@@ -1,0 +1,330 @@
+\section{Review of statistical inference; 2-sample t}
+\frame{\sectionpage}
+```{r setup1,echo=F}
+library(knitr)
+opts_chunk$set(dev = "pdf")
+opts_chunk$set(comment = NA, fig.width = 5, fig.height = 3.5)
+options(width = 45)
+suppressMessages(library(tidyverse))
+```
+def 
+## The statistical world
+
+
+* 
+Consists of:
+
+
+* objects or people of interest to us ({\em individuals})
+
+* things measured or counted on those individuals ({\em variables})
+
+
+\pause
+
+
+* About the individuals:
+
+
+
+* which ones do we care about? All of them, the {\em population}.
+
+* which ones do we know about? The ones we happened to look at, the {\em sample}.
+
+
+\pause
+
+
+* Sample is (or should be) randomly chosen from population, with no favoritism.
+
+
+
+
+## Sample to population: confidence interval
+
+
+* 
+Want to know about population (parameter), but don't. Only have sample (statistic). Eg.\ population mean, only have sample mean.
+
+* Logic:
+
+
+* {\em If} we knew about population, could figure out kinds of samples that might appear (math).
+
+* In particular, can figure how far apart sample statistic and population parameter might be.
+
+* Use this to construct {\em confidence interval} for population parameter: says eg. "based on my sample, I think population mean between $a$ and $b$". 
+
+
+
+
+## Example of confidence interval
+
+
+* Take a sample of $n=10$ observations. Obtain sample mean of
+$\bar{x}=15$, and sample SD of $s=2.5$. Want 95\% confidence
+interval for population mean.
+
+* For population mean *with population SD unknown*: use $t$
+distribution with $n-1=9$ degrees of freedom.
+
+* Obtain $t^*$ from $t$-table or as
+```{r }
+t.star <- qt(1 - 0.05 / 2, 9)
+t.star
+```
+
+     
+
+* and thus 95\% CI for mean is this: $m=t^* s / \sqrt{n}$, then
+$\bar{x} \pm m$:
+```{r }
+m <- t.star * 2.5 / sqrt(10)
+m
+c(15 - m, 15 + m)
+```
+
+   
+
+
+
+## Test of significance
+
+
+* Or: 
+
+
+* 
+might have theory leading to {\em null hypothesis} (eg. population mean is 20) and {\em alternative hypothesis} (eg. population mean not 20).
+
+* This leads to {\em test of significance} (hypothesis test): "based on my sample, I think pop.\ mean is (is not) 20"
+
+* Done by choosing $\alpha$ (eg. 0.05), calculating {\em test statistic} and {\em P-value}. If P-value $< \alpha$, {\em reject null}: have evidence in favour of alternative.
+
+
+* Math producing inference procedures can be difficult, but calculations (with software) and interpretations need not be.
+
+
+
+## Example of test of significance
+
+
+*   Let's suppose we are trying to prove that a population mean is not
+equal to 17 (alternative hypothesis), against a null that the mean
+is 17 after all. Use $\alpha=0.05$.
+
+* Use same data as before: $n=10, \bar{x}=15, s=2.5$.
+
+* Calculate test statistic $t=(\bar{x}-\mu_0)/(s/\sqrt{n})$, where
+$\mu_0$ is the population mean given by the null hypothesis:
+```{r }
+t.stat <- (15 - 17) / (2.5 / sqrt(10))
+t.stat
+```
+
+
+
+* Get P-value by looking along 9 df row of $t$-table, and seeing
+where `t.tstat`, or its absolute value, comes. Or get P-value
+directly from R. *left* tail here, since
+`t.stat` $<0$; also $\times 2$ for
+two-sided test:
+```{r }
+2 * pt(t.stat, 9)
+```
+
+   
+
+
+
+## Conclusion
+
+
+* $\alpha=0.05$, P-value was 0.032.
+
+* P-value less than $\alpha$, so *reject* null hypothesis
+in favour of alternative: that is, population mean *not* equal to 17.
+
+* If had $\alpha=0.01$, would not have been able to reject
+null. So evidence against a mean of 17 is strong but not
+*that* strong.
+
+
+
+## Doing it in R
+```{r echo=F}
+data <- rnorm(10)
+data <- (data - mean(data)) / sd(data)
+mydata <- 15 + 2.5 * data
+```
+
+   
+
+
+
+* These data have right mean and SD:
+```{r }
+mydata
+```
+
+   
+
+* One step with R (note everything as before):
+{\small
+```{r }
+t.test(mydata, mu = 17)
+```
+
+   
+}
+
+
+
+## Exploratory data analysis
+
+
+* Sometimes don't have theory (yet), just want to see what data
+tell us.
+
+* Use graphs, simple descriptive statistics, some of methods we learn.
+
+* Idea: generate ideas ("hypotheses") for future study.
+
+* Cannot make clear conclusions about populations.
+
+
+## The Degree of Reading Power data
+
+
+* Have new method for teaching reading.
+
+* Want to see if better than "standard" method ("research hypothesis").
+
+* Design: randomly allocate available children to "treatment"
+(new method) or "control" (standard).
+
+* Measure score for all children on standard reading test.
+
+* Analysis: is observed difference between treatment/control score
+means big enough to be real not chance? Do 2-sample $t$-test.
+
+
+
+
+## Some of the data
+
+
+```
+
+t 43
+t 53
+t 57
+t 49
+t 56
+t 33
+c 42
+c 33
+c 46
+c 37
+c 43
+
+```
+
+
+
+* 1st column label ("t" for treatment, "c" for control).
+
+* 2nd column response (score on reading test).
+
+* Data in plain text file `drp.txt`.
+
+
+## Reading and examining data
+```{r readtable}
+drp <- read.table("drp.txt", header = T)
+head(drp)
+```
+def 
+
+
+
+* `read.table` gets data from "space-delimited" text
+file. `header=T` reads top line as variable names.
+
+* Resulting R data structure called `data.frame`, basic
+arrangement for data in R.
+
+* `head` looks at first few lines (default 6) of data frame.
+
+
+
+## Visual comparison of groups
+
+
+* My favourite tool: **boxplot**:
+```{r fig.height=3.5,size="small"}
+ggplot(drp, aes(x = group, y = score)) + geom_boxplot()
+```
+
+     
+
+
+## Comments and setup
+
+
+* Mean reading score for treatment group is higher
+
+* but a lot of variability.
+
+* Is that difference real/reproducible?
+
+* Do *two-sample $t$-test*.
+
+* **P-value** tells you whether difference in samples
+likely to persist in population
+
+* Small P-value (less than 0.05) means "yes, it's real"
+
+* Confidence interval says how far apart means might be.
+
+
+
+## Two-sample $t$
+
+{\small
+```{r ttest}
+with(drp, t.test(score ~ group))
+```
+def 
+
+}
+
+
+
+* P-value 0.026 says means really are different
+
+* CI says difference between 1 and 19 points in favour of new
+reading program.
+
+* R puts groups in alphabetical order (`c` before `t`).
+
+
+
+## Comments
+
+
+* New reading program really helps!
+
+* 2 possible $t$ procedures:
+
+
+* Pooled: assumes 2 population variances/SDs are same
+
+* Welch/Satterthwaite: does not, but only approximation.
+
+
+* R does Welch by default. If willing to assume equal variances,
+add `var.equal=T` to `t.test`.
+
+
+

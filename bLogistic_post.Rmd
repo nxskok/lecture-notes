@@ -1,0 +1,1247 @@
+
+## Logistic regression
+
+
+* When response variable is measured/counted, regression can work well.
+
+* But what if response is yes/no, lived/died, success/failure?
+
+* Model *probability* of success.
+
+* Probability must be between 0 and 1; need method that ensures this.
+
+* *Logistic regression* does this. In R, is a
+*generalized linear model* with binomial "family": 
+```{r, eval=F}
+glm(y ~ x, family="binomial")
+```
+
+
+* Begin with simplest case.
+
+
+
+## Packages
+```{r, eval=F}
+library(MASS)
+library(tidyverse)
+library(broom)
+library(nnet)
+library(conflicted)
+```
+
+   
+
+
+## The rats, part 1
+
+
+* Rats given dose of some poison; either live or die:
+
+\small
+```
+dose status
+0 lived
+1 died
+2 lived
+3 lived
+4 died
+5 died
+```
+
+\normalsize
+
+## Read in: 
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/rat.txt"
+# my_url <- "rat.txt"
+rats <- read_delim(my_url, " ")
+rats
+```
+ 
+
+
+## Basic logistic regression
+
+
+* Make response into a factor first:
+
+\small
+```{r}
+rats2 <- rats %>% mutate(status = factor(status))
+rats2
+```
+\normalsize
+   
+
+
+* then fit model:
+
+\small
+```{r, error=T}
+status.1 <- glm(status ~ dose, family = "binomial", data = rats2)
+```
+\normalsize
+   
+
+   
+
+
+## Output
+
+\scriptsize
+```{r}
+summary(status.1)
+```
+\normalsize
+
+
+## Interpreting the output
+
+
+* Like (multiple) regression, get
+tests of significance of individual $x$'s
+
+* Here not significant (only 6 observations).
+
+* "Slope" for dose is negative, meaning that as dose increases, probability of event modelled (survival) decreases.
+
+
+
+
+
+## Output part 2: predicted survival probs
+```{r }
+p <- predict(status.1, type = "response")
+p
+cbind(rats, p)
+```
+ 
+
+## The rats, more
+
+
+* More realistic: more rats at each dose (say 10).
+
+* Listing each rat on one line makes a big data file.
+
+* Use format below: dose, number of survivals, number of deaths.
+
+```
+
+dose lived died
+0    10    0
+1     7    3 
+2     6    4 
+3     4    6 
+4     2    8 
+5     1    9  
+
+```
+
+
+* 6 lines of data correspond to 60 actual rats.
+
+* Saved in `rat2.txt`.
+
+
+
+## These data
+
+\footnotesize
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/rat2.txt"
+# my_url <- "rat2.txt"
+rat2 <- read_delim(my_url, " ")
+rat2
+```
+\normalsize
+
+
+## Create response matrix:
+
+- Each row contains *multiple* observations.
+- Create *two-column* response:
+  - \#survivals in first column, 
+  - \#deaths in second.
+
+
+\footnotesize
+```{r }
+response <- with(rat2, cbind(lived, died))
+response
+```
+\normalsize
+
+- Response is R `matrix`:
+
+\footnotesize
+```{r }
+class(response)
+```
+\normalsize
+
+     
+## Fit logistic regression
+
+- using response you just made:
+
+```{r}
+rat2.1 <- glm(response ~ dose,
+  family = "binomial",
+  data = rat2
+)
+```
+
+
+
+
+## Output
+
+\scriptsize
+```{r}
+summary(rat2.1)
+```
+\normalsize
+
+
+## Predicted survival probs
+```{r }
+p <- predict(rat2.1, type = "response")
+cbind(rat2, p)
+```
+ 
+aside
+
+```{r}
+rat2
+```
+
+one rat per row?
+
+```{r}
+rat2 %>% pivot_longer(-dose, names_to = "status", values_to = "freq") %>% 
+  uncount(freq) -> rat2x
+rat2x
+```
+
+run logistic regression
+
+```{r}
+rat2x.1 <- glm(factor(status)~dose, data = rat2x, family = "binomial")
+summary(rat2x.1)
+```
+
+end of aside
+
+## Comments
+
+
+
+* Significant effect of dose. 
+
+* Effect of larger dose is to *decrease* survival probability
+("slope" negative; also see in decreasing predictions.)
+
+
+## Multiple logistic regression
+
+
+* With more than one $x$, works much like multiple regression.
+
+* Example: study of patients with blood poisoning severe enough to warrant surgery. Relate survival to other potential risk factors.
+
+* Variables, 1=present, 0=absent:
+
+
+  * survival (death from sepsis=1), response
+  * shock
+  * malnutrition
+  * alcoholism
+  * age (as numerical variable)
+  * bowel infarction
+
+
+* See what relates to death.
+
+
+
+## Read in data
+```{r size="footnotesize"}
+my_url <- 
+  "http://www.utsc.utoronto.ca/~butler/d29/sepsis.txt"
+# my_url <- "sepsis.txt"
+sepsis <- read_delim(my_url, " ")
+```
+ 
+
+
+## The data
+```{r size="footnotesize"}
+sepsis
+```
+
+   
+
+
+## Fit model
+```{r }
+sepsis.1 <- glm(death ~ shock + malnut + alcohol + age +
+  bowelinf,
+family = "binomial",
+data = sepsis
+)
+```
+
+   
+
+
+## Output part 1
+```{r size="footnotesize"}
+tidy(sepsis.1)
+```
+ 
+
+
+
+* All P-values fairly small
+
+* but `malnut` not significant: remove.
+
+
+
+## Removing `malnut`
+```{r size="footnotesize"}
+sepsis.2 <- update(sepsis.1, . ~ . - malnut)
+tidy(sepsis.2)
+```
+ 
+
+
+
+* Everything significant now.
+
+
+
+## Comments
+
+
+* Most of the original $x$'s helped predict death. Only `malnut` seemed not to add anything.
+
+* Removed `malnut` and tried again.
+
+* Everything remaining is significant (though `bowelinf`
+actually became *less* significant).
+
+* All coefficients are *positive*, so having any of the risk
+factors (or being older)
+*increases* risk of death.  
+
+
+
+
+## Predictions from model without "malnut"
+
+
+* A few chosen at random:
+
+\normalsize
+```{r size="footnotesize"}
+sepsis.pred <- predict(sepsis.2, type = "response")
+d <- data.frame(sepsis, sepsis.pred)
+d
+myrows <- c(4, 1, 2, 11, 32)
+slice(d, myrows)
+```
+\normalsize
+
+## Comments 
+
+* Survival chances pretty good if no risk factors, though decreasing with age.
+
+* Having more than one risk factor reduces survival chances dramatically.
+
+* Usually good job of predicting survival; sometimes death predicted to survive.
+
+
+
+## Assessing proportionality of odds for age
+
+
+* An assumption we made is that log-odds of survival depends
+linearly on age.
+
+* Hard to get your head around, but 
+basic idea is that survival chances go continuously up (or down)
+with age, instead of (for example) going up and then down.
+
+* In this case, seems reasonable, but should check:
+
+
+## Residuals vs.\ age
+```{r virtusentella,fig.height=3.4, warning=F}
+ggplot(augment(sepsis.2), aes(x = age, y = .resid)) +
+  geom_point()
+```
+ 
+## Comments
+
+* No apparent problems overall.
+
+* Confusing "line" across: no risk factors, survived. 
+
+
+
+## Probability and odds
+
+* For probability $p$, odds is $p/(1-p)$:
+
+
+  \begin{tabular}{rrrl}
+      \hline
+      Prob.\ & Odds & log-odds & in words\\
+      \hline
+      0.5 & $0.5/0.5=1/1=1.00$ & $0.00$ &  ``even money''\\
+      0.1 & $0.1/0.9=1/9=0.11$ & $-2.20$ & ``9 to 1''\\
+      0.4 & $0.4/0.6=1/1.5=0.67$ & $-0.41$ & ``1.5 to 1''\\
+      0.8 & $0.8/0.2=4/1=4.00$ & $1.39$ & ``4 to 1 on''\\
+      \hline
+    \end{tabular}
+
+
+* Gamblers use odds: if you win at 9 to 1 odds, get original
+stake back plus 9 times the stake.
+
+* Probability has to be between 0 and 1
+
+* Odds between 0 and infinity
+
+* *Log*-odds can be anything: any log-odds corresponds to
+valid probability.
+
+
+
+## Odds ratio
+
+
+* Suppose 90 of 100 men drank wine last week, but only 20 of 100 women.
+
+* Prob of man drinking wine $90/100=0.9$, woman $20/100=0.2$.
+
+* Odds of man drinking wine $0.9/0.1=9$, woman $0.2/0.8=0.25$.
+
+* Ratio of odds is $9/0.25=36$.
+
+* Way of quantifying difference between men and women: ``odds of
+drinking wine 36 times larger for males than females''. 
+
+
+
+## Sepsis data again
+
+
+* Recall prediction of probability of death from risk factors:
+```{r size="small"}
+sepsis.2.tidy <- tidy(sepsis.2)
+sepsis.2.tidy
+```
+
+     
+
+
+* Slopes in column `estimate`.
+
+
+
+## Multiplying the odds
+
+
+* Can interpret slopes by taking "exp" of them. We ignore intercept.
+
+```{r expo}
+sepsis.2.tidy %>% 
+  mutate(exp_coeff=exp(estimate)) %>% 
+  select(term, exp_coeff)
+```
+
+## Interpretation
+
+\small
+```{r ref.label="expo", echo=F}
+```
+\normalsize
+
+
+* These say ``how much do you *multiply* odds of death by
+for increase of 1 in corresponding risk factor?'' Or, what is odds
+ratio for that factor being 1 (present) vs.\ 0 (absent)?
+
+* Eg.\ being alcoholic vs.\ not increases odds of death by 24 times
+
+* One year older multiplies odds by about 1.1 times. Over 40 years,
+about  $1.09^{40}=31$ times. 
+
+
+
+## Odds ratio and relative risk
+
+
+* **Relative risk** is ratio of probabilities.
+
+* Above: 90 of 100 men (0.9) drank wine, 20 of 100 women (0.2).
+
+* Relative risk 0.9/0.2=4.5. (odds ratio was 36).
+
+* When probabilities small, relative risk and odds ratio similar.
+
+* Eg.\ prob of man having disease 0.02, woman 0.01.
+
+* Relative risk $0.02/0.01=2$.
+
+## Odds ratio vs.\ relative risk
+
+- Odds for men and for women:
+
+```{r }
+(od1 <- 0.02 / 0.98) # men
+(od2 <- 0.01 / 0.99) # women
+```
+
+-  Odds ratio 
+
+```{r }
+od1 / od2
+```
+
+
+- Very close to relative risk of 2.
+
+
+## More than 2 response categories
+
+
+* With 2 response categories, model the probability of one, and prob of other is one minus that. So doesn't matter which category you model.
+
+* With more than 2 categories, have to think more carefully about the categories: are they
+
+
+* *ordered*: you can put them in a natural order (like low, medium, high)
+
+* *nominal*: ordering the categories doesn't make sense (like red, green, blue).
+
+
+* R handles both kinds of response; learn how.
+
+
+
+## Ordinal response: the miners
+
+
+* 
+Model probability of being in given category *or lower*.
+
+* Example: coal-miners often suffer disease pneumoconiosis. Likelihood of disease believed to be greater 
+among miners who have worked longer. 
+
+* Severity of disease measured on categorical scale: none,
+moderate, 3 severe.
+
+## Miners data
+
+* Data are frequencies:
+
+```
+Exposure None Moderate Severe
+5.8       98      0       0
+15.0      51      2       1
+21.5      34      6       3
+27.5      35      5       8
+33.5      32     10       9
+39.5      23      7       8
+46.0      12      6      10
+51.5       4      2       5
+```
+
+
+
+
+## Reading the data
+
+Data in aligned columns with more than one space between, so: 
+
+\small
+```{r }
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/miners-tab.txt"
+my_url <- "miners-tab.txt"
+freqs <- read_table(my_url)
+```
+\normalsize
+
+
+## The data
+```{r }
+freqs
+```
+
+   
+
+
+## Tidying and row proportions
+```{r }
+freqs %>%
+  pivot_longer(None:Severe, names_to = "Severity", values_to = "Freq") %>%
+  group_by(Exposure) %>%
+  mutate(proportion = Freq / sum(Freq)) -> miners
+```
+
+   
+
+
+## Result
+
+\small
+```{r }
+miners
+```
+\normalsize
+     
+
+
+## Plot proportions against exposure
+
+\small
+```{r fig.height=3.5, message=F}
+ggplot(miners, aes(x = Exposure, y = proportion,
+                   colour = Severity)) + 
+  geom_point() + geom_smooth(se = F)
+```
+\normalsize
+
+
+## Reminder of data setup
+\footnotesize
+```{r }
+miners
+```
+
+   
+\normalsize
+
+## Creating an ordered factor
+
+
+* Problem: on plot, `Severity` categories in \emph{wrong
+order}. 
+
+* *In the data frame*, categories in *correct* order.
+
+* Package `forcats` (in `tidyverse`) has functions for creating factors to specifications.
+
+* `fct_inorder` takes levels *in order they appear in data*: 
+```{r }
+miners %>%
+  mutate(sev_ord = fct_inorder(Severity)) -> miners
+```
+
+     
+
+
+* To check:
+```{r }
+levels(miners$sev_ord)
+```
+
+   
+
+
+## New data frame
+
+\small
+```{r }
+miners
+```
+\normalsize
+ 
+
+## Improved plot
+```{r fig.height=3.25, message=FALSE}
+ggplot(miners, aes(x = Exposure, y = proportion,
+                   colour = sev_ord)) + 
+  geom_point() + geom_smooth(se = F)
+```
+
+   
+
+## Fitting ordered logistic model
+
+Use function `polr` from package `MASS`. Like `glm`.
+```{r }
+sev.1 <- polr(sev_ord ~ Exposure,
+  weights = Freq,
+  data = miners
+)
+```
+ 
+
+
+## Output: not very illuminating
+\scriptsize
+```{r }
+summary(sev.1)
+```
+\normalsize
+   
+
+## Does exposure have an effect?
+Fit model without `Exposure`, and compare
+using `anova`. Note `1` for model with just intercept:
+
+```{r echo=F}
+w <- getOption("width")
+options(width = w - 20)
+```
+
+ 
+
+\small
+```{r}
+sev.0 <- polr(sev_ord ~ 1, weights = Freq, data = miners)
+anova(sev.0, sev.1)
+```
+\normalsize
+
+Exposure definitely has effect on severity of disease. 
+
+
+## Another way
+
+
+* What (if anything) can we drop from model with `exposure`?
+```{r }
+drop1(sev.1, test = "Chisq")
+```
+
+     
+
+
+* Nothing. Exposure definitely has effect.
+
+
+
+## Predicted probabilities
+
+Make new data frame out of all the exposure values (from original data
+frame), and predict from that:
+
+```{r echo=F}
+options(width = 70)
+```
+
+ 
+```{r size="small"}
+sev.new <- tibble(Exposure = freqs$Exposure)
+sev.new
+pr <- predict(sev.1, sev.new, type = "p")
+pr
+miners.pred <- cbind(sev.new, pr)
+miners.pred
+```
+ 
+
+## Comments
+
+
+* Model appears to match data: as exposure goes up, prob of None
+goes down, Severe goes up (sharply for high exposure).
+
+* Like original data frame, this one nice to look at but
+*not tidy*. We want to make graph, so tidy it.
+
+* Also want the severity values in right order.
+
+* Usual `gather`, plus a bit:
+```{r size="small"}
+miners.pred %>%
+  pivot_longer(-Exposure, names_to = "Severity", values_to = "probability") %>%
+  mutate(sev_ord = fct_inorder(Severity)) -> preds
+```
+
+     
+
+
+
+## Some of the gathered predictions
+
+\footnotesize
+```{r}
+preds 
+```
+\normalsize
+   
+
+
+## Plotting predicted and observed proportions
+
+
+* Plot:
+  *  predicted probabilities, lines (shown) joining points (not shown)
+
+  * data, just the points. 
+
+
+* Unfamiliar process: data from two *different* data frames:
+
+\small
+```{r }
+g <- ggplot(preds, aes(
+  x = Exposure, y = probability,
+  colour = sev_ord
+)) + geom_line() +
+  geom_point(data = miners, aes(y = proportion))
+```
+\normalsize
+   
+* Idea: final `geom_point` uses data in `miners`
+rather than `preds`, $y$-variable for plot is `proportion`
+from that data frame, but $x$-coordinate is `Exposure`, as it
+was before, and `colour` is `Severity` as before. The
+final `geom_point` "inherits" from the first `aes`
+as needed.
+
+
+
+
+## The plot: data match model
+```{r fig.height=3.8}
+g
+```
+
+## Unordered responses
+
+
+* With unordered (nominal) responses, can use *generalized logit*.
+
+* Example: 735 people, record age and sex (male 0, female 1), which of 3 brands of some product preferred.
+
+* Data in `mlogit.csv` separated by commas (so
+`read_csv` will work):
+```{r }
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/mlogit.csv"
+# my_url <- "mlogit.csv"
+brandpref <- read_csv(my_url)
+```
+ 
+
+
+
+
+## The data
+```{r }
+brandpref
+```
+
+   
+
+
+## Bashing into shape, and fitting model
+
+
+* `sex` and `brand` not meaningful as numbers, so
+turn into factors:
+```{r }
+brandpref <- brandpref %>%
+  mutate(sex = factor(sex)) %>%
+  mutate(brand = factor(brand))
+```
+ 
+
+* We use `multinom` from package `nnet`. Works
+like `polr`.
+
+```{r }
+brands.1 <- multinom(brand ~ age + sex, data = brandpref)
+brands.1
+```
+ 
+
+
+## Can we drop anything?
+
+
+* Unfortunately `drop1` seems not to work:
+```{r, error=TRUE}
+drop1(brands.1, test = "Chisq", trace = 0)
+```
+
+   
+
+* so fall back on fitting model without what you want to test, and
+comparing using `anova`.    
+
+
+
+## Do age/sex help predict brand? 1/2
+
+Fit models without each of age and sex:
+```{r }
+brands.2 <- multinom(brand ~ age, data = brandpref)
+brands.3 <- multinom(brand ~ sex, data = brandpref)
+```
+ 
+
+
+## Do age/sex help predict brand? 2/2
+
+\scriptsize
+```{r}
+anova(brands.2, brands.1)
+anova(brands.3, brands.1)
+```
+\normalsize
+
+
+## Do age/sex help predict brand? 3/3
+
+
+* `age` definitely significant (second `anova`)
+
+* `sex` seems significant also (first `anova`)
+
+* Keep both.
+
+
+
+
+## Another way to build model
+
+
+* Start from model with everything and run `step`:
+
+\footnotesize
+```{r }
+step(brands.1, trace = 0)
+```
+\normalsize
+     
+
+* Final model contains both `age` and `sex` so neither
+could be removed.
+
+
+
+## Predictions: all possible combinations
+
+Create data frame with various age and sex:
+
+\footnotesize
+```{r}
+ages <- c(24, 28, 32, 35, 38)
+sexes <- factor(0:1)
+ages
+sexes
+new <- crossing(age = ages, sex = sexes)
+new
+```
+\normalsize
+
+
+
+## Making predictions
+```{r }
+p <- predict(brands.1, new, type = "probs")
+class(p)
+probs <- cbind(new, p)
+```
+
+or
+
+```{r}
+p %>% as_tibble() %>% 
+  bind_cols(new) -> probs
+```
+
+   
+
+
+## The predictions
+
+\small
+```{r }
+probs
+```
+\normalsize
+   
+
+
+* Young males (`sex=0`) prefer brand 1, 
+but older males prefer brand 3.
+
+* Females similar, but like brand 1 less and
+brand 2 more.
+
+
+
+## Making a plot
+
+
+* Plot fitted probability against age, distinguishing brand by
+colour and gender by plotting symbol.
+
+* Also join points by lines, and distinguish lines by gender. 
+
+* I thought about facetting, but this seems to come out clearer.
+
+* First need tidy data frame, by familiar process:
+```{r }
+probs %>%
+  pivot_longer(-(age:sex), names_to = "brand", values_to = "probability") -> probs.long
+```
+
+## The tidy data (random sample of rows)
+
+\small
+```{r}
+probs.long 
+```
+\normalsize
+
+## The plot
+```{r fig.height=2.8}
+ggplot(probs.long, aes(
+  x = age, y = probability,
+  colour = brand, shape = sex
+)) +
+  geom_point() + geom_line(aes(linetype = sex))
+```
+
+   
+
+## Digesting the plot
+
+
+* Brand vs.\ age: younger people (of both genders) prefer brand
+1, but older people (of both genders) prefer brand 3. (Explains
+significant age effect.)
+
+* Brand vs.\ sex: females (dashed) like brand 1 less than males
+(solid), like brand 2 more (for all ages). 
+
+* Not much brand difference between genders (solid and dashed
+lines of same colours close), but enough to be significant.
+
+* Model didn't include interaction, so modelled effect of gender
+on brand same for each age, modelled effect of age same for each
+gender. 
+
+
+## Alternative data format
+
+Summarize all people of same brand preference, same sex, same age on one line of data file with frequency on end:
+
+
+
+```
+1 0 24 1
+1 0 26 2
+1 0 27 4
+1 0 28 4
+1 0 29 7
+1 0 30 3
+...
+```
+
+Whole data set in 65 lines not 735! But how?
+
+
+## Getting alternative data format
+```{r }
+brandpref %>%
+  group_by(age, sex, brand) %>%
+  summarize(Freq = n()) %>%
+  ungroup() -> b
+b
+```
+
+```{r }
+brandpref %>%
+  count(age, sex, brand) 
+```   
+
+## Fitting models, almost the same
+
+
+* Just have to remember `weights` to incorporate
+frequencies.
+
+* Otherwise `multinom` assumes you have just 1 obs
+on each line!
+
+* Again turn (numerical) `sex` and `brand` into factors:
+
+\footnotesize
+```{r, results="hide"}
+b %>%
+  mutate(sex = factor(sex)) %>%
+  mutate(brand = factor(brand)) -> bf
+b.1 <- multinom(brand ~ age + sex, data = bf, weights = Freq)
+b.2 <- multinom(brand ~ age, data = bf, weights = Freq)
+```
+\normalsize
+
+
+
+## P-value for `sex` identical
+
+\footnotesize
+```{r}
+anova(b.2, b.1)
+```
+\normalsize
+
+Same P-value as before, so we haven't changed anything important.
+
+
+## Including data on plot
+
+
+* Everyone's age given as whole
+number, so maybe not too many different ages with sensible amount
+of data at each:
+
+\scriptsize
+```{r}
+b %>%
+  group_by(age) %>%
+  summarize(total = sum(Freq))
+```
+\normalsize
+
+
+## Comments and next
+
+
+* Not great (especially at low end), but live with it.
+
+* Need proportions of frequencies in each brand for each
+age-gender combination. Mimic what we did for miners:
+```{r spal-b}
+b %>%
+  group_by(age, sex) %>%
+  mutate(proportion = Freq / sum(Freq)) -> brands
+```
+
+     
+
+
+
+## Checking proportions for age 32
+
+\small
+```{r }
+brands %>% filter(age == 32)
+```
+\normalsize
+   
+
+
+
+* First three proportions (males) add up to 1.
+
+* Last three proportions (females) add up to 1.
+
+* So looks like proportions of right thing.
+
+
+
+## Attempting plot
+
+
+* Take code from previous plot and:
+
+
+* remove `geom_point` for fitted values
+
+* add `geom_point` with correct `data=` and
+`aes` to plot data.
+
+```{r fig.height=3.2}
+g <- ggplot(probs.long, aes(
+  x = age, y = probability,
+  colour = brand, shape = sex
+)) +
+  geom_line(aes(linetype = sex)) + 
+  geom_point(data = brands, aes(y = proportion))
+```
+
+     
+
+
+* Data seem to correspond more or less to fitted curves:
+
+
+
+## The plot
+```{r fig.height=3.7}
+g
+```
+
+   
+
+
+## But\ldots
+
+
+* Some of the plotted points based on a lot of people, and some
+only a few.
+
+* Idea: make the *size* of plotted point bigger if point
+based on a lot of people (in `Freq`).
+
+* Hope that larger points then closer to predictions.
+
+* Code:
+
+\footnotesize
+```{r }
+g <- ggplot(probs.long, aes(
+  x = age, y = probability,
+  colour = brand, shape = sex
+)) +
+  geom_line(aes(linetype = sex)) +
+  geom_point(
+    data = brands,
+    aes(y = proportion, size = Freq)
+  )
+```
+\normalsize
+     
+
+
+
+## The plot
+```{r fig.height=3.7}
+g
+```
+
+   
+
+
+## Trying interaction between age and gender
+
+```{r echo=F}
+options(width = 60)
+```
+
+   
+\scriptsize
+```{r }
+b.4 <- update(b.1, . ~ . + age:sex)
+anova(b.1, b.4)
+```
+
+   
+\normalsize
+
+* No evidence that effect of age on brand preference differs for
+the two genders.

@@ -1,0 +1,24 @@
+---
+title: "Multiway Frequency Tables"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: default
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r bMultiway, child="bMultiway.Rmd"}
+
+```
+ 

@@ -1,0 +1,37 @@
+---
+title: "Testing survival analysis"
+output: html_notebook
+---
+
+## Packages
+
+```{r}
+library(tidyverse)
+library(survival)
+library(survminer)
+library(broom)
+```
+
+## Read in dance data
+
+```{r}
+dance=read_table("dancing.txt")
+dance
+```
+
+```{r}
+mth=with(dance,Surv(Months,Quit))
+str(mth)
+print.default(mth)
+```
+
+is it crossing instead of expand.grid?
+
+```{r}
+ages=c(20,40)
+treatments=c("no","yes")
+crossing(age=ages,treatment=treatments)
+```
+
+
+

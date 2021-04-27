@@ -1,0 +1,296 @@
+\section{Introduction to `ggplot`}
+\frame{\sectionpage}
+
+## Base graphics and `ggplot`
+
+
+* When R began life (in 1993), graphics terminals were new, and
+was a big rush to use them to display statistical plots.
+
+* Since then, graphics have been "bolted on" with no clear
+overarching plan.
+
+* This means that each kind of graph uses different ideas.
+
+* Hadley Wickham used idea of "grammar of graphics" to develop
+`ggplot`, a set of graphing tools with consistent ideas.
+
+* See
+[link](http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf).
+
+* In package `ggplot2`, thus first:
+```{r }
+library(tidyverse)
+```
+
+     
+
+
+
+## Ideas behind `ggplot`
+
+
+* Separates *what to plot* from *how to plot it*.
+
+* What to plot, for example:
+\begin{description}
+\item[x] variable to put on the $x$-axis
+\item[y] variable to put on the $y$-axis
+\item[colour] colour to make the points (eg. colouring by a
+categorical variable)
+\item[group] group points together (eg. which ones to join  by lines)
+\end{description}
+
+* How to plot, such as:
+\begin{description}[geom\_histogram]
+\item[geom\_histogram] histogram
+\item[geom\_boxplot] boxplot
+\item[geom\_point] (scatter plot of) points
+\item[geom\_line] join (possibly grouped) points by lines.
+\item[facet\_grid] draw separate graphs of subsets of data and put
+them side by side.
+\end{description}
+
+
+
+## Degree of Reading Power data
+
+
+* Some children were randomly assigned to learn to read via a
+new method (labelled `t` for "treatment") or via the
+standard method (labelled `c` for "control"). Each child
+was given a reading test at the end. How do the test scores
+compare for the two groups?
+
+* Read in and show some of the data:
+```{r }
+drp <- read.table("drp.txt", header = T)
+head(drp)
+```
+
+     
+
+
+
+## Histogram of all reading scores
+Histogram has only an $x$-scale (reading score), so do this:
+
+```{r fig.height=3.5}
+ggplot(drp, aes(x = score)) +
+  geom_histogram()
+```
+
+ 
+
+
+## Better histogram
+Set number of bins to 10:
+```{r fig.height=4.5}
+ggplot(drp, aes(x = score)) + geom_histogram(bins = 10)
+```
+
+   
+
+
+## Histograms by group, side by side
+Add a `facet_grid`, thus:
+
+```{r fig.height=4.4}
+ggplot(drp, aes(x = score)) + geom_histogram(bins = 10) +
+  facet_grid(group ~ .)
+```
+
+   
+
+
+## Comments
+
+
+* Control group scores (top) more spread out (they go higher
+and lower).
+
+* Not sure how means/medians compare.
+
+* Above/below histograms make for easier comparison.
+
+* In `facet_grid`, variable before squiggle denotes
+up/down, variable after squiggle denotes left/right (like
+`y~x` in usual model formula).
+
+* If nothing to go before or after squiggle, use `.`
+
+
+* Here, no left-right graphs, so right side of squiggle is `.`
+
+
+
+
+## Boxplot of reading scores by group
+Boxplot has $y$ scale (measured variable) *and* $x$ scale
+(groups), so specify both:
+```{r fig.height=4}
+ggplot(drp, aes(x = group, y = score)) + geom_boxplot()
+```
+
+   
+
+
+## Boxplot of a single group
+To get a boxplot of all the reading scores together, specify a
+"dummy" group for `x`:
+```{r cateloupe,fig.height=4}
+ggplot(drp, aes(x = factor(1), y = score)) + geom_boxplot()
+```
+
+   
+
+
+## Scatterplot
+For this, use analysis of covariance data from later:
+
+```{r }
+prepost <- read.table("ancova.txt", header = T)
+str(prepost)
+```
+
+ 
+
+
+
+* 
+20 subjects were randomized to one of two drugs `a` and
+`b`.
+
+* Each subject had their before and after scores measured on
+some test.
+
+* Want a scatterplot of after score against before score
+labelled by drug.
+
+
+
+## Basic scatterplot
+```{r fig.height=5}
+ggplot(prepost, aes(x = before, y = after)) + geom_point()
+```
+
+   
+
+
+## Coloured by `drug`
+Add `colour=` to the *aesthetic*:
+
+```{r fig.height=4.3}
+ggplot(prepost, aes(x = before, y = after, colour = drug)) +
+  geom_point()
+```
+
+ 
+
+
+## Adding a smooth trend
+```{r fig.height=4}
+ggplot(prepost, aes(x = before, y = after)) +
+  geom_point() + geom_smooth()
+```
+
+   
+
+
+## A smooth trend for each drug
+```{r fig.height=3.5}
+ggplot(prepost, aes(x = before, y = after, colour = drug)) +
+  geom_point() + geom_smooth()
+```
+
+   
+
+
+## A regression line
+
+```{r fig.height=4.5}
+ggplot(prepost, aes(x = before, y = after)) +
+  geom_point() + geom_smooth(method = "lm")
+```
+
+   
+
+
+## A regression line for each drug
+
+```{r kalloni,fig.height=4.5}
+ggplot(prepost, aes(x = before, y = after, colour = drug)) +
+  geom_point() + geom_smooth(method = "lm")
+```
+
+   
+
+## Think of before-after data as repeated measures
+Reorganize:
+```{r }
+prepost %>%
+  mutate(subject = row_number()) %>%
+  pivot_longer(before:after, names_to="time", 
+               values_to="score", names_ptypes = list(time=factor())
+  ) -> prepost.long
+prepost.long %>% sample_n(8) # 8 random rows
+```
+
+   
+
+*One* column of scores, with column `time` saying whether
+was before or after.
+
+
+## A "spaghetti plot"
+```{r fig.height=4.5}
+ggplot(prepost.long, aes(
+  x = time, y = score, colour = drug,
+  group = subject
+)) + geom_point() + geom_line()
+```
+
+   
+
+
+## Exponential growth data
+
+
+* I made up these data:
+```{r }
+x <- 0:5
+y <- c(2.0, 4.1, 8.2, 15.8, 31.6, 65.0)
+grow <- data.frame(x, y)
+grow
+```
+
+   
+
+
+* Each $y$-value is approximately twice as big as the previous:
+exponential growth.
+
+
+
+## Scatter plot with line (bad)
+```{r fig.height=4.5}
+ggplot(grow, aes(x = x, y = y)) +
+  geom_point() + geom_smooth(method = "lm")
+```
+
+   
+
+
+## Use log scale for $y$-axis
+
+```{r fig.height=4}
+ggplot(grow, aes(x = x, y = y)) +
+  geom_point() + coord_trans(y = "log10")
+```
+
+   
+
+On this plot, trend is straight.
+
+
+

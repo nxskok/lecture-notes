@@ -1,0 +1,931 @@
+# Multidimensional scaling
+
+
+## Multidimensional Scaling
+
+
+* Have distances between individuals.
+
+* Want to draw a picture (map) in 2 dimensions showing
+individuals so that distances (or order of distances) as close
+together as possible. (Or maybe 3 with `rgl`.)
+
+* If want to preserve actual distances, called
+*metric multidimensional scaling* (in R, `cmdscale`).
+
+* If only want to preserve order of distances, called *non-metric multidimensional scaling*
+(in R, `isoMDS` in
+package `MASS`).
+
+* Metric scaling has solution that can be worked out exactly.
+
+* Non-metric only has iterative solution.
+
+* Assess quality of fit, see whether use of resulting map is
+reasonable. (Try something obviously 3-dimensional and assess its
+failure.)
+
+
+
+
+## Packages
+The usual, plus some new stuff:
+
+
+```{r eval=F, message=F}
+library(MASS)
+library(tidyverse)
+library(ggrepel)
+library(ggmap)
+library(shapes)
+```
+   
+
+## Metric scaling: European cities
+
+CSV file `europe.csv` contains road distances (in km) between 16 European cities. Can we reproduce a map of Europe from these distances?
+
+Read in data:
+
+```{r include=F}
+options(width = 65)
+```
+
+ 
+\scriptsize
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/europe.csv"
+europe <- read_csv(my_url)
+```
+\normalsize
+ 
+
+
+## The data
+
+```{r, echo=F}
+options(width=70)
+```
+
+
+\scriptsize
+```{r, echo=F}
+europe
+```
+\normalsize
+   
+
+## Multidimensional scaling
+
+
+* Create distance object first using all but first column of
+`europe`. `europe` has distances in it already, so make
+into `dist` with `as.dist`.
+
+* Then run multidimensional scaling and look at result:
+```{r }
+europe %>% select(-City) %>% as.dist() -> europe.d
+europe.scale <- cmdscale(europe.d)
+head(europe.scale)
+```
+
+   
+
+
+* This is a `matrix` of $x$ and $y$ coordinates.
+
+
+
+## As a data frame; make picture
+We know how to plot data frames, so make one first. This gives a warning that you can ignore:
+
+\normalsize
+```{r, warning=F}
+europe.scale %>%
+  as_tibble() %>%
+  mutate(city = europe$City) -> europe_coord
+ggplot(europe_coord, aes(x = V1, y = V2, label = city)) +
+  geom_point() + geom_text_repel() -> g
+```
+\normalsize
+   
+
+
+## The map
+```{r fig.height=3.8}
+g
+```
+
+   
+
+
+## Making a function
+
+
+* Idea: given input distance matrix (as stored in a CSV file),
+output a map (like the one on the previous page).
+
+\footnotesize
+```{r}
+mds_map <- function(filename) {
+  x <- read_csv(filename)
+  x %>%
+    select_if(is.numeric) %>%
+    as.dist() -> dist 
+  x.scale <- cmdscale(dist) # this is a matrix
+  x.scale %>%
+    as_tibble() %>% # cols called V1 and V2
+    mutate(place = row.names(x.scale)) -> x_coord
+  ggplot(x_coord, aes(x = V1, y = V2, label = place)) +
+    geom_point() + geom_text_repel() +
+    coord_fixed()
+}
+```
+\normalsize
+     
+## Comments
+
+
+* Use `select_if` to pick out all the numerical columns
+(no text), whichever they are.
+
+* `x.scale` is matrix with no column headers. Turn into
+data frame, acquires headers `V1` and `V2`.
+
+* Get place names from `cmdscale` output.
+
+
+## Does it work?
+```{r fig.height=4, message=F}
+mds_map("europe.csv")
+```
+
+   
+
+
+## A square
+
+
+- The data, in `square.csv`:
+
+\footnotesize
+```
+x,A  ,B  ,C  ,D
+A,0  ,1  ,1  ,1.4
+B,1  ,0  ,1.4,1
+C,1  ,1.4,0  ,1
+D,1.4,1  ,1  ,0
+```
+\normalsize
+
+* The map:
+```{r message=F,fig.height=1.8,fig.width=1.6}
+mds_map("square.csv")
+```
+
+
+## Drawing a map of the real Europe
+
+
+* Works with package `ggmap`.
+
+* First find latitudes and longitudes of our cities, called
+*geocoding*: 
+
+\small
+```{r cache=T, message=F, eval=F}
+latlong <- geocode(europe$City)
+latlong <- bind_cols(city = europe$City, latlong)
+latlong %>% slice(1:6)
+```
+\normalsize
+
+\small
+```{r echo=F}
+latlong <- readRDS("euro_latlong.rds")
+latlong %>% slice(1:6)
+```
+\normalsize
+ 
+
+
+* Just so you know, there is a limit
+of 2500 queries per day (it queries Google Maps).
+
+
+
+## Making the map
+
+
+* Get a map of Europe from Google Maps (specify what you want a
+map of any way you can in Google Maps). This one centres the map
+on the city shown and zooms it so all the cities appear (I had to
+experiment):
+```{r eval=F}
+map <- get_map("Memmingen DE", zoom = 5)
+```
+
+     
+
+```{r echo=F}
+map <- readRDS("memmingen.rds")
+```
+
+ 
+
+* Plot the map with `ggmap`. This is `ggplot`,
+so add anything to it that you would
+add to a `ggplot`, such as cities we want to show:
+```{r }
+g2 <- ggmap(map) +
+  geom_point(
+    data = latlong, aes(x = lon, y = lat),
+    shape = 3, colour = "red"
+  )
+```
+
+   
+
+
+* We don't have a default data frame or `aes` for our
+`geom_point`, so have to specify one.
+
+
+
+## The real Europe with our cities
+```{r fig.height=3.6}
+g2
+```
+
+   
+
+
+## Compare our scaling map
+```{r fig.height=4,echo=F}
+g
+```
+
+   
+
+## Comments
+
+
+* North-south not quite right: Edinburgh and Copenhagen on same
+latitude, also Amsterdam and Berlin; Athens should be south of Rome.
+
+* Rotating clockwise by about 45 degrees should fix that.
+
+* General point: MDS only uses distances, so answer can be
+"off" by rotation (as here) or reflection (flipping over, say
+exchanging west and east while leaving north and south same). 
+ 
+
+
+## Exploring the map by plotting in 3 dimensions
+
+
+* Package `rgl` makes 3D plots.
+
+* We have to fake up a 3rd dimension (by setting all its values
+to 1).
+
+* Try this code:
+```{r eval=F}
+library(rgl)
+es.2 <- cbind(europe.scale, 1)
+es.2
+plot3d(es.2, zlim = c(-1000, 1000))
+text3d(es.2, text = europe$City)
+```
+
+     
+
+* Opens a graphics window with the cities plotted and named.
+
+* Click and hold left mouse button to rotate plot. "Rotate away"
+3rd dimension to get a possible map (that preserves distances). 
+
+
+## Ontario, the same way
+
+\footnotesize
+```{r}
+url <- 
+  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+
+```
+
+\small
+```{r message=F,fig.height=3.5}
+(g <- mds_map(url))
+```
+\normalsize
+
+## Comment
+   
+
+- Thunder Bay and Sault Ste Marie dominate the picture since they are
+so far away from everywhere else.
+- Remove them and just look at everywhere else.
+
+## Removing points
+
+
+* Messy: have to find which rows and columns contain
+those cities, then remove just those rows and columns.
+
+* Better: 
+
+
+  * "tidy" the distance matrix
+
+  * then remove rows we don't need
+
+  * then "untidy" it again
+
+  * save into .csv file
+
+
+* Illustrate with easier data first.
+
+
+
+## Square data
+```{r message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/square.csv"
+square <- read_csv(my_url)
+square
+```
+
+   
+
+
+## Make tidy
+
+\scriptsize
+```{r}
+square %>% gather(point, distance, -x)
+```
+\normalsize
+   
+
+
+## Remove all references to point C
+In column `x` or `point`:
+
+\small
+```{r }
+square %>%
+  gather(point, distance, -1) %>%
+  filter(x != "C", point != "C")
+```
+\normalsize
+   
+
+
+## Put back as distance matrix
+and save as .csv when we are happy:
+```{r }
+square %>%
+  pivot_longer(-x, names_to="point", values_to="distance") %>%
+  filter(x != "C", point != "C") %>%
+  pivot_wider(names_from=point, values_from=distance) -> noc
+noc
+noc %>% write_csv("no-c.csv")
+```
+
+   
+
+
+## Make map of square-without-C
+```{r message=F,fig.height=4}
+mds_map("no-c.csv")
+```
+
+   
+
+
+## Back to Ontario
+```{r fig.height=4}
+g
+```
+
+   
+
+Get rid of Thunder Bay and Sault Ste Marie.
+
+
+## Tidy, remove, untidy
+
+\footnotesize
+```{r message=F}
+my_url <- 
+  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+ontario2 <- read_csv(my_url) 
+ontario2 %>%
+  gather(city, distance, -1) %>%
+  filter(
+    city != "Thunder Bay",
+    place != "Thunder Bay",
+    city != "Sault Ste Marie",
+    place != "Sault Ste Marie"
+  ) %>%
+  pivot_wider(names_from=place, values_from=distance) %>%
+  write_csv("southern-ontario.csv")
+```
+\normalsize
+   
+
+
+## Map of Southern Ontario
+```{r fig.height=3.5, message=F}
+(g <- mds_map("southern-ontario.csv"))
+```
+
+   
+
+Geographically about right.
+
+
+## What about that cluster of points?
+
+
+* Plot looks generally good, but what about that cluster of points?
+
+* "Zoom in" on area between $-150$ and $-100$ on $x$ axis, $-50$ to 0 on
+$y$ axis.
+
+* Code below overrides the `coord_fixed` we had before.
+
+\small
+```{r zoom}
+g2 <- g + coord_fixed(xlim = c(-150, -100), ylim = c(-50, 0))
+```
+\normalsize
+ 
+
+
+## Zoomed-in plot
+Ignore the arrows to points off the map:
+```{r spal,fig.height=3.5}
+g2
+```
+
+   
+
+
+
+## Does that make sense?
+
+
+* Get a Google map of the area, with the points labelled.
+
+* First geocode the cities of interest:
+
+\footnotesize
+```{r message=F, cache=T, eval=F}
+cities <- c(
+  "Kitchener ON", "Hamilton ON", "Niagara Falls ON",
+  "St Catharines ON", "Brantford ON"
+)
+latlong <- geocode(cities)
+latlong <- bind_cols(city = cities, latlong) %>% print()
+```
+     
+
+```{r echo=F}
+latlong <- readRDS("ontario_trouble.rds")
+latlong %>% print()
+```
+
+\normalsize
+ 
+## Get Google map
+
+* Get a Google map of the area (experiment with zoom):
+```{r message=F, eval=F}
+map <- get_map("Hamilton ON", zoom = 8)
+```
+
+```{r echo=F}
+map <- readRDS("hamilton_map.rds")
+```
+
+ 
+
+
+* Plot map with cities marked.
+
+
+
+## Making the R Google map
+Plot the map, plus the cities, plus labels for the cities:
+```{r }
+ggmap(map) +
+  geom_point(
+    data = latlong,
+    aes(x = lon, y = lat),
+    shape = 3, colour = "red"
+  ) +
+  geom_text_repel(
+    data = latlong,
+    aes(label = city)
+  ) -> gmap
+```
+
+## MDS and Google map side by side
+
+```{r, include=F, warning=F}
+ggsave("g2.png", g2, "png")
+ggsave("gmap.png", gmap, "png")
+```
+
+![](g2.png){width=48%}
+![](gmap.png){width=48%}
+   
+St Catharines and Niagara Falls should be the *other* side of
+Hamilton! 
+
+
+## Quality of fit
+
+
+* Read in "southern Ontario" data set from file. Calling `cmdscale` with `eig=T` gives more info:
+
+\footnotesize
+```{r message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/southern-ontario.csv"
+ontario2 <- read_csv(my_url)
+ontario2.2 <- ontario2 %>%
+  select_if(is.numeric) %>%
+  cmdscale(eig = T)
+names(ontario2.2)
+ontario2.2$GOF
+ontario2.3 <- ontario2 %>%
+  select_if(is.numeric) %>%
+  cmdscale(3, eig = T)
+ontario2.3$GOF
+```
+\normalsize
+   
+
+
+
+
+## Comments
+
+
+* Coordinates now in `points`.
+
+* `GOF` is R-squared-like measure saying how well map
+distances match real ones. Higher is better.
+
+* For Ontario road distances, `GOF` better for 3 dimensions
+than 2, presumably to accommodate St Catharines and Niagara Falls?
+
+
+
+## 3-dimensional coordinates, cities attached
+
+\tiny
+```{r}
+ontario2.3$points %>%
+  as_tibble() %>%
+  mutate(city = ontario2$x)
+```
+\normalsize
+   
+
+
+## RGL code for 3 dimensions
+```{r eval=F}
+library(rgl)
+plot3d(ontario2.3$points)
+text3d(ontario2.3$points, text = ontario2$x)
+```
+
+ 
+
+
+## A cube
+
+```
+
+a-----b
+|\    |\
+| c---- d
+| |   | |
+e-|---f |
+ \|    \|
+  g-----h
+
+```
+
+
+Cube has side length 1, so distance across diagonal on same face is $\sqrt{2}\simeq 1.4$ and "long" diagonal of cube is $\sqrt{3}\simeq 1.7$. 
+\vspace{3ex}
+
+Try MDS on this obviously 3-dimensional data.
+
+
+
+## Cube data as distances
+
+\footnotesize
+```{r f, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/cube.txt"
+cube <- read_table(my_url)
+cube
+```
+\normalsize
+   
+
+
+## Making `dist object`
+```{r cuby}
+cube.d <- cube %>% select(-1) %>% as.dist()
+cube.d
+```
+
+ 
+
+
+
+## MDS and plotting commands
+
+
+*   By default in 2 dimensions; save the extra stuff for later:
+
+```{r }
+cube.2 <- cube.d %>% cmdscale(eig = T)
+```
+
+   
+
+
+* Make data frame to plot, remembering the points to plot are in
+`points` now:
+```{r }
+d <- cube.2$points %>%
+  as_tibble() %>%
+  mutate(corners = cube$x)
+```
+
+   
+
+* Plot points labelled by our names for the corners:
+```{r }
+g <- ggplot(d, aes(x = V1, y = V2, label = corners)) +
+  geom_point() + geom_text_repel()
+```
+
+   
+
+
+## The "cube"
+```{r bianconeri,echo=F,fig.height=4}
+g
+```
+
+ 
+
+Not good.
+
+## 2 and 3 dimensions
+```{r }
+cube.3 <- cube.d %>% cmdscale(3, eig = T)
+cube.2$GOF
+cube.3$GOF
+```
+
+   
+
+
+
+* Really need 3rd dimension to represent cube.
+
+
+## Non-metric scaling
+
+
+* Sometimes distances not meaningful *as distances*
+
+* Only order matters: closest should be closest, farthest
+farthest on map, but how much further doesn't matter.
+
+* Non-metric scaling, aims to minimize **stress**, measure
+of lack of fit.
+
+* Example: languages. Make map based on "similarity" of number
+names, without requiring that 1 is "eight times better" than 8.
+
+
+
+## The languages
+
+
+* Recall language data (from cluster analysis): 1--10, measure dissimilarity between two languages by how many number names *differ* in first letter:
+
+```{r include=F}
+options(width = 65)
+```
+
+\scriptsize     
+```{r message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/languages.txt"
+number.d <- read_table(my_url)
+number.d
+```
+\normalsize
+ 
+
+
+
+## Non-metric scaling
+
+
+* Turn language dissimilarities into `dist` object
+
+* Run through `isoMDS` from `MASS` package; works
+like `cmdscale`.
+
+* Map only reproduces *relative* closeness of languages.
+
+\small
+```{r}
+number.d %>%
+  select_if(is.numeric) %>%
+  as.dist() -> d
+d %>% isoMDS() -> number.nm
+```
+\normalsize
+
+* `points` for plotting, `stress` measure of fit
+(lower better).
+
+
+
+
+## Results
+
+
+* Stress is very low (5\%, good):
+```{r }
+number.nm$stress
+```
+
+
+* Familiar process: make a data frame to plot. Use name
+`dd` for data frame this time since used `d` for
+distance object:
+```{r }
+dd <- number.nm$points %>%
+  as_tibble() %>%
+  mutate(lang = number.d$la)
+```
+
+   
+
+
+* Make plot:
+```{r }
+g <- ggplot(dd, aes(x = V1, y = V2, label = lang)) +
+  geom_point() + geom_text_repel()
+```
+
+   
+
+
+## The languages map
+
+```{r padova,echo=F,fig.height=4}
+g
+```
+
+ 
+
+
+## Comments
+
+
+* Tight clusters: Italian-Spanish-French, English-Danish-Norwegian.
+
+* Dutch and German close to English group.
+
+* Polish close to French group.
+
+* Hungarian, Finnish distant from everything else and each other!
+
+* Similar conclusions as from the cluster analysis.
+
+
+
+## Shepard diagram
+
+
+* Stress for languages data was 5.3\%, very low.
+
+* How do observed dissimilarities and map distances correspond?
+
+* For low stress, expect larger dissimilarity to go with larger
+map distance, almost all the time.
+
+* Not necessarily a linear trend since non-metric MDS works with
+*order* of values.
+
+* Actual dissimilarity on $x$-axis; map distances on $y$-axis.
+
+
+
+## Shepard diagram for languages
+```{r parma,fig.height=3.5}
+Shepard(d, number.nm$points) %>%
+  as_tibble() %>%
+  ggplot(aes(x = x, y = y)) + geom_point()
+```
+
+ 
+
+Actual dissimilarity $x$ between higher: mapped distance $y$ from
+MDS higher too. (MDS working well.)
+
+## Cube, revisited
+
+\small
+```{r}
+cube.d <- cube %>% select(-x) %>% as.dist(cube)
+cube.2 <- isoMDS(cube.d, trace = F)
+cube.2$stress
+cube.3 <- isoMDS(cube.d, k = 3, trace = F)
+cube.3$stress
+```
+\normalsize
+   
+
+
+
+* Stress is 18\% for 2 dimensions, basically 0\% for 3.
+
+* Three dimensions correct, two dimensions bad.
+
+## Shepard diagrams
+
+\normalsize
+```{r}
+cube2.sh <- Shepard(cube.d, cube.2$points)
+g2 <- ggplot(as.data.frame(cube2.sh), aes(x = x, y = y)) +
+  geom_point()
+cube3.sh <- Shepard(cube.d, cube.3$points)
+g3 <- ggplot(as.data.frame(cube3.sh), aes(x = x, y = y)) +
+  geom_point()
+```
+\normalsize
+   
+
+
+
+## Shepard diagram for 2-dimensional cube
+
+```{r fig.height=3.6}
+g2
+```
+
+   
+
+Poor correspondence (not much trend).
+
+
+## Shepard diagram for 3-dimensional cube
+```{r fig.height=3.6}
+g3
+```
+
+ 
+Almost perfect: all actual $x=1$ go with smallest mapped distances; almost
+all $x=1.7$ go with  largest.
+
+
+## Guidelines for stress values, in \%
+
+Smaller is better:
+\begin{tabular}{lp{3in}}
+Stress value & Interpretation \\
+\hline
+Less than 5 & Excellent: no prospect of misinterpretation (rarely achieved)\\
+5--10 & Good: most distances reproduced well, small prospect of false inferences\\
+10--20 & Fair: usable, but some distances misleading.\\
+More than 20 & Poor: may be dangerous to interpret\\
+\hline
+\end{tabular}
+
+
+
+* Languages: stress in "good" range.
+
+* Cube:
+
+
+  *   2 dimensions "fair", almost "poor";
+
+  * 3 dimensions, "excellent".
+

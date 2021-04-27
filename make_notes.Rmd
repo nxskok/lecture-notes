@@ -1,0 +1,52 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+
+make notes
+
+packages
+
+```{r}
+library(tidyverse)
+```
+
+read in notes parts file
+
+```{r}
+parts <- read_csv("notes_parts.txt")
+parts
+```
+
+insert slides into names
+
+```{r}
+parts %>% mutate(full_part=str_replace(part, ".Rmd$", "_slides.Rmd")) -> parts
+parts
+```
+
+knit a file
+
+```{r}
+fname <- parts$full_part[16]
+fname
+options(tinytex.verbose = TRUE)
+rmarkdown::render(fname)
+```
+
+works
+
+```{r}
+parts %>% 
+  mutate(done=walk(full_part, ~rmarkdown::render(.)))
+```
+
+next:
+
+make an "all" lecture notes?
+make web page with all of these
+repeat for c33
+
+sas?
+

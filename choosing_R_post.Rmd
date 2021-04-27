@@ -1,0 +1,349 @@
+## Doing things with data frames
+Let’s go back to our Australian athletes: 
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r read-athletes, echo=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes <- read_tsv(my_url)
+```
+
+\footnotesize
+
+```{r}
+athletes
+```
+\normalsize
+
+## Choosing a column
+
+```{r}
+athletes %>% select(Sport)
+```
+
+## Choosing several columns
+
+```{r}
+athletes %>% select(Sport, Hg, BMI)
+```
+
+## Choosing consecutive columns
+
+```{r}
+athletes %>% select(Sex:WCC)
+```
+
+## Choosing all-but some columns
+
+```{r}
+athletes %>% select(-(RCC:LBM))
+```
+
+## Select-helpers
+Other ways to select columns: those whose name:
+
+- `starts_with` something
+- `ends_with` something
+- `contains` something
+- `matches` a “regular expression”
+- `everything()` select all the columns
+
+## Columns whose names begin with S 
+
+```{r}
+athletes %>% select(starts_with("S"))
+```
+
+## Columns whose names end with C
+
+either uppercase or lowercase:
+
+```{r}
+athletes %>% select(ends_with("c"))
+```
+
+## Case-sensitive
+
+This works with any of the select-helpers:
+
+```{r}
+athletes %>% select(ends_with("C", ignore.case=FALSE))
+```
+
+
+## Column names containing letter R
+
+```{r}
+athletes %>% select(contains("r"))
+```
+
+## Exactly two characters, ending with T
+
+In regular expression terms, this is `^.t$`:
+
+- `^` means “start of text”
+- `.` means “exactly one character, but could be anything”
+- `$` means “end of text”.
+```{r}
+athletes %>% select(matches("^.t$"))
+```
+
+## Choosing rows by number 
+
+```{r}
+athletes %>% slice(16:25)
+```
+
+
+
+
+## Non-consecutive rows 
+
+```{r}
+athletes %>% 
+  slice(10,13,17,42)
+```
+
+## A random sample of rows
+
+```{r}
+athletes %>% slice_sample(n=8)
+```
+
+## Rows for which something is true
+
+\footnotesize
+```{r}
+athletes %>% filter(Sport == "Tennis")
+```
+\normalsize
+
+## More complicated selections
+
+```{r}
+athletes %>% filter(Sport == "Tennis", RCC < 5)
+```
+
+## Another way to do "and"
+
+```{r}
+athletes %>% filter(Sport == "Tennis") %>% 
+  filter(RCC < 5)
+```
+
+
+## Either/Or
+
+```{r}
+athletes %>% filter(Sport == "Tennis" | RCC > 5)
+```
+
+## Sorting into order
+
+```{r}
+athletes %>% arrange(RCC)
+```
+
+## Breaking ties by another variable
+
+```{r}
+athletes %>% arrange(RCC, BMI)
+```
+
+## Descending order
+
+```{r}
+athletes %>% arrange(desc(BMI))
+```
+
+## “The top ones”
+
+
+```{r}
+athletes %>%
+  arrange(desc(Wt)) %>%
+  slice(1:7) %>%
+  select(Sport, Wt)
+```
+
+## Another way
+
+```{r}
+athletes %>% 
+  slice_max(order_by = Wt, n=7) %>% 
+  select(Sport, Wt)
+```
+
+
+## Create new variables from old ones
+
+```{r new-from-old}
+athletes %>%
+  mutate(wt_lb = Wt * 2.2) %>%
+  select(Sport, Sex, Wt, wt_lb) %>% 
+  arrange(Wt)
+```
+
+## Turning the result into a number
+Output is always data frame unless you explicitly turn it into something
+else, eg. the weight of the heaviest athlete, as a number:
+
+```{r to-number}
+athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1)
+```
+
+Or the 20 heaviest weights in descending order:
+
+
+```{r}
+athletes %>%
+  arrange(desc(Wt)) %>%
+  slice(1:20) %>%
+  pluck("Wt")
+```
+
+
+
+## Another way to do the last one
+
+```{r}
+athletes %>%
+  arrange(desc(Wt)) %>%
+  slice(1:20) %>%
+  pull("Wt")
+```
+
+`pull` grabs the column you name *as a vector* (of whatever it contains).
+
+## To find the mean height of the women athletes
+Two ways:
+
+\small
+```{r}
+athletes %>% group_by(Sex) %>% summarize(m = mean(Ht))
+```
+
+```{r}
+athletes %>%
+  filter(Sex == "female") %>%
+  summarize(m = mean(Ht))
+```
+
+\normalsize
+
+## Summary of data selection/arrangement "verbs"
+
+ \begin{tabular}{lp{0.7\textwidth}}
+    Verb & Purpose\\
+    \hline
+    \texttt{select} & Choose columns\\
+    \texttt{print} & Display non-default \# of rows/columns \\
+    \texttt{slice} & Choose rows by number\\
+    \texttt{sample\_n} & Choose random rows\\ 
+    \texttt{filter} & Choose rows satisfying conditions \\
+    \texttt{arrange}& Sort in order by column(s) \\
+    \texttt{mutate} & Create new variables\\
+    \texttt{group\_by} & Create groups to summarize by\\
+    \texttt{summarize} & Calculate summary statistics (by groups if defined)\\
+    \texttt{pluck} & Extract items from data frame\\
+    \texttt{pull} & Extract a single column from a data frame as a vector\\
+    \hline
+  \end{tabular}
+  
+  
+## Looking things up in another data frame
+
+```{r, echo=FALSE}
+tb3 <- read_rds("tb3.rds")
+```
+
+
+Recall the tuberculosis data set, tidied: 
+```{r}
+tb3
+```
+
+What are actual names of those countries in `iso2`?
+
+## Actual country names
+Found actual country names to go with those abbreviations, in spreadsheet: 
+
+\footnotesize
+```{r}
+my_url <- 
+  "http://www.utsc.utoronto.ca/~butler/c32/ISOCountryCodes081507.xlsx"
+```
+
+\normalsize
+
+Note trick for reading in `.xlsx` from URL:
+
+```{r country-codes}
+f <- tempfile()
+download.file(my_url, f)
+country_names <- read_excel(f)
+```
+
+- set up temporary file
+- download spreadsheet to there
+- read it from temporary file (which is "local")
+
+
+## The country names
+
+```{r}
+country_names
+```
+
+## Looking up country codes
+Matching a variable in one data frame to one in another is called a **join**
+(database terminology):
+
+```{r}
+tb3 %>% left_join(country_names, by = c("iso2" = "Code_UC"))
+```
+
+## Total cases by country
+
+```{r}
+options(dplyr.summarise.inform=FALSE)
+```
+
+
+
+```{r}
+tb3 %>%
+  group_by(iso2) %>%
+  summarize(cases = sum(freq)) %>%
+  left_join(country_names, by = c("iso2" = "Code_UC")) %>%
+  select(Country, cases)
+```
+
+## or even sorted in order
+
+```{r}
+tb3 %>%
+  group_by(iso2) %>%
+  summarize(cases = sum(freq)) %>%
+  select(Country, cases) %>%
+  arrange(desc(cases))
+```
+
+## Comments
+
+- This is probably not quite right because of:
+  - the 1994-1995 thing
+  - there is at least one country in `tb3` that was not in `country_names` (the NA above). Which?
+  
+\footnotesize  
+```{r}
+tb3 %>%
+  anti_join(country_names, by = c("iso2" = "Code_UC")) %>%
+  distinct(iso2)
+```
+\normalsize
+
+

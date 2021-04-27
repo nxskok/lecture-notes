@@ -1,0 +1,37 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+trying `knitrdata`:
+
+```{r}
+library(tidyverse)
+library(knitrdata)
+```
+
+set up some data
+
+```{data output.var="analgesic", loader.function=read_table}
+subject druga drugb
+1         2.0   3.5
+2         3.6   5.7
+3         2.6   2.9
+4         2.6   2.4
+5         7.3   9.9
+6         3.4   3.3
+7        14.9  16.7
+8         6.6   6.0
+9         2.3   3.8
+10        2.0   4.0
+11        6.8   9.1
+12        8.5  20.9
+```
+
+did it work?
+
+```{r}
+analgesic
+```
+
+it did!

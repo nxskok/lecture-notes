@@ -1,0 +1,110 @@
+---
+title: "1-way anova in stan"
+output: html_notebook
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+library(rstan)
+library(loo)
+library(conflicted)
+conflict_prefer("extract", "rstan")
+conflict_prefer("filter", "dplyr") 
+conflict_prefer("lag", "dplyr")
+conflict_prefer("loo", "loo")
+conflict_prefer("Position", "ggplot2") 
+```
+
+## some data
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/c32/jumping.txt"
+rats0=read_delim(my_url," ")
+rats0
+```
+
+turn the groups into numbers
+
+```{r}
+rats0 %>% mutate(group_fct=fct_inorder(group),
+              group_no=as.integer(group_fct)) -> rats
+rats
+```
+
+## fitting a model with different mean for each group
+
+Use before, but add `generated quantities` section. See `anova-loo.stan`:
+
+```{r}
+anova_loo_compiled=stan_model("anova-loo.stan")
+```
+
+and then sample from it as usual
+
+```{r}
+anova_data=list(n_obs=30, n_group=3, density=rats$density, group_no=rats$group_no)
+anova_loo_samples=sampling(anova_loo_compiled, data=anova_data)
+```
+
+## fitting a model with *same* mean for each group
+
+We want to compare this model with a "null" model. In this case, the null would be that all the groups have the *same* mean. To fit that, go back to our Stan code, and replace `mu` as a vector with `mu` as a scalar. This is in `anova_loo_null.stan`.
+
+```{r}
+anova_loo_null_compiled <- stan_model("anova_loo_null.stan")
+```
+
+and then sample from *that*, using same data we used before (I didn't change the `data` section):
+
+```{r}
+anova_loo_null_samples=sampling(anova_loo_null_compiled, data=anova_data)
+```
+
+check that it worked:
+
+```{r}
+anova_loo_samples
+```
+
+```{r}
+anova_loo_null_samples
+```
+
+
+## compare the fits of the two models, thus:
+
+```{r}
+log_lik_a=extract_log_lik(anova_loo_samples, merge_chains = F)
+log_lik_0=extract_log_lik(anova_loo_null_samples, merge_chains = F)
+r_eff_a=relative_eff(log_lik_a)
+r_eff_0=relative_eff(log_lik_0)
+
+```
+
+and then
+
+```{r}
+(loo_a <- loo(log_lik_a, r_eff=r_eff_a))
+```
+
+```{r}
+(loo_0 <- loo(log_lik_0, r_eff=r_eff_0))
+```
+
+The model with all three group means estimated has a better (lower) looic, but that's what you would expect (since it is a bigger model). 
+
+Compare:
+
+```{r}
+(v=compare(loo_a, loo_0))
+```
+
+The negative sign means that the first model fits better, and so should be preferred. Is there a "substantial" difference? Divide by SE:
+
+```{r}
+v[1]/v[2]
+```
+
+More than two SEs different, so the model with different means for each group is "substantially" better than having the same mean for each group.

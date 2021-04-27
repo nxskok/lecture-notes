@@ -1,0 +1,160 @@
+## Our data
+- To illustrate making graphs, we need some data.
+- Data on 202 male and female athletes at the Australian Institute of
+Sport.
+- Variables:
+  - categorical: Sex of athlete, sport they play
+  - quantitative: height (cm), weight (kg), lean body mass, red and white
+  blood cell counts, haematocrit and haemoglobin (blood), ferritin
+  concentration, body mass index, percent body fat.
+- Values separated by *tabs* (which impacts reading in).
+
+## Packages for this section
+
+```{r, eval=F}
+library(tidyverse)
+```
+
+
+## Reading data into R
+- Use `read_tsv` (“tab-separated values”), like `read_csv`.
+- Data in `ais.txt`:
+
+\scriptsize
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes <- read_tsv(my_url)
+```
+\normalsize
+
+read_table?
+
+```{r}
+read_table(my_url)
+```
+
+
+## The data (some)
+
+\footnotesize
+```{r}
+athletes
+```
+\normalsize
+
+## Types of graph
+
+Depends on number and type of variables:
+
+  \begin{tabular}{ccp{0.5\textwidth}}
+    Categorical & Quantitative & Graph\\
+    \hline
+    1 & 0 & bar chart\\
+    0 & 1 & histogram\\
+    2 & 0 & grouped bar charts\\
+    1 & 1 & side-by-side boxplots\\
+    0 & 2 & scatterplot\\
+    2 & 1 & grouped boxplots\\
+    1 & 2 & scatterplot with points identified by group (eg.\ by colour)\\
+    \hline
+  \end{tabular}
+
+With more variables, might want *separate plots by groups*. This is called
+`facetting` in R.
+
+
+## `ggplot`
+
+- R has a standard graphing procedure `ggplot`, that we use for all our
+graphs.
+- Use in different ways to get precise graph we want.
+- Let’s start with bar chart of the sports played by the athletes.
+
+## Bar chart
+
+```{r, fig.height=3.9}
+ggplot(athletes, aes(x = Sport)) + geom_bar()
+```
+
+
+## Histogram of body mass index
+
+```{r, fig.height=3.9}
+ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 30)
+```
+
+```{r, fig.height=3.9}
+ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
+```
+
+## Which sports are played by males and females?
+
+Grouped bar chart:
+
+```{r, fig.height=3.15}
+ggplot(athletes, aes(x = Sport, fill = Sex)) +
+  geom_bar(position = "dodge")
+```
+
+## BMI by gender
+
+```{r, fig.height=4}
+ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot()
+```
+
+## Height vs. weight
+
+Scatterplot:
+
+```{r, fig.height=3.4}
+ggplot(athletes, aes(x = Ht, y = Wt)) + geom_point()
+```
+
+## With regression line
+
+```{r, fig.height=3.6}
+ggplot(athletes, aes(x = Ht, y = Wt)) +
+  geom_point() + geom_smooth(method = "lm")
+```
+
+## BMI by sport and gender
+
+```{r, fig.height=3.6}
+ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
+  geom_boxplot()
+```
+
+## Height and weight by gender
+
+```{r, fig.height=3.6}
+ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
+  geom_point()
+```
+
+
+or
+
+```{r}
+ggplot(athletes, aes(x = Ht, y = Wt)) +
+  geom_point() + facet_wrap(~Sex)
+```
+
+
+## Height by weight for each sport and gender, with facets
+
+```{r, fig.height=3.6}
+ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
+  geom_point() + facet_wrap(~Sport)
+```
+
+## Filling each facet
+
+Default uses same scale for each facet. To use different scales for each
+facet, this:
+
+\small
+```{r, fig.height=3.2}
+ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
+  geom_point() + facet_wrap(~Sport, scales = "free")
+```
+\normalsize

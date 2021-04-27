@@ -1,0 +1,51 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.height = 5)
+# knitr::opts_chunk$set(echo = FALSE)
+options(width=52)
+knitr::opts_chunk$set(dev = 'pdf')
+```
+
+
+```{r, results="hide", message=F, warning=F}
+library(MASS)
+library(tidyverse)
+library(broom)
+library(readxl)
+library(devtools)
+library(smmr)
+library(PMCMRplus)
+library(leaps)
+library(lubridate)
+library(ggrepel)
+library(ggbiplot)
+library(nnet)
+library(survival)
+library(survminer)
+library(car)
+library(spatstat)
+#library(ggmap)
+#library(shapes)
+#library(lavaan)
+library(ggfortify)
+library(forecast)
+library(mkac) 
+library(tmaptools)
+library(leaflet)
+library(conflicted)
+conflict_prefer("summarize", "dplyr")
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("extract", "rstan")
+conflict_prefer("intersect", "dplyr")
+conflict_prefer("lag", "dplyr")
+conflict_prefer("Position", "ggplot2")
+conflict_prefer("setdiff", "dplyr")
+conflict_prefer("union", "dplyr")
+conflict_prefer("arrange", "dplyr")
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("count", "dplyr")
+conflict_prefer("ggbiplot", "ggbiplot")
+```
+
+
+

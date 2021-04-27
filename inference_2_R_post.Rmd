@@ -1,0 +1,404 @@
+
+## Errors in testing
+
+What can happen:
+
+\begin{center}
+\begin{tabular}{|l|cc|}
+\hline
+  & \multicolumn{2}{c|}{Decision}\\
+Truth & Do not reject & Reject null\\
+\hline
+Null true & Correct & Type I error\\
+Null false & Type II error & Correct\\
+\hline
+\end{tabular}  
+\end{center}
+
+Tension between truth and decision about truth (imperfect).
+
+- Prob. of type I error denoted $\alpha$. Usually fix $\alpha$, eg. $\alpha = 0.05$.
+- Prob. of type II error denoted $\beta$. Determined by the planned
+experiment. Low $\beta$ good.
+- Prob. of not making type II error called **power** (= $1 - \beta$). *High* power
+good.
+
+## Power 
+
+- Suppose $H_0 : \theta = 10$, $H a : \theta \ne 10$ for some parameter $\theta$.
+- Suppose $H_0$ wrong. What does that say about $\theta$?
+- Not much. Could have $\theta = 11$ or $\theta = 8$ or $\theta = 496$. In each case, $H_0$
+wrong.
+- How likely a type II error is depends on what $\theta$ is:
+  - If $\theta = 496$, should be able to reject $H_0 : \theta = 10$ even for small sample,
+so $\beta$ should be small (power large).
+  - If $\theta = 11$, might have hard time rejecting $H_0$ even with large sample, so
+$\beta$ would be larger (power smaller).
+- Power depends on true parameter value, and on sample size.
+- So we play “what if”: “if $\theta$ were 11 (or 8 or 496), what would power
+be?”.
+
+## Figuring out power
+- Time to figure out power is before you collect any data, as part of
+planning process.
+- Need to have idea of what kind of departure from null hypothesis of
+interest to you, eg. average improvement of 5 points on reading test
+scores. (Subject-matter decision, not statistical one.)
+- Then, either:
+  - “I have this big a sample and this big a departure I want to detect.
+What is my power for detecting it?”
+  - “I want to detect this big a departure with this much power. How big a
+sample size do I need?”
+
+## How to understand/estimate power?
+
+- Suppose we test $H_0 : \mu = 10$ against $H_a : \mu \ne 10$, where $\mu$ is
+population mean.
+- Suppose in actual fact, $\mu = 8$, so $H_0$ is wrong. We want to reject it.
+How likely is that to happen?
+- Need population SD (take $\sigma = 4$) and sample size (take $n = 15$). In
+practice, get $\sigma$ from pilot/previous study, and take the $n$ we plan to
+use.
+- Idea: draw a random sample from the true distribution, test whether
+its mean is 10 or not.
+- Repeat previous step “many” times.
+- “Simulation”.
+
+## Making it go
+- Random sample of 15 normal observations with mean 8 and SD 4:
+
+```{r, echo=F}
+set.seed(457299)
+```
+
+
+```{r}
+x <- rnorm(15, 8, 4)
+x
+```
+
+- Test whether `x` from population with mean 10 or not (over):
+
+
+## ...continued
+
+
+
+```{r}
+t.test(x, mu = 10)
+```
+
+
+- Fail to reject the mean being 10 (a Type II error).
+
+## or get just P-value 
+
+```{r}
+t.test(x, mu = 10)$p.value
+```
+
+
+
+## Run this lots of times
+- Two steps:
+  - Generate a bunch of random samples
+  - extract the P-value for the t-test from each
+- without a loop!
+- Use `rerun` to generate the random samples
+- Use `map` to run the test on each random sample
+- Use `map_dbl` to pull out the P-value for each test
+- Count up how many of the P-values are 0.05 or less.
+
+## In code
+
+```{r, echo=FALSE}
+set.seed(457299)
+```
+
+```{r}
+rerun(1000, rnorm(15, 8, 4)) %>%
+  map( ~ t.test(., mu = 10)) %>%
+  map_dbl("p.value") %>% 
+  enframe(value="pvals") %>% 
+  count(pvals <= 0.05)
+```
+
+We correctly rejected 422 times out of 1000, so the estimated power is
+0.422.
+
+try with larger sample
+
+```{r}
+rerun(1000, rnorm(60, 8, 4)) %>%
+  map( ~ t.test(., mu = 10)) %>%
+  map_dbl("p.value") %>% 
+  enframe(value="pvals") %>% 
+  count(pvals <= 0.05)
+```
+
+## Calculating power
+
+- Simulation approach very flexible: will work for any test. But answer
+different each time because of randomness.
+- In some cases, for example 1-sample and 2-sample t-tests, power can
+be calculated.
+- `power.t.test`. delta difference between null and true mean: 
+
+\small
+```{r}
+power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
+```
+\normalsize
+
+```{r}
+power.t.test(n = 60, delta = 10-8, sd = 4, type = "one.sample")
+```
+
+## Comparison of results
+
+  \begin{center}
+  \begin{tabular}{lr}
+    Method & Power\\
+    \hline
+    Simulation & 0.422\\
+    \texttt{power.t.test} & 0.4378\\
+    \hline
+  \end{tabular}
+    
+  \end{center}
+
+- Simulation power is similar to calculated power; to get more accurate
+value, repeat more times (eg. 10,000 instead of 1,000), which takes
+longer.
+- CI for power based on simulation approx. $0.42 \pm 0.03$.
+- With this small a sample size, the power is not great. With a bigger
+sample, the sample mean should be closer to 8 most of the time, so
+would reject $H_0 : \mu = 10$ more often.
+
+## Calculating required sample size 
+
+- Often, when planning a study, we do not have a particular sample size
+in mind. Rather, we want to know how big a sample to take. This
+can be done by asking how big a sample is needed to achieve a
+certain power.
+- The simulation approach does not work naturally with this, since you
+have to supply a sample size.
+- For the power-calculation method, you supply a value for the power,
+but leave the sample size missing.
+- Re-use the same problem: $H_0 : \mu = 10$ against 2-sided alternative,
+true $\mu = 8$, $\sigma = 4$, but now aim for power 0.80.
+
+## Using power.t.test
+- No `n=`, replaced by a `power=`:
+
+```{r}
+power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
+```
+
+- Sample size must be a whole number, so round up to 34 (to get at
+least as much power as you want).
+
+## Power curves
+- Rather than calculating power for one sample size, or sample size for
+one power, might want a picture of relationship between sample size
+and power.
+- Or, likewise, picture of relationship between difference between true
+and null-hypothesis means and power.
+- Called power curve.
+- Build and plot it yourself.
+
+## Building it
+- If you feed power.t.test a collection (“vector”) of values, it will do
+calculation for each one.
+- Do power for variety of sample sizes, from 10 to 100 in steps of 10:
+
+```{r}
+ns=seq(10,100,10)
+ns
+```
+
+- Calculate powers:
+```{r}
+ans=power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
+ans$power
+```
+
+
+
+
+## Building a plot (1/2)
+- Make a data frame out of the values to plot:
+```{r}
+d=tibble(n=ns, power=ans$power)
+d
+```
+
+## Building a plot (2/2)
+
+- Plot these as points joined by lines, and add horizontal line at 1
+(maximum power): 
+```{r}
+g = ggplot(d, aes(x = n, y = power)) + geom_point() + 
+  geom_line() + 
+  geom_hline(yintercept = 1, linetype = "dashed")
+```
+
+## The power curve
+```{r}
+g
+```
+
+## Another way to do it:
+
+```{r}
+tibble(n=ns) %>% 
+  mutate(power_output=map(n, ~power.t.test(n=., delta=10-8, sd=4, type="one.sample"))) %>% 
+  mutate(power=map_dbl(power_output, "power")) %>% 
+  ggplot(aes(x=n, y=power)) + geom_point() + geom_line() +
+    geom_hline(yintercept=1, linetype="dashed")
+```
+
+## Power curves for means
+
+- Can also investigate power as it depends on what the true mean is
+(the farther from null mean 10, the higher the power
+will be).
+- Investigate for two different sample sizes, 15 and 30.
+- First make all combos of mean and sample size:
+
+```{r}
+means <- seq(6,10,0.5)
+means
+ns <- c(15,30)
+ns
+combos=crossing(mean=means, n=ns)
+```
+
+## The combos
+
+```{r}
+combos
+```
+
+## Calculate and plot
+
+- Calculate the powers, carefully:
+
+
+```{r}
+ans=with(combos, power.t.test(n=n, delta=mean-10, sd=4, 
+                              type="one.sample"))
+ans
+```
+
+ 
+## More of what's in the output
+
+```{r}
+names(ans)
+ans$power
+```
+
+##  Make a data frame to plot, pulling things from the right places:
+
+```{r}
+d=tibble(n=factor(combos$n), mean=combos$mean, 
+         power=ans$power)
+d
+```
+
+##  then make the plot:
+
+```{r}
+g = ggplot(d, aes(x = mean, y = power, colour = n)) +
+  geom_point() + geom_line() +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  geom_vline(xintercept = 10, linetype = "dotted")
+```
+
+## The power curves
+
+```{r, fig.height=3.8}
+g
+```
+
+## Comments
+- When `mean=10`, that is, the true mean equals the null mean, $H_0$ is
+actually true, and the probability of rejecting it then is $\alpha = 0.05$.
+- As the null gets more wrong (mean decreases), it becomes easier to
+correctly reject it.
+- The blue power curve is above the red one for any mean < 10, meaning
+that no matter how wrong $H_0$ is, you always have a greater chance of
+correctly rejecting it with a larger sample size.
+- Previously, we had $H_0 : \mu = 10$ and a true $\mu = 8$, so a mean of 8
+produces power 0.42 and 0.80 as shown on the graph.
+- With $n = 30$, a true mean that is less than about 7
+is almost certain to be correctly rejected. (With $n = 15$, the
+true mean needs to be less than 6.)
+
+## Power by sample size for means 7 and 8
+Similar procedure to before:
+
+```{r}
+means=c(7, 8)
+ns=seq(10, 40, 5)
+combos=crossing(mean=means, n=ns)
+ans=with(combos, power.t.test(n=n, delta=10-mean, sd=4, 
+                              type="one.sample"))
+d=tibble(mean=factor(combos$mean), n=combos$n, 
+         power=ans$power)
+d
+g=ggplot(d, aes(x=n, y=power, colour=mean)) + 
+  geom_point() + geom_line() +
+  geom_hline(yintercept=1,linetype="dashed")  
+```
+
+## The power curves
+
+```{r, fig.height=3.8}
+g
+```
+
+## Two-sample power
+
+```{r, echo=FALSE}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/drp.txt"
+kids <- read_delim(my_url," ")
+```
+
+
+- For kids learning to read, had sample sizes of 22 (approx) in each group
+- and these group SDs:
+
+```{r}
+kids
+kids %>% group_by(group) %>% 
+  summarize(n=n(), s=sd(score))
+```
+
+## Setting up
+
+- suppose a 5-point improvement in reading score was considered important (on this scale)
+- in a 2-sample test, null (difference of) mean is zero, so `delta` is true difference in means
+- what is power for these sample sizes, and what sample size would be needed to get power up to 0.80?
+- SD in both groups has to be same in `power.t.test`, so take as 14.
+
+## Calculating power for sample size 22 (per group) 
+
+```{r pow1}
+power.t.test(n=22, delta=5, sd=14, type="two.sample", 
+             alternative="one.sided")
+```
+
+## sample size for power 0.8 
+
+```{r pow2}
+power.t.test(power=0.80, delta=5, sd=14, type="two.sample", 
+             alternative="one.sided")
+```
+
+## Comments
+
+- The power for the sample sizes we have is very small (to detect a 5-point increase).
+- To get power 0.80, we need 98 kids in *each* group!
+

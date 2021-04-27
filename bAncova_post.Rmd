@@ -1,0 +1,312 @@
+
+## Analysis of covariance
+
+
+* ANOVA: explanatory variables categorical (divide data into groups)
+
+* traditionally, analysis of covariance has categorical $x$'s plus one numerical $x$ ("covariate") to be adjusted for.
+
+* `lm` handles this too.
+
+* Simple example: two treatments (drugs) (`a` and `b`), with before and after scores. 
+
+
+* Does knowing before score and/or treatment help to predict after score?
+
+* Is after score different by treatment/before score?
+
+
+
+
+
+## Data
+
+Treatment, before, after: 
+
+
+\scriptsize
+```
+a 5 20
+a 10 23
+a 12 30
+a 9 25
+a 23 34
+a 21 40
+a 14 27
+a 18 38
+a 6 24
+a 13 31
+b 7 19
+b 12 26
+b 27 33
+b 24 35
+b 18 30
+b 22 31
+b 26 34
+b 21 28
+b 14 23
+b 9 22
+```
+\normalsize
+
+
+## Packages
+`tidyverse` and `broom`:
+```{r, eval=FALSE }
+library(tidyverse)
+library(broom)
+```
+
+## Read in data
+
+```{r, message=F}
+url <- "http://www.utsc.utoronto.ca/~butler/d29/ancova.txt"
+# url <- "ancova.txt"
+prepost <- read_delim(url, " ")
+prepost # randomly chosen rows
+```
+
+
+
+## Making a plot
+```{r ancova-plot<}
+ggplot(prepost, aes(x = before, y = after, colour = drug)) +
+  geom_point()
+```
+
+
+
+## Comments 
+
+* As before score goes up, after score goes up.
+
+* Red points (drug A) generally above blue points (drug B), for
+comparable before score.
+
+* Suggests before score effect *and* drug effect.
+
+
+## The means
+```{r }
+prepost %>%
+  group_by(drug) %>%
+  summarize(
+    before_mean = mean(before),
+    after_mean = mean(after)
+  )
+```
+ 
+
+
+* Mean "after" score slightly higher for treatment A.
+
+* Mean "before" score much higher for treatment B.
+
+* Greater *improvement* on treatment A. 
+
+
+
+## Testing for interaction
+```{r }
+prepost.1 <- lm(after ~ before * drug, data = prepost)
+anova(prepost.1)
+drop1(prepost.1, test = "F")
+```
+ 
+```{r}
+summary(prepost.1)
+```
+
+
+* Interaction not significant. Will remove later.
+
+
+## Predictions, with interaction included
+
+Make combinations of before score and drug:
+```{r }
+new <- crossing(
+  before = c(5, 15, 25),
+  drug = c("a", "b")
+)
+new
+```
+
+   
+
+## Do predictions: 
+
+```{r size="small"}
+pred <- predict(prepost.1, new)
+pred
+preds <- cbind(new, pred)
+# preds <- bind_cols(new, pred = pred)
+preds
+```
+
+ 
+
+
+
+## Making a plot with lines for each `drug`
+```{r AJHSA}
+g <- ggplot(prepost,
+  aes(x = before, y = after, colour = drug)) +
+  geom_point() + geom_line(data = preds, aes(y = pred))
+```
+ 
+* Here, final line:
+
+
+  *   joins points by lines \emph{for different data
+set} (`preds` rather than `prepost`),
+
+  *   *different $y$* (`pred` rather than `after`),
+
+  * but same $x$ (`x=before` inherited from first `aes`).
+
+* Last line could (more easily) be 
+
+```{r eval=F}
+geom_smooth(method = "lm", se = F)
+```
+
+which would work here, but not for later plot.
+
+
+
+
+
+
+## The plot
+
+* Lines almost parallel, but not quite.
+ 
+* Non-parallelism (interaction) not significant:
+
+```{r nachwazzo, fig.height=3.5, echo=F}
+g
+```
+ 
+
+ 
+
+ 
+
+## Taking out interaction
+\small
+```{r }
+prepost.2 <- update(prepost.1, . ~ . - before:drug)
+anova(prepost.2)
+drop1(prepost.2, test = "F")
+```
+ 
+\normalsize
+
+
+* Take out non-significant interaction.
+
+* `before` and `drug` strongly significant.
+
+* Do predictions again and plot them.
+
+
+
+## Predicted values again (no-interaction model)
+```{r }
+new
+pred <- predict(prepost.2, new)
+preds <- bind_cols(new, pred = pred)
+preds
+```
+
+ 
+Each increase of 10 in before score results in 8.3 in predicted after
+score, *the same for both drugs*.
+
+
+## Making a plot, again
+```{r }
+g <- ggplot(
+  prepost,
+  aes(x = before, y = after, colour = drug)
+) +
+  geom_point() +
+  geom_line(data = preds, aes(y = pred))
+```
+ 
+Exactly same as before, but using new predictions.
+
+
+## The no-interaction plot of predicted values
+```{r cabazzo,fig.height=3}
+g
+```
+ 
+Lines now *parallel*. No-interaction model forces them
+to have the same slope. 
+
+
+
+## Different look at model output
+
+
+* `anova(prepost.2)` tests for significant effect of
+before score and of drug, but doesn't help with interpretation.
+
+* `summary(prepost.2)` views as regression with slopes:
+
+\scriptsize
+```{r }
+summary(prepost.2)
+```
+
+\normalsize       
+
+
+
+
+## Understanding those slopes
+
+\footnotesize
+```{r}
+tidy(prepost.2)
+```
+
+\normalsize
+
+
+
+* `before` ordinary numerical variable; `drug`
+categorical. 
+
+* `lm` uses first category `druga` as baseline.
+
+* Intercept is prediction of after score for before score 0 and
+*drug A*.
+
+* `before` slope is predicted change in after score when
+before score increases by 1 (usual slope)
+
+* Slope for `drugb` is *change* in predicted after
+score for being on drug B rather than drug A. Same for *any*
+before score (no interaction).
+
+
+
+## Summary
+
+
+* ANCOVA model: fits different regression line for each group,
+predicting response from covariate.
+
+* ANCOVA model with interaction between factor and covariate
+allows different slopes for each line.
+
+* Sometimes those lines can cross over!
+
+* If interaction not significant, take out. Lines then parallel.
+
+* With parallel lines, groups have consistent effect regardless
+of value of covariate.
+

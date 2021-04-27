@@ -1,0 +1,70 @@
+---
+title: "R Notebook"
+output:
+  html_notebook: default
+  word_document: default
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+```
+
+## Read in and display file:
+
+Read in file:
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/sleep.txt"
+sleep=read_delim(my_url," ")
+sleep
+```
+
+## Make a picture
+
+A scatterplot of sleep time against age
+
+```{r}
+ggplot(sleep,aes(x=age,y=atst))+geom_point()+
+  geom_smooth(method="lm")+ggtitle("Sleep time against age")
+```
+
+# Regression
+
+Fit a line
+
+```{r}
+atst.1=lm(atst~age,data=sleep)
+summary(atst.1)
+```
+
+## Use things from `broom` package
+
+```{r}
+library(broom)
+glance(atst.1)
+```
+
+One-line summary of model
+
+```{r}
+tidy(atst.1) %>% filter(term=="age") %>% select(p.value)
+```
+
+Intercept and slope
+
+```{r}
+a=augment(atst.1)
+a
+```
+
+Data with residuals, fitted values etc. added
+
+Hence, residual plot:
+
+```{r}
+ggplot(a,aes(x=age,y=.resid))+geom_point()
+```
+
+no pattern: regression is satisfactory

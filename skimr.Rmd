@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+packages:
+
+```{r setup}
+library(tidyverse)
+library(skimr)
+```
+
+
+```{r athletes}
+my_url="http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes=read_tsv(my_url)
+athletes
+```
+
+skimming
+
+```{r}
+skim(athletes)
+```
+
+```{r s}
+s <- skim(athletes)
+s %>% filter(skim_variable=="Ht")
+
+```
+
+pittsburgh bridges
+
+```{r}
+pittsburgh=read_csv("../exams/bridges.csv",na="?")
+pittsburgh
+```
+
+```{r}
+skim(pittsburgh)
+```
+
+```{r}
+pittsburgh %>% mutate(across(where(is.character), ~as.factor(.))) %>% skim()
+```
+

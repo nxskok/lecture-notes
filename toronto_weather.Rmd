@@ -1,0 +1,47 @@
+---
+title: "Toronto weather"
+output: html_notebook
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+```
+
+## read in data as I have it
+
+```{r}
+my_url <- "~/Documents/en_climate_daily_ON_6158355_2018_P1D.csv"
+weather <- read_csv(my_url)
+weather
+```
+
+```{r}
+weather %>% select(station=`Station Name`, Year, Month, Day, tmax=`Max Temp (°C)`, tmin=`Min Temp (°C)`) -> w2
+w2
+```
+
+```{r}
+w2 %>% 
+  pivot_longer(tmax:tmin, names_to="element", values_to="temperature") %>% 
+  pivot_wider(names_from=Day, values_from=c(temperature)) %>% 
+  rename_at(vars(5:35), ~str_c("d",.)) -> w3
+```
+
+```{r}
+w3
+```
+
+```{r}
+write_csv(w3, "toronto_weather.csv")
+```
+
+## actual work from here
+
+```{r}
+my_url <- "http://ritsokiguess.site/STAC32/toronto_weather.csv"
+weather1 <- read_csv(my_url)
+weather1
+```
+

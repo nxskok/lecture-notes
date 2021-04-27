@@ -1,0 +1,467 @@
+---
+title: "Bootstrap again"
+output: html_notebook
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+library(bootstrap)
+library(rsample)
+library(conflicted)
+conflict_prefer("filter", "dplyr") 
+```
+
+## Is my sampling distribution normal enough?
+
+- Recall the IRS data that we used as a motivation for the sign test:
+
+```{r, include=F}
+my_url="http://www.utsc.utoronto.ca/~butler/c32/irs.txt"
+irs = read_csv(my_url)
+```
+
+
+```{r, fig.height=3.2}
+ggplot(irs, aes(x=Time))+geom_histogram(bins=10)
+```
+
+- We said that a $t$ procedure for the mean would not be a good idea because the distribution is skewed.
+
+## What *actually* matters
+
+- It's not the distribution of the *data* that has to be approx normal (for a $t$ procedure).
+- What matters is the *sampling distribution of the sample mean*.
+- If the sample size is large enough, the sampling distribution will be normal enough even if the data distribution is not.
+  - This is why we had to consider the sample size as well as the shape.
+- But how do we know whether this is the case or not? We only have *one* sample.
+
+## The (nonparametric) bootstrap
+
+- Typically, our sample will be reasonably representative of the population.
+- Idea: pretend the sample *is* the population, and sample from it *with replacement*.
+- Calculate test statistic, and repeat many times.
+- This gives an idea of how our statistic might vary in repeated samples: that is, its sampling distribution.
+- Called the **bootstrap distribution** of the test statistic.
+- If the bootstrap distribution is approx normal, infer that the true sampling distribution also approx normal, therefore inference about the mean such as $t$ is good enough.
+- If not, we should be more careful.
+
+## Why it works
+
+- We typically estimate population parameters by using the corresponding sample thing: eg. estimate population mean using sample mean.
+- This called **plug-in principle**.
+- The fraction of sample values less than a value $x$ called the **empirical distribution function** (as a function of $x$).
+- By plug-in principle, the empirical distribution function is an estimate of the population CDF.
+- In this sense, the sample *is* an estimate of the population, and so sampling from it is an estimate of sampling from the population.
+
+## Bootstrapping the IRS data
+
+- Sampling with replacement is done like this (the default sample size is as long as the original data):
+
+```{r}
+boot=sample(irs$Time, replace=T)
+mean(boot)
+```
+
+- That's one bootstrapped mean. We need a whole bunch.
+- Use the same idea as for simulating power:
+
+```{r, echo=F}
+set.seed(457299)
+```
+
+
+```{r, cache=T}
+rerun(1000, sample(irs$Time, replace=T)) %>% 
+  map_dbl(~mean(.)) -> means
+```
+
+## Sampling distribution of sample mean
+
+```{r, fig.height=4}
+ggplot(tibble(means), aes(x=means))+geom_histogram(bins=20)
+```
+
+## Comments
+
+This is not so bad: a long right tail, maybe:
+
+```{r, fig.height=3.5}
+ggplot(tibble(means), aes(sample=means))+
+  stat_qq()+stat_qq_line()
+```
+
+or not so much.
+
+## Confidence interval from the bootstrap distribution
+
+There are two ways (at least):
+
+- percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to get the middle 95%). This is easy, but not always the best:
+
+```{r}
+(b_p=quantile(means, c(0.025, 0.975)))
+```
+
+- bootstrap $t$: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a $t$ interval:
+
+```{r}
+n=length(irs$Time)
+t_star=qt(0.975, n-1)
+(b_t=mean(means)+c(-1, 1)*t_star*sd(means))
+```
+
+## Comparing
+
+- get ordinary $t$ interval:
+
+```{r}
+my_names=c("LCL", "UCL")
+o_t=t.test(irs$Time)$conf.int
+```
+
+
+- Compare the 2 bootstrap intervals with the ordinary $t$-interval: 
+
+```{r}
+tibble(limit=my_names, o_t, b_t, b_p)
+```
+
+- The bootstrap $t$ and the ordinary $t$ are very close
+- The percentile bootstrap interval is noticeably shorter (common) and higher (skewness).
+  
+## Which to prefer?
+
+- If the intervals agree, then they are all good.
+- If they disagree, they are all bad! 
+- In that case, use BCA interval (over).
+
+  
+## Bias correction and acceleration
+
+- this from 
+"An introduction to the bootstrap", by
+Brad Efron and Robert J. Tibshirani.
+- there is way of correcting the CI for skewness in the bootstrap distribution, called the BCa method
+- complicated (see the Efron and Tibshirani book), but implemented in `bootstrap` package.
+
+## Run this on the IRS data:
+
+```{r}
+bca=bcanon(irs$Time, 1000, mean)
+bca$confpoints
+```
+
+## use 2.5% and 97.5% points for CI
+
+```{r}
+bca$confpoints %>% as_tibble() %>% 
+  filter(alpha %in% c(0.025, 0.975)) %>% 
+  pull(`bca point`) -> b_bca
+b_bca
+```
+
+## Comparing
+
+```{r}
+tibble(limit=my_names, o_t, b_t, b_p, b_bca)
+```
+
+- The BCA interval says that the mean should be estimated even higher than the bootstrap percentile interval does. 
+- The BCA interval is the one to trust.
+
+
+## Bootstrapping the correlation
+
+Recall the soap data:
+
+```{r}
+url="http://www.utsc.utoronto.ca/~butler/c32/soap.txt"
+soap=read_delim(url," ")
+```
+
+## The data
+
+```{r, fig.height=3.75}
+ggplot(soap, aes(x=speed, y=scrap, colour=line))+
+  geom_point()+geom_smooth(method="lm", se=F)
+```
+
+## Comments
+
+- Line B produces less scrap for any given speed.
+- For line B, estimate the correlation between speed and scrap (with a confidence interval.)
+
+## Extract the line B data; standard correlation test 
+
+```{r}
+soap %>% filter(line=="b") -> line_b
+with(line_b, cor.test(speed, scrap))
+```
+
+```{r, include=FALSE}
+o_c=with(line_b, cor.test(speed, scrap))$conf.int
+```
+
+
+## Bootstrapping a correlation
+
+- Sample from data with replacement, but have to keep the `speed`-`scrap` *pairs* together
+- Sample *rows* at random, then take the variable values that belong to those rows:
+
+```{r}
+rerun(1000, sample(1:nrow(line_b), replace=T)) %>%
+  map(~slice(line_b, .)) %>% 
+  map_dbl(~with(.,cor(speed, scrap))) -> cors
+```
+
+## A picture of this 
+
+```{r, fig.height=4}
+ggplot(tibble(cors), aes(x=cors))+geom_histogram(bins=15)
+```
+
+## Comments and next steps
+
+- This is very left-skewed.
+- Bootstrap percentile interval is:
+
+```{r}
+(b_p=quantile(cors, c(0.025, 0.975)))
+```
+
+- We probably need the BCA interval instead.
+
+## Getting the BCA interval 1/2
+
+- To use `bcanon`, write a function that takes a vector of row numbers and returns the correlation between `speed` and `scrap` for those rows:
+
+```{r}
+theta=function(rows, d) {
+  d %>% slice(rows) %>% with(., cor(speed, scrap))
+}
+theta(1:3, line_b)
+line_b %>% slice(1:3)
+```
+
+- That looks about right.
+
+## Getting the BCA interval 2/2
+
+- Inputs to `bcanon` are now:
+  - row numbers (1 through 12 in our case: 12 rows in `line_b`)
+  - number of bootstrap samples
+  - the function we just wrote
+  - the data frame:
+
+```{r}
+points=bcanon(1:12, 1000, theta, line_b)$confpoints
+points %>% as_tibble() %>% 
+  filter(alpha %in% c(0.025, 0.975)) %>% 
+  pull(`bca point`) -> b_bca
+b_bca
+```
+
+## Comparing the results
+
+```{r}
+tibble(limit=my_names, o_c, b_p, b_bca)
+```
+
+- The bootstrap percentile interval doesn't go down far enough. 
+- The BCA interval seems to do a better job than the ordinary `cor.test` interval in capturing the skewness of the distribution.
+
+## A problem
+
+Consider this example: samples of UK and Ontario (Canada) children, and their journey times to school, in minutes:
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/c32/to-school.csv"
+to_school=read_csv(my_url)
+to_school
+to_school %>% count(location)
+```
+
+We want to compare the mean journey times in the two different places. This is a two-sample sitation, and if we are not careful with the bootstrap, things will go wrong:
+
+```{r}
+sample(1:nrow(to_school), replace=T) %>% slice(to_school, .) %>% count(location)
+```
+
+Our original samples were 40 from each location, but by randomly resampling rows, we probably *don't* get 40 from each. We need to draw "stratified resamples" to ensure that we get 40 from each place. This is hard to organize with the build-it-yourself bootstrap. To make things easier, we use the `rsample` package, but then we have to worry about handling the results.
+
+## Automating the bootstrap
+
+Let's go back to our IRS data for a moment:
+
+```{r}
+irs
+```
+
+What happens if we use `rsample`  to resample from these? Let's just do a few to start. `rsample` has a function `bootstraps` that does this:
+
+```{r}
+d <- bootstraps(irs, times=1000) 
+d
+```
+
+Each of those things in `splits` is one bootstrap resample. To get at the things in them, we use `analysis`:
+
+```{r}
+d %>% mutate(sample=map(splits, ~analysis(.))) -> dd
+dd
+```
+
+and then `unnest` the actual samples to see them:
+
+```{r}
+dd %>% unnest(sample)
+```
+
+The values in `Time` are the resampled-with-replacement times to fill in the form.
+
+What we cared about here was the bootstrap distribution of the sample mean, so that for each of the samples in `dd` we need to find the mean `Time` in it:
+
+```{r}
+dd %>% mutate(the_mean=map_dbl(sample, ~mean(.$Time))) -> ddd
+ddd
+```
+
+and for example make a histogram of them, to see how normal this is:
+
+```{r}
+ggplot(ddd, aes(x=the_mean))+geom_histogram(bins=10)
+```
+
+This actually looks pretty normal:
+
+```{r}
+ggplot(ddd, aes(sample=the_mean))+stat_qq()+stat_qq_line()
+```
+
+all of which suggests that the $t$-interval for the mean:
+
+```{r}
+with(irs, t.test(Time))
+```
+
+and some kind of bootstrap interval for the mean, say the percentile-based one:
+
+```{r}
+quantile(ddd$the_mean, c(0.025, 0.975))
+```
+
+won't be all that far apart.
+
+How do I get the BCa interval from this output? First write a function that gets the mean Time from given rows of a data frame:
+
+```{r}
+theta <- function(rows, d) {
+  d %>% slice(rows) %>% 
+    with(., mean(Time))
+}
+irs %>% slice(1:3)
+theta(1:3, irs)
+```
+
+check. And then feed into `bcanon` these things:
+
+- row numbers of data frame that we want to use (all of them)
+- number of ... oh, but this uses the original data, or rows thereof
+
+can I do "stratified resampling"? [Yes](https://gist.github.com/ramhiser/8b5ffd0ffbfbf1f49e71bbbd330bf72d)
+
+```{r}
+to_school %>% 
+  group_by(location) %>% 
+  sample_frac(replace=T) %>% 
+  count(location)
+```
+
+that seems to work, but I want to try it on groups of different sizes
+
+```{r}
+groups <- tribble(
+  ~group, ~y,
+  "A", 1,
+  "A", 2,
+  "B", 3,
+  "B", 4,
+  "B", 5
+)
+groups
+```
+
+```{r}
+groups %>% 
+  group_by(group) %>% 
+  sample_frac(replace=T)
+```
+
+```{r}
+resample_by_group <- function(d, var, gp) {
+    d %>% group_by({{ gp }}) %>% 
+    sample_frac(replace=T)
+}
+groups %>% resample_by_group(var=y, gp=group)
+```
+
+second step: difference in means between (evidently two) grooups
+
+```{r}
+mean_diff=function(d, var, gp) {
+  d %>% group_by({{ gp }}) %>% 
+    summarize(m=mean({{ var }})) %>% pull(m) -> v
+  v[1]-v[2]
+}
+mean_diff(groups, y, group)
+```
+
+bootstrap it
+
+```{r}
+rerun(1000, resample_by_group(groups, y, group)) %>% 
+  map_dbl(~mean_diff(., y, group)) -> means
+```
+
+vis
+
+```{r}
+ggplot(tibble(means), aes(x=means))+geom_histogram()
+```
+
+or even
+
+```{r}
+tibble(means) %>% count(means)
+```
+
+
+this distribution is discrete but more or less normal:
+
+```{r}
+ggplot(tibble(means), aes(sample=means))+stat_qq()+stat_qq_line()
+```
+
+
+
+now do it on travel times: this is wrong, because I have to sample the rows properly
+
+```{r}
+rerun(1000, resample_by_group(to_school, traveltime, location)) %>% 
+  map_dbl(~mean_diff(., traveltime, location)) -> means
+```
+
+
+```{r}
+ggplot(tibble(means), aes(x=means))+geom_histogram(bins=20)
+```
+
+normal quantile plot
+
+```{r}
+ggplot(tibble(means), aes(sample=means))+stat_qq()+stat_qq_line()
+```
+
+ok, but that still doesn't solve bcanon. (I think, don't solve that.)

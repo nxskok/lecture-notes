@@ -1,0 +1,228 @@
+## Packages needed for this section
+
+```{r, eval=F}
+library(tidyverse)
+library(ggrepel)
+```
+
+
+## How do you read a file like this?
+
+```
+rat1T 8
+rat2T11
+rat3C 7
+rat4C 4
+rat5T12
+```
+
+- Columns:
+  - 1st 4 columns are ID of rat
+  - next 1 column is T (treatment) or C (control)
+  - next 2 columns are value of response variable `y`.
+- No delimiters!
+- Each data value *same width*.
+- `read_fwf`.
+
+## Reading in delimiterless data
+- `read_fwf`, vector of widths and names for columns:
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/rats7.txt"
+rat7 <- read_fwf(my_url, fwf_widths(
+  c(4, 1, 2),
+  c("id", "group", "y")
+))
+```
+
+## The “rat7” data
+
+```{r, paged.print=T}
+rat7
+```
+
+- Note that `read_fwf` determined that `y` was a
+number and the other things were text.
+- You need to have a separate document telling you how many
+characters each column is.
+
+## Plotting series: The oranges data
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/oranges.txt"
+oranges <- read_delim(my_url, " ")
+```
+
+## The data
+
+```{r, paged.print=T}
+oranges
+```
+
+- These are circumferences of five different trees at seven different ages (days).
+
+## Plotting series
+
+- Want to plot orange tree circumferences against age for each orange tree.
+- Recall ggplot wants one column of x values and one column of y
+values, which we do not have.
+
+- Gather up columns A through E, which are different trees but all
+circumferences.
+- Then construct a plot (shown over):
+```{r}
+g <- oranges %>%
+  gather(tree, circumf, A:E) %>%
+  ggplot(aes(x = age, y = circumf, colour = tree)) +
+  geom_point() + geom_line()
+```
+
+## The plot
+
+```{r, fig.height=3.8}
+g
+```
+
+## Labelling points on a plot
+
+- My car data
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/cars.csv"
+cars <- read_csv(my_url)
+```
+
+- Names of and information about 38 models of car (from a US car
+magazine).
+
+## Plot gas mileage against weight
+
+```{r, fig.height=3.5}
+ggplot(cars, aes(x = weight, y = MPG)) +
+  geom_point()
+```
+
+## Label points with name of car they belong to
+
+```{r, fig.height=3.5}
+ggplot(cars, aes(x = weight, y = MPG, label = car)) +
+  geom_point() + geom_text_repel()
+```
+
+## Make labels smaller
+
+```{r, fig.height=3.5}
+ggplot(cars, aes(x = weight, y = MPG, label = car)) +
+  geom_point() + geom_text_repel(size = 2)
+```
+
+## Labelling some of the cars
+- Maybe you want to draw attention only to some of the individuals
+  - for example labelling only certain cars or ones that satisfy a condition
+- Mechanism: define a new label variable that contains:
+  - the label, for the individual you want to label
+  - blank text for those you don’t
+- Handy function ifelse, like Excel `=IF`.
+- Label cars with MPG over 34: 
+```{r}
+cars %>%
+  mutate(newlabel = ifelse(MPG > 34, car, "")) %>%
+  ggplot(aes(x = weight, y = MPG, label = newlabel)) +
+  geom_point() +
+  geom_text_repel() -> g
+```
+
+## The plot
+
+```{r, fig.height=3.8}
+g
+```
+
+## Labelling cars by row number
+- Suppose we knew that the cars we wanted to label were in rows 4 and
+9 of data frame.
+- How to use `ifelse` with row numbers? Define new column of row
+numbers, and then use it in `ifelse`, thus: 
+```{r}
+g <- cars %>%
+  mutate(row = row_number()) %>%
+  mutate(newlabel = ifelse(row == 4 | row == 9, car, "")) %>%
+  ggplot(aes(x = weight, y = MPG, label = newlabel)) +
+  geom_point() +
+  geom_text_repel()
+```
+
+## The plot
+
+```{r, fig.height=3.8}
+g
+```
+
+
+## Lightest weight and worst gas-mileage cars
+- Suppose you didn’t know which cars were the ones you wanted. Then
+you have to find them first.
+- Now try for lightest weight and worst gas-mileage cars: 
+```{r}
+cars %>%
+  mutate(tolabel = (weight == min(weight) |
+    MPG == min(MPG))) %>%
+  mutate(newlabel = ifelse(tolabel, car, "")) %>%
+  ggplot(aes(x = weight, y = MPG, label = newlabel)) +
+  geom_point() +
+  geom_text_repel() -> g
+```
+
+## The plot
+
+```{r, fig.height=4}
+g
+```
+
+## Miscellaneous graph things
+- Title for graph
+- Axis labels
+- We use previous graph as base (to save drawing again).
+
+## With title
+```{r, fig.height=3.8}
+g + ggtitle("Gas mileage against weight")
+```
+
+## Axis labels
+
+```{r, fig.height=3.8}
+g + xlab("Weight (tons)") + ylab("MPG (miles per US gallon)")
+```
+
+## Permanence
+- When you close R Studio, you are offered the option to “save your
+workspace”. If you choose “yes”, all of the data frames and other
+things you have created are saved, so that when you open R Studio in
+the same project later, you will be able to access all of these things.
+(“Everything is permanent” in that sense.)
+- If you choose not to save your workspace, you will have to recreate all
+your objects next time (eg. re-read data from files). But you have a
+script to do that, don’t you?
+- There is a school of thought that says you should not save your
+workspace, but keep scripts to re-create everything.
+  - Pro: keeps your workspace “clean” of old objects that you created but
+don’t need any more, and you know exactly why everything is there.
+  - Con: some objects take time and effort to re-create, and you won’t
+want to do that every time.
+
+## Saving and restoring objects 
+
+- It is possible to save and re-load large/complicated
+objects so that they don’t have to be re-created. Uses `saveRDS` and `readRDS`:
+
+```{r, error=T}
+xx <- sample(1:10, 5)
+xx
+saveRDS(xx, "xx.rds")
+rm(xx)
+xx # gone
+xx <- readRDS("xx.rds")
+xx # back
+```
+
+

@@ -1,0 +1,200 @@
+## Packages
+
+```{r}
+library(tidyverse)
+```
+
+## The pig feed data again
+
+```{r, message=F}
+my_url <- "http://ritsokiguess.site/STAC32/pigs1.txt"
+pigs <- read_table(my_url)
+pigs
+```
+
+## Make longer (as before)
+
+```{r}
+pigs
+pigs %>% pivot_longer(-pig, names_to="feed", 
+                      values_to="weight") -> pigs_longer
+```
+
+## Make wider two ways 1/2
+
+`pivot_wider` is inverse of `pivot_longer`:
+
+```{r}
+pigs_longer %>% 
+  pivot_wider(names_from=feed, values_from=weight)
+```
+
+we are back where we started.
+
+## Make wider 2/2
+
+Or
+
+```{r}
+pigs_longer %>% 
+  pivot_wider(names_from=pig, values_from=weight)
+```
+
+## Disease presence and absence at two locations
+
+Frequencies of plants observed with and without disease at two locations:
+
+    Species     Disease present         Disease absent
+           Location X Location Y  Location X Location Y
+    A            44         12          38        10
+    B            28         22          20        18
+
+This has two rows of headers, so I rewrote the data file:
+
+    Species  present_x present_y    absent_x  absent_y
+    A            44         12          38        10
+    B            28         22          20        18
+
+Read into data frame called `prevalence`.
+
+```{r, echo=F, message=F}
+my_url <- "http://ritsokiguess.site/STAC32/disease.txt"
+prevalence <- read_table(my_url)
+prevalence
+```
+
+## Lengthen and separate
+
+```{r}
+prevalence %>% 
+  pivot_longer(-Species, names_to = "column", 
+               values_to = "freq") %>% 
+  separate(column, into = c("disease", "location"))
+```
+
+## Making longer, the better way
+
+```{r}
+prevalence %>% 
+  pivot_longer(-Species, names_to=c("disease", "location"),
+               names_sep="_", values_to="frequency")%>% 
+  arrange(Species, location, disease) -> prevalence_longer
+prevalence_longer
+```
+
+## Making wider, different ways
+
+```{r}
+prevalence_longer %>% 
+  pivot_wider(names_from=c(Species, location), values_from=frequency)
+```
+
+```{r}
+prevalence_longer %>% 
+  pivot_wider(names_from=location, values_from=frequency)
+```
+
+## Interlude
+
+```{r}
+pigs_longer
+pigs_longer %>% 
+  group_by(feed) %>% 
+  summarize(weight_mean=mean(weight))
+```
+
+## What if summary is more than one number?
+
+eg. quartiles:
+
+```{r, error=T}
+pigs_longer %>% 
+  group_by(feed) %>% 
+  summarize(r=quantile(weight, c(0.25, 0.75)))
+```
+
+## this also works
+
+```{r, error=T}
+pigs_longer %>% 
+  group_by(feed) %>% 
+  summarize(r=list(quantile(weight, c(0.25, 0.75)))) %>% 
+  unnest(r)
+```
+
+
+
+## or, even better, use `enframe`:
+
+```{r}
+quantile(pigs_longer$weight, c(0.25, 0.75))
+enframe(quantile(pigs_longer$weight, c(0.25, 0.75)))
+```
+
+## A nice look
+
+
+```{r, warning=FALSE}
+pigs_longer %>% 
+  group_by(feed) %>% 
+  summarize(r=list(enframe(quantile(weight, c(0.25, 0.75))))) %>% 
+  unnest(r) %>% 
+  pivot_wider(names_from=name, values_from=value) 
+```
+
+## A hairy one
+
+18 people receive one of three treatments. At 3 different times (pre, post, followup) two variables `y` and `z` are measured on each person:
+
+```{r, echo=F, message=F}
+my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
+repmes0 <- read_table2(my_url)
+repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
+  select(-rep) %>% 
+  select(id, everything()) -> repmes
+repmes
+```
+
+## Attempt 1
+
+```{r}
+repmes %>% pivot_longer(contains("_"),
+                        names_to=c("time", "var"),
+                        names_sep="_"
+                         )
+```
+
+## Attempt 2
+
+```{r}
+repmes %>% pivot_longer(contains("_"),
+                        names_to=c("time", ".value"),
+                        names_sep="_"
+                        ) -> repmes3
+repmes3
+```
+
+## make a graph
+
+```{r}
+ggplot(repmes3, aes(x=fct_inorder(time), y=y, 
+                    colour=treatment, group=id)) +
+  geom_point() + geom_line()
+```
+
+## or do the plot with means
+
+```{r}
+repmes3 %>% group_by(treatment, ftime=fct_inorder(time)) %>% 
+  summarize(mean_y=mean(y)) %>% 
+  ggplot(aes(x=ftime, y=mean_y, colour=treatment, 
+             group=treatment)) + 
+    geom_point() + geom_line() -> g
+```
+
+## the plot
+
+```{r}
+g
+```
+

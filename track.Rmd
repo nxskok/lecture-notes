@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+```
+
+read track data
+
+```{r}
+track=read_table2("men_track_field.txt")
+track
+```
+
+```{r}
+track_num = track %>% select(where(is.numeric))
+track_num
+```
+
+```{r}
+track.pc = track_num %>% princomp(cor=T)
+summary(track.pc)
+```
+
+```{r}
+names(track.pc)
+```
+
+```{r}
+track.pc$loadings %>% str()
+```
+

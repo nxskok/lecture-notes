@@ -1,0 +1,10 @@
+---
+title: "STAD29 notes"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This repo contains my [lecture notes](https://github.com/nxskok/stad29-notes/blob/master/slides-sw.pdf) for the STAD29 course at UTSC.

@@ -1,0 +1,43 @@
+## Find weibull parameters to fit eg an interquartile range
+
+```{r}
+library(tidyverse)
+```
+
+cumulative distribution function
+
+```{r}
+qweibull(0.75, 1, 1.5)
+```
+
+```{r}
+qw=function(a, b) {
+  vec=c(0.25, 0.75)
+  qweibull(vec, a, b)
+}
+
+qw(1, 1.5)
+```
+
+sum of squared error
+
+```{r}
+sse=function(x) {
+  q=qw(x[1], x[2])
+  (q[1]-2)^2+(q[2]-8)^2
+}
+```
+
+optimize
+
+```{r}
+optim(c(1,1),sse)
+```
+
+check
+
+```{r}
+pweibull(c(2,8),1.1, 6)
+```
+
+yep those are the quartiles

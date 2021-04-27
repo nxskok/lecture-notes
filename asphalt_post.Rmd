@@ -1,0 +1,524 @@
+## The asphalt data
+- 31 asphalt pavements prepared under different conditions. How does
+quality of pavement depend on these?
+- Variables:
+  - `pct.a.surf` The percentage of asphalt in the surface layer
+  - `pct.a.base` The percentage of asphalt in the base layer
+  - `fines` The percentage of fines in the surface layer
+  - `voids` The percentage of voids in the surface layer
+  - `rut.depth` The change in rut depth per million vehicle passes
+  - `viscosity` The viscosity of the asphalt
+  - `run` 2 data collection periods: run 1 for run 1, 0 for run 2.
+- `rut.depth` response. Depends on other variables, how?
+
+## Packages for this section
+
+```{r, eval=F}
+library(MASS)
+library(tidyverse)
+library(broom)
+library(leaps)
+```
+
+
+## Getting set up 
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/asphalt.txt"
+asphalt <- read_delim(my_url, " ")
+```
+
+- Quantitative variables with one response: multiple regression.
+- Some issues here that don’t come up in “simple” regression; handle as
+we go. (STAB27/STAC67 ideas.)
+
+## The data (some)
+
+```{r}
+asphalt
+```
+
+## Plotting response “rut depth” against everything else
+
+Same idea as for plotting separate predictions on one plot:
+
+
+```{r}
+asphalt %>%
+  pivot_longer(
+    -rut.depth,
+    names_to="xname", values_to="x"
+  ) %>%
+  ggplot(aes(x = x, y = rut.depth)) + geom_point() +
+  facet_wrap(~xname, scales = "free") -> g
+```
+
+“collect all the x-variables together into one column called x, with another
+column xname saying which x they were, then plot these x’s against
+rut.depth, a separate facet for each x-variable.”
+
+I saved this graph to plot later (on the next page).
+
+## The plot
+
+```{r}
+g
+```
+
+## Interpreting the plots
+- One plot of rut depth against each of the six other variables.
+- Get rough idea of what’s going on.
+- Trends mostly weak.
+- `viscosity` has strong but non-linear trend.
+- `run` has effect but variability bigger when run is 1.
+- Weak but downward trend for `voids`.
+- Non-linearity of `rut.depth`-`viscosity` relationship should concern
+us.
+
+## Log of `viscosity`: more nearly linear?
+
+- Take this back to asphalt engineer: suggests log of `viscosity`:
+
+
+```{r logvisplot, fig.keep="none", warning=F, message=F}
+ggplot(asphalt, aes(y = rut.depth, x = log(viscosity))) +
+  geom_point() + geom_smooth(se = F)
+```
+
+(plot overleaf)
+
+## Rut depth against log-viscosity
+
+```{r, ref.label="logvisplot", echo=FALSE, message=FALSE}
+
+```
+
+## Comments and next steps
+- Not very linear, but better than before.
+- In multiple regression, hard to guess which x’s affect response. So
+typically start by predicting from everything else.
+- Model formula has response on left, squiggle, explanatories on right
+joined by plusses:
+
+```{r}
+rut.1 <- lm(rut.depth ~ pct.a.surf + pct.a.base + fines +
+  voids + log(viscosity) + run, data = asphalt)
+```
+
+## Regression output: `summary(rut.1)` or:
+
+\footnotesize
+```{r}
+glance(rut.1)
+tidy(rut.1)
+```
+\normalsize
+
+## Comments
+- R-squared 81%, not so bad. 
+- P-value in `glance` asserts that something helping to predict
+rut.depth.
+- Table of coefficients says `log(viscosity)`.
+- But confused by clearly non-significant variables: remove those to get
+clearer picture of what is helpful.
+- Before we do anything, look at residual plots:
+  - (a) of residuals against fitted values (as usual)
+  - (b) of residuals against each explanatory.
+- Problem fixes:
+  - with (a): fix response variable; 
+  - with some plots in (b): fix those explanatory variables.
+
+## Plot fitted values against residuals
+
+```{r}
+ggplot(rut.1, aes(x = .fitted, y = .resid)) + geom_point()
+```
+
+## Plotting residuals against $x$ variables
+- Problem here is that residuals are in the fitted model, and the
+observed $x$-values are in the original data frame `asphalt`. 
+- Package broom contains a function `augment` that combines these two
+together so that they can later be plotted: start with a model first, and then augment with a
+data frame:
+
+```{r}
+rut.1 %>% augment(asphalt) -> rut.1a
+rut.1a
+```
+
+
+## What does rut.1a contain?
+
+```{r, echo=FALSE}
+#options(width = 70)
+```
+
+
+```{r}
+names(rut.1a)
+```
+
+- all the stuff in original data frame, plus:
+- quantities from regression (starting with a dot)
+
+
+## Plotting residuals against $x$-variables 
+
+
+```{r}
+rut.1a %>%
+  mutate(log_vis=log(viscosity)) %>% 
+  pivot_longer(
+    c(pct.a.surf:voids, run, log_vis),
+    names_to="xname", values_to="x"
+  ) %>%
+  ggplot(aes(x = x, y = .resid)) +
+  geom_point() + facet_wrap(~xname, scales = "free") -> g
+```
+
+## The plot
+
+```{r}
+g
+```
+
+## Comments
+- There is serious curve in plot of residuals vs. fitted values. Suggests a
+transformation of $y$. 
+- The residuals-vs-$x$’s  plots don’t show any serious trends. Worst
+probably that potential curve against log-viscosity.
+- Also, large positive residual, 10, that shows up on all plots. Perhaps
+transformation of $y$ will help with this too.
+- If residual-fitted plot OK, but some residual-$x$ plots not, try
+transforming those $x$’s, eg. by adding $x^2$ to help with curve.
+
+## Which transformation?
+- Best way: consult with person who brought you the data.
+- Can’t do that here!
+- No idea what transformation would be good.
+- Let data choose: “Box-Cox transformation”.
+- Scale is that of “ladder of powers”: power transformation, but 0 is
+log.
+
+
+## Running Box-Cox
+
+From package `MASS`:
+
+```{r}
+boxcox(rut.depth ~ pct.a.surf + pct.a.base + fines + voids +
+  log(viscosity) + run, data = asphalt)
+```
+
+## Comments on Box-Cox plot
+- $\lambda$ represents power to transform $y$ with.
+- Best single choice of transformation parameter $\lambda$ is peak of curve,
+close to 0.
+- Vertical dotted lines give CI for $\lambda$, about (−0.05, 0.2).
+- $\lambda = 0$ means “log”.
+- Narrowness of confidence interval mean that these not supported by
+data:
+  - No transformation ($\lambda = 1$)
+  - Square root ($\lambda = 0.5$)
+  - Reciprocal ($\lambda = −1$).
+
+## Relationships with explanatories
+- As before: plot response (now `log(rut.depth)`) against other
+explanatory variables, all in one shot:
+
+```{r}
+asphalt %>%
+  mutate(log_vis=log(viscosity)) %>% 
+  pivot_longer(
+    c(pct.a.surf:voids, run, log_vis),
+    names_to="xname", values_to="x"
+  ) %>%
+  ggplot(aes(y = log(rut.depth), x = x)) + geom_point() +
+  facet_wrap(~xname, scales = "free") -> g3
+```
+
+## The new plots
+
+```{r}
+g3
+```
+
+## Modelling with transformed response
+- These trends look pretty straight, especially with `log.viscosity`.
+- Values of `log.rut.depth` for each `run` have same spread.
+- Other trends weak, but are straight if they exist.
+- Start modelling from the beginning again.
+- Model `log.rut.depth` in terms of everything else, see what can be
+removed:
+```{r}
+rut.2 <- lm(log(rut.depth) ~ pct.a.surf + pct.a.base +
+  fines + voids + log(viscosity) + run, data = asphalt)
+```
+
+- use `tidy` from `broom` to display just the coefficients.
+
+## Output
+```{r}
+tidy(rut.2)
+```
+
+## Taking out everything non-significant
+- Try: remove everything but pct.a.surf and log.viscosity:
+
+\footnotesize
+```{r}
+rut.3 <- lm(log(rut.depth) ~ pct.a.surf + log(viscosity), data = asphalt)
+```
+\normalsize
+
+\footnotesize
+- Check that removing all those variables wasn’t too much:
+```{r}
+anova(rut.3, rut.2)
+```
+\normalsize
+
+- $H_0$ : two models equally good; $H_a$ : bigger model better.
+- Null not rejected here; small model as good as the big one, so prefer
+simpler smaller model `rut.3`.
+
+## Find the largest P-value by eye:
+
+
+```{r}
+tidy(rut.2)
+```
+
+- Largest P-value is 0.78 for `pct.a.base`, not significant.
+- So remove this first, re-fit and re-assess.
+- Or, as over.
+
+## Get the computer to find the largest P-value for you
+
+- Output from `tidy` is itself a data frame, thus:
+
+```{r}
+tidy(rut.2) %>% arrange(p.value)
+```
+
+- Largest P-value at the bottom.
+
+## Take out `pct.a.base`
+
+- Copy and paste the `lm` code and remove what you're removing:
+
+\small
+```{r}
+rut.4 <- lm(log(rut.depth) ~ pct.a.surf + fines + voids + 
+              log(viscosity) + run, data = asphalt)
+tidy(rut.4) %>% arrange(p.value)
+```
+\normalsize
+
+- `fines` is next to go, P-value 0.32.
+
+## “Update”
+
+Another way to do the same thing:
+```{r}
+rut.4 <- update(rut.2, . ~ . - pct.a.base)
+tidy(rut.4) %>% arrange(p.value)
+```
+
+- Again, fines is the one to go. (Output identical as it should be.)
+
+## Take out fines:
+
+```{r}
+rut.5 <- update(rut.4, . ~ . - fines)
+tidy(rut.5) %>% arrange(p.value)
+```
+
+Can’t take out intercept, so `run`, with P-value 0.36, goes next.
+
+## Take out run:
+
+
+```{r}
+rut.6 <- update(rut.5, . ~ . - run)
+tidy(rut.6) %>% arrange(p.value)
+```
+
+Again, can’t take out intercept, so largest P-value is for `voids`, 0.044. But
+this is significant, so we shouldn’t remove `voids`.
+
+## Comments
+- Here we stop: `pct.a.surf`, `voids` and `log.viscosity` would all
+make fit significantly worse if removed. So they stay.
+- Different final result from taking things out one at a time (top), than
+by taking out 4 at once (bottom):
+
+```{r}
+coef(rut.6)
+coef(rut.3)
+```
+
+- Point: Can make difference which way we go.
+
+## Comments on variable selection
+- Best way to decide which $x$’s belong: expert knowledge: which of
+them should be important.
+- Best automatic method: what we did, “backward selection”.
+- Do not learn about “stepwise regression”! [**eg. here**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df)
+- R has function `step` that does backward selection, like this:
+```{r, eval=F}
+rut.7 <- step(rut.2, direction = "backward", test = "F")
+```
+
+```{r}
+summary(rut.7)
+```
+
+
+Gets same answer as we did (by removing least significant x). 
+
+- Removing non-significant $x$’s may remove interesting ones whose
+P-values happened not to reach 0.05. Consider using less stringent
+cutoff like 0.20 or even bigger.
+- Can also fit all possible regressions, as over (may need to do
+`install.packages("leaps")` first).
+
+## All possible regressions (output over)
+
+Uses package `leaps`:
+
+```{r}
+leaps <- regsubsets(log(rut.depth) ~ pct.a.surf + 
+                      pct.a.base + fines + voids + 
+                      log(viscosity) + run, 
+                    data = asphalt, nbest = 2)
+s <- summary(leaps)
+with(s, data.frame(rsq, outmat)) -> d
+```
+
+## The output
+
+```{r, echo=F}
+wid=getOption("width")
+options(width=80)
+```
+
+
+\scriptsize
+```{r}
+d %>% rownames_to_column("model") %>% arrange(desc(rsq))
+```
+\normalsize
+
+```{r, echo=F}
+options(width=wid)
+```
+
+
+## Comments
+- Problem: even adding a worthless x increases R-squared. So try for
+line where R-squared stops increasing “too much”, eg. top line (just
+log.viscosity), first 3-variable line (backwards-elimination model).
+Hard to judge.
+- One solution (STAC67): adjusted R-squared, where adding worthless
+variable makes it go down.
+- `data.frame` rather than `tibble` because there are several columns in
+`outmat`. 
+
+## All possible regressions, adjusted R-squared
+
+```{r, echo=F}
+wid=getOption("width")
+options(width=80)
+```
+
+\scriptsize
+```{r}
+with(s, data.frame(adjr2, outmat)) %>% 
+  rownames_to_column("model") %>% 
+  arrange(desc(adjr2))
+```
+\normalsize
+
+
+```{r, echo=F}
+options(width=wid)
+```
+
+## Revisiting the best model
+- Best model was our rut.6:
+
+```{r}
+tidy(rut.6)
+```
+
+## Revisiting (2)
+- Regression slopes say that rut depth increases as log-viscosity
+decreases, `pct.a.surf` increases and `voids` increases. This more or
+less checks out with out scatterplots against `log.viscosity`. 
+- We should check residual plots again, though previous scatterplots say
+it’s unlikely that there will be a problem:
+
+```{r}
+g <- ggplot(rut.6, aes(y = .resid, x = .fitted)) + 
+geom_point()
+```
+
+## Residuals against fitted values
+
+
+```{r}
+g
+```
+
+
+```{r}
+ggplot(rut.6, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+```
+
+## Plotting residuals against x’s
+- Do our trick again to put them all on one plot:
+
+```{r}
+augment(rut.6, asphalt) %>%
+  mutate(log_vis=log(viscosity)) %>% 
+  pivot_longer(
+    c(pct.a.surf:voids, run, log_vis),
+    names_to="xname", values_to="x",
+  ) %>%
+  ggplot(aes(y = .resid, x = x)) + geom_point() +
+  facet_wrap(~xname, scales = "free") -> g2
+```
+
+## Residuals against the x’s
+
+```{r}
+g2
+```
+
+## Comments
+- None of the plots show any sort of pattern. The points all look
+random on each plot.
+- On the plot of fitted values (and on the one of log.viscosity), the
+points seem to form a “left half” and a “right half” with a gap in the
+middle. This is not a concern.
+- One of the pct.a.surf values is low outlier (4), shows up top left of
+that plot.
+- Only two possible values of run; the points in each group look
+randomly scattered around 0, with equal spreads.
+- Residuals seem to go above zero further than below, suggesting a
+mild non-normality, but not enough to be a problem.
+
+## Variable-selection strategies
+- Expert knowledge.
+- Backward elimination.
+- All possible regressions.
+- Taking a variety of models to experts and asking their opinion.
+- Use a looser cutoff to eliminate variables in backward elimination (eg.
+only if P-value greater than 0.20).
+- If goal is prediction, eliminating worthless variables less important.
+- If goal is understanding, want to eliminate worthless variables where
+possible.
+- Results of variable selection not always reproducible, so caution
+advised.
+

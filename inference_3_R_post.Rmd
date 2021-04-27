@@ -1,0 +1,390 @@
+
+```{r}
+library(tidyverse)
+```
+
+
+## Duality between confidence intervals and hypothesis tests 
+- Tests and CIs really do the same thing, if you look at them the right
+way. They are both telling you something about a parameter, and
+they use same things about data.
+- To illustrate, some data (two groups):
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/duality.txt"
+twogroups <- read_delim(my_url," ")
+```
+
+
+## The data
+
+\footnotesize
+```{r}
+twogroups
+```
+\normalsize
+
+## 95% CI (default)
+```{r}
+t.test(y ~ group, data = twogroups)
+```
+
+## 90% CI
+```{r}
+t.test(y ~ group, data = twogroups, conf.level = 0.90)
+```
+
+## Hypothesis test
+
+Null is that difference in means is zero:
+
+```{r}
+t.test(y ~ group, mu=0, data = twogroups)
+```
+
+
+## Comparing results
+
+Recall null here is $H_0 : \mu_1 - \mu_2 = 0$. P-value 0.0668. 
+
+- 95% CI from $-5.6$ to 0.2, contains 0.
+- 90% CI from $-5.0$ to $-0.3$, does not contain 0.
+- At $\alpha = 0.05$, would not reject $H_0$ since P-value > 0.05.
+- At $\alpha = 0.10$, *would* reject $H_0$ since P-value < 0.10.
+
+Not just coincidence. Let $C = 100(1 - \alpha)$, so C% gives corresponding CI
+to level-$\alpha$ test. Then following always true.
+($\iff$ means ``if and only if''.)
+
+\begin{tabular}{|rcl|}
+  \hline
+  Reject $H_0$ at level $\alpha$ & $\iff$ & $C\%$ CI does not contain $H_0$ value\\
+  Do not reject $H_0$ at level $\alpha$ & $\iff$ & $C\%$ CI contains $H_0$ value\\
+  \hline
+\end{tabular}
+
+Idea: "Plausible" parameter value inside CI, not rejected;
+  "Implausible" parameter value outside CI, rejected. 
+  
+## The value of this
+- If you have a test procedure but no corresponding CI:
+- you make a CI by including all the parameter values that would not
+be rejected by your test.
+- Use:
+  - $\alpha = 0.01$ for a 99% CI,
+  - $\alpha = 0.05$ for a 95% CI,
+  - $\alpha = 0.10$ for a 90% CI,
+and so on.
+
+## Testing for non-normal data
+- The IRS (“Internal Revenue Service”) is the US authority that deals
+with taxes (like Revenue Canada).
+- One of their forms is supposed to take no more than 160 minutes to
+complete. A citizen’s organization claims that it takes people longer
+than that on average.
+- Sample of 30 people; time to complete form recorded.
+- Read in data, and do $t$-test of $H_0 : \mu = 160$ vs. $H_a : \mu > 160$.
+- For reading in, there is only one column, so can pretend it is delimited
+by anything.
+  
+## Read in data 
+```{r, message=FALSE}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/irs.txt"
+irs <- read_csv(my_url)
+irs
+```
+
+
+## Test whether mean is 160 or greater
+
+```{r}
+with(irs, t.test(Time, mu = 160, 
+                 alternative = "greater"))
+```
+
+Reject null; mean (for all people to complete form) greater than 160.
+
+
+
+## But, look at a graph
+```{r, fig.height=3.5}
+ggplot(irs, aes(x = Time)) + geom_histogram(bins = 6)
+```
+
+## Comments
+
+- Skewed to right. 
+- Should look at *median*, not mean.
+
+## The sign test
+- But how to test whether the median is greater than 160?
+- Idea: if the median really is 160 ($H_0$ true), the sampled values from
+the population are equally likely to be above or below 160.
+- If the population median is greater than 160, there will be a lot of
+sample values greater than 160, not so many less. Idea: test statistic
+is number of sample values greater than hypothesized median.
+
+## Getting a P-value for sign test 1/3
+
+- How to decide whether “unusually many” sample values are greater
+than 160? Need a sampling distribution.
+- If $H_0$ true, pop. median is 160, then each sample value independently
+equally likely to be above or below 160.
+- So number of observed values above 160 has binomial distribution
+with $n = 30$ (number of data values) and $p = 0.5$ (160 is
+hypothesized to be *median*).
+
+## Getting P-value for sign test 2/3
+
+- Count values above/below 160:
+```{r}
+irs %>% count(Time > 160)
+```
+
+- 17 above, 13 below. How unusual is that? Need a *binomial table*.
+
+## Getting P-value for sign test 3/3
+- R function `dbinom` gives the probability of eg. exactly 17 successes in
+a binomial with $n = 30$ and $p = 0.5$:
+```{r}
+dbinom(17, 30, 0.5)
+```
+
+- but we want probability of 17 *or more*, so get all of those, find probability of each,  and add them up: 
+```{r}
+tibble(x=17:30) %>% 
+  mutate(prob=dbinom(x, 30, 0.5)) %>% 
+  summarize(total=sum(prob))
+```
+
+
+## Using my package `smmr`
+- I wrote a package `smmr` to do the sign test (and some other things).
+Installation is a bit fiddly:
+  - Install devtools with `install.packages("devtools")`
+  - then install smmr: 
+```{r, eval=F}
+library(devtools)
+install_github("nxskok/smmr", force = TRUE)
+```
+- Then load it:
+```{r, eval=F}
+library(smmr)
+```
+
+## `smmr` for sign test
+- `smmr`’s function `sign_test` needs three inputs: a data frame, a
+column and a null median:
+```{r}
+sign_test(irs, Time, 160)
+```
+
+
+## Comments (1/3)
+
+- Testing whether population median *greater than* 160, so want
+*upper-tail* P-value 0.2923. Same as before.
+- Also get table of values above and below; this too as we got.
+
+## Comments (2/3)
+- P-values are:
+    \begin{center}
+    \begin{tabular}{lr}
+      Test & P-value\\
+      \hline
+      $t$ & 0.0392\\
+      Sign & 0.2923\\
+      \hline
+    \end{tabular}
+      
+    \end{center}
+- These are very different: we reject a mean of 160 (in favour of the
+mean being bigger), but clearly *fail* to reject a median of 160 in
+favour of a bigger one.
+- Why is that? Obtain mean and median:
+
+```{r}
+irs %>% summarize(mean_time = mean(Time), 
+                  median_time = median(Time))
+```
+
+## Comments (3/3)
+- The mean is pulled a long way up by the right skew, and is a fair bit
+bigger than 160.
+- The median is quite close to 160.
+- We ought to be trusting the sign test and not the t-test here (median
+and not mean), and therefore there is no evidence that the “typical”
+time to complete the form is longer than 160 minutes.
+- Having said that, there are clearly some people who take a lot longer
+than 160 minutes to complete the form, and the IRS could focus on
+simplifying its form for these people.
+- In this example, looking at any kind of average is not really helpful; a
+better question might be “do an unacceptably large fraction of people
+take longer than (say) 300 minutes to complete the form?”: that is,
+thinking about worst-case rather than average-case.
+
+## Confidence interval for the median
+- The sign test does not naturally come with a confidence interval for
+the median.
+- So we use the “duality” between test and confidence interval to say:
+the (95%) confidence interval for the median contains exactly those
+values of the null median that would not be rejected by the two-sided
+sign test (at $\alpha = 0.05$).
+
+## For our data
+- The procedure is to try some values for the null median and see which
+ones are inside and which outside our CI.
+- smmr has pval_sign that gets just the 2-sided P-value:
+```{r}
+pval_sign(160, irs, Time)
+```
+
+- Try a couple of null medians:
+```{r}
+pval_sign(200, irs, Time)
+pval_sign(300, irs, Time)
+```
+
+- So 200 inside the 95% CI and 300 outside.
+
+## Doing a whole bunch
+- Choose our null medians first:
+
+\small
+```{r}
+(d=tibble(null_median=seq(100,300,20)))
+```
+\normalsize
+
+## ... and then
+
+“for
+each null median, run the function `pval_sign` for that null median
+and get the P-value”: 
+
+```{r}
+d %>% mutate(p_value = map_dbl(null_median, 
+                               ~ pval_sign(., irs, Time)))
+```
+
+## Make it easier for ourselves 
+
+```{r}
+d %>% 
+  mutate(p_value = map_dbl(null_median, 
+                           ~ pval_sign(., irs, Time))) %>%
+  mutate(in_out = ifelse(p_value > 0.05, "inside", "outside"))
+```
+
+
+## confidence interval for median?
+
+- 95% CI to this accuracy from 120 to 200.
+- Can get it more accurately by looking more closely in intervals from
+100 to 120, and from 200 to 220.
+
+## A more efficient way: bisection
+- Know that top end of CI between 200 and 220:
+```{r}
+lo=200 
+hi=220
+```
+
+- Try the value halfway between: is it inside or outside?
+```{r}
+(try = (lo + hi) / 2)
+pval_sign(try,irs,Time)
+```
+
+- Inside, so upper end is between 210 and 220. Repeat (over):
+
+## ... bisection continued 
+
+```{r}
+lo = try
+(try = (lo + hi) / 2)
+pval_sign(try, irs, Time)
+```
+
+- 215 is inside too, so upper end between 215 and 220. 
+- Continue until have as accurate a result as you want.
+
+## Bisection automatically
+
+- A loop, but not a `for` since we don’t know how many times we’re
+going around. Keep going while a condition is true:
+```{r, eval=F}
+lo = 200
+hi = 220
+while (hi - lo > 1) {
+  try = (hi + lo) / 2
+  ptry = pval_sign(try, irs, Time)
+  print(c(try, ptry))
+  if (ptry <= 0.05)
+    hi = try
+  else
+    lo = try
+}
+```
+
+## The output from this loop
+
+```{r, echo=F}
+lo = 200
+hi = 220
+while (hi - lo > 1) {
+  try = (hi + lo) / 2
+  ptry = pval_sign(try, irs, Time)
+  print(c(try, ptry))
+  if (ptry <= 0.05)
+    hi = try
+  else
+    lo = try
+}
+```
+
+- 215 inside, 215.625 outside. Upper end of interval to this accuracy is 215.
+
+## Using smmr
+- `smmr` has function `ci_median` that does this (by default 95% CI):
+```{r}
+ci_median(irs,Time)
+```
+
+- Uses a more accurate bisection than we did.
+- Or get, say, 90% CI for median:
+```{r}
+ci_median(irs,Time,conf.level=0.90)
+```
+
+- 90% CI is shorter, as it should be.
+
+## Bootstrap (optional)
+
+- but, was the sample size (30) big enough to overcome the skewness?
+- Bootstrap, again:
+
+```{r, echo=FALSE}
+set.seed(457299)
+```
+
+
+```{r}
+rerun(1000, sample(irs$Time, replace = TRUE)) %>% 
+  map_dbl(~mean(.)) %>% 
+  enframe() %>% 
+  ggplot(aes(x=value)) + geom_histogram(bins=10) -> g
+```
+
+
+## The sampling distribution
+
+```{r}
+g
+```
+
+## Comments
+
+- A little skewed to right, but not nearly as much as I was expecting.
+- The $t$-test for the mean might actually be OK for these data, *if the mean is what you want*.
+- In actual data, mean and median very different; we chose to make inference about the median. 
+- Thus for us it was right to use the sign test.

@@ -1,0 +1,323 @@
+---
+title: "April 3"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Multi-way frequency analysis
+
+## Packages 
+
+```{r}
+library(tidyverse)
+```
+
+
+## Eyewear
+
+slide 660
+
+data
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/eyewear.txt"
+eyewear=read_delim(my_url," ")
+eyewear
+```
+
+not tidy! Columns are *levels* of a categorical variable `eyewear`, so
+
+```{r}
+(eyewear %>% gather(eyewear, frequency, -gender) -> eyes)
+```
+
+Modelling-friendly "long" format.
+
+Introduce ways to get from long data to frequency and proportion tables:
+
+```{r}
+xtabs(frequency~gender+eyewear, data=eyes)
+```
+
+`prop.table` takes output from `xtabs` and works out row/column/layer proportions:
+
+```{r}
+xtabs(frequency~gender+eyewear, data=eyes) %>% 
+  prop.table(margin=1) 
+```
+
+1 is rows, 2 is columns, etc. "Out of people of each gender, what proportion wore...?"
+
+## Modelling
+
+The model is a generalization of a chi-squared test for independence. It is a generalized linear model with `poisson` family (and log link), and thus is called a log-linear model. Note that we fit *all* interactions (and then see what we can remove):
+
+```{r}
+eyes.1=glm(frequency~gender*eyewear, data=eyes, family="poisson")
+drop1(eyes.1, test="Chisq")
+```
+
+The only thing we could remove, the `gender`-`eyewear` interaction, is significant, so cannot remove it. Here we stop.
+
+In context of log-linear model, there is *association* between gender and eyewear. We then investigate with `prop.table`:
+
+```{r}
+xtabs(frequency~gender+eyewear, data=eyes) %>% 
+  prop.table(margin=1) 
+```
+
+More of the females wear contacts, and more of the males wear glasses. That's the reason for the association.
+
+Suppose things had been as below:
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/eyewear2.txt"
+eyewear2=read_table(my_url)
+eyewear2
+```
+
+The *proportions* of males and females wearing each kind of eyewear are very similar:
+
+```{r}
+eyes2 = eyewear2 %>% gather(eyewear, frequency, -gender)
+xtabs(frequency~gender+eyewear,data=eyes2) %>% 
+  prop.table(margin=1)
+```
+
+so there should now be no association:
+
+```{r}
+eyes.2=glm(frequency~gender*eyewear,data=eyes2,
+family="poisson")
+drop1(eyes.2,test="Chisq")
+```
+
+Take out interaction:
+
+```{r}
+eyes.3=update(eyes.2, .~.-gender:eyewear)
+drop1(eyes.3, test="Chisq")
+```
+
+```{r}
+xtabs(frequency~gender, data=eyes2)
+```
+
+There are more females overall (gender effect), and
+
+```{r}
+xtabs(frequency~eyewear, data=eyes2)
+```
+
+there are more people wearing contacts overall (eyewear effect).
+
+## Chest pain, being overweight, being a smoker
+
+slide 670
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/ecg.txt"
+chest=read_delim(my_url," ")
+chest
+```
+
+Modelling
+
+```{r}
+chest.1=glm(count~ecg*bmi*smoke, data=chest, family="poisson")
+drop1(chest.1,test="Chisq")
+```
+
+3-way interaction can come out:
+
+```{r}
+chest.2=update(chest.1, .~.-ecg:bmi:smoke)
+drop1(chest.2,test="Chisq")
+```
+
+`bmi:smoke` has largest P-value, just larger than 0.05, so remove it. (What will happen to `ecg:smoke`?)
+
+```{r}
+chest.3=update(chest.2, .~.-bmi:smoke)
+drop1(chest.3,test="Chisq")
+```
+
+`ecg:smoke` became significant, so here we stop.
+
+Interpretation: `ecg` is outcome, so look for associations with that (there are two):
+
+```{r}
+xtabs(count~ecg+bmi, data=chest) %>% 
+  prop.table(margin=2)
+```
+
+Most normal-weight people had normal ecg, but more overweight people had abnormal ecg.
+
+`ecg:smoke`:
+
+```{r}
+xtabs(count~ecg+smoke, data=chest) %>% 
+  prop.table(margin=2)
+```
+
+Most non-smokers had normal ecg, but the smokers were about 50-50 normal and abnormal.
+
+For `prop.table`, if you have a response, make the other thing(s) add up to 1.
+
+## Airlines example
+
+slide 677
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/airlines.txt"
+airlines=read_table2(my_url)
+airlines
+```
+
+Data tidying
+
+```{r}
+airlines %>%
+  gather(line.status,freq, contains("_")) %>%
+  separate(line.status,c("airline","status")) -> punctual
+```
+
+```{r}
+punctual
+```
+
+
+Proportions delayed by airline
+
+```{r}
+xtabs(freq~airline+status, data=punctual) %>% 
+  prop.table(margin=1)
+```
+
+This is the 13% and 11% we got before.
+
+Proportion delayed by each airline and airport:
+
+```{r}
+xtabs(freq~airline+airport+status, data=punctual) %>% 
+  prop.table(margin=c(1,2))
+```
+
+slide 682
+
+Log-linear modelling:
+
+```{r}
+punctual.1=glm(freq~airport*airline*status,
+  data=punctual,family="poisson")
+drop1(punctual.1,test="Chisq")
+```
+
+3-way interaction comes out:
+
+```{r}
+punctual.2=update(punctual.1,~.-airport:airline:status)
+drop1(punctual.2,test="Chisq")
+```
+
+So now we have three two-way associations to understand. Think of `status` as a response to airline and airport:
+
+```{r}
+xtabs(freq~airline+status, data=punctual) %>% prop.table(margin=1)
+```
+
+Overall percent delayed. Saw this before.
+
+```{r}
+xtabs(freq~airport+status, data=punctual) %>% prop.table(margin=1)
+```
+
+Flights into some airports (San Francisco, Seattle) often delayed, into Phoenix usually on time.
+
+```{r}
+xtabs(freq~airport+airline, data=punctual) %>% prop.table(margin=2)
+```
+
+What percent of each airline's flights are to each airport. Alaska Airlines flies mostly to Seattle, America West mostly to Phoenix.
+
+slide 688
+
+## Ovarian cancer
+
+slide 689
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/cancer.txt"
+cancer=read_delim(my_url," ")
+cancer
+```
+
+```{r}
+cancer.1=glm(freq~stage*operation*xray*survival,
+  data=cancer,family="poisson")
+drop1(cancer.1,test="Chisq")
+```
+
+```{r}
+cancer.2=update(cancer.1, .~.-stage:operation:xray:survival)
+drop1(cancer.2,test="Chisq")
+```
+
+```{r}
+cancer.3=update(cancer.2,.~.-stage:xray:survival)
+  drop1(cancer.3,test="Chisq")
+```
+
+```{r}
+cancer.4=update(cancer.3,.~.-operation:xray:survival)
+drop1(cancer.4,test="Chisq")
+```
+
+```{r}
+cancer.5=update(cancer.4,.~.-xray:survival)
+drop1(cancer.5,test="Chisq")
+```
+
+```{r}
+cancer.6=update(cancer.5,.~.-stage:operation:survival)
+drop1(cancer.6,test="Chisq")
+```
+
+```{r}
+cancer.7=update(cancer.6,.~.-operation:survival)
+drop1(cancer.7,test="Chisq")
+```
+
+finally done!
+
+Response variable is `survival`, and the only remaining thing associated with that is `stage`:
+
+```{r}
+xtabs(freq~survival+stage, data=cancer) %>% prop.table(margin=2)
+```
+
+Most of the people with early-stage cancer survived, and most people with advanced-stage cancer did not.
+
+Operation or x-ray had no effect on survival.
+
+
+
+... and ....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![](~/teaching/d29-lecture-code/img/done+devito_wzD3nQPA4gqHK.gif)
+

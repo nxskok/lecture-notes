@@ -1,0 +1,105 @@
+---
+title: "logistic regression"
+author: "Ken"
+date: "1/14/2019"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(broom)
+```
+
+other rat data
+
+```{r}
+my_url="notes/rat2.txt"
+rat2=read_delim(my_url," ")
+rat2
+```
+
+same 5 doses, but more rats (10 at each dose), summarized onto one line per dose (#lived, #died)
+
+To model, create two-column response, thing you model (living) in 1st:
+
+```{r}
+response=with(rat2,cbind(lived,died))
+class(response)
+```
+
+now fit model:
+
+```{r}
+rat2.1=glm(response~dose,family="binomial",
+  data=rat2)
+summary(rat2.1)
+```
+
+there is now a significant effect of dose. Negative slope: prob of living goes *down* as dose increases.
+
+Predictions:
+
+```{r}
+p=predict(rat2.1,type="response")
+cbind(rat2,p)
+```
+
+graph with CIs again
+
+## sepsis data
+
+slide 105
+
+```{r}
+my_url="sepsis.txt"
+sepsis=read_delim(my_url," ")
+sepsis
+```
+
+Predict from everything:
+
+```{r}
+sepsis.1=glm(death~shock+malnut+alcohol+age+
+              bowelinf,family="binomial",
+	      data=sepsis)
+summary(sepsis.1)
+```
+
+or
+
+```{r}
+tidy(sepsis.1)
+```
+
+
+Take out `malnut`:
+
+```{r}
+sepsis.2=update(sepsis.1,.~.-malnut)
+tidy(sepsis.2)
+```
+
+Nothing else can be removed.
+
+Predictions:
+
+```{r}
+sepsis.pred=predict(sepsis.2,type="response")
+d=data.frame(sepsis,sepsis.pred)
+myrows=c(4,1,2,11,32) ; slice(d,myrows)
+```
+
+
+
+
+## ----virtusentella,fig.height=3.4, warning=F-----------------------------
+ggplot(augment(sepsis.2),aes(x=age,y=.resid))+
+  geom_point()
+
+## ----size="small"--------------------------------------------------------
+sepsis.2.tidy=tidy(sepsis.2)
+sepsis.2.tidy
+
+## ----size="small"--------------------------------------------------------
+cc=exp(sepsis.2.tidy$estimate)
+data.frame(sepsis.2.tidy$term,expcoeff=round(cc,2))

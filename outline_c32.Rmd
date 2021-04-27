@@ -1,0 +1,165 @@
+## This course
+
+-   STAC32, Applications of Statistical Methods
+
+-   Online:
+
+    -   2 hours of recorded lectures / week, asynchronous (watch when you like)
+    -   1.5 hours of live tutorial / week, Wednesday 2:00 or 3:30, on Zoom
+    -   "office hours" also on Zoom, by appointment
+
+-   Instructor:
+
+    -   Ken Butler, `ken.butler@utoronto.ca`
+    -   I like sharing what I know about applied statistics, particularly with people who are not primarily statisticians
+    -   This course will help you develop the skills to use software to analyze data, and to communicate the results.
+    -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
+    -   I want you to demonstrate your understanding and insight about the data you're working with
+    -   I will help you to work towards this.
+
+## Programs and Prerequisites
+
+-   This course *only* offers credit for the Statistics Applied Minor program. If you are in the Statistics Major, Minor or Specialist programs, or the Math Specialist (Statistics), you should instead take STAC33, offered in Winter.
+
+-   To take this course, you need one of these courses as preparation:
+
+    -   STAB27 / STA221
+    -   PSYC08 / PSY202
+    -   MGEB12
+
+-   STAB57 is *not* suitable preparation for this course. If you have that, you should take STAC33.
+
+-   Note that you may not combine the Applied Minor Program in Statistics with any other Statistics, Mathematics or Computer Science program.
+
+-   I check prerequisites.
+
+## STAC53
+
+-   Check your Degree Explorer.
+
+-   This might have STAC50 as a requirement (for which you don't now have the prereq)
+
+-   If you have not already taken C50, you need to take *STAC53*.
+
+-   To get this reflected in your Degree Explorer: email (instructions below)
+
+    -   with your name and student number
+    -   and explaining that you would like me to make this change.
+
+## Getting help
+
+-   Option 1: come to tutorial and ask the TAs or me.
+
+-   Option 2: Quercus discussion boards:
+
+    -   First: look at the Quercus discussion board (Forum 2). Your question might have an answer there.
+    -   If you see a question there that you can answer, go ahead and answer it.
+    -   If you don't see an answer to your question, post your question on Forum 2.
+    -   If you don't get an answer to your question (from me or anyone else) in Forum 2, post it to Forum 3 and I will answer.
+    -   For an issue that is more personal, email me (below).
+
+-   Option 3: I am also willing to meet at other times on Zoom if you want to chat. I will set up a mechanism for you to make an appointment.
+
+## E-mail
+
+-   Use a U of T email (so that I know who you are)
+-   Use a suitable subject, eg "STAC32" or "Applied Minor Program"
+-   Begin with "Dear Dr Butler"
+-   State *clearly* how I can help you. (The quicker I can figure this out, the better your chances of a quick reply.)
+-   Include your name (as U of T knows it) *and* student number
+-   I aim to reply within one working day.
+
+## Course objectives
+
+-   You will learn how to use software to analyze data, and to communicate what you found.
+
+-   This will be assessed through assignments (approximately weekly) and a final project.
+
+    -   Some questions will ask for software output, and some for explanation.
+    -   The grading will reward evidence of clear understanding and insight.
+
+-   Along the way you will learn how to use R Notebooks and how to turn these into reports.
+
+## Course materials
+
+The blue things are all links:
+
+-   [Quercus](https://q.utoronto.ca/): lecture videos, hand in assignments/projects, receive grades.
+
+-   [Course website](http://ritsokiguess.site/STAC32/): course news, reminders, lecture notes and code, assignment solutions, other stuff I want to share with you
+
+-   [Computer requirements](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
+
+    -   to get the most out of tutorials, you will want a working camera and microphone
+    -   can use `rstudio.cloud` (needs only web browser) or install R and R Studio on your computer
+
+-   [Reference: R for Data Science](https://r4ds.had.co.nz/)
+
+## Assessment
+
+-   Assignments: 10 total, due in weeks 2 through 10 and in the final exam period. Best 8 count, total 80% (10% each).
+-   Project: can be done in groups (chosen by you) of up to 5 people. Due the last day of classes. Worth 20%.
+
+## Grading
+
+-   Assignments and projects will be graded out of 10 on this scale:
+
+    -   6/10 or less: Falls short of expectations for this course, with serious errors in coding or absent or deficient explanations.
+    -   7/10: As expected in this course. May be small coding errors or misconceptions.
+    -   8/10: Good work, no obvious coding errors, mostly accurate explanations.
+    -   9/10: Excellent work, showing clear understanding throughout.
+    -   10/10 (rare): Excellent work that shows additional insight.
+
+-   Graders will also give feedback on how you can improve for the next assignment.
+
+-   Grades are the grader's best assessment of the quality of the work, and are unlikely to change on appeal.
+
+-   My (detailed) solutions will be available after each assignment is handed in.
+
+## Policies
+
+-   I do not generally accept late work, because I will want to post my solutions for everyone to learn from.
+-   I am willing to be a little flexible (say, a few minutes), but work that is handed in after my solutions have been posted will definitely not be graded.
+-   You have two "free" assignments (since only the best 8 count); you may miss these without explanation. If circumstances make it impossible to hand in work beyond that, email me and we'll see what we can work out.
+-   There are no make-up assessments.
+-   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
+
+## Course material
+
+In R:
+
+-   Installation / connection
+-   Reading data files (of different sorts)
+-   Making graphs
+-   Numerical summaries
+-   Statistical inference
+-   Reports
+-   Tidying and organizing data
+-   Case studies
+-   Functions
+-   Dates and times
+-   Miscellaneous tasks
+
+
+## Accessibility statement
+
+> Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confiden- tial. The UTSC AccessAbility Services staff (located in S302) are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability@utsc.utoronto.ca`.
+
+## Expectations 1/3
+
+-   I expect that you will do your own work in this course, and not seek help from outside this course. (In the case of the project, that you will not seek help from anyone outside of your group, except possibly the TAs and me.)
+-   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
+
+## Expectations 2/3
+
+-   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me.
+-   Anything else, for example, material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there.
+-   If you want credit for any ideas that come from outside the course materials, you must say where they came from.
+-   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view.
+
+## Expectations 3/3
+
+-   I expect you to learn how to do things *as they are done in this course*. You will also make STAD29 much easier if you do that.
+-   If you tell me you're having trouble, I will not judge you or think less of you. I hope you'll extend me the same grace. (From [here](https://econf20.classes.andrewheiss.com/syllabus/).)
+-   [This (video)](https://twitter.com/i/status/1293543531496308736).
+-   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.

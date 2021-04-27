@@ -1,0 +1,285 @@
+# Dates and Times
+
+## Packages for this section
+```{r, eval=F}
+library(tidyverse)
+library(lubridate)
+```
+
+## Dates
+- Dates represented on computers as “days since an origin”,
+typically Jan 1, 1970, with a negative date being before the origin: 
+
+```{r, paged.print=T}
+mydates <- c("1970-01-01", "2007-09-04", "1931-08-05")
+(somedates <- tibble(text = mydates) %>%
+  mutate(
+    d = as.Date(text),
+    numbers = as.numeric(d)
+  ))
+```
+
+## Doing arithmetic with dates
+
+- Dates are "actually" numbers, so can add and subtract (difference is 2007 date in `d` minus others): 
+
+```{r, paged.print=T}
+somedates %>% mutate(plus30 = d + 30, diffs = d[2] - d)
+```
+
+## Reading in dates from a file
+- `read_csv` and the others can guess that you have dates, if you
+format them as year-month-day, like column 1 of this `.csv`:
+
+```
+date,status,dunno
+2011-08-03,hello,August 3 2011
+2011-11-15,still here,November 15 2011
+2012-02-01,goodbye,February 1 2012
+```
+
+- Then read them in:
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/mydates.csv"
+ddd <- read_csv(my_url)
+```
+
+- read_csv guessed that the 1st column is dates, but not 3rd.
+
+## The data as read in
+
+```{r, paged.print=T}
+ddd
+```
+
+## Dates in other formats 
+
+- Preceding shows that dates should be stored as text in format
+yyyy-mm-dd (ISO standard).
+- To deal with dates in other formats, use package `lubridate` and
+convert. For example, dates in US format with month first:
+```{r, paged.print=T}
+tibble(usdates = c("05/27/2012", "01/03/2016", "12/31/2015")) %>%
+  mutate(iso = mdy(usdates))
+```
+
+## Trying to read these as UK dates 
+
+```{r, paged.print=T}
+tibble(usdates = c("05/27/2012", "01/03/2016", "12/31/2015")) %>%
+  mutate(uk = dmy(usdates))
+```
+
+- For UK-format dates with month second, one of these dates is legit,
+but the other two make no sense.
+
+## Our data frame's last column:
+
+- Back to this: 
+
+```{r, paged.print=F}
+ddd
+```
+
+- Month, day,  year in that order.
+
+## so interpret as such
+
+```{r, paged.print=T}
+(ddd %>% mutate(date2 = mdy(dunno)) -> d4)
+```
+
+
+## Are they really the same? 
+
+- Column `date2` was correctly converted from column `dunno`: 
+
+```{r, paged.print=F}
+d4 %>% mutate(equal = identical(date, date2))
+```
+
+- The two columns of dates are all the same.
+
+## Making dates from pieces
+Starting from this file:
+
+```
+year month day
+1970 1 1
+2007 9 4
+1940 4 15
+```
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/pieces.txt"
+dates0 <- read_delim(my_url, " ")
+```
+
+## Making some dates 
+
+```{r}
+dates0
+dates0 %>%
+  unite(dates, day, month, year) %>%
+  mutate(d = dmy(dates)) -> newdates
+```
+
+
+## The results
+
+```{r, paged.print=T}
+newdates
+```
+
+- `unite` glues things together with an underscore between them (if you
+don’t specify anything else). Syntax: first thing is new column to be
+created, other columns are what to make it out of.
+- `unite` makes the original variable columns year, month, day
+*disappear*.
+- The column `dates` is text, while `d` is a real date.
+
+## Extracting information from dates 
+
+```{r, paged.print=T}
+newdates %>%
+  mutate(
+    mon = month(d),
+    day = day(d),
+    weekday = wday(d, label = T)
+  )
+```
+
+## Dates and times
+- Standard format for times is to put the time after the date, hours,
+minutes, seconds:
+```{r, paged.print=F}
+(dd <- tibble(text = c(
+  "1970-01-01 07:50:01", "2007-09-04 15:30:00",
+  "1940-04-15 06:45:10", "2016-02-10 12:26:40"
+)))
+```
+
+## Converting text to date-times: 
+
+- Then get from this text using `ymd_hms`:
+```{r, paged.print=F}
+dd %>% mutate(dt = ymd_hms(text))
+```
+
+
+## Timezones
+
+- Default timezone is “Universal Coordinated Time”. Change it via `tz=`
+and the name of a timezone: 
+
+```{r, paged.print=T}
+dd %>% 
+  mutate(dt = ymd_hms(text, tz = "America/Toronto")) -> dd
+dd %>% mutate(zone = tz(dt))
+```
+
+## Extracting time parts
+- As you would expect: 
+```{r, paged.print=F}
+dd %>%
+  select(-text) %>%
+  mutate(
+    h = hour(dt),
+    sec = second(dt),
+    min = minute(dt),
+    zone = tz(dt)
+  )
+```
+
+## Same times, but different time zone: 
+
+```{r, paged.print=T}
+dd %>%
+  select(dt) %>%
+  mutate(oz = with_tz(dt, "Australia/Sydney"))
+```
+
+In more detail: 
+
+```{r, echo=F}
+dd %>%
+  mutate(oz = with_tz(dt, "Australia/Sydney")) %>%
+  pull(oz)
+```
+
+
+## How long between date-times?
+- We may need to calculate the time between two events. For example,
+these are the dates and times that some patients were admitted to
+and discharged from a hospital:
+
+```
+admit,discharge
+1981-12-10 22:00:00,1982-01-03 14:00:00
+2014-03-07 14:00:00,2014-03-08 09:30:00
+2016-08-31 21:00:00,2016-09-02 17:00:00
+```
+
+## Do they get read in as date-times? 
+
+- These ought to get read in and converted to date-times:
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/hospital.csv"
+stays <- read_csv(my_url)
+```
+
+-  and so it proves.
+
+## Subtracting the date-times
+
+- In the obvious way, this gets us an answer:
+```{r}
+stays %>% mutate(stay = discharge - admit)
+```
+
+- Number of hours; hard to interpret. 
+
+## Days
+
+- Fractional number of days would
+be better: 
+
+```{r, paged.print=T}
+# stays %>% 
+#   mutate(stay_days = (discharge - admit) / ddays(1))
+stays %>% 
+  mutate(
+    stay_days = as.period(admit %--% discharge) / days(1))
+```
+
+## Completed days
+
+- Pull out with `day()` etc, as for a date-time
+
+error here ****
+
+```{r, error=TRUE}
+stays %>% 
+  mutate(
+    stay = as.period(admit %--% discharge),
+    stay_days = day(stay),
+    stay_hours = hour(stay)
+    ) %>%
+  select(starts_with("stay"))
+```
+
+
+## Comments
+- Date-times are stored internally as seconds-since-something, so that
+subtracting two of them will give, internally, a number of seconds.
+- Just subtracting the date-times is displayed as a time (in units that R
+chooses for us).
+- Functions `ddays(1)`, `dminutes(1)` etc. will give number of seconds
+in a day or a minute, thus dividing by them will give (fractional) days,
+minutes etc. This works for things like days/minutes with equal numbers of seconds, but not months/years.
+- Better: convert to a "period", then divide by `days(1)`, `months(1)` etc.
+- These ideas useful for calculating time from a start point until an event
+happens (in this case, a patient being discharged from hospital).
+

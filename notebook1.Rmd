@@ -1,0 +1,28 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+```
+
+## read and inspect data
+
+```{r}
+mydata <- read_csv("test1.csv")
+mydata
+```
+
+```{r}
+View(mydata)
+```
+
+## summary
+
+```{r}
+summary(mydata)
+```
+

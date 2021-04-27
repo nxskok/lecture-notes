@@ -1,0 +1,8 @@
+---
+title: "Parametrized R Notebook"
+output: html_notebook
+params:
+  fruit: "banana"
+---
+
+The fruit is `r params$fruit`. 

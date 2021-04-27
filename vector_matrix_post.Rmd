@@ -1,0 +1,316 @@
+## Packages for this section
+
+- This is (almost) all base R! We only need this for one thing later:
+
+```{r, eval=F}
+library(tidyverse)
+```
+
+
+## Vector addition
+
+
+Adds 2 to each element.
+
+- Adding vectors:
+```{r}
+u <- c(2, 3, 6, 5, 7)
+u
+v <- c(1, 8, 3, 2, 0)
+u
+v
+u + v
+```
+
+- Elementwise addition. (Linear algebra: vector addition.)
+
+## Adding a number to a vector
+
+- Define a vector, then “add 2” to it:
+
+```{r}
+u
+k <- 2
+u
+u + k
+```
+
+- adds 2 to *each* element of `u`.
+
+this is as in a dataframe:
+
+```{r}
+d <- tribble(
+  ~x, ~y,
+  1, 2,
+  3, 4
+)
+d %>% mutate(z = 5)
+```
+
+
+## Scalar multiplication
+As per linear algebra:
+
+```{r}
+k
+u
+k * u
+```
+
+- Each element of vector multiplied by 2.
+
+## “Vector multiplication”
+What about this?
+```{r}
+u
+v
+u * v
+```
+
+Each element of `u` multiplied by *corresponding* element of `v`. Could be
+called elementwise multiplication. 
+
+(Don't confuse with “outer” or
+“vector” product from linear algebra, or indeed “inner” or “scalar” multiplication,
+for which the answer is a number.)
+
+## Combining different-length vectors
+- No error here (you get a warning). What happens?
+```{r}
+u
+w <- c(1, 2)
+w
+u + w
+```
+
+- Add 1 to first element of `u`, add 2 to second.
+- Go back to beginning of `w` to find something to add: add 1 to 3rd
+element of `u`, 2 to 4th element, 1 to 5th. 
+
+## How R does this 
+
+- Keep re-using shorter vector until reach length of longer one.
+- “Recycling”.
+- If the longer vector's length not a multiple of the shorter vector's length, get a warning (probably not what you want). 
+- Same idea is used when multiplying a vector by a number: the number
+keeps getting recycled.
+
+## Matrices
+- Create matrix like this:
+```{r}
+(A <- matrix(1:4, nrow = 2))
+```
+
+- First: stuff to make matrix from, then how many rows and columns.
+- R goes down columns by default. To go along rows instead:
+```{r}
+(B <- matrix(5:8, nrow = 2, ncol = 2, byrow = TRUE))
+```
+
+- One of `nrow` and `ncol` enough, since R knows how many things in
+the matrix.
+
+## Adding matrices
+What happens if you add two matrices?
+
+```{r}
+A
+B
+A + B
+```
+
+## Adding matrices
+
+- Nothing surprising here. This is matrix addition as we and linear algebra know it.
+
+## Multiplying matrices
+- Now, what happens here?
+```{r}
+A
+B
+A * B
+```
+
+## Multiplying matrices?
+
+- *Not* matrix multiplication (as per linear algebra).
+- Elementwise multiplication. Also called *Hadamard product* of `A` and `B`.
+
+## Legit matrix multiplication
+Like this:
+
+```{r}
+A
+B
+A %*% B
+```
+
+## Reading matrix from file
+- The usual:
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/m.txt"
+M <- read_delim(my_url, " ", col_names = F)
+M
+class(M)
+```
+
+## but...
+
+- except that M is not an R matrix, and thus this doesn’t work:
+```{r, error=T}
+v <- c(1, 3)
+v
+M %*% v
+```
+
+## Making a genuine matrix
+
+Do this first:
+```{r}
+M <- as.matrix(M)
+M
+```
+
+and then all is good:
+```{r}
+M %*% v
+```
+
+## Linear algebra stuff
+- To solve system of equations
+$Ax = w$ for $x$:
+```{r}
+A
+w
+solve(A, w)
+```
+
+## Matrix inverse
+
+- To find the inverse of A:
+```{r}
+A
+solve(A)
+A %*% solve(A)
+```
+
+- You can check that the matrix inverse and equation solution are
+correct.
+
+## Inner product
+- Vectors in R are column vectors, so just do the matrix multiplication (`t()` is transpose): 
+
+```{r}
+a <- c(1, 2, 3)
+b <- c(4, 5, 6)
+t(a) %*% b
+as.vector(t(a) %*% b)
+```
+
+- Note that the answer is actually a 1 × 1 matrix.
+- Or as the sum of the elementwise multiplication:
+
+```{r}
+a
+b
+a*b
+sum(a * b)
+```
+
+## Accessing parts of vector
+
+- use square brackets and a number to get elements of a vector
+
+```{r}
+b
+b[3]
+```
+
+## Accessing parts of matrix
+
+- use a row and column index to get an element of a matrix
+
+```{r}
+A
+A[2,1]
+```
+
+- leave the row or column index empty to get whole row or column, eg.
+
+```{r}
+A[1,]
+A[,2]
+```
+
+
+
+## Eigenvalues and eigenvectors
+
+- For a matrix $A$, these are scalars $\lambda$ and vectors $v$ that solve
+
+$$ A v = \lambda v $$
+
+- In R, `eigen` gets these:
+
+```{r}
+A
+e <- eigen(A)
+```
+
+## The eigenvalues/vectors
+
+```{r}
+e
+```
+
+
+## To check that the eigenvalues/vectors are correct
+
+- $\lambda_1 v_1$: (scalar) multiply first eigenvalue by first eigenvector (in column)
+
+```{r}
+e$values[1] * e$vectors[,1]
+```
+- $A v_1$: (matrix) multiply matrix by first eigenvector (in column)
+
+```{r}
+A %*% e$vectors[,1]
+```
+
+- These are (correctly) equal.
+- The second one goes the same way.
+
+## A statistical application of eigenvalues
+
+- A negative correlation:
+
+\footnotesize
+```{r}
+d <- tribble(
+  ~x,  ~y,
+  10,  20,
+  11,  18,
+  12,  17,
+  13,  14,
+  14,  13
+)
+d
+v <- cor(d)
+v
+```
+\normalsize
+
+- `cor` gives the correlation matrix between each pair of variables (correlation between `x` and `y` is $-0.988$)
+
+## Eigenanalysis of correlation matrix
+
+```{r}
+eigen(v)
+```
+
+- first eigenvalue much bigger than second (second one near zero)
+- two variables, but data nearly *one*-dimensional
+- opposite signs in first eigenvector indicate that the one dimension is:
+  - `x` small and `y` large at one end,
+  - `x` large and `y` small at the other.

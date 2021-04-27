@@ -1,0 +1,1018 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+# Discriminant analysis
+
+
+
+
+## Discriminant analysis
+
+  
+  - ANOVA and MANOVA: predict a (counted/measured) response from group membership.
+  - Discriminant analysis: predict group membership based on counted/measured variables.
+  - Covers same ground as logistic regression (and its variations), but emphasis on classifying observed data into correct groups.
+  - Does so by searching for linear combination of original variables that best separates data into groups (canonical variables).
+  - Assumption here that groups are known (for data we have). If trying to "best separate" data into unknown groups, see *cluster analysis*.
+  - Examples: revisit seed yield and weight data, peanut data,
+    professions/activities data; remote-sensing data.
+  
+
+
+
+
+## Packages
+
+  
+```{r}
+library(MASS)
+library(tidyverse)
+library(ggrepel)
+```   
+
+`ggrepel` allows labelling points on a plot so they don't
+overwrite each other.
+
+
+## About `select`
+  
+  
+  - Both `dplyr` (in `tidyverse`) and `MASS`
+    have a function called `select`, and *they do
+      different things*.
+  - How do you know which `select` is going to get called? 
+  - With `library`, the one loaded *last* is visible,
+    and others are not.
+  - Thus we can access the `select` in `dplyr` but
+    not the one in `MASS`. If we wanted that one, we'd have to
+    say `MASS::select`.
+  - This is why I loaded `MASS` before
+    `tidyverse`. If I had done it the other way around, the
+    `tidyverse` `select`, which I want to use, would have
+    been the invisible one.  
+  
+
+
+## Example 1: seed yields and weights
+
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/manova1.txt"
+hilo=read_delim(my_url," ")
+g=ggplot(hilo,aes(x=yield,y=weight,
+  colour=fertilizer))+geom_point(size=4)
+``` 
+
+
+```{r}
+g
+```   
+
+
+  
+  
+  Recall data from MANOVA: needed a multivariate analysis to find
+  difference in seed yield and weight based on whether they were high
+  or low fertilizer.
+
+
+  
+
+
+
+
+## Basic discriminant analysis
+
+```{r}
+hilo.1=lda(fertilizer~yield+weight,data=hilo)
+``` 
+
+
+- Uses `lda` from package MASS.
+- "Predicting" group membership from measured variables.
+
+
+
+
+## Output
+
+  
+```{r}
+hilo.1
+``` 
+
+
+
+## Things to take from output
+  
+  
+  - Group means: high-fertilizer plants have (slightly) higher
+    mean yield and weight than low-fertilizer plants.
+  
+  - "Coefficients of linear discriminants": `LD1,
+      LD2,`... are scores constructed from observed variables that
+    best separate the groups.
+    
+    - Understand by pretending all variables standardized (mean 0,
+      $+$ above mean, $-$ below mean). If yield and weight high (above
+      average), contribute a $+$ to LD1 score, so LD1
+      *negative*. If yield and weight low (think $-$), LD1 score
+      *positive*.
+    - High-fertilizer plants have higher yield and weight, thus
+      negative LD1 score. Low-fertilizer plants have low yield and
+      weight, thus positive LD1 score.
+    - One LD1 score for each observation. Plot with actual groups.
+    
+  
+  
+
+
+## How many linear discriminants?
+    
+    
+  - Number of variables
+  - Number of groups *minus 1*
+  - Smaller of these
+  - Seed yield and weight: 2 variables, 2 groups,
+      $\min(2,2-1)=1$. 
+    
+  
+
+
+## Getting LD scores
+  
+Feed output from LDA into `predict`:
+
+```{r}
+hilo.pred=predict(hilo.1)
+names(hilo.pred)
+``` 
+
+Component $x$ contains LD score(s), here in descending order:
+
+```{r}
+d = cbind(hilo,hilo.pred$x) %>% arrange(desc(LD1))
+d
+``` 
+
+High fertilizer have yield and weight high, negative LD1 scores.
+  
+
+
+## Plotting LD1 scores
+  
+  With one LD score, plot against (true) groups, eg. boxplot:
+  
+```{r}
+ggplot(d,aes(x=fertilizer,y=LD1))+geom_boxplot()
+```   
+  
+
+
+## Potentially misleading
+  
+  
+  - These are like regression slopes:
+    
+```{r}
+hilo.1$scaling
+```     
+
+- Reflect change in LD1 score for 1-unit change in variables.
+- But one-unit change in variables might not be comparable:
+  
+```{r}
+summary(hilo)
+```   
+
+- Here, IQRs *identical*, so 1-unit change in each variable
+  means same thing.
+  
+  
+
+
+## What else is in `hilo.pred?`
+  
+```{r}
+names(hilo.pred)
+```
+
+
+- `class`: predicted fertilizer level (based on values of
+  `yield` and `weight`).
+- `posterior`: predicted probability of being low or high
+  fertilizer given `yield` and `weight`.
+ 
+    
+
+
+## Predictions and predicted groups
+  
+... based on `yield` and `weight`:
+
+```{r}
+cbind(hilo,predicted=hilo.pred$class)
+table(obs=hilo$fertilizer,pred=hilo.pred$class)
+``` 
+
+Or:
+
+```{r}
+d2=tibble(obs=hilo$fertilizer,pred=hilo.pred$class)
+d2
+d2 %>% count(obs,pred)
+```
+
+or even
+
+```{r}
+d2=tibble(obs=hilo$fertilizer,pred=hilo.pred$class)
+d2 %>% count(obs,pred) %>% 
+  mutate(stat=ifelse(obs==pred,"correct","wrong"))
+
+```
+
+
+
+
+## Understanding the predicted groups
+  
+  
+  - Each predicted fertilizer level is exactly same as observed
+    one (perfect prediction).
+  - Table shows no errors: all values on top-left to bottom-right
+    diagonal. 
+  
+
+
+## Posterior probabilities
+  
+  show how clear-cut the classification decisions were:
+  
+```{r}
+pp=round(hilo.pred$posterior,4)
+d=cbind(hilo,hilo.pred$x,pp)
+d
+``` 
+
+Only obs. 7 has any doubt: `yield` low for a high-fertilizer,
+but high `weight` makes up for it.
+  
+
+
+
+
+
+
+## Example 2: the peanuts
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/peanuts.txt"
+peanuts=read_delim(my_url," ")
+peanuts 
+``` 
+
+Recall: `location` and `variety` both significant in
+MANOVA. Make combo of them (over):
+
+  
+
+
+## Location-variety combos
+  
+```{r}
+peanuts.combo = peanuts %>% unite(combo,variety,location) 
+peanuts.combo
+```  
+
+  
+
+
+## Discriminant analysis
+  
+```{r}
+peanuts.1=lda(combo~y+smk+w,data=peanuts.combo)
+peanuts.1
+```   
+
+Or, in pieces:
+
+```{r}
+peanuts.1$scaling
+```
+
+and
+
+```{r}
+peanuts.1$svd
+```
+
+
+- Now 3 LDs (3 variables, 6 groups, $\min(3,6-1)=3$).
+- First: relationship of LDs to original variables. Look for
+  coeffs far from zero: here,
+  
+  -   high `LD1` mainly high `w`
+  or low `y`.
+- high `LD2` mainly high `w`.
+  
+- `svd` values show relative importance of LDs:
+  `LD1` much more important than `LD2`.
+
+
+
+## Group means by variable
+  
+```{r}
+peanuts.1$means
+```   
+
+
+- `5_2` clearly smallest on `y`, `smk`, near
+  smallest on `w`
+- `8_2` clearly biggest on `smk`, `w`, also
+  largest on `y`
+- `8_1` large on `w`, small on `y`.
+- `scaling` links LDs with original variables,
+  `means` links original variables with groups.
+- Implies: link between groups and LDs.
+
+  
+
+
+
+## The predictions and misclassification
+  
+```{r}
+peanuts.pred=predict(peanuts.1)
+table(obs=peanuts.combo$combo,
+      pred=peanuts.pred$class)
+```   
+
+Actually classified very well. Only one `6_2` classified as a
+`5_1`, rest all correct.
+
+Or: 
+
+
+```{r}
+dd=tibble(obs=peanuts.combo$combo,pred=peanuts.pred$class)
+dd
+dd %>% count(obs,pred)
+```
+
+or even
+
+```{r}
+dd %>% count(obs,pred) %>% 
+  mutate(stat=ifelse(obs==pred,"correct","wrong"))
+```
+
+
+
+## Posterior probabilities
+
+```{r}
+pp=round(peanuts.pred$posterior,2)
+peanuts.combo %>% select(-c(y,smk,w)) %>%
+   cbind(.,pred=peanuts.pred$class,pp)
+```   
+
+*Some* doubt about which combo each plant belongs in, but not too
+much. The one misclassified plant was a close call.
+
+
+
+## Discriminant scores, again
+  
+  
+  - How are discriminant scores related to original variables?
+  - Construct data frame with original data and discriminant
+    scores side by side:
+```{r}
+peanuts.1$scaling
+lds=round(peanuts.pred$x,2)
+mm=with(peanuts.combo,
+  data.frame(combo,y,smk,w,lds))
+```   
+- LD1 positive if `w` large and/or `y` small.
+- LD2 positive if `w` large.    
+  - But, what if `y, smk, w` differ in spread?
+    
+  
+
+
+
+## Discriminant scores for data
+
+```{r}
+mm
+```   
+  
+  
+- Obs. 5 and 6 have most negative `LD1`: large `y`,
+  small `w`.
+- Obs. 4 has most negative `LD2`: small `w`.
+
+Plot:
+```{r,fig.width=10}
+ggplot(mm,aes(x=LD1,y=LD2,colour=combo,shape=combo))+geom_point()
+  ```
+
+
+
+
+## Predict typical LD1 scores
+  
+  First and third quartiles for three response variables (reading down):
+  
+```{r}
+quartiles = peanuts %>% select(y:w) %>%
+  map_df(quantile, c(0.25,0.75))
+quartiles
+new=with(quartiles,crossing(y,smk,w))
+```   
+  
+
+
+## The combinations
+  
+```{r}
+new
+pp=predict(peanuts.1,new)
+```   
+  
+
+
+## Predicted typical LD1 scores
+  
+```{r}
+cbind(new,pp$x) %>% arrange(LD1)
+```   
+
+
+- Very negative LD1 score with large `y` and small
+  `w`
+- `smk` doesn't contribute much to LD1
+- Very positive LD1 score with small `y` and large
+  `w`.
+- Same as we saw from Coefficients of Linear Discriminants.
+
+  
+
+
+
+  
+## Plot LD1 vs. LD2, labelling by combo
+  
+```{r}
+g=ggplot(mm,aes(x=LD1,y=LD2,colour=combo,
+  label=combo))+geom_point()+
+  geom_text_repel()+guides(colour=F) ; g
+```   
+  
+
+
+## "Bi-plot" from `ggbiplot`
+  
+See installation notes below.  
+  
+```{r}
+ggbiplot::ggbiplot(peanuts.1,
+  groups=factor(peanuts.combo$combo))
+``` 
+
+## Installing `ggbiplot`
+  
+  
+  - `ggbiplot` not on CRAN, so usual
+    `install.packages` will not work.
+  - Install package `devtools` first (once):
+    
+```{r, eval=F}
+install.packages("devtools")
+```     
+  - Then install `ggbiplot` (once):
+```{r, eval=FALSE}
+library(devtools)
+install_github("vqv/ggbiplot")
+```     
+  
+I already have these installed, so I don't need to install them again.
+For you, take the `eval=FALSE` out of the code chunk header (once) to install them (and then put it back).
+
+
+
+## Cross-validation
+  
+  
+  - So far, have predicted group membership from same data used to
+    form the groups --- dishonest!
+  - Better: *cross-validation*: form groups from all
+    observations *except one*, then predict group membership for
+    that left-out observation.
+  - No longer cheating!
+  - Illustrate with peanuts data again.
+  
+  
+
+
+## Misclassifications
+  
+  - Fitting and prediction all in one go:
+  
+```{r}
+peanuts.cv=lda(combo~y+smk+w,
+  data=peanuts.combo,CV=T)
+table(obs=peanuts.combo$combo,
+      pred=peanuts.cv$class)
+```   
+
+- Some more misclassification this time.
+  
+
+
+
+## Repeat of LD plot
+ 
+```{r}
+g
+```   
+  
+
+
+## Posterior probabilities
+  
+```{r}
+pp=round(peanuts.cv$posterior,3)
+data.frame(obs=peanuts.combo$combo,
+           pred=peanuts.cv$class,pp)
+```   
+  
+
+
+## Why more misclassification?
+  
+  
+  - When predicting group membership for one observation, only
+    uses the *other one* in that group.
+  - So if two in a pair are far apart, or if two groups overlap,
+    great potential for misclassification.
+  - Groups `5_1` and `6_2` overlap.
+  - `5_2` closest to `8_1`s looks more like an
+    `8_1` than a `5_2` (other one far away).
+  - `8_1`s relatively far apart and close to other things,
+    so one appears to be a `5_2` and the other an `8_2`.
+  
+  
+
+
+
+## Example 3: professions and leisure activities
+
+  
+  - 15 individuals from three different professions (politicians,
+    administrators and belly dancers) each participate in four
+    different leisure activities: reading, dancing, TV watching and
+    skiing. After each activity they rate it on a 0--10 scale.
+  - Some of the data:
+
+```
+bellydancer 7 10 6 5
+bellydancer 8 9 5 7
+bellydancer 5 10 5 8
+politician 5 5 5 6
+politician 4 5 6 5
+admin 4 2 2 5
+admin 7 1 2 4
+admin 6 3 3 3
+```
+  - How can we best use the scores on the activities to predict a person's profession?
+  - Or, what combination(s) of scores best separate data into profession groups?
+  
+
+
+
+## Discriminant analysis
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/profile.txt"
+active=read_delim(my_url," ")
+active.1=lda(job~reading+dance+tv+ski,data=active)
+active.1$svd
+active.1$scaling
+```   
+
+
+- Two discriminants, first fair bit more important than second.
+- `LD1` depends (negatively) most on `dance`, a bit
+  on `tv`.
+- `LD2` depends mostly on `tv`.
+
+
+
+
+
+
+## Misclassification
+  
+```{r}
+active.pred=predict(active.1)
+table(obs=active$job,pred=active.pred$class)
+```   
+
+Everyone correctly classified. Or:
+
+```{r}
+tibble(obs=active$job,pred=active.pred$class) %>% 
+  count(obs,pred) %>% 
+  mutate(stat=ifelse(obs==pred,"correct","wrong"))
+```
+
+  
+
+
+## Plotting LDs
+  
+```{r}
+mm=data.frame(job=active$job,active.pred$x,person=1:15)
+g=ggplot(mm,aes(x=LD1,y=LD2,
+    colour=job,label=job))+geom_point()+
+    geom_text_repel()+guides(colour=F) ; g
+```   
+  
+
+
+## Biplot
+  
+```{r}
+ggbiplot::ggbiplot(active.1,groups=active$job)
+```   
+  
+
+
+## Comments on plot
+  
+  
+  - Groups well separated: bellydancers top left, administrators
+    top right, politicians lower middle.
+  - Bellydancers most negative on `LD1`: like dancing most.
+  - Administrators most positive on `LD1`: like dancing least.
+  - Politicians most negative on `LD2`: like TV-watching most.
+  
+  
+
+
+## Plotting individual `persons`
+  
+Make `label` be identifier of person. Now need legend:
+
+```{r}
+ggplot(mm,aes(x=LD1,y=LD2,
+    colour=job,label=person))+geom_point()+
+    geom_text_repel()
+```   
+  
+  
+
+
+## Posterior probabilities
+
+```{r}
+pp=round(active.pred$posterior,3)
+data.frame(obs=active$job,pred=active.pred$class,pp)
+```   
+
+
+Not much doubt.
+
+
+## Cross-validating the jobs-activities data
+  
+Recall: no need for `predict`. Just pull out `class` and
+make a table:  
+  
+```{r}
+active.cv=lda(job~reading+dance+tv+ski,
+  data=active,CV=T)
+table(obs=active$job,pred=active.cv$class)
+```   
+
+Or:
+
+```{r}
+tibble(obs=active$job,pred=active.cv$class) %>% 
+  count(obs,pred) %>% 
+  mutate(is_correct=ifelse(obs==pred,"yes","no"))
+```
+
+
+
+This time one of the bellydancers was classified as a politician.
+  
+
+
+## and look at the posterior probabilities
+  
+picking out the ones where things are not (absolutely) certain:
+
+```{r}
+pp=round(active.cv$posterior,3)
+data.frame(obs=active$job,pred=active.cv$class,pp) %>%
+  mutate(max=pmax(admin,bellydancer,politician)) %>%
+  filter(max<0.9995)
+```   
+
+
+- Bellydancer was "definitely" a politician!
+- One of the administrators might have been a politician too.
+
+  
+
+
+
+## Why did things get misclassified?
+
+  
+```{r}
+g
+```       
+  
+  
+    
+    - Go back to plot of discriminant scores:
+    - one bellydancer much closer to the politicians,
+    - one administrator a bit closer to the politicians.
+    
+  
+  
+  
+
+  
+
+
+
+## Example 4: remote-sensing data
+
+  
+  - View 38 crops from air, measure 4 variables `x1-x4`.
+  - Go back and record what each crop was.
+  - Can we use the 4 variables to distinguish crops?
+  
+
+
+## Reading in
+  
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/remote-sensing.txt"
+crops=read_table(my_url)
+crops
+```   
+  
+
+
+
+## Starting off: number of LDs
+  
+```{r}
+crops.lda=lda(crop~x1+x2+x3+x4,data=crops)
+crops.lda
+``` 
+
+```{r}
+crops.lda$svd
+```
+
+
+- 4 LDs (four variables, six groups).
+- 1st one important, maybe 2nd as well.
+
+  
+
+
+
+## Connecting original variables and LDs
+  
+```{r}
+crops.lda$means
+round(crops.lda$scaling,3)
+```   
+
+
+- Links groups to original variables to LDs.
+
+
+
+## `LD1 and \texttt{LD2`}
+  
+```{r}
+round(crops.lda$scaling,3)
+``` 
+%$
+
+- `LD1` mostly `x1` (minus), so clover low on
+  `LD1`, corn high.
+- `LD2` `x3` (minus), `x2` (plus), so
+  sugarbeets should be high on `LD2`.
+
+
+  
+
+
+## Predictions
+  
+  
+  - Thus:
+```{r}
+crops.pred=predict(crops.lda)
+table(obs=crops$crop,pred=crops.pred$class)
+```   
+- Not very good, eg. only 6 of 11 `Clover` classified correctly.
+- Set up for plot:
+  
+```{r}
+mm=data.frame(crop=crops$crop,crops.pred$x)
+```   
+    
+  
+
+  
+
+
+
+## Plotting the LDs
+  
+```{r}
+ggplot(mm,aes(x=LD1,y=LD2,colour=crop,shape=crop))+
+  geom_point()
+```   
+  
+
+
+## Biplot
+  
+```{r}
+ggbiplot::ggbiplot(crops.lda,groups=crops$crop)
+```   
+  
+
+
+\begin{frame}[figure]{Comments}
+  
+  
+  - Corn high on LD1 (right).
+  - Clover all over the place, but mostly low on LD1 (left).
+  - Sugarbeets tend to be high on LD2.
+  - Cotton tends to be low on LD2.
+  - Very mixed up.
+  
+  
+
+
+## Try removing Clover
+
+    
+```{r}
+crops %>% filter(crop!="Clover") -> crops2
+crops2.lda=lda(crop~x1+x2+x3+x4,data=crops2)
+```   
+
+- LDs for `crops2` will be different from before.
+- Concentrate on plot and posterior probs.
+
+```{r}
+crops2.pred=predict(crops2.lda)
+mm=data.frame(crop=crops2$crop,crops2.pred$x)
+```   
+  
+
+  
+
+
+
+## `lda output`
+  
+  
+Different from before:
+
+```{r}
+crops2.lda
+```  
+  
+
+
+## Plot
+
+A bit more clustered:
+  
+```{r}
+ggplot(mm,aes(x=LD1,y=LD2,colour=crop,shape=crop))+
+  geom_point()
+```   
+
+
+
+## Biplot
+  
+```{r}
+ggbiplot::ggbiplot(crops2.lda,groups=crops2$crop)
+```   
+  
+
+
+## Quality of classification
+  
+```{r}
+table(obs=crops2$crop,pred=crops2.pred$class)
+```   
+
+or:
+
+```{r}
+tibble(obs=crops2$crop,pred=crops2.pred$class) %>% 
+  count(obs,pred) %>% 
+  mutate(is_correct=ifelse(obs==pred,"yes","no"))
+
+```
+
+
+Better.
+  
+
+
+## Posterior probs, the wrong ones
+ 
+
+```{r}
+post=round(crops2.pred$posterior,3)
+data.frame(obs=crops2$crop,pred=crops2.pred$class,post) %>%
+  filter(obs!=pred)
+```   
+}
+
+
+- These were the misclassified ones, but the posterior probability
+  of being correct was not usually too low.
+- The correctly-classified ones are sometimes more clear-cut, but not completely convincing:
+
+```{r}
+data.frame(obs=crops2$crop,pred=crops2.pred$class,post) %>%
+  filter(obs==pred)
+```
+
+
+
+  
+
+
+## MANOVA
+  
+Began discriminant analysis as a followup to MANOVA. Do our variables
+significantly separate the crops (excluding Clover)?
+
+```{r}
+response=with(crops2,cbind(x1,x2,x3,x4))
+crops2.manova=manova(response~crop,data=crops2)
+summary(crops2.manova)
+``` 
+
+Yes, at least one of the crops differs (in means) from the others. So
+it is worth doing this analysis.
+
+Having said that, the P-value is not *very* small, so the separation of crops might not be very strong (as we saw).
+
+We did this the wrong way around, though!
+  
+
+
+## The right way around
+  
+  
+  - *First*, do a MANOVA to see whether any of the groups
+    differ significantly on any of the variables.
+  - *If the MANOVA is significant*, do a discriminant
+    analysis in the hopes of understanding how the groups are different.
+  - For remote-sensing data (without Clover):
+    
+    - LD1 a fair bit more important than LD2 (definitely ignore LD3).
+    - LD1 depends mostly on `x1`, on which Cotton was high
+      and Corn was low. 
+    
+
+  - Discriminant analysis in MANOVA plays the same kind of role
+    that Tukey does in ANOVA.
+  
+  
+
+
+
+
+
+
+
+
+
+

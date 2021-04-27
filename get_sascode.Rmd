@@ -1,0 +1,64 @@
+
+```{r}
+library(tidyverse)
+```
+
+file containing sas code
+
+```{r}
+fname <- "SAS/tidying-sas.Rnw"
+```
+
+extract lines
+
+```{r}
+v <- readLines(fname)
+v %>% enframe() %>% 
+  filter(!str_detect(value, "^%%")) %>% 
+  mutate(cnt = cumsum(str_detect(value, "Datastep|Sascode"))) %>% 
+  filter(cnt %% 2 == 1) %>% 
+  filter(!str_detect(value, "begin")) %>% 
+  mutate(val2 = ifelse(str_detect(value, "data |proc |filename "), 
+                       str_c("\n", value),
+                       str_c(value))) -> d
+writeLines(d$val2, "SAS/tidying.sas")
+```
+
+make into function
+
+```{r}
+get_code <- function(fname) {
+  print(glue::glue("doing {fname}"))
+  in_name <- str_c("SAS/", fname, "-sas.Rnw")
+  out_name <- str_c("SAS/", fname, ".sas")
+  v <- readLines(in_name)
+  v %>% enframe() %>% 
+    filter(!str_detect(value, "^%%")) %>% 
+    mutate(cnt = cumsum(str_detect(value, "Datastep|Sascode"))) %>% 
+    filter(cnt %% 2 == 1) %>% 
+    filter(!str_detect(value, "begin")) %>% 
+    mutate(val2 = ifelse(str_detect(value, "data |proc |filename "), 
+                         str_c("\n", value),
+                         str_c(value))) -> d
+  if (nrow(d)>0) {
+    writeLines(d$val2, out_name)
+  }
+  out_name
+}
+```
+
+```{r}
+get_code("tidying")
+```
+
+
+get all sas rnws
+
+```{r}
+list.files("./SAS/", pattern = "*-sas.Rnw") %>% 
+  str_extract(".*(?=-sas.Rnw)") %>% 
+  map_chr(~get_code(.))
+```
+
+
+run function on all

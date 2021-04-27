@@ -1,0 +1,754 @@
+## Tidying data
+- Data rarely come to us as we want to use them.
+- Before we can do analysis, typically have organizing to do.
+- This is typical of ANOVA-type data, “wide format”: 
+
+```
+pig feed1 feed2 feed3 feed4
+  1  60.8  68.7  92.6  87.9
+  2  57.0  67.7  92.1  84.2
+  3  65.0  74.0  90.2  83.1
+  4  58.6  66.3  96.5  85.7
+  5  61.7  69.8  99.1  90.3
+```
+
+- 20 pigs are randomly allocated to one of four feeds. At the end of the
+study, the weight of each pig is recorded, and we want to know
+whether there are any differences in mean weights among the feeds.
+- Problem: want the weights all in one column, with 2nd column
+labelling which feed each weight was from. Untidy!
+
+
+## Tidy and untidy data (Wickham) 
+- Data set easier to deal with if:
+  - each observation is one row
+  - each variable is one column
+  - each type of observation unit is one table
+- Data arranged this way called “tidy”; otherwise called “untidy”.
+- For the pig data:
+  - response variable is weight, but scattered over 4
+columns, which are levels of a factor `feed`.
+  - Want all the weights in one column, with a second column `feed`
+saying which feed that weight goes with.
+  - Then we can run `aov`.
+  
+## Packages for this section
+
+```{r, eval=F}
+library(tidyverse)
+library(readxl)
+```
+
+  
+## Reading in the pig data
+
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/pigs1.txt"
+pigs1 <- read_delim(my_url, " ")
+pigs1
+```
+
+## Gathering up the columns
+- This is a very common reorganization, and the magic “verb” is
+`gather`:
+```{r}
+pigs1 %>% gather(feed, weight, feed1:feed4) -> pigs2
+```
+
+- `pigs2` is now in “long” format, ready for analysis. See next page.
+- Anatomy of `gather`: what makes the columns different (different
+feeds), what makes them the same (all weights), which columns to
+combine.
+
+## Long format pigs
+
+```{r}
+pigs2
+```
+
+## Another way to do this:
+
+```{r}
+pigs1 %>% 
+  pivot_longer(feed1:feed4, names_to = "feed", 
+               values_to="weight")
+```
+
+
+## ...and finally, the analysis
+- which is just what we saw before:
+```{r}
+weight.1 <- aov(weight ~ feed, data = pigs2)
+summary(weight.1)
+```
+
+- The mean weights of pigs on the different feeds are definitely not all
+equal.
+- So we run Tukey to see which ones differ (over).
+
+## Tukey
+
+```{r}
+TukeyHSD(weight.1)
+```
+
+All of the feeds differ! 
+
+## Mean weights by feed 
+
+To find the best and worst, get mean weight by 
+feed group. I borrowed an idea from later to put the means in descending order:
+
+```{r}
+pigs2 %>%
+  group_by(feed) %>%
+  summarize(mean_weight = mean(weight))%>%
+  arrange(desc(mean_weight))
+```
+
+Feed 3 is best, feed 1 worst.
+
+## Should we have any concerns about the ANOVA?
+
+Feed 2 has an outlier, but there are only 5 pigs in each group, and the
+conclusion is so clear that I am OK with this.
+
+```{r pigfeedplot}
+ggplot(pigs2, aes(x = feed, y = weight)) + geom_boxplot()
+```
+
+
+
+## Tuberculosis
+
+- The World Health Organization keeps track of number of cases of
+various diseases, eg. tuberculosis.
+- Some data:
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/tb.csv"
+tb
+tb <- read_csv(my_url)
+```
+
+- Variables (see over): country (abbreviated), year. Then number of
+cases for each gender and age group, eg. `m1524` is males aged 15–24.
+Also `mu` and `fu`, where age is unknown.
+- Lots of missings. Want to get rid of.
+
+## The data
+
+```{r glimpsetb}
+glimpse(tb)
+```
+
+## Gather the gender-age group columns
+
+```{r}
+tb %>% gather(genage, freq, m04:fu, na.rm = T) -> tb2
+```
+
+or
+
+```{r}
+tb %>% 
+  pivot_longer(m04:fu, names_to = "genage", 
+               values_to = "freq", values_drop_na = T) -> tb2
+```
+
+- columns to make longer
+- column to contain the names
+- column to contain the values
+- (optional) drop missings in the values
+
+## Results (some)
+
+```{r}
+tb2
+```
+
+## Separating
+- 4 columns, but 5 variables, since `genage` contains both gender and
+age group. Split that up using separate.
+- `separate` needs 3 things:
+  - what to separate (no quotes needed),
+  - what to separate into (here you do need quotes),
+  - how to split.
+- For “how to split”, here “after first character”:
+```{r}
+tb2 %>% separate(genage, c("gender", "age"), 1) -> tb3
+```
+
+## Tidied tuberculosis data (some)
+
+```{r}
+tb3
+```
+
+## In practice...
+
+- instead of doing the pipe one step at a time, you *debug* it one step at
+a time, and when you have each step working, you use that step’s
+output as input to the next step, thus:
+```{r}
+tb %>%
+  pivot_longer(m04:fu, names_to = "genage", 
+               values_to = "freq", values_drop_na = T) %>% 
+  separate(genage, c("gender", "age"), 1) 
+```
+
+- You can split the R code over as many lines as you like, as long as
+each line is incomplete, so that R knows more is to come.
+- I like to put the pipe symbol on the end of the line.
+
+## Total tuberculosis cases by year (some of the years) 
+
+```{r}
+tb3 %>%
+  filter(between(year, 1991, 1998)) %>% 
+  count(year, wt=freq) 
+```
+
+- Something very interesting happened between 1994 and 1995.
+
+## To find out what
+
+- try counting up total cases by country:
+
+```{r}
+tb3 %>% 
+  count(iso2, wt=freq) %>% 
+  arrange(desc(n))
+```
+
+## what years do I have for China?
+
+China started recording in 1995, which is at least part of the problem:
+
+```{r}
+tb3 %>% filter(iso2=="CN") %>% 
+  count(year, wt=freq)
+```
+
+## first year of recording for each country?
+
+- A lot of countries started recording in about 1995:
+
+```{r}
+tb3 %>% group_by(iso2) %>% 
+  summarize(first_year=min(year)) %>% 
+  arrange(first_year)
+```
+
+
+## Some Toronto weather data
+
+```{r}
+my_url <- 
+  "http://ritsokiguess.site/STAC32/toronto_weather.csv"
+weather <- read_csv(my_url)
+```
+
+## The data (some)
+
+```{r}
+weather
+```
+
+## The columns
+
+- Daily weather records for "Toronto City" weather station in 2018:
+
+  - *station*: identifier for this weather station (always same here)
+  - *Year*, *Month*: obvious 
+  - *element*: whether temperature given was daily max or daily min
+  - *d01, d02*,... *d31*: day of the month from 1st to 31st.
+
+- Numbers in data frame all temperatures (for different days of the month),
+so first step is
+
+```{r}
+weather %>% 
+  pivot_longer(d01:d31, names_to="day", 
+               values_to="temperature", 
+               values_drop_na = T) -> d
+```
+
+## So far
+
+```{r}
+d
+```
+
+## The days
+- Column `element` contains names of two different variables, that
+should each be in separate column.
+- Distinct from eg. `m1524` in tuberculosis data, that contained levels of
+two different factors, handled by separate.
+- Untangling names of variables handled by `pivot_wider`:
+
+```{r}
+weather %>%
+  pivot_longer(d01:d31, names_to="day", 
+               values_to="temperature", 
+               values_drop_na = T) %>% 
+  pivot_wider(names_from=element, 
+                values_from=temperature)
+```
+
+## So far
+
+```{r}
+d
+```
+
+## Further improvements
+- We have tidy data now, but can improve things further.
+- `mutate` creates new columns from old (or assign back to change a
+variable).
+- Would like numerical dates. `separate` works, or pull out number as
+below.
+- `select` keeps columns (or drops, with minus). Station name has no
+value to us:
+
+\small
+```{r}
+weather %>%
+  pivot_longer(d01:d31, names_to="day", 
+               values_to="temperature", values_drop_na = T) %>% 
+  pivot_wider(names_from=element, values_from=temperature) %>% 
+  mutate(Day = parse_number(day)) %>%
+  select(-station) -> d
+```
+\normalsize
+## So far
+
+```{r}
+d
+```
+
+## Final step(s)
+- Make year-month-day into proper date.
+- Keep only date, tmax, tmin:
+\small
+```{r}
+weather %>%
+  pivot_longer(d01:d31, names_to="day", 
+               values_to="temperature", values_drop_na = T) %>% 
+  pivot_wider(names_from=element, values_from=temperature) %>% 
+  mutate(Day = parse_number(day)) %>%
+  select(-station) %>% 
+  unite(datestr, c(Year, Month, Day), sep = "-") %>%
+  mutate(date = as.Date(datestr)) %>%
+  select(c(date, tmax, tmin)) -> weather_tidy
+```
+\normalsize
+
+## Our tidy data frame
+
+```{r}
+weather_tidy
+```
+
+## Plotting the temperatures
+- Plot temperature against date joined by lines, but with separate lines
+for max and min. `ggplot` requires something like
+
+\footnotesize
+```{r, eval=F}
+ggplot(..., aes(x = date, y = temperature)) + geom_point() + 
+  geom_line()
+```
+\normalsize
+
+only we have two temperatures, one a max and one a min, that we
+want to keep separate.
+
+- The trick: combine `tmax` and `tmin` together into one column, keeping
+track of what kind of temp they are. (This actually same format as
+untidy `weather`.) Are making `weather_tidy`
+untidy for purposes of drawing graph only.
+- Then can do something like
+
+\footnotesize
+```{r, eval=F}
+ggplot(d, aes(x = date, y = temperature, colour = maxmin)) 
+  + geom_point() + geom_line()
+```
+\normalsize
+to distinguish max and min on graph.
+
+## Setting up plot
+- Since we only need data frame for plot, we can do the
+column-creation and plot in a pipeline.
+- For a `ggplot` in a pipeline, the initial data frame is omitted, because it
+is whatever came out of the previous step.
+- To make those “one column”s: `pivot_longer`. I save the graph to show overleaf:
+```{r}
+weather_tidy %>%
+  pivot_longer(tmax:tmin, names_to="maxmin", 
+               values_to="temperature") %>%
+  ggplot(aes(x = date, y = temperature, colour = maxmin)) +
+      geom_line() -> g
+```
+
+## The plot
+
+```{r temp-plot}
+g
+```
+
+## Summary of tidying “verbs”
+
+  \begin{tabular}{lp{0.55\textwidth}}
+    Verb & Purpose\\
+    \hline
+    \texttt{pivot\_longer} (\texttt{gather}) & Combine columns that measure same thing into one\\
+    \texttt{pivot\_wider} (\texttt{spread}) & Take column that measures one thing under
+                     different conditions and put into multiple columns\\
+    \texttt{separate} & Turn a column that encodes
+                        several variables into
+                        several columns\\
+    \texttt{unite} & Combine several (related) variables into one
+                     ``combination'' variable\\
+    \hline
+  \end{tabular}
+
+## Doing things with data frames
+Let’s go back to our Australian athletes: 
+
+```{r read-athletes, echo=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes <- read_tsv(my_url)
+```
+
+\footnotesize
+
+```{r}
+athletes
+```
+\normalsize
+
+## Choosing a column
+
+```{r}
+athletes %>% select(Sport)
+```
+
+## Choosing several columns
+
+```{r}
+athletes %>% select(Sport, Hg, BMI)
+```
+
+## Choosing consecutive columns
+
+```{r}
+athletes %>% select(Sex:WCC)
+```
+
+## Choosing all-but some columns
+
+```{r}
+athletes %>% select(-(RCC:LBM))
+```
+
+## Select-helpers
+Other ways to select columns: those whose name:
+
+- `starts_with` something
+- `ends_with` something
+- `contains` something
+- `matches` a “regular expression”
+- `num_range` like x1 to x3
+- `everything()` all the columns
+
+## Columns whose names begin with S 
+
+```{r}
+athletes %>% select(starts_with("S"))
+```
+
+## Columns whose names end with C
+
+either uppercase or lowercase:
+
+```{r}
+athletes %>% select(ends_with("c"))
+```
+
+## Case-sensitive
+
+```{r}
+athletes %>% select(ends_with("C", ignore.case=F))
+```
+
+
+## Column names containing letter R
+
+```{r}
+athletes %>% select(contains("r"))
+```
+
+## Exactly two characters, ending with T
+
+In regular expression terms, this is `^.t$`:
+
+- `^` means “start of text”
+- `.` means “exactly one character, but could be anything”
+- `$` means “end of text”.
+```{r}
+athletes %>% select(matches("^.t$"))
+```
+
+## Displaying some numbered columns
+
+Make up a data frame to illustrate. This `sample` generates 5 random values
+equally likely to be anything 0–9 (without replacement): 
+
+```{r}
+(d <- tibble(
+  y = sample(0:9, 5),
+  x1 = sample(0:9, 5),
+  x2 = sample(0:9, 5),
+  x3 = sample(0:9, 5)
+))
+```
+
+## Just display x2 and x3:
+```{r}
+d %>% select(num_range("x", 2:3))
+d %>% select(x2:x3)
+```
+
+## Choosing rows by number 
+
+```{r}
+athletes %>% slice(16:25)
+```
+
+```{r}
+athletes %>% mutate(row=row_number()) %>% select(Sex, Sport, row) %>% 
+  slice(16:25)
+```
+
+
+## Non-consecutive rows 
+
+```{r}
+athletes %>% 
+  slice(10,13,17,42)
+```
+
+## A random sample of rows
+
+```{r}
+athletes %>% sample_n(8)
+```
+
+## Rows for which something is true
+
+\footnotesize
+```{r}
+athletes %>% filter(Sport == "Tennis")
+```
+\normalsize
+
+## More complicated selections
+
+```{r}
+athletes %>% filter(Sport == "Tennis", RCC < 5)
+```
+
+## Another way to do "and"
+
+```{r}
+athletes %>% filter(Sport == "Tennis") %>% 
+  filter(RCC < 5)
+```
+
+
+## Either/Or
+
+```{r}
+athletes %>% filter(Sport == "Tennis" | RCC > 5)
+```
+
+## Sorting into order
+
+```{r}
+athletes %>% arrange(RCC)
+```
+
+## Breaking ties by another variable
+
+```{r}
+athletes %>% arrange(RCC, BMI)
+```
+
+## Descending order
+
+```{r}
+athletes %>% arrange(desc(BMI))
+```
+
+## “The top ones”
+
+
+```{r}
+athletes %>%
+  arrange(desc(Wt)) %>%
+  slice(1:7) %>%
+  select(Sport, Wt)
+```
+
+## Create new variables from old ones
+
+```{r new-from-old}
+athletes %>%
+  mutate(wt_lb = Wt * 2.2) %>%
+  select(Sport, Sex, Wt, wt_lb) %>% 
+  arrange(Wt)
+```
+
+## Turning the result into a number
+Output is always data frame unless you explicitly turn it into something
+else, eg. the weight of the heaviest athlete, as a number:
+
+```{r to-number}
+athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1)
+```
+
+Or the 20 heaviest weights in descending order:
+
+
+```{r}
+athletes %>%
+  arrange(desc(Wt)) %>%
+  slice(1:20) %>%
+  pluck("Wt")
+```
+
+## Another way to do the last one
+
+```{r}
+athletes %>%
+  arrange(desc(Wt)) %>%
+  slice(1:20) %>%
+  pull("Wt")
+```
+
+`pull` grabs the column you name *as a vector* (of whatever it contains).
+
+## To find the mean height of the women athletes
+Two ways:
+
+\small
+```{r}
+athletes %>% group_by(Sex) %>% summarize(m = mean(Ht))
+```
+
+```{r}
+athletes %>%
+  filter(Sex == "female") %>%
+  summarize(m = mean(Ht))
+```
+
+\normalsize
+
+## Summary of data selection/arrangement "verbs"
+
+ \begin{tabular}{lp{0.7\textwidth}}
+    Verb & Purpose\\
+    \hline
+    \texttt{select} & Choose columns\\
+    \texttt{print} & Display non-default \# of rows/columns \\
+    \texttt{slice} & Choose rows by number\\
+    \texttt{sample\_n} & Choose random rows\\ 
+    \texttt{filter} & Choose rows satisfying conditions \\
+    \texttt{arrange}& Sort in order by column(s) \\
+    \texttt{mutate} & Create new variables\\
+    \texttt{group\_by} & Create groups to summarize by\\
+    \texttt{summarize} & Calculate summary statistics (by groups if defined)\\
+    \texttt{pluck} & Extract items from data frame\\
+    \texttt{pull} & Extract a single column from a data frame as a vector\\
+    \hline
+  \end{tabular}
+  
+  
+## Looking things up in another data frame
+Recall the tuberculosis data set, tidied: 
+```{r}
+tb3
+```
+
+What are actual names of those countries in `iso2`?
+
+## Actual country names
+Found actual country names to go with those abbreviations, in spreadsheet: 
+
+\footnotesize
+```{r}
+my_url <- 
+  "http://www.utsc.utoronto.ca/~butler/c32/ISOCountryCodes081507.xlsx"
+```
+
+\normalsize
+
+```{r country-codes}
+f <- tempfile()
+download.file(my_url, f)
+country_names <- read_excel(f)
+```
+
+## The country names
+
+```{r}
+country_names
+```
+
+## Looking up country codes
+Matching a variable in one data frame to one in another is called a **join**
+(database terminology):
+
+```{r}
+tb3 %>% left_join(country_names, by = c("iso2" = "Code_UC"))
+```
+
+## Total cases by country
+
+
+```{r}
+tb3 %>%
+  group_by(iso2) %>%
+  summarize(cases = sum(freq)) %>%
+  left_join(country_names, by = c("iso2" = "Code_UC")) %>%
+  select(Country, cases)
+```
+
+## or even sorted in order
+
+```{r}
+tb3 %>%
+  group_by(iso2) %>%
+  summarize(cases = sum(freq)) %>%
+  left_join(country_names, by = c("iso2" = "Code_UC")) %>%
+  select(Country, cases) %>%
+  arrange(desc(cases))
+```
+
+## Comments
+
+- This is probably not quite right because of:
+  - the 1994-1995 thing
+  - there is at least one country in `tb3` that was not in `country_names` (the NA above). Which?
+  
+\footnotesize  
+```{r}
+tb3 %>%
+  anti_join(country_names, by = c("iso2" = "Code_UC")) %>%
+  distinct(iso2)
+```
+\normalsize
+
+

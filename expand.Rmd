@@ -1,0 +1,25 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+testing `expand`
+
+```{r}
+rm(x)
+rm(y)
+xg=tibble(g=c("a","b"),x=c(4,5),y=c(6,7))
+xg
+```
+
+and then
+
+```{r}
+xg %>% expand(x,y)
+```
+

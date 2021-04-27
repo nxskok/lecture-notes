@@ -1,0 +1,29 @@
+---
+title: "athletes and knitr::kable"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes <- read_tsv(my_url)
+```
+
+one that works
+
+```{r}
+athletes %>% select(Sex:WCC) %>% knitr::kable()
+```
+
+does this?
+
+```{r}
+athletes %>% sample_n(10) %>% knitr::kable()
+```
+
+here it does
+
+```{r}
+athletes %>% slice(c(10, 13, 17, 42)) %>% knitr::kable()
+```
+

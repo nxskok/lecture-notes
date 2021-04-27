@@ -1,0 +1,137 @@
+## Comparing models
+
+- Typically in ANOVA situation, we want to see whether the group means are "really" different.
+- We are used to doing an $F$-test here.
+- In regression, have looked at AIC: measure of fit allowing for complexity.
+- Bayesian equivalent called `looic`, in package `loo`.
+
+## Difficulty:
+
+- Posterior proportional to likelihood times prior:
+  - Stan drops proportionality constant
+  - but for model comparison, it matters.
+- Have to calculate log-likelihood again, not dropping constants this time.
+
+## The extra code
+
+```
+generated quantities {
+  vector[n_obs] log_lik;
+  int g;
+  for (i in 1:n_obs) {
+    g=group_no[i];
+    log_lik[i] = normal_lpdf(density[i] | mu[g], sigma);
+  }
+}
+```
+
+## Comments
+
+- This is repeat of `model` section, but note no "squiggle": this explicitly calculates the log of the normal density function for each observation and saves it in an array.
+- This section goes at the bottom.
+
+## Compile and sample
+
+```{r, results="hide"}
+anova_loo_compiled <- stan_model("anova-loo.stan")
+anova_data <- list(
+  n_obs = 30,
+  n_group = 3,
+  density = rats$density,
+  group_no = rats$group_no
+)
+anova_loo_samples <- sampling(anova_loo_compiled, data = anova_data)
+```
+
+## Now we need a null model
+
+- one value of `mu` for all groups
+- replace all the `mu[i]` with `mu`
+- omit any reference to group numbers (not needed any more)
+- leave the `data` section as is (so can use previous `anova_data`).
+
+## The null Stan code 1/2
+
+```
+data {
+  int n_obs;
+  int n_group;
+  real density[n_obs];
+  int<lower=1, upper=n_group> group_no[n_obs];
+}
+
+parameters {
+  real mu;
+  real<lower=0> sigma;
+}
+
+```
+
+## The null Stan code 2/2
+
+```
+model {
+  // priors
+  mu ~ normal(600, 50);
+  sigma ~ chi_square(50);
+  // likelihood
+  for (i in 1:n_obs) {
+    density[i] ~ normal(mu, sigma);
+  }
+}
+
+generated quantities {
+  vector[n_obs] log_lik;
+  for (i in 1:n_obs) {
+    log_lik[i] = normal_lpdf(density[i] | mu, sigma);
+  }
+}
+```
+
+## Compile and sample again
+
+```{r, results="hide"}
+anova_loo_null_compiled <- stan_model("anova_loo_null.stan")
+anova_loo_null_samples <- sampling(anova_loo_null_compiled, data = anova_data)
+```
+
+## Compare the fits of the two models
+
+
+Setup
+
+```{r}
+library(loo)
+log_lik_a <- extract_log_lik(anova_loo_samples,
+  merge_chains = F
+)
+log_lik_0 <- extract_log_lik(anova_loo_null_samples,
+  merge_chains = F
+)
+r_eff_a <- relative_eff(log_lik_a)
+r_eff_0 <- relative_eff(log_lik_0)
+```
+
+## Results 1/2
+
+\footnotesize
+```{r}
+loo(log_lik_a, r_eff = r_eff_a)
+```
+\normalsize
+
+## Results 2/2
+
+\small
+```{r}
+loo(log_lik_0, r_eff = r_eff_0)
+```
+\normalsize
+
+
+## Comments
+
+- Look at `looic`: smaller value is better, allowing for complexity of model
+- For separate means, 277.7; for one single mean, 285.7.
+- Prefer the model with separate means, one for each group.
+

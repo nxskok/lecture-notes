@@ -1,0 +1,161 @@
+---
+title: "2018-01-17"
+output: html_notebook
+---
+
+## The curvy data
+
+Read in and examine some other data:
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/curvy.txt"
+curvy=read_delim(my_url," ")
+ggplot(curvy,aes(x=xx,y=yy))+geom_point()
+```
+
+Fit a linear regression, and see what goes wrong:
+
+```{r}
+curvy.1=lm(yy~xx,data=curvy) ; summary(curvy.1)
+ggplot(curvy.1,aes(x=.fitted,y=.resid))+geom_point()
+```
+
+Add squared term, either of 2 ways:
+
+```{r}
+curvy.2=lm(yy~xx+I(xx^2),data=curvy)
+curvy.2a=update(curvy.1,.~.+I(xx^2))
+summary(curvy.2)
+```
+
+Look at residuals from that:
+
+```{r}
+ggplot(curvy.2,aes(x=.fitted,y=.resid))+geom_point()
+```
+
+Better, though is that fan-out?
+
+
+## the made-up data
+
+```{r}
+library(MASS)
+my_url="http://www.utsc.utoronto.ca/~butler/d29/madeup.csv"
+madeup=read_csv(my_url)
+madeup
+ggplot(madeup,aes(x=x,y=y))+geom_point()+
+  geom_smooth()
+```
+
+## Box-Cox
+
+```{r}
+boxcox(y~x,data=madeup)
+```
+
+Use log of `y`:
+
+```{r}
+log.y=log(madeup$y) 
+ggplot(madeup,aes(x=x,y=log.y))+geom_point()+
+  geom_smooth()
+```
+
+Get rid of `MASS`:
+
+```{r}
+detach("package:MASS",unload=T)
+```
+
+## Multiple regression
+
+```{r}
+library(tidyverse)
+my_url="http://www.utsc.utoronto.ca/~butler/d29/regressx.txt"
+visits=read_delim(my_url," ")
+visits
+visits.1=lm(timedrs~phyheal+menheal+stress,
+  data=visits)
+summary(visits.1)
+```
+
+Another look at results
+
+```{r}
+library(broom)
+tidy(visits.1)
+```
+
+Just `menheal`:
+
+```{r}
+visits.2=lm(timedrs~menheal,data=visits) 
+summary(visits.2)
+```
+
+Why? Correlations:
+
+```{r}
+visits %>% select_if(is.numeric) %>% cor()
+```
+
+Residual plot (from 1st regression):
+
+```{r}
+ggplot(visits.1,aes(x=.fitted,y=.resid))+geom_point()
+```
+
+Normal quantile plot of residuals
+
+```{r}
+r=resid(visits.1)
+qqnorm(r)
+qqline(r)
+```
+
+Absolute residuals
+
+```{r}
+ggplot(visits.1,aes(x=.fitted,y=abs(.resid)))+
+  geom_point()+geom_smooth()
+```
+
+Try log of visits (plus one, since visits could be zero):
+
+```{r}
+lgtime=with(visits,log(timedrs+1))
+visits.3=lm(lgtime~phyheal+menheal+stress,
+  data=visits)
+summary(visits.3)
+```
+
+Residual plots from this:
+
+```{r}
+ggplot(visits.3,aes(x=.fitted,y=.resid))+
+  geom_point()
+r=residuals(visits.3); qqnorm(r); qqline(r)
+ggplot(visits.3,aes(x=.fitted,y=abs(.resid)))+
+  geom_point()+geom_smooth()
+```
+
+Box-Cox:
+
+```{r}
+tp=with(visits,timedrs+1)
+library(MASS)
+boxcox(tp~phyheal+menheal+stress,data=visits)
+```
+
+Zoom in:
+
+```{r}
+my.lambda=seq(-0.3,0.1,0.01)
+my.lambda
+boxcox(tp~phyheal+menheal+stress,lambda=my.lambda,
+  data=visits)
+```
+
+Log is definitely good.
+

@@ -1,0 +1,2525 @@
+
+# anova done the bayes way
+
+Placeholder
+
+
+## packages
+## grab some data
+## stan model
+## sample from it
+
+<!--chapter:end:anova-bayes.Rmd-->
+
+
+
+## packages
+## some data
+## fitting a model with different mean for each group
+## fitting a model with *same* mean for each group
+## compare the fits of the two models, thus:
+
+<!--chapter:end:anova-loo.Rmd-->
+
+
+
+## The asphalt data
+## Packages for this section
+## Getting set up 
+## The data (some)
+## Plotting response “rut depth” against everything else
+## The plot
+## Interpreting the plots
+## Log of `viscosity`: more nearly linear?
+## Rut depth against log-viscosity
+## Comments and next steps
+## Regression output: `summary(rut.1)` or:
+## Comments
+## Plot fitted values against residuals
+## Plotting residuals against $x$ variables
+## What does rut.1a contain?
+## Plotting residuals against $x$-variables 
+## The plot
+## Comments
+## Which transformation?
+## Running Box-Cox
+## Comments on Box-Cox plot
+## Relationships with explanatories
+## The new plots
+## Modelling with transformed response
+## Output
+## Taking out everything non-significant
+## Find the largest P-value by eye:
+## Get the computer to find the largest P-value for you
+## Take out `pct.a.base`
+## “Update”
+## Take out fines:
+## Take out run:
+## Comments
+## Comments on variable selection
+## All possible regressions (output over)
+## The output
+## Comments
+## All possible regressions, adjusted R-squared
+## Revisiting the best model
+## Revisiting (2)
+## Residuals against fitted values
+## Plotting residuals against x’s
+## Residuals against the x’s
+## Comments
+## Variable-selection strategies
+
+<!--chapter:end:asphalt_post.Rmd-->
+
+---
+title: "Case study 3: Asphalt"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="asphalt.Rmd"}
+```
+
+
+<!--chapter:end:asphalt_slides.Rmd-->
+
+
+
+## The asphalt data
+## Packages for this section
+## Getting set up 
+## The data (some)
+## Plotting response “rut depth” against everything else
+## The plot
+## Interpreting the plots
+## Log of `viscosity`: more nearly linear?
+## Rut depth against log-viscosity
+## Comments and next steps
+## Regression output: `summary(rut.1)` or:
+## Comments
+## Plot fitted values against residuals
+## Plotting residuals against $x$ variables
+## What does rut.1a contain?
+## Plotting residuals against $x$-variables 
+## The plot
+## Comments
+## Which transformation?
+## Running Box-Cox
+## Comments on Box-Cox plot
+## Relationships with explanatories
+## The new plots
+## Modelling with transformed response
+## Output
+## Taking out everything non-significant
+## Find the largest P-value by eye:
+## Get the computer to find the largest P-value for you
+## Take out `pct.a.base`
+## “Update”
+## Take out fines:
+## Take out run:
+## Comments
+## Comments on variable selection
+## All possible regressions (output over)
+## The output
+## Comments
+## All possible regressions, adjusted R-squared
+## Revisiting the best model
+## Revisiting (2)
+## Residuals against fitted values
+## Plotting residuals against x’s
+## Residuals against the x’s
+## Comments
+## Variable-selection strategies
+
+<!--chapter:end:asphalt.Rmd-->
+
+---
+title: "The Bootstrap"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="bootstrap.Rmd"}
+```
+
+
+
+<!--chapter:end:bootstrap_slides.Rmd-->
+
+
+
+## packages
+## Is my sampling distribution normal enough?
+## What *actually* matters
+## The (nonparametric) bootstrap
+## Why it works
+## Bootstrapping the IRS data
+## Sampling distribution of sample mean
+## Comments
+## Confidence interval from the bootstrap distribution
+## Comparing
+## Which to prefer?
+## Bias correction and acceleration
+## Run this on the IRS data:
+## use 2.5% and 97.5% points for CI
+## Comparing
+## Bootstrapping the correlation
+## The data
+## Comments
+## Extract the line B data; standard correlation test 
+## Bootstrapping a correlation
+## A picture of this 
+## Comments and next steps
+## Getting the BCA interval 1/2
+## Getting the BCA interval 2/2
+## Comparing the results
+## A problem
+## Automating the bootstrap
+
+<!--chapter:end:bootstrap-again.Rmd-->
+
+
+
+## Packages for this section
+## Is my sampling distribution normal enough?
+## What *actually* matters
+## The (nonparametric) bootstrap
+## Why it works
+## Bootstrapping the IRS data
+## Sampling distribution of sample mean
+## Comments
+## Confidence interval from the bootstrap distribution
+## Comparing
+## Which to prefer?
+## Bias correction and acceleration
+## Run this on the IRS data:
+## use 2.5% and 97.5% points for CI
+## Comparing
+## Bootstrapping the correlation
+## The data
+## Comments
+## Extract the line B data; standard correlation test 
+## Bootstrapping a correlation 1/2
+## Bootstrapping a correlation 2/2
+## A picture of this 
+## Comments and next steps
+## Getting the BCA interval 1/2
+## Getting the BCA interval 2/2
+## Comparing the results
+
+<!--chapter:end:bootstrap.Rmd-->
+
+
+
+## Packages for this section
+## Dates
+## Doing arithmetic with dates
+## Reading in dates from a file
+## The data as read in
+## Dates in other formats 
+## Trying to read these as UK dates 
+## Our data frame's last column:
+## so interpret as such
+## Are they really the same? 
+## Making dates from pieces
+## Making some dates 
+## The results
+## Extracting information from dates 
+## Dates and times
+## Converting text to date-times: 
+## Timezones
+## Time zone names
+## Extracting time parts
+## Same times, but different time zone: 
+## How long between date-times?
+## Do they get read in as date-times? 
+## Subtracting the date-times
+## Days
+## Comments
+
+<!--chapter:end:dates_and_times_post.Rmd-->
+
+---
+title: "Dates and times"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+# Dates and times
+
+```{r, child="dates_and_times.Rmd"}
+```
+
+<!--chapter:end:dates_and_times_slides.Rmd-->
+
+
+
+## Packages for this section
+## Dates
+## Doing arithmetic with dates
+## Reading in dates from a file
+## The data as read in
+## Dates in other formats 
+## Trying to read these as UK dates 
+## Our data frame's last column:
+## so interpret as such
+## Are they really the same? 
+## Making dates from pieces
+## Making some dates 
+## The results
+## Extracting information from dates 
+## Dates and times
+## Converting text to date-times: 
+## Timezones
+## Extracting time parts
+## Same times, but different time zone: 
+## How long between date-times?
+## Do they get read in as date-times? 
+## Subtracting the date-times
+## Days
+## Comments
+
+<!--chapter:end:dates_and_times.Rmd-->
+
+---
+title: "Durations, intervals and periods"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="dip.Rmd"}
+```
+
+
+<!--chapter:end:dip_slides.Rmd-->
+
+
+
+## Packages for this section
+## Exact time intervals
+## Intervals
+## Periods
+## Completed days
+## Completed hours 1/2
+## Completed hours 2/2
+## Durations
+## Sometimes it matters
+## Comments
+## Manchester United
+## The data
+## Ages
+## Guess download date and work out ages
+## Results (just the ages)
+## Which ones are different?
+## Try an earlier date
+## Results
+
+<!--chapter:end:dip.Rmd-->
+
+
+
+## Packages for this section
+## Don’t repeat yourself
+## What's the problem?
+## Anatomy of function
+## About the input; testing
+## Vectorization 1/2 
+## Vectorization 2/2 
+## More than one input
+## Defaults 1/2
+## Defaults 2/2
+## Catching errors before they happen
+## What happens with `stopifnot`
+## Using R’s built-ins
+## Pulling out just the slope
+## Making this into a function
+## Passing things on
+## Using `...`
+## Running a function for each of several inputs
+## The loop way
+## The `map_dbl` way
+## Square roots
+## Summarizing all columns of a data frame, two ways
+## What if summary returns more than one thing?
+## map results
+## Or
+## Or even
+## Comments
+## `Map` in data frames with `mutate`
+## Write a function first and then map it
+## Write the function
+## Test it 
+## One through ten
+## Until I get to 1 (if I ever do)
+## Trying it 1/2
+## Trying it 2/2 
+## Which starting points have the longest sequences?
+## What happens if we save the entire sequence? 
+## Using the whole sequence to find its length and its max 
+## Does it work with `rowwise`?
+## Yet another way
+## Final thoughts on this
+
+<!--chapter:end:functions_post.Rmd-->
+
+---
+title: "Functions"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="functions.Rmd"}
+```
+
+
+<!--chapter:end:functions_slides.Rmd-->
+
+
+
+## Packages for this section
+## Don’t repeat yourself
+## What's the problem?
+## Anatomy of function
+## About the input; testing
+## Vectorization 1/2 
+## Vectorization 2/2 
+## More than one input
+## Defaults 1/2
+## Defaults 2/2
+## Catching errors before they happen
+## What happens with `stopifnot`
+## Using R’s built-ins
+## Pulling out just the slope
+## Making this into a function
+## Passing things on
+## Using `...`
+## Running a function for each of several inputs
+## The loop way
+## The `map_dbl` way
+## Square roots
+## Summarizing all columns of a data frame, two ways
+## What if summary returns more than one thing?
+## map results
+## Or
+## Or even
+## Comments
+## `Map` in data frames with `mutate`
+## Write a function first and then map it
+## Write the function
+## Test it 
+## One through ten
+## Until I get to 1 (if I ever do)
+## Trying it 1/2
+## Trying it 2/2 
+## Which starting points have the longest sequences?
+## What happens if we save the entire sequence? 
+## Using the whole sequence to find its length and its max 
+## Does it work with `rowwise`?
+## Yet another way
+## Final thoughts on this
+
+<!--chapter:end:functions.Rmd-->
+
+---
+title: "Drawing graphs"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+
+```{r, child="graphs_R.Rmd"}
+```
+
+
+<!--chapter:end:graphs_R_slides.Rmd-->
+
+
+
+## Our data
+## Packages for this section
+## Reading data into R
+## The data (some)
+## Types of graph
+## `ggplot`
+## Bar chart
+## Histogram of body mass index
+## Which sports are played by males and females?
+## BMI by gender
+## Height vs. weight
+## With regression line
+## BMI by sport and gender
+## Height and weight by gender
+## Height by weight for each sport, with facets
+## Filling each facet
+
+<!--chapter:end:graphs_R.Rmd-->
+
+
+
+## Statistical Inference and Science
+## Sample data are imperfect
+## Packages for this section
+## Reading the attendances
+## Taking a look (tiny)
+## Another way
+## Attendance histogram
+## Comments
+## Getting CI for mean attendance 
+## Or, 90% CI
+## Comments
+## Another way to access data frame columns
+## Hypothesis test
+## $\alpha$ and errors
+## Why 0.05? This man. 
+## Why 0.05? (2)
+## Three steps:
+## Using `t.test`:
+## Assumptions
+## Blue Jays attendances again:
+## Another example: learning to read
+## Reading in data 
+## The data (some) 
+## Boxplots
+## Two kinds of two-sample t-test
+## The (Welch-Satterthwaite) t-test
+## Welch-Satterthwaite 
+## The pooled t-test 
+## Two-sided test; CI
+## Comments:
+## Jargon for testing 
+## Logic of testing 
+
+<!--chapter:end:inference_1_R_post.Rmd-->
+
+---
+title: "Statistical Inference: one- and two-sample inference"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="inference_1_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_1_R_slides.Rmd-->
+
+
+
+## Statistical Inference and Science
+## Sample data are imperfect
+## Packages for this section
+## Reading the attendances
+## Taking a look (tiny)
+## Another way
+## Attendance histogram
+## Comments
+## Getting CI for mean attendance 
+## Or, 90% CI
+## Comments
+## Another way to access data frame columns
+## Hypothesis test
+## $\alpha$ and errors
+## Why 0.05? This man. 
+## Why 0.05? (2)
+## Three steps:
+## Using `t.test`:
+## Assumptions
+## Blue Jays attendances again:
+## Another example: learning to read
+## Reading in data 
+## The data (some) 
+## Boxplots
+## Two kinds of two-sample t-test
+## The (Welch-Satterthwaite) t-test
+## Welch-Satterthwaite 
+## The pooled t-test 
+## Two-sided test; CI
+## Comments:
+## Jargon for testing 
+## Logic of testing 
+
+<!--chapter:end:inference_1_R.Rmd-->
+
+
+
+## Errors in testing
+## Power 
+## Figuring out power
+## How to understand/estimate power?
+## Making it go
+## ...continued
+## or get just P-value 
+## Run this lots of times
+## In code
+## Calculating power
+## Comparison of results
+## Calculating required sample size 
+## Using power.t.test
+## Power curves
+## Building it
+## Building a plot (1/2)
+## Building a plot (2/2)
+## The power curve
+## Another way to do it:
+## Power curves for means
+## The combos
+## Calculate and plot
+## More of what's in the output
+##  Make a data frame to plot, pulling things from the right places:
+##  then make the plot:
+## The power curves
+## Comments
+## Power by sample size for means 7 and 8
+## The power curves
+## Two-sample power
+## Setting up
+## Calculating power for sample size 22 (per group) 
+## sample size for power 0.8 
+## Comments
+
+<!--chapter:end:inference_2_R_post.Rmd-->
+
+---
+title: "Statistical Inference: power"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+
+```{r, child="inference_2_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_2_R_slides.Rmd-->
+
+
+
+## Errors in testing
+## Power 
+## Figuring out power
+## How to understand/estimate power?
+## Making it go
+## ...continued
+## or get just P-value 
+## Run this lots of times
+## In code
+## Calculating power
+## Comparison of results
+## Calculating required sample size 
+## Using power.t.test
+## Power curves
+## Building it
+## Building a plot (1/2)
+## Building a plot (2/2)
+## The power curve
+## Another way to do it:
+## Power curves for means
+## The combos
+## Calculate and plot
+## More of what's in the output
+##  Make a data frame to plot, pulling things from the right places:
+##  then make the plot:
+## The power curves
+## Comments
+## Power by sample size for means 7 and 8
+## The power curves
+## Two-sample power
+## Setting up
+## Calculating power for sample size 22 (per group) 
+## sample size for power 0.8 
+## Comments
+
+<!--chapter:end:inference_2_R.Rmd-->
+
+
+
+## Duality between confidence intervals and hypothesis tests 
+## The data
+## 95% CI (default)
+## 90% CI
+## Hypothesis test
+## Comparing results
+## The value of this
+## Testing for non-normal data
+## Read in data 
+## Test whether mean is 160 or greater
+## But, look at a graph
+## Comments
+## The sign test
+## Getting a P-value for sign test 1/3
+## Getting P-value for sign test 2/3
+## Getting P-value for sign test 3/3
+## Using my package `smmr`
+## `smmr` for sign test
+## Comments (1/3)
+## Comments (2/3)
+## Comments (3/3)
+## Confidence interval for the median
+## For our data
+## Doing a whole bunch
+## ... and then
+## Make it easier for ourselves 
+## confidence interval for median?
+## A more efficient way: bisection
+## ... bisection continued 
+## Bisection automatically
+## The output from this loop
+## Using smmr
+## Bootstrap (optional)
+## The sampling distribution
+## Comments
+
+<!--chapter:end:inference_3_R_post.Rmd-->
+
+---
+title: "Statistical Inference: the sign test"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="inference_3_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_3_R_slides.Rmd-->
+
+
+
+## Duality between confidence intervals and hypothesis tests 
+## The data
+## 95% CI (default)
+## 90% CI
+## Hypothesis test
+## Comparing results
+## The value of this
+## Testing for non-normal data
+## Read in data 
+## Test whether mean is 160 or greater
+## But, look at a graph
+## Comments
+## The sign test
+## Getting a P-value for sign test 1/3
+## Getting P-value for sign test 2/3
+## Getting P-value for sign test 3/3
+## Using my package `smmr`
+## `smmr` for sign test
+## Comments (1/3)
+## Comments (2/3)
+## Comments (3/3)
+## Confidence interval for the median
+## For our data
+## Doing a whole bunch
+## ... and then
+## Make it easier for ourselves 
+## confidence interval for median?
+## A more efficient way: bisection
+## ... bisection continued 
+## Bisection automatically
+## The output from this loop
+## Using smmr
+## Bootstrap (optional)
+## The sampling distribution
+## Comments
+
+<!--chapter:end:inference_3_R.Rmd-->
+
+
+
+## Matched pairs
+## Matched pairs data
+## Paired t test: reading the data
+## The data
+## Paired *t*-test 
+## t-testing the differences
+## t-test on the differences
+## Assessing normality 
+## The normal quantile plot
+## More normal quantile plots
+## Normal data, large sample
+## The normal quantile plot
+## Normal data, small sample
+## The normal quantile plot
+## Chi-squared data, *df* = 10
+## The normal quantile plot
+## Chi-squared data, df = 3
+## The normal quantile plot
+## t-distributed data, df = 3
+## The normal quantile plot
+## Our pain-relief data
+## Comments
+## Sign test
+## Comments 
+## blue jays data
+## normal quantile plot of attendances
+## histogram
+## (Some of) the kids’ reading data, again
+## Where we were at 
+## Boxplots for reading data
+## Facetted normal quantile plots
+## Comments
+## Welch two-sample test
+
+<!--chapter:end:inference_4_R_post.Rmd-->
+
+---
+title: "Statistical Inference: matched pairs and normal quantile plot"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+```{r, child="inference_4_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_4_R_slides.Rmd-->
+
+
+
+## Matched pairs
+## Matched pairs data
+## Paired t test: reading the data
+## The data
+## Paired *t*-test 
+## t-testing the differences
+## t-test on the differences
+## Assessing normality 
+## The normal quantile plot
+## More normal quantile plots
+## Normal data, large sample
+## The normal quantile plot
+## Normal data, small sample
+## The normal quantile plot
+## Chi-squared data, *df* = 10
+## The normal quantile plot
+## Chi-squared data, df = 3
+## The normal quantile plot
+## t-distributed data, df = 3
+## The normal quantile plot
+## Our pain-relief data
+## Comments
+## Sign test
+## Comments 
+## (Some of) the kids’ reading data, again
+## Where we were at 
+## Boxplots for reading data
+## Facetted normal quantile plots
+## Comments
+## Welch two-sample test
+
+<!--chapter:end:inference_4_R.Rmd-->
+
+
+
+## The normal quantile plot
+## Kids learning to read
+## Get the groups separately
+## The treatment group
+## Control group
+## Facetting more than one sample
+## Blue Jays attendances, skewed to right
+## On a normal quantile plot
+## More normal quantile plots
+## Normal data, large sample
+## The normal quantile plot
+## Normal data, small sample
+## The normal quantile plot
+## Chi-squared data, *df* = 10
+## The normal quantile plot
+## Chi-squared data, df = 3
+## The normal quantile plot
+## t-distributed data, df = 3
+## The normal quantile plot
+## Summary
+
+<!--chapter:end:inference_4a_R_post.Rmd-->
+
+---
+title: "Statistical Inference: normal quantile plot"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+```{r, child="inference_4a_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_4a_R_slides.Rmd-->
+
+
+
+## The normal quantile plot
+## Kids learning to read
+## Get the groups separately
+## The treatment group
+## Control group
+## Facetting more than one sample
+## Blue Jays attendances, skewed to right
+## On a normal quantile plot
+## More normal quantile plots
+## Normal data, large sample
+## The normal quantile plot
+## Normal data, small sample
+## The normal quantile plot
+## Chi-squared data, *df* = 10
+## The normal quantile plot
+## Chi-squared data, df = 3
+## The normal quantile plot
+## t-distributed data, df = 3
+## The normal quantile plot
+## Summary
+
+<!--chapter:end:inference_4a_R.Rmd-->
+
+
+
+## Matched pairs
+## Matched pairs data
+## Paired t test: reading the data
+## The data
+## Paired *t*-test 
+## t-testing the differences
+## t-test on the differences
+## Assessing normality 
+## The normal quantile plot (of differences)
+## What to do instead?
+## Comments
+
+<!--chapter:end:inference_4b_R_post.Rmd-->
+
+---
+title: "Statistical Inference: matched pairs"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation: 
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: AnnArbor
+    colortheme: dove
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+```{r, child="inference_4b_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_4b_R_slides.Rmd-->
+
+
+
+## Matched pairs
+## Matched pairs data
+## Paired t test: reading the data
+## The data
+## Paired *t*-test 
+## t-testing the differences
+## t-test on the differences
+## Assessing normality 
+## The normal quantile plot (of differences)
+## What to do instead?
+## Comments
+
+<!--chapter:end:inference_4b_R.Rmd-->
+
+
+
+## Two-sample test: What to do if normality fails
+## The chi-squared test for independence
+## ... continued
+## ...And finally
+## Mood’s median test
+## Mood’s median test for reading data
+## The test
+## Or by smmr
+## Comments
+## graph
+## Jumping rats
+## Reading the data
+## The data (some random rows)
+## Boxplots
+## Or, arranging groups in data (logical) order
+## Analysis of Variance
+## Testing: ANOVA in R
+## Which groups are different from which?
+## Control vs. low
+## Control vs. high
+## Low vs. high
+## But...
+## John W. Tukey 
+## Honestly Significant Differences
+## Tukey on rat data
+## Why Tukey’s procedure better than all t-tests 
+## Checking assumptions
+## Normal quantile plots by group
+## The assumptions
+## Mood’s median test 1/4
+## Mood’s median test 2/4 
+## Mood’s median test 3/4 
+## Mood’s median test 4/4 
+## Comments
+## Welch ANOVA
+## Games-Howell
+## Deciding which test to do
+
+<!--chapter:end:inference_5_R_post.Rmd-->
+
+---
+title: "Statistical Inference: MMT / ANOVA"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+
+```{r, child="inference_5_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_5_R_slides.Rmd-->
+
+
+
+## Two-sample test: What to do if normality fails
+## The chi-squared test for independence
+## ... continued
+## ...And finally
+## Mood’s median test
+## Mood’s median test for reading data
+## The test
+## Or by smmr
+## Comments
+## Jumping rats
+## Reading the data
+## The data (some random rows)
+## Boxplots
+## Or, arranging groups in data (logical) order
+## Analysis of Variance
+## Testing: ANOVA in R
+## Which groups are different from which?
+## Control vs. low
+## Control vs. high
+## Low vs. high
+## But...
+## John W. Tukey 
+## Honestly Significant Differences
+## Tukey on rat data
+## Why Tukey’s procedure better than all t-tests 
+## Checking assumptions
+## Normal quantile plots by group
+## The assumptions
+## Mood’s median test 1/4
+## Mood’s median test 2/4 
+## Mood’s median test 3/4 
+## Mood’s median test 4/4 
+## Comments
+## Welch ANOVA
+## Games-Howell
+## Deciding which test to do
+
+<!--chapter:end:inference_5_R.Rmd-->
+
+---
+title: "STAC32: Statistical Inference"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+
+```{r, child="inference_R.Rmd"}
+```
+
+
+<!--chapter:end:inference_R_slides.Rmd-->
+
+
+
+## Statistical Inference and Science
+## Sample data are imperfect
+## Packages for this section
+## Reading the attendances
+## Taking a look
+## Another way
+## Attendance histogram
+## Comments
+## Getting CI for mean attendance 
+## Or, 90% CI
+## Comments
+## Another way to access data frame columns
+## Hypothesis test
+## $\alpha$ and errors
+## Why 0.05? This man. 
+## Why 0.05? (2)
+## Three steps:
+## Using `t.test`:
+## Assumptions
+## Blue Jays attendances again:
+## Another example: learning to read
+## Reading in data 
+## The data (some) 
+## Boxplots
+## Two kinds of two-sample t-test
+## The (Welch-Satterthwaite) t-test
+## Welch-Satterthwaite 
+## The pooled t-test 
+## Two-sided test; CI
+## Comments:
+## Jargon for testing 
+## Logic of testing 
+## Errors in testing
+## Power 
+## Figuring out power
+## How to understand/estimate power?
+## Making it go
+## ...continued
+## or get just P-value 
+## Run this lots of times
+## In code
+## Calculating power
+## Comparison of results
+## Calculating required sample size 
+## Using power.t.test
+## Power curves
+## Building it
+## Building a plot
+## The power curve
+## Power curves for means
+## The combos
+## Calculate and plot
+## The power curves
+## Comments
+## Power by sample size for means 7 and 8
+## The power curves
+## Two-sample power
+## Setting up
+## Calculating power for sample size 22 (per group) 
+## sample size for power 0.8 
+## Comments
+## Duality between confidence intervals and hypothesis tests 
+## The data
+## 95% CI (default)
+## 90% CI
+## Hypothesis test
+## Comparing results
+## The value of this
+## Testing for non-normal data
+## Read in data 
+## Test whether mean is 160 or greater
+## But, look at a graph
+## Comments
+## The sign test
+## Obtaining P-value for sign test 1/2
+## Obtaining P-value for sign test 2/2
+## Using my package `smmr`
+## `smmr` for sign test
+## Comments (1/3)
+## Comments (2/3)
+## Comments (3/3)
+## Confidence interval for the median
+## For our data
+## Doing a whole bunch
+## ... and then
+## Make it easier for ourselves 
+## confidence interval for median?
+## A more efficient way: bisection
+## ... bisection continued 
+## Bisection automatically
+## The output from this loop
+## Using smmr
+## Matched pairs
+## Matched pairs data
+## Paired t test: reading the data
+## The data
+## Paired *t*-test 
+## t-testing the differences
+## t-test on the differences
+## Assessing normality 
+## The normal quantile plot
+## More normal quantile plots
+## Normal data, large sample
+## The normal quantile plot
+## Normal data, small sample
+## The normal quantile plot
+## Chi-squared data, *df* = 10
+## The normal quantile plot
+## Chi-squared data, df = 3
+## The normal quantile plot
+## t-distributed data, df = 3
+## The normal quantile plot
+## Our pain-relief data
+## Comments
+## Sign test
+## Comments 
+## (Some of) the kids’ reading data, again
+## Where we are at 
+## Boxplots for reading data
+## Facetted normal quantile plots
+## Comments
+## Welch two-sample test
+## What to do if normality fails
+## The chi-squared test for independence
+## ... continued
+## ...And finally
+## Mood’s median test
+## Mood’s median test for reading data
+## The test
+## Or by smmr
+## Comments
+## Jumping rats
+## Reading the data
+## The data (some random rows) 
+## Boxplots
+## Or, arranging groups in data (logical) order
+## Analysis of Variance
+## Testing: ANOVA in R
+## Which groups are different from which?
+## Control vs. low
+## Control vs. high
+## Low vs. high
+## But...
+## John W. Tukey 
+## Honestly Significant Differences
+## Tukey on rat data
+## Why Tukey’s procedure better than all t-tests 
+## Checking assumptions
+## Normal quantile plots by group
+## The assumptions
+## Mood’s median test 1/4
+## Mood’s median test 2/4 
+## Mood’s median test 3/4 
+## Mood’s median test 4/4 
+## Comments
+## Welch ANOVA
+## Games-Howell
+
+<!--chapter:end:inference_R.Rmd-->
+
+## junk
+
+## Summary
+
+On a normal quantile plot:
+
+- points following line (with some small wiggles): normal.
+- kind of deviation from a straight line indicates kind of nonnormality:
+  - a few highest point(s) too high and/or lowest too low: outliers
+  - else see how points at each end off the line:
+  
+  \begin{tabular}{llcc}
+  && \multicolumn{2}{c}{High points}\\
+  && Too low & too high\\
+  \hline
+  Low points & Too low & Skewed left & Long tails\\
+             & Too high & Short tails & Skewed right \\
+  \hline
+  
+  \end{tabular}
+  
+  
+
+<!--chapter:end:junk.Rmd-->
+
+---
+title: "athletes and knitr::kable"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes <- read_tsv(my_url)
+```
+
+one that works
+
+```{r}
+athletes %>% select(Sex:WCC) %>% knitr::kable()
+```
+
+does this?
+
+```{r}
+athletes %>% sample_n(10) %>% knitr::kable()
+```
+
+here it does
+
+```{r}
+athletes %>% slice(c(10, 13, 17, 42)) %>% knitr::kable()
+```
+
+
+<!--chapter:end:knitr-kable.Rmd-->
+
+---
+title: "Miscellanea"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="miscellanea.Rmd"}
+```
+
+
+
+<!--chapter:end:miscellanea_slides.Rmd-->
+
+
+
+## Packages needed for this section
+## How do you read a file like this?
+## Reading in delimiterless data
+## The “rat7” data
+## Plotting series: The oranges data
+## The data
+## Plotting series
+## The plot
+## Labelling points on a plot
+## Plot gas mileage against weight
+## Label points with name of car they belong to
+## Make labels smaller
+## Labelling some of the cars
+## The plot
+## Labelling cars by row number
+## The plot
+## Lightest weight and worst gas-mileage cars
+## The plot
+## Miscellaneous graph things
+## With title
+## Axis labels
+## Permanence
+## Saving and restoring objects 
+
+<!--chapter:end:miscellanea.Rmd-->
+
+---
+title: "Numerical Summaries"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="numsum_R.Rmd"}
+```
+
+
+<!--chapter:end:numsum_R_slides.Rmd-->
+
+
+
+## Summarizing data in R
+## Packages for this section
+## Summarizing one column
+## Quartiles
+## Creating new columns
+## Counting how many
+## Counting how many, variation 2:
+## Summaries by group
+## Summarizing several columns
+
+<!--chapter:end:numsum_R.Rmd-->
+
+---
+title: "STAC33: Introduction to Applied Statistics"
+author: "Course outline"
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+# Course outline 
+
+```{r, child="outline_20210101.Rmd"}
+```
+
+
+<!--chapter:end:outline_20210101_slides.Rmd-->
+
+
+
+## This course
+## Programs and Prerequisites
+### Getting help
+## E-mail
+## Course objectives
+## Course materials
+## Assessment
+## Grading
+## Policies
+## Course material
+## Accessibility statement
+## Expectations 1/3
+## Expectations 2/3
+## Expectations 3/3
+
+<!--chapter:end:outline_20210101.Rmd-->
+
+
+
+## This course
+## Programs and Prerequisites
+## STAC53
+## Getting help
+## E-mail
+## Course objectives
+## Course materials
+## Assessment
+## Grading
+## Policies
+## Course material
+## Accessibility statement
+## Expectations 1/3
+## Expectations 2/3
+## Expectations 3/3
+
+<!--chapter:end:outline_c32.Rmd-->
+
+---
+title: "STAC33: Introduction to Applied Statistics"
+author: "Course outline"
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="outline_c33_online.Rmd"}
+```
+
+
+<!--chapter:end:outline_c33_online_slides.Rmd-->
+
+
+
+## This course
+## Prerequisites
+## Getting help
+## E-mail
+## Course objectives
+## Course materials
+## Assessment
+## Grading
+## Policies
+## Course material
+## Accessibility statement
+## Expectations 1/3
+## Expectations 2/3
+## Expectations 3/3
+
+<!--chapter:end:outline_c33_online.Rmd-->
+
+---
+title: "Course Outline"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="outline_c33.Rmd"}
+```
+
+
+<!--chapter:end:outline_c33_slides.Rmd-->
+
+
+
+## In this course
+## Prerequisites
+## The instructor, lectures and tutorials
+## Text(s)
+## Structure of course
+## Course material (C33)
+## Laptop use
+## Assessment
+## Open book, defined
+## Missed work and documentation
+## Academic integrity
+## Penalties
+## Accessibility statement
+
+<!--chapter:end:outline_c33.Rmd-->
+
+---
+title: "STAC32: Applications of Statistical Methods"
+author: "Course outline"
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+# Course outline 
+
+```{r, child="outline_c32.Rmd"}
+```
+
+
+<!--chapter:end:outline.Rmd-->
+
+
+
+
+<!--chapter:end:preliminaries.Rmd-->
+
+---
+title: "Reading in data"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+# Reading in data
+
+```{r child="readfile_R.Rmd"}
+```
+
+
+<!--chapter:end:readfile_R_slides.Rmd-->
+
+
+
+## Introduction
+## Packages for this section
+## A spreadsheet
+## Save as `.csv`
+## The `.csv` file
+## Make a new notebook
+## Reading in the file
+## More on the above
+## R Studio on your own computer
+## Looking at what we read in
+## `View`-ing your data frame
+## This View
+## Summarizing what we read in
+## Reading from a URL
+## The data
+## Space-delimited files
+## Reading the coffee data
+## Looking at the values (some)
+## Reading from the Web; the soap data
+## The soap data (some)
+## Data aligned in columns
+## Reading in column-aligned data
+## The data
+## Reading an Excel sheet directly
+## Reading it in
+
+<!--chapter:end:readfile_R.Rmd-->
+
+---
+output: github_document
+---
+
+## STAC32/C33 lecture notes:
+
+- [STAC32 lecture notes](https://github.com/nxskok/notes/blob/master/slides_c32.pdf)
+- [STAC32 R Markdown file](https://raw.githubusercontent.com/nxskok/notes/master/slides_c32.Rmd)
+
+## STAC33 stuff coming soon.
+
+<!--chapter:end:README.Rmd-->
+
+---
+title: "Writing reports"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+```{r, child="reports_R.Rmd"}
+```
+
+
+
+<!--chapter:end:reports_R_slides.Rmd-->
+
+
+
+## Communicating your results
+## Reports
+## Report structure
+## A typical journal article
+## Abstract
+## Introduction
+## Materials and methods
+## Taking measurements
+## Results (a)
+## Results (b)
+## Conclusions (selected) 1/2 
+## Conclusions 2/2
+## References to other work (some)
+## Reproducibility
+## Why this is better than copy-and-paste
+## Other output formats
+## Writing your own report
+
+<!--chapter:end:reports_R.Rmd-->
+
+
+
+## Comparing models
+## Difficulty:
+## The extra code
+## Comments
+## Compile and sample
+## Now we need a null model
+## The null Stan code 1/2
+## The null Stan code 2/2
+## Compile and sample again
+## Compare the fits of the two models
+## Results 1/2
+## Results 2/2
+## Comments
+
+<!--chapter:end:rstan_compare.Rmd-->
+
+---
+title: "Bayesian Statistics with Stan"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: tibble
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="rstan.Rmd"}
+```
+
+
+
+
+<!--chapter:end:rstan_slides.Rmd-->
+
+
+
+## Packages for this section
+## Installation 1/2
+## Installation 2/2
+## Bayesian and frequentist inference
+## Distribution of parameters
+## An example
+## Some algebra
+## Sampling from the posterior distribution
+## Components of Stan code: the model
+## Components of Stan code: the prior distribution
+## Components of Stan code: data and parameters 
+## Compile and sample from the model
+## The output
+## Comments
+## Making the code more general
+## Set up again and sample:
+## output should be the same (to within randomness)
+## Picture of posterior
+## Extracting actual sampled values
+## Sampled values as dataframe
+## Posterior predictive distribution
+## Comparison
+## The plot 
+## Do they have the same distribution? 
+## Analysis of variance, the Bayesian way
+## Our aims here
+## Numbering the groups
+## Plotting the data 1/2
+## Plotting the data 2/2
+## The procedure
+## The model part
+## The variables here
+## Complete the `model` section:
+## Parameters
+## Data
+## Compile
+## Set up data and sample
+## Check that the sampling worked properly 
+## Look at the results
+## Comments
+## Plotting the posterior distributions for the `mu`
+## Extract the sampled values 
+## estimated probability that $\mu_3 > \mu_1$ 
+## More organizing
+## What we have now:
+## Density plots of posterior mean distributions
+## Posterior predictive distributions
+## Compare posterior predictive distribution with actual data
+## The plot
+## Extensions 
+
+<!--chapter:end:rstan.Rmd-->
+
+---
+title: "Running R"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r child="running_R.Rmd"}
+```
+
+<!--chapter:end:running_R_slides.Rmd-->
+
+
+
+## Running R online
+## Signing up
+## Logging in
+## R Studio Cloud
+## In a new project
+## R Notebooks
+## The template R Notebook
+## About this notebook
+## After running the code chunk
+## Making our own notebook
+## My R notebook
+## Run the chunks
+## The end of my (formatted) report
+## Installing R on your own computer
+## Click on Download
+## Click your mirror
+## Click on Base
+## The actual download
+## Now, R Studio
+## Scroll down...
+## Find the one for you
+## Running R
+## How R Studio looks when you run it
+## Projects
+
+<!--chapter:end:running_R.Rmd-->
+
+
+# Course outline 
+
+Placeholder
+
+
+
+<!--chapter:end:slides_c33.Rmd-->
+
+---
+title: "Statistical Inference: matched pairs"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation: 
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: AnnArbor
+    colortheme: dove
+urlcolor: blue
+---
+
+
+
+## a slide
+
+Hello world
+
+
+
+<!--chapter:end:some_slides.Rmd-->
+
+
+
+## Packages
+## Introduction
+## The problem
+## Getting around the problem
+## An example
+## Comments
+## Bayes factors and bridge sampling
+## The $t$-test
+## References
+
+<!--chapter:end:stan-compare.Rmd-->
+
+
+
+## Tidying data
+## Tidy and untidy data (Wickham) 
+## Packages for this section
+## Reading in the pig data
+## Gathering up the columns
+## Long format pigs
+## Another way to do this:
+## ...and finally, the analysis
+## Tukey
+## Mean weights by feed 
+## Should we have any concerns about the ANOVA?
+## Tuberculosis
+## The data
+## Gather the gender-age group columns
+## Results (some)
+## Separating
+## Tidied tuberculosis data (some)
+## In practice...
+## Total tuberculosis cases by year (some of the years) 
+## To find out what
+## what years do I have for China?
+## first year of recording for each country?
+## Some Toronto weather data
+## The data (some)
+## The columns
+## So far
+## The days
+## So far
+## Further improvements
+## So far
+## Final step(s)
+## Our tidy data frame
+## Plotting the temperatures
+## Setting up plot
+## The plot
+## Summary of tidying “verbs”
+## Doing things with data frames
+## Choosing a column
+## Choosing several columns
+## Choosing consecutive columns
+## Choosing all-but some columns
+## Select-helpers
+## Columns whose names begin with S 
+## Columns whose names end with C
+## Case-sensitive
+## Column names containing letter R
+## Exactly two characters, ending with T
+## Displaying some numbered columns
+## Just display x2 and x3:
+## Choosing rows by number 
+## Non-consecutive rows 
+## A random sample of rows
+## Rows for which something is true
+## More complicated selections
+## Another way to do "and"
+## Either/Or
+## Sorting into order
+## Breaking ties by another variable
+## Descending order
+## “The top ones”
+## Create new variables from old ones
+## Turning the result into a number
+## Another way to do the last one
+## To find the mean height of the women athletes
+## Summary of data selection/arrangement "verbs"
+## Looking things up in another data frame
+## Actual country names
+## The country names
+## Looking up country codes
+## Total cases by country
+## or even sorted in order
+## Comments
+
+<!--chapter:end:tidying_R_debug.Rmd-->
+
+
+
+## Tidying data
+## Tidy and untidy data (Wickham) 
+## Packages for this section
+## Reading in the pig data
+## Gathering up the columns
+## Long format pigs
+## Identifying the pigs
+## ...and finally, the analysis
+## Tukey
+## Mean weights by feed 
+## Should we have any concerns about the ANOVA?
+## Comments
+## Tuberculosis
+## The data
+## What we have
+## All frequencies in one column
+## Results (some)
+## Separating
+## Tidied tuberculosis data (some)
+## In practice...
+## Total tuberculosis cases by year (some of the years)
+## To find out what
+## what years do I have for China?
+## first year of recording for each country?
+## Some Toronto weather data
+## The data (some)
+## The columns
+## So far
+## The days
+## So far
+## Further improvements
+## So far
+## Final step(s)
+## Our tidy data frame
+## Plotting the temperatures
+## Setting up plot
+## The plot
+## Summary of tidying “verbs”
+
+<!--chapter:end:tidying_R_post.Rmd-->
+
+---
+title: "Tidying and organizing data"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+
+```{r, child="tidying_R.Rmd"}
+```
+
+
+<!--chapter:end:tidying_R_slides.Rmd-->
+
+
+
+## Tidying data
+## Tidy and untidy data (Wickham) 
+## Packages for this section
+## Reading in the pig data
+## Gathering up the columns (OLD)
+## Long format pigs
+## Another way to do this: (NEW)
+## What we have
+## All frequencies in one column
+## Results (some)
+## Separating
+## Tidied tuberculosis data (some)
+## In practice...
+## Total tuberculosis cases by year (some of the years)
+## To find out what
+## what years do I have for China?
+## first year of recording for each country?
+## Some Toronto weather data
+## The data (some)
+## The columns
+## So far
+## The days
+## So far
+## Further improvements
+## So far
+## Final step(s)
+## Our tidy data frame
+## Plotting the temperatures
+## Setting up plot
+## The plot
+## Summary of tidying “verbs”
+
+<!--chapter:end:tidying_R.Rmd-->
+
+
+<!--chapter:end:tidying.Rmd-->
+
+
+
+## Packages for this section
+## Vector addition
+## Adding a number to a vector
+## Scalar multiplication
+## “Vector multiplication”
+## Combining different-length vectors
+## How R does this 
+## Matrices
+## Adding matrices
+## Adding matrices
+## Multiplying matrices
+## Multiplying matrices?
+## Legit matrix multiplication
+## Reading matrix from file
+## but...
+## Making a genuine matrix
+## Linear algebra stuff
+## Matrix inverse
+## Inner product
+## Accessing parts of vector
+## Accessing parts of matrix
+## Eigenvalues and eigenvectors
+## The eigenvalues/vectors
+## To check that the eigenvalues/vectors are correct
+## A statistical application of eigenvalues
+## Eigenanalysis of correlation matrix
+
+<!--chapter:end:vector_matrix_post.Rmd-->
+
+---
+title: "Vector and Matrix Algebra"
+author: "Lecture notes"
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="vector_matrix.Rmd"}
+```
+
+
+<!--chapter:end:vector_matrix_slides.Rmd-->
+
+
+
+## Packages for this section
+## Vector addition
+## Adding a number to a vector
+## Scalar multiplication
+## “Vector multiplication”
+## Combining different-length vectors
+## How R does this 
+## Matrices
+## Adding matrices
+## Adding matrices
+## Multiplying matrices
+## Multiplying matrices?
+## Legit matrix multiplication
+## Reading matrix from file
+## but...
+## Making a genuine matrix
+## Linear algebra stuff
+## Matrix inverse
+## Inner product
+## Accessing parts of vector
+## Accessing parts of matrix
+## Eigenvalues and eigenvectors
+## The eigenvalues/vectors
+## To check that the eigenvalues/vectors are correct
+## A statistical application of eigenvalues
+## Eigenanalysis of correlation matrix
+
+<!--chapter:end:vector_matrix.Rmd-->
+
+
+
+## Find weibull parameters to fit eg an interquartile range
+
+<!--chapter:end:weibull.Rmd-->
+
+
+
+## The windmill data
+## Packages for this section
+## Reading in the data
+## The data
+## Strategy
+## Scatterplot
+## Comments
+## Fit a straight line (and see what happens)
+## Another way of looking at the output
+## Comments
+## back to scatterplot, but this time add line
+## The plot
+## Plot of residuals against fitted values
+## Comments on residual plot
+## Parabolas and fitting parabola model
+## Parabola model output
+## Comments on output
+## Residual plot from parabola model
+## Make scatterplot with fitted line and curve 
+## Comments
+## Scatterplot with fitted line and curve
+## Another approach to a curve
+## How to fit asymptote model?
+## Scatterplot for wind_pace
+## Regression output
+## Comments
+## Residual plot for asymptote model
+## Plotting trends on scatterplot
+## What’s in `w2`
+## Making the plot
+## Scatterplot with fitted curves
+## Comments
+## Asymptote model summary
+## Comments
+## Checking back in with research questions
+## Job done, kinda
+## Setting up data frame to predict from
+## `wv_new`
+## Doing predictions, one for each model
+## `my_fits`
+## Making a plot 1/2
+## Making a plot 2/2
+## The plot
+## Comments (1)
+## Comments (2)
+## Comments (3): asymptote model
+## Summary
+
+<!--chapter:end:windmill_post.Rmd-->
+
+---
+title: "Case study 1: the windmill data"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue    
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="windmill.Rmd"}
+```
+
+
+
+<!--chapter:end:windmill_slides.Rmd-->
+
+
+
+## The windmill data
+## Packages for this section
+## Reading in the data
+## The data
+## Strategy
+## Scatterplot
+## Comments
+## Fit a straight line (and see what happens)
+## Another way of looking at the output
+## Comments
+## back to scatterplot, but this time add line
+## The plot
+## Plot of residuals against fitted values
+## Comments on residual plot
+## Parabolas and fitting parabola model
+## Parabola model output
+## Comments on output
+## Residual plot from parabola model
+## Make scatterplot with fitted line and curve 
+## Comments
+## Scatterplot with fitted line and curve
+## Another approach to a curve
+## How to fit asymptote model?
+## Scatterplot for wind_pace
+## Regression output
+## Comments
+## Residual plot for asymptote model
+## Plotting trends on scatterplot
+## What’s in `w2`
+## Making the plot
+## Scatterplot with fitted curves
+## Comments
+## Asymptote model summary
+## Comments
+## Checking back in with research questions
+## Job done, kinda
+## Setting up data frame to predict from
+## `wv_new`
+## Doing predictions, one for each model
+## `my_fits`
+## Making a plot 1/2
+## Making a plot 2/2
+## The plot
+## Comments (1)
+## Comments (2)
+## Comments (3): asymptote model
+## Summary
+
+<!--chapter:end:windmill.Rmd-->
+
+
+
+## Packages for this section
+## The pigs revisited
+## Summaries
+## Running through `aov` and `lm`
+## and now `lm`
+## Understanding those slopes
+## Reproducing the ANOVA
+## The crickets
+## The crickets data
+## Fit model with `lm` 
+## The summary 
+## Conclusions
+## To end with a graph
+## The graph
+
+<!--chapter:end:with_categ_R_post.Rmd-->
+
+---
+title: "Regression with categorical variables"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="with_categ_R.Rmd"}
+```
+
+<!--chapter:end:with_categ_R_slides.Rmd-->
+
+
+
+## Packages for this section
+## The pigs revisited
+## Summaries
+## Running through `aov` and `lm`
+## and now `lm`
+## Understanding those slopes
+## Reproducing the ANOVA
+## The crickets
+## The crickets data
+## Fit model with `lm` 
+## The summary 
+## Conclusions
+## To end with a graph
+## The graph
+
+<!--chapter:end:with_categ_R.Rmd-->
+

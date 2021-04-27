@@ -1,0 +1,622 @@
+\section{R Scripts, projects and R Markdown: 
+organizing your work}
+\frame{\sectionpage}
+
+\begin{frame}[frame]{R Scripts}
+
+
+* Typing commands in the bottom left Console window is OK, but:
+
+
+* may need to type commands over again
+
+* can use up/down arrows to scroll through previous commands
+
+* no easy record of what you did.
+
+
+* File/New/R Script opens new window top left.
+
+* enter commands *here*, control-enter or Run button runs
+them (output in console).
+
+* select several lines, Run runs all.
+
+* **Have record of what you did**.
+
+* Editable: can save list of working commands, with no false
+trails, re-run from start to check analysis reproducible.
+
+
+
+## Projects
+
+
+* Provides a way of putting code and data in one place.
+
+* One overarching structure: can have scripts, text windows,
+etc. all open in one place.
+
+* When you close a project and re-open it, code and data are as
+you left it.
+
+* To create a project, Project-Create Project. Project
+associated with folder (directory). Prompted to create new project
+in new folder, or associate it with existing folder.
+
+* Then browse to folder where you want the project, and click
+Create Project.
+
+* Can have different projects for eg. each assignment, to keep
+them separate.
+
+* Helps solve "folder problem", because everything in Project folder.
+
+
+
+## R Markdown
+
+
+* Reproducible research: anyone should be able to reproduce
+exactly the analysis you did.
+
+* Report and analysis combined (instead of copy-pasting).
+
+* Report uses "markup language" (simplified HTML) for text
+and formatting.
+
+* To add code, insert *code chunk*.
+
+* Inside code chunk, put *only* code. This is run when
+document is processed, and output inserted in final document.
+
+
+
+## Example R Markdown document
+
+{\scriptsize  
+
+```
+
+This is the title
+=================
+Here is some data:
+
+```{r}
+x=c(10,11,13,14,17,18,22,24,27,41)
+x
+```
+
+and this is a summary of x:
+
+```{r}
+summary(x)
+```
+
+Finally, a boxplot of x:
+
+```{r}
+boxplot(x)
+```
+
+from which we see that x is right-skewed.
+
+```
+
+}
+
+
+## How it looks when "knitted", some
+It falls off the bottom of the page:
+
+![](silly.png)
+
+
+
+## Doing it yourself
+
+
+* File-New-R Notebook, pops up new window top left with template.
+
+* Save it (just filename, R supplies extension).
+
+* Write your report/assignment, inserting formatting code.
+
+* Insert code chunk by Chunks, Insert Chunk (control-alt-i).
+
+* In code chunk, just put the code you want to run. Can produce
+text or graphics output.
+
+* To see how each chunk's output looks, click green arrow top
+right of chunk
+
+* To see how it all looks, click Preview. Preview window pops up.
+
+* If you don't like it, edit R Markdown and preview again.
+
+
+
+## When you're happy with it
+
+
+* Find arrow to right of Preview. Click it. In drop-down, select
+Knit to Word. This will produce Word copy of text plus code plus
+output, suitable for handing in as assignment.
+
+* If you see any errors, *close* Word, go back to R
+Markdown, make changes and knit again.
+
+* You can make final cosmetic changes to the Word (eg. put
+tables in fixed-width font so that they line up), but if you
+change the R code and knit again, *those changes will be lost*.
+
+* You can also knit to PDF, but that requires \LaTeX\ on your
+computer. 
+ ## Tidying data
+   
+   
+   
+* Most of this from
+     [link](http://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html). 
+   
+* Data don't often come to us in the format that we would like
+     them for analysis.
+   
+* Often, columns should be rows (or vice versa), or columns
+     should be combined or split.
+   
+* Guiding principle (for us): every value belongs to a *variable*
+     and an *observation*:
+     
+     
+*     A variable contains all values that
+     measure the same thing (eg. height)
+   
+* An observation contains all values measured on the same
+     subject (eg. person.)
+   
+* Each variable is in a column.
+   
+* Each observation is in one, or more than one, row.
+     
+     
+   
+   
+ 
+ 
+ ## The usual beginning
+ <<>>=
+ library(tidyverse)
+ @   
+   
+ 
+ 
+ ## One variable in multiple columns
+ <<message=F>>=
+ scores=read_delim("scores.txt"," ")
+ scores
+ @   
+ 
+ 
+ 
+* `assgt.1` through `test.2` are all the same thing
+   (scores on an assessment). Combine them into *one* column, with
+   a label showing which assessment they belong to. 
+    
+ 
+ 
+ 
+ ## `gather`
+ 
+   
+ <<size="scriptsize">>=
+ library(tidyverse)
+ scores2 = scores %>% 
+     gather(assessment,score,assgt.1:test.2)
+ scores2
+ @   
+ 
+ Now can find mean score on each assessment, or make boxplots of scores
+ for each assessment (side by side). 
+ 
+ 
+ ## Anatomy of `gather`
+   
+   Gather requires three things:
+   
+   
+* What makes the columns different
+   
+* What makes the columns the same (what the columns to be combined
+     are all instances of)
+   
+* Which columns to "gather" together. Can be `x:y`
+     meaning columns `x` through `y` inclusive, or a
+     vector of column names with `c()`, or column names to omit
+     with `-`. No quotes needed in column names.
+   
+   
+ 
+ 
+ ## Splitting things up
+   
+ Suppose we want to split up that `assessment` column into two
+ things': the assessment type `assess.type` and which number
+ assessment it is `assess.num`. That is a job for `separate`:
+ 
+ {\footnotesize
+ <<>>=
+ separate(scores2,assessment,
+          into=c("assess.type","assess.num"),
+          sep="\\.")
+ @ 
+ }
+   
+ 
+ 
+ 
+ ## Chaining things together
+   
+   To do `gather` and `separate` in sequence, use pipe
+   `%>%`, "and then".
+ 
+ <<size="footnotesize">>=
+ scores %>% 
+     gather(assessment,score,assgt.1:test.2) %>%
+     separate(assessment,into=c("assess.type","assess.num"), 
+       sep="\\.")
+ @   
+   
+ 
+ 
+ 
+ ## Anatomy of `separate`
+   
+   This too needs three things:
+   
+   
+   
+* a variable `x` to separate out into parts
+   
+* a thing `into`: a vector of variable names to separate
+     `x` into
+   
+* a thing `sep` to specify what to separate on. This is a
+     "regular expression": the odd-looking code we used means
+     "separate by dot", but a dot in a regular expression means ``any
+     one character'', and we want an actual dot.
+     
+     `sep` can also be a number, which means ``separate after
+     that many characters from the beginning''. Here, though, the dot
+     could be anywhere, so we separate at the dot, wherever it is.
+   
+   
+   
+ 
+ 
+ ## The weather data
+   
+ <<>>=
+ weather=read_delim("weather.txt"," ")
+ @   
+   
+ 
+ 
+ 
+ ## Making separate columns
+   
+ We have:
+   
+ <<>>=
+ weather
+ @   
+ 
+   
+ 
+ 
+ ## `spread`
+ 
+ `temperature` is certainly temperature, but `type`
+ is two kinds of temperature: daily maximum and 
+ daily minimum. Two separate variables, and thus need to be
+ in two separate columns. Inverse of `gather`:
+ 
+ <<>>=
+ weather %>% spread(type,temperature)
+ @ 
+ 
+ `spread` needs two things: the variable for dividing into
+ groups (used as names for new variables), and the variable to be
+ divided. 
+ 
+ 
+ 
+ 
+ ## `dplyr: doing things to tidy data frames`
+   
+   Real-life data frames, even after tidying, don't always  contain
+   what we want. `dplyr` helps to "bash things into shape":
+   
+   
+   
+* Choosing rows (observations) (`filter`)
+   
+* Sorting rows by variables (`arrange`)
+   
+* Choosing columns (variables) (`select`)
+   
+* Creating new variables (`mutate`)
+   
+* Summarizing variables (`summarize`)
+   
+* Randomly sampling rows (`sample_n` and `sample_frac`)
+   
+   
+   This based on [link](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html).
+ 
+ 
+ 
+ 
+ 
+ ## Choosing rows (1)
+   
+   Start with somewhat-tidy marks data frame:
+   
+ <<>>=
+ scores2
+ @   
+ 
+   
+   
+ 
+ 
+ ## Choosing rows (2)
+   
+   To choose just Angela's marks (note `==`):
+   
+ <<size="small">>=
+ scores2 %>% filter(name=="Angela")
+ @   
+ 
+ or just Angela's test 1 mark ("and" implied):
+ 
+ <<size="footnotesize">>=
+ scores2 %>% 
+     filter(name=="Angela",assessment=="test.1")
+ @ 
+   
+ 
+ 
+ ## Choosing rows (3)
+   
+ Choose marks which belong either to assignment 1 or to test 1:
+ 
+ <<>>=
+ scores2 %>% 
+     filter(assessment=="assgt.1" | 
+            assessment=="test.1")
+ @ 
+   
+ 
+ 
+ ## Choosing rows (4)
+   
+ The marks that are over 40:
+ 
+ <<>>=
+ scores2 %>% filter(score>40)
+ @ 
+   
+ 
+ 
+ ## Ordering rows (1)
+   
+ To sort rows into order (by one or more variables), use `arrange`:
+ 
+ {\small
+ <<>>=
+ scores2 %>% arrange(name)
+ @ 
+ }
+   
+ 
+ 
+ ## Ordering rows (2)
+   
+ In descending order:
+ 
+ {\small
+ <<>>=
+ scores2 %>% arrange(desc(score))
+ @ 
+ }
+   
+ 
+ 
+ 
+ ## Ordering rows (3)
+   
+ By name, breaking ties in descending order of score:
+ 
+ {\small
+ <<>>=
+ scores2 %>% arrange(name,desc(score))
+ @ 
+ }
+   
+ 
+ 
+ ## Choosing columns
+ 
+   
+   
+*   `select` chooses columns. You choose columns the same way as
+   in `gather`.
+   
+ 
+* *But*, `MASS` also has a `select` (that does
+   something different). So if you did `library(MASS)` in this R
+   session, "unattach" it first:
+   
+ <<eval=F>>=
+ detach("package:MASS", unload=T)
+ @   
+ 
+     
+ 
+   
+   
+ 
+ 
+ ## Choosing columns (variables) (1)
+ 
+   
+   
+* Now, for
+   example, to pull out just the marks (only the top few fit on the screen):
+ 
+ <<size="footnotesize">>=
+ scores2 %>% select(score)
+ @   
+   
+   
+ 
+ 
+ ## Choosing columns (variables) (2)
+   
+   And to pull out everything but the names:
+   
+ <<size="footnotesize">>=
+ scores2 %>% select(-name)
+ @   
+   
+ 
+ 
+ ## Selecting columns (variables) (3)
+   
+ Or, choose "assessment through score":
+   
+ <<size="footnotesize">>=
+ scores2 %>% select(assessment:score)
+ @   
+   
+ 
+ 
+ ## Chaining things together
+   
+   These functions can also be chained together in sequence. Again,
+   remove the first data frame argument to any of the functions. Thus,
+   to choose everything but name and display the first 5 rows of result:
+ 
+ <<size="footnotesize">>=
+ scores2 %>% select(-name) %>% head(5)
+ @ 
+   
+ 
+ 
+ ## Finding the different ones: `distinct`
+   
+   ``What are the different
+   assessments?'' Easiest done in a chain:
+   
+ <<>>=
+ scores2 %>% select(assessment) %>% distinct() 
+ @   
+   
+ 
+ 
+ ## What does this one do?
+   
+ <<>>=
+ scores2 %>% select(-name) %>% head(5) %>% 
+   distinct()
+ @ 
+   
+ This shows the distinct assessment-score patterns (several people had
+ the same score on the same assessment, so even though we looked at the
+ top 5 lines of the result, several of them were identical, so we only
+ got 3 distinct ones).
+   
+ 
+ 
+ 
+ ## Creating new columns using `mutate`
+   
+   Suppose the assignment is out of 10, the tests are out of 50, and we
+   want to create a new column that is percentages:
+   
+   {\small
+ <<>>=
+ scores2 %>% mutate(out.of=c(rep(10,4),rep(50,8)),
+                    percent=score/out.of*100)
+ @   
+ }
+   
+ 
+ 
+ ## Summarizing values
+   
+   Use `summarize` (or `summarise`):
+   
+ <<>>=
+ scores2 %>% summarize(mean.score=mean(score))
+ @   
+ 
+ Not useful yet, but very useful in making summaries by group (later).
+   
+ 
+ 
+ ## Random samples of rows
+   
+ <<echo=F>>=
+ set.seed(457299)
+ @   
+ 
+ By the number of rows you want:
+ 
+ <<>>=
+ scores2 %>% sample_n(5)
+ @ 
+   
+ 
+ 
+ ## Random samples of rows (part 2)
+   
+ 
+ or the fraction of rows you want:
+ 
+ <<>>=
+ scores2 %>% sample_frac(0.25)
+ @ 
+   
+ 
+ 
+ 
+ ## Doing things by groups
+   
+   Start with `group_by`. Then use `summarize()` or
+   whatever as needed. This seems to work most naturally in a chain.
+   
+   To find the mean score on each assessment:
+   
+ <<>>=
+ scores2 %>% group_by(assessment) %>% 
+    summarize( assess.mean=mean(score),
+               assess.sd=sd(score)
+             )
+ @   
+   
+ 
+ 
+ ## How many assessments did each person do?
+   
+ <<>>=
+ scores2 %>% group_by(name) %>%
+    dplyr::summarize(how.many=n())
+ @   
+   
+ 
+ This is actually ``how many times did each name appear in the original
+ data frame?''.
+ 
+

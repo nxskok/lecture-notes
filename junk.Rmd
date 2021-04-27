@@ -1,0 +1,22 @@
+Some stupid data analysis
+========================================================
+
+Here is a variable x:
+
+```{r}
+x=c(10,11,13,14,21,26,35)
+x
+```
+
+Here is a summary of x:
+
+```{r}
+summary(x)
+sd(x)
+```
+
+and here is a boxplot of x:
+
+```{r}
+boxplot(x)
+```

@@ -1,0 +1,214 @@
+## Packages for this section
+```{r, eval=F}
+library(tidyverse)
+library(lubridate)
+```
+
+## Exact time intervals
+
+We previously got fractional days (of stays in hospital):
+
+\small
+
+```{r, message=FALSE}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/hospital.csv"
+stays <- read_csv(my_url)
+stays %>% mutate(stay_days = (discharge - admit) / ddays(1))
+```
+
+\normalsize
+
+but what if we wanted days, hours and minutes?
+
+## Intervals
+
+\footnotesize
+
+```{r}
+stays %>% mutate(stay = admit %--% discharge)
+```
+
+\normalsize
+
+- These are called *intervals*: they have a start point and an end point.
+
+## Periods
+
+To work out the exact length of an interval, in human units, turn it into a `period`:
+
+```{r}
+stays %>% mutate(stay = as.period(admit %--% discharge))
+```
+
+A period is exact as long as it has a start and an end (accounting for daylight savings, leap years etc).
+
+## Completed days
+
+Take `day` of the periods:
+
+\small
+
+```{r}
+stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
+  mutate(days_of_stay = day(stay))
+```
+
+\normalsize
+
+## Completed hours 1/2
+
+- Not quite what you think:
+
+\small
+
+```{r}
+stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
+  mutate(hours_of_stay = hour(stay))
+```
+
+\normalsize
+
+- These are completed hours *within* days. 
+
+## Completed hours 2/2
+
+- To get total hours, count each day as 24 hours also:
+
+\small
+
+```{r}
+stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
+  mutate(hours_of_stay = hour(stay) + 24*day(stay))
+```
+
+\normalsize
+
+## Durations
+
+- What's the difference between `duration` and `period`?
+
+```{r}
+stays %>% mutate(stay = as.duration(admit %--% discharge)) 
+```
+
+- A duration is always a number of *seconds*. 
+- Also shown is an approx equivalent on a more human scale (calculated from seconds).
+
+## Sometimes it matters
+
+- Days and hours are always the same length (as a number of seconds).
+- Months and years are not always the same length:
+  - months have different numbers of days
+  - years can be leap years or not
+  - the actual length of 2 months depends *which* 2 months:
+  
+\small
+
+```{r}
+tribble(
+  ~start, ~end,
+  ymd("2020-01-15"), ymd("2020-03-15"),
+  ymd("2020-07-15"), ymd("2020-09-15")
+) %>% mutate(period = as.period(start %--% end)) %>% 
+  mutate(duration = as.duration(start %--% end))
+```
+
+\normalsize
+
+## Comments
+
+- Both periods are exactly two months
+- but they have a different duration in seconds
+- the first two-month period is shorter because it contains the short month February
+- the second two-month period is longer because both July and August have 31 days.
+
+## Manchester United
+
+Sometime in December 2019 or January 2020, I downloaded some information about the players that were then in the squad of the famous Manchester United Football (soccer) Club. We are going to use the players' ages (as given) to figure out exactly when the download happened.
+  
+\small
+
+```{r}
+my_url <- "http://ritsokiguess.site/STAD29/manu.csv"
+read_csv(my_url) %>% 
+  select(name, date_of_birth, age) -> man_united
+```
+
+\normalsize
+
+## The data
+
+```{r}
+man_united
+```
+
+## Ages
+
+- A player's age is the number of *completed* years since their birth
+- This suggests:
+  - guessing a download date
+  - working out time since birth as *period*
+  - extracting number of years
+  
+- After that, see if our calculations of age match actual ages
+
+
+## Guess download date and work out ages
+
+Guess January 10, 2020 as download date (just to pick a date):
+
+```{r}
+guess <- ymd("2020-01-10")
+man_united %>% 
+  mutate(dob = dmy(date_of_birth)) %>% 
+  mutate(age_period = as.period(dob %--% guess)) %>% 
+  mutate(age_years = year(age_period)) -> d
+```
+
+## Results (just the ages)
+
+\scriptsize
+
+```{r}
+d %>% select(name, age, age_years)
+```
+
+\normalsize
+
+## Which ones are different?
+
+```{r}
+d %>% filter(age != age_years) %>% 
+  select(name, date_of_birth, age, age_years)
+```
+
+- these three players were calculated wrong: we got one year too many.
+- Our guessed date, January 10, was too *late*.
+- These three players had a birthday since the actual download date
+- actual download date must have been before Dec 15.
+
+## Try an earlier date
+
+- say Dec 5:
+
+```{r}
+guess <- ymd("2019-12-05")
+man_united %>% 
+  mutate(dob = dmy(date_of_birth)) %>% 
+  mutate(age_period = as.period(dob %--% guess)) %>% 
+  mutate(age_years = year(age_period)) %>% 
+  filter(age != age_years) %>% 
+  select(name, date_of_birth, age, age_years) -> d2
+```
+
+## Results
+
+```{r}
+d2
+```
+
+- Dec 5 was too early for the download date
+- must have been later than Dec 8 (to get McTominay's age right)
+- so must have been between Dec 8 and Dec 15 (Lingard's birthday)
+- Actually I downloaded the data on Dec 10.
+

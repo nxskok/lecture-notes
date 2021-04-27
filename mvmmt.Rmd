@@ -1,0 +1,176 @@
+---
+title: "mmmt"
+output: html_notebook
+---
+
+## apckages
+
+```{r}
+library(tidyverse)
+```
+
+manova data
+
+```{r}
+url <- "manova1.txt"
+hilo <- read_delim(url, " ")
+```
+
+```{r}
+hilo
+```
+
+make long
+
+```{r}
+hilo %>% pivot_longer(-fertilizer, names_to="xnames", values_to="x") -> hilo_long
+hilo_long
+```
+
+median of each variable
+
+```{r}
+hilo_long %>% group_by(xnames) %>% summarize(med=median(x)) -> meds
+meds
+```
+
+look back up
+
+```{r}
+hilo_long %>% left_join(meds, by="xnames") %>% 
+  group_by(fertilizer, xnames) %>% 
+  count(x>=med) %>% 
+  janitor::clean_names() -> f
+f
+```
+
+log linear model
+
+```{r}
+f.1 <- glm(n~fertilizer*xnames*x_med, family=poisson, data=f)
+summary(f.1)
+drop1(f.1, test="Chisq")
+```
+
+```{r}
+f.2 <- update(f.1, .~.-fertilizer:xnames:x_med)
+drop1(f.2, test="Chisq")
+```
+
+```{r}
+f.3 <- update(f.2, .~.-fertilizer:xnames)
+drop1(f.3, test="Chisq")
+```
+
+```{r}
+f.4 <- update(f.3, .~.-xnames:x_med)
+drop1(f.4, test="Chisq")
+```
+
+```{r}
+f.5 <- update(f.4, .~.-xnames)
+drop1(f.5, test="Chisq")
+```
+
+```{r}
+xtabs(n~fertilizer+x_med, data=f)
+```
+
+another data set
+
+```{r}
+manova1 <- read_delim("ex1.txt", " ")
+manova1
+```
+
+just look at disability
+
+```{r}
+manova1 %>% pivot_longer(starts_with("W"), names_to="what", values_to="score") -> d
+d
+```
+
+work out medians
+
+```{r}
+d %>% group_by(what) %>% summarize(med=median(score)) -> meds
+meds
+```
+
+do I need to keep the zeros below?
+
+```{r}
+d %>% left_join(meds, by="what") %>% 
+  mutate(where=ifelse(score>med, "above", "below")) %>% 
+  count(Disability, what, where) -> dd
+dd
+```
+
+llm
+
+```{r}
+dd.1 <- glm(n~Disability*what*where, data=dd, family=poisson)
+drop1(dd.1, test="Chisq")
+```
+
+singularities
+
+```{r}
+dd.2 <- update(dd.1, .~.-Disability:what:where)
+drop1(dd.2, test="Chisq")
+```
+
+```{r}
+dd.3 <- update(dd.2, .~.-Disability:what)
+drop1(dd.3, test="Chisq")
+```
+
+need a bigger data set, like Australian athletes?
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes <- read_tsv(my_url)
+athletes
+```
+
+think about height and weight vs gender
+
+```{r}
+athletes %>% mutate(Ht=Ht) %>% 
+  select(Sex, Ht, Wt) %>% 
+  pivot_longer(-Sex, names_to="xnames", values_to="x") -> d
+d
+```
+
+medians
+
+```{r}
+d %>% group_by(xnames) %>% 
+  summarize(med=median(x)) -> meds
+meds
+```
+
+```{r}
+d %>% left_join(meds, by="xnames") %>% 
+  mutate(where=ifelse(x>=med, "greater", "less")) %>% select(Sex, xnames, where) -> dd
+dd %>% count(Sex, xnames, where) -> ddd
+ddd
+```
+
+```{r}
+ddd.1 <- glm(n~Sex*xnames*where, data=ddd, family=poisson)
+drop1(ddd.1, test="Chisq")
+```
+
+```{r}
+ddd.2 <- update(ddd.1, .~.-Sex:xnames:where)
+drop1(ddd.2, test="Chisq")
+```
+
+```{r}
+ddd.3 <- update(ddd.2, .~.-Sex:xnames)
+drop1(ddd.3, test="Chisq")
+```
+
+
+

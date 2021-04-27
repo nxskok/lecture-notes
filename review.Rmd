@@ -1,0 +1,315 @@
+Review session
+========================================================
+
+```{r,echo=FALSE}
+opts_chunk$set(fig.cap="")
+```
+
+
+Generating some data
+--------------------
+
+Generate a matrix of 60 random normals, in 3 columns:
+
+```{r}
+set.seed(457299)
+z=matrix(rnorm(60,mean=10,sd=3),ncol=3)
+head(z)
+```
+
+Making some correlated variables
+--------------------------------
+
+`x` and `y` are related, but `z` has nothing to do with them:
+
+
+```{r}
+w=data.frame(x=z[,1],y=z[,1]+0.9*z[,2],
+             z=z[,3])
+cor(w)
+rm(z)
+```
+
+Principal components
+--------------------
+
+```{r}
+w.pc=princomp(w,cor=T)
+summary(w.pc)
+```
+
+2 components explain 94% of variability.
+
+Scree plot (version 1)
+----------
+
+```{r}
+plot(w.pc)
+```
+
+Scree plot (version 2)
+---------------------
+
+```{r}
+plot(w.pc$sdev^2,type="b")
+abline(h=1,lty="dashed")
+```
+
+Decision to make:
+------------------
+
+* elbow at 2, suggests 1 component.
+* 2nd eigenvalue close to 1, suggests 2 components.
+* 1 component explains 66% of variability
+* 2 components explain 94% of variability.
+
+I go with 2 components.
+
+
+Loadings
+--------
+
+```{r}
+w.pc$loadings
+```
+
+Component 1 mostly x and y (negatively), component 2 mostly z. (z had nothing to do with x and y, which were related.)
+
+Biplot
+------
+
+```{r}
+biplot(w.pc)
+```
+
+Individuals
+-----------
+
+Individual 1 should be high on `x` and `y`, 12 (or 20) low on both.
+Individual 3 should be low on `z`, 11 high (and also low on `x` and `y`)
+
+```{r}
+summary(w)
+pickout=c(1,12,20,3,11)
+w[pickout,]
+```
+
+Summary
+-------
+
+<pre>
+
+Observation |   x    |   y    |   z 
+------------|--------|--------|---------
+          1 | high   | high   | average
+         12 | low    | low    | average
+         20 | low    | low    | low
+         3  | average| average| low
+         11 | low    | low    | high
+         
+</pre>
+
+Without using a biplot
+----------------------
+
+Look at loadings first to determine which variables have to do with which components:
+
+```{r}
+w.pc$loadings
+```
+
+* Component 1 mostly `x` and `y` (negative)
+* Component 2 `z` (positive)
+
+
+Plotting component scores
+-------------------------
+
+```{r}
+labels=as.character(1:20)
+plot(w.pc$scores,type="n")
+text(w.pc$scores,labels)
+```
+
+Individuals on:
+
+* left: *high* on `x`, `y`
+* right: *low* on `x`, `y`
+* top: *high* on `z`
+* bottom: *low* on `z`
+
+Adding a group variable
+-----------------------
+
+```{r, echo=FALSE}
+group=cut(w$z,quantile(w$z),labels=letters[1:4],include.lowest=T)
+```
+
+```{r}
+cbind(w,group)
+```
+
+Manova: are the groups different on any of the variables?
+---------------------------------------------------------
+
+```{r}
+gf=factor(group)
+attach(w)
+response=cbind(x,y,z)
+detach(w)
+w.man=manova(response~gf)
+summary(w.man)
+```
+
+Yes, something distinguishes groups.
+
+
+Which variable(s) distinguish groups?
+-------------------------------------
+
+Discriminant analysis.
+
+```{r}
+library(MASS)
+w.lda=lda(group~x+y+z,data=w)
+w.lda$scaling
+```
+
+LD1 best distinguishes groups, and is almost entirely `z`. 
+
+Discriminant predictions
+------------------------
+
+Or, how separate are the groups?
+
+```{r}
+w.lda2=lda(group~x+y+z,data=w,CV=T)
+table(group,pred=w.lda2$class)
+```
+
+Not actually that distinguishable.
+
+Plot groups by colour
+---------------------
+
+```{r}
+colour=as.integer(gf)
+plot(w.lda,dimen=2,col=colour)
+```
+Groups a little mixed up with neighbours.
+
+Posterior probabilities
+-----------------------
+
+```{r}
+o=order(group)
+wp=round(w.lda2$posterior,3)
+tmp=data.frame(w,group,pred=w.lda2$class,wp)
+tmp[o,]
+```
+
+
+Repeated measures
+=================
+
+
+Example
+---------
+
+```{r}
+rm=read.table("rm1.txt",header=T)
+rm
+```
+
+4 measurements per individual, at times 1, 2, 3, 4. Two treatments `a` and `b`.
+
+
+
+Run through `lm` first 
+----------------------
+
+with multivariate response:
+
+```{r}
+attach(rm)
+response=cbind(t1,t2,t3,t4)
+response
+rm.lm=lm(response~treatment)
+```
+
+* `rm.lm` is stepping stone only: use as input to `Manova` in a moment.
+* Between-subjects model in `lm`: response just depends on `treatment`.
+
+Setting up for `Manova`
+-----------------------
+
+Have to tell R that the 4 columns of responses are repeated measures:
+
+```{r}
+times=colnames(response)
+times.df=data.frame(times)
+times.df
+library(car)
+rm.manova=Manova(rm.lm,idata=times.df,idesign=~times)
+```
+
+Results
+-------
+
+```{r}
+rm.manova
+```
+
+* Significant difference between treatments
+* Significant time effect
+* No significant interaction between treatment and time (pattern of responses over time same for each treatment)
+
+The data, again
+----------------
+
+```{r}
+rm
+```
+
+* Treatment `a` numbers consistently higher than treatment `b` numbers (comparing at same time)
+* Time `t4` numbers consistently higher than others (comparing within an individual)
+* "Jump" at time `t4` seems same for both treatments.
+
+
+Interaction plot preparation
+----------------------------
+
+Why were the results what we got? Want interaction plot, but first have to convert data from "wide format" (all responses on one row) to "long format" (one response per row):
+
+```{r}
+times
+detach(rm)
+rm2=reshape(rm,varying=times,sep="",direction="long")
+head(rm2,n=10)
+
+```
+
+The interaction plot
+--------------------
+
+```{r}
+attach(rm2)
+interaction.plot(time,treatment,t)
+```
+
+* responses for treatment a consistently higher than for treatment b (treatment effect)
+* traces parallel: effect of treatment same for all times (no interaction)
+* response constant for first 3 times, but sharp increase for 4th (time effect)
+
+Fiddling with the data
+----------------------
+
+```{r}
+rm
+```
+
+How could you change the data:
+
+* to remove the time effect?
+* to remove the treatment effect?
+* to introduce a significant interaction?

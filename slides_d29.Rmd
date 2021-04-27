@@ -1,0 +1,101 @@
+---
+title: "STAD29: Statistics for the Life and Social Sciences"
+author: "Lecture notes"
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+```{r outline,child="bOutline.Rmd"}
+
+```
+
+Get course content in here somewhere
+
+
+```{r Regression, child="bRegression.Rmd"}
+
+```
+
+ 
+```{r bLogistic, child="bLogistic.Rmd"}
+
+```
+
+  
+
+```{r bSurvival, child="bSurvival.Rmd"}
+
+```
+
+ 
+```{r bAnova, child="bAnova.Rmd"}
+
+```
+
+ 
+
+```{r ancova, child="bAncova.Rmd"}
+
+```
+
+ 
+
+```{r bManova, child="bManova.Rmd"}
+
+```
+
+ 
+
+```{r bProfile, child="bProfile.Rmd"}
+
+```
+
+ 
+
+```{r bDiscrim, child="bDiscrim.Rmd"}
+
+```
+
+ 
+
+```{r bCluster, child="bCluster.Rmd"}
+
+```
+
+ 
+
+```{r bMDS, child="bMDS.Rmd"}
+
+```
+ 
+```{r bPrincomp, child="bPrincomp.Rmd"}
+
+```
+
+ 
+
+```{r bFactor, child="bFactor.Rmd"}
+
+```
+
+include time series notes here
+
+```{r bMultiway, child="bMultiway.Rmd"}
+
+```
+
+make DONE slide
+
+

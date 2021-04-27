@@ -1,0 +1,114 @@
+
+## Matched pairs
+
+Some data: 
+
+\centering{
+  \includegraphics[height=0.7\textheight]{Screenshot_2019-04-26_13-41-29}
+}
+
+
+## Matched pairs data
+- Data are comparison of 2 drugs for effectiveness at reducing pain.
+
+     - 12 subjects (cases) were arthritis sufferers
+     - Response is #hours of pain relief from each drug.
+      
+- In reading example, each child tried only one reading method.
+- But here, each subject tried out both drugs, giving us two
+measurements.
+
+    - Possible because, if you wait long enough, one drug has no influence
+over effect of other.
+    - Advantage: focused comparison of drugs. Compare one drug with
+another on same person, removes a lot of variability due to differences between people. 
+    - Matched pairs, requires different analysis.
+      
+- Design: randomly choose 6 of 12 subjects to get drug A first, other 6
+get drug B first.
+
+## Paired t test: reading the data
+Values aligned in columns:  
+
+```{r}
+my_url <- 
+  "http://www.utsc.utoronto.ca/~butler/c32/analgesic.txt"
+pain <- read_table(my_url)
+```
+
+## The data
+
+```{r}
+pain
+```
+
+## Paired *t*-test 
+
+\small
+
+```{r}
+with(pain, t.test(druga, drugb, paired = T))
+```
+
+\normalsize
+
+- P-value is 0.053. 
+- Not quite evidence of difference between drugs.
+
+## t-testing the differences
+
+- Likewise, you can calculate the differences yourself and
+do a 1-sample t-test on them.
+- First calculate a column of differences:
+
+\footnotesize
+
+```{r}
+(pain %>% mutate(diff=druga-drugb) -> pain)
+```
+
+\normalsize
+
+## t-test on the differences
+- then throw them into t.test, testing that the mean is zero, with
+same result as before:
+```{r}
+with(pain, t.test(diff, mu=0))
+```
+
+## Assessing normality 
+- 1-sample and 2-sample t-tests assume (each) group normally
+distributed.
+- Matched pairs analyses assume (theoretically) that differences
+normally distributed.
+- How to assess normality? A normal quantile plot.
+
+## The normal quantile plot (of differences)
+
+
+```{r, fig.height=4}
+ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
+```
+
+- Points should follow the straight line. Bottom left one way off, so
+normality questionable here: outlier.
+
+## What to do instead?
+
+
+- Matched pairs $t$-test based on one sample of differences
+- the differences not normal (enough)
+- so do *sign test* on differences, null median 0:
+
+
+```{r}
+sign_test(pain, diff, 0)
+```
+
+
+## Comments
+
+- no evidence of any difference between drugs (P-value 0.1460)
+- in $t$-test, the low outlier difference pulled mean difference downward and made it look more negative than it should have been
+- therefore, there really isn't any difference between the drugs.
+

@@ -1,0 +1,1077 @@
+---
+title: "March 21"
+output: html_notebook
+---
+
+
+
+# March 21: Cluster analysis
+
+## Packages
+
+```{r}
+library(MASS) # for an LDA later
+library(ggrepel)
+library(tidyverse)
+```
+
+
+## Cluster Analysis
+
+  
+  - One side-effect of discriminant analysis: could draw picture of data (if 1st 2s `LD`s told most of story) and see which individuals "close" to each other.
+  - Discriminant analysis requires knowledge of groups.
+  - Without knowledge of groups, use *cluster analysis*: see which individuals close, which groups suggested by data.
+  - Idea: see how individuals group into "clusters" of nearby individuals.
+  - Base on "dissimilarities" between individuals.
+  - Or base on standard deviations and correlations between variables (assesses dissimilarity behind scenes).
+  
+
+
+## One to ten in 11 languages
+
+  \begin{tabular}{lcccccc}
+    & English & Norwegian & Danish & Dutch & German\\
+    \hline
+    1 & one & en & en & een & eins\\
+    2 & two & to & to & twee & zwei\\
+    3 & three & tre & tre & drie & drei\\
+    4 & four & fire & fire & vier & vier\\
+    5 & five & fem & fem & vijf & funf\\
+    6 & six & seks & seks & zes & sechs\\
+    7 & seven & sju & syv & zeven & sieben\\
+    8 & eight & atte & otte & acht & acht\\
+    9 & nine & ni & ni & negen & neun\\
+    10 & ten & ti & ti & tien & zehn\\
+    \hline
+    \end{tabular}
+
+
+## One to ten
+
+  \begin{small}
+  \begin{tabular}{lcccccc}
+    & French & Spanish & Italian & Polish & Hungarian & Finnish\\
+\hline
+    1 & un & uno & uno & jeden & egy & yksi\\
+    2 & deux & dos & due & dwa & ketto & kaksi\\
+    3 & trois & tres & tre & trzy &  harom & kolme\\
+    4 & quatre & cuatro & quattro & cztery & negy & nelja\\
+    5 & cinq & cinco & cinque & piec & ot & viisi\\
+    6 & six & seis & sei & szesc & hat & kuusi\\
+    7 & sept & siete & sette & siedem & het & seitseman \\
+    8 & huit & ocho & otto & osiem & nyolc & kahdeksan\\
+    9 & neuf & nueve & nove & dziewiec & kilenc & yhdeksan \\
+    10 & dix & diez & dieci & dziesiec & tiz & kymmenen\\
+    \hline
+  \end{tabular}
+    
+  \end{small}
+
+
+
+
+## Dissimilarities and languages example
+
+  
+  - Can define dissimilarities how you like (whatever makes sense in application).
+  - Sometimes defining "similarity" makes more sense; can turn this into dissimilarity by subtracting from some maximum.
+  - Example: numbers 1--10 in various European languages. Define
+    similarity between two languages by counting how often the same
+    number has a name starting with the same letter (and dissimilarity
+    by how often number has names starting with different letter).
+  - Crude (doesn't even look at most of the words), but see how effective.
+  
+  
+
+
+## Two kinds of cluster analysis
+
+  
+  - Looking at process of forming clusters (of similar languages):
+    **hierarchical cluster analysis** (`hclust`).
+    
+    - Start with each individual in cluster by itself.
+    - Join "closest" clusters one by one until all individuals in one cluster.
+    - How to define closeness of two *clusters*? Not obvious,
+      investigate in a moment.
+    
+  - Know how many clusters: which division into that many clusters
+    is "best" for individuals? **K-means clustering** (`kmeans`).
+  
+  
+
+
+## Two made-up clusters
+  
+```{r}
+set.seed(457299)
+a=data.frame(x=runif(5,0,20),y=runif(5,0,20))
+b=data.frame(x=runif(5,20,40),y=runif(5,20,40))
+ddd=bind_rows(a=a,b=b,.id="cluster")
+g=ggplot(ddd,aes(x=x,y=y,colour=cluster))+geom_point()+
+  coord_fixed(xlim=c(0,40),ylim=c(0,40))
+g
+```   
+
+How to measure distance between set of red points and set of blue
+ones? 
+  
+
+
+## Single-linkage distance
+  
+  Find the red point and the blue point that are closest together:
+  
+```{r}
+distance=function(p1,p2) {
+  sqrt((p1[1]-p2[1])^2+(p1[2]-p2[2])^2)
+}
+distances=matrix(0,nrow(a),nrow(b))
+for (i in 1:nrow(a)) {
+  for (j in 1:nrow(b)) {
+    dd=distance(a[i,],b[j,])
+    distances[i,j]=dd
+  }
+}
+wm1=which.min(apply(distances,1,min))
+wm2=which.min(apply(distances,2,min))
+closest=bind_rows(a=a[wm1,],b=b[wm2,],.id="cluster")
+# single linkage distance
+g+geom_segment(data=closest,aes(x=x[1],y=y[1],xend=x[2],yend=y[2]),colour="blue")
+```   
+
+Single-linkage distance between 2 clusters is distance between their
+closest points.
+  
+
+
+## Complete linkage
+  
+  Find the red and blue points that are farthest apart:
+  
+```{r}
+wm1=which.max(apply(distances,1,max))
+wm2=which.max(apply(distances,2,max))
+closest=bind_rows(a[wm1,],b[wm2,],.id="cluster")
+g+geom_segment(data=closest,aes(x=x[1],y=y[1],xend=x[2],yend=y[2]),colour="blue")
+```
+
+Complete-linkage distance is distance between farthest points. 
+  
+
+
+## Ward's method
+  
+  Work out mean of each cluster and join point to its mean:
+  
+```{r}
+xm=aggregate(x~cluster,ddd,mean)
+ym=aggregate(y~cluster,ddd,mean)
+dm=cbind(xm,y=ym[,2])
+# loop through data frame and create grp that links to cluster's mean
+new=data.frame(x=double(),y=double(),cluster=character(),grp=integer(),
+  stringsAsFactors = F)
+count=0;
+for (i in 1:5) {
+  count=count+1
+  new[2*count-1,]=c(a[i,],cluster="a",grp=count)
+  new[2*count,]=c(dm[1,-1],cluster="a",grp=count)
+  count=count+1
+  new[2*count-1,]=c(b[i,],cluster="b",grp=count)
+  new[2*count,]=c(dm[2,-1],cluster="b",grp=count)
+}
+ggplot(ddd,aes(x=x,y=y,colour=cluster))+
+  coord_fixed(xlim=c(0,40),ylim=c(0,40))+
+  geom_point()+
+  geom_point(data=dm,shape=3)+
+  geom_line(data=new,aes(group=grp),alpha=0.5)
+```   
+
+(i) Work out sum of squared distances of points from means.
+
+
+## Ward's method part 2
+  
+Now imagine combining the two clusters and working out overall
+mean. Join each point to this mean:
+
+```{r}
+ddd %>% summarize(x=mean(x),y=mean(y)) -> dm
+# loop through data frame and create grp that links to cluster's mean
+new=data.frame(x=double(),y=double(),cluster=character(),grp=integer(),
+  stringsAsFactors = F)
+count=0;
+for (i in 1:5) {
+  count=count+1
+  new[2*count-1,]=c(a[i,],cluster="a",grp=count)
+  new[2*count,]=c(dm[1,],cluster="a",grp=count)
+  count=count+1
+  new[2*count-1,]=c(b[i,],cluster="b",grp=count)
+  new[2*count,]=c(dm[1,],cluster="b",grp=count)
+}
+ggplot(ddd,aes(x=x,y=y,colour=cluster))+
+  coord_fixed(xlim=c(0,40),ylim=c(0,40))+
+  geom_point()+
+  geom_point(data=dm,aes(colour=NULL),shape=3)+
+  geom_line(data=new,aes(group=grp),alpha=0.5)
+```   
+(ii) Calc sum of squared distances of points to combined mean.
+  
+
+
+## Ward's method part 3
+  
+  
+  - (ii) will be bigger than (i) (points closer to own cluster
+    mean than combined mean).
+  - Ward's distance is (ii) minus (i).
+  - Think of as "cost" of combining clusters:
+    
+    - if clusters close together, (ii) only a little larger than
+      (i)
+    - if clusters far apart, (ii) a lot larger than (i) (as in
+      example). 
+    
+  
+  
+
+
+## Hierarchical clustering revisited
+  
+  
+  - Single linkage, complete linkage, Ward are ways of measuring
+    closeness of clusters.
+  - Use them, starting with each observation in own cluster, to
+    repeatedly combine two closest clusters until all points in one
+    cluster.
+  - They will give different answers (clustering stories). 
+  - Single linkage tends to make "stringy" clusters because
+    clusters can be very different apart from two closest points.
+  - Complete linkage insists on whole clusters being similar.
+  - Ward tends to form many small clusters first.
+  
+  
+
+
+## Dissimilarity data in R
+
+
+Dissimilarities for language data\label{p:numberd} were how many
+number names had *different* first letter:
+
+```{r}
+options(width=60)
+``` 
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/languages.txt"
+number.d=read_table(my_url)
+number.d
+``` 
+
+
+
+## Making a distance object
+  
+```{r}
+d = number.d %>% 
+    select(-la) %>%
+    as.dist()
+d
+class(d)
+```   
+  
+
+
+## Cluster analysis and dendrogram
+  
+```{r}
+d.hc=hclust(d,method="single")
+plot(d.hc)
+```   
+  
+
+
+## Comments
+  
+  
+  - Tree shows how languages combined into clusters.
+  - First (bottom), Spanish, French, Italian joined into one
+    cluster, Norwegian and Danish into another.
+  - Later, English joined to Norse languages, Polish to Romance group.
+  - Then German, Dutch make a Germanic group.
+  - Finally, Hungarian and Finnish joined to each other and
+    everything else.
+  
+  
+
+
+## Clustering process
+
+  
+
+
+  
+```{r}
+d.hc$labels
+d.hc$merge
+``` 
+
+  
+  
+    
+    
+- Lines of `merge` show what was combined
+    - First, languages 2 and 3 (`no` and `dk`)
+    - Then languages 6 and 8 (`fr` and `it`)
+    - Then \#7 combined with cluster formed at step 2 (`es`
+      joined to `fr` and `it`).
+    - Then `en` joined to `no` and `dk` ...
+    - Finally `fi` joined to all others.
+    
+  
+
+
+
+## Complete linkage
+  
+```{r}
+d.hc=hclust(d,method="complete")
+plot(d.hc)
+```  
+  
+
+
+## Ward
+  
+```{r}
+d.hc=hclust(d,method="ward.D")
+plot(d.hc)
+```   
+  
+
+
+## Chopping the tree
+
+  
+  - Three clusters (from Ward) looks good:
+```{r}
+v=cutree(d.hc,3)
+v
+tibble(la=d.hc$labels,cluster=v)
+```     
+  
+  
+
+
+## Drawing those clusters on the tree
+  
+```{r}
+plot(d.hc)
+rect.hclust(d.hc,3)
+```   
+  
+
+
+## Comparing single-linkage and Ward
+
+  
+  - In Ward, Dutch and German get joined earlier (before joining to Germanic cluster).
+  - Also Hungarian and Finnish get combined earlier.
+  
+  
+
+
+
+## Making those dissimilarities
+
+Original data:
+
+```{r}
+options(width=60)
+```  
+
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/one-ten.txt"
+lang=read_delim(my_url," ")
+lang 
+``` 
+
+It would be a lot easier to extract the first letter if the number
+names were all in one column.
+  
+
+
+## Tidy, and extract first letter
+  
+```{r}
+lang.long = lang %>% mutate(number=row_number()) %>%
+    gather(language,name,-number) 
+
+%>%
+    mutate(first=str_sub(name,1,1))
+lang.long %>% print(n=12)
+lang.long 
+
+```   
+  
+
+
+## Calculating dissimilarity
+  
+  
+  - Suppose we wanted dissimilarity between English and
+    Norwegian. It's the number of first letters that are different.
+    
+    
+  - First get the lines for English:
+    
+```{r}
+english = lang.long %>% filter(language=="en")
+english
+```     
+  
+  
+
+
+## And then the lines for Norwegian
+  
+```{r}
+norwegian = lang.long %>% filter(language=="no")
+norwegian
+```   
+
+And now we want to put them side by side, matched by number. This is
+what `left_join` does. (A "join" is a lookup of values in
+one table using another.)
+  
+
+
+## The join
+  
+
+```{r}
+english %>% left_join(norwegian, by="number")
+```   
+
+`first.x` is 1st letter of English word, `first.y` 1st
+letter of Norwegian word.
+
+
+
+## Counting the different ones
+  
+```{r}
+english %>% left_join(norwegian, by="number") %>%
+  mutate(different=(first.x!=first.y)) %>%
+  summarize(diff=sum(different))
+```   
+
+Words for 1 and 8 start with different letter; rest are same.
+  
+
+
+## Function to do this for any two languages
+  
+```{r}
+countdiff=function(lang.1,lang.2,d) {
+    lang1d=d %>% filter(language==lang.1)
+    lang2d=d %>% filter(language==lang.2)
+    lang1d %>% left_join(lang2d, by="number") %>%
+        mutate(different=(first.x!=first.y)) %>%
+        summarize(diff=sum(different)) %>% 
+        pull(diff)
+}
+```   
+  
+Test:
+
+```{r}
+countdiff("en","no",lang.long)
+``` 
+
+
+
+## For all pairs of languages?
+  
+  
+  - First need all the languages:
+    
+```{r}
+languages=names(lang)
+languages
+```     
+
+- and then all *pairs* of languages:
+  
+```{r}
+pairs=crossing(lang=languages, lang2=languages) %>% print(n=12)
+```   
+  
+  
+## Run `countdiff` for all those language pairs
+  
+```{r}
+thediffs = pairs %>% 
+    mutate(diff=map2_int(lang,lang2,countdiff,lang.long)) %>% 
+    print(n=12)
+```   
+  
+
+
+## Make square table of these
+
+
+```{r}
+thediffs %>% spread(lang2,diff)
+```   
+
+and that was where we began.
+  
+
+
+
+## Another example
+
+Birth, death and infant mortality rates for 97 countries (variables not dissimilarities):
+
+
+```
+24.7  5.7  30.8 Albania         12.5 11.9  14.4 Bulgaria
+13.4 11.7  11.3 Czechoslovakia  12   12.4   7.6 Former_E._Germany
+11.6 13.4  14.8 Hungary         14.3 10.2    16 Poland
+13.6 10.7  26.9 Romania           14    9  20.2 Yugoslavia
+17.7   10    23 USSR            15.2  9.5  13.1 Byelorussia_SSR
+13.4 11.6    13 Ukrainian_SSR   20.7  8.4  25.7 Argentina
+46.6   18   111 Bolivia         28.6  7.9    63 Brazil
+23.4  5.8  17.1 Chile           27.4  6.1    40 Columbia
+32.9  7.4    63 Ecuador         28.3  7.3    56 Guyana
+...
+```
+
+
+
+- Want to find groups of similar countries (and how many groups, which countries in each group).
+- Tree would be unwieldy with 97 countries.
+- More automatic way of finding given number of clusters?
+
+  
+
+
+## Reading in
+
+  
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/birthrate.txt"
+vital=read_table(my_url)
+``` 
+
+
+
+## The data
+
+```{r}
+vital
+```   
+
+
+
+## Standardizing
+
+
+
+- Infant mortality rate numbers bigger than others, consequence of
+  measurement scale (arbitrary).
+- Standardize (numerical) columns of data frame to have mean 0, SD
+  1, done by `scale`.
+
+
+```{r}
+vital.s = vital %>% mutate_if(is.numeric,scale) %>% print(n=10)
+```   
+  
+
+
+## Three clusters
+  
+  Pretend we know 3 clusters is good. Take off the 4th column (of
+  countries) and run `kmeans` on the resulting data frame,
+  asking for 3 clusters:
+
+```{r}
+set.seed(457299)
+```   
+
+```{r}
+vital.km3 = vital.s %>% select(-4) %>% kmeans(3)
+names(vital.km3)
+```   
+  
+  
+  A lot of output, so look at these individually.
+  
+
+
+
+## What's in the output?
+  
+  
+  - Cluster sizes:
+    
+
+```{r}
+vital.km3$size
+```  
+
+- Cluster centres:
+  
+```{r}
+vital.km3$centers
+```  
+
+- Cluster 2 has lower than average rates on everything; cluster 3
+  has much higher than average.
+    
+  
+  
+
+
+## Cluster sums of squares and membership
+  
+```{r}
+vital.km3$withinss
+```  
+
+Cluster 1 compact relative to others (countries in cluster 1  more similar).
+
+```{r}
+vital.km3$cluster
+```  
+
+The cluster membership for each of the 97 countries.
+
+
+
+  
+
+
+
+## Store countries and clusters to which they belong
+  
+```{r}
+vital.3=tibble(country=vital.s$country,
+               cluster=vital.km3$cluster)
+vital.3 %>% arrange(cluster)
+```   
+
+Next, which countries in which cluster? 
+
+Write function to extract them:
+
+```{r}
+get_countries=function(i,d) {
+    d %>% filter(cluster==i) %>% pull(country)
+}
+``` 
+
+
+
+## Cluster membership: cluster 2
+
+
+```{r}
+get_countries(2,vital.3)
+```   
+
+
+
+## Cluster 3
+```{r}
+get_countries(3,vital.3)
+```   
+
+
+## Cluster 1
+
+```{r}
+get_countries(1,vital.3)
+```   
+
+
+## Problem!
+  
+  
+  - `kmeans` uses randomization. So result of one run might
+    be different from another run.
+  - Example: just run again on 3 clusters, `table` of results:
+```{r}
+set.seed(457298)
+``` 
+    
+```{r}
+vital.km3a=vital.s %>% select(-4) %>% kmeans(3)
+table(first=vital.km3$cluster,
+      second=vital.km3a$cluster)
+```
+- Clusters are similar but *not same*.
+  
+- Solution: `nstart` option on `kmeans` runs that
+  many times, takes best. Should be same every time:
+```{r}
+vital.km3b = vital.s %>% select(-4) %>% 
+    kmeans(3,nstart=20)
+```   
+    
+    
+  
+  
+
+
+## How many clusters?
+  
+  
+  - Three was just a guess.
+  - Idea: try a whole bunch of \#clusters (say 2--20), obtain measure of
+    goodness of fit for each, make plot.
+  - Appropriate measure is `tot.withinss`.
+  - Use loop to run `kmeans` for each \#clusters, keep
+    track of `tot.withinss`.
+  
+  
+
+
+## Function to get `tot.withinss`
+  
+  ... for an input number of clusters, taking only numeric columns
+  of input data frame:
+  
+```{r}
+ss=function(i,d) {
+    km = d %>% select_if(is.numeric) %>%
+        kmeans(i,nstart=20)
+    km$tot.withinss
+}
+```  
+
+Note: writing function to be as general as possible, so that we can
+re-use it later.
+  
+
+
+## Constructing within-cluster SS
+    
+  Make a data frame with desired numbers of clusters, and fill it with
+  the total within-group sums of squares. "For each number of
+  clusters, run `ss`", so `map_dbl`.
+  
+```{r}
+ssd = tibble(clusters=2:20) %>%
+    mutate(wss=map_dbl(clusters,ss,vital.s)) %>% 
+    print(n=10)
+```   
+
+
+
+## Scree plot
+
+```{r}
+ggplot(ssd,aes(x=clusters,y=wss))+geom_point()+
+  geom_line()
+```   
+  
+
+
+## Interpreting scree plot
+  
+  
+  - Lower `wss` better.
+  - But lower for larger \#clusters, harder to explain.
+  - Compromise: low-ish `wss` and low-ish \#clusters.
+  - Look for "elbow" in plot.
+  - Idea: this is where `wss` decreases fast then slow.
+  - On our plot, small elbow at 6 clusters. Try this many clusters.
+  
+  
+
+
+## Six clusters, using `nstart`
+  
+```{r}
+vital.km6 = vital.s %>% select(-4) %>% 
+    kmeans(6,nstart=20)
+vital.km6$size
+vital.km6$centers
+vital.6=tibble(country=vital.s$country,
+               cluster=vital.km6$cluster)
+```   
+  
+
+
+## Cluster 1
+
+High death rate:
+
+  
+```{r}
+get_countries(1,vital.6)
+```   
+  
+
+## Cluster 2
+
+Lower than average on everything:
+  
+```{r}
+options(width=60)
+get_countries(2,vital.6)
+options(width=50)
+```   
+  
+
+## Cluster 3
+
+Very high on everything:
+
+  
+```{r}
+get_countries(3,vital.6)
+```   
+  
+
+## Cluster 4
+
+Low on everything, especially death rate:
+
+  
+```{r}
+get_countries(4,vital.6)
+```   
+  
+
+## Cluster 5
+
+Higher than average on everything, though not the highest:
+  
+```{r}
+get_countries(5,vital.6)
+```   
+  
+
+## Cluster 6
+
+Low death rate compared to birth rate and infant mortality rate:
+
+  
+```{r}
+get_countries(6,vital.6)
+```   
+  
+
+
+## Comparing our 3 and 6-cluster solutions
+  
+```{r}
+table(three=vital.km3$cluster,six=vital.km6$cluster)
+```   
+
+Compared to 3-cluster solution:
+
+
+- most of cluster 1 gone to (new) cluster 6
+- cluster 2 split into clusters 2 and 4 (two types of "richer" countries)
+- cluster 3 split into clusters 3 and 5 (two types of "poor"
+  countries, divided by death rate).
+- cluster 1 (Mexico and Korea) was split before.
+
+  
+
+
+
+## Getting a picture from `kmeans`
+  
+  
+  - Use multidimensional scaling (later)
+  - Use discriminant analysis on clusters found, treating them as
+    "known" groups.
+  
+  
+
+
+
+## MANOVA and discriminant analysis
+  
+  
+  - Go back to 1st 3 columns of `vital.s` (variables,
+    standardized), plus `cf` (cluster as factor).
+    `clus` (6 clusters).
+  - First, do they actually differ by group? (MANOVA):
+```{r}
+v = vital.s %>% select(-4) %>% as.matrix()
+cf = as.factor(vital.km6$cluster)
+vital.manova=manova(v~cf)
+summary(vital.manova)
+```  
+
+Oh yes.
+    
+  
+  
+
+
+## Discriminant analysis
+  
+  
+  - So what makes the groups different?
+  - Uses package `MASS` (loaded):
+    
+  
+```{r}
+vital.lda=lda(cf~birth+death+infant,data=vital.s)
+vital.lda$svd
+vital.lda$scaling
+```  
+- LD1 is some of everything, but not so much death rate
+  (high=rich, low=poor).
+- LD2 mainly death rate, high or low.
+    
+  
+  
+
+
+## To make a plot
+  
+  
+  
+  - Get predictions first:
+```{r}
+vital.pred=predict(vital.lda)
+d=data.frame(country=vital.s$country,
+  cluster=vital.km6$cluster,vital.pred$x)
+glimpse(d)
+```   
+
+
+- `d` contains country names, cluster memberships and
+  discriminant scores. Plot `LD1` against `LD2`,
+  colouring points by cluster and labelling by country:
+  
+```{r}
+g=ggplot(d,aes(x=LD1,y=LD2,colour=factor(cluster),
+    label=country))+geom_point()+
+    geom_text_repel(size=2)+guides(colour=F)
+```   
+    
+  
+  
+
+
+## The plot
+  
+```{r}
+g
+```   
+
+
+## Final example: a hockey league
+
+  
+  - 
+An Ontario hockey league has teams in 21 cities. How can we arrange those teams into 4 geographical divisions?
+- Distance data in spreadsheet.
+- Take out spaces in team names.
+- Save as "text/csv".
+  - Distances, so back to `hclust`.
+
+
+  
+  
+
+
+## A map
+
+![Map 1](http://www.utsc.utoronto.ca/~butler/d29/map1.png)
+
+
+## Attempt 1
+
+Read in data:
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+ontario=read_csv(my_url)
+ontario
+```
+
+Make distance object
+
+```{r}
+ontario.d = ontario %>% select(-place) %>% as.dist()
+ontario.d
+```
+
+## Clustering: Ward's method
+
+```{r}
+ontario.hc=hclust(ontario.d,method="ward.D")
+cutree(ontario.hc,4)
+```   
+
+
+
+## Plot, with 4 clusters
+  
+```{r}
+plot(ontario.hc)
+rect.hclust(ontario.hc,4)
+```   
+
+
+## Comments
+  
+  
+  - Can't have divisions of 1 team!
+  - "Southern" divisions way too big!
+  - Try splitting into more. I found 7 to be good:
+  
+
+  
+
+
+## Seven clusters
+  
+```{r} 
+plot(ontario.hc)
+rect.hclust(ontario.hc,7)
+```   
+  
+
+
+## Divisions now
+  
+  
+  - I want to put Huntsville and North Bay together with northern teams.
+  - I'll put the Eastern teams together. Gives:
+    
+    - North: Sault Ste Marie, Sudbury, Huntsville, North Bay
+    - East: Brockville, Cornwall, Ottawa, Peterborough,
+      Belleville, Kingston
+    - West:  Windsor, London, Sarnia
+    - Central: Owen Sound, Barrie, Toronto, Niagara Falls, St
+      Catharines, Brantford, Hamilton, Kitchener
+    
+  - Getting them same size beyond us!
+  
+  
+
+
+## Another map
+
+![Map 2](http://www.utsc.utoronto.ca/~butler/d29/map2.png)
+
+   
+
+
+
+

@@ -1,0 +1,22 @@
+This is the title
+=================
+Here is some data:
+
+```{r}
+x=c(10,11,13,14,17,18,22,24,27,41)
+x
+```
+
+and this is a summary of x:
+
+```{r}
+summary(x)
+```
+
+Finally, a boxplot of x:
+
+```{r}
+boxplot(x)
+```
+
+from which we see that x is right-skewed.

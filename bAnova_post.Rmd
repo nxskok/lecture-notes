@@ -1,0 +1,1326 @@
+
+
+## Analysis of variance 
+
+
+* Analysis of variance used with: 
+
+
+  * counted/measured response
+
+  * categorical explanatory variable(s)
+
+  * that is, data divided into groups, and see if response significantly different among groups
+
+  * or, see whether knowing group membership helps to predict response.
+
+
+* Typically two stages: 
+
+
+  * $F$-test to detect *any* differences among/due to groups
+
+  * if $F$-test significant, do *multiple comparisons* to see which groups significantly different from which.
+
+* Need special multiple comparisons method because just doing (say) two-sample $t$-tests on each pair of groups gives too big a chance of finding "significant" differences by accident.
+
+
+
+
+## Packages
+These: 
+```{r, eval=F}
+library(tidyverse)
+library(broom)
+library(car) # for Levene's text
+```
+
+   
+
+
+## Example: Pain threshold and hair colour
+
+
+* Do people with different hair colour have different abilities
+to deal with pain?
+
+* Men and women of various ages divided into 4 groups by hair
+colour: light and dark blond, light and dark brown.
+
+* Each subject given a pain sensitivity test resulting in pain
+threshold score: higher score is higher pain tolerance.
+
+* 19 subjects altogether.
+
+
+
+
+## The data 
+In `hairpain.txt`:
+\begin{multicols}{2}
+
+\begin{verbatim}
+hair pain
+lightblond 62
+lightblond 60
+lightblond 71
+lightblond 55
+lightblond 48
+darkblond 63
+darkblond 57
+darkblond 52
+darkblond 41
+darkblond 43
+lightbrown 42
+lightbrown 50
+lightbrown 41
+lightbrown 37
+darkbrown 32
+darkbrown 39
+darkbrown 51
+darkbrown 30
+darkbrown 35
+\end{verbatim}
+
+\end{multicols}
+
+## Summarizing the groups 
+\footnotesize
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/hairpain.txt"
+hairpain <- read_delim(my_url, " ")
+hairpain
+hairpain %>%
+  group_by(hair) %>%
+  summarize(
+    n = n(),
+    xbar = mean(pain),
+    s = sd(pain)
+  )
+```
+\normalsize
+
+
+
+Brown-haired people seem to have lower pain tolerance.
+
+
+## Boxplot
+
+```{r tartuffo,fig.height=3.5}
+ggplot(hairpain, aes(x = hair, y = pain)) + geom_boxplot()
+```
+
+   
+
+
+## Assumptions
+
+
+* Data should be:
+
+
+  * normally distributed within each group
+
+  * same spread for each group
+
+
+* `darkbrown` group has upper outlier (suggests not normal)
+
+* `darkblond` group has smaller IQR than other groups.
+
+* But, groups *small*.
+
+* Shrug shoulders and continue for moment. 
+
+
+
+## Testing equality of SDs
+
+
+*   via **Levene's test** in package `car`:
+
+\small
+
+```{r}
+leveneTest(pain ~ hair, data = hairpain)
+```
+
+\normalsize
+
+   
+
+
+* No evidence (at all) of difference among group SDs.
+
+* Possibly because groups *small*.
+
+
+
+## Analysis of variance
+
+\small
+
+```{r}
+hairpain.1 <- aov(pain ~ hair, data = hairpain)
+summary(hairpain.1)
+```
+
+\normalsize
+
+   
+
+
+
+* P-value small: the mean pain tolerances for the four groups are
+*not* all the same.
+
+* Which groups differ from which, and how?
+
+
+## Multiple comparisons
+
+
+* Which groups differ from which? Multiple
+comparisons method. Lots.
+
+* Problem: by comparing all the groups with each other, doing
+many tests, have large chance to (possibly incorrectly) reject
+$H_0:$ groups have equal means.
+
+* 4 groups: 6 comparisons (1 vs 2, 1 vs 3, \ldots, 3 vs 4). 5 groups: 10
+comparisons. Thus 6 (or 10) chances to make mistake.
+
+* Get "familywise error rate" of 0.05 (whatever), no
+matter how many comparisons you’re doing.
+
+* My favourite: Tukey, or ``honestly
+significant differences'': how far apart might largest, smallest
+group means be (if actually no differences). Group means more
+different: significantly different.
+
+
+
+## Tukey
+
+
+* `TukeyHSD:`
+
+\footnotesize
+```{r}
+TukeyHSD(hairpain.1)
+```
+ 
+\normalsize
+
+
+
+## The old-fashioned way
+
+
+* List group means in order
+
+* Draw lines connecting groups that are *not* significantly
+different:
+
+```
+darkbrown lightbrown  darkblond lightblond
+37.4      42.5       51.2       59.2
+-------------------------
+                     ---------------
+```
+
+
+* `lightblond` significantly higher than everything
+except `darkblond` (at $\alpha=0.05$).
+
+* `darkblond` in middle ground: not significantly less
+than `lightblond`, not significantly greater than
+`darkbrown` and `lightbrown`.
+
+* More data might resolve this.
+
+* Looks as if blond-haired people do have higher pain tolerance,
+but not completely clear.
+
+
+## Some other multiple-comparison methods
+
+
+* Work any time you do $k$ tests at once (not just ANOVA).
+
+  * **Bonferroni**: multiply all P-values by $k$.
+
+  * **Holm**: multiply smallest P-value by $k$, next-smallest by
+$k-1$, etc.
+
+  * **False discovery rate**: multiply smallest P-value by $k/1$,
+2nd-smallest by $k/2$, \ldots, $i$-th smallest by $k/i$.
+
+* Stop after non-rejection.
+
+
+
+## Example
+
+
+* P-values 0.005, 0.015, 0.03, 0.06 (4 tests all done at once)
+Use $\alpha=0.05$.
+
+
+* Bonferroni: 
+
+
+  * Multiply all P-values by 4 (4 tests).
+
+  * Reject only 1st null.
+
+
+
+* Holm: 
+
+
+  * Times smallest P-value by 4: $0.005*4=0.020<0.05$, reject.
+
+  * Times next smallest by 3: $0.015*3=0.045<0.05$, reject.
+
+  * Times next smallest by 2: $0.03*2=0.06>0.05$, do not reject. Stop.
+
+
+
+
+
+## \ldots Continued
+
+
+* With P-values 0.005, 0.015, 0.03, 0.06:
+
+* False discovery rate:
+
+
+  * Times smallest P-value by 4: $0.005*4=0.02<0.05$: reject.
+
+  * Times second smallest by $4/2$: $0.015*4/2=0.03<0.05$, reject.
+
+  * Times third smallest by $4/3$: $0.03*4/3=0.04<0.05$, reject.
+
+  * Times fourth smallest by $4/4$: $0.06*4/4=0.06>0.05$, do not reject. Stop. 
+
+
+
+
+## `pairwise.t.test`
+
+\tiny
+```{r }
+with(hairpain, pairwise.t.test(pain, hair, p.adj = "none"))
+with(hairpain, pairwise.t.test(pain, hair, p.adj = "holm"))
+```
+\normalsize
+
+## `pairwise.t.test` part 2 
+
+\tiny
+```{r }
+with(hairpain, pairwise.t.test(pain, hair, p.adj = "fdr"))
+with(hairpain, pairwise.t.test(pain, hair, p.adj = "bon"))
+```
+
+\normalsize 
+
+
+## Comments
+
+
+* P-values all adjusted upwards from "none".
+
+* Required because 6 tests at once.
+
+* Highest P-values for Bonferroni: most "conservative".
+
+* Prefer Tukey or FDR or Holm.
+
+* Tukey only applies to ANOVA, not to other cases of multiple
+testing. 
+
+
+
+## Rats and vitamin B
+
+
+* What is the effect of dietary vitamin B on the kidney?
+
+* A number of rats were randomized to receive either a
+B-supplemented diet or a regular diet.
+
+* Desired to control for initial size of rats, so classified
+into size classes `lean` and `obese`.
+
+* After 20 weeks, rats' kidneys weighed.
+
+* Variables:
+
+
+  * Response: `kidneyweight` (grams).
+
+  * Explanatory: `diet`, `ratsize`.
+
+
+* Read in data:
+
+\small
+
+```{r }
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/vitaminb.txt"
+vitaminb <- read_delim(my_url, " ")
+```
+\normalsize
+     
+
+
+
+## The data
+```{r }
+vitaminb
+```
+
+   
+
+
+## Grouped boxplot
+```{r fig.height=3.0}
+ggplot(vitaminb, aes(
+  x = ratsize, y = kidneyweight,
+  fill = diet
+)) + geom_boxplot()
+```
+
+   
+
+
+## What's going on?
+
+
+* Calculate group means: 
+
+\footnotesize
+```{r }
+summary <- vitaminb %>%
+  group_by(ratsize, diet) %>%
+  summarize(mean = mean(kidneyweight))
+summary
+```
+\normalsize
+   
+
+* Rat size: a large and consistent effect.
+
+* Diet: small/no effect (compare same rat size, different
+diet).
+
+* Effect of rat size *same* for each diet: no interaction.
+
+
+
+
+## ANOVA with interaction
+```{r }
+vitaminb.1 <- aov(kidneyweight ~ ratsize * diet,
+  data = vitaminb
+)
+summary(vitaminb.1)
+```
+
+   
+
+- Significance/nonsignificance as we expected. 
+- Note no significant
+interaction (can be removed). 
+
+
+## Interaction plot
+
+
+* Plot mean of response variable against one of the explanatory, using
+other one as groups. Start from `summary`: 
+```{r }
+summary
+g <- ggplot(summary, aes(
+  x = diet, y = mean,
+  colour = ratsize, group = ratsize
+)) +
+  geom_point() + geom_line()
+```
+
+    
+
+
+* For this, have to give *both* `group` and `colour`.
+
+
+
+## The interaction plot 
+```{r fig.height=3.7}
+g
+```
+
+
+
+Lines basically parallel, indicating no interaction.
+
+
+## Take out interaction
+\small
+
+```{r}
+vitaminb.2 <- update(vitaminb.1, . ~ . - ratsize:diet)
+summary(vitaminb.2)
+```
+
+\normalsize
+
+   
+
+
+
+* No Tukey for `diet`: not significant.
+
+* No Tukey for `ratsize`: only two sizes, and already know
+that obese rats have larger kidneys than lean ones.
+
+* Bottom line: diet has no effect on kidney size once you control
+for size of rat.
+
+## Assessing assumptions: residuals
+
+- In two-way ANOVA, not many observations per treatment group.
+- Difficult to check for normality / equal spreads.
+- *But*, any regular ANOVA also a regression.
+- Use regression residual ideas.
+- In ANOVA, one fitted value per treatment group (based on means).
+- Residual: observation minus fitted value.
+
+## Previous ANOVA as regression
+
+\scriptsize
+
+```{r}
+vitaminb.3 <- lm(kidneyweight ~ ratsize + diet, data = vitaminb)
+summary(vitaminb.3)
+```
+\normalsize
+
+## Reproduce ANOVA
+
+\small
+
+```{r}
+drop1(vitaminb.3, test = "F")
+```
+
+\normalsize
+
+- ANOVA and regression `drop1` output always the same.
+- this time, ANOVA and regression `summary` output have same P-values, but only because categorical variables both have two levels.
+
+
+## Are the residuals normal?
+
+```{r}
+ggplot(vitaminb.3, aes(sample=.resid)) + 
+  stat_qq() + stat_qq_line()
+```
+
+## Residuals against fitted
+
+```{r}
+ggplot(vitaminb.3, aes(x=.fitted, y=.resid)) + geom_point()
+```
+
+## Comments
+
+- 2 rat sizes, 2 diets: only $2 \times 2 = 4$ different fitted values
+- larger fitted values have greater spread (fan-out, transformation?)
+- add residuals to data to plot residuals against size, diet (`augment` from `broom`):
+
+```{r}
+vitaminb.3 %>% augment(vitaminb) -> vitaminb.3a
+vitaminb.3a
+```
+
+- explanatory `ratsize`, `diet` categorical, so plot resid vs. them with *boxplots*.
+
+## Residuals vs rat size 
+
+```{r}
+ggplot(vitaminb.3a, aes(x = ratsize, y = .resid)) + 
+  geom_boxplot()
+```
+
+## Residuals vs diet
+
+```{r}
+ggplot(vitaminb.3a, aes(x = diet, y = .resid)) + 
+  geom_boxplot()
+```
+
+## Comments
+
+- there are low outliers on the plot against diet
+- residuals for obese rats seem more spread out than for lean rats
+- case for transformation of rat weights
+- however, story from our analysis very clear:
+    - rat size strongly significant
+    - diet nowhere near significant
+- and so expect transformation to make no difference to conclusions.
+
+
+
+## The auto noise data
+In 1973, the President of Texaco cited an automobile filter
+developed by Associated Octel Company as effective in reducing
+pollution. However, questions had been raised about the effects of
+filter silencing. He referred to the data included in the report
+(and below) as evidence
+that the silencing properties of the Octel filter were at least
+equal to those of standard silencers. 
+```{r }
+u <- "http://www.utsc.utoronto.ca/~butler/d29/autonoise.txt"
+autonoise <- read_table(u)
+```
+
+ 
+
+
+## The data
+```{r }
+autonoise
+```
+
+   
+
+
+## Making boxplot
+
+
+* Make a boxplot, but have combinations of filter type and
+engine size.
+
+* Use grouped boxplot again, thus:
+```{r }
+g <- autonoise %>%
+  ggplot(aes(x = size, y = noise, fill = type)) +
+  geom_boxplot()
+```
+
+   
+
+
+
+## The boxplot
+
+* See difference in engine noise between Octel and standard is larger for
+medium engine size than for large or small.
+
+* Some evidence of differences in spreads (ignore for now):
+
+
+```{r fig.height=2.7}
+g
+```
+
+   
+
+
+
+
+
+## ANOVA
+\small
+```{r}
+autonoise.1 <- aov(noise ~ size * type, data = autonoise)
+summary(autonoise.1)
+```
+
+\normalsize
+
+   
+
+
+
+* The interaction is significant, as we suspected from the boxplots.
+
+* The within-group spreads don't look very equal, but only based
+on 6 obs each.
+
+
+
+## Tukey: ouch! 
+\scriptsize
+```{r}
+autonoise.2 <- TukeyHSD(autonoise.1)
+autonoise.2$`size:type`
+```
+
+\normalsize
+
+ 
+
+
+## Interaction plot
+
+
+* This time, don't have summary of mean noise for each size-type
+combination. 
+
+* One way is to compute summaries (means) first, and feed into
+`ggplot` as in vitamin B example.
+
+* Or, have `ggplot` compute them for us, thus:
+```{r }
+g <- ggplot(autonoise, aes(
+  x = size, y = noise,
+  colour = type, group = type
+)) +
+  stat_summary(fun = mean, geom = "point") +
+  stat_summary(fun = mean, geom = "line")
+```
+
+     
+  
+
+
+## Interaction plot
+
+The lines are definitely *not* parallel, showing that the effect
+of `type` is different for medium-sized engines than for others:
+
+```{r fig.height=3}
+g
+```
+
+
+
+
+
+
+## If you don't like that\ldots
+\ldots then compute the means first, in a pipeline: 
+
+\footnotesize
+
+```{r}
+autonoise %>%
+  group_by(size, type) %>%
+  summarize(mean_noise = mean(noise)) %>%
+  ggplot(aes(
+    x = size, y = mean_noise, group = type,
+    colour = type
+  )) + geom_point() + geom_line()
+```
+
+\normalsize
+
+   
+
+## Simple effects for auto noise example
+
+
+* In auto noise example, weren't interested in all comparisons
+between car size and filter type combinations.
+
+* Wanted to demonstrate (lack of) difference between filter types
+*for each car type*. 
+
+* These are called **simple effects** of one variable
+(filter type)
+conditional on other variable (car type).
+
+* To do this, pull out just the data for small cars, compare
+noise for the two filter types. Then repeat for medium and large
+cars. (Three one-way ANOVAs.)
+
+
+
+## Do it using `dplyr tools`
+
+
+* Small cars:
+```{r }
+autonoise %>%
+  filter(size == "S") %>%
+  aov(noise ~ type, data = .) %>%
+  summary()
+```
+
+     
+
+
+* No filter difference for small cars.
+
+* For Medium, change `S` to `M` and repeat.
+
+
+
+## Simple effect of filter type for medium cars
+
+\small
+
+```{r }
+autonoise %>%
+  filter(size == "M") %>%
+  aov(noise ~ type, data = .) %>%
+  summary()
+```
+
+   
+\normalsize
+
+
+
+* There *is* an effect of filter type for medium cars. Look
+at means to investigate (over). 
+
+## Mean noise for each filter type
+
+\ldots for medium engine size: 
+
+
+```{r }
+autonoise %>%
+  filter(size == "M") %>%
+  group_by(type) %>%
+  summarize(m = mean(noise))
+```
+
+* Octel filters produce *less* noise for medium cars.
+   
+
+
+
+## Large cars 
+
+
+
+* Large cars:
+```{r }
+autonoise %>%
+  filter(size == "L") %>%
+  aov(noise ~ type, data = .) %>%
+  summary()
+```
+
+   
+
+
+* No significant difference again. 
+
+
+## All at once, using split/apply/combine
+
+The "split" part:
+
+```{r}
+autonoise %>%
+  group_by(size) %>%
+  nest()
+```
+
+   
+
+Now have *three* rows, with the data frame for each size encoded
+as *one element* of this data frame.
+
+
+
+## Apply
+
+
+*   Write function to do `aov` on a
+data frame with columns `noise` and `type`,
+returning P-value:
+```{r }
+aov_pval <- function(x) {
+  noise.1 <- aov(noise ~ type, data = x)
+  gg <- tidy(noise.1)
+  gg$p.value[1]
+}
+```
+     
+
+* Test it:
+```{r }
+autonoise %>%
+  filter(size == "L") %>%
+  aov_pval()
+```
+
+   
+
+
+* Check.
+
+
+## Combine
+
+
+* Apply this function to each of the nested data frames (one per
+engine size):
+```{r}
+autonoise %>%
+  group_by(size) %>%
+  nest() %>%
+  mutate(p_val = map_dbl(data, ~ aov_pval(.)))
+```
+
+     
+
+* `map_dbl` because `aov_pval` returns a decimal
+number (a `dbl`). Investigate what happens if you use
+`map` instead.
+
+
+
+## Tidy up
+
+
+* The `data` column was stepping-stone to getting
+answer. Don't need it any more:
+
+\small
+
+```{r}
+simple_effects <- autonoise %>%
+  group_by(size) %>%
+  nest() %>%
+  mutate(p_val = map_dbl(data, ~ aov_pval(.))) %>%
+  select(-data)
+simple_effects
+```
+
+\normalsize
+
+     
+
+
+
+## Simultaneous tests
+
+
+* When testing simple effects, doing several tests at once. (In
+this case, 3.) Have to adjust P-values for this. Eg.\ Holm:
+
+\footnotesize
+
+```{r}
+simple_effects %>% ungroup() %>% arrange(p_val) %>%
+  mutate(multiplier = 4 - row_number()) %>%
+  mutate(p_val_adj = p_val * multiplier)
+```
+
+\normalsize
+
+     
+
+\footnotesize
+
+* No change in rejection decisions.
+
+* Octel filters sig.\ better in terms of noise for
+medium cars, and not sig.\ different for other sizes.
+
+* Octel filters never significantly worse than standard
+ones. 
+
+\normalsize
+
+
+
+## Confidence intervals
+
+
+* Perhaps better way of assessing simple effects: look at
+*confidence intervals* rather than tests.
+
+* Gives us sense of accuracy of estimation, and thus whether
+non-significance might be lack of power: ``absence of evidence is
+not evidence of absence''.
+
+* Works here because *two* filter types, using
+`t.test` for each engine type.
+
+* Want to show that the Octel filter is equivalent to or better
+than the standard filter, in terms of engine noise.
+
+
+
+## Equivalence and noninferiority
+
+
+* Known as "equivalence testing" in medical world. A good
+read:
+[link](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3019319/). Basic
+idea: decide on size of difference $\delta$ that would be considered
+"equivalent", and if CI entirely inside $\pm \delta$, have
+evidence in favour of equivalence.
+
+* We really want to show that the Octel filters are "no worse"
+than the standard one: that is, equivalent *or better* than
+standard filters.
+
+* Such a "noninferiority test" done by checking that
+`upper limit` of CI, new minus old, is *less* than
+$\delta$. (This requires careful thinking about (i) which way
+around the difference is and (ii) whether a higher or lower value
+is better.)
+
+
+## CI for small cars
+Same idea as for simple effect test:
+
+```{r }
+autonoise %>%
+  filter(size == "S") %>%
+  t.test(noise ~ type, data = .) %>%
+  pluck("conf.int")
+```
+
+ 
+
+## CI for medium cars
+
+```{r }
+autonoise %>%
+  filter(size == "M") %>%
+  t.test(noise ~ type, data = .) %>%
+  pluck("conf.int")
+```
+
+ 
+
+## CI for large cars
+```{r }
+autonoise %>%
+  filter(size == "L") %>%
+  t.test(noise ~ type, data = .) %>%
+  pluck("conf.int")
+```
+
+ 
+
+
+## Or, all at once: split/apply/combine
+
+
+```{r}
+ci_func <- function(x) {
+  tt <- t.test(noise ~ type, data = x)
+  tt$conf.int
+}
+autonoise %>% group_by(size) %>%
+  nest() %>% 
+  mutate(ci = map(data, ~ ci_func(.))) %>%
+  unnest_wider(ci) -> cis
+```
+
+\normalsize
+
+## Results
+
+```{r}
+cis
+```
+
+## Procedure 
+
+* Function to get CI of difference in noise means for types
+of filter on input data frame
+
+* Group by `size`, nest (mini-df per size)
+
+* Calculate CI for each thing in `data` (ie.\ each
+`size`). `map`: CI is two numbers long
+
+* `unnest` `ci` column to see two numbers
+in each CI.
+
+
+## CIs and noninferiority test
+
+
+* Suppose we decide that a 20 dB difference would be considered
+equivalent. (I have no idea whether that is reasonable.)
+
+* Intervals: \vspace{2ex} 
+
+\small
+
+```{r}
+hilos=c("lower", "upper")
+cis %>%
+  mutate(hilo = hilos) %>%
+  pivot_wider(names_from=hilo, values_from=ci)
+```
+
+\normalsize
+
+## Comments 
+
+* In all cases, upper limit of CI is less than 20 dB. The Octel
+filters are "noninferior" to the standard ones.
+
+* Caution: we did 3 procedures at once again. The true
+confidence level is not 95\%. (Won't worry about that here.)
+
+
+
+## Contrasts in ANOVA
+
+
+* Sometimes, don't want to compare *all* groups, only
+*some* of them.
+
+* Might be able to specify these comparisons ahead of time;
+other comparisons of no interest.
+
+* Wasteful to do ANOVA and Tukey.
+
+
+
+## Example: chainsaw kickback
+
+
+* From [link](http://www.ohio.edu/plantbio/staff/mccarthy/quantmet/lectures/ANOVA2.pdf).
+
+* Forest manager concerned about safety of chainsaws issued to
+field crew. 4 models of chainsaws, measure "kickback" (degrees
+of deflection) for 5 of each:
+
+```
+
+ A  B  C  D
+-----------
+42 28 57 29
+17 50 45 29
+24 44 48 22
+39 32 41 34
+43 61 54 30
+
+```
+
+
+* So far, standard 1-way ANOVA: what differences are there
+among models?
+
+
+
+## chainsaw kickback (2)
+
+
+* But: models A and D are designed to be used at home, while
+models B and C are industrial models.
+
+* Suggests these comparisons of interest:
+
+
+* home vs.\ industrial
+
+* the two home models A vs.\ D
+
+* the two industrial models B vs.\ C.
+
+
+* Don't need to compare *all* the pairs of models.
+
+
+
+## What is a contrast?
+
+
+* Contrast is a linear combination of group means.
+
+* Notation: $\mu_A$ for (population) mean of group $A$, and so on.
+
+* In example, compare two home models: $H_0: \mu_A-\mu_D=0$.
+
+* Compare two industrial models: $H_0: \mu_B-\mu_C=0$.
+
+* Compare average of two home models vs.\ average of two
+industrial models: $H_0: \frac{1}{2}(\mu_A+\mu_D)-{1\over
+2}(\mu_B+\mu_C)=0$ or $H_0: 0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$.
+
+* Note that coefficients of contrasts add to 0, and right-hand
+side is 0.
+
+
+
+## Contrasts in R
+
+
+* Comparing two home models A and D ($\mu_A-\mu_D=0$):
+```{r }
+c.home <- c(1, 0, 0, -1)
+```
+
+     
+
+
+* Comparing two industrial models B and C ($\mu_B-\mu_C=0$):
+```{r }
+c.industrial <- c(0, 1, -1, 0)
+```
+
+   
+
+
+* Comparing home average vs.\ industrial average ($0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$):
+```{r }
+c.home.ind <- c(0.5, -0.5, -0.5, 0.5)
+```
+
+   
+
+
+
+## Orthogonal contrasts
+
+
+* What happens if we multiply the contrast coefficients one by one?
+```{r }
+c.home * c.industrial
+c.home * c.home.ind
+c.industrial * c.home.ind
+```
+
+     
+
+* in each case, the results **add up to zero**. Such
+contrasts are called **orthogonal**.
+
+
+
+## Orthogonal contrasts (2)
+
+
+* Compare these:
+
+\normalsize
+```{r }
+c1 <- c(1, -1, 0)
+c2 <- c(0, 1, -1)
+sum(c1 * c2)
+```
+\normalsize
+ 
+Not zero, so `c1` and `c2` are *not*
+orthogonal.
+
+* Orthogonal contrasts are much easier to deal with. 
+
+
+* Can use non-orthogonal contrasts, but more trouble 
+(beyond us).
+
+
+## Read in data
+\small
+```{r, message=F}
+url <- "http://www.utsc.utoronto.ca/~butler/d29/chainsaw.txt"
+chain.wide <- read_table(url)
+chain.wide
+```
+
+\normalsize
+
+   
+
+
+## Tidying
+
+Need all the kickbacks in *one* column:
+
+```{r }
+chain.wide %>% 
+  pivot_longer(A:D, names_to = "model", 
+               names_ptypes = list(model=factor()), 
+               values_to = "kickback") -> chain
+```
+
+ 
+
+
+## Starting the analysis (2)
+The proper data frame (tiny):
+
+\tiny
+```{r }
+chain 
+```
+\normalsize
+ 
+
+ 
+
+
+## Setting up contrasts
+```{r }
+m <- cbind(c.home, c.industrial, c.home.ind)
+m
+contrasts(chain$model) <- m
+```
+
+   
+
+
+## ANOVA *as if regression*
+
+\scriptsize
+```{r }
+chain.1 <- lm(kickback ~ model, data = chain)
+summary(chain.1)
+```
+
+\normalsize 
+
+
+
+## Conclusions
+```{r }
+tidy(chain.1) %>% select(term, p.value)
+```
+
+     
+
+
+* Two home models not sig.\ diff.\ (P-value 0.51)
+
+* Two industrial models not sig.\ diff.\ (P-value 0.34)
+
+* Home, industrial
+models *are* sig.\ diff.\ (P-value 0.0032).
+
+
+
+## Means by model
+
+
+* The means:
+
+\footnotesize
+```{r }
+chain %>%
+  group_by(model) %>%
+  summarize(mean.kick = mean(kickback)) %>%
+  arrange(desc(mean.kick))
+```
+
+\small
+
+* Home models A \& D have less kickback than industrial ones B \& C.
+
+* Makes sense because industrial users should get training to cope
+with additional kickback.
+
+\normalsize
+ 
+

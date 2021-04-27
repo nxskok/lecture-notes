@@ -1,0 +1,175 @@
+## Packages for this section
+
+```{r, eval=F}
+library(tidyverse)
+library(broom)
+```
+
+
+## The pigs revisited
+
+```{r, echo=FALSE}
+options(dplyr.summarise.inform = FALSE)
+```
+
+- Recall pig feed data, after we tidied it: 
+
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/pigs2.txt"
+pigs <- read_delim(my_url, " ")
+pigs 
+```
+
+## Summaries
+
+```{r}
+pigs %>%
+  group_by(feed) %>%
+  summarize(n = n(), mean_wt = mean(weight), 
+            sd_wt = sd(weight))
+```
+
+## Running through `aov` and `lm`
+- What happens if we run this through `lm` rather than `aov`? 
+- Recall `aov` first: 
+
+```{r}
+pigs.1 <- aov(weight ~ feed, data = pigs)
+summary(pigs.1)
+```
+
+## and now `lm`
+
+\footnotesize
+```{r}
+pigs.2 <- lm(weight ~ feed, data = pigs)
+summary(pigs.2)
+tidy(pigs.2)
+glance(pigs.2)
+```
+\normalsize
+
+## Understanding those slopes
+- Get one slope for each category of categorical variable feed, except
+for first.
+- feed1 treated as “baseline”, others measured relative to that.
+- Thus prediction for feed 1 is intercept, 60.62 (mean weight for feed 1).
+- Prediction for feed 2 is 60.62 + 8.68 = 69.30 (mean weight for feed 2).
+- Or, mean weight for feed 2 is 8.68 bigger than for feed 1.
+- Mean weight for feed 3 is 33.48 bigger than for feed 1.
+- Slopes can be negative, if mean for a feed had been smaller than for
+feed 1.
+
+## Reproducing the ANOVA
+- Pass the fitted model object into `anova`:
+
+\footnotesize
+```{r}
+anova(pigs.2)
+```
+\normalsize
+
+- Same as before.
+- But no Tukey this way:
+
+\footnotesize
+```{r, error=TRUE}
+TukeyHSD(pigs.2)
+```
+\normalsize
+
+## The crickets
+- Male crickets rub their wings together to produce a chirping sound.
+- Rate of chirping, called “pulse rate”, depends on species and possibly
+on temperature.
+- Sample of crickets of two species’ pulse rates measured; temperature
+also recorded.
+- Does pulse rate differ for species, especially when temperature
+accounted for?
+
+## The crickets data
+Read the data:
+
+\small
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/crickets2.csv"
+crickets <- read_csv(my_url)
+crickets 
+```
+\normalsize
+## Fit model with `lm` 
+
+```{r}
+crickets.1 <- lm(pulse_rate ~ temperature + species, 
+                 data = crickets)
+summary(crickets.1)
+```
+
+Can I remove anything? No:
+
+```{r}
+drop1(crickets.1, test = "F")
+```
+
+`drop1` is right thing to use in a regression with categorical (explanatory) variables in it: "can I remove this categorical variable *as a whole*?"
+
+## The summary 
+
+```{r}
+glance(crickets.1)
+tidy(crickets.1)
+```
+
+## Conclusions
+- Slope for temperature says that increasing temperature by 1 degree
+increases pulse rate by 3.6 (same for both species)
+- Slope for `speciesniveus` says that pulse rate for niveus about 10
+lower than that for exclamationis at same temperature (latter species
+is baseline).
+- R-squared of almost 0.99 is very high, so that the prediction of pulse
+rate from species and temperature is very good.
+
+## To end with a graph
+
+- Two quantitative variables and one categorical: scatterplot with categories distinguished by colour.
+- This graph seems to need a title, which I define first. 
+
+\small
+
+```{r}
+t1 <- "Pulse rate against temperature for two species of crickets"
+t2 <- "Temperature in degrees Celsius"
+```
+
+\normalsize
+
+```{r spectemp, fig.keep="none", warning=F, message=F}
+ggplot(crickets, aes(x = temperature, y = pulse_rate,
+  colour = species)) +
+  geom_point() + geom_smooth(method = "lm", se = F) +
+  ggtitle(t1, t2)
+```
+
+## The graph
+
+```{r thingy, ref.label="spectemp", echo=FALSE, message=FALSE}
+```
+
+
+interaction
+
+```{r}
+crickets.2 <- lm(pulse_rate ~ temperature * species, 
+                 data = crickets)
+summary(crickets.2)
+```
+
+```{r}
+drop1(crickets.2, test = "F")
+```
+
+```{r}
+crickets.3 <- update(crickets.2, .~. - temperature:species)
+drop1(crickets.3, test="F")
+```
+

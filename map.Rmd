@@ -1,0 +1,44 @@
+trying a map of ontario
+
+```{r}
+# library(openstreetmap)
+library(tmaptools)
+library(leaflet)
+library(tidyverse)
+library(conflicted)
+```
+
+my locations
+
+```{r}
+my_url <- 
+  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+ontario <- read_csv(my_url)
+ontario
+```
+
+make a dataframe of lats and longs
+
+```{r}
+tibble(place = ontario$place) %>% 
+  mutate(prov = "ON") %>% 
+  mutate(place1 = str_c(place, " ", prov)) %>% 
+  rowwise() %>% 
+  mutate(ll = list(geocode_OSM(place1))) -> d
+d %>% unnest_wider(ll) %>% 
+  unnest_wider(coords) -> coords
+```
+
+```{r}
+d %>% unnest_wider(ll) %>% 
+  unnest_wider(coords) -> coords
+```
+
+make a map with the coords
+
+```{r}
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = coords$x, lat = coords$y)
+```
+

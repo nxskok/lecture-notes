@@ -1,0 +1,110 @@
+# anova done the bayes way
+
+## packages
+
+```{r}
+library(tidyverse)
+library(rstan)
+```
+
+## grab some data
+
+```{r}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/jumping.txt"
+rats0 <- read_delim(my_url," ")
+rats0
+```
+
+plot
+
+```{r}
+ggplot(rats0, aes(x=group, y=density))+geom_boxplot()
+```
+
+turn the group IDs into numbers
+
+```{r}
+rats0 %>% mutate(group_fct=fct_inorder(group),
+              group_no=as.integer(group_fct)) -> rats
+rats
+```
+
+these groups are now in the right order:
+
+```{r}
+ggplot(rats, aes(x=group_fct, y=density))+geom_boxplot()
+```
+
+## stan model
+
+model code in `anova.stan`:
+
+```{r}
+anova_compiled=stan_model("anova.stan")
+```
+
+## sample from it
+
+```{r}
+anova_data=list(n_obs=30, n_group=3, density=rats$density, group_no=rats$group_no)
+anova_samples=sampling(anova_compiled, data=anova_data)
+```
+
+```{r}
+traceplot(anova_samples)
+```
+
+```{r}
+anova_samples
+```
+
+
+```{r}
+anova_ext=extract(anova_samples)
+glimpse(anova_ext)
+```
+
+```{r}
+anova_ext$sigma %>% as_tibble() %>% 
+  ggplot(aes(x=value))+geom_histogram(bins=20)
+```
+
+```{r}
+anova_ext$sigma %>% as_tibble() %>% 
+  ggplot(aes(x=value))+geom_density()
+```
+
+```{r}
+anova_ext$mu %>% as_tibble() %>% 
+  gather(group, density, everything()) %>% 
+  ggplot(aes(x=group, y=density)) + geom_boxplot()
+```
+
+posterior distributions of group *means*
+
+```{r}
+anova_ext$mu %>% as_tibble() %>% 
+  gather(group, density, everything()) %>% 
+  ggplot(aes(x=density, colour=group)) + geom_density()
+```
+
+
+predictive distributions (compare with observed data)
+
+```{r}
+cbind(mu=anova_ext$mu, sigma=anova_ext$sigma) %>% 
+  as_tibble() %>% 
+  gather(group, mean, V1:V3) %>% 
+  mutate(sim_data=rnorm(12000, mean, sigma)) -> sims
+sims %>% sample_n(10)
+sims %>% 
+  mutate(group=fct_recode(group, Control="V1", Lowjump="V2", Highjump="V3")) -> sims2
+sims2
+```
+
+```{r}
+ggplot(sims2, aes(x=sim_data)) + geom_density() +
+  geom_point(data=rats, aes(x=density, y=0)) + 
+  facet_wrap(~group)
+```
+

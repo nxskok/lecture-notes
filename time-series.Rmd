@@ -1,0 +1,850 @@
+## Packages
+
+Uses my package `mkac` which is on Github. Install with:
+
+```{r, eval=F}
+library(devtools)
+install_github("nxskok/mkac")
+```
+
+Plus these. You might need to install some of them first:
+
+```{r, eval=F}
+library(ggfortify)
+library(forecast)
+library(tidyverse)
+library(mkac) 
+```
+
+## Time trends
+
+```{r,echo=FALSE}
+knitr::opts_chunk$set(fig.cap="")
+```
+
+
+* Assess existence or nature of time trends with:
+  * correlation
+  * regression ideas.
+  * (later) time series analysis
+  
+## World mean temperatures
+
+
+Global mean temperature every year since 1880:
+
+\small
+```{r, message=F, warning=F, fig.height=3.3}
+temp=read_csv("temperature.csv")
+ggplot(temp, aes(x=year, y=temperature)) + 
+  geom_point() + geom_smooth()
+```
+\normalsize
+
+## Examining trend
+
+* Temperatures increasing on average over time, but pattern very irregular.
+* Find (Pearson) correlation with time, and test for significance:
+
+```{r}
+with(temp, cor.test(temperature,year))
+```
+
+## Comments
+
+* Correlation, 0.8695, significantly different from zero. 
+* CI shows how far from zero it is.
+
+Tests for *linear* trend with *normal* data. 
+
+## Kendall correlation
+
+Alternative, Kendall (rank) correlation, which just tests for monotone trend (anything upward, anything downward) and is resistant to outliers:
+
+```{r}
+with(temp, cor.test(temperature,year,method="kendall"))
+```
+
+Kendall correlation usually closer to 0 for same data, but here P-values comparable. Trend again strongly significant.
+
+## Mann-Kendall
+
+- Another way is via **Mann-Kendall**: Kendall correlation with time.
+
+- Use my package `mkac`:
+
+\footnotesize
+```{r}
+kendall_Z_adjusted(temp$temperature)
+```
+\normalsize
+
+## Comments
+
+- Standard Mann-Kendall assumes observations *independent*.
+- Observations close together in time often *correlated* with each other.
+- Correlation of time series "with itself" called **autocorrelation**.
+- Adjusted P-value above is correction for autocorrelation (via Hamed-Rao).
+
+## Examining rate of change
+
+* Having seen that there *is* a change, question is "how fast is it?"
+* Examine slopes:
+
+  * regular regression slope, if you believe straight-line regression
+  * Theil-Sen slope: resistant to outliers, based on medians
+  
+
+## Ordinary regression against time
+
+```{r}
+lm(temperature~year, data=temp) %>% tidy() -> temp.tidy
+temp.tidy
+```
+
+- Slope about 0.006 degrees per year 
+- about this many degrees over course of data):
+
+```{r}
+temp.tidy %>% pluck("estimate", 2)*130
+```
+
+
+## Theil-Sen slope
+
+also from `mkac`:
+
+```{r}
+theil_sen_slope(temp$temperature)
+```
+
+## Conclusions
+
+- Slopes:
+  * Linear regression: 0.005863
+  * Theil-Sen slope: 0.005676
+  * Very close.
+- Correlations:
+  * Pearson 0.8675
+  * Kendall 0.6993
+  * Kendall correlation smaller, but P-value equally significant (often the case)
+
+
+## Constant rate of change?
+
+Slope assumes that the rate of change is same over all years, but trend seemed to be accelerating:
+
+```{r, fig.height=3, message=F}
+ggplot(temp, aes(x=year, y=temperature)) + 
+  geom_point() + geom_smooth()
+```
+
+## Pre-1970 and post-1970:
+
+```{r}
+temp %>% 
+  mutate(time_period=
+           ifelse(year<=1970, "pre-1970", "post-1970")) %>% 
+  nest_by(time_period) %>%
+  rowwise() %>% 
+  mutate(theil_sen = theil_sen_slope(data$temperature))
+```
+
+Theil-Sen slope is very nearly *four times* as big since 1970 vs. before.
+
+
+
+
+
+## Actual time series: the Kings of England
+
+* Age at death of Kings and Queens of England since William the Conqueror (1066):
+
+```{r}
+kings=read_table("kings.txt", col_names=F)
+```
+
+Data in one long column `X1`, so `kings` is data frame with one column. 
+
+## Turn into `ts` time series object
+
+```{r}
+kings.ts=ts(kings)
+kings.ts
+```
+
+
+## Plotting a time series
+
+`autoplot` from `ggfortify` gives time plot:
+
+```{r,"Kings-Time-Series", fig.height=3.7}
+autoplot(kings.ts)
+```
+
+##  Comments
+
+* "Time" here is order of monarch from William the Conqueror (1st) to George VI (last).
+
+* Looks to be slightly increasing trend of age-at-death
+
+* but lots of irregularity.
+
+
+##  Stationarity
+
+A time series is **stationary** if:
+
+* mean is constant over time
+* variability constant over time and not changing with mean.
+
+Kings time series seems to have:
+
+* non-constant mean
+* but constant variability
+* not stationary.
+
+##  Getting it stationary
+
+- Usual fix for non-stationarity is *differencing*: get new series from original one's values: 2nd - 1st, 3rd - 2nd etc.
+
+In R, `diff`:
+
+```{r}
+kings.diff.ts=diff(kings.ts)
+```
+
+##  Did differencing fix stationarity?
+
+Looks stationary now:
+
+```{r "Differenced-Kings-Series", fig.height=3.9}
+autoplot(kings.diff.ts)
+```
+
+
+
+##  Births per month in New York City
+
+from January 1946 to December 1959:
+
+\small
+```{r, message=F}
+ny=read_table("nybirths.txt",col_names=F)
+ny
+```
+\normalsize
+
+## As a time series
+
+```{r, echo=F}
+w=getOption("width")
+options(width=100)
+```
+
+\tiny
+```{r}
+ny.ts=ts(ny,freq=12,start=c(1946,1))
+ny.ts
+```
+\normalsize
+
+```{r, echo=F}
+options(width=w)
+```
+
+
+## Comments
+
+Note extras on `ts`:
+
+* Time period is 1 year
+* 12 observations per year (monthly) in `freq`
+* First observation is 1st month of 1946 in `start`
+
+Printing formats nicely.
+
+
+##  Time plot
+
+* Time plot shows extra pattern:
+
+```{r,fig.cap="", fig.height=3.8}
+autoplot(ny.ts)
+```
+
+##  Comments on time plot
+
+* steady increase (after initial drop)
+* repeating pattern each year (seasonal component).
+* Not stationary.
+
+##  Differencing the New York births
+
+Does differencing help here? Looks stationary, but some regular spikes:
+
+```{r, fig.height=3.6}
+ny.diff.ts=diff(ny.ts)
+autoplot(ny.diff.ts)
+```
+
+
+##  Decomposing a seasonal time series
+
+
+A visual (using original data):
+
+```{r fig.height=3.5}
+ny.d <- decompose(ny.ts) 
+ny.d %>% autoplot()
+```
+
+##  Decomposition bits
+
+
+Shows:
+
+* original series
+* a "seasonal" part: something that repeats every year
+* just the trend, going steadily up (except at the start)
+* random: what is left over ("remainder")
+
+##  The seasonal part
+
+Fitted seasonal part is same every year, births lowest in February and highest in July:
+
+```{r, echo=F}
+w=getOption("width")
+options(width=100)
+```
+
+
+\tiny
+```{r}
+ny.d$seasonal
+```
+\normalsize
+
+```{r, echo=F}
+options(width=w)
+```
+
+
+```{r, echo=FALSE}
+set.seed(457299)
+```
+
+##  Time series basics: white noise
+
+Each value independent random normal. Knowing one value tells you nothing about the next. "Random" process.
+
+
+```{r "White-Noise", fig.height=3.0}
+wn=rnorm(100)
+wn.ts=ts(wn)
+autoplot(wn.ts)
+```
+
+
+
+
+##  Lagging a time series
+
+This means moving a time series one (or more) steps back in time:
+
+```{r}
+x=rnorm(5)
+tibble(x) %>% mutate(x_lagged=lag(x)) -> with_lagged
+with_lagged
+```
+
+Gain a missing because there is nothing before the first observation.
+
+##  Lagging white noise
+
+```{r, warning=F, fig.height=4}
+tibble(wn) %>% mutate(wn_lagged=lag(wn)) -> wn_with_lagged
+ggplot(wn_with_lagged, aes(y=wn, x=wn_lagged))+geom_point()
+with(wn_with_lagged, cor.test(wn, wn_lagged, use="c")) # ignore the missing value
+```
+
+
+##  Correlation with lagged series
+
+If you know about white noise at one time point, you know *nothing* about it at the next. This is shown by the scatterplot and the correlation. 
+
+
+On the other hand, this:
+
+\footnotesize
+```{r}
+tibble(age=kings$X1) %>% 
+  mutate(age_lagged=lag(age)) -> kings_with_lagged
+with(kings_with_lagged, cor.test(age, age_lagged))
+```
+\normalsize
+
+## Correlation with next value?
+
+```{r, warning=F, fig.height=4}
+ggplot(kings_with_lagged, aes(x=age_lagged, y=age)) + 
+  geom_point()
+```
+
+##  Two steps back:
+
+\small
+```{r}
+kings_with_lagged %>% 
+  mutate(age_lag_2=lag(age_lagged)) %>% 
+  with(., cor.test(age, age_lag_2))
+```
+\normalsize
+
+Still a correlation two steps back, but smaller (and no longer significant).
+
+##  Autocorrelation
+
+Correlation of time series with *itself* one, two,... time steps back is useful idea, called **autocorrelation**. Make a plot of it with `acf` and `autoplot`. Here, white noise:
+
+```{r, fig.height=3.3}
+acf(wn.ts, plot=F) %>% autoplot()
+```
+
+No autocorrelations beyond chance, anywhere (except *possibly* at lag 13).
+
+Autocorrelations work best on *stationary* series.
+
+##  Kings, differenced
+
+```{r, fig.height=4}
+acf(kings.diff.ts, plot=F) %>% autoplot()
+```
+
+##  Comments on autocorrelations of kings series
+
+Negative autocorrelation at lag 1, nothing beyond that. 
+
+* If one value of differenced series positive, next one most likely negative.
+* If one monarch lives longer than predecessor, next one likely lives shorter.
+
+## NY births, differenced
+
+```{r, fig.height=4}
+acf(ny.diff.ts, plot=F) %>% autoplot()
+```
+
+##  Lots of stuff:
+
+* large positive autocorrelation at 1.0 years (July one year like July last year)
+* large negative autocorrelation at 1 month.
+* smallish but significant negative autocorrelation at 0.5 year = 6 months.
+* Other stuff -- complicated.
+
+##  Souvenir sales
+
+Monthly sales for a beach souvenir shop in Queensland, Australia:
+
+```{r, echo=F}
+w=getOption("width")
+options(width=80)
+```
+
+
+\scriptsize
+```{r, message=F}
+souv=read_table("souvenir.txt", col_names=F)
+souv.ts=ts(souv,frequency=12,start=1987)
+souv.ts
+```
+\normalsize
+
+```{r, echo=F}
+options(width=w)
+```
+
+
+##  Plot of souvenir sales
+
+```{r, fig.height=4}
+autoplot(souv.ts)
+```
+
+##  Several problems:
+
+* Mean goes up over time
+* Variability gets larger as mean gets larger
+* Not stationary
+
+##  Problem-fixing:
+
+Fix non-constant variability first by taking logs:
+
+```{r, fig.height=3.5}
+souv.log.ts=log(souv.ts)
+autoplot(souv.log.ts)
+```
+
+##  Mean still not constant, so try taking differences
+
+```{r, fig.height=4}
+souv.log.diff.ts=diff(souv.log.ts)
+autoplot(souv.log.diff.ts)
+```
+
+##  Comments
+
+* Now stationary
+* but clear seasonal effect.
+
+##  Decomposing to see the seasonal effect
+
+```{r, fig.height=4}
+souv.d=decompose(souv.log.diff.ts)
+autoplot(souv.d)
+```
+
+##  Comments 
+
+**Big** drop in one month's differences. Look at seasonal component to see which:
+
+
+```{r, echo=F}
+w=getOption("width")
+options(width=90)
+```
+
+\tiny
+```{r}
+souv.d$seasonal
+```
+\normalsize
+
+```{r, echo=F}
+options(width=w)
+```
+
+January.
+
+##  Autocorrelations
+
+```{r, fig.height=4}
+acf(souv.log.diff.ts, plot=F) %>% autoplot()
+```
+
+* Big positive autocorrelation at 1 year (strong seasonal effect)
+* Small negative autocorrelation at 1 and 2 months.
+
+
+##  Moving average
+
+- A particular type of time series called a **moving average** or MA process captures idea of autocorrelations at a few lags but not at others.
+
+- Here's generation of MA(1) process, with autocorrelation at lag 1 but not otherwise:
+
+```{r}
+beta=1
+tibble(e=rnorm(100)) %>% 
+  mutate(e_lag=lag(e)) %>% 
+  mutate(y=e+beta*e_lag) %>% 
+  mutate(y=ifelse(is.na(y), 0, y)) -> ma
+```
+
+## The series
+
+\small
+```{r}
+ma
+```
+\normalsize
+
+##  Comments
+
+* `e` contains independent "random shocks". 
+* Start process at 0. 
+* Then, each value of the time series has that time's random shock, plus a multiple of the last time's random shock. 
+* `y[i]` has shock in common with `y[i-1]`; should be a lag 1 autocorrelation. 
+* But `y[i]` has no shock in common with `y[i-2]`, so no lag 2 autocorrelation (or beyond).
+
+
+##  ACF for MA(1) process
+
+Significant at lag 1, but beyond, just chance:
+
+```{r, fig.height=3.5}
+acf(ma$y, plot=F, na.rm=T) %>% autoplot()
+```
+
+
+
+##  AR process
+
+Another kind of time series is AR process, where each value depends on previous one, like this (loop):
+
+```{r}
+e=rnorm(100)
+x=numeric(0)
+x[1]=0
+alpha=0.7
+for (i in 2:100)
+{
+  x[i]=alpha*x[i-1]+e[i]
+}
+```
+
+## The series
+
+```{r}
+x
+```
+
+
+##  Comments
+
+* Each random shock now only used for its own value of `x`
+* but `x[i]` also depends on previous value `x[i-1]`
+* so correlated with previous value
+* *but* `x[i]` also contains multiple of `x[i-2]` and previous x's
+* so all x's correlated, but autocorrelation dying away.
+
+##  ACF for AR(1) series
+
+```{r, fig.height=4}
+acf(x, plot=F) %>% autoplot()
+```
+
+##  Partial autocorrelation function
+
+This cuts off for an AR series:
+
+```{r, fig.height=3.7}
+pacf(x, plot=F) %>% autoplot()
+```
+
+The lag-2 autocorrelation should not be significant, and isn't.
+
+##  PACF for an MA series decays slowly
+
+```{r, fig.height=4}
+pacf(ma$y, plot=F) %>% autoplot()
+```
+
+##  The old way of doing time series analysis
+
+Starting from a series with constant variability (eg. transform first to get it, as for souvenirs):
+
+* Assess stationarity.
+* If not stationary, take differences as many times as needed until it is.
+* Look at ACF, see if it dies off. If it does, you have MA series.
+* Look at PACF, see if that dies off. If it does, have AR series.
+* If neither dies off, probably have a mixed "ARMA" series.
+* Fit coefficients (like regression slopes).
+* Do forecasts.
+
+
+##  The new way of doing time series analysis (in R)
+
+* Transform series if needed to get constant variability
+* Use package `forecast`.
+* Use function `auto.arima` to estimate what kind of series best fits data.
+* Use `forecast` to see what will happen in future.
+
+##  Anatomy of `auto.arima` output
+
+```{r}
+auto.arima(ma$y)
+```
+
+Comments over.
+
+## Comments
+
+* ARIMA part tells you what kind of series you are estimated to have:
+  * first number (first 0) is AR (autoregressive) part
+  * second number (second 0) is amount of differencing here
+  * third number (1) is MA (moving average) part
+  
+* Below that, coefficients (with SEs)
+* AICc is measure of fit (lower better)
+
+##  What other models were possible?
+
+Run `auto.arima` with `trace=T`:
+
+\small
+```{r}
+auto.arima(ma$y,trace=T)
+```
+\normalsize
+
+Also possible were MA(2) and ARMA(1,1), both with AICc=273.7.
+
+
+##  Doing it all the new way: white noise
+
+```{r}
+wn.aa=auto.arima(wn.ts)
+wn.aa
+```
+
+Best fit *is* white noise (no AR, no MA, no differencing). 
+
+##  Forecasts:
+
+```{r, echo=F}
+options(width=65)
+```
+
+
+\small
+```{r}
+forecast(wn.aa)
+```
+\normalsize
+
+Forecasts all 0, since the past doesn't help to predict future.
+
+
+##  MA(1)
+
+```{r}
+y.aa=auto.arima(ma$y)
+y.aa
+y.f=forecast(y.aa)
+```
+
+##  Plotting the forecasts for MA(1) 
+
+```{r, fig.height=4}
+autoplot(y.f)
+```
+
+
+##  AR(1)
+
+```{r}
+x.aa=auto.arima(x)
+x.aa
+```
+
+Oops! Thought it was MA(1), not AR(1)!
+
+## Fit right AR(1) model:
+
+```{r}
+x.arima=arima(x,order=c(1,0,0))
+x.arima
+```
+
+##  Forecasts for `x`
+
+```{r, fig.height=4}
+forecast(x.arima) %>% autoplot()
+```
+
+## Comparing wrong model:
+
+```{r, fig.height=4}
+forecast(x.aa) %>% autoplot()
+```
+
+
+##  Kings
+  
+```{r}
+kings.aa=auto.arima(kings.ts)
+kings.aa
+```
+
+##  Kings forecasts:
+
+\small
+```{r}
+kings.f=forecast(kings.aa)
+kings.f
+```
+\normalsize
+
+##  Kings forecasts, plotted
+
+```{r, fig.height=4}
+autoplot(kings.f) + labs(x="index", y= "age at death")
+```
+
+
+
+
+##  NY births
+
+Very complicated:
+
+\small
+```{r}
+ny.aa=auto.arima(ny.ts)
+ny.aa
+```
+\normalsize
+
+
+##  NY births forecasts
+
+Not *quite* same every year:
+
+\tiny
+```{r}
+ny.f=forecast(ny.aa,h=36)
+ny.f
+```
+\normalsize
+
+
+##  Plotting the forecasts
+
+```{r, fig.height=4}
+autoplot(ny.f)+labs(x="time", y="births")
+```
+
+
+##  Log-souvenir sales
+
+```{r}
+souv.aa=auto.arima(souv.log.ts)
+souv.aa
+souv.f=forecast(souv.aa,h=27)
+```
+
+##  The forecasts
+
+Differenced series showed low value for January (large drop). December highest, Jan and Feb lowest:
+
+\scriptsize
+```{r}
+souv.f
+souv.f$mean
+exp(souv.f$mean)
+print.default(souv.f)
+```
+\normalsize
+
+##  Plotting the forecasts
+
+```{r, fig.height=4}
+autoplot(souv.f)
+```
+
+
+##  Global mean temperatures, revisited
+
+```{r}
+temp.ts=ts(temp$temperature,start=1880)
+temp.aa=auto.arima(temp.ts)
+temp.aa
+```
+
+##  Forecasts
+
+```{r, fig.height=4}
+temp.f=forecast(temp.aa)
+autoplot(temp.f)+labs(x="year", y="temperature")
+```
+

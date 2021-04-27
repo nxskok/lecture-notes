@@ -1,0 +1,29 @@
+This is my title.
+========================================================
+
+Here is some random data.
+
+```{r}
+x=rnorm(100)
+x
+```
+
+This is a random formula:
+$$z^2=x^2+y^2+{x \over 2 \sin x}$$
+
+Here are some plots, for example:
+
+```{r}
+plot(x)
+hist(x,prob=T)
+lines(density(x))
+```
+
+How normal is this?
+
+```{r}
+qqnorm(x)
+qqline(x)
+```
+
+I'd say that's pretty normal.

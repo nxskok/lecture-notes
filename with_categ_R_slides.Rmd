@@ -1,0 +1,23 @@
+---
+title: "Regression with categorical variables"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r, child="with_categ_R.Rmd"}
+```

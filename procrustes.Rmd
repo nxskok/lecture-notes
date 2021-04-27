@@ -1,0 +1,232 @@
+## Comparing MDS solution with "reality": Procrustes rotation
+
+
+* How to tell that an MDS map makes a good correspondence with ``what
+should be''?
+
+* Problem: MDS map might be rotated/scaled/reflected from reality.
+
+* How to find rotation/scaling/reflection that best matches reality?
+
+* Answer: **Procrustes rotation**.
+
+* In R: `procOPA` in package `shapes`.
+
+
+
+## "True" coordinates
+
+
+* Get latitudes and longitudes of cities by geocoding, as
+before. Glue "ON" onto city names to make sure we get right ones: xxx
+
+\footnotesize
+```{r message=F, cache=T, eval=F}
+lookup <- str_c(ontario2$x, " ON")
+latlong <- geocode(lookup)
+latlong <- bind_cols(city = ontario2$x, latlong) %>% print(n = 4)
+```
+\normalsize
+    
+xxx
+
+\footnotesize
+```{r echo=F}
+latlong <- readRDS("ontario_all.rds")
+latlong %>% print(n = 4)
+```
+\normalsize
+ 
+
+* Not $(x,y)$ coordinates: one degree of latitude is always
+110.25 km, but one degree of longitude is only that at the equator
+(less than that as you move further north, down to 0 km at north
+pole).
+
+
+## "True" coordinates part 2
+
+
+* Make coordinates by multiplying by cosine of "typical" latitude.
+
+* Find mean latitude:
+```{r }
+m <- mean(latlong$lat)
+m
+```
+
+     
+
+
+* Turn into radians and find its cosine:
+```{r }
+mult <- cos(m * pi / 180)
+mult
+```
+
+   
+
+
+* Create "true" coords by multiplying the longitudes by
+that. This needs to be R `matrix`, not data frame: xxx
+
+\footnotesize
+```{r}
+truecoord <- with(latlong, cbind(V1 = lon * mult, V2 = lat))
+```
+\normalsize
+   
+
+
+## Using `procOPA`
+
+
+* Feed 2 things into `procOPA`: first, "true"
+coordinates, second MDS coordinates.
+
+* Get out: 
+
+
+*     (centred and scaled) first set of coordinates `Ahat`
+
+* (centred and scaled) second set of coordinates `Bhat`
+
+* sum of squared differences between two sets of coordinates `OSS`
+
+* Rotation matrix `R`
+
+
+* `Ahat` and `Bhat` coordinates supposed to
+match as well as possible. xxx
+
+\footnotesize
+```{r message=F}
+ontario.pro <- procOPA(
+  truecoord,
+  ontario2.2$points
+)
+names(ontario.pro)
+```
+\normalsize
+     
+
+
+## Make data frames of output, glue together
+
+
+* Two sets of coordinates, `Ahat` are actual,
+`Bhat` are from MDS. xxx
+
+\scriptsize
+```{r}
+A <- ontario.pro$Ahat %>%
+  as_tibble() %>%
+  mutate(which = "actual", city = ontario2$x)
+B <- ontario.pro$Bhat %>%
+  as_tibble() %>%
+  mutate(which = "MDS", city = ontario2$x)
+dp <- bind_rows(A, B)
+dp %>% sample_n(6)
+```
+\normalsize
+
+ ## `procOPA`, part 2: plotting
+ 
+   
+     
+* Make data frames of each, glue together: xxx
+
+\small
+```{r, warning=F}
+A=with(ontario.pro,data.frame(x=Ahat[,1],
+   y=Ahat[,2],which="actual",city=ontario2$x)) 
+ B=with(ontario.pro,data.frame(x=Bhat[,1],
+   y=Bhat[,2],which="MDS",city=ontario2$x))
+ dp=bind_rows(A,B)
+ dp %>% sample_n(6)
+ 
+```
+\normalsize
+
+   
+ 
+
+## Procrustes rotation plot
+
+
+* Strategy: plot all the locations, and colour them by whether
+they were the true location (red) or the MDS one (blue), which is
+in `which`. Label each location with the city name in the
+appropriate colour.
+
+* I realized it
+was actually easy to join the two instances of a city by a line
+(in green, here, 3rd line) by setting `group=city`: xxx
+
+\footnotesize
+```{r}
+g_opa <- ggplot(dp, aes(
+  x = V1, y = V2, colour = which,
+  label = city
+)) + geom_point() +
+  geom_line(aes(group = city), colour = "green") +
+  geom_text_repel(size = 2)
+```
+\normalsize
+     
+
+* On plot, look to see whether points that are same city are
+joined by a short green line (good) or a long one (bad).
+
+
+
+## The maps
+```{r prosesto,echo=F,fig.height=4}
+g_opa
+```
+  
+![](bMDS-ont-proc.png)
+
+
+
+## Comments
+
+
+* True locations red, MDS locations blue
+
+* Most things in roughly right place (esp.\ relative to other things)
+
+* Extreme cities off by a bit, but OK relative to neighbours.
+
+* St Catharines, Niagara Falls off by most.
+
+* Sarnia, Windsor also off noticeably.
+
+* These four cities had largest "third dimension" in 3D
+representation  `ontario2.3`.
+
+
+
+## Rotation matrix
+Shows how MDS map needs to be rotated to get best match with actual coordinates:
+```{r }
+ontario.pro$R
+```
+
+   
+
+Rotation angle $\theta$ such that $\cos\theta=0.885$,
+$\sin\theta=0.466$: $\theta=23$ degrees (counterclockwise). 
+$ %$ %$
+
+
+## Is that right? Look at MDS map again
+```{r fig.height=4}
+g
+```
+
+   
+
+23 degrees counterclockwise seems about right.
+
+

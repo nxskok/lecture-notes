@@ -1,0 +1,152 @@
+## Summarizing data in R
+- Have seen `summary` (5-number summary of each column). But what
+if we want:
+  - a summary or two of just one column
+  - a count of observations in each category of a categorical variable
+  - summaries by group
+  - a different summary of all columns (eg. SD)
+- To do this, meet pipe operator `%>%`. This takes input data frame,
+does something to it, and outputs result. (Learn: `Ctrl-Shift-M`.) 
+- Output from a pipe can be used as input to something else, so can
+have a sequence of pipes.
+- Summaries include: mean, median, min, max, sd, IQR, quantile (for
+obtaining quartiles or any percentile), n (for counting observations).
+- Use our Australian athletes data again.
+
+## Packages for this section
+
+```{r, eval=F}
+library(tidyverse)
+```
+
+```{r, echo=F, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+athletes <- read_tsv(my_url)
+athletes
+```
+
+## Summarizing one column
+- Mean height: 
+
+```{r}
+athletes %>% summarize(m=mean(Ht))
+athletes %>% summarise(m=mean(Ht))
+```
+
+(these both work)
+
+or to get mean and SD of BMI:
+
+```{r}
+athletes %>% summarize(mean_bmi=mean(BMI), sd_bmi=sd(BMI))
+```
+
+## Quartiles
+
+- `quantile` calculates percentiles ("fractiles"), so we want the 25th and 75th
+percentiles:
+
+```{r}
+v <- c(0.25, 0.75)
+athletes %>% summarize(q=quantile(Wt, v), prob=v)
+```
+
+
+## Creating new columns
+
+- These weights are in kilograms. Maybe we want to summarize the
+weights in pounds.
+- Convert kg to lb by multiplying by 2.2.
+- Create new column and summarize that: 
+
+```{r}
+v
+athletes %>% mutate(wt_lb=Wt*2.2) %>%
+  summarize(Q_lb=quantile(wt_lb, v), prob=v)
+```
+
+## Counting how many
+for example, number of athletes in
+each sport: 
+
+```{r, echo=FALSE}
+options(dplyr.summarise.inform=FALSE) 
+```
+
+
+```{r}
+athletes %>% count(Sport)
+```
+
+## Counting how many, variation 2:
+
+Another way (which will make sense
+in a moment):
+
+\small
+```{r}
+athletes %>% group_by(Sport) %>%
+  summarize(count=n())
+```
+\normalsize
+
+## Summaries by group
+- Might want separate summaries for each “group”, eg. mean and SD
+of height for males and females. Strategy is `group_by` (to define the
+groups) and then `summarize`: 
+
+```{r}
+athletes %>% group_by(Sex) %>% 
+  summarize(m=mean(Ht), s=sd(Ht))
+```
+
+## Count plus stats
+
+If you want number of observations per group plus some stats, you need to go the `n()` way:
+
+```{r}
+athletes %>% group_by(Sex) %>% 
+  summarize(n=n(), m=mean(Ht), s=sd(Ht))
+```
+
+- This explains second variation on counting within group: “within each
+sport, how many athletes were there?”
+
+## quantiles by group
+
+```{r}
+v
+athletes %>%
+  group_by(Sex) %>% 
+  summarize(Q_wt=quantile(Wt, v), prob=v)
+```
+
+
+## Summarizing several columns
+
+- Standard deviation of each (numeric) column: 
+
+\small
+```{r}
+athletes %>% summarize(across(where(is.numeric), ~sd(.)))
+```
+\normalsize
+
+- Median and IQR of all columns whose name starts with H: 
+
+\small
+```{r}
+athletes %>% summarize(across(starts_with("H"),
+                       list(med=~median(.), iqr=~IQR(.))))
+```
+\normalsize
+
+## by group
+
+```{r}
+athletes %>% 
+  group_by(Sex) %>% 
+  summarize(across(starts_with("H"), 
+                   list(med=~median(.), 
+                        iqr=~IQR(.))))
+```

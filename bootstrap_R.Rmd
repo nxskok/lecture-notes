@@ -1,0 +1,182 @@
+
+## Assessing assumptions
+
+- Our $t$-tests assume normality of variable being tested
+- but, Central Limit Theorem says that normality matters less if sample is "large"
+- in practice "approximate normality" is enough, but how do we assess whether what we have is normal enough?
+- so far, use histogram/boxplot and make a call, allowing for sample size.
+
+## What actually has to be normal
+
+- is: **sampling distribution of sample mean**
+- the distribution of sample mean over *all possible samples*
+- but we only have *one* sample!
+- Idea: assume our sample is representative of the population, and draw samples from our sample (!), with replacement.
+- This gives an idea of what different samples from the population might look like.
+- Called *bootstrap*, after expression "to pull yourself up by your own bootstraps".
+
+## Blue Jays attendances
+
+```{r, echo=FALSE, message=FALSE}
+jays <- read_csv("jays15-home.csv")
+set.seed(457299)
+```
+
+```{r}
+jays$attendance
+```
+
+- A bootstrap sample:
+
+```{r}
+s <- sample(jays$attendance, replace = TRUE)
+s
+```
+
+## Getting mean of bootstrap sample
+
+- A bootstrap sample is same size as original, but contains repeated values (eg. 15062) and missing ones (42917).
+- We need the mean of our bootstrap sample:
+
+```{r}
+mean(s)
+```
+
+- This is a little different from the mean of our actual sample:
+
+```{r}
+mean(jays$attendance)
+```
+
+- Want a sense of how the sample mean might vary, if we were able to take repeated samples from our population.
+- Idea: take lots of *bootstrap* samples, and see how *their* sample means vary.
+
+## Taking lots of bootstrap samples
+
+- `rerun` does something as many times as you say. We just do 2 times to get the idea:
+
+
+```{r, echo=FALSE, message=FALSE}
+set.seed(457299)
+```
+
+```{r}
+rerun(2, sample(jays$attendance, replace = TRUE))
+```
+
+## Mean of each bootstrap sample
+
+- Then take the mean of each of those:
+
+```{r, echo=FALSE, message=FALSE}
+set.seed(457299)
+```
+
+```{r}
+rerun(2, sample(jays$attendance, replace = TRUE)) %>% 
+  map_dbl(~mean(.))
+```
+
+- Last: make these into a dataframe:
+
+```{r, echo=FALSE, message=FALSE}
+set.seed(457299)
+```
+
+```{r}
+rerun(2, sample(jays$attendance, replace = TRUE)) %>% 
+  map_dbl(~mean(.)) %>% 
+  enframe()
+```
+
+## Do it many times
+
+- Now that we know it works, replace 2 by 1000 (or larger) and save result:
+
+\footnotesize
+
+```{r}
+rerun(1000, sample(jays$attendance, replace = TRUE)) %>% 
+  map_dbl(~mean(.)) %>% 
+  enframe() -> d
+d
+```
+
+\normalsize
+
+## Are these normal?
+
+```{r}
+ggplot(d, aes(x=value)) + geom_histogram(bins=10)
+```
+
+## Comments
+
+- This is very close to normal
+- The bootstrap says that the sampling distribution of the sample mean is close to normal, even though the distribution of the data is not
+- A sample size of 25 is big enough to overcome the skewness that we saw
+- This is the Central Limit Theorem in practice
+- It is surprisingly powerful.
+- Thus, the $t$-test is actually perfectly good here.
+
+## Two samples
+
+- Assumption: *both* samples are from a normal distribution.
+- In practice, each sample is "normal enough" given its sample size, since Central Limit Theorem will help.
+- Use bootstrap on each group independently, as above.
+
+## Kids learning to read
+
+```{r, echo=FALSE, message=FALSE}
+my_url <- "http://www.utsc.utoronto.ca/~butler/c32/drp.txt"
+kids <- read_delim(my_url," ")
+```
+
+```{r}
+ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
+```
+
+
+## Getting just the control group 
+
+
+```{r}
+kids %>% filter(group=="c") -> controls
+controls
+```
+
+## Bootstrap these
+
+```{r}
+rerun(1000, sample(controls$score, replace = TRUE)) %>% 
+  map_dbl(~mean(.)) %>% 
+  enframe() -> d
+```
+
+## Plot
+
+```{r}
+ggplot(d, aes(x=value)) + geom_histogram(bins=10)
+```
+
+## ... and the treatment group:
+
+```{r}
+kids %>% filter(group=="t") -> treats
+rerun(1000, sample(treats$score, replace = TRUE)) %>% 
+  map_dbl(~mean(.)) %>% 
+  enframe() %>% 
+  ggplot(aes(x=value)) + geom_histogram(bins=10) -> g
+```
+
+## Histogram
+
+```{r}
+g
+```
+
+## Comments
+
+- sampling distributions of sample means both look pretty normal
+- as we thought, no problems with our two-sample $t$ at all.
+

@@ -1,0 +1,837 @@
+
+## Multi-way frequency analysis
+
+
+* A study of gender and eyewear-wearing finds the following frequencies:
+\begin{tabular}{lrrr}
+\hline
+Gender & Contacts & Glasses & None \\
+\hline
+Female & 121 & 32 & 129 \\
+Male & 42 & 37 & 85\\
+\hline
+\end{tabular}
+
+* Is there association between eyewear and gender?
+
+* Normally answer this with chisquare test (based on observed and expected frequencies from null hypothesis of no association).
+
+* Two categorical variables and a frequency.
+
+* We assess in way that generalizes to more categorical variables.
+
+
+
+
+##  The data file
+
+\footnotesize
+```
+gender contacts glasses none
+female 121      32      129
+male   42       37      85
+```
+\normalsize
+
+
+* This is *not tidy!*
+
+* Two variables are gender and *eyewear*, and those numbers
+all frequencies.
+
+\footnotesize
+```{r message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/eyewear.txt"
+(eyewear <- read_delim(my_url, " "))
+```
+\normalsize
+   
+
+
+##  Tidying the data
+```{r size="footnotesize"}
+eyewear %>%
+  pivot_longer(contacts:none, names_to="eyewear", 
+               values_to="frequency") -> eyes
+eyes
+```
+
+## Making tidy data back into a table
+
+- use `pivot_longer`
+- or this (we use it again later):
+
+```{r}
+xt <- xtabs(frequency ~ gender + eyewear, data = eyes)
+xt
+```
+
+   
+
+##  Modelling
+
+
+* Predict frequency from other factors and combos. 
+- `glm`
+with `poisson` family.
+
+```{r }
+eyes.1 <- glm(frequency ~ gender * eyewear,
+  data = eyes,
+  family = "poisson"
+)
+summary(eyes.1)
+```
+
+
+
+* Called **log-linear model**.
+
+
+
+##  What can we get rid of?
+
+\small    
+```{r }
+drop1(eyes.1, test = "Chisq")
+```
+ 
+nothing!
+
+
+##  Conclusions
+
+
+* `drop1` says what we can remove at this
+step. Significant = must stay.
+
+* Cannot remove anything.
+
+* Frequency depends on `gender-wear`
+*combination*, cannot be simplified further.
+
+* Gender and eyewear are *associated*.
+
+* Stop here.
+
+
+##  `prop.table`
+Original table:
+
+\footnotesize
+```{r }
+xt
+```
+\normalsize
+ 
+
+Calculate eg. row proportions like this:
+
+\small
+```{r }
+prop.table(xt, margin = 1)
+```
+\normalsize
+
+## Comments
+
+* `margin` says what to make add to 1.
+
+* More females wear contacts and more males wear glasses.
+
+
+
+
+##  No association
+
+
+* Suppose table had been as shown below:
+
+\scriptsize
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/eyewear2.txt"
+eyewear2 <- read_table(my_url)
+eyewear2
+eyes2 <- eyewear2 %>% pivot_longer(contacts:none, names_to = "eyewear", values_to = "frequency")
+eyes2
+xt2 <- xtabs(frequency ~ gender + eyewear, data = eyes2)
+xt2
+prop.table(xt2, margin = 1)
+```
+\normalsize
+   
+## Comments
+
+* Females and males wear contacts and glasses *in same proportions*
+   - though more females and more contact-wearers. 
+- No
+*association* between gender and eyewear.
+
+
+
+##  Analysis for revised data
+```{r}
+eyes.2 <- glm(frequency ~ gender * eyewear,
+  data = eyes2,
+  family = "poisson"
+)
+drop1(eyes.2, test = "Chisq")
+```
+
+   
+
+No longer any association. Take out interaction.
+
+
+##  No interaction
+\small
+```{r }
+eyes.3 <- update(eyes.2, . ~ . - gender:eyewear)
+drop1(eyes.3, test = "Chisq")
+```
+\normalsize
+   
+
+
+* More females (gender effect)
+
+* more contact-wearers (eyewear
+effect)
+
+* no association (no interaction). 
+
+
+
+##  Chest pain, being overweight and being a smoker
+
+
+* In a hospital emergency department, 176 subjects who attended
+for acute chest pain took part in a study.
+
+* Each subject had a
+normal or abnormal electrocardiogram reading (ECG), were
+overweight (as judged by BMI) or not, and were a smoker or
+not.
+
+* How are these three variables related, or not?
+
+
+
+## The data
+In modelling-friendly format:
+
+```
+
+ecg bmi smoke count
+abnormal overweight yes 47
+abnormal overweight no 10
+abnormal normalweight yes 8 
+abnormal normalweight no 6
+normal overweight yes 25 
+normal overweight no 15 
+normal normalweight yes 35
+normal normalweight no 30
+
+```
+
+
+
+##  First step
+\small
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/ecg.txt"
+chest <- read_delim(my_url, " ")
+chest
+chest.1 <- glm(count ~ ecg * bmi * smoke,
+  data = chest,
+  family = "poisson"
+)
+drop1(chest.1, test = "Chisq")
+```
+\normalsize
+   
+
+That 3-way interaction comes out.
+
+
+##  Removing the 3-way interaction
+\small
+```{r}
+chest.2 <- update(chest.1, . ~ . - ecg:bmi:smoke)
+drop1(chest.2, test = "Chisq")
+```
+\normalsize
+   
+
+At $\alpha=0.05$, `bmi:smoke` comes out.
+
+
+##  Removing `bmi:smoke`
+\small
+```{r}
+chest.3 <- update(chest.2, . ~ . - bmi:smoke)
+drop1(chest.3, test = "Chisq")
+```
+\normalsize
+   
+
+`ecg:smoke` has become significant. So we have to stop.
+
+
+## Understanding the final model
+
+
+* Thinking of `ecg` as "response" that might depend on
+anything else.
+
+* What is associated with `ecg`? Both `bmi` on its
+own and `smoke` on its own, but *not* the combination
+of both.
+
+* `ecg:bmi` table:
+```{r }
+xt <- xtabs(count ~ ecg + bmi, data = chest)
+xt
+```
+
+```{r}
+prop.table(xt, margin = 2)
+```
+     
+
+
+* Most normal weight people have a normal ECG, but a
+majority of overweight people have an *abnormal* ECG. That is,
+knowing about BMI says something about likely ECG.
+
+
+
+## `ecg:smoke`
+
+
+* `ecg:smoke` table:
+```{r }
+xt <- xtabs(count ~ ecg + smoke, data = chest)
+xt
+```
+
+```{r}
+prop.table(xt, margin = 2)
+```
+   
+
+
+* Most nonsmokers have a normal ECG, but smokers are about 50--50
+normal and abnormal ECG.
+
+* Don't look at `smoke:bmi` table since not significant. 
+
+```{r}
+xtabs(count ~ bmi + smoke, data = chest)
+```
+
+
+## Simpson's paradox: the airlines example
+\begin{tabular}{|l|rr|rr|}
+\hline
+& \multicolumn{2}{|c|}{Alaska Airlines} & 
+\multicolumn{2}{|c|}{America West}\\
+Airport & On time & Delayed & On time & Delayed\\
+\hline
+Los Angeles & 497 & 62 & 694 & 117\\
+Phoenix & 221 & 12 & 4840 & 415\\
+San Diego & 212 & 20 & 383 & 65\\
+San Francisco & 503 & 102 & 320 & 129 \\
+Seattle & 1841 & 305 & 201 & 61\\
+\hline
+Total & 3274 & 501 & 6438 & 787\\
+\hline
+\end{tabular}
+\vspace{2ex}
+Use `status` as variable name for "on time/delayed".
+
+
+* Alaska: 13.3\% flights delayed ($501/(3274+501)$).
+
+* America West: 10.9\% ($787/(6438+787)$).
+
+* America West more punctual, right?
+
+
+
+##  Arranging the data
+
+
+* Can only have single thing in columns, so we have to construct
+column names like this:
+\small
+
+```
+
+airport    aa_ontime aa_delayed aw_ontime aw_delayed
+LosAngeles   497          62       694        117
+Phoenix      221          12      4840        415
+SanDiego     212          20       383         65
+SanFrancisco 503         102       320        129
+Seattle     1841         305       201         61
+
+```
+
+\normalsize
+
+- Read in:
+
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/airlines.txt"
+airlines <- read_table2(my_url)
+airlines
+```
+
+## Tidying 
+
+the modern way
+
+```{r}
+airlines %>% 
+   pivot_longer(-airport, names_to = c("airline", "status"), names_sep = "_", values_to = "freq") -> punctual
+```
+
+
+* Some tidying gets us the right layout, with frequencies all in
+one column and the airline and delayed/on time status separated out: 
+```{r message=F, size="small"}
+airlines %>%
+  gather(line.status, freq, contains("_")) %>%
+  separate(line.status, c("airline", "status")) -> punctual
+punctual
+```
+
+- See how this works by running it one line at a time.
+     
+
+
+##  The data frame `punctual`
+
+\scriptsize
+```{r echo=F}
+punctual
+```
+\normalsize
+   
+
+
+##  Proportions delayed by airline
+
+
+* Two-step process: get appropriate subtable:
+
+\small
+```{r }
+xt <- xtabs(freq ~ airline + status, data = punctual)
+xt
+```
+\normalsize
+     
+
+
+* and then calculate appropriate proportions:
+
+\small
+```{r }
+prop.table(xt, margin = 1)
+```
+\normalsize
+
+* More of Alaska Airlines' flights delayed (13.3\% vs.\ 10.9\%).
+
+
+
+##  Proportion delayed by airport, for each airline
+
+\footnotesize
+```{r}
+xt <- xtabs(freq ~ airline + status + airport, data = punctual)
+xp <- prop.table(xt, margin = c(1, 3))
+xp
+ftable(xp,
+  row.vars = c("airport", "airline"),
+  col.vars = "status"
+)
+```
+\normalsize
+   
+
+##  Simpson's Paradox
+
+\begin{tabular}{|l|rr|}
+\hline
+Airport & Alaska & America West\\
+\hline
+Los Angeles & 11.4 & 14.4\\
+Phoenix & 5.2 & 7.9\\
+San Diego & 8.6 & 14.5\\
+San Francisco & 16.9 & 28.7\\
+Seattle & 14.2 & 23.2 \\
+\hline
+Total & 13.3 & 10.9 \\
+\hline
+\end{tabular}
+
+
+* America West more punctual overall,
+
+* but worse at *every single* airport!
+
+* How is that possible?
+
+* Log-linear analysis sheds some light.
+
+
+
+## Model 1 and output
+```{r}
+punctual.1 <- glm(freq ~ airport * airline * status,
+  data = punctual, family = "poisson"
+)
+drop1(punctual.1, test = "Chisq")
+```
+ 
+
+
+##  Remove 3-way interaction
+
+\footnotesize
+```{r}
+punctual.2 <- update(punctual.1, ~ . - airport:airline:status)
+drop1(punctual.2, test = "Chisq")
+```
+\normalsize
+
+Stop here.
+
+
+## Understanding the significance
+
+
+* `airline:status`:
+
+```{r }
+xt <- xtabs(freq ~ airline + status, data = punctual)
+prop.table(xt, margin = 1)
+```
+
+     
+
+
+* More of Alaska Airlines' flights delayed overall.
+
+* Saw this before.
+
+
+
+## Understanding the significance (2)
+
+
+* `airport:status`:
+```{r }
+xt <- xtabs(freq ~ airport + status, data = punctual)
+xt
+prop.table(xt, margin = 1)
+```
+
+
+
+* Flights into San Francisco (and maybe Seattle) are often late, and
+flights into Phoenix are usually on time.
+
+* Considerable variation among airports.
+
+
+
+## Understanding the significance (3)
+
+
+* `airport:airline`:
+```{r }
+xt <- xtabs(freq ~ airport + airline, data = punctual)
+xt
+prop.table(xt, margin = 2)
+```
+
+
+
+* What fraction of each airline's flights are to each airport.
+
+* Most of Alaska Airlines' flights to Seattle and San Francisco.
+
+* Most of America West's flights to Phoenix.
+
+
+
+##  The resolution
+
+
+* Most of America West's flights to Phoenix, where it is easy to
+be on time.
+
+* Most of Alaska Airlines' flights to San Francisco and Seattle,
+where it is difficult to be on time.
+
+* Overall comparison looks bad for Alaska because of this.
+
+* But, *comparing like with like*, if you compare each
+airline's performance *to the same airport*, Alaska does better.
+
+* Aggregating over the very different airports was a (big)
+mistake: that was the cause of the Simpson's paradox.
+
+* Alaska Airlines is *more* punctual when you do the proper comparison.
+
+
+##  Ovarian cancer: a four-way table
+
+
+* Retrospective study of ovarian cancer done in 1973.
+
+* Information about 299 women operated on for ovarian cancer 10 years previously.
+
+* Recorded:
+
+
+   * stage of cancer (early or advanced)
+
+   * type of operation (radical or limited)
+
+   * X-ray treatment received (yes or no)
+
+   * 10-year survival (yes or no)
+
+
+* Survival looks like response (suggests logistic
+regression).
+
+* Log-linear model finds any associations at all.
+
+
+##  The data
+
+after tidying:
+
+\scriptsize
+
+```
+
+stage operation xray survival freq
+early radical no no 10
+early radical no yes 41
+early radical yes no 17
+early radical yes yes 64
+early limited no no 1
+early limited no yes 13
+early limited yes no 3
+early limited yes yes 9
+advanced radical no no 38
+advanced radical no yes 6
+advanced radical yes no 64
+advanced radical yes yes 11
+advanced limited no no 3
+advanced limited no yes 1
+advanced limited yes no 13
+advanced limited yes yes 5
+
+
+```
+
+\normalsize
+
+## Reading in data
+
+\small
+```{r, message=F}
+my_url <- "http://www.utsc.utoronto.ca/~butler/d29/cancer.txt"
+cancer <- read_delim(my_url, " ")
+cancer
+```
+\normalsize
+
+
+##  Model 1
+
+hopefully looking familiar by now:
+```{r}
+cancer.1 <- glm(freq ~ stage * operation * xray * survival,
+  data = cancer, family = "poisson"
+)
+```
+ 
+
+
+##  Output 1
+
+See what we can remove:
+
+\scriptsize
+```{r}
+drop1(cancer.1, test = "Chisq")
+```
+\normalsize
+
+Non-significant interaction can come out.
+
+##  Model 2
+
+\scriptsize
+```{r}
+cancer.2 <- update(cancer.1, . ~ . - stage:operation:xray:survival)
+drop1(cancer.2, test = "Chisq")
+```
+\normalsize
+
+Least significant term is `stage:xray:survival`: remove.
+
+##  Take out `stage:xray:survival`
+
+\scriptsize
+```{r}
+cancer.3 <- update(cancer.2, . ~ . - stage:xray:survival)
+drop1(cancer.3, test = "Chisq")
+```
+\normalsize
+   
+
+`operation:xray:survival` comes out next.
+
+
+##  Remove `operation:xray:survival`
+
+\scriptsize
+```{r}
+cancer.4 <- update(cancer.3, . ~ . - operation:xray:survival)
+drop1(cancer.4, test = "Chisq")
+```
+\normalsize
+   
+
+
+##  Comments
+
+
+* `stage:operation:xray` has now become significant, so
+won't remove that.
+
+* Shows value of removing terms one at a time.
+
+* There are no higher-order interactions containing both
+`xray` and `survival`, so now we get to test (and
+remove) `xray:survival`.
+
+
+
+##  Remove `xray:survival`
+
+\scriptsize
+```{r}
+cancer.5 <- update(cancer.4, . ~ . - xray:survival)
+drop1(cancer.5, test = "Chisq")
+```
+\normalsize
+   
+
+
+##  Remove `stage:operation:survival`
+
+\scriptsize
+```{r}
+cancer.6 <- update(cancer.5, . ~ . - stage:operation:survival)
+drop1(cancer.6, test = "Chisq")
+```
+\normalsize
+   
+
+
+##  Last step?
+Remove `operation:survival`.  
+
+\footnotesize
+```{r size="footnotesize"}
+cancer.7 <- update(cancer.6, . ~ . - operation:survival)
+drop1(cancer.7, test = "Chisq")
+```
+\normalsize
+   
+Finally done!
+
+
+## Conclusions 
+
+
+* What matters is things associated with `survival` (`survival` is
+"response").
+
+* Only significant such term is `stage:survival`:
+```{r }
+xt <- xtabs(freq ~ stage + survival, data = cancer)
+xt
+prop.table(xt, margin = 1)
+```
+
+     
+
+* Most people in early stage of cancer survived, and most people
+in advanced stage did not survive.
+
+* This true *regardless* of type of operation or whether or
+not X-ray treatment was received. These things have no impact on
+survival. 
+
+
+
+##  What about that other interaction?
+
+\footnotesize
+```{r }
+xt <- xtabs(freq ~ operation + xray + stage, data = cancer)
+ftable(prop.table(xt, margin = 3))
+```
+\normalsize
+   
+
+
+
+* Out of the people at each stage of cancer (since
+`margin=3` and `stage` was listed 3rd).
+
+* The association is between `stage` and `xray`
+*only for those who had the limited operation*.
+
+* For those who
+had the radical operation, there was no association between
+`stage` and `xray`.
+
+* This is of less interest than associations with
+`survival`. 
+
+
+
+##  General procedure
+
+
+
+* Start with "complete model" including all possible interactions.
+
+* `drop1` gives highest-order interaction(s) remaining, remove least non-significant.
+
+* Repeat as necessary until everything significant.
+
+* Look at subtables of significant interactions.
+
+* Main effects not usually very interesting.
+
+* Interactions with "response" usually of most interest: show association with response.
+
+
+   
+
+
+
+

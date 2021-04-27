@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output:
+  word_document: default
+  html_notebook: default
+---
+
+List all my files in this folder beginning with `cu`:
+
+```{bash}
+ls cu*
+```
+
+Load up the Tidyverse:
+
+```{r}
+library(tidyverse)
+```
+
+
+Read in and display the sleep data:
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/sleep.txt"
+sleep=read_delim(my_url," ")
+sleep
+```
+
+Make a scatterplot for predicting `atst` from `age`, with a smooth trend:
+
+```{r}
+ggplot(sleep,aes(x=age,y=atst))+geom_point()+geom_smooth()+
+  ggtitle("Scatterplot of average total sleep time against age","Sleep time in minutes")
+```
+
+The trend is downward, fairly strong and more or less linear.

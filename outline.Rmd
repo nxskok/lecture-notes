@@ -1,0 +1,24 @@
+---
+title: "STAD29: Statistics for the Life and Social Sciences"
+author: "Lecture notes"
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+---
+
+
+
+```{r child="preliminaries.Rmd", echo=F}
+```
+
+
+```{r outline,child="bOutline.Rmd"}
+
+```
+

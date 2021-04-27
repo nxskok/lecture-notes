@@ -1,0 +1,285 @@
+---
+title: "Using Stan for model comparison"
+output: html_notebook
+---
+
+## Packages
+
+```{r}
+library(tidyverse)
+library(rstan)
+library(loo)
+library(bridgesampling)
+```
+
+## Introduction
+
+Stan is really good at estimation: that is, obtaining a posterior distribution of a parameter. But what if you want to do a test, or compare two models to see which one fits better? 
+
+One way to go is a Bayes factor: the ratio of the likelihoods under the null and alternative hypotheses. This can be multiplied by your personal prior odds on the alternative being true (vs. the alternative being true) to produce your posterior odds on the alternative being true. There are a number of reasons why one should not (or might prefer not to) use a Bayes factor. The best discussion of this I have seen is [Danielle Navarro's post](https://djnavarro.net/post/a-personal-essay-on-bayes-factors/).
+
+Another way to go is something AIC-like, such as WAIC or LOOIC. This gets at how well a model fits, allowing for how complex it is, so you can fit two models and prefer the model with the better one. See the [Vehtari, Gelman and Gabry paper](http://www.stat.columbia.edu/~gelman/research/unpublished/loo_stan.pdf).
+
+I assume here that you know how to use Stan to obtain at least a simple posterior distribution. <link to other Stan post>
+
+
+## The problem
+
+Both of the above ideas can be made to work with Stan (or, in general, a simulated posterior distribution), but the process is not entirely straightforward. As I learned it (supply a Uruguayan accent here) posterior is proportional to likelihood times prior, with a proportionality "constant"
+that is the denominator of Bayes' rule. I say "constant" because it does not depend on the parameter(s) you're estimating (and is thus irrelevant to the posterior distribution), but as soon as you are comparing two models, the thing on the bottom matters, and the fact that Stan ignores it suddenly matters as well.
+
+## Getting around the problem
+
+The difficulty is that when you specify the model in Stan, you cannot now just specify the model; you have to include enough information to calculate the marginal likelihood as well. This means that instead of saying, for example, `y ~ normal(mu, sigma)` you have to explicitly say what has to be included in the likelihood as well.
+
+To handle the AIC-type way, there is a package `loo` that does the hard work for you. The Stan code you need starts off the same, but to allow for getting the actual likelihood what you do is to repeat the likelihood calculation in a `generated quantities` block.
+
+To handle Bayes factors, we need to have Stan calculate the complete likelihood in the `model` section. This is no longer as simple as something with a squiggle in it; we have to build the log-posterior up out of the prior(s) and likelihood. Then we go the rest of the way with something called "bridge sampling". I find this way involves more thinking, quite aside from whether we should be doing it anyway.
+
+## An example
+
+I wanted to come up with the simplest example I could, to convince myself that I could make it work. I seem to need a two-parameter model, so that I can test a hypothesis about one of them while estimating the other. (I don't think Stan likes "estimating" models with zero parameters, but I might be wrong about that.) The obvious thing is a normal model for the mean, with SD to be estimated as well. Since this is a practice example, we'll make up some data:
+
+```{r}
+set.seed(457299)
+z=rnorm(10, 2, 3)
+z 
+```
+
+and we'll test the null hypothesis that the mean is zero, against the alternative that it is not. (If you prefer, we compare the fit of a model where the mean is zero vs. one where the mean is estimated). The way I generated these data (true mean of 2), the null hypothesis is actually wrong, so we should prefer estimating the mean rather than acting as if it is zero.
+
+We will need some priors. For the mean, normal with mean 0 and SD 5 (slightly favouring the null, with an SD largish but not too large). For the SD, a chi-squared distribution with 5 df (giving the SD a prior mean of 5 and variance 10). I chose these more or less arbitrarily.
+
+So now, for the `loo` approach, we need two pieces of Stan code, one where we estimate the mean (and the SD as well), and one where we set mean equal to the hypothesized value of zero. Here's the one where we estimate both parameters:
+
+```
+data {
+  vector[10] y;
+}
+
+parameters {
+  real mu;
+  real<lower=0> sigma;
+}
+
+model {
+  mu ~ normal(0, 10); // prior for mu
+  sigma ~ chi_square(5); // prior for sigma
+  y ~ normal(mu, sigma); // likelihood
+}
+
+generated quantities {
+  vector[10] log_lik;
+  for (i in 1:10) {
+    log_lik[i] = normal_lpdf(y[i] | mu, sigma);
+  }
+}
+```
+ 
+There's not too much surprising here, not if you've seen Stan before anyway. There's a `model` section with the likelihood and priors for the parameters; the parameters `mu` and `sigma` are declared in the `parameters` section, the latter constrained to be non-negative; above that there is a `data` section, with the only data here being the observations `y`. I have hard-coded the number of observations, which I realize is a bad idea, especially since the number of observations comes in again at the bottom, but hey, it's a toy problem anyway.
+
+The one new thing here is the `generated quantities` section at the bottom. In order to use `loo` to compare the null and alternative models, it needs to have access to the observation-by-observation terms in the log-likelihood. This means digging in the Stan function reference to  find out how the log of the normal density is coded. The log-likelihood has to be called `log_lik`.
+
+All right, let's compile that. (I used the "check" button in the Stan code pane to check that there were no obvious errors in the code.) My code file is called `loo1.stan`:
+
+```{r}
+loo1_compiled=stan_model("loo1.stan")
+```
+
+Now I need a null model. I will test that the mean is zero, which means copying the code in `loo1.stan` and deleting all references to `mu` as a variable, replacing with zero (if a value is needed):
+
+```
+data {
+  vector[10] y;
+}
+
+parameters {
+  real<lower=0> sigma;
+}
+
+model {
+  sigma ~ chi_square(5);
+  y ~ normal(0, sigma); // likelihood
+}
+
+generated quantities {
+  vector[10] log_lik;
+  for (i in 1:10) {
+    log_lik[i] = normal_lpdf(y[i] | 0, sigma);
+  }
+}
+```
+
+This is "syntactically correct", so compile it as well:
+
+```{r}
+loo2_compiled=stan_model("loo2.stan")
+```
+
+and then sample from each of these:
+
+```{r}
+data_list=list(y=z)
+loo1_sample=sampling(loo1_compiled, data=data_list)
+loo2_sample=sampling(loo2_compiled, data=data_list)
+```
+
+Did that work reasonably?
+
+```{r}
+loo1_sample
+loo2_sample
+```
+
+In the first case, we have posterior distributions for `mu` and `sigma`, with a 95% posterior interval for `mu` not including zero (which means that we would expect to prefer a model in which `mu` is estimated rather than set to zero). In each case, we also have the log-likelihood terms, one for each of the ten observations. The output from the second model has no term for `mu` (since it was set equal to zero), and the posterior mean for `sigma` is a bit bigger than for the first model (suggesting that the observations are on average noticeably further away from zero than the sample mean). 
+
+Now, what we came here to do: what the `loo` package calls "the efficient PSIS-LOO approximation to exact LOO-CV". I'm copying from the vignette here. First, we have to extract those log-likelihood terms that we so carefully had Stan calculate for us:
+
+```{r}
+log_lik_1=extract_log_lik(loo1_sample, merge_chains = F)
+log_lik_2=extract_log_lik(loo2_sample, merge_chains = F)
+r_eff_1=relative_eff(log_lik_1)
+r_eff_2=relative_eff(log_lik_2)
+```
+
+Next, look at the results for each model, first the one with `mu` estimated:
+
+```{r}
+loo_1 <- loo(log_lik_1, r_eff=r_eff_1)
+loo_1
+```
+
+Perhaps the easiest one of these to look at is the last one, `looic`. This is minus twice the expected log posterior density, and so is on the same scale as a deviance (that is to say, a smaller `looic` is better).
+
+```{r}
+loo_2 <- loo(log_lik_2, r_eff=r_eff_2)
+loo_2
+```
+
+The first model fits better than the second one, since its `looic` is smaller.
+This is what we suspected (from the 95% posterior interval for `mu` not including zero). We can go one step further and *actually* compare the models, thus:
+
+```{r}
+compare(loo_1, loo_2)
+```
+
+The negative difference indicates that the first model (estimating `mu`) is better, but the difference is only 1.5 standard errors from zero, so the evidence is not as convincing as we might have thought from our posterior distribution for `mu`.
+
+## Comments
+
+This approach is based on an AIC-like idea, so it can be used to compare any models, not just nested ones (as here, where the second model was the first one with a value supplied for one parameter). One of the vignettes in the `loo` package compares the fits of Poisson and negative binomial models (to the same data).
+
+ (The models being compared are not necessarily generalized linear models, and might not even be nested, so the idea of comparing the difference in "deviance" to a chi-squared distribution makes no sense here.)
+
+## Bayes factors and bridge sampling
+
+Another approach to hypothesis testing or model comparison in a Bayesian framework is to calculate a Bayes factor. A little symbolism here. Suppose our two hypotheses are called $H_0$ and $H_1$ and our data is denoted $D$.  (These could be two different *models*, in which case the notation $M_0$ and $M_1$ would be better.) Then Bayes' theorem says:
+
+$$
+{ P(H_1 | D) \over P(H_0 | D)}  = {P(D|H_1) \over {P(D|H_0)}} \times {P(H_1) \over P(H_0)}
+$$
+
+On the left is the "posterior odds" of the two hypotheses, given the data. This is what you really care about: "how much do I prefer the alternative over the null once I look at the data?". On the right, there are two terms. The second is the "prior odds" of the two hypotheses, before you look at any data. This is personal to the analyst; different people will have different prior odds and thus different posterior odds. The first term on the right is known as the Bayes factor; it is the ratio of likelihoods of the data under the two hypotheses. (This idea will be familiar to frequentists as the likelihood ratio, on which an asymptotically chi-squared test is based.) The idea is that you can cite the Bayes factor as the result of your analysis, and then your reader can multiply it by their personal prior odds for the two hypotheses to obtain their personal posterior odds. Or, if you are willing to assume that the prior odds is 1 (indifference, you might say, between the two hypotheses), the posterior odds and the Bayes factor are the same.
+
+How, then, to obtain a Bayes factor from a simulated posterior distribution such as one sampled by Stan? As with the `loo` stuff, you need all the bits of the likelihood, including the parts that are constant as far as the posterior distribution of the parameter is concerned. The rest of the details are handled by a technique known as "bridge sampling", implemented in the package `bridgesampling`.
+
+With `loo` above, we handled the "constant" by re-specifying the likelihood in an additional `generated quantities` block, so that the `model` part looked exactly as we would expect. With bridge sampling, we have to write the *model* so that the calculation of the likelihood includes all the constants that we need. Let's re-use my `loo` example to show you what I mean. 
+
+First, the code when I estimate both `mu` and `sigma`. I saved this in `bf1.stan`:
+
+```
+data {
+  vector[10] y;
+}
+
+parameters {
+  real mu;
+  real<lower=0> sigma;
+}
+
+model { // target contains the complete log-posterior, prior, constants and all
+  target+=normal_lpdf(mu | 0, 5); // prior for mu
+  target+=chi_square_lpdf(sigma | 5); // prior for sigma
+  target+=normal_lpdf(y | mu, sigma); // likelihood
+}
+```
+
+In the `model` section, I construct a quantity `target` that is the log-posterior, including all the constants. I do this by first adding the log-priors with constants (the prior for `mu` being normal and the prior for `sigma` being chi-squared), and then adding on the log-likelihood with constants. The result seems to need to be called `target`. This approach could also be used in the usual case where we are obtaining a posterior distribution for a parameter, but the "squiggle" approach is, to my mind, a lot easier and clearer.
+
+Compile it:
+
+```{r}
+bf1_compiled=stan_model("bf1.stan")
+```
+
+Then the null model, once again taking out reference to `mu` and inserting 0 where required:
+
+```
+data {
+  vector[10] y;
+}
+
+parameters {
+  real<lower=0> sigma;
+}
+
+model { // target contains the complete log-posterior, constants and all
+  target+=chi_square_lpdf(sigma | 5); // prior for sigma
+  target+=normal_lpdf(y | 0, sigma); // likelihood
+}
+```
+
+and compile *that*:
+
+```{r}
+bf2_compiled=stan_model("bf2.stan")
+```
+
+The `bridgesampling` vignette suggests to use a lot more samples than default. We already have our data set up, so
+
+```{r}
+bf1_sample=sampling(bf1_compiled, data=data_list, iter=50000, warmup=1000, chains=4)
+bf2_sample=sampling(bf2_compiled, data=data_list, iter=50000, warmup=1000, chains=4)
+```
+
+Now compare the marginal likelihoods. This takes a bit longer than the Stan sampling. The 1 and 2 are the wrong way around because of how I set things up before:
+
+```{r}
+h0_bridge=bridge_sampler(bf2_sample, silent=T)
+h0_bridge
+ha_bridge=bridge_sampler(bf1_sample, silent=T)
+ha_bridge
+```
+
+then obtain the Bayes factor:
+
+```{r}
+bf(ha_bridge, h0_bridge)
+```
+This is, according to [this talk](http://statmath.wu.ac.at/research/talks/resources/talkheld.pdf), "barely worth mentioning". 
+
+The moral of this seems to be that the model with `mu` estimated fits better than the one with it set to zero, but there is no substantial difference between the fit of the two models. At this point, you wave your hands around a bit and decide what to do.
+
+## The $t$-test
+
+Of course, you're wondering how the $t$-test comes out:
+
+```{r}
+t.test(z, mu=0)
+```
+
+One of those cases where the Bayesian approach is less impressed by the data than the frequentist approach is.
+
+## References
+
+- [Danielle Navarro's thoughts on Bayes factors](https://djnavarro.net/post/a-personal-essay-on-bayes-factors/)
+
+- [Twitter conversation with Dan Simpson and others](https://twitter.com/KenButler12/status/1142608053579243520)
+
+- [Vehtari, Gelman and Gabry paper](http://www.stat.columbia.edu/~gelman/research/unpublished/loo_stan.pdf)
+
+- [Bridge sampling vignette](https://cran.r-project.org/web/packages/bridgesampling/vignettes/bridgesampling_stan_ttest.html)
+
+- [Loo vignette](https://cran.r-project.org/web/packages/loo/vignettes/loo2-with-rstan.html)
+
+- [Talk by Leonhard Held](http://statmath.wu.ac.at/research/talks/resources/talkheld.pdf)

@@ -1,0 +1,290 @@
+---
+title: "Feb 7 2018"
+output: html_notebook
+---
+
+## Packages
+
+```{r}
+# install.packages("survminer") from CRAN
+```
+
+
+```{r}
+library(tidyverse)
+library(survival)
+library(survminer)
+library(broom)
+```
+
+- `survival` does survival model-fitting
+- `survminer` makes nice survival plots
+- `broom` does tidy model output (computable with) 
+
+## The dancing data
+
+```{r}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/dancing.txt"
+dance=read_table(my_url)
+dance
+```
+
+- Number of months observed dancing
+- whether or not they quit (1=quit, 0=still dancing), 
+- treatment=1: visit to dance competition
+- age
+
+## Create response variable for survival analysis
+
+Called `mth` in notes, but I now prefer `y`:
+
+```{r}
+y=with(dance,Surv(Months,Quit))
+y
+```
+
+`+` means "censored": event (quitting) not observed.
+
+```{r}
+print.default(y)
+```
+
+
+## Fit a Cox proportional-hazards model
+
+```{r}
+dance.1=coxph(y~Treatment+Age,data=dance)
+summary(dance.1)
+```
+
+Both explanatory variables significant at $\alpha=0.10$ (not much data).
+
+Keep both. (If one truly not significant, remove.)
+
+
+## Model checking
+
+Make residual plot using "martingale residuals":
+
+
+```{r}
+ggcoxdiagnostics(dance.1)+geom_smooth()
+```
+
+Looking for no pattern. Martingale residuals can be very negative, so won't be normal. I call this no pattern. Therefore model satisfactory. 
+
+## Predicted survival
+
+Make combinations of ages 20 and 40, treatment no or yes:
+
+```{r}
+treatments=c(0,1)
+ages=c(20,40)
+dance.new=crossing(Treatment=treatments,Age=ages)
+dance.new
+```
+
+Make the predictions. `data=` is not needed for predictions, but *is* needed for plot below:
+
+```{r}
+s=survfit(dance.1,newdata=dance.new,data=dance)
+summary(s)
+```
+
+Number of each `survival` column is number of row in `dance.new`:
+
+```{r}
+dance.new
+```
+
+but this is hard to see; a plot is much nicer:
+
+```{r}
+ggsurvplot(s,conf.int=F)
+```
+
+Identify "strata" with rows of `dance.new` (one coloured survival curve for each treatment-age combo). Eg. stratum 1 (red) is no treatment, age 20, stratum 4 (purple) is treatment, age 40.
+
+Survival curve up and to the right (the purple one) is associated with the longest survival,
+survival curve down and to left (red) associated with shortest survival.
+
+What makes a woman likely to continue dancing longest? Being older, and going to the dance competition. 
+
+Assess effect of age by comparing strata of different age but same treatment, 
+- eg. strata 1 and 2, 
+- red and green, 
+- age 20 and 40. 
+
+Green has better survival, so age 40
+women tend to keep dancing for longer.
+
+Assess effect of treatment by comparing strata of same age but different treatment, 
+- eg strata 2 and 4, 
+- no treatment and treatment, 
+- green and purple.
+
+Purple, treatment, associated with keeping dancing for longer.
+
+## The lung cancer data set
+
+```{r}
+lung
+```
+
+or
+
+```{r}
+summary(lung)
+```
+
+Remove missings:
+
+```{r}
+cc=complete.cases(lung)
+cc
+lung.complete = lung %>% filter(cc)
+```
+
+```{r}
+lung.complete
+```
+
+```{r}
+summary(lung.complete)
+```
+
+
+## Construct response, and model in terms of everything else but `inst`:
+
+```{r}
+y=with(lung.complete,Surv(time,status==2))
+lung.1=coxph(y~.-inst-time-status,
+  data=lung.complete)
+```
+
+Summary:
+
+```{r}
+summary(lung.1)
+```
+
+Using `broom` ideas to pick things out of the output:
+
+```{r}
+glance(lung.1)
+```
+
+`p.value.log`, `p.value.sc` and `p.value.wald` all test for overall significance of the model. All small, so *something* predicts survival.
+
+```{r}
+tidy(lung.1) 
+```
+
+Some non-significant things there, with `meal.cal` having highest P-value. 
+
+Can:
+
+- remove one at a time using `summary` or `drop1` to see what to remove next
+- remove several and then test (via `anova`)
+- use `step` to do whole backward elimination
+
+`step`:
+
+```{r}
+step.back=step(lung.1,direction="backward",test="Chisq")
+```
+
+Or take out a bunch and test:
+
+```{r}
+lung.2=update(lung.1,.~.-age-pat.karno-meal.cal)
+tidy(lung.2) %>% select(term,p.value)
+lung.3=update(lung.2,.~.-ph.karno-wt.loss)
+tidy(lung.3) %>% select(term,estimate,p.value)
+anova(lung.3,lung.1)
+```
+
+Different results. Go with the model `lung.3` with just `sex` and `ph.ecog`.
+
+## Problems with the model?
+
+```{r}
+ggcoxdiagnostics(lung.3)+geom_smooth(se=F)
+```
+
+apparently OK.
+
+## Predictions
+
+The usual:
+
+```{r}
+sexes=c(1,2)
+ph.ecogs=0:3
+lung.new=crossing(sex=sexes,ph.ecog=ph.ecogs)
+lung.new
+s=survfit(lung.3,newdata=lung.new,data=lung.complete)
+```
+
+Plot:
+
+```{r}
+ggsurvplot(s,conf.int=F)
+```
+
+- connect coloured survival curves with strata and thus with rows of `lung.new`.
+- longest survival time: stratum 5, females, `ph.ecog` 0
+- shortest survival time: stratum 4, males, `ph.ecog` 3
+- effect of gender is that females survive longer than males with same `ph.ecog` score (compare strata 1 and 5, 2 and 6, etc)
+- effect of `ph.ecog` score is that survival longer if score *lower* (compare eg. strata 5 through 8)
+
+## How can proportional hazards go wrong?
+
+Invent data set where survival with age goes up and then down:
+
+```{r}
+age=seq(20,60,5)
+survtime=c(10,12,11,21,15,20,8,9,11)
+stat=c(1,1,1,1,0,1,1,1,1)
+d=tibble(age,survtime,stat)
+d
+y=with(d,Surv(survtime,stat))
+```
+
+Fit model:
+
+```{r}
+y.1=coxph(y~age,data=d)
+summary(y.1)
+```
+
+Check diagnostic plot:
+
+```{r}
+ggcoxdiagnostics(y.1)+geom_smooth()
+```
+
+Apparently a curve; suggests adding age-squared to model:
+
+```{r}
+y.2=coxph(y~age+I(age^2),data=d)
+summary(y.2)
+```
+
+Age-squared is significant at $\alpha=0.10$. Diagnostics now?
+
+```{r}
+ggcoxdiagnostics(y.2)+geom_smooth(se=F)
+```
+
+Better.
+
+```{r}
+new=tibble(age=c(20,35,50,65))
+s=survfit(y.2,new,data=d)
+```
+
+```{r}
+ggsurvplot(s,conf.int=F)
+new
+```

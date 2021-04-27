@@ -1,0 +1,784 @@
+---
+title: "Feb 28 2018"
+output: html_notebook
+---
+
+## Contrasts in ANOVA
+  
+  - Sometimes, don't want to compare *all* groups, only
+    *some* of them.
+  - Might be able to specify these comparisons ahead of time;
+    other comparisons of no interest.
+  - Wasteful to do ANOVA and Tukey.
+
+
+
+## Example: chainsaw kickback
+  
+  
+    -  From <http://www.ohio.edu/plantbio/staff/mccarthy/quantmet/lectures/ANOVA2.pdf>.
+  -  Forest manager concerned about safety of chainsaws issued to
+    field crew. 4 models of chainsaws, measure ``kickback'' (degrees
+    of deflection) for 5 of each:
+    
+```
+ A  B  C  D
+-----------
+42 28 57 29
+17 50 45 29
+24 44 48 22
+39 32 41 34
+43 61 54 30
+
+```
+    
+
+    -  So far, standard 1-way ANOVA: what differences are there
+      among models?
+  
+  
+
+
+## chainsaw kickback (2)
+  
+  
+    -  But: models A and D are designed to be used at home, while
+      models B and C are industrial models.
+    -  Suggests these comparisons of interest:
+      
+      -  home vs.\ industrial
+      -  the two home models A vs.\ D
+      -  the two industrial models B vs.\ C.
+      
+    -  Don't need to compare *all* the pairs of models.
+
+  
+  
+
+
+## What is a contrast?
+  
+  
+  -  Contrast is a linear combination of group means.
+
+  -  Notation: $\mu_A$ for (population) mean of group $A$, and so on.
+  -  In example, compare two home models: $H_0: \mu_A-\mu_D=0$.
+  -  Compare two industrial models: $H_0: \mu_B-\mu_C=0$.
+  -  Compare average of two home models vs.\ average of two
+    industrial models: $H_0: {1\over2}(\mu_A+\mu_D)-{1\over
+      2}(\mu_B+\mu_C)=0$ or $H_0: 0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$.
+  -  Note that coefficients of contrasts add to 0, and right-hand
+    side is 0.
+  
+  
+
+
+## Contrasts in R
+  
+  
+  -  Comparing two home models A and D ($\mu_A-\mu_D=0$):
+```{r }
+c.home=c(1,0,0,-1)
+```     
+
+-  Comparing two industrial models B and C ($\mu_B-\mu_C=0$):
+  
+```{r }
+c.industrial=c(0,1,-1,0)
+```   
+
+-  Comparing home average vs.\ industrial average ($0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$):
+  
+```{r }
+c.home.ind=c(0.5,-0.5,-0.5,0.5)
+```   
+  
+  
+
+
+## Orthogonal contrasts
+  
+  
+  -  What happens if we multiply the contrast coefficients one by one?
+```{r }
+c.home*c.industrial
+c.home*c.home.ind
+c.industrial*c.home.ind
+```     
+-  in each case, the results **add up to zero**. Such
+  contrasts are called **orthogonal**.
+
+  
+  
+
+
+## Orthogonal contrasts (2)
+  
+  
+-  Compare these:
+```{r }
+c1=c(1,-1,0)
+c2=c(0,1,-1)
+c1*c2
+``` 
+Does not add up to zero, so `c1` and `c2` are *not*
+orthogonal.
+-  Orthogonal contrasts are much easier to deal with. 
+
+-  Can use non-orthogonal contrasts, but much more trouble (and
+  beyond us).
+  
+
+```{r}
+library(tidyverse)
+```
+
+
+## Starting the analysis
+  
+```{r size="footnotesize"}
+my_url="http://www.utsc.utoronto.ca/~butler/d29/chainsaw.txt"
+chain.wide=read_table(my_url)
+chain.wide
+```   
+
+  
+
+
+## Tidying
+  
+Need all the kickbacks in *one* column:
+
+```{r}
+chain.wide %>% 
+  gather(model,kickback,A:D)
+```
+
+
+```{r }
+chain = chain.wide %>% 
+  gather(model,kickback,A:D,factor_key=T)
+``` 
+  
+*explain factor_key*  
+
+
+## Starting the analysis (2)
+  
+  The proper data frame:
+  
+```{r }
+chain
+``` 
+
+
+## Setting up contrasts
+  
+```{r }
+m=cbind(c.home,c.industrial,c.home.ind)
+m
+contrasts(chain$model)=m
+```   
+
+  
+
+
+## ANOVA as regression
+
+  Now run ANOVA *as if regression*:
+
+```{r }
+chain.1=lm(kickback~model,data=chain)
+summary(chain.1)
+``` 
+
+
+
+## Conclusions
+    
+```{r }
+tidy(chain.1) %>% select(term,p.value)
+```     
+  
+  
+  -  Two home models not sig.\ diff.\ (P-value 0.51)
+  -  Two industrial models not sig.\ diff.\ (P-value 0.34)
+  -  Home, industrial
+    models *are* sig.\ diff.\ (P-value 0.0032).
+  
+  
+
+
+## Means by model
+
+  
+    -  The means:
+```{r }
+chain %>% group_by(model) %>%
+  summarize(mean.kick=mean(kickback))
+``` 
+-  Home models A \& D have less kickback than industrial ones B \& C.
+-  Makes sense because industrial users should get training to cope
+  with additional kickback.
+
+  
+
+
+  
+
+# Analysis of covariance
+
+
+
+## Analysis of covariance
+
+  
+  -  ANOVA: explanatory variables categorical (divide data into groups)
+  -  traditionally, analysis of covariance has categorical $x$'s plus one numerical $x$ (``covariate'') to be adjusted for.
+  -  `lm` handles this too.
+  -  Simple example: two treatments (drugs) (\verb-a- and \verb-b-), with before and after scores. 
+    
+    -  Does knowing before score and/or treatment help to predict after score?
+-  Is after score different by treatment/before score?
+    
+  
+
+
+
+## Data
+
+Treatment, before, after:
+
+
+```
+a 5 20
+a 10 23
+a 12 30
+a 9 25
+a 23 34
+a 21 40
+a 14 27
+a 18 38
+a 6 24
+a 13 31
+b 7 19
+b 12 26
+b 27 33
+b 24 35
+b 18 30
+b 22 31
+b 26 34
+b 21 28
+b 14 23
+b 9 22
+```
+
+
+
+## Packages
+  
+  `tidyverse` and `broom`:
+  
+```{r }
+library(tidyverse)
+library(broom)
+```   
+  
+
+
+## Making a plot
+
+ 
+```{r}
+prepost=read_delim("ancova.txt"," ")
+prepost
+ggplot(prepost,aes(x=before,y=after,colour=drug))+
+  geom_point()
+``` 
+
+
+## Comments
+
+-  As before score goes up, after score goes up.
+-  Red points (drug A) generally above blue points (drug B), for
+  comparable before score.
+-  Suggests before score effect *and* drug effect.
+
+  
+
+
+
+## The means
+
+ 
+```{r }
+prepost %>% group_by(drug) %>%
+  summarize(before_mean=mean(before), 
+            after_mean=mean(after) 
+	   )
+```
+  
+
+
+-  Mean ``after'' score slightly higher for treatment A.
+-  Mean ``before'' score much higher for treatment B.
+-  Greater {\em improvement} on treatment A. 
+
+  
+
+
+## Testing for interaction
+
+ 
+```{r }
+prepost.1=lm(after~before*drug,data=prepost)
+anova(prepost.1)
+``` 
+
+
+
+-  Interaction not significant. Will remove later.
+
+
+
+
+
+## Predictions, with interaction included
+
+
+
+  Make combinations of before score and drug:
+  
+```{r }
+new=crossing( 
+      before=c(5,15,25),
+      drug=c("a","b"))
+new
+```   
+
+Do predictions:
+
+```{r}
+pred=predict(prepost.1,new)
+preds=bind_cols(new,pred=pred)
+preds
+``` 
+  
+  or `cbind`
+
+
+## Making a plot with lines for each `drug`
+
+ 
+```{r }
+g=ggplot(prepost,
+  aes(x=before,y=after,colour=drug))+
+  geom_point()+
+  geom_line(data=preds,aes(y=pred))
+``` 
+
+
+
+-  Last line could (more easily) be 
+
+```{r eval=F}
+geom_smooth(method="lm",se=F)
+``` 
+
+which would work here, but not for later plot.
+-  Here, final line:
+  
+  -    joins points by lines *for different data set* (`preds` rather than `prepost`),
+-    *different $y$* (`pred` rather than `after`),
+  
+-  but same $x$ (`x=before` inherited from first `aes`).
+
+  
+  
+
+  
+  
+
+
+## The plot
+ 
+  
+```{r}
+g
+``` 
+   
+   
+ 
+ 
+ -  Lines almost parallel, but not quite.
+ -  Non-parallelism (interaction) not significant.
+ 
+   
+
+ 
+
+## Taking out interaction
+
+
+
+ 
+```{r }
+prepost.2=update(prepost.1,.~.-before:drug)
+anova(prepost.2)
+``` 
+
+  
+  -  Take out non-significant interaction.
+  -  `before` and `drug` strongly significant.
+  -  Do predictions again and plot them.
+  
+  
+
+
+## Predicted values again (no-interaction model)
+
+   
+```{r }
+pred=predict(prepost.2,new)
+preds=bind_cols(new,pred=pred)
+preds
+``` 
+ 
+
+Each increase of 10 in before score results in 8.3 in predicted after
+score, *the same for both drugs*.
+  
+
+
+## Making a plot, again
+
+ 
+```{r }
+g=ggplot(prepost,
+  aes(x=before,y=after,colour=drug))+
+  geom_point()+
+  geom_line(data=preds,aes(y=pred))
+``` 
+ 
+
+Exactly same as before, but using new predictions.
+  
+
+
+## The no-interaction plot of predicted values
+  
+ 
+```{r}
+g
+``` 
+
+
+Lines now *parallel*. No-interaction model forces them
+to have the same slope. 
+
+
+
+## Different look at model output
+  
+  
+  -  `anova(prepost.2)` tests for significant effect of
+    before score and of drug, but doesn't help with interpretation.
+  -  `summary(prepost.2)` views as regression with slopes:
+    
+    
+```{r }
+summary(prepost.2)
+```       
+
+  
+
+
+## Understanding those slopes
+  
+```{r}
+tidy(prepost.2)
+```     
+
+
+-  `before` ordinary numerical variable; `drug`
+  categorical. 
+-  `lm` uses first category `druga` as baseline.
+-  Intercept is prediction of after score for before score 0 and
+  *drug A*.
+-  `before` slope is predicted change in after score when
+  before score increases by 1 (usual slope)
+-  Slope for `drugb` is *change* in predicted after
+  score for being on drug B rather than drug A. Same for *any*
+  before score (no interaction).
+-  In `summary(prepost.1)`, `before:drugb` would be change in
+  *slope* for being on drug B rather than A.
+  
+
+
+  
+
+
+## Summary
+
+  
+  -  ANCOVA model: fits different regression line for each group,
+    predicting response from covariate.
+  -  ANCOVA model with interaction between factor and covariate
+    allows different slopes for each line.
+  -  Sometimes those lines can cross over!
+  -  If interaction not significant, take out. Lines then parallel.
+  -  With parallel lines, groups have consistent effect regardless
+    of value of covariate.
+  
+
+
+
+# Multivariate ANOVA
+
+
+## Multivariate analysis of variance
+
+  
+  -  Standard ANOVA has just one response variable.
+  -  What if you have more than one response?
+  -  Try an ANOVA on each response separately.
+  -  But might miss some kinds of interesting dependence between the responses that distinguish the groups.
+  
+  
+
+
+## Packages
+  
+```{r }
+library(car)
+library(tidyverse)
+```   
+  
+
+
+## Small example
+
+  
+  -  Measure yield and seed weight of plants grown under 2 conditions: low and high amounts of fertilizer.
+  -  Data (fertilizer, yield, seed weight):
+
+ 
+```{r }
+hilo=read_delim("manova1.txt"," ")
+``` 
+
+  -  2 responses, yield and seed weight.
+  
+  
+
+
+## The data
+  
+```{r }
+hilo
+```   
+  
+
+
+## Boxplot for yield for each fertilizer group
+
+ 
+```{r}
+ggplot(hilo,aes(x=fertilizer,y=yield))+geom_boxplot()
+``` 
+  
+Yields overlap for fertilizer groups.
+  
+
+
+## Boxplot for weight for each fertilizer group
+
+ 
+```{r}
+ggplot(hilo,aes(x=fertilizer,y=weight))+geom_boxplot()
+``` 
+
+Weights overlap for fertilizer groups.
+  
+
+
+## ANOVAs for yield and weight
+
+
+```{r }
+hilo.y=aov(yield~fertilizer,data=hilo)
+summary(hilo.y)
+hilo.w=aov(weight~fertilizer,data=hilo)
+summary(hilo.w)
+``` 
+
+Neither response depends significantly on fertilizer. But...
+  
+
+
+## Plotting both responses at once
+
+Have two response variables (not more), so can plot the
+response variables against *each other*, labelling points by
+which fertilizer group they're from.
+
+```{r }
+g=ggplot(hilo,aes(x=yield,y=weight,
+    colour=fertilizer))+geom_point()
+``` 
+
+Want line through points $(31,14)$ and $(38,10)$ (why? Later):
+
+explain `tribble`
+
+```{r size="footnotesize"}
+d=tribble(
+    ~line_x, ~line_y,
+    31, 14,
+    38, 10)
+d
+g=g+geom_line(data=d,aes(x=line_x,y=line_y,
+  colour=NULL))
+``` 
+
+Fitting regression line through points in `d`. 
+Adding to previous `ggplot`, so `geom\_smooth` 
+inherits `colour` from first one. This data frame has
+no `fertilizer` (previous `colour`), so have to unset.
+
+
+
+## The plot
+  
+ 
+```{r}
+g
+``` 
+  
+  
+
+
+## MANOVA
+  
+
+  -  High-fertilizer plants have both yield and weight high.
+  -  True even though no sig difference in yield or weight individually.
+  -  Drew line separating highs from lows on plot.
+  
+  
+
+ 
+
+
+
+## MANOVA finds multivariate differences
+  
+  
+  -  Is difference found by diagonal line significant? MANOVA finds out.
+
+
+```{r}
+response=with(hilo,cbind(yield,weight))
+hilo.1=manova(response~fertilizer,data=hilo)
+summary(hilo.1)
+``` 
+    
+
+-  Yes! Difference between groups is *diagonally*, not just up/down
+(weight) or left-right (yield). The *yield-weight combination* matters.
+
+  
+
+
+
+## Strategy
+
+
+-  Create new response variable by gluing together columns of
+  responses, using `cbind`.
+-  Use `manova` with new response, looks like `lm` otherwise.
+-  With more than 2 responses, cannot draw graph. What then?
+-  If MANOVA test significant, cannot use Tukey. What then?
+-  Use {\em discriminant analysis} (of which more later).
+
+
+
+
+## Another way to do MANOVA
+
+  
+Install (once) and load package `car`:
+  
+```{r eval=F}
+library(car)
+``` 
+
+
+  
+  
+
+
+## Another way...
+
+```{r }
+hilo.2.lm=lm(response~fertilizer,data=hilo)
+hilo.2=Manova(hilo.2.lm)
+hilo.2
+```   
+
+    
+-  Same result as small-m `manova`.
+-  `Manova` will also do *repeated measures*, coming up
+  later.
+  
+
+
+
+## Another example: peanuts
+
+  
+  -   Three different varieties
+of peanuts (mysteriously, 5, 6 and 8) planted in two different
+locations.
+-  Three response variables: `y`, `smk` and
+`w`.
+  
+
+ 
+```{r }
+peanuts.orig=read_delim("peanuts.txt"," ")
+peanuts.orig
+``` 
+    
+    
+
+
+## Setup for analysis
+
+```{r }
+peanuts = peanuts.orig %>%
+  mutate(location=factor(location),
+         variety=factor(variety)) 
+response=with(peanuts,cbind(y,smk,w))
+head(response)
+``` 
+
+  
+
+
+## Analysis (using `Manova`)
+
+```{r}
+peanuts.1=lm(response~location*variety,data=peanuts)
+peanuts.2=Manova(peanuts.1)
+peanuts.2
+``` 
+
+
+-  Interaction not quite significant, but main effects are.
+-  Combined response variable `(y,smk,w)` definitely depends
+  on location and on variety
+-  Weak dependence of `(y,smk,w)` on the location-variety *combination.*
+-  Understanding that dependence beyond our scope right now.
+
+

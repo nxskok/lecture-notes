@@ -1,0 +1,140 @@
+---
+title: "3dplot"
+author: "Ken Butler"
+date: "December 6, 2015"
+output: html_document
+---
+
+Does rgl work in R Markdown? Yes it does! Below are some examples of `rgl` plots for you to play with.
+
+If you download and run the R Markdown yourself, you should see, as it runs, little windows containing the plots popping up, one after the other. These will eventually disappear, with the plots being subsumed into the HTML. There is a lot of sophistication happening in the background, of which I know very little.
+
+First some setup:
+
+```{r setup}
+library(knitr)
+library(rgl)
+knit_hooks$set(webgl = hook_webgl)
+```
+
+The last line is what enables the `rgl` graphs to behave themselves and be playable with.
+
+First, some random data with "rainbow" colours sorted along `x`. If you look at it in directions other than `x` it will be all jumbled up, but along `x` it is sorted.
+
+Whenever we make a code chunk with one of these plots in it, we need to say `webgl=TRUE` (or `webgl=T`) in the chunk header. Otherwise we will not be able to interact with the plot.
+
+```{r testgl, webgl=TRUE}
+set.seed(457299)
+x <- sort(rnorm(1000))
+y <- rnorm(1000)
+z <- rnorm(1000) + atan2(x,y)
+plot3d(x, y, z, col=rainbow(1000))
+```
+
+Interact with the plot by using the mouse (or touchpad if you are using one). See the vignette "`rgl` Overview": to get at that, click on the Packages tab bottom right in R Studio, find the `rgl` package, click on "User guides, package vignettes and other documentation" and then click on `rgl` Overview. A little way down are the instructions for interacting with a plot using a mouse, of which the executive summary is:
+
+- click and hold the left mouse button, then dragging rotates the plot
+- right mouse button resizes the plot (zooms in/out)
+- middle button (if you have one) is supposed to "change the perspective in the point of view". I can't get this to work. (In my system pressing both buttons together is supposed to emulate the middle button.)
+
+If you have a Mac, I imagine you only have one button on your mouse, I'm not sure how that translates. Maybe one of you Mac users can try it and let me know what happens. (Maybe bring your Mac to my office hours so that I can see as well.)
+
+All right, we have another `y` coming, so get rid of this `y`:
+
+```{r}
+rm(y)
+```
+
+Go back to the peanuts data, from class. You can get the data [here](http://www.utsc.utoronto.ca/~butler/d29/peanuts.txt). If you are going to "knit" the R Markdown code, you'll need to save the data to the folder where the `.Rmd` is, so that it can be found when the R code in the code chunks is run.
+
+```{r}
+peanuts=read.table("peanuts.txt",header=T)
+head(peanuts)
+attach(peanuts)
+```
+
+Create location-variety combo:
+
+```{r}
+combo=paste(variety,location,sep="-")
+combo=factor(combo)
+combo
+```
+
+plot *original* peanuts data, with combos labelled:
+
+```{r,webgl=T}
+plot3d(y,smk,w,col=as.numeric(combo))
+text3d(y,smk,w,combo)
+```
+
+Play with this by rotating the plot (using the mouse) and seeing what direction seems to put the same combos close together and different ones far apart (that's what "separating the groups" means).
+
+*I* think that looking at it in the `y`-`w` direction does the best job of separating the groups, but there is a lot of judgement involved, and mine is by no means infallible. What do you think?
+
+Let's do a discriminant analysis:
+
+```{r}
+library(MASS)
+peanuts.lda=lda(combo~y+smk+w)
+```
+
+Now, there are three LDs (three variables, six combos,smaller of 3 and $6-1$ is 3). So if we pass the discriminant scores into `plot3d`, it will indeed make a 3D plot. (If we had just `plot`ted them the way we did before, we would have gotten a scatterplot matrix with all the pairs of LD scores plotted against each other.) Try playing with this plot.
+
+```{r, webgl=T}
+peanuts.pred=predict(peanuts.lda)
+names(peanuts.pred)
+peanuts.pred$class
+plot3d(peanuts.pred$x,col=as.numeric(peanuts.pred$class))
+```
+
+You ought to see this time that it's really the `LD1` and `LD2` directions that separate the combos; `LD3` doesn't do much of anything. This is by design: the `LD1` direction should be the direction that best distinguishes the groups. To make that happen on this graph, rotate so that the `LD3` direction goes into the screen and all you see is the `LD1` and `LD2` directions. Do the combos appear more or less together, and separate from the other combos?
+
+Now, let's look at one of our class examples for multidimensional scaling: the
+Ontario road distances. These are (road) distances between places that have real locations on the surface of the earth, so metric scaling (`cmdscale`) makes sense. As in class, I'm removing Thunder Bay and Sault Ste Marie, since they are far enough away from the other cities to dominate the plot. The data can be found [here](http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.txt).
+
+First, some book-keeping (same thing as in lecture):
+
+```{r}
+library(rgl)
+ontario=read.csv("ontario-road-distances.csv")
+head(ontario)
+ontario2=ontario[c(-17,-19),c(-17,-19)]
+cities=colnames(ontario2)
+ontario2.d=as.dist(ontario2)
+```
+
+Let's start with a *two*-dimensional representation, which seems a bit odd with a 3D-plotting package, but bear with me:
+
+```{r,webgl=T}
+ontario2.2d=cmdscale(ontario2.d,2)
+coord=cbind(ontario2.2d,1)
+plot3d(coord,zlim=c(0,2))
+text3d(coord,text=cities)
+```
+
+This is rather odd, because the third dimension is non-existent, and we had to provide some artificial "thickness" to get it to plot. I added an artificial 3rd coordinate that is always 1, and artificial limits on the 3rd coordinate axis so that you would see it. If you rotate this plot so that the third dimension is pointing up (say), and one of the other axes is pointing into the page, you'll see that the cities all have the same coordinate on that third dimension, so that you see a flat "surface" of points.
+
+The point about this is that you can rotate this plot in its two "real" dimensions, and you can even flip it over, and as long as you stop with the 3rd dimension facing towards the back, no matter what angle the two "real" axes are at, the *distances between cities will always be the same*. Play with it. I managed to get Windsor at the top, North  Bay on the left, and Cornwall at the bottom right. 
+
+This is rather more visceral than me saying "the multidimensional scaling map might be a rotation or reflection of the real points", don't you think?
+
+The real value of `rgl` is in visualizing a *three*-dimensional multidimensional scaling map. We saw in class that when we looked at two dimensions, St Catharines and Niagara Falls came out in about the same place as Hamilton and Brantford, which makes no sense. What was happening was that the lake was distorting road distances, so that you have to go a lot further to drive from Toronto to St Catharines than if you could take a ferry straight across the lake. Does a third dimension on the map help to compensate for that?
+
+```{r, webgl=T}
+ontario2.scale.3=cmdscale(ontario2.d,3)
+head(ontario2.scale.3)
+plot3d(ontario2.scale.3)
+text3d(ontario2.scale.3,text=cities)
+```
+
+If you look at this in the first two dimensions, with the third one going into the page, it looks a lot like the previous map. (Some of the place names have come out twice, for reasons that I don't understand.) There is a big crowd of points between Toronto and London. Now, if you rotate away one of the first two dimensions so that the third dimension goes up the page, you'll see a lot of cities in a flat mass (like we did before), but there are a few cities that have a substantial third coordinate: Windsor and Sarnia in one direction, and in the other: St Catharines and Niagara Falls! So the third dimension has enabled a bit of extra flexibility to account for the fact that the road distances can't really be mapped on a flat surface, because of the distortion effect of Lake Ontario.
+
+We can ask whether three dimensions fits noticeably better than two:
+
+```{r}
+cmdscale(ontario2.d,2,eig=T)$GOF
+cmdscale(ontario2.d,3,eig=T)$GOF
+```
+
+The question to ask yourself now is whether that improvement of five percentage points is worth having. 

@@ -1,0 +1,322 @@
+\section{Introduction to R}
+\frame{\sectionpage}
+
+## Getting and installing R
+
+
+* Available for Windows, Mac, Linux.
+
+* Get R from [link](www.r-project.org), install (standard way).
+
+* Get R Studio from [link](www.rstudio.org), install.
+
+* R Studio is nicer-looking "front end" to R.
+
+
+
+## Introduction to R
+
+
+* Start up R Studio.
+
+* Look for Console Window (bottom left) with `>` prompt,
+click on window.
+
+* Type R commands there, see output (*not* point and
+click!). Eg:
+
+```{r setup,echo=F}
+# opts_chunk$set(dev = 'pdf')
+# opts_chunk$set(comment=NA, fig.width=5, fig.height=4)
+options(width = 40)
+suppressMessages(library(tidyverse))
+```
+def 
+```{r }
+x <- c(10, 11, 13, 14, 17, 18, 22, 24, 27, 41)
+```
+def 
+
+* "Glue those numbers into a ``list" and save it in
+`x`'', `x` called a **variable**. To see what's
+in a variable, type its name:
+```{r }
+x
+```
+def 
+
+
+* Another variable and its value, "5 through 37":
+
+{\small  
+```{r }
+z <- 5:37
+z
+```
+def 
+}  
+
+
+
+## Statistics on variables
+
+
+* A "summary" of `x`:
+```{r }
+summary(x)
+```
+def 
+
+\begin{multicols}{2}
+
+
+* Or: mean:
+```{r }
+mean(x)
+```
+def 
+
+
+* median:
+```{r }
+median(x)
+```
+def 
+
+* standard deviation:
+```{r }
+sd(x)
+```
+def 
+
+
+* inter-quartile range (note UPPERCASE):
+```{r }
+IQR(x)
+```
+def 
+\end{multicols}
+
+
+## Histogram
+```{r histo,fig.height=4}
+hist(x)
+```
+def 
+
+
+## Better histogram
+See `ggplot` section.
+```{r binsg,fig.height=3.5}
+d <- data.frame(x)
+ggplot(d, aes(x)) + geom_histogram(bins = 7)
+```
+
+ 
+
+
+## Boxplot (comments next page)
+```{r aslkhrliuf,fig.height=4}
+boxplot(x)
+```
+def 
+
+
+## About the boxplot
+
+
+* Like histogram, shows centre, shape and spread of distribution.
+
+* Based on median and quartiles.
+
+* Middle of box is **median**.
+
+* Top and bottom of  box are **quartiles**.
+
+* Any values more than 1.5 times IQR below Q1 or above Q3
+considered *outliers*, plotted separately.
+
+* "Whiskers" join quartiles to most extreme data values.
+
+
+
+## Reading data from text files
+
+
+* Text file like this, values separated by *whitespace*:
+
+```
+
+xx yy   group
+1  10   red
+2   9   green
+3  11   red
+4  12   green
+5  11   red
+
+```
+
+
+* Saved in file `mydata.txt`. Read in via
+`read.table` and save in variable:
+```{r }
+my.data <- read.table("mydata.txt", header = T)
+my.data
+```
+def 
+
+
+
+## Getting the right folder
+
+
+* Sometimes R cannot find a data file.
+
+* Set R's "working directory" to folder where data file is:
+
+
+* In R Studio, select Session Menu, Set Working Directory,
+Choose Working Directory.
+
+* Browse to folder where your data file is.
+
+* Initially shows you what folder R is "in".
+
+
+
+
+## Data frame
+
+
+* `my.data` example of **data frame**: rows are
+observations, columns variables.
+
+* `read.table` automatically creates data frame from text file.
+
+* Columns by name:
+```{r }
+my.data$xx
+my.data$group
+```
+def 
+
+
+* Or, to save the `$` stuff:
+```{r }
+attach(my.data)
+group
+```
+def 
+
+
+
+## Rows and columns by number
+\begin{multicols}{2}
+
+
+* `my.data`:
+```{r }
+my.data
+```
+def 
+
+* The value in 3rd row and 2nd column:
+```{r }
+my.data[3, 2]
+```
+def 
+
+
+* Whole 3rd row:
+```{r }
+my.data[3, ]
+```
+def 
+
+
+* Whole 2nd column:
+```{r }
+my.data[, 2]
+```
+def 
+
+\end{multicols}
+
+
+## More selection
+\begin{multicols}{2}
+
+
+* All the columns *except* the second:
+```{r }
+my.data[, -2]
+```
+def 
+
+
+* First through third rows:
+```{r }
+my.data[1:3, ]
+```
+def 
+
+
+* Third and fifth rows:
+```{r }
+my.data[c(3, 5), ]
+```
+def 
+
+\end{multicols}
+
+## Variable types
+
+
+* This:
+```{r }
+a <- 2
+a
+```
+def 
+is a **scalar** (one value). 
+
+
+* This:
+```{r }
+x
+```
+def 
+is a **vector** (several values).
+
+* This:
+```{r }
+group
+```
+def 
+is a **factor** (categorical/grouping variable).  
+
+
+
+## Spreadsheet data
+
+![](myspread.png)
+
+
+
+## Reading into R
+
+
+* Save as `.csv` file (Text/CSV).
+
+* Read in using `read.csv` (like `read.table`):
+```{r }
+tbl <- read.csv("myspread.csv", header = T)
+tbl
+```
+def 
+
+
+* Then use like any other data frame.
+
+
+
