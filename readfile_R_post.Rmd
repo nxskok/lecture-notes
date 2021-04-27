@@ -252,7 +252,7 @@ the temperature of the coffee in the mug decreased over 30 minutes.
 - Save the URL in a variable first:
 
 ```{r}
-url <- "http://www.utsc.utoronto.ca/~butler/c32/soap.txt"
+url <- "http://ritsokiguess.site/datafiles/soap.txt"
 soap <- read_delim(url, " ")
 ```
 
@@ -321,7 +321,7 @@ tmp
 ```
 
 ```{r}
-download.file("http://www.utsc.utoronto.ca/~butler/c32/test2.xlsx", tmp)
+download.file("http://ritsokiguess.site/datafiles/test2.xlsx", tmp)
 ```
 ```{r}
 read_excel(tmp, sheet = "data")
