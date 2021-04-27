@@ -54,7 +54,7 @@ options(width = 65)
  
 \scriptsize
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/europe.csv"
+my_url <- "http://ritsokiguess.site/datafiles/europe.csv"
 europe <- read_csv(my_url)
 ```
 \normalsize
@@ -311,7 +311,7 @@ text3d(es.2, text = europe$City)
 \footnotesize
 ```{r}
 url <- 
-  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+  "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 
 ```
 
@@ -352,7 +352,7 @@ those cities, then remove just those rows and columns.
 
 ## Square data
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/square.csv"
+my_url <- "http://ritsokiguess.site/datafiles/square.csv"
 square <- read_csv(my_url)
 square
 ```
@@ -420,7 +420,7 @@ Get rid of Thunder Bay and Sault Ste Marie.
 \footnotesize
 ```{r message=F}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+  "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario2 <- read_csv(my_url) 
 ontario2 %>%
   gather(city, distance, -1) %>%
@@ -554,7 +554,7 @@ Hamilton!
 
 \footnotesize
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/southern-ontario.csv"
+my_url <- "http://ritsokiguess.site/datafiles/southern-ontario.csv"
 ontario2 <- read_csv(my_url)
 ontario2.2 <- ontario2 %>%
   select_if(is.numeric) %>%
@@ -633,7 +633,7 @@ Try MDS on this obviously 3-dimensional data.
 
 \footnotesize
 ```{r f, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/cube.txt"
+my_url <- "http://ritsokiguess.site/datafiles/cube.txt"
 cube <- read_table(my_url)
 cube
 ```
@@ -732,7 +732,7 @@ options(width = 65)
 
 \scriptsize     
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/languages.txt"
+my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 number.d <- read_table(my_url)
 number.d
 ```

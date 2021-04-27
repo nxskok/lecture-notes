@@ -28,7 +28,7 @@ library(tidyverse)
 
 * Data (fertilizer, yield, seed weight):
 ```{r }
-url <- "http://www.utsc.utoronto.ca/~butler/d29/manova1.txt"
+url <- "http://ritsokiguess.site/datafiles/manova1.txt"
 hilo <- read_delim(url, " ")
 ```
  
@@ -211,7 +211,7 @@ locations.
 `w`.
 
 ```{r size="footnotesize"}
-u <- "http://www.utsc.utoronto.ca/~butler/d29/peanuts.txt"
+u <- "http://ritsokiguess.site/datafiles/peanuts.txt"
 peanuts.orig <- read_delim(u, " ")
 ```
  

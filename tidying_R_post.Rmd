@@ -43,7 +43,7 @@ library(readxl)
 ## Reading in the pig data
 
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/pigs1.txt"
+my_url <- "http://ritsokiguess.site/datafiles/pigs1.txt"
 pigs1 <- read_delim(my_url, " ")
 pigs1
 ```
@@ -135,7 +135,7 @@ various diseases, eg. tuberculosis.
 - Some data:
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/tb.csv"
+my_url <- "http://ritsokiguess.site/datafiles/tb.csv"
 tb <- read_csv(my_url)
 ```
 

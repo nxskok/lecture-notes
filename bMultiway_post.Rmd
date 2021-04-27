@@ -41,7 +41,7 @@ all frequencies.
 
 \footnotesize
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/eyewear.txt"
+my_url <- "http://ritsokiguess.site/datafiles/eyewear.txt"
 (eyewear <- read_delim(my_url, " "))
 ```
 \normalsize
@@ -149,7 +149,7 @@ prop.table(xt, margin = 1)
 
 \scriptsize
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/eyewear2.txt"
+my_url <- "http://ritsokiguess.site/datafiles/eyewear2.txt"
 eyewear2 <- read_table(my_url)
 eyewear2
 eyes2 <- eyewear2 %>% pivot_longer(contacts:none, names_to = "eyewear", values_to = "frequency")
@@ -239,7 +239,7 @@ normal normalweight no 30
 ##  First step
 \small
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/ecg.txt"
+my_url <- "http://ritsokiguess.site/datafiles/ecg.txt"
 chest <- read_delim(my_url, " ")
 chest
 chest.1 <- glm(count ~ ecg * bmi * smoke,
@@ -382,7 +382,7 @@ Seattle     1841         305       201         61
 - Read in:
 
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/airlines.txt"
+my_url <- "http://ritsokiguess.site/datafiles/airlines.txt"
 airlines <- read_table2(my_url)
 airlines
 ```
@@ -648,7 +648,7 @@ advanced limited yes yes 5
 
 \small
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/cancer.txt"
+my_url <- "http://ritsokiguess.site/datafiles/cancer.txt"
 cancer <- read_delim(my_url, " ")
 cancer
 ```

@@ -7,7 +7,7 @@ library(tidyverse)
 
 
 ```{r read-athletes, echo=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
 
@@ -274,7 +274,7 @@ Found actual country names to go with those abbreviations, in spreadsheet:
 \footnotesize
 ```{r}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/c32/ISOCountryCodes081507.xlsx"
+  "http://ritsokiguess.site/datafiles/ISOCountryCodes081507.xlsx"
 ```
 
 \normalsize

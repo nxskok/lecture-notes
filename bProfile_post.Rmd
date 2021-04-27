@@ -47,7 +47,7 @@ library(tidyverse)
 
 ## Read in data
 ```{r }
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/dogs.txt"
+my_url <- "http://ritsokiguess.site/datafiles/dogs.txt"
 dogs <- read_table(my_url)
 ```
 
@@ -378,7 +378,7 @@ exercise), so have repeated measures.
 ## Reading the data
 Separated by *tabs*:  
 ```{r }
-url <- "http://www.utsc.utoronto.ca/~butler/d29/exercise.txt"
+url <- "http://ritsokiguess.site/datafiles/exercise.txt"
 exercise.long <- read_tsv(url)
 ```
 

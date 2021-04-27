@@ -149,7 +149,7 @@ A %*% B
 ## Reading matrix from file
 - The usual:
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/m.txt"
+my_url <- "http://ritsokiguess.site/datafiles/m.txt"
 M <- read_delim(my_url, " ", col_names = F)
 M
 class(M)

@@ -10,7 +10,7 @@ way. They are both telling you something about a parameter, and
 they use same things about data.
 - To illustrate, some data (two groups):
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/duality.txt"
+my_url <- "http://ritsokiguess.site/datafiles/duality.txt"
 twogroups <- read_delim(my_url," ")
 ```
 
@@ -88,7 +88,7 @@ by anything.
   
 ## Read in data 
 ```{r, message=FALSE}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/irs.txt"
+my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
 irs <- read_csv(my_url)
 irs
 ```

@@ -54,7 +54,7 @@ dose status
 ## Read in: 
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/rat.txt"
+my_url <- "http://ritsokiguess.site/datafiles/rat.txt"
 # my_url <- "rat.txt"
 rats <- read_delim(my_url, " ")
 rats
@@ -151,7 +151,7 @@ dose lived died
 
 \footnotesize
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/rat2.txt"
+my_url <- "http://ritsokiguess.site/datafiles/rat2.txt"
 # my_url <- "rat2.txt"
 rat2 <- read_delim(my_url, " ")
 rat2
@@ -270,7 +270,7 @@ end of aside
 ## Read in data
 ```{r size="footnotesize"}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/d29/sepsis.txt"
+  "http://ritsokiguess.site/datafiles/sepsis.txt"
 # my_url <- "sepsis.txt"
 sepsis <- read_delim(my_url, " ")
 ```
@@ -572,8 +572,8 @@ Data in aligned columns with more than one space between, so:
 
 \small
 ```{r }
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/miners-tab.txt"
-my_url <- "miners-tab.txt"
+my_url <- "http://ritsokiguess.site/datafiles/miners-tab.txt"
+# my_url <- "miners-tab.txt"
 freqs <- read_table(my_url)
 ```
 \normalsize
@@ -827,7 +827,7 @@ g
 * Data in `mlogit.csv` separated by commas (so
 `read_csv` will work):
 ```{r }
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/mlogit.csv"
+my_url <- "http://ritsokiguess.site/datafiles/mlogit.csv"
 # my_url <- "mlogit.csv"
 brandpref <- read_csv(my_url)
 ```

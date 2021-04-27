@@ -264,7 +264,7 @@ options(width = 60)
  
 \footnotesize
 ```{r size="scriptsize",message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/languages.txt"
+my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 # my_url <- "languages.txt"
 (number.d <- read_table(my_url))
 ```
@@ -400,7 +400,7 @@ Original data:
 
 \tiny
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/one-ten.txt"
+my_url <- "http://ritsokiguess.site/datafiles/one-ten.txt"
 # my_url <- "one-ten.txt"
 lang <- read_delim(my_url, " ")
 lang
@@ -638,7 +638,7 @@ Birth, death and infant mortality rates for 97 countries (variables not dissimil
 
 ## Reading in
 ```{r }
-url <- "http://www.utsc.utoronto.ca/~butler/d29/birthrate.txt"
+url <- "http://ritsokiguess.site/datafiles/birthrate.txt"
 # url <- "birthrate.txt"
 vital <- read_table(url)
 ```
@@ -1111,7 +1111,7 @@ An Ontario hockey league has teams in 21 cities. How can we arrange those teams 
 
 ```{r message=F}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+  "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 # my_url <- "ontario-road-distances.csv"
 ontario <- read_csv(my_url)
 ontario

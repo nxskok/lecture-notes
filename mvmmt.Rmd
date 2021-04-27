@@ -128,7 +128,7 @@ drop1(dd.3, test="Chisq")
 need a bigger data set, like Australian athletes?
 
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+my_url="http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 athletes
 ```

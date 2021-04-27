@@ -15,7 +15,7 @@ options(dplyr.summarise.inform = FALSE)
 - Recall pig feed data, after we tidied it: 
 
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/pigs2.txt"
+my_url <- "http://ritsokiguess.site/datafiles/pigs2.txt"
 pigs <- read_delim(my_url, " ")
 pigs 
 ```
@@ -92,7 +92,7 @@ Read the data:
 
 \small
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/crickets2.csv"
+my_url <- "http://ritsokiguess.site/datafiles/crickets2.csv"
 crickets <- read_csv(my_url)
 crickets 
 ```

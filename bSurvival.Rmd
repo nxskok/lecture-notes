@@ -94,7 +94,7 @@ library(broom)
 
 \normalsize
 ```{r}
-url <- "http://www.utsc.utoronto.ca/~butler/d29/dancing.txt"
+url <- "http://ritsokiguess.site/datafiles/dancing.txt"
 dance <- read_table(url)
 ```
 \normalsize

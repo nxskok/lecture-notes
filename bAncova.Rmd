@@ -60,7 +60,7 @@ library(broom)
 ## Read in data
 
 ```{r, message=F}
-url <- "http://www.utsc.utoronto.ca/~butler/d29/ancova.txt"
+url <- "http://ritsokiguess.site/datafiles/ancova.txt"
 prepost <- read_delim(url, " ")
 prepost %>% sample_n(9) # randomly chosen rows
 ```

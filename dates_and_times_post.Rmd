@@ -43,7 +43,7 @@ date,status,dunno
 - Then read them in:
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/mydates.csv"
+my_url <- "http://ritsokiguess.site/datafiles/mydates.csv"
 ddd <- read_csv(my_url)
 ```
 
@@ -114,7 +114,7 @@ year month day
 ```
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/pieces.txt"
+my_url <- "http://ritsokiguess.site/datafiles/pieces.txt"
 dates0 <- read_delim(my_url, " ")
 ```
 
@@ -242,7 +242,7 @@ admit,discharge
 - These ought to get read in and converted to date-times:
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/hospital.csv"
+my_url <- "http://ritsokiguess.site/datafiles/hospital.csv"
 stays <- read_csv(my_url)
 ```
 

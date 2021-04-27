@@ -11,7 +11,7 @@ We previously got fractional days (of stays in hospital):
 \small
 
 ```{r, message=FALSE}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/hospital.csv"
+my_url <- "http://ritsokiguess.site/datafiles/hospital.csv"
 stays <- read_csv(my_url)
 stays %>% mutate(stay_days = (discharge - admit) / ddays(1))
 ```

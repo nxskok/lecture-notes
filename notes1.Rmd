@@ -21,7 +21,7 @@ library(tidyverse)
 Read in and display the sleep data:
 
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/d29/sleep.txt"
+my_url="http://ritsokiguess.site/datafiles/sleep.txt"
 sleep=read_delim(my_url," ")
 sleep
 ```

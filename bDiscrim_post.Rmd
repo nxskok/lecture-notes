@@ -75,7 +75,7 @@ been the invisible one.
 ## Example 1: seed yields and weights
 \small
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/manova1.txt"
+my_url <- "http://ritsokiguess.site/datafiles/manova1.txt"
 # my_url <- "manova1.txt"
 hilo <- read_delim(my_url, " ")
 g <- ggplot(hilo, aes(
@@ -302,7 +302,7 @@ but high `weight` makes up for it.
 
 \scriptsize
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/peanuts.txt"
+my_url <- "http://ritsokiguess.site/datafiles/peanuts.txt"
 # my_url <- "peanuts.txt"
 peanuts <- read_delim(my_url, " ")
 peanuts
@@ -654,7 +654,7 @@ admin 6 3 3 3
 
 \small
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/profile.txt"
+my_url <- "http://ritsokiguess.site/datafiles/profile.txt"
 # my_url <- "profile.txt"
 active <- read_delim(my_url, " ")
 active
@@ -821,7 +821,7 @@ ggsave("nesta.pdf", g, "pdf")
 \small
 ```{r }
 my_url <-
-   "http://www.utsc.utoronto.ca/~butler/d29/remote-sensing.txt"
+   "http://ritsokiguess.site/datafiles/remote-sensing.txt"
 # my_url <- "remote-sensing.txt"
 crops <- read_table(my_url)
 crops

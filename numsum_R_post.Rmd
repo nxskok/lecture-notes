@@ -20,7 +20,7 @@ library(tidyverse)
 ```
 
 ```{r, echo=F, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/ais.txt"
+my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 athletes
 ```

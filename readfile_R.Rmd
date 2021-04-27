@@ -155,14 +155,14 @@ summary(mydata)
 
 ## Reading from a URL
 - Any data file on the Web can be read directly.
-- [Example data link:](http://www.utsc.utoronto.ca/~butler/c32/global.csv)
+- [Example data link:](http://ritsokiguess.site/datafiles/global.csv)
 - Use URL instead of filename.
 - I like to save the URL in a variable first (because URLs tend to be
 long), and then put that variable in the `read_` function:
 
 \small
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/global.csv"
+my_url <- "http://ritsokiguess.site/datafiles/global.csv"
 global <- read_csv(my_url)
 ```
 \normalsize
@@ -231,7 +231,7 @@ the temperature of the coffee in the mug decreased over 30 minutes.
 - Save the URL in a variable first:
 
 ```{r}
-url <- "http://www.utsc.utoronto.ca/~butler/c32/soap.txt"
+url <- "http://ritsokiguess.site/datafiles/soap.txt"
 soap <- read_delim(url, " ")
 ```
 

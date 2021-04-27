@@ -15,7 +15,7 @@ whether they each agree with having DST all year round (“yes”) or
 not (“no”). Some of the data:
 
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/dst.txt"
+my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
 dst %>% slice_sample(n=5) # randomly sample 5 rows
 ```
@@ -66,7 +66,7 @@ mostly above grand median and other below.
 ## Mood’s median test for reading data
 
 ```{r, echo=FALSE, message=FALSE}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/drp.txt"
+my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 
@@ -143,7 +143,7 @@ Values separated by spaces:
 \small
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/jumping.txt"
+my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
 rats <- read_delim(my_url," ")
 ```
 

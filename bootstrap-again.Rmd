@@ -18,7 +18,7 @@ conflict_prefer("filter", "dplyr")
 - Recall the IRS data that we used as a motivation for the sign test:
 
 ```{r, include=F}
-my_url="http://www.utsc.utoronto.ca/~butler/c32/irs.txt"
+my_url="http://ritsokiguess.site/datafiles/irs.txt"
 irs = read_csv(my_url)
 ```
 
@@ -177,7 +177,7 @@ tibble(limit=my_names, o_t, b_t, b_p, b_bca)
 Recall the soap data:
 
 ```{r}
-url="http://www.utsc.utoronto.ca/~butler/c32/soap.txt"
+url="http://ritsokiguess.site/datafiles/soap.txt"
 soap=read_delim(url," ")
 ```
 
@@ -277,7 +277,7 @@ tibble(limit=my_names, o_c, b_p, b_bca)
 Consider this example: samples of UK and Ontario (Canada) children, and their journey times to school, in minutes:
 
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/c32/to-school.csv"
+my_url="http://ritsokiguess.site/datafiles/to-school.csv"
 to_school=read_csv(my_url)
 to_school
 to_school %>% count(location)

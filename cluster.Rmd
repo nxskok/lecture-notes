@@ -269,7 +269,7 @@ options(width=60)
 ``` 
 
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/d29/languages.txt"
+my_url="http://ritsokiguess.site/datafiles/languages.txt"
 number.d=read_table(my_url)
 number.d
 ``` 
@@ -396,7 +396,7 @@ options(width=60)
 
 
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/d29/one-ten.txt"
+my_url="http://ritsokiguess.site/datafiles/one-ten.txt"
 lang=read_delim(my_url," ")
 lang 
 ``` 
@@ -570,7 +570,7 @@ Birth, death and infant mortality rates for 97 countries (variables not dissimil
 
   
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/d29/birthrate.txt"
+my_url="http://ritsokiguess.site/datafiles/birthrate.txt"
 vital=read_table(my_url)
 ``` 
 
@@ -1004,7 +1004,7 @@ An Ontario hockey league has teams in 21 cities. How can we arrange those teams 
 Read in data:
 
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+my_url="http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario=read_csv(my_url)
 ontario
 ```

@@ -45,7 +45,7 @@ All right, we have another `y` coming, so get rid of this `y`:
 rm(y)
 ```
 
-Go back to the peanuts data, from class. You can get the data [here](http://www.utsc.utoronto.ca/~butler/d29/peanuts.txt). If you are going to "knit" the R Markdown code, you'll need to save the data to the folder where the `.Rmd` is, so that it can be found when the R code in the code chunks is run.
+Go back to the peanuts data, from class. You can get the data [here](http://ritsokiguess.site/datafiles/peanuts.txt). If you are going to "knit" the R Markdown code, you'll need to save the data to the folder where the `.Rmd` is, so that it can be found when the R code in the code chunks is run.
 
 ```{r}
 peanuts=read.table("peanuts.txt",header=T)
@@ -91,7 +91,7 @@ plot3d(peanuts.pred$x,col=as.numeric(peanuts.pred$class))
 You ought to see this time that it's really the `LD1` and `LD2` directions that separate the combos; `LD3` doesn't do much of anything. This is by design: the `LD1` direction should be the direction that best distinguishes the groups. To make that happen on this graph, rotate so that the `LD3` direction goes into the screen and all you see is the `LD1` and `LD2` directions. Do the combos appear more or less together, and separate from the other combos?
 
 Now, let's look at one of our class examples for multidimensional scaling: the
-Ontario road distances. These are (road) distances between places that have real locations on the surface of the earth, so metric scaling (`cmdscale`) makes sense. As in class, I'm removing Thunder Bay and Sault Ste Marie, since they are far enough away from the other cities to dominate the plot. The data can be found [here](http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.txt).
+Ontario road distances. These are (road) distances between places that have real locations on the surface of the earth, so metric scaling (`cmdscale`) makes sense. As in class, I'm removing Thunder Bay and Sault Ste Marie, since they are far enough away from the other cities to dominate the plot. The data can be found [here](http://ritsokiguess.site/datafiles/ontario-road-distances.txt).
 
 First, some book-keeping (same thing as in lecture):
 

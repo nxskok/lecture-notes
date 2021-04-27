@@ -320,7 +320,7 @@ Recall the jumping rats data:
 
 ```{r, message=F}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/c32/jumping.txt"
+  "http://ritsokiguess.site/datafiles/jumping.txt"
 rats0 <- read_delim(my_url, " ")
 rats0
 ```
