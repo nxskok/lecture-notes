@@ -23,7 +23,7 @@ library(broom)
 
 ```{r}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/c32/windmill.csv"
+  "http://ritsokiguess.site/datafiles/windmill.csv"
 windmill <- read_csv(my_url)
 ```
 

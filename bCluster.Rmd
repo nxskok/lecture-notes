@@ -635,7 +635,7 @@ Birth, death and infant mortality rates for 97 countries (variables not dissimil
 
 ## Reading in
 ```{r }
-url <- "http://www.utsc.utoronto.ca/~butler/d29/birthrate.txt"
+url <- "http://ritsokiguess.site/datafiles/birthrate.txt"
 vital <- read_table(url)
 ```
 
@@ -1100,7 +1100,7 @@ An Ontario hockey league has teams in 21 cities. How can we arrange those teams 
 
 ```{r message=F}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+  "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario <- read_csv(my_url)
 ontario.d <- ontario %>% select(-1) %>% as.dist()
 ontario.hc <- hclust(ontario.d, method = "ward.D")

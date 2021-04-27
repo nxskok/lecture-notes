@@ -64,7 +64,7 @@ dots 0.095 0.181 0.113 0.585 1
 Using correlation matrix. Read that first:
 
 ```{r kids-scree,message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/rex2.txt"
+my_url <- "http://ritsokiguess.site/datafiles/rex2.txt"
 kids <- read_delim(my_url, " ")
 kids
 ```
@@ -221,7 +221,7 @@ kids.f1$PVAL
 Read the data, run principal components, get biplot: 
 
 ```{r, message=FALSE}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/men_track_field.txt"
+my_url <- "http://ritsokiguess.site/datafiles/men_track_field.txt"
 track <- read_table(my_url)
 track %>% select_if(is.numeric) -> track_num
 track.pc <- princomp(track_num, cor = T)
@@ -317,7 +317,7 @@ scores %>% slice(1:6)
 Most negative on factor 2:
 
 ```{r message=F, include=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/isocodes.csv"
+my_url <- "http://ritsokiguess.site/datafiles/isocodes.csv"
 iso <- read_csv(my_url)
 iso
 ```
@@ -375,7 +375,7 @@ of factors that capture aspects of personality?
 
 \scriptsize
 ```{r bem-scree, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/factor.txt"
+my_url <- "http://ritsokiguess.site/datafiles/factor.txt"
 bem <- read_tsv(my_url)
 bem
 ```

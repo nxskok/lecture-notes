@@ -34,7 +34,7 @@ library(conflicted)
 
 13 children, measure average total sleep time (ATST, mins) and age (years) for each. See if ATST depends on age. Data in `sleep.txt`, ATST then age. Read in data:
 ```{r }
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/sleep.txt"
+my_url <- "http://ritsokiguess.site/datafiles/sleep.txt"
 sleep <- read_delim(my_url, " ")
 ```
 
@@ -281,7 +281,7 @@ ggplot(sleep.1, aes(x = .fitted, y = .resid)) + geom_point()
 
 Different data:  
 ```{r curvy}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/curvy.txt"
+my_url <- "http://ritsokiguess.site/datafiles/curvy.txt"
 curvy <- read_delim(my_url, " ")
 ```
 
@@ -400,7 +400,7 @@ logs to get $\ln y=\ln a + bx$.
 
 ## Some made-up data
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/madeup.csv"
+my_url <- "http://ritsokiguess.site/datafiles/madeup.csv"
 madeup <- read_csv(my_url)
 madeup
 ```
@@ -528,7 +528,7 @@ Study of women and visits to health professionals, and how the number of visits 
 ## The data 
 ```{r }
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/d29/regressx.txt"
+  "http://ritsokiguess.site/datafiles/regressx.txt"
 visits <- read_delim(my_url, " ")
 ```
  
@@ -894,7 +894,7 @@ left            right               punt         fred
 
 * Separated by *multiple spaces* with *columns lined up*:
 ```{r }
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/punting.txt"
+my_url <- "http://ritsokiguess.site/datafiles/punting.txt"
 punting <- read_table(my_url)
 ```
 

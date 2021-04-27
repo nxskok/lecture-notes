@@ -246,12 +246,12 @@ nothing to do with anything else about that child.
 reading method (t) or standard one (c).
 
 ## Reading in data 
-- File at <http://www.utsc.utoronto.ca/~butler/c32/drp.txt>.
+- File at <http://ritsokiguess.site/datafiles/drp.txt>.
 - Proper reading-in function is `read_delim` (check file to see)
 - Read in thus:
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/drp.txt"
+my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 

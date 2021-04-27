@@ -12,7 +12,7 @@ my locations
 
 ```{r}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
+  "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario <- read_csv(my_url)
 ontario
 ```

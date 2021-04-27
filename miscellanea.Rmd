@@ -27,7 +27,7 @@ rat5T12
 ## Reading in delimiterless data
 - `read_fwf`, vector of widths and names for columns:
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/rats7.txt"
+my_url <- "http://ritsokiguess.site/datafiles/rats7.txt"
 rat7 <- read_fwf(my_url, fwf_widths(
   c(4, 1, 2),
   c("id", "group", "y")
@@ -48,7 +48,7 @@ characters each column is.
 ## Plotting series: The oranges data
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/oranges.txt"
+my_url <- "http://ritsokiguess.site/datafiles/oranges.txt"
 oranges <- read_delim(my_url, " ")
 ```
 
@@ -87,7 +87,7 @@ g
 - My car data
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/cars.csv"
+my_url <- "http://ritsokiguess.site/datafiles/cars.csv"
 cars <- read_csv(my_url)
 ```
 

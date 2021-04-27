@@ -68,7 +68,7 @@ install_github("vqv/ggbiplot")
 
 \small
 ```{r testt,message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/test12.txt"
+my_url <- "http://ritsokiguess.site/datafiles/test12.txt"
 test12 <- read_table2(my_url)
 test12
 ```
@@ -298,7 +298,7 @@ options(width = w + 10)
 
 \scriptsize
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/men_track_field.txt"
+my_url <- "http://ritsokiguess.site/datafiles/men_track_field.txt"
 track <- read_table(my_url)
 track 
 ```
@@ -311,7 +311,7 @@ Also read in a table to look country names up in later:
 
 \footnotesize
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/isocodes.csv"
+my_url <- "http://ritsokiguess.site/datafiles/isocodes.csv"
 iso <- read_csv(my_url)
 iso
 ```
@@ -589,7 +589,7 @@ Create data file like this:
 
 and read in like this:
 ```{r message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/cov.txt"
+my_url <- "http://ritsokiguess.site/datafiles/cov.txt"
 mat <- read_table(my_url, col_names = F)
 mat
 ```

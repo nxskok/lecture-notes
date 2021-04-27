@@ -348,7 +348,7 @@ g
 ## Two-sample power
 
 ```{r, echo=FALSE}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/drp.txt"
+my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 

@@ -24,7 +24,7 @@ library(leaps)
 ## Getting set up 
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/asphalt.txt"
+my_url <- "http://ritsokiguess.site/datafiles/asphalt.txt"
 asphalt <- read_delim(my_url, " ")
 ```
 

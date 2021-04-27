@@ -32,7 +32,7 @@ Values aligned in columns:
 
 ```{r}
 my_url <- 
-  "http://www.utsc.utoronto.ca/~butler/c32/analgesic.txt"
+  "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
 ```
 

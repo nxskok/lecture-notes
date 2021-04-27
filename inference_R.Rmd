@@ -240,12 +240,12 @@ nothing to do with anything else about that child.
 reading method (t) or standard one (c).
 
 ## Reading in data 
-- File at <http://www.utsc.utoronto.ca/~butler/c32/drp.txt>.
+- File at <http://ritsokiguess.site/datafiles/drp.txt>.
 - Proper reading-in function is `read_delim` (check file to see)
 - Read in thus:
 
 ```{r}
-my_url="http://www.utsc.utoronto.ca/~butler/c32/drp.txt"
+my_url="http://ritsokiguess.site/datafiles/drp.txt"
 kids=read_delim(my_url," ")
 ```
 
@@ -695,7 +695,7 @@ way. They are both telling you something about a parameter, and
 they use same things about data.
 - To illustrate, some data (two groups):
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/duality.txt"
+my_url <- "http://ritsokiguess.site/datafiles/duality.txt"
 twogroups <- read_delim(my_url," ")
 ```
 
@@ -773,7 +773,7 @@ by anything.
   
 ## Read in data 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/irs.txt"
+my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
 irs <- read_csv(my_url)
 irs %>% glimpse()
 ```
@@ -1060,7 +1060,7 @@ get drug B first.
 Values aligned in columns:  
 
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/analgesic.txt"
+my_url <- "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
 ```
 
@@ -1326,7 +1326,7 @@ whether they each agree with having DST all year round (“yes”) or
 not (“no”). Some of the data: 
 
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/dst.txt"
+my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
 dst %>% sample_n(5) # randomly sample 5 rows
 ```
@@ -1444,7 +1444,7 @@ bone density.
 ## Reading the data
 Values separated by spaces:
 ```{r}
-my_url <- "http://www.utsc.utoronto.ca/~butler/c32/jumping.txt"
+my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
 rats <- read_delim(my_url," ")
 ```
 

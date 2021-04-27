@@ -87,7 +87,7 @@ darkbrown 35
 ## Summarizing the groups 
 \footnotesize
 ```{r, message=F}
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/hairpain.txt"
+my_url <- "http://ritsokiguess.site/datafiles/hairpain.txt"
 hairpain <- read_delim(my_url, " ")
 hairpain
 hairpain %>%
@@ -371,7 +371,7 @@ into size classes `lean` and `obese`.
 \small
 
 ```{r }
-my_url <- "http://www.utsc.utoronto.ca/~butler/d29/vitaminb.txt"
+my_url <- "http://ritsokiguess.site/datafiles/vitaminb.txt"
 vitaminb <- read_delim(my_url, " ")
 ```
 \normalsize
@@ -585,7 +585,7 @@ filter silencing. He referred to the data included in the report
 that the silencing properties of the Octel filter were at least
 equal to those of standard silencers. 
 ```{r }
-u <- "http://www.utsc.utoronto.ca/~butler/d29/autonoise.txt"
+u <- "http://ritsokiguess.site/datafiles/autonoise.txt"
 autonoise <- read_table(u)
 ```
 
@@ -1225,7 +1225,7 @@ orthogonal.
 ## Read in data
 \small
 ```{r, message=F}
-url <- "http://www.utsc.utoronto.ca/~butler/d29/chainsaw.txt"
+url <- "http://ritsokiguess.site/datafiles/chainsaw.txt"
 chain.wide <- read_table(url)
 chain.wide
 ```
