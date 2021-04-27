@@ -1791,6 +1791,11 @@ output: github_document
 - [STAC32 lecture notes](https://github.com/nxskok/notes/blob/master/slides_c32.pdf)
 - [STAC32 R Markdown file](https://raw.githubusercontent.com/nxskok/notes/master/slides_c32.Rmd)
 
+```{r}
+
+```
+
+
 ## STAC33 stuff coming soon.
 
 <!--chapter:end:README.Rmd-->

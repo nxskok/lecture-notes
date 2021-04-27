@@ -21,7 +21,7 @@ library(tidyverse)
 
 ## Grab the spreadsheet
 
-- from [this link](https://raw.githubusercontent.com/nxskok/notes/master/test1.xlsx)
+- from [this link](http://ritsokiguess.site/datafiles/test1.xlsx)
 - open in Excel or other spreadsheet software (if it doesn't already open)
 
 
@@ -226,7 +226,7 @@ CUPPS 10
 
 ## Reading the coffee data
 
-- Get the file yourself from [here](https://raw.githubusercontent.com/nxskok/notes/master/coffee.txt).
+- Get the file yourself from [here](http://ritsokiguess.site/datafiles/coffee.txt).
 - This file was on my computer so I uploaded it to `rstudio.cloud`
  first.
 - This time, `read_delim`, and we also have to say what the thing is
@@ -287,7 +287,7 @@ drugs
 
 ## Reading an Excel sheet directly
 
-- Here is [my spreadsheet](https://raw.githubusercontent.com/nxskok/notes/master/test2.xlsx) from before, but tarted up a bit:
+- Here is [my spreadsheet](http://ritsokiguess.site/datafiles/test2.xlsx) from before, but tarted up a bit:
 
 ![](excel.png){height=180px}
 
