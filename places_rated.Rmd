@@ -51,3 +51,117 @@ Take a look at what is in each component:
 places.1$loadings
 ```
 
+Look at component loadings and make a call about "large" (in absolute value) vs "small". Large loadings are a part of the component and small ones are not. Thus, if we use 0.4 as cutoff:
+
+- component #1 depends on health and arts
+- #2 depends on economy and crime, and negatively on education. 
+- #3 depends on climate, and negatively on economy.
+- #4 depends on education and the economy, negatively on transportation and recreation opportunities.
+- #5 depends on crime and negatively on housing.
+
+The use of 0.4 is arbitrary; you can use whatever you like. It can be difficult to decide whether an indicator is "in" or "out". 
+
+The large (far from zero) loadings indicate what distinguishes the cities as places to live, for example:
+
+- places that are rated high for health also tend to be rated hight for arts
+- places that have a good economy tend to have a bad climate (and vice versa)
+- places that have a lot of crime tend to have bad housing.
+
+How can we make a visual showing the cities? We need a "score" for each city on each component, and we need to identify the cities (we have a numerical `id` in the original dataset):
+
+```{r}
+cbind(city_id = places$id, places.1$scores) %>% 
+  as_tibble() -> places_score
+places_score
+```
+
+The `as_tibble` is needed at the end because the scores are a `matrix`.
+
+We can plot the first two scores against each other, labelling each point by the `id` of the city it belongs to:
+
+```{r}
+ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
+                         label = city_id)) +
+  geom_text()
+```
+
+Cities 213 and 270 are high on component 1, and city 116 is low. City 195 is high on component 2, and city 322 is low.
+
+This suggests that cities 213 and 270 are high on health and arts, and city 116 is low. City 195 should be high on economy and crime and low on education, and city 322 should be the other way around. But we had to go back to the component loadings to see this. It would be better to have observations (cities) and variables 
+(criteria) all on one plot. This is what a *biplot* does, thus:
+
+```{r}
+ggbiplot(places.1, labels = places$id)
+```
+
+This is hard to read with so many cities. If I make the city labels smaller, we can see what the red stuff is:
+
+```{r}
+ggbiplot(places.1, labels = places$id, labels.size = 0.5)
+```
+
+The red things are the variables. A longer arrow means that the variable is more important; an arrow that points left or right belongs to component 1 and up or down to component 2.
+
+Thus housing and arts belong more to component 1, and economy more to component 2. 
+
+Let's return to our first plot:
+
+```{r}
+ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
+                         label = city_id)) +
+  geom_text()
+```
+
+We said that cities 270 and 213 would be
+high on health and arts, and city 116 is low. City 195 should be high on economy and crime and low on education, and city 322 should be the other way around.
+
+The obvious way of checking this is in two steps: first, work out what high or low means for each variable:
+
+```{r}
+summary(places)
+```
+
+and then find the values on the variables of interest for our cities of interest, and see where they sit on here.
+
+Cities 270, 213, and 116 were extreme on component 1, which depended mainly on health and arts:
+
+```{r}
+places %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+```
+
+City 166 is near or below Q1 on both variables. City 213 is the highest of all on both `health` and `arts`, while city 270 is well above Q3 on both.
+
+Component 2 depended positively on economy and crime and negatively on education. City 195 was high and 322 was low:
+
+```{r}
+places %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322))
+```
+
+City 195 is the highest on economy, just above Q3 on crime, and below Q1 on education. City 322 should be the other way around: nearly the lowest on economy, below Q1 on crime, and between the median and Q3 on education. This is as we'd expect.
+
+It is a lot of work to find the value of each city on each variable in the data summary. A  better way is to work out the percentile ranks of each city on each variable and then look at those:
+
+```{r}
+places %>% 
+  mutate(across(-id, ~percent_rank(.))) -> places_pr
+places_pr
+```
+
+and now we look up our cities and variables again:
+
+```{r}
+places_pr %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+
+```
+
+This shows that city 270 was also really high on these two variables: in the 97th percentile for `health` and the 98th for `arts`. What about the extreme cities on component 2?
+
+```{r}
+places_pr %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322)) 
+```
+
+City 322 was really low on economy and crime, but only just above average on education. City 195 was the highest on economy and really low on education, but only somewhat high on crime (76th percentile).
