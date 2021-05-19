@@ -32,7 +32,7 @@
 You might not have installed the first of these. See over for
 instructions. 
 
-```{r eval=F}
+```{r, eval=FALSE}
 library(ggbiplot) # see over
 library(tidyverse)
 library(ggrepel)
