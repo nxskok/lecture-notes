@@ -1,0 +1,53 @@
+Places rated data:
+
+```{r}
+places0 <- read_table2("places.txt")
+places0
+```
+
+look at distributions of everything
+
+```{r}
+places0 %>% 
+  pivot_longer(-id, names_to = "criterion", values_to = "rating") %>% 
+  ggplot(aes(x = rating)) + geom_histogram(bins = 10) + 
+  facet_wrap(~criterion, scales = "free")
+```
+several of these variables have long right tails
+
+take logs of everything but id:
+
+```{r}
+places0 %>% 
+  mutate(across(-id, ~log(.))) -> places
+places
+```
+
+get rid of the id column
+
+```{r}
+places %>% select(-id) -> places_numeric
+places_numeric
+```
+
+
+principal components
+
+```{r}
+places.1 <- princomp(places_numeric, cor = TRUE)
+summary(places.1)
+```
+scree plot
+
+```{r}
+ggscreeplot(places.1)
+```
+
+big elbow at 2 (1 component); smaller elbow at 6 (5) and maybe 4 (3).
+
+Take a look at what is in each component:
+
+```{r}
+places.1$loadings
+```
+
