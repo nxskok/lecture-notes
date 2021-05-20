@@ -273,294 +273,222 @@ relative to first.
 
 
 
-##  Track running data
+## Places rated
 
-Track running records (1984) for distances 100m to marathon, arranged
-by country. Countries labelled by (mostly) Internet domain names (ISO
-2-letter codes):
+Every year, a new edition of the Places Rated Almanac is produced. This rates a large number (in our data 329) of American cities on a number of different criteria, to help people find the ideal place for them to live (based on what are important criteria for them).
 
-```{r echo=F}
-w <- getOption("width")
-options(width = w + 10)
+The data for one year are in [http://ritsokiguess.site/datafiles/places.txt](http://ritsokiguess.site/datafiles/places.txt).
+
+## The criteria
+
+There are nine of them:
+
+- `climate`: a higher value means that the weather is better
+- `housing`: a higher value means that there is more good housing or a greater choice of different types of housing
+- `health`: higher means better healthcare facilities
+- `crime`: higher means more crime (bad)
+- `trans`: higher means better transportation (this being the US, probably more roads)
+- `educate`: higher means better educational facilities, schools, colleges etc.
+- `arts`: higher means better access to the arts (theatre, music etc)
+- `recreate`: higher means better access to recreational facilities
+- `econ`: higher means a better economy (more jobs, spending power etc)
+
+Each city also has a numbered `id`.
+
+## Read in the data
+
+```{r}
+my_url <- "http://ritsokiguess.site/datafiles/places.txt"
+places0 <- read_table2(my_url)
+places0
 ```
 
- 
+## Look at distributions of everything
 
-\scriptsize
-```{r, message=F}
-my_url <- "http://ritsokiguess.site/datafiles/men_track_field.txt"
-track <- read_table(my_url)
-track %>% sample_n(10)
-```
-\normalsize
- 
-
-
-##  Country names
-Also read in a table to look country names up in later:
-
-\footnotesize
-```{r message=F}
-my_url <- "http://ritsokiguess.site/datafiles/isocodes.csv"
-iso <- read_csv(my_url)
-iso
-```
-\normalsize
- 
-
-
-##  Data and aims
-
-
-* 
-Times in seconds 100m--400m, in minutes for rest (800m up).
-
-* This taken care of by standardization.
-
-* 8 variables; can we summarize by fewer and gain some insight?
-
-* In particular, if 2 components tell most of story, what do we see in a plot?
-
-
-##  Fit and examine principal components
-```{r echo=FALSE}
-options(width = 50)
+```{r}
+places0 %>% 
+  pivot_longer(-id, names_to = "criterion", 
+               values_to = "rating") %>% 
+  ggplot(aes(x = rating)) + geom_histogram(bins = 10) + 
+  facet_wrap(~criterion, scales = "free") -> g
 ```
 
-\footnotesize
-```{r scree-a}
-track %>% select(where(is.numeric)) -> track_num
-track.pc <- princomp(track_num, cor = T)
-summary(track.pc)
-```
-\normalsize
- 
+## The histograms
 
-
-##   Scree plot
-
-```{r scree-b,fig.height=3.5,}
-ggscreeplot(track.pc)
-```
-
- 
-
-
-##  How many components?
-
-
-* As for discriminant analysis, look for "elbow" in scree plot.
-
-* See one here at 3 components; everything 3 and beyond is "scree".
-
-* So take 2 components.
-
-* Note difference from discriminant analysis: want "large"
-rather than "small", so go 1 step left of elbow.
-
-* Another criterion: any component with eigenvalue bigger than
-about 1 is worth including. 2nd one here has eigenvalue just less
-than 1.
-
-* Refer back to `summary`: cumulative proportion of
-variance explained for 2 components is 93.7\%, pleasantly high. 2
-components tell almost whole story.
-
-
-
-##  How do components depend on original variables?
-Loadings:
-
-\footnotesize
-```{r, echo=2}
-options(width = 65)
-track.pc$loadings
-```
-\normalsize
-   
-
-
-##  Comments
-
-
-* `comp.1` loads about equally (has equal weight) on
-times over all distances.
-
-* `comp.2` has large positive loading for short
-distances, large negative for long ones.
-
-* `comp.3`: large negative for middle distance, large
-positive especially for short distances.
-
-* Country overall good at running will have lower than average record
-times at all distances, so `comp.1`
-*small*. Conversely, for countries bad at running,
-`comp.1` very positive.
-
-* Countries relatively better at sprinting (low times) will be
-*negative* on `comp.2`; countries relatively better at
-distance running *positive* on `comp.2`.
-
-
-
-##  Commands for plots
-
-
-* Principal component scores (first two). Also need country IDs.
-```{r pc-plot}
-d <- data.frame(track.pc$scores,
-  country = track$country
-)
-names(d)
-g1 <- ggplot(d, aes(x = Comp.1, y = Comp.2,
-  label = country)) +
-  geom_point() + geom_text_repel() + coord_fixed()
-```
-
-     
-
-
-* Biplot:
-```{r biplot}
-g2 <- ggbiplot(track.pc, labels = track$country)
-```
-
-   
-
-
-
-##   Principal components plot
-
-```{r lecce,fig.height=3.9}
-g1
-```
-
-     
-
-
-##   Comments on principal components plot
-
-
-* Good running countries at left of plot: US, UK, Italy,
-Russia, East and West Germany.
-
-* Bad running countries at right: Western Samoa, Cook Islands.
-
-* Better sprinting countries at bottom: US, Italy, Russia,
-Brazil, Greece. `do` is Dominican Republic, where sprinting
-records relatively good, distance records very bad.
-
-* Better distance-running countries at top: Portugal, Norway,
-Turkey, Ireland, New Zealand, Mexico. `ke` is Kenya.
-
-
-
-##   Biplot
-
-```{r biplot2,fig.height=3.7}
-g2
-```
-  
-
-
-
-##  Comments on biplot
-
-
-* Had to do some pre-work to interpret PC plot. Biplot more self-contained.
-
-* All variable arrows point right; countries on right have large
-(bad) record times overall, countries on left good overall.
-
-* Imagine that variable arrows extend negatively as well. Bottom right = bad at
-distance running, top left = good at distance running.
-
-* Top right = bad at sprinting, bottom left = good at
-sprinting.
-
-* Doesn't require so much pre-interpretation of components.
-
-
-
-
-
-##  Best 8 running countries
-
-Need to look up two-letter abbreviations in ISO table:
-
-\footnotesize
-```{r,warning=F}
-d %>%
-  arrange(Comp.1) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.1, country, Country) %>%
-  slice(1:8)
-```
-\normalsize
-   
-
-
-##  Worst 8 running countries
-
-\footnotesize
-```{r, warning=F}
-d %>%
-  arrange(desc(Comp.1)) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.1, country, Country) %>%
-  slice(1:8)
-```
-\normalsize
-   
-
-
-##  Better at distance running
-
-\footnotesize
-```{r, warning=F}
-d %>%
-  arrange(desc(Comp.2)) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.2, country, Country) %>%
-  slice(1:10)
-```
-\normalsize
-   
-
-##  Better at sprinting
-
-\footnotesize
-```{r, warning=F}
-d %>%
-  arrange(Comp.2) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.2, country, Country) %>%
-  slice(1:10)
-```
-\normalsize
-   
-
-
-##  Plot with country names
-```{r }
-g <- d %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.1, Comp.2, Country) %>%
-  ggplot(aes(x = Comp.1, y = Comp.2, label = Country)) +
-  geom_point() + geom_text_repel(size = 1) +
-  coord_fixed()
-```
-
-   
-
-
-##  The plot
-
-```{r fig.height=5.5, warning=F}
+```{r}
 g
 ```
 
-   
+## Transformations
+
+- Several of these variables have long right tails
+
+- Take logs of everything but id:
+
+```{r}
+places0 %>% 
+  mutate(across(-id, ~log(.))) -> places
+```
+
+## Just the numerical columns
+
+- get rid of the id column
+
+```{r}
+places %>% select(-id) -> places_numeric
+```
+
+## Principal components
+
+\scriptsize
+```{r}
+places.1 <- princomp(places_numeric, cor = TRUE)
+summary(places.1)
+```
+\normalsize
+
+## scree plot
+
+```{r}
+ggscreeplot(places.1)
+```
+
+- big elbow at 2 (1 component); smaller elbow at 6 (5) and maybe 4 (3).
+
+## What is in each component?
+
+```{r}
+places.1$loadings
+```
+
+## Assessing the components
+
+Look at component loadings and make a call about "large" (in absolute value) vs "small". Large loadings are a part of the component and small ones are not. Thus, if we use 0.4 as cutoff:
+
+- component #1 depends on health and arts
+- #2 depends on economy and crime, and negatively on education. 
+- #3 depends on climate, and negatively on economy.
+- #4 depends on education and the economy, negatively on transportation and recreation opportunities.
+- #5 depends on crime and negatively on housing.
+
+## Comments
+
+- The use of 0.4 is arbitrary; you can use whatever you like. It can be difficult to decide whether a variable is "in" or "out". 
+
+- The large (far from zero) loadings indicate what distinguishes the cities as places to live, for example:
+
+  - places that are rated high for health also tend to be rated high for arts
+  - places that have a good economy tend to have a bad climate (and vice versa)
+  - places that have a lot of crime tend to have bad housing.
+
+## Making a plot 1/3
+
+How can we make a visual showing the cities? We need a "score" for each city on each component, and we need to identify the cities (we have a numerical `id` in the original dataset):
+
+```{r}
+cbind(city_id = places$id, places.1$scores) %>% 
+  as_tibble() -> places_score
+```
+
+The `as_tibble` is needed at the end because the scores are a `matrix`.
+
+## Making a plot 2/3
+
+- Plot the first two scores against each other, labelling each point by the `id` of the city it belongs to:
+
+```{r}
+ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
+                         label = city_id)) +
+  geom_text() -> g
+```
+
+## Making a plot 3/3
+
+```{r}
+g
+```
+
+
+## Comments
+
+- Cities 213 and 270 are high on component 1, and city 116 is low. City 195 is high on component 2, and city 322 is low.
+
+- This suggests that cities 213 and 270 are high on health and arts, and city 116 is low. City 195 should be high on economy and crime and low on education, and city 322 should be the other way around. 
+
+## Checking this 1/2
+
+- The obvious way of checking this is in two steps: first, work out what high or low means for each variable:
+
+\scriptsize
+```{r}
+summary(places)
+```
+\normalsize
+
+## Checking this 2/2
+
+- and then find the values on the variables of interest for our cities of interest, and see where they sit on here.
+
+- Cities 270, 213, and 116 were extreme on component 1, which depended mainly on health and arts:
+
+```{r}
+places %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+```
+
+- City 166 is near or below Q1 on both variables. City 213 is the highest of all on both `health` and `arts`, while city 270 is well above Q3 on both.
+
+## Checking component 2
+
+- Component 2 depended positively on economy and crime and negatively on education. City 195 was high and 322 was low:
+
+```{r}
+places %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322))
+```
+
+- City 195 is the highest on economy, just above Q3 on crime, and below Q1 on education. City 322 should be the other way around: nearly the lowest on economy, below Q1 on crime, and between the median and Q3 on education. This is as we'd expect.
+
+## A better way: percentile ranks
+
+- It is a lot of work to find the value of each city on each variable in the data summary. 
+
+- A  better way is to work out the percentile ranks of each city on each variable and then look at those:
+
+```{r}
+places %>% 
+  mutate(across(-id, ~percent_rank(.))) -> places_pr
+```
+
+## Look up cities and variables again
+
+```{r}
+places_pr %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+```
+
+This shows that city 270 was also really high on these two variables: in the 97th percentile for `health` and the 98th for `arts`. 
+
+## Component 2
+
+- What about the extreme cities on component 2?
+
+```{r}
+places_pr %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322)) 
+```
+
+- City 322 was really low on economy and crime, but only just above average on education. City 195 was the highest on economy and really low on education, but only somewhat high on crime (76th percentile).
+
+- This, as you see, is much easier once you have set it up.
+
+## The biplot
+
+- draw it
+
+- explain why little value
+
+- redraw with cities minimized
 
 
 
