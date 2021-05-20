@@ -232,7 +232,7 @@ g
 suggests how they score on each variable.
 
 * Add `labels` option to identify individuals:
-```{r }
+```{r}
 g <- ggbiplot(test12.pc, labels = test12$id)
 ```
 
@@ -241,7 +241,7 @@ g <- ggbiplot(test12.pc, labels = test12$id)
 
 
 ##  The biplot
-```{r ff3,fig.height=4,echo=F}
+```{r ff3,fig.height=3,echo=F}
 g
 ```
   
@@ -277,7 +277,7 @@ relative to first.
 
 Every year, a new edition of the Places Rated Almanac is produced. This rates a large number (in our data 329) of American cities on a number of different criteria, to help people find the ideal place for them to live (based on what are important criteria for them).
 
-The data for one year are in [http://ritsokiguess.site/datafiles/places.txt](http://ritsokiguess.site/datafiles/places.txt).
+The data for one year are in [http://ritsokiguess.site/datafiles/places.txt](http://ritsokiguess.site/datafiles/places.txt). The data columns are aligned but the column headings are not.
 
 ## The criteria
 
@@ -297,11 +297,12 @@ Each city also has a numbered `id`.
 
 ## Read in the data
 
+\small
 ```{r}
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
 places0 <- read_table2(my_url)
-places0
 ```
+\normalsize
 
 ## Look at distributions of everything
 
@@ -340,12 +341,20 @@ places %>% select(-id) -> places_numeric
 
 ## Principal components
 
+```{r, include=FALSE}
+options(width = 80)
+```
+
 \scriptsize
 ```{r}
 places.1 <- princomp(places_numeric, cor = TRUE)
 summary(places.1)
 ```
 \normalsize
+
+```{r, include=FALSE}
+options(width = 60)
+```
 
 ## scree plot
 
@@ -493,7 +502,7 @@ places_pr %>% select(id, econ, crime, educate) %>%
 
 ## The biplot
 
-```{r}
+```{r, fig.height=3}
 ggbiplot(places.1, labels = places$id)
 ```
 
@@ -505,7 +514,7 @@ ggbiplot(places.1, labels = places$id)
 
 ## Biplot, attempt 2
 
-```{r}
+```{r, fig.height=3}
 ggbiplot(places.1, labels = places$id,
          labels.size = 0.8)
 ```

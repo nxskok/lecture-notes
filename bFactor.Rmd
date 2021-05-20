@@ -25,8 +25,8 @@
 
 
 ##  Packages
+
 ```{r eval=F, warning=F, message=F}
-library(lavaan) # for confirmatory, later
 library(ggbiplot)
 library(tidyverse)
 ```
@@ -210,139 +210,199 @@ kids.f1$PVAL
 
 1 factor rejected (P-value small). Definitely need more than 1.
 
+## Places rated, again 
 
-##  Track running records revisited
-
-Read the data, run principal components, get biplot: 
+Read data, transform, rerun principal components, get biplot: 
 
 ```{r, message=FALSE}
-my_url <- "http://ritsokiguess.site/datafiles/men_track_field.txt"
-track <- read_table(my_url)
-track %>% select(where(is.numeric)) -> track_num
-track.pc <- princomp(track_num, cor = T)
-g2 <- ggbiplot(track.pc, labels = track$country)
+my_url <- "http://ritsokiguess.site/datafiles/places.txt"
+places0 <- read_table2(my_url)
+places0 %>% 
+  mutate(across(-id, ~log(.))) -> places
+places %>% select(-id) -> places_numeric
+places.1 <- princomp(places_numeric, cor = TRUE)
+g <- ggbiplot(places.1, labels = places$id,
+         labels.size = 0.8)
 ```
 
 ## The biplot
 
-```{r fig.height=3.7}
-g2
+```{r, fig.height=3}
+g
 ```
 
-   
+## Comments
 
+- Most of the criteria are part of components 1 *and* 2. 
+- If we can rotate the arrows counterclockwise:
+  - economy and crime would point straight up
+    - part of component 2 only
+  - health and education would point to the right
+    - part of component 1 only
+- would be easier to see which variables belong to which component.
+- Factor analysis includes a rotation to help with interpretation.
 
+## Factor analysis
 
-##  Benefit of rotation
+- Have to pick a number of factors *first*. 
+- Do this by running principal components and looking at scree plot.
+- In this case, 3 factors seemed good (revisit later):
 
-
-* 100m and marathon arrows almost perpendicular, but components
-don't match anything much:
-
-
-* sprinting: bottom left and top right
-
-* distance running: top left and bottom right.
-
-
-* Can we arrange things so that components (factors) correspond
-to something meaningful?
-
-
-
-##  Track records by factor analysis
-Obtain factor scores (have actual data):
-
-\normalsize
-```{r track-factor-biplot}
-track %>%
-  select(where(is.numeric)) %>%
-  factanal(2, scores = "r") -> track.f
-```
-\normalsize
-   
-
-
-##  Track data biplot
-Not so nice-looking:  
-```{r siracusa,fig.height=3.5}
-biplot(track.f$scores, track.f$loadings,
-  xlabs = track$country
-)
+```{r}
+places.3 <- factanal(places_numeric, 3, scores = "r")
 ```
 
-   
+- There are different ways to get factor scores. These called "regression" scores.
+
+## A bad biplot 
+
+```{r, fig.height=4}
+biplot(places.3$scores, places.3$loadings,
+  xlabs = places$id)
+```
 
 
-##  Comments
+## Comments
 
+- I have to find a way to make a better biplot!
+- Some of the variables now point straight up and some straight across (if you look carefully for the red arrows among the black points).
+- This should make the factors more interpretable than the components were.
 
-* This time 100m "up" (factor 2), marathon "right" (factor 1).
+## Factor loadings
 
-* Countries most negative on factor 2 good at sprinting.
-
-* Countries most negative on factor 1 good at distance running.
-
-
-
-##  Rotated factor loadings
 \small
-```{r }
-track.f$loadings
+```{r}
+places.3$loadings
 ```
 \normalsize
 
+## Comments on loadings
 
-## Which countries are good at sprinting or distance running?
+- These are at least somewhat clearer than for the principal components:
+  - Factor 1: health, education, arts: "well-being"
+  - Factor 2: housing, transportation, arts (again), recreation: "places to be"
+  - Factor 3: climate (only): "climate"
+- In this analysis, economic factors don't seem to be important.
 
-Make a data frame with the countries and scores in:
+## Factor scores
 
-```{r }
-scores <- data.frame(
-  country = track$country,
-  track.f$scores
-)
-scores %>% slice(1:6)
+- Make a dataframe with the city IDs and factor scores:
+
+```{r}
+cbind(id = places$id, places.3$scores) %>% 
+  as_tibble() -> places_scores
 ```
 
- 
+- Make percentile ranks again (for checking):
+
+```{r}
+places %>% 
+  mutate(across(-id, ~percent_rank(.))) -> places_pr
+```
+
+## Highest scores on factor 1, "well-being":
+
+```{r}
+places_scores %>% 
+  arrange(desc(Factor1))
+```
+
+## Check percentile ranks for factor 1
+
+```{r}
+places_pr %>% 
+  select(id, health, educate, arts) %>% 
+  filter(id %in% c(213, 65, 234, 314))
+```
+
+- These are definitely high on the well-being variables.
+- City #213 is not so high on education, but is highest of all on the others.
+
+## Highest scores on factor 2, "places to be":
+
+```{r}
+places_scores %>% 
+  arrange(desc(Factor2))
+```
+
+## Check percentile ranks for factor 2
+
+```{r}
+places_pr %>% 
+  select(id, housing, trans, arts, recreate) %>% 
+  filter(id %in% c(318, 12, 168, 44))
+```
+
+- These are definitely high on housing and recreation.
+- Some are (very) high on transportation, but not so much on arts.
+- Could look at more cities to see if #168 being low on arts is a fluke.
+
+## Highest scores on factor 3, "climate":
+
+```{r}
+places_scores %>% 
+  arrange(desc(Factor3))
+```
+
+## Check percentile ranks for factor 3
+
+```{r}
+places_pr %>% 
+  select(id, climate) %>% 
+  filter(id %in% c(227, 218, 269, 270))
+```
+
+This is very clear.
+
+## Uniquenesses
+
+- We said earlier that the economy was not part of any of our factors:
+
+```{r}
+places.3$uniquenesses
+```
+
+- The higher the uniqueness, the less the variable concerned is part of any of our factors (and that  maybe another factor is needed to accommodate it).
+- This includes economy and maybe crime.
 
 
-##  The best sprinting countries
-Most negative on factor 2:
+## Test of significance
 
-```{r message=F, include=F}
-my_url <- "http://ritsokiguess.site/datafiles/isocodes.csv"
-iso <- read_csv(my_url)
-iso
+We can test whether the three factors that we have is enough, or whether we need more to describe our data:
+
+```{r}
+places.3$PVAL
+```
+
+- 3 factors are not enough. 
+- What would 5 factors look like?
+
+## Five factors
+
+```{r}
+places.5 <- factanal(places_numeric, 5, scores = "r")
+places.5$loadings
 ```
 
 
-\footnotesize
-```{r, warning=F}
-scores %>%
-  arrange(Factor2) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Country, Factor1, Factor2) %>%
-  slice(1:10)
+## Comments
+
+- On (new) 5 factors:
+  - Factor 1 is health, education, arts: same as factor 1 before.
+  - Factor 2 is housing, transportation, arts, recreation: as factor 2 before.
+  - Factor 3 is economy.
+  - Factor 4 is crime.
+  - Factor 5 is climate and housing: like factor 3 before.
+  
+- The two added factors include the two "missing" variables.
+- Is this now enough?
+
+```{r}
+places.5$PVAL
 ```
-\normalsize
- 
 
+- No. My guess is that the authors of Places Rated chose their 9 criteria to capture different aspects of what makes a city good or bad to live in, and so it was too much to hope that a small number of factors would come out of these.
 
-##  The best distance-running countries
-Most negative on factor 1:
-
-\footnotesize
-```{r, warning=F}
-scores %>%
-  arrange(Factor1) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Country, Factor1, Factor2) %>%
-  slice(1:10)
-```
-\normalsize
- 
 
 ##  A bigger example: BEM sex role inventory
 
@@ -418,13 +478,19 @@ g + scale_x_continuous(limits = c(0, 8))
 
 ##  but is 2 really good?
 
+```{r, include=FALSE}
+options(width = 80)
+```
+
 \scriptsize
 ```{r }
 summary(bem.pc)
 ```
 \normalsize
 
-
+```{r, include=FALSE}
+options(width = 60)
+```
 
 ##  Comments
 
@@ -455,10 +521,10 @@ ggbiplot(bem.pc, alpha = 0.3)
 
 * Ignore individuals for now.
 
-* Most variables point to 10 o'clock or 7 o'clock.
+* Most variables point to 1 o'clock or 4 o'clock.
 
 * Suggests factor analysis with rotation will get interpretable
-factors (rotate to 6 o'clock and 9 o'clock, for example).
+factors (rotate to 12 o'clock and 3 o'clock, for example).
 
 * Try for 2-factor solution (rough interpretation, will be bad):
 
@@ -1002,250 +1068,5 @@ enframe(bem.15$uniquenesses, name="quality", value="uniq") %>%
 
 Uses foul language especially, also loves children and analytical. So
 could use even more factors.
-
-
-# Confirmatory factor analysis}
-
-##  Confirmatory factor analysis
-
-
-* Exploratory: what do data suggest as hidden underlying factors (in terms of variables observed)?
-
-* Confirmatory: have *theory* about how underlying factors depend on observed variables; test whether theory supported by data:
-
-
-* does theory provide *some* explanation (better than nothing)
-
-* can we do better?
-
-
-* Also can compare two theories about factors: is more complicated one significantly better than simpler one?
-
-
-
-##  Children and tests again
-
-
-
-* Previously had this correlation matrix of test scores (based on 145
-children):
-
-```{r }
-km
-```
- 
-
-
-* Will use package `lavaan` for confirmatory analysis.
-
-* Can use actual data or correlation matrix.
-
-* Latter (a bit) more work, as we see.
-
-
-
-
-##  Two or three steps
-
-
-* Make sure correlation matrix (if needed) is handy.
-
-* Specify factor model (from theory)
-
-* Fit factor model: does it fit acceptably? 
-
-## Terminology
-
-* Thing you cannot observe called **latent variable**.
-
-* Thing you *can* observe called **manifest variable**.
-
-* Model predicts latent variables from manifest variables.
-  - asserts a relationship between latent and manifest.
-
-- We need to invent names for the latent variables.
-
-
-##  Specifying a factor model
-
-
-
-* Model with one factor including all the tests:
-```{r }
-test.model.1 <- "ability=~para+sent+word+add+dots"
-```
- 
-
-
-* and a model that we really believe, that there are two factors,
-a verbal and a mathematical:
-```{r }
-test.model.2 <- "verbal=~para+sent+word
-                 math=~add+dots"
-```
- 
-
-* Note the format: really all one line between single quotes, but
-putting it on several lines makes the layout clearer.
-
-* Also note special notation `=~` for ``this latent
-variable depends on these observed variables''.  
-
-
-
-##  Fitting a 1-factor model
-
-
-* Need to specify model, correlation matrix, $n$ like this:
-
-```{r }
-fit1 <- cfa(test.model.1,
-  sample.cov = km,
-  sample.nobs = 145
-)
-```
- 
-
-
-* Has `summary`, or briefer version like this:
-
-\scriptsize
-```{r}
-fit1
-```
-\normalsize
-
-* Test of fit: null "model fits" *rejected*. We can do better.
-
-
-
-##  Two-factor model
-
-\scriptsize
-```{r}
-fit2 <- cfa(test.model.2, sample.cov = km, sample.nobs = 145)
-fit2
-```
-\normalsize
-
-
-
-* This fits OK: 2-factor model supported by the data.
-
-* 1-factor model did not fit. We really need 2 factors.
-
-* Same conclusion as from `factanal` earlier.
-
-
-
-##  Comparing models
-
-
-* Use `anova` as if this were a regression:
-
-\scriptsize
-```{r}
-anova(fit1, fit2)
-```
-\normalsize
-
-
-* 2-factor model fits significantly better than 1-factor.
-
-* No surprise!
-
-
-
-##  Track and field data, yet again
-
-
-* `cfa` works easier on actual data, such as the running records:
-
-\footnotesize
-```{r}
-track %>% print(n = 6)
-```
-\normalsize
-
-
-* Specify factor model. Factors seemed to be "sprinting" (up to
-800m) and "distance running" (beyond):
-
-\footnotesize
-```{r}
-track.model <- "sprint=~m100+m200+m400+m800
-                distance=~m1500+m5000+m10000+marathon"
-```
-\normalsize
-
-
-##  Fit and examine the model
-
-
-* Fit the model. The observed variables are on different
-scales, so we should standardize them first via `std.ov`:
-
-\scriptsize
-```{r}
-track.1 <- track %>%
-  select(-country) %>%
-  cfa(track.model, data = ., std.ov = T)
-track.1
-```
-\normalsize
-
-
-* This fits badly. Can we do better?
-
-* Idea: move middle distance races (800m, 1500m) into a third factor.
-
-
-##  Factor model 2
-
-
-* Define factor model:
-
-```{r }
-track.model.2 <- "sprint=~m100+m200+m400
-                  middle=~m800+m1500
-                  distance=~m5000+m10000+marathon"
-```
- 
-
-
-* Fit:
-
-```{r}
-track %>%
-  select(-country) %>%
-  cfa(track.model.2, data = ., std.ov = T) -> track.2
-```
-
-## Examine
-
-```{r}
-track.2
-```
-
-
-* Fits  marginally better, though still badly.
-
-
-
-##  Comparing the two models
-
-
-* Second model doesn't fit well, but is it better than first?
-
-\footnotesize
-```{r}
-anova(track.1, track.2)
-```
-\normalsize
-
-* Oh yes, a lot better.
-
-
-
 
 
