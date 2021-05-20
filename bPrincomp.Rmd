@@ -419,11 +419,20 @@ g
 
 - The obvious way of checking this is in two steps: first, work out what high or low means for each variable:
 
-\scriptsize
+```{r, include=FALSE}
+options(width = 100)
+```
+
+
+\tiny
 ```{r}
 summary(places)
 ```
 \normalsize
+
+```{r, include=FALSE}
+options(width = 80)
+```
 
 ## Checking this 2/2
 
@@ -436,7 +445,7 @@ places %>% select(id, health, arts) %>%
   filter(id %in% c(270, 213, 166))
 ```
 
-- City 166 is near or below Q1 on both variables. City 213 is the highest of all on both `health` and `arts`, while city 270 is well above Q3 on both.
+City 166 is near or below Q1 on both variables. City 213 is the highest of all on both `health` and `arts`, while city 270 is well above Q3 on both.
 
 ## Checking component 2
 
@@ -484,12 +493,30 @@ places_pr %>% select(id, econ, crime, educate) %>%
 
 ## The biplot
 
-- draw it
+```{r}
+ggbiplot(places.1, labels = places$id)
+```
 
-- explain why little value
+## Comments
 
-- redraw with cities minimized
+- This is hard to read!
+- There are a lot of cities that overshadow the red arrows for the variables.
+- reduce the size of the city labels
 
+## Biplot, attempt 2
+
+```{r}
+ggbiplot(places.1, labels = places$id,
+         labels.size = 0.8)
+```
+
+## Comments on attempt #2
+
+- Now at least can see the variables
+- All of them point somewhat right (all belong partly to component 1)
+- Some of them (economy, crime, education) point up/down, belong to component 2 as well.
+- In this case, cannot really see both observations (cities) and variables (criteria) together, which defeats the purpose of the biplot. 
+- Have to try it and see.
 
 
 ##  Principal components from correlation matrix
