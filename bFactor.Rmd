@@ -74,16 +74,16 @@ kids
 ```{r}
 kids %>%
   select(where(is.numeric)) %>%
-  as.matrix() %>%
-  princomp(covmat = .) -> kids.pc
+  as.matrix() -> m
+kids.0 <- princomp(covmat = m) 
 ```
 
-
+I used `kids.0` here since I want `kids.1` and `kids.2` later.
 
 
 ##  Scree plot
 ```{r fig.height=3.5}
-ggscreeplot(kids.pc)
+ggscreeplot(kids.0)
 ```
 
    
@@ -96,7 +96,7 @@ ggscreeplot(kids.pc)
 
 \footnotesize
 ```{r}
-kids.pc$loadings
+kids.0$loadings
 ```
 \normalsize
 
@@ -108,6 +108,8 @@ first three tests.
 * Second component rather more clearly `add` and `dots`.
 
 * No scores, plots since no actual data.
+
+- See how factor analysis compares on these data.
 
 
 ##  Factor analysis
@@ -135,12 +137,12 @@ wrote the tests.
 
 * Feed this into `factanal`, specifying how many factors (2).
 
+- Start with the matrix we made before.
+
 ```{r }
-km <- kids %>%
-  select(where(is.numeric)) %>%
-  as.matrix()
-km2 <- list(cov = km, n.obs = 145)
-kids.f2 <- factanal(factors = 2, covmat = km2)
+m
+ml <- list(cov = m, n.obs = 145)
+kids.2 <- factanal(factors = 2, covmat = ml)
 ```
 
    
@@ -150,7 +152,7 @@ kids.f2 <- factanal(factors = 2, covmat = km2)
 ##  Uniquenesses
 
 ```{r }
-kids.f2$uniquenesses
+kids.2$uniquenesses
 ```
 
 
@@ -168,7 +170,7 @@ uniqueness means that the variable is summarized by a factor (good).
 
 \footnotesize
 ```{r}
-kids.f2$loadings
+kids.2$loadings
 ```
 \normalsize
 
@@ -187,9 +189,9 @@ regression R-squared).
 
 ##  Are 2 factors enough? 
 ```{r }
-kids.f2$STATISTIC
-kids.f2$dof
-kids.f2$PVAL
+kids.2$STATISTIC
+kids.2$dof
+kids.2$PVAL
 ```
 
    
@@ -200,19 +202,19 @@ P-value not small, so 2 factors OK.
 ##  1 factor
 
 ```{r }
-kids.f1 <- factanal(factors = 1, covmat = km2)
-kids.f1$STATISTIC
-kids.f1$dof
-kids.f1$PVAL
+kids.1 <- factanal(factors = 1, covmat = ml)
+kids.1$STATISTIC
+kids.1$dof
+kids.1$PVAL
 ```
 
    
 
 1 factor rejected (P-value small). Definitely need more than 1.
 
-## Places rated, again 
+## Places rated, again
 
-Read data, transform, rerun principal components, get biplot: 
+- Read data, transform, rerun principal components, get biplot: 
 
 ```{r, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
@@ -224,6 +226,8 @@ places.1 <- princomp(places_numeric, cor = TRUE)
 g <- ggbiplot(places.1, labels = places$id,
          labels.size = 0.8)
 ```
+
+- This is all exactly as for principal components (nothing new here).
 
 ## The biplot
 
@@ -301,6 +305,8 @@ places %>%
 ```
 
 ## Highest scores on factor 1, "well-being":
+
+- for the top 4 places:
 
 ```{r}
 places_scores %>% 
@@ -529,9 +535,9 @@ factors (rotate to 12 o'clock and 3 o'clock, for example).
 * Try for 2-factor solution (rough interpretation, will be bad):
 
 ```{r }
-bem.2 <- bem %>%
+bem %>%
   select(-subno) %>%
-  factanal(factors = 2)
+  factanal(factors = 2) -> bem.2
 ```
 
 
@@ -580,9 +586,11 @@ bit tricky:
 
 \footnotesize
 ```{r}
-loadings <- as.data.frame(unclass(bem.2$loadings)) %>%
-  mutate(trait = rownames(bem.2$loadings))
-loadings %>% slice(1:12)
+bem.2$loadings %>% 
+  unclass() %>% 
+  as_tibble() %>% 
+  mutate(trait = rownames(bem.2$loadings)) -> loadings
+loadings %>% slice(1:8)
 ```
 \normalsize
    
@@ -666,7 +674,10 @@ bem %>% slice(366) %>% glimpse()
 * Individual 366 high on factor 2, but hard to see which traits should have high scores
 (unless we remember).
 
-* Idea: *tidy* original data frame to make easier to look
+- Idea 1: use percentile ranks as before.
+
+* Idea 2: Rating scale is easy to interpret. So
+*tidy* original data frame to make easier to look
 things up.
 
 
@@ -728,7 +739,8 @@ As expected, high scorer on these.
 Rows 311 and 214 were *low* on Factor 2, so their scores should
 be low. Can we do them all at once?
 
-\footnotesize
+
+\scriptsize
 ```{r}
 bem_tidy %>% filter(
   row %in% c(366, 311, 214),
@@ -785,9 +797,9 @@ bem.2$PVAL
 15 factors to not reject:
 
 ```{r }
-bem.15 <- bem %>%
+bem %>%
   select(-subno) %>%
-  factanal(factors = 15)
+  factanal(factors = 15) -> bem.15
 bem.15$PVAL
 ```
 
@@ -795,22 +807,23 @@ bem.15$PVAL
 
 Even then, only just over 50\% of variability explained.
 
-Let's have a look at the important things in those 15 factors.
+## What's important in 15 factors?
 
+- Let's take a look at the important things in those 15 factors.
 
-
-##  Get 15-factor loadings
-into a data frame, as before:  
+- Get 15-factor loadings into a data frame, as before:  
 
 \small
 ```{r}
-loadings <- as.data.frame(unclass(bem.15$loadings)) %>%
-  mutate(trait = rownames(bem.15$loadings))
+bem.15$loadings %>% 
+  unclass() %>% 
+  as_tibble() %>% 
+  mutate(trait = rownames(bem.15$loadings)) -> loadings
 ```
 \normalsize
    
 
-then show the highest few loadings on each factor.
+- then show the highest few loadings on each factor.
 
 
 
@@ -880,7 +893,7 @@ Gentle, tender, warm (affectionate): caring for others.
 
 ##  Factor 5
 
-\footnotesize
+\scriptsize
 ```{r}
 loadings %>%
   arrange(desc(abs(Factor5))) %>%
@@ -897,7 +910,7 @@ Being the best.
 
 ##  Factor 6
 
-\footnotesize
+\scriptsize
 ```{r}
 loadings %>%
   arrange(desc(abs(Factor6))) %>%
@@ -923,10 +936,7 @@ loadings %>%
 ```
 \normalsize
    
-
-Acts like a leader, leadership ability (with a bit of Dominant):
-Taking charge.
-
+Happy and cheerful.
 
 
 ##  Factor 8
