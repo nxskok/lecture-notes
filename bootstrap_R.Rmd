@@ -18,7 +18,7 @@
 ## Blue Jays attendances
 
 ```{r, echo=FALSE, message=FALSE}
-jays <- read_csv("jays15-home.csv")
+jays <- read_csv("http://ritsokiguess.site/datafiles/jays15-home.csv")
 set.seed(457299)
 ```
 
@@ -51,63 +51,83 @@ mean(jays$attendance)
 - Want a sense of how the sample mean might vary, if we were able to take repeated samples from our population.
 - Idea: take lots of *bootstrap* samples, and see how *their* sample means vary.
 
-## Taking lots of bootstrap samples
+## Setting up bootstrap sampling
 
-- `rerun` does something as many times as you say. We just do 2 times to get the idea:
-
-
-```{r, echo=FALSE, message=FALSE}
-set.seed(457299)
-```
+- Begin by setting up a dataframe that contains a row for each bootstrap sample. I usually call this column `sim`. Do just 4 to get the idea:
 
 ```{r}
-rerun(2, sample(jays$attendance, replace = TRUE))
+tibble(sim = 1:4)
 ```
 
-## Mean of each bootstrap sample
+## Drawing the bootstrap samples
 
-- Then take the mean of each of those:
+- Then set up to work one row at a time, and draw a bootstrap sample of the attendances in each row:
 
-```{r, echo=FALSE, message=FALSE}
-set.seed(457299)
-```
-
+\small
 ```{r}
-rerun(2, sample(jays$attendance, replace = TRUE)) %>% 
-  map_dbl(~mean(.))
+tibble(sim = 1:4) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(jays$attendance, replace = TRUE)))
 ```
+\normalsize
 
-- Last: make these into a dataframe:
-
-```{r, echo=FALSE, message=FALSE}
-set.seed(457299)
-```
-
-```{r}
-rerun(2, sample(jays$attendance, replace = TRUE)) %>% 
-  map_dbl(~mean(.)) %>% 
-  enframe()
-```
-
-## Do it many times
-
-- Now that we know it works, replace 2 by 1000 (or larger) and save result:
-
-\footnotesize
-
-```{r}
-rerun(1000, sample(jays$attendance, replace = TRUE)) %>% 
-  map_dbl(~mean(.)) %>% 
-  enframe() -> d
-d
-```
+- Each row of our dataframe contains *all* of a bootstrap sample of 25 observations drawn with replacement from the attendances.
 
 \normalsize
 
-## Are these normal?
+## Sample means
+
+- Find the mean of each sample:
+
+\footnotesize
+```{r}
+tibble(sim = 1:4) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
+  mutate(my_mean = mean(sample))
+```
+\normalsize
+
+- These are (four simulated values of) the bootstrapped sampling distribution of the sample mean.
+
+## Make a histogram of them
+
+- rather pointless here, but to get the idea:
+
+\footnotesize
+```{r}
+tibble(sim = 1:4) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
+  mutate(my_mean = mean(sample)) %>% 
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3) -> g
+```
+\normalsize
+
+## The (pointless) histogram
 
 ```{r}
-ggplot(d, aes(x=value)) + geom_histogram(bins=10)
+g
+```
+
+## Now do again with a decent number of bootstrap samples
+
+- say 1000, and put a decent number of bins on the histogram also:
+
+\footnotesize
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
+  mutate(my_mean = mean(sample)) %>% 
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
+```
+\normalsize
+
+## The (better) histogram
+
+```{r}
+g
 ```
 
 ## Comments
@@ -119,6 +139,25 @@ ggplot(d, aes(x=value)) + geom_histogram(bins=10)
 - It is surprisingly powerful.
 - Thus, the $t$-test is actually perfectly good here.
 
+## Comments on the code
+
+- You might have been wondering about this:
+
+\small
+```{r}
+tibble(sim = 1:4) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(jays$attendance, replace = TRUE)))
+```
+\normalsize
+
+- how did we squeeze all 25 sample values into one cell?
+  - sample is a so-called "list-column" that can contain anything.
+- why did we have to put `list()` around the `sample()`?
+  - because `sample` produces a collection of numbers, not just a single one
+  - the `list()` signals this: "make a list-column of samples".
+  
+  
 ## Two samples
 
 - Assumption: *both* samples are from a normal distribution.
@@ -139,6 +178,7 @@ ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 
 ## Getting just the control group 
 
+- Use `filter` to select rows where something is true:
 
 ```{r}
 kids %>% filter(group=="c") -> controls
@@ -147,27 +187,34 @@ controls
 
 ## Bootstrap these
 
+\footnotesize
 ```{r}
-rerun(1000, sample(controls$score, replace = TRUE)) %>% 
-  map_dbl(~mean(.)) %>% 
-  enframe() -> d
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(controls$score, replace = TRUE))) %>% 
+  mutate(my_mean = mean(sample)) %>% 
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
 ```
+\normalsize
 
 ## Plot
 
 ```{r}
-ggplot(d, aes(x=value)) + geom_histogram(bins=10)
+g
 ```
 
 ## ... and the treatment group:
 
+\footnotesize
 ```{r}
 kids %>% filter(group=="t") -> treats
-rerun(1000, sample(treats$score, replace = TRUE)) %>% 
-  map_dbl(~mean(.)) %>% 
-  enframe() %>% 
-  ggplot(aes(x=value)) + geom_histogram(bins=10) -> g
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
+  mutate(my_mean = mean(sample)) %>% 
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
 ```
+\normalsize
 
 ## Histogram
 
