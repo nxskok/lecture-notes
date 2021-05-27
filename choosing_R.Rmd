@@ -315,3 +315,63 @@ sales %>% left_join(desc) %>%
 - other variations (examples follow):
   - if there are two columns with the same name in the two dataframes, and you only want to match on one, use `by` with one column name
   - if the columns you want to look up have different names in the two dataframes, use `by` with a "named list"
+
+## Matching on only some matching names
+
+- Suppose the `sales` dataframe *also* had a column `qty` (which was the quantity sold): 
+
+\small
+```{r}
+sales %>% rename("qty"="sales") -> sales1
+sales1
+```
+\normalsize
+
+- The `qty` in `sales1` is the quantity sold, but the `qty` in `desc` is the number of nails in a package. These should *not* be matched: they are different things.
+
+## Matching only on product code
+
+```{r}
+sales1 %>% 
+  left_join(desc, by = "product_code")
+```
+
+- Get `qty.x` (from `sales1`) and `qty.y` (from `desc`).
+
+## Matching on different names 1/2
+
+- Suppose the product code in `sales` was just `code`:
+
+\small
+```{r}
+sales %>% rename("code" = "product_code") -> sales2
+sales2
+```
+\normalsize
+
+- How to match the two product codes that have different names?
+
+##  Matching on different names 2/2
+
+- Use `by`, but like this:
+
+```{r}
+sales2 %>% 
+  left_join(desc, by = c("code"="product_code"))
+```
+
+## Other types of join
+
+- `right_join`: interchanges roles, looking up keys from second dataframe in first.
+- `anti_join`: give me all the rows in the first dataframe that are *not* in the second. (Use this eg. to see whether the product descriptions are incomplete.)
+- `full_join`: give me all the rows in both dataframes, with missings as needed.
+
+## Full join here
+
+\small
+```{r}
+sales %>% full_join(desc)
+```
+\normalsize
+
+- The missing `sales` for "masonry nail" says that it was in the lookup table `desc`, but we didn't sell any.

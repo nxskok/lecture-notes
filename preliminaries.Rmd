@@ -17,6 +17,7 @@ library(PMCMRplus)
 library(leaps)
 library(lubridate)
 library(ggrepel)
+library(bootstrap)
 library(ggbiplot)
 library(nnet)
 library(survival)
@@ -46,6 +47,7 @@ conflict_prefer("arrange", "dplyr")
 conflict_prefer("mutate", "dplyr")
 conflict_prefer("count", "dplyr")
 conflict_prefer("ggbiplot", "ggbiplot")
+conflict_prefer("rename", "dplyr")
 ```
 
 

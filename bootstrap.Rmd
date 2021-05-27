@@ -6,7 +6,7 @@ library(tidyverse)
 library(bootstrap)
 ```
 
-[ref](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
+[My source for this](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
 
 
 ## Is my sampling distribution normal enough?
@@ -56,44 +56,58 @@ ggplot(irs, aes(x=Time))+geom_histogram(bins=10)
 - Sampling with replacement is done like this (the default sample size is as long as the original data):
 
 ```{r}
-boot=sample(irs$Time, replace=T)
+boot <- sample(irs$Time, replace=T)
 mean(boot)
 ```
 
 - That's one bootstrapped mean. We need a whole bunch.
+
+## A whole bunch
+
 - Use the same idea as for simulating power:
 
 ```{r, echo=F}
 set.seed(457299)
 ```
 
+\small
 ```{r}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(boot_sample = list(sample(irs$Time, replace = TRUE)))
 ```
+\normalsize
 
+## Get the mean of each of those
 
-
-```{r, cache=T}
-rerun(1000, sample(irs$Time, replace=T)) %>% 
-  map_dbl(~mean(.)) -> means
+\small
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(boot_sample = list(sample(irs$Time, replace = TRUE))) %>% 
+  mutate(my_mean = mean(boot_sample)) -> samples
+samples
 ```
+\normalsize
 
 ## Sampling distribution of sample mean
 
 ```{r, fig.height=4}
-ggplot(tibble(means), aes(x=means))+geom_histogram(bins=20)
+ggplot(samples, aes(x=my_mean)) + geom_histogram(bins=10)
 ```
 
-## Comments
+- Is that a slightly long right tail?
 
-This is not so bad: a long right tail, maybe:
+## Normal quantile plot
+
+might be better than a histogram:
 
 ```{r, fig.height=3.5}
-ggplot(tibble(means), aes(sample=means))+
+ggplot(samples, aes(sample = my_mean)) + 
   stat_qq()+stat_qq_line()
 ```
+
+- a very very slight right-skewness, but very close to normal.
 
 ## Confidence interval from the bootstrap distribution
 
@@ -101,17 +115,22 @@ There are two ways (at least):
 
 - percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to get the middle 95%). This is easy, but not always the best:
 
+\small
 ```{r}
-(b_p=quantile(means, c(0.025, 0.975)))
+(b_p=quantile(samples$my_mean, c(0.025, 0.975)))
 ```
+\normalsize
 
 - bootstrap $t$: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a $t$ interval:
 
+\small
 ```{r}
-n=length(irs$Time)
-t_star=qt(0.975, n-1)
-(b_t=mean(means)+c(-1, 1)*t_star*sd(means))
+n <- length(irs$Time)
+t_star <- qt(0.975, n-1)
+b_t <- with(samples, mean(my_mean)+c(-1, 1)*t_star*sd(my_mean))
+b_t
 ```
+\normalsize
 
 ## Comparing
 
@@ -119,7 +138,7 @@ t_star=qt(0.975, n-1)
 
 ```{r}
 my_names=c("LCL", "UCL")
-o_t=t.test(irs$Time)$conf.int
+o_t <- t.test(irs$Time)$conf.int
 ```
 
 
@@ -177,12 +196,13 @@ tibble(limit=my_names, o_t, b_t, b_p, b_bca)
 
 Recall the soap data:
 
-```{r}
+```{r, message=FALSE}
 url <- "http://ritsokiguess.site/datafiles/soap.txt"
 soap <- read_delim(url," ")
+soap
 ```
 
-## The data
+## Scatterplot
 
 ```{r, fig.height=3.75}
 ggplot(soap, aes(x=speed, y=scrap, colour=line))+
@@ -222,14 +242,16 @@ line_b %>% sample_frac(replace=T)
 1000 times:
 
 ```{r}
-rerun(1000, sample_frac(line_b, replace=T)) %>%
-  map_dbl(~with(.,cor(speed, scrap))) -> cors
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(boot_df = list(sample_frac(line_b, replace = TRUE))) %>% 
+  mutate(my_cor = with(boot_df, cor(speed, scrap))) -> cors
 ```
 
-## A picture of this 
+## A picture of this
 
 ```{r, fig.height=4}
-ggplot(tibble(cors), aes(x=cors))+geom_histogram(bins=15)
+ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 ```
 
 ## Comments and next steps
@@ -238,7 +260,7 @@ ggplot(tibble(cors), aes(x=cors))+geom_histogram(bins=15)
 - Bootstrap percentile interval is:
 
 ```{r}
-(b_p=quantile(cors, c(0.025, 0.975)))
+(b_p=quantile(cors$my_cor, c(0.025, 0.975)))
 ```
 
 - We probably need the BCA interval instead.
@@ -247,6 +269,7 @@ ggplot(tibble(cors), aes(x=cors))+geom_histogram(bins=15)
 
 - To use `bcanon`, write a function that takes a vector of row numbers and returns the correlation between `speed` and `scrap` for those rows:
 
+\footnotesize
 ```{r}
 theta=function(rows, d) {
   d %>% slice(rows) %>% with(., cor(speed, scrap))
@@ -254,6 +277,7 @@ theta=function(rows, d) {
 theta(1:3, line_b)
 line_b %>% slice(1:3)
 ```
+\normalsize
 
 - That looks about right.
 
@@ -280,4 +304,15 @@ tibble(limit=my_names, o_c, b_p, b_bca)
 ```
 
 - The bootstrap percentile interval doesn't go down far enough. 
-- The BCA interval seems to do a better job than the ordinary `cor.test` interval in capturing the skewness of the distribution.
+- The BCA interval seems to do a better job in capturing the skewness of the distribution.
+- The ordinary confidence interval for the correlation is very similar to the BCA one, and thus seems to be trustworthy here even though the correlation has a very skewed distribution. (`cor.test` uses the Fisher $z$ transformation which "spreads out" correlations close to 1).
+
+## The $z$-transformed bootstrapped correlations
+
+\small
+```{r}
+cors %>% 
+  mutate(z = 0.5 * log((1+my_cor)/(1-my_cor))) %>% 
+  ggplot(aes(sample=z)) + stat_qq() + stat_qq_line()
+```
+\normalsize

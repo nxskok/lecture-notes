@@ -362,14 +362,15 @@ ci_median(irs,Time,conf.level=0.90)
 set.seed(457299)
 ```
 
-
+\small
 ```{r}
-rerun(1000, sample(irs$Time, replace = TRUE)) %>% 
-  map_dbl(~mean(.)) %>% 
-  enframe() %>% 
-  ggplot(aes(x=value)) + geom_histogram(bins=10) -> g
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) %>% 
+  ggplot(aes(x=my_mean)) + geom_histogram(bins=10) -> g
 ```
-
+\normalsize
 
 ## The sampling distribution
 
