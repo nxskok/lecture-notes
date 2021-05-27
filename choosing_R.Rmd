@@ -259,95 +259,59 @@ athletes %>%
   
 ## Looking things up in another data frame
 
-```{r, echo=FALSE}
-tb3 <- read_rds("tb3.rds")
+- Suppose you are working in the nails department of a hardware store and you find that you have sold these items:
+
+```{r, message=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/nail_sales.csv"
+sales <- read_csv(my_url)
+sales
 ```
 
 
-Recall the tuberculosis data set, tidied: 
-```{r}
-tb3
-```
+## Product descriptions and prices
 
-What are actual names of those countries in `iso2`?
+- but you don't remember what these product codes are, and you would like to know the total revenue from these sales.
 
-## Actual country names
-Found actual country names to go with those abbreviations, in spreadsheet: 
+- Fortunately you found a list of product descriptions and prices:
 
-\footnotesize
-```{r}
-my_url <- 
-  "http://ritsokiguess.site/datafiles/ISOCountryCodes081507.xlsx"
+\small
+
+```{r, message=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/nail_desc.csv"
+desc <- read_csv(my_url)
+desc
 ```
 
 \normalsize
 
-Note trick for reading in `.xlsx` from URL:
+## The lookup
 
-```{r country-codes}
-f <- tempfile()
-download.file(my_url, f)
-country_names <- read_excel(f)
-```
-
-- set up temporary file
-- download spreadsheet to there
-- read it from temporary file (which is "local")
-
-
-## The country names
+- How do you "look up" the product codes to find the product descriptions and prices?
+- `left_join`.
 
 ```{r}
-country_names
+sales %>% left_join(desc)
 ```
 
-## Looking up country codes
-Matching a variable in one data frame to one in another is called a **join**
-(database terminology):
+## What we have
+
+- this looks up all the rows in the *first* dataframe that are also in the *second*. 
+- by default matches all columns with same name in two dataframes (`product_code` here)
+- get *all* columns in *both* dataframes. The rows are the ones for that `product_code`.
+
+So now can work out how much the total revenue was:
 
 ```{r}
-tb3 %>% left_join(country_names, by = c("iso2" = "Code_UC"))
-```
-
-## Total cases by country
-
-```{r}
-options(dplyr.summarise.inform=FALSE)
+sales %>% left_join(desc) %>% 
+  mutate(product_revenue = sales*price) %>% 
+  summarize(total_revenue = sum(product_revenue))
 ```
 
 
+## More comments
 
-```{r}
-tb3 %>%
-  group_by(iso2) %>%
-  summarize(cases = sum(freq)) %>%
-  left_join(country_names, by = c("iso2" = "Code_UC")) %>%
-  select(Country, cases)
-```
-
-## or even sorted in order
-
-```{r}
-tb3 %>%
-  group_by(iso2) %>%
-  summarize(cases = sum(freq)) %>%
-  left_join(country_names, by = c("iso2" = "Code_UC")) %>%
-  select(Country, cases) %>%
-  arrange(desc(cases))
-```
-
-## Comments
-
-- This is probably not quite right because of:
-  - the 1994-1995 thing
-  - there is at least one country in `tb3` that was not in `country_names` (the NA above). Which?
-  
-\footnotesize  
-```{r}
-tb3 %>%
-  anti_join(country_names, by = c("iso2" = "Code_UC")) %>%
-  distinct(iso2)
-```
-\normalsize
-
-
+- if any product codes are not matched, you get NA in the added columns
+- anything in the *second* dataframe that was not in the first does not appear (here, any products that were not sold)
+- other variations (examples follow):
+  - if there are two columns with the same name in the two dataframes, and you only want to match on one, use `by` with one column name
+  - if the columns you want to look up have different names in the two dataframes, use `by` with a "named list"
