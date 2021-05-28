@@ -242,11 +242,12 @@ pval_sign(300, irs, Time)
 - So 200 inside the 95% CI and 300 outside.
 
 ## Doing a whole bunch
+
 - Choose our null medians first:
 
 \small
 ```{r}
-(d=tibble(null_median=seq(100,300,20)))
+(d <- tibble(null_median=seq(100,300,20)))
 ```
 \normalsize
 
@@ -257,16 +258,15 @@ each null median, run the function `pval_sign` for that null median
 and get the P-value”: 
 
 ```{r}
-d %>% mutate(p_value = map_dbl(null_median, 
-                               ~ pval_sign(., irs, Time)))
+d %>% rowwise() %>% 
+  mutate(p_value = pval_sign(null_median, irs, Time))
 ```
 
-## Make it easier for ourselves 
+## Make it easier for ourselves
 
 ```{r}
-d %>% 
-  mutate(p_value = map_dbl(null_median, 
-                           ~ pval_sign(., irs, Time))) %>%
+d %>% rowwise() %>% 
+  mutate(p_value = pval_sign(null_median, irs, Time)) %>% 
   mutate(in_out = ifelse(p_value > 0.05, "inside", "outside"))
 ```
 

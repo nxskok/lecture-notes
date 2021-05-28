@@ -183,11 +183,12 @@ ggplot(ddd, aes(x = x, y = y, colour = cluster)) +
 Work out (i) sum of squared distances of points from means.
 
 
-## Ward's method part 2
+## Ward's method part 2 xxx
+
 Now imagine combining the two clusters and working out overall
 mean. Join each point to this mean:
 
-```{r echo=F,fig.height=3.5}
+```{r echo=F,fig.height=3.1}
 ddd %>% summarize(x = mean(x), y = mean(y)) -> dm
 # loop through data frame and create grp that links to cluster's mean
 new <- data.frame(
@@ -575,11 +576,11 @@ pairs %>% slice(1:12)
 
 
 ## Run `countdiff` for all those language pairs
+
 \footnotesize
 ```{r}
-pairs %>%
-  mutate(diff = map2_int(lang, lang2, 
-                         ~countdiff(.x, .y, lang.long))) -> thediff
+pairs %>% rowwise() %>% 
+  mutate(diff = countdiff(lang, lang2, lang.long)) -> thediff
 thediff
 ```
 \normalsize

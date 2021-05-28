@@ -100,13 +100,12 @@ t.test(x, mu = 10)$p.value
 
 
 ## Run this lots of times
-- Two steps:
-  - Generate a bunch of random samples
-  - extract the P-value for the t-test from each
+
 - without a loop!
-- Use `rerun` to generate the random samples
-- Use `map` to run the test on each random sample
-- Use `map_dbl` to pull out the P-value for each test
+- use `rowwise` to work one random sample at a time
+- draw random samples from the truth
+- test that $\mu = 10$
+- get P-value
 - Count up how many of the P-values are 0.05 or less.
 
 ## In code
@@ -116,11 +115,12 @@ set.seed(457299)
 ```
 
 ```{r}
-rerun(1000, rnorm(15, 8, 4)) %>%
-  map( ~ t.test(., mu = 10)) %>%
-  map_dbl("p.value") %>% 
-  enframe(value="pvals") %>% 
-  count(pvals <= 0.05)
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(rnorm(15, 8, 4))) %>% 
+  mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
+  mutate(p_val = t_test$p.value) %>% 
+  count(p_val <= 0.05)
 ```
 
 We correctly rejected 422 times out of 1000, so the estimated power is
@@ -238,12 +238,21 @@ g
 ## Another way to do it:
 
 ```{r}
-tibble(n=ns) %>% 
-  mutate(power_output=map(n, ~power.t.test(n=., delta=10-8, sd=4, type="one.sample"))) %>% 
-  mutate(power=map_dbl(power_output, "power")) %>% 
+tibble(n=ns) %>% rowwise() %>%
+  mutate(power_output = 
+           list(power.t.test(n = n, delta = 10-8, sd = 4, 
+                             type = "one.sample"))) %>% 
+  mutate(power = power_output$power) %>% 
   ggplot(aes(x=n, y=power)) + geom_point() + geom_line() +
-    geom_hline(yintercept=1, linetype="dashed")
+    geom_hline(yintercept=1, linetype="dashed") -> g2
 ```
+
+## The power curve done the other way
+
+```{r}
+g2
+```
+
 
 ## Power curves for means
 
