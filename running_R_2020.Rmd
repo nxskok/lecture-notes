@@ -1,57 +1,57 @@
 ## Running R online
 
-Go to [https://jupyter.utoronto.ca/hub/login](https://jupyter.utoronto.ca/hub/login). 
+Go to [rstudio.cloud](https://rstudio.cloud).
 
-You want to see this (if you don't, see next two slides):
+![](Screenshot_2018-06-29_15-01-16.png)
 
-![](Screenshot_2021-06-14_14-39-44.png){height=50%}
+- Click Get Started (or Sign Up top right).
+ 
+## Signing up
+  
 
-If you do, find the line that says "after logging in, open" and click the button next to R Studio to make it blue. Then click the orange Log In to Start, and log in with UTorID and password.
+![](Screenshot_2018-06-29_15-08-57.png){height=200px}
 
 
-## Problems 1
+-  Fill out the top 4 boxes and click Sign Up. Or, log in with your
+  Google or Github accounts, if you have either of those. (If you have
+  GMail, that's a Google account.)
 
-You might instead see this:
 
-![](Screenshot_2021-06-14_14-46-12.png){height=50%}
+## Logging in
 
-It looks exactly the same, but has no option to start R Studio. Log in anyway, which will bring you to the screen shown in Problems 2.
+- After you have signed up, you will be logged in.
+- If you close the rstudio.cloud browser tab and open it up again,
+you will probably get automatically logged in.
+- If not, you can click Log In on the opening screen, or click Get
+Started and pretend to sign up again, and you’ll get logged in.
+- You can explicitly log out, in which case you’ll need to log in again.
+- Use one of these ways to get back into R Studio Cloud next time.
 
-## Problems 2
 
-You might see something that looks like this:
+## R Studio Cloud
 
-![](Screenshot_2021-06-14_15-00-24.png){height=50%}
-
-Click Logout (top right), even if you just logged in. This should bring you back to where you should be, from where you can select R Studio and log in.
-
-## How R Studio looks
-
-![](Screenshot_2021-06-14_15-06-08.png)
-
-## Projects
+![](Screenshot_2018-06-29_15-24-21.png){height=200px}
 
 - Each user has a “workspace”, a place where all your work is
 stored.
 - Within that workspace, you can have as many Projects as you like.
 - To create a new Project, click on the blue New Project button.
 - I recommend having one project per *course*.
-- R Studio restarts where you left off.
 
-## Make a new project
+## In a new project
+  
+-   R Studio starts a new (untitled) project:
+    
+![](Screenshot_2018-06-29_15-32-48.png){height=180px}     
 
-- Call it what you like. Mine is called `thing7`:
-- Select: 
-  - File, 
-  - New Project, 
-  - New Directory,
-  - New Project (again),
-  - give it a name and click Create Project.
-- You see the name of your new project top right.
+  - In left-hand Console can type stuff and see output.
+  - Click on Console, type \texttt{install.packages("tidyverse")}
+    and let it do what it will. (This takes a few minutes.)
+
 
 ## R Notebooks
 
-- At top right of previous view is Console, where you can enter R commands
+- At left of previous view is Console, where you can enter R commands
 and see output.
 - A better way to work is via “R Notebooks”. These allow you to
 combine narrative, code and output in one document.
@@ -59,7 +59,8 @@ combine narrative, code and output in one document.
 did it, with the “why” being more important.
 - To create a new notebook, select File, New File, R Notebook. This
 brings up an example notebook as over.
-- The next example was done in another online environment, so looks (slightly) different, but will still work for you.
+- The first time, you will probably be asked to “install some packages”.
+Click Yes to let it do that.
 
 ## The template R Notebook
   

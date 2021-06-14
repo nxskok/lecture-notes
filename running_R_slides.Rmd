@@ -10,6 +10,7 @@ output:
     df_print: kable
     theme: "AnnArbor"
     colortheme: "dove"
+urlcolor: blue
 ---
 
 
