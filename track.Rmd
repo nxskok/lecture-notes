@@ -5,32 +5,32 @@ output: html_notebook
 
 ## packages
 
-```{r}
+```{r track-1}
 library(tidyverse)
 ```
 
 read track data
 
-```{r}
+```{r track-2}
 track=read_table2("men_track_field.txt")
 track
 ```
 
-```{r}
+```{r track-3}
 track_num = track %>% select(where(is.numeric))
 track_num
 ```
 
-```{r}
+```{r track-4}
 track.pc = track_num %>% princomp(cor=T)
 summary(track.pc)
 ```
 
-```{r}
+```{r track-5}
 names(track.pc)
 ```
 
-```{r}
+```{r track-6}
 track.pc$loadings %>% str()
 ```
 

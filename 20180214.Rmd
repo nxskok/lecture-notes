@@ -18,7 +18,7 @@ library(broom)
 
 ## The data  
 
-```{r}
+```{r 20180214-1}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/hairpain.txt"
 hairpain=read_delim(my_url," ")
 hairpain
@@ -26,7 +26,7 @@ hairpain
 
 Summary statistics
     
-```{r size="footnotesize"}
+```{r 20180214-2, size="footnotesize"}
 hairpain %>% group_by(hair) %>%
   summarize( n=n(),
              xbar=mean(pain),
@@ -45,7 +45,7 @@ ggplot(hairpain,aes(x=hair,y=pain))+geom_boxplot()
   
 via **Levene's test** in package `car`:
 
-```{r}
+```{r 20180214-3}
 car::leveneTest(pain~hair,data=hairpain)
 ```   
 
@@ -55,7 +55,7 @@ car::leveneTest(pain~hair,data=hairpain)
 
 ## Analysis of variance
 
-```{r}
+```{r 20180214-4}
 hairpain.1=aov(pain~hair,data=hairpain)
 summary(hairpain.1)
 ```   
@@ -66,7 +66,7 @@ summary(hairpain.1)
 
 ## Tukey
 
-```{r}
+```{r 20180214-5}
 TukeyHSD(hairpain.1)
 ``` 
 
@@ -115,7 +115,7 @@ Variables:
 
 Read in data:
     
-```{r }
+```{r 20180214-6 }
 my_url="http://www.utsc.utoronto.ca/~butler/d29/vitaminb.txt"
 vitaminb=read_delim(my_url," ")
 vitaminb
@@ -124,14 +124,14 @@ vitaminb
 
 ### *Grouped* boxplot
   
-```{r}
+```{r 20180214-7}
 ggplot(vitaminb,aes(x=diet,y=kidneyweight,
                     fill=ratsize))+geom_boxplot()
 ```   
   
 ## Calculate group means:
     
-```{r }
+```{r 20180214-8 }
 rat_means = vitaminb %>% group_by(ratsize,diet) %>%
   summarize(mean=mean(kidneyweight))
 rat_means
@@ -144,7 +144,7 @@ rat_means
 
 ## ANOVA with interaction
   
-```{r }
+```{r 20180214-9 }
 vitaminb.1=aov(kidneyweight~ratsize*diet,
   data=vitaminb)
 summary(vitaminb.1)
@@ -158,14 +158,14 @@ interaction (can be removed).
   -  Plot mean of response variable against one of the explanatory, using
     other one as groups. Start from summary:
     
-```{r}
+```{r 20180214-10}
 ggplot(vitaminb,aes(x=ratsize,y=kidneyweight,
                     fill=diet))+geom_boxplot()
 ```   
   
 ## Calculate group means:
     
-```{r }
+```{r 20180214-11 }
 rat_means = vitaminb %>% group_by(ratsize,diet) %>%
   summarize(mean=mean(kidneyweight))
 rat_means
@@ -178,7 +178,7 @@ rat_means
 
 ## ANOVA with interaction
   
-```{r }
+```{r 20180214-12 }
 vitaminb.1=aov(kidneyweight~ratsize*diet,
   data=vitaminb)
 summary(vitaminb.1)
@@ -192,7 +192,7 @@ interaction (can be removed).
   -  Plot mean of response variable against one of the explanatory, using
     other one as groups. Start from summary:
     
-```{r }
+```{r 20180214-13 }
 ggplot(rat_means,aes(x=ratsize,y=mean,
      colour=diet,group=diet))+
   geom_point()+geom_line()
@@ -204,7 +204,7 @@ Lines basically parallel, indicating no interaction.
 
 Another look: switch `diet` and `ratsize` around:
 
-```{r}
+```{r 20180214-14}
 ggplot(rat_means,aes(x=diet,y=mean,
      colour=ratsize,group=ratsize))+
   geom_point()+geom_line()
@@ -216,7 +216,7 @@ Again, two lines basically parallel.
 
 Note notation `a:b` for "just the interaction between `a` and `b`":
   
-```{r}
+```{r 20180214-15}
 vitaminb.2=update(vitaminb.1,.~.-ratsize:diet)
 summary(vitaminb.2)
 ```   
@@ -246,7 +246,7 @@ summary(vitaminb.2)
 - type of filter (Octel, Std)
 - side: L or R (ignore)
  
-```{r }
+```{r 20180214-16 }
 my_url="http://www.utsc.utoronto.ca/~butler/d29/autonoise.txt"
 autonoise=read_table(my_url)
 autonoise
@@ -255,7 +255,7 @@ autonoise
 
 ### Use grouped boxplot again:
   
-```{r }
+```{r 20180214-17 }
 autonoise %>% 
     ggplot(aes(x=size,y=noise,fill=type))+
     geom_boxplot() 
@@ -267,7 +267,7 @@ medium engine size than for large or small.
 
 ### ANOVA
   
-```{r}
+```{r 20180214-18}
 autonoise.1=aov(noise~size*type,data=autonoise)
 summary(autonoise.1)
 ```   
@@ -278,7 +278,7 @@ summary(autonoise.1)
 
 ### Tukey: ouch!
   
-```{r}
+```{r 20180214-19}
 autonoise.2=TukeyHSD(autonoise.1)
 autonoise.2
 ``` 
@@ -293,7 +293,7 @@ We don't want to compare all of those.
     `ggplot` as in vitamin B example.
   -  Or, have `ggplot` compute them for us, thus:
     
-```{r }
+```{r 20180214-20 }
 ggplot(autonoise,aes(x=size,y=noise,
     colour=type,group=type))+
   stat_summary(fun.y=mean,geom="point")+
@@ -307,7 +307,7 @@ of `type` is different for medium-sized engines than for others.
   
   ... then compute the means first, in a pipeline:
 
-```{r}
+```{r 20180214-21}
 autonoise %>% group_by(size,type) %>%
   summarize(mean_noise=mean(noise)) %>%
   ggplot(aes(x=size,y=mean_noise,group=type,
@@ -333,7 +333,7 @@ autonoise %>% group_by(size,type) %>%
 
 Small:
 
-```{r }
+```{r 20180214-22 }
 autonoise %>% filter(size=="S") %>%
   aov(noise~type,data=.) %>% summary()
 ```     
@@ -343,7 +343,7 @@ autonoise %>% filter(size=="S") %>%
 
 -  For Medium, change `S` to `M` and repeat.
 
-```{r }
+```{r 20180214-23 }
 autonoise %>% filter(size=="M") %>%
   aov(noise~type,data=.) %>% summary()
 ```   
@@ -351,7 +351,7 @@ autonoise %>% filter(size=="M") %>%
 -  There *is* an effect of filter type for medium-engined cars. Look
   at means to investigate:
  
-```{r }
+```{r 20180214-24 }
 autonoise %>% filter(size=="M") %>%
   group_by(type) %>% summarize(m=mean(noise))
 ```   
@@ -360,7 +360,7 @@ autonoise %>% filter(size=="M") %>%
 
 -  Large:
 
-```{r }
+```{r 20180214-25 }
 autonoise %>% filter(size=="L") %>%
   aov(noise~type,data=.) %>% summary()
 ```   
@@ -369,7 +369,7 @@ autonoise %>% filter(size=="L") %>%
   
   -  Or use `glance` from `broom`:
 
-```{r size="footnotesize"}
+```{r 20180214-26, size="footnotesize"}
 autonoise %>% filter(size=="L") %>%
   aov(noise~type,data=.) %>% glance()
 ```   
@@ -379,14 +379,14 @@ autonoise %>% filter(size=="L") %>%
 
 Remind ourselves of data layout:
 
-```{r}
+```{r 20180214-27}
 autonoise
 ```
 
   
 The "split" part:
 
-```{r }
+```{r 20180214-28 }
 autonoise %>% group_by(size) %>%
     nest()
 ```   
@@ -400,7 +400,7 @@ Apply:
     data frame with columns `noise` and `type`,
     returning P-value:
     
-```{r }
+```{r 20180214-29 }
 aov_pval=function(x) {
     noise.1=aov(noise~type,data=x)
     gg=glance(noise.1)
@@ -410,7 +410,7 @@ aov_pval=function(x) {
 
 -  Test it:
   
-```{r }
+```{r 20180214-30 }
 autonoise %>% filter(size=="L") %>%
   aov_pval()
 ```   
@@ -422,12 +422,12 @@ Combine:
   -  Apply this function to each of the nested data frames (one per
     engine size):
 
-```{r }
+```{r 20180214-31 }
 autonoise %>% group_by(size) %>%
     nest()
 ```     
     
-```{r }
+```{r 20180214-32 }
 autonoise %>% group_by(size) %>%
     nest() %>%
     mutate(p_val=map_dbl(data,aov_pval))
@@ -437,7 +437,7 @@ autonoise %>% group_by(size) %>%
   number (a `dbl`). Investigate what happens if you use
   `map` instead:
   
-```{r }
+```{r 20180214-33 }
 autonoise %>% group_by(size) %>%
     nest() %>%
     mutate(p_val=map(data,aov_pval))
@@ -445,7 +445,7 @@ autonoise %>% group_by(size) %>%
   
   We don't get to see the P-values; we need one more step to get them out:
   
-```{r }
+```{r 20180214-34 }
 autonoise %>% group_by(size) %>%
     nest() %>%
     mutate(p_val=map(data,aov_pval)) %>% 
@@ -456,7 +456,7 @@ autonoise %>% group_by(size) %>%
   -  The `data` column was stepping-stone to getting
     answer. Don't need it any more:
     
-```{r size="small"}
+```{r 20180214-35, size="small"}
 simple_effects = autonoise %>% group_by(size) %>%
     nest() %>%
     mutate(p_val=map_dbl(data,aov_pval)) %>%
@@ -470,7 +470,7 @@ simple_effects
     this case, 3.)
   -  Have to adjust P-values for this. Eg.\ Holm:
   
-```{r size="small"}
+```{r 20180214-36, size="small"}
 simple_effects %>%
     arrange(p_val) %>%
     mutate(multiplier=4-row_number()) %>%
@@ -500,7 +500,7 @@ simple_effects %>%
   
 Same idea as for simple effect test:
 
-```{r }
+```{r 20180214-37 }
 autonoise %>% filter(size=="S") %>%
   t.test(noise~type,data=.) %>% glance() %>% 
   select(conf.low,conf.high)
@@ -510,7 +510,7 @@ autonoise %>% filter(size=="S") %>%
 ### CI for medium cars
   
 
-```{r }
+```{r 20180214-38 }
 autonoise %>% filter(size=="M") %>%
   t.test(noise~type,data=.) %>% glance() %>% 
   select(conf.low,conf.high)
@@ -519,7 +519,7 @@ autonoise %>% filter(size=="M") %>%
 CI for large:
   
 
-```{r }
+```{r 20180214-39 }
 autonoise %>% filter(size=="L") %>%
   t.test(noise~type,data=.) %>% 
   glance() %>% 
@@ -528,7 +528,7 @@ autonoise %>% filter(size=="L") %>%
   
 Or, all at once: split/apply/combine
   
-```{r}
+```{r 20180214-40}
 ci_func=function(x) {
     tt=t.test(noise~type,data=x) %>% 
       glance() %>% 
@@ -599,26 +599,26 @@ autonoise %>%
 ## Contrasts in R
   
 -  Comparing two home models A and D ($\mu_A-\mu_D=0$):
-```{r }
+```{r 20180214-41 }
 c.home=c(1,0,0,-1)
 ```     
 
 -  Comparing two industrial models B and C ($\mu_B-\mu_C=0$):
   
-```{r }
+```{r 20180214-42 }
 c.industrial=c(0,1,-1,0)
 ```   
 
 -  Comparing home average vs.\ industrial average ($0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$):
   
-```{r }
+```{r 20180214-43 }
 c.home.ind=c(0.5,-0.5,-0.5,0.5)
 ```   
 ## Orthogonal contrasts
 
 -  What happens if we multiply the contrast coefficients one by one?
 
-```{r }
+```{r 20180214-44 }
 c.home*c.industrial
 c.home*c.home.ind
 c.industrial*c.home.ind
@@ -627,7 +627,7 @@ c.industrial*c.home.ind
   contrasts are called **orthogonal**.
 
 -  Compare these:
-```{r }
+```{r 20180214-45 }
 c1=c(1,-1,0)
 c1
 c2=c(0,1,-1)
@@ -643,7 +643,7 @@ orthogonal.
 
 ## Starting the analysis
   
-```{r }
+```{r 20180214-46 }
 my_url="http://www.utsc.utoronto.ca/~butler/d29/chainsaw.txt"
 chain.wide=read_table(my_url)
 chain.wide
@@ -652,7 +652,7 @@ chain.wide
   
 Need all the kickbacks in *one* column:
 
-```{r }
+```{r 20180214-47 }
 chain = chain.wide %>% 
   gather(model,kickback,A:D,factor_key=T)
 chain
@@ -662,7 +662,7 @@ We beed `model` to be factor later, so the `factor_key=T` makes that happen now.
   
 ## Setting up and using contrasts
   
-```{r}
+```{r 20180214-48}
 m=cbind(c.home,c.industrial,c.home.ind)
 m
 contrasts(chain$model)=m
@@ -670,12 +670,12 @@ contrasts(chain$model)=m
   
 Now run ANOVA *as if regression*:
 
-```{r }
+```{r 20180214-49 }
 chain.1=lm(kickback~model,data=chain)
 summary(chain.1)
 ``` 
 
-```{r }
+```{r 20180214-50 }
 tidy(chain.1) %>% select(term,p.value)
 ```     
   
@@ -693,7 +693,7 @@ tidy(chain.1) %>% select(term,p.value)
   \begin{itemize}
     -  The means:
     
-```{r }
+```{r 20180214-51 }
 chain %>% group_by(model) %>%
   summarize(mean.kick=mean(kickback))
 ``` 

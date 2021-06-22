@@ -67,12 +67,12 @@ its mean is 10 or not.
 ## Making it go
 - Random sample of 15 normal observations with mean 8 and SD 4:
 
-```{r, echo=F}
+```{r inference-2-R-post-1, echo=F}
 set.seed(457299)
 ```
 
 
-```{r}
+```{r inference-2-R-post-2}
 x <- rnorm(15, 8, 4)
 x
 ```
@@ -84,7 +84,7 @@ x
 
 
 
-```{r}
+```{r inference-2-R-post-3}
 t.test(x, mu = 10)
 ```
 
@@ -93,7 +93,7 @@ t.test(x, mu = 10)
 
 ## or get just P-value 
 
-```{r}
+```{r inference-2-R-post-4}
 t.test(x, mu = 10)$p.value
 ```
 
@@ -111,11 +111,11 @@ t.test(x, mu = 10)$p.value
 
 ## In code
 
-```{r, echo=FALSE}
+```{r inference-2-R-post-5, echo=FALSE}
 set.seed(457299)
 ```
 
-```{r}
+```{r inference-2-R-post-6}
 rerun(1000, rnorm(15, 8, 4)) %>%
   map( ~ t.test(., mu = 10)) %>%
   map_dbl("p.value") %>% 
@@ -128,7 +128,7 @@ We correctly rejected 422 times out of 1000, so the estimated power is
 
 try with larger sample
 
-```{r}
+```{r inference-2-R-post-7}
 rerun(1000, rnorm(60, 8, 4)) %>%
   map( ~ t.test(., mu = 10)) %>%
   map_dbl("p.value") %>% 
@@ -145,12 +145,12 @@ be calculated.
 - `power.t.test`. delta difference between null and true mean: 
 
 \small
-```{r}
+```{r inference-2-R-post-8}
 power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
 ```
 \normalsize
 
-```{r}
+```{r inference-2-R-post-9}
 power.t.test(n = 60, delta = 10-8, sd = 4, type = "one.sample")
 ```
 
@@ -191,7 +191,7 @@ true $\mu = 8$, $\sigma = 4$, but now aim for power 0.80.
 ## Using power.t.test
 - No `n=`, replaced by a `power=`:
 
-```{r}
+```{r inference-2-R-post-10}
 power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 ```
 
@@ -212,13 +212,13 @@ and null-hypothesis means and power.
 calculation for each one.
 - Do power for variety of sample sizes, from 10 to 100 in steps of 10:
 
-```{r}
+```{r inference-2-R-post-11}
 ns=seq(10,100,10)
 ns
 ```
 
 - Calculate powers:
-```{r}
+```{r inference-2-R-post-12}
 ans=power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
 ans$power
 ```
@@ -228,7 +228,7 @@ ans$power
 
 ## Building a plot (1/2)
 - Make a data frame out of the values to plot:
-```{r}
+```{r inference-2-R-post-13}
 d=tibble(n=ns, power=ans$power)
 d
 ```
@@ -237,20 +237,20 @@ d
 
 - Plot these as points joined by lines, and add horizontal line at 1
 (maximum power): 
-```{r}
+```{r inference-2-R-post-14}
 g = ggplot(d, aes(x = n, y = power)) + geom_point() + 
   geom_line() + 
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
 ## The power curve
-```{r}
+```{r inference-2-R-post-15}
 g
 ```
 
 ## Another way to do it:
 
-```{r}
+```{r inference-2-R-post-16}
 tibble(n=ns) %>% 
   mutate(power_output=map(n, ~power.t.test(n=., delta=10-8, sd=4, type="one.sample"))) %>% 
   mutate(power=map_dbl(power_output, "power")) %>% 
@@ -266,7 +266,7 @@ will be).
 - Investigate for two different sample sizes, 15 and 30.
 - First make all combos of mean and sample size:
 
-```{r}
+```{r inference-2-R-post-17}
 means <- seq(6,10,0.5)
 means
 ns <- c(15,30)
@@ -276,7 +276,7 @@ combos=crossing(mean=means, n=ns)
 
 ## The combos
 
-```{r}
+```{r inference-2-R-post-18}
 combos
 ```
 
@@ -285,7 +285,7 @@ combos
 - Calculate the powers, carefully:
 
 
-```{r}
+```{r inference-2-R-post-19}
 ans=with(combos, power.t.test(n=n, delta=mean-10, sd=4, 
                               type="one.sample"))
 ans
@@ -294,14 +294,14 @@ ans
  
 ## More of what's in the output
 
-```{r}
+```{r inference-2-R-post-20}
 names(ans)
 ans$power
 ```
 
 ##  Make a data frame to plot, pulling things from the right places:
 
-```{r}
+```{r inference-2-R-post-21}
 d=tibble(n=factor(combos$n), mean=combos$mean, 
          power=ans$power)
 d
@@ -309,7 +309,7 @@ d
 
 ##  then make the plot:
 
-```{r}
+```{r inference-2-R-post-22}
 g = ggplot(d, aes(x = mean, y = power, colour = n)) +
   geom_point() + geom_line() +
   geom_hline(yintercept = 1, linetype = "dashed") +
@@ -318,7 +318,7 @@ g = ggplot(d, aes(x = mean, y = power, colour = n)) +
 
 ## The power curves
 
-```{r, fig.height=3.8}
+```{r inference-2-R-post-23, fig.height=3.8}
 g
 ```
 
@@ -339,7 +339,7 @@ true mean needs to be less than 6.)
 ## Power by sample size for means 7 and 8
 Similar procedure to before:
 
-```{r}
+```{r inference-2-R-post-24}
 means=c(7, 8)
 ns=seq(10, 40, 5)
 combos=crossing(mean=means, n=ns)
@@ -355,13 +355,13 @@ g=ggplot(d, aes(x=n, y=power, colour=mean)) +
 
 ## The power curves
 
-```{r, fig.height=3.8}
+```{r inference-2-R-post-25, fig.height=3.8}
 g
 ```
 
 ## Two-sample power
 
-```{r, echo=FALSE}
+```{r inference-2-R-post-26, echo=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
@@ -370,7 +370,7 @@ kids <- read_delim(my_url," ")
 - For kids learning to read, had sample sizes of 22 (approx) in each group
 - and these group SDs:
 
-```{r}
+```{r inference-2-R-post-27}
 kids
 kids %>% group_by(group) %>% 
   summarize(n=n(), s=sd(score))

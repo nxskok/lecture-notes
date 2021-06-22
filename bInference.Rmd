@@ -69,7 +69,7 @@ interval for population mean.
 distribution with $n-1=9$ degrees of freedom.
 
 * Obtain $t^*$ from $t$-table or as
-```{r }
+```{r bInference-1 }
 t.star <- qt(1 - 0.05 / 2, 9)
 t.star
 ```
@@ -78,7 +78,7 @@ t.star
 
 * and thus 95\% CI for mean is this: $m=t^* s / \sqrt{n}$, then
 $\bar{x} \pm m$:
-```{r }
+```{r bInference-2 }
 m <- t.star * 2.5 / sqrt(10)
 m
 c(15 - m, 15 + m)
@@ -117,7 +117,7 @@ is 17 after all. Use $\alpha=0.05$.
 
 * Calculate test statistic $t=(\bar{x}-\mu_0)/(s/\sqrt{n})$, where
 $\mu_0$ is the population mean given by the null hypothesis:
-```{r }
+```{r bInference-3 }
 t.stat <- (15 - 17) / (2.5 / sqrt(10))
 t.stat
 ```
@@ -129,7 +129,7 @@ where `t.tstat`, or its absolute value, comes. Or get P-value
 directly from R. *left* tail here, since
 `t.stat` $<0$; also $\times 2$ for
 two-sided test:
-```{r }
+```{r bInference-4 }
 2 * pt(t.stat, 9)
 ```
 
@@ -152,7 +152,7 @@ null. So evidence against a mean of 17 is strong but not
 
 
 ## Doing it in R
-```{r echo=F}
+```{r bInference-5, echo=F}
 data <- rnorm(10)
 data <- (data - mean(data)) / sd(data)
 mydata <- 15 + 2.5 * data
@@ -163,7 +163,7 @@ mydata <- 15 + 2.5 * data
 
 
 * These data have right mean and SD:
-```{r }
+```{r bInference-6 }
 mydata
 ```
 
@@ -171,7 +171,7 @@ mydata
 
 * One step with R (note everything as before):
 {\small
-```{r }
+```{r bInference-7 }
 t.test(mydata, mu = 17)
 ```
 
@@ -262,7 +262,7 @@ arrangement for data in R.
 
 
 * My favourite tool: **boxplot**:
-```{r fig.height=3.5,size="small"}
+```{r bInference-8, fig.height=3.5,size="small"}
 ggplot(drp, aes(x = group, y = score)) + geom_boxplot()
 ```
 

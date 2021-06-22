@@ -82,20 +82,20 @@ This is the title
 =================
 Here is some data:
 
-```{r}
+```{r bRscript-1}
 x=c(10,11,13,14,17,18,22,24,27,41)
 x
 ```
 
 and this is a summary of x:
 
-```{r}
+```{r bRscript-2}
 summary(x)
 ```
 
 Finally, a boxplot of x:
 
-```{r}
+```{r bRscript-3}
 boxplot(x)
 ```
 

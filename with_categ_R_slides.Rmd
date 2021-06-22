@@ -15,9 +15,9 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r with-categ-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="with_categ_R.Rmd"}
+```{r with-categ-R-slides-2, child="with_categ_R.Rmd"}
 ```

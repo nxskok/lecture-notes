@@ -11,7 +11,7 @@ Sport.
 
 ## Packages for this section
 
-```{r, eval=F}
+```{r graphs-R-1, eval=F}
 library(tidyverse)
 ```
 
@@ -21,7 +21,7 @@ library(tidyverse)
 - Data in `ais.txt`:
 
 \scriptsize
-```{r}
+```{r graphs-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
@@ -30,7 +30,7 @@ athletes <- read_tsv(my_url)
 ## The data (some)
 
 \footnotesize
-```{r}
+```{r graphs-R-3}
 athletes
 ```
 \normalsize
@@ -65,14 +65,14 @@ graphs.
 
 ## Bar chart
 
-```{r, fig.height=3.9}
+```{r graphs-R-4, fig.height=3.9}
 ggplot(athletes, aes(x = Sport)) + geom_bar()
 ```
 
 
 ## Histogram of body mass index
 
-```{r, fig.height=3.9}
+```{r graphs-R-5, fig.height=3.9}
 ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
 ```
 
@@ -80,14 +80,14 @@ ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
 
 Grouped bar chart:
 
-```{r, fig.height=3.15}
+```{r graphs-R-6, fig.height=3.15}
 ggplot(athletes, aes(x = Sport, fill = Sex)) +
   geom_bar(position = "dodge")
 ```
 
 ## BMI by gender
 
-```{r, fig.height=4}
+```{r graphs-R-7, fig.height=4}
 ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot()
 ```
 
@@ -95,34 +95,34 @@ ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot()
 
 Scatterplot:
 
-```{r, fig.height=3.4}
+```{r graphs-R-8, fig.height=3.4}
 ggplot(athletes, aes(x = Ht, y = Wt)) + geom_point()
 ```
 
 ## With regression line
 
-```{r, fig.height=3.6}
+```{r graphs-R-9, fig.height=3.6}
 ggplot(athletes, aes(x = Ht, y = Wt)) +
   geom_point() + geom_smooth(method = "lm")
 ```
 
 ## BMI by sport and gender
 
-```{r, fig.height=3.6}
+```{r graphs-R-10, fig.height=3.6}
 ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
   geom_boxplot()
 ```
 
 ## Height and weight by gender
 
-```{r, fig.height=3.6}
+```{r graphs-R-11, fig.height=3.6}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point()
 ```
 
 ## Height by weight for each sport, with facets
 
-```{r, fig.height=3.6}
+```{r graphs-R-12, fig.height=3.6}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport)
 ```
@@ -133,7 +133,7 @@ Default uses same scale for each facet. To use different scales for each
 facet, this:
 
 \small
-```{r, fig.height=3.2}
+```{r graphs-R-13, fig.height=3.2}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport, scales = "free")
 ```

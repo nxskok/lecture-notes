@@ -26,7 +26,7 @@
 
 ##  Packages
 
-```{r eval=F, warning=F, message=F}
+```{r bFactor-1, eval=F, warning=F, message=F}
 library(ggbiplot)
 library(tidyverse)
 ```
@@ -71,7 +71,7 @@ kids
 
 ## Principal components on correlation matrix
 
-```{r}
+```{r bFactor-2}
 kids %>%
   select(where(is.numeric)) %>%
   as.matrix() -> m
@@ -82,7 +82,7 @@ I used `kids.0` here since I want `kids.1` and `kids.2` later.
 
 
 ##  Scree plot
-```{r fig.height=3.5}
+```{r bFactor-3, fig.height=3.5}
 ggscreeplot(kids.0)
 ```
 
@@ -95,7 +95,7 @@ ggscreeplot(kids.0)
 * Need 2 components. Loadings:
 
 \footnotesize
-```{r}
+```{r bFactor-4}
 kids.0$loadings
 ```
 \normalsize
@@ -139,7 +139,7 @@ wrote the tests.
 
 - Start with the matrix we made before.
 
-```{r }
+```{r bFactor-5 }
 m
 ml <- list(cov = m, n.obs = 145)
 kids.2 <- factanal(factors = 2, covmat = ml)
@@ -151,7 +151,7 @@ kids.2 <- factanal(factors = 2, covmat = ml)
 
 ##  Uniquenesses
 
-```{r }
+```{r bFactor-6 }
 kids.2$uniquenesses
 ```
 
@@ -169,7 +169,7 @@ uniqueness means that the variable is summarized by a factor (good).
 ##  Loadings
 
 \footnotesize
-```{r}
+```{r bFactor-7}
 kids.2$loadings
 ```
 \normalsize
@@ -188,7 +188,7 @@ regression R-squared).
 - Which variables belong to which factor is *much* clearer than with principal components.
 
 ##  Are 2 factors enough? 
-```{r }
+```{r bFactor-8 }
 kids.2$STATISTIC
 kids.2$dof
 kids.2$PVAL
@@ -201,7 +201,7 @@ P-value not small, so 2 factors OK.
 
 ##  1 factor
 
-```{r }
+```{r bFactor-9 }
 kids.1 <- factanal(factors = 1, covmat = ml)
 kids.1$STATISTIC
 kids.1$dof
@@ -216,7 +216,7 @@ kids.1$PVAL
 
 - Read data, transform, rerun principal components, get biplot: 
 
-```{r, message=FALSE}
+```{r bFactor-10, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
 places0 <- read_table2(my_url)
 places0 %>% 
@@ -231,7 +231,7 @@ g <- ggbiplot(places.1, labels = places$id,
 
 ## The biplot
 
-```{r, fig.height=3}
+```{r bFactor-11, fig.height=3}
 g
 ```
 
@@ -252,7 +252,7 @@ g
 - Do this by running principal components and looking at scree plot.
 - In this case, 3 factors seemed good (revisit later):
 
-```{r}
+```{r bFactor-12}
 places.3 <- factanal(places_numeric, 3, scores = "r")
 ```
 
@@ -260,7 +260,7 @@ places.3 <- factanal(places_numeric, 3, scores = "r")
 
 ## A bad biplot 
 
-```{r, fig.height=4}
+```{r bFactor-13, fig.height=4}
 biplot(places.3$scores, places.3$loadings,
   xlabs = places$id)
 ```
@@ -275,7 +275,7 @@ biplot(places.3$scores, places.3$loadings,
 ## Factor loadings
 
 \small
-```{r}
+```{r bFactor-14}
 places.3$loadings
 ```
 \normalsize
@@ -292,14 +292,14 @@ places.3$loadings
 
 - Make a dataframe with the city IDs and factor scores:
 
-```{r}
+```{r bFactor-15}
 cbind(id = places$id, places.3$scores) %>% 
   as_tibble() -> places_scores
 ```
 
 - Make percentile ranks again (for checking):
 
-```{r}
+```{r bFactor-16}
 places %>% 
   mutate(across(-id, ~percent_rank(.))) -> places_pr
 ```
@@ -308,14 +308,14 @@ places %>%
 
 - for the top 4 places:
 
-```{r}
+```{r bFactor-17}
 places_scores %>% 
   arrange(desc(Factor1))
 ```
 
 ## Check percentile ranks for factor 1
 
-```{r}
+```{r bFactor-18}
 places_pr %>% 
   select(id, health, educate, arts) %>% 
   filter(id %in% c(213, 65, 234, 314))
@@ -326,14 +326,14 @@ places_pr %>%
 
 ## Highest scores on factor 2, "places to be":
 
-```{r}
+```{r bFactor-19}
 places_scores %>% 
   arrange(desc(Factor2))
 ```
 
 ## Check percentile ranks for factor 2
 
-```{r}
+```{r bFactor-20}
 places_pr %>% 
   select(id, housing, trans, arts, recreate) %>% 
   filter(id %in% c(318, 12, 168, 44))
@@ -345,14 +345,14 @@ places_pr %>%
 
 ## Highest scores on factor 3, "climate":
 
-```{r}
+```{r bFactor-21}
 places_scores %>% 
   arrange(desc(Factor3))
 ```
 
 ## Check percentile ranks for factor 3
 
-```{r}
+```{r bFactor-22}
 places_pr %>% 
   select(id, climate) %>% 
   filter(id %in% c(227, 218, 269, 270))
@@ -364,7 +364,7 @@ This is very clear.
 
 - We said earlier that the economy was not part of any of our factors:
 
-```{r}
+```{r bFactor-23}
 places.3$uniquenesses
 ```
 
@@ -376,7 +376,7 @@ places.3$uniquenesses
 
 We can test whether the three factors that we have is enough, or whether we need more to describe our data:
 
-```{r}
+```{r bFactor-24}
 places.3$PVAL
 ```
 
@@ -385,7 +385,7 @@ places.3$PVAL
 
 ## Five factors
 
-```{r}
+```{r bFactor-25}
 places.5 <- factanal(places_numeric, 5, scores = "r")
 places.5$loadings
 ```
@@ -403,7 +403,7 @@ places.5$loadings
 - The two added factors include the two "missing" variables.
 - Is this now enough?
 
-```{r}
+```{r bFactor-26}
 places.5$PVAL
 ```
 
@@ -448,7 +448,7 @@ bem
 
 ##  Principal components first
 \ldots to decide on number of factors:
-```{r }
+```{r bFactor-27 }
 bem.pc <- bem %>%
   select(-subno) %>%
   princomp(cor = T)
@@ -484,17 +484,17 @@ g + scale_x_continuous(limits = c(0, 8))
 
 ##  but is 2 really good?
 
-```{r, include=FALSE}
+```{r bFactor-28, include=FALSE}
 options(width = 80)
 ```
 
 \scriptsize
-```{r }
+```{r bFactor-29 }
 summary(bem.pc)
 ```
 \normalsize
 
-```{r, include=FALSE}
+```{r bFactor-30, include=FALSE}
 options(width = 60)
 ```
 
@@ -534,7 +534,7 @@ factors (rotate to 12 o'clock and 3 o'clock, for example).
 
 * Try for 2-factor solution (rough interpretation, will be bad):
 
-```{r }
+```{r bFactor-31 }
 bem %>%
   select(-subno) %>%
   factanal(factors = 2) -> bem.2
@@ -549,7 +549,7 @@ bem %>%
 ##  Uniquenesses, sorted
 
 \scriptsize
-```{r, echo=-1}
+```{r bFactor-32, echo=-1}
 options(width = 60)
 sort(bem.2$uniquenesses)
 ```
@@ -573,7 +573,7 @@ Tender (0.493).
 ##  Factor loadings, some
 
 \scriptsize
-```{r}
+```{r bFactor-33}
 bem.2$loadings
 ```
 \normalsize
@@ -585,7 +585,7 @@ There are too many to read easily, so make a data frame. A
 bit tricky:
 
 \footnotesize
-```{r}
+```{r bFactor-34}
 bem.2$loadings %>% 
   unclass() %>% 
   as_tibble() %>% 
@@ -601,7 +601,7 @@ loadings %>% slice(1:8)
 Arbitrarily defining $>0.4$ or $<-0.4$ as "big":
 
 \scriptsize
-```{r}
+```{r bFactor-35}
 loadings %>% filter(abs(Factor1) > 0.4) 
 ```
 \normalsize
@@ -611,7 +611,7 @@ loadings %>% filter(abs(Factor1) > 0.4)
 ##  Factor 2, the big ones
 
 \footnotesize
-```{r}
+```{r bFactor-36}
 loadings %>% filter(abs(Factor2) > 0.4)
 ```
 \normalsize
@@ -662,7 +662,7 @@ accomplished by rotation.
 ##  Individual 366
 
 \tiny
-```{r}
+```{r bFactor-37}
 bem %>% slice(366) %>% glimpse()
 ```
 \normalsize
@@ -685,7 +685,7 @@ things up.
 ##  Tidying original data
 
 \scriptsize
-```{r}
+```{r bFactor-38}
 bem %>%
   mutate(row = row_number()) %>%
   pivot_longer(c(-subno, -row), names_to="trait", 
@@ -699,7 +699,7 @@ bem_tidy
 ##  Recall data frame of loadings
 
 \footnotesize
-```{r}
+```{r bFactor-39}
 loadings %>% slice(1:10)
 ```
 \normalsize
@@ -713,7 +713,7 @@ Want to add the factor scores for each trait to our tidy data frame
 ##  Looking up loadings
 
 \scriptsize
-```{r}
+```{r bFactor-40}
 bem_tidy %>% left_join(loadings) -> bem_tidy
 bem_tidy %>% sample_n(12)
 ```
@@ -727,7 +727,7 @@ individual 366 (`row=366`) and for which the `Factor2`
 score exceeds 0.4 in absolute value (our "big" from before):
 
 \scriptsize
-```{r}
+```{r bFactor-41}
 bem_tidy %>% filter(row == 366, abs(Factor2) > 0.4)
 ```
 \normalsize
@@ -741,7 +741,7 @@ be low. Can we do them all at once?
 
 
 \scriptsize
-```{r}
+```{r bFactor-42}
 bem_tidy %>% filter(
   row %in% c(366, 311, 214),
   abs(Factor2) > 0.4
@@ -757,7 +757,7 @@ Can we display each individual in own column?
 Un-`tidy`, that is, `pivot_wider`:
 
 \tiny
-```{r}
+```{r bFactor-43}
 bem_tidy %>%
   filter(
     row %in% c(366, 311, 214),
@@ -775,7 +775,7 @@ bem_tidy %>%
 These were high, low, low on factor 1. Adapt code:
 
 \tiny
-```{r}
+```{r bFactor-44}
 bem_tidy %>%
   filter(row %in% c(359, 258, 230), abs(Factor1) > 0.4) %>%
   select(-subno, -Factor1, -Factor2) %>%
@@ -787,7 +787,7 @@ bem_tidy %>%
 
 ##  Is 2 factors enough?
 Suspect not:
-```{r }
+```{r bFactor-45 }
 bem.2$PVAL
 ```
 
@@ -796,7 +796,7 @@ bem.2$PVAL
 2 factors resoundingly rejected. Need more. Have to go all the way to
 15 factors to not reject:
 
-```{r }
+```{r bFactor-46 }
 bem %>%
   select(-subno) %>%
   factanal(factors = 15) -> bem.15
@@ -814,7 +814,7 @@ Even then, only just over 50\% of variability explained.
 - Get 15-factor loadings into a data frame, as before:  
 
 \small
-```{r}
+```{r bFactor-47}
 bem.15$loadings %>% 
   unclass() %>% 
   as_tibble() %>% 
@@ -830,7 +830,7 @@ bem.15$loadings %>%
 ##  Factor 1 (of 15)
 
 \footnotesize
-```{r}
+```{r bFactor-48}
 loadings %>%
   arrange(desc(abs(Factor1))) %>%
   select(Factor1, trait) %>%
@@ -846,7 +846,7 @@ others.
 ##  Factor 2
 
 \footnotesize
-```{r}
+```{r bFactor-49}
 loadings %>%
   arrange(desc(abs(Factor2))) %>%
   select(Factor2, trait) %>%
@@ -862,7 +862,7 @@ Strong personality, forceful, assertive, dominant: getting ahead.
 ##  Factor 3
 
 \footnotesize
-```{r}
+```{r bFactor-50}
 loadings %>%
   arrange(desc(abs(Factor3))) %>%
   select(Factor3, trait) %>%
@@ -878,7 +878,7 @@ Self-reliant, self-sufficient, independent: going it alone.
 ##  Factor 4
 
 \footnotesize
-```{r}
+```{r bFactor-51}
 loadings %>%
   arrange(desc(abs(Factor4))) %>%
   select(Factor4, trait) %>%
@@ -894,7 +894,7 @@ Gentle, tender, warm (affectionate): caring for others.
 ##  Factor 5
 
 \scriptsize
-```{r}
+```{r bFactor-52}
 loadings %>%
   arrange(desc(abs(Factor5))) %>%
   select(Factor5, trait) %>%
@@ -911,7 +911,7 @@ Being the best.
 ##  Factor 6
 
 \scriptsize
-```{r}
+```{r bFactor-53}
 loadings %>%
   arrange(desc(abs(Factor6))) %>%
   select(Factor6, trait) %>%
@@ -928,7 +928,7 @@ Taking charge.
 ##  Factor 7
 
 \footnotesize
-```{r}
+```{r bFactor-54}
 loadings %>%
   arrange(desc(abs(Factor7))) %>%
   select(Factor7, trait) %>%
@@ -942,7 +942,7 @@ Happy and cheerful.
 ##  Factor 8
 
 \footnotesize
-```{r}
+```{r bFactor-55}
 loadings %>%
   arrange(desc(abs(Factor8))) %>%
   select(Factor8, trait) %>%
@@ -957,7 +957,7 @@ Affectionate, flattering: Making others feel good.
 ##  Factor 9
 
 \footnotesize
-```{r}
+```{r bFactor-56}
 loadings %>%
   arrange(desc(abs(Factor9))) %>%
   select(Factor9, trait) %>%
@@ -973,7 +973,7 @@ Taking a stand.
 ##  Factor 10
 
 \footnotesize
-```{r}
+```{r bFactor-57}
 loadings %>%
   arrange(desc(abs(Factor10))) %>%
   select(Factor10, trait) %>%
@@ -990,7 +990,7 @@ Feminine. (A little bit of not-masculine!)
 ##  Factor 11
 
 \footnotesize
-```{r}
+```{r bFactor-58}
 loadings %>%
   arrange(desc(abs(Factor11))) %>%
   select(Factor11, trait) %>%
@@ -1006,7 +1006,7 @@ Loyal.
 ##  Factor 12
 
 \footnotesize
-```{r}
+```{r bFactor-59}
 loadings %>%
   arrange(desc(abs(Factor12))) %>%
   select(Factor12, trait) %>%
@@ -1022,7 +1022,7 @@ Childlike. (With a bit of moody, shy, not-self-sufficient, not-conscientious.)
 ##  Factor 13
 
 \footnotesize
-```{r}
+```{r bFactor-60}
 loadings %>%
   arrange(desc(abs(Factor13))) %>%
   select(Factor13, trait) %>%
@@ -1038,7 +1038,7 @@ Truthful. (With a bit of happy and not-gullible.)
 ##  Factor 14
 \footnotesize
 
-```{r}
+```{r bFactor-61}
 loadings %>%
   arrange(desc(abs(Factor14))) %>%
   select(Factor14, trait) %>%
@@ -1053,7 +1053,7 @@ Decisive. (With a bit of self-sufficient and not-soft-spoken.)
 
 ##  Factor 15
 \footnotesize
-```{r}
+```{r bFactor-62}
 loadings %>%
   arrange(desc(abs(Factor15))) %>%
   select(Factor15, trait) %>%
@@ -1068,7 +1068,7 @@ Not-compassionate, athletic, sensitive: A mixed bag. ("Cares about self"?)
 ##  Anything left out? Uniquenesses
 
 \scriptsize
-```{r}
+```{r bFactor-63}
 enframe(bem.15$uniquenesses, name="quality", value="uniq") %>%
   arrange(desc(uniq)) %>%
   slice(1:10)

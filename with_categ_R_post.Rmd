@@ -1,6 +1,6 @@
 ## Packages for this section
 
-```{r, eval=F}
+```{r with-categ-R-post-1, eval=F}
 library(tidyverse)
 library(broom)
 ```
@@ -8,13 +8,13 @@ library(broom)
 
 ## The pigs revisited
 
-```{r, echo=FALSE}
+```{r with-categ-R-post-2, echo=FALSE}
 options(dplyr.summarise.inform = FALSE)
 ```
 
 - Recall pig feed data, after we tidied it: 
 
-```{r, message=F}
+```{r with-categ-R-post-3, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/pigs2.txt"
 pigs <- read_delim(my_url, " ")
 pigs 
@@ -22,7 +22,7 @@ pigs
 
 ## Summaries
 
-```{r}
+```{r with-categ-R-post-4}
 pigs %>%
   group_by(feed) %>%
   summarize(n = n(), mean_wt = mean(weight), 
@@ -33,7 +33,7 @@ pigs %>%
 - What happens if we run this through `lm` rather than `aov`? 
 - Recall `aov` first: 
 
-```{r}
+```{r with-categ-R-post-5}
 pigs.1 <- aov(weight ~ feed, data = pigs)
 summary(pigs.1)
 ```
@@ -41,7 +41,7 @@ summary(pigs.1)
 ## and now `lm`
 
 \footnotesize
-```{r}
+```{r with-categ-R-post-6}
 pigs.2 <- lm(weight ~ feed, data = pigs)
 summary(pigs.2)
 tidy(pigs.2)
@@ -64,7 +64,7 @@ feed 1.
 - Pass the fitted model object into `anova`:
 
 \footnotesize
-```{r}
+```{r with-categ-R-post-7}
 anova(pigs.2)
 ```
 \normalsize
@@ -73,7 +73,7 @@ anova(pigs.2)
 - But no Tukey this way:
 
 \footnotesize
-```{r, error=TRUE}
+```{r with-categ-R-post-8, error=TRUE}
 TukeyHSD(pigs.2)
 ```
 \normalsize
@@ -91,7 +91,7 @@ accounted for?
 Read the data:
 
 \small
-```{r, message=F}
+```{r with-categ-R-post-9, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/crickets2.csv"
 crickets <- read_csv(my_url)
 crickets 
@@ -99,7 +99,7 @@ crickets
 \normalsize
 ## Fit model with `lm` 
 
-```{r}
+```{r with-categ-R-post-10}
 crickets.1 <- lm(pulse_rate ~ temperature + species, 
                  data = crickets)
 summary(crickets.1)
@@ -107,7 +107,7 @@ summary(crickets.1)
 
 Can I remove anything? No:
 
-```{r}
+```{r with-categ-R-post-11}
 drop1(crickets.1, test = "F")
 ```
 
@@ -115,7 +115,7 @@ drop1(crickets.1, test = "F")
 
 ## The summary 
 
-```{r}
+```{r with-categ-R-post-12}
 glance(crickets.1)
 tidy(crickets.1)
 ```
@@ -136,7 +136,7 @@ rate from species and temperature is very good.
 
 \small
 
-```{r}
+```{r with-categ-R-post-13}
 t1 <- "Pulse rate against temperature for two species of crickets"
 t2 <- "Temperature in degrees Celsius"
 ```
@@ -158,17 +158,17 @@ ggplot(crickets, aes(x = temperature, y = pulse_rate,
 
 interaction
 
-```{r}
+```{r with-categ-R-post-14}
 crickets.2 <- lm(pulse_rate ~ temperature * species, 
                  data = crickets)
 summary(crickets.2)
 ```
 
-```{r}
+```{r with-categ-R-post-15}
 drop1(crickets.2, test = "F")
 ```
 
-```{r}
+```{r with-categ-R-post-16}
 crickets.3 <- update(crickets.2, .~. - temperature:species)
 drop1(crickets.3, test="F")
 ```

@@ -7,7 +7,7 @@ output: html_notebook
 
 Read in and examine some other data:
 
-```{r}
+```{r 20180117-1}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/curvy.txt"
 curvy=read_delim(my_url," ")
 ggplot(curvy,aes(x=xx,y=yy))+geom_point()
@@ -15,14 +15,14 @@ ggplot(curvy,aes(x=xx,y=yy))+geom_point()
 
 Fit a linear regression, and see what goes wrong:
 
-```{r}
+```{r 20180117-2}
 curvy.1=lm(yy~xx,data=curvy) ; summary(curvy.1)
 ggplot(curvy.1,aes(x=.fitted,y=.resid))+geom_point()
 ```
 
 Add squared term, either of 2 ways:
 
-```{r}
+```{r 20180117-3}
 curvy.2=lm(yy~xx+I(xx^2),data=curvy)
 curvy.2a=update(curvy.1,.~.+I(xx^2))
 summary(curvy.2)
@@ -30,7 +30,7 @@ summary(curvy.2)
 
 Look at residuals from that:
 
-```{r}
+```{r 20180117-4}
 ggplot(curvy.2,aes(x=.fitted,y=.resid))+geom_point()
 ```
 
@@ -39,7 +39,7 @@ Better, though is that fan-out?
 
 ## the made-up data
 
-```{r}
+```{r 20180117-5}
 library(MASS)
 my_url="http://www.utsc.utoronto.ca/~butler/d29/madeup.csv"
 madeup=read_csv(my_url)
@@ -50,13 +50,13 @@ ggplot(madeup,aes(x=x,y=y))+geom_point()+
 
 ## Box-Cox
 
-```{r}
+```{r 20180117-6}
 boxcox(y~x,data=madeup)
 ```
 
 Use log of `y`:
 
-```{r}
+```{r 20180117-7}
 log.y=log(madeup$y) 
 ggplot(madeup,aes(x=x,y=log.y))+geom_point()+
   geom_smooth()
@@ -64,13 +64,13 @@ ggplot(madeup,aes(x=x,y=log.y))+geom_point()+
 
 Get rid of `MASS`:
 
-```{r}
+```{r 20180117-8}
 detach("package:MASS",unload=T)
 ```
 
 ## Multiple regression
 
-```{r}
+```{r 20180117-9}
 library(tidyverse)
 my_url="http://www.utsc.utoronto.ca/~butler/d29/regressx.txt"
 visits=read_delim(my_url," ")
@@ -82,33 +82,33 @@ summary(visits.1)
 
 Another look at results
 
-```{r}
+```{r 20180117-10}
 library(broom)
 tidy(visits.1)
 ```
 
 Just `menheal`:
 
-```{r}
+```{r 20180117-11}
 visits.2=lm(timedrs~menheal,data=visits) 
 summary(visits.2)
 ```
 
 Why? Correlations:
 
-```{r}
+```{r 20180117-12}
 visits %>% select_if(is.numeric) %>% cor()
 ```
 
 Residual plot (from 1st regression):
 
-```{r}
+```{r 20180117-13}
 ggplot(visits.1,aes(x=.fitted,y=.resid))+geom_point()
 ```
 
 Normal quantile plot of residuals
 
-```{r}
+```{r 20180117-14}
 r=resid(visits.1)
 qqnorm(r)
 qqline(r)
@@ -116,14 +116,14 @@ qqline(r)
 
 Absolute residuals
 
-```{r}
+```{r 20180117-15}
 ggplot(visits.1,aes(x=.fitted,y=abs(.resid)))+
   geom_point()+geom_smooth()
 ```
 
 Try log of visits (plus one, since visits could be zero):
 
-```{r}
+```{r 20180117-16}
 lgtime=with(visits,log(timedrs+1))
 visits.3=lm(lgtime~phyheal+menheal+stress,
   data=visits)
@@ -132,7 +132,7 @@ summary(visits.3)
 
 Residual plots from this:
 
-```{r}
+```{r 20180117-17}
 ggplot(visits.3,aes(x=.fitted,y=.resid))+
   geom_point()
 r=residuals(visits.3); qqnorm(r); qqline(r)
@@ -142,7 +142,7 @@ ggplot(visits.3,aes(x=.fitted,y=abs(.resid)))+
 
 Box-Cox:
 
-```{r}
+```{r 20180117-18}
 tp=with(visits,timedrs+1)
 library(MASS)
 boxcox(tp~phyheal+menheal+stress,data=visits)
@@ -150,7 +150,7 @@ boxcox(tp~phyheal+menheal+stress,data=visits)
 
 Zoom in:
 
-```{r}
+```{r 20180117-19}
 my.lambda=seq(-0.3,0.1,0.01)
 my.lambda
 boxcox(tp~phyheal+menheal+stress,lambda=my.lambda,

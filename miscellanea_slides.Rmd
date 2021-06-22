@@ -14,11 +14,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r miscellanea-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="miscellanea.Rmd"}
+```{r miscellanea-slides-2, child="miscellanea.Rmd"}
 ```
 
 

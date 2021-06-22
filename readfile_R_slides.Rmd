@@ -14,12 +14,12 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r readfile-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
 # Reading in data
 
-```{r child="readfile_R.Rmd"}
+```{r readfile-R-slides-2, child="readfile_R.Rmd"}
 ```
 

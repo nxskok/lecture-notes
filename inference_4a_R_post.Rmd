@@ -10,35 +10,35 @@
   
 ## Kids learning to read
 
-```{r, echo=FALSE, message=FALSE}
+```{r inference-4a-R-post-1, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 kids
 ```
 
 
-```{r}
+```{r inference-4a-R-post-2}
 ggplot(kids, aes(x = group, y = score)) + geom_boxplot()
 ```
 Each group looks normal, or at least symmetric.
 
 ## Get the groups separately
 
-```{r}
+```{r inference-4a-R-post-3}
 kids %>% filter(group == "t") -> treatment
 kids %>% filter(group == "c") -> control
 ```
 
 to check
 
-```{r}
+```{r inference-4a-R-post-4}
 treatment %>% count(group)
 control %>% count(group)
 ```
 
 ## The treatment group
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-5, fig.height=4.5}
 ggplot(treatment, aes(sample = score)) + 
   stat_qq() + stat_qq_line()
 ```
@@ -46,7 +46,7 @@ only problem here is lowest value a little too low (mild outlier).
 
 ## Control group
 
-```{r, fig.height=4}
+```{r inference-4a-R-post-6, fig.height=4}
 ggplot(control, aes(sample = score)) + 
   stat_qq() + stat_qq_line()
 ```
@@ -57,7 +57,7 @@ This time, highest value a little too high, but again, no real problem with norm
 
 Use the whole data set and facet by groups
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-7, fig.height=4.5}
 ggplot(kids, aes(sample = score)) + 
   stat_qq() + stat_qq_line() + facet_wrap(~group)
 ```
@@ -65,18 +65,18 @@ ggplot(kids, aes(sample = score)) +
 
 ## Blue Jays attendances, skewed to right
 
-```{r, echo=FALSE, message=FALSE}
+```{r inference-4a-R-post-8, echo=FALSE, message=FALSE}
 jays <- read_csv("jays15-home.csv")
 ```
 
 
-```{r}
+```{r inference-4a-R-post-9}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
 ```
 
 ## On a normal quantile plot
 
-```{r, fig.height=3.5}
+```{r inference-4a-R-post-10, fig.height=3.5}
 ggplot(jays, aes(sample = attendance)) + 
   stat_qq() + stat_qq_line()
 ```
@@ -103,7 +103,7 @@ set.seed(457299)
 ```
 
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-11, fig.height=4.5}
 d <- tibble(x=rnorm(200))
 d
 ggplot(d, aes(x=x)) + geom_histogram(bins=10)
@@ -111,13 +111,13 @@ ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 
 ## The normal quantile plot
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-12, fig.height=4.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
 ## Normal data, small sample
 
-```{r, echo=F}
+```{r inference-4a-R-post-13, echo=F}
 set.seed(457299)
 ```
 
@@ -136,7 +136,7 @@ Good, apart from the highest and lowest points being slightly off. I’d call
 this good:
 
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-14, fig.height=4.5}
 ggplot(d, aes(sample=x)) + stat_qq() + stat_qq_line()
 ```
 
@@ -144,7 +144,7 @@ ggplot(d, aes(sample=x)) + stat_qq() + stat_qq_line()
 
 Somewhat skewed to right:
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-15, fig.height=4.5}
 d <- tibble(x=rchisq(100, 10))
 ggplot(d,aes(x=x)) + geom_histogram(bins=10)
 ```
@@ -155,7 +155,7 @@ ggplot(d,aes(x=x)) + geom_histogram(bins=10)
 
 Somewhat opening-up curve:
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-16, fig.height=4.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -175,7 +175,7 @@ ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 
 Clear upward-opening curve:
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-17, fig.height=4.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -196,7 +196,7 @@ ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 
 Low values too low and high values too high for normal.
 
-```{r, fig.height=4.5}
+```{r inference-4a-R-post-18, fig.height=4.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 

@@ -3,7 +3,7 @@ This is my title.
 
 Here is some random data.
 
-```{r}
+```{r thingy-1}
 x=rnorm(100)
 x
 ```
@@ -13,7 +13,7 @@ $$z^2=x^2+y^2+{x \over 2 \sin x}$$
 
 Here are some plots, for example:
 
-```{r}
+```{r thingy-2}
 plot(x)
 hist(x,prob=T)
 lines(density(x))
@@ -21,7 +21,7 @@ lines(density(x))
 
 How normal is this?
 
-```{r}
+```{r thingy-3}
 qqnorm(x)
 qqline(x)
 ```

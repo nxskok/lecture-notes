@@ -15,11 +15,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r bootstrap-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="bootstrap.Rmd"}
+```{r bootstrap-slides-2, child="bootstrap.Rmd"}
 ```
 
 

@@ -19,7 +19,7 @@ athletes
 
 skimming
 
-```{r}
+```{r skimr-1}
 skim(athletes)
 ```
 
@@ -31,16 +31,16 @@ s %>% filter(skim_variable=="Ht")
 
 pittsburgh bridges
 
-```{r}
+```{r skimr-2}
 pittsburgh=read_csv("../exams/bridges.csv",na="?")
 pittsburgh
 ```
 
-```{r}
+```{r skimr-3}
 skim(pittsburgh)
 ```
 
-```{r}
+```{r skimr-4}
 pittsburgh %>% mutate(across(where(is.character), ~as.factor(.))) %>% skim()
 ```
 

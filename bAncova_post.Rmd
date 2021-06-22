@@ -52,14 +52,14 @@ b 9 22
 
 ## Packages
 `tidyverse` and `broom`:
-```{r, eval=FALSE }
+```{r bAncova-post-1, eval=FALSE }
 library(tidyverse)
 library(broom)
 ```
 
 ## Read in data
 
-```{r, message=F}
+```{r bAncova-post-2, message=F}
 url <- "http://ritsokiguess.site/datafiles/ancova.txt"
 # url <- "ancova.txt"
 prepost <- read_delim(url, " ")
@@ -87,7 +87,7 @@ comparable before score.
 
 
 ## The means
-```{r }
+```{r bAncova-post-3 }
 prepost %>%
   group_by(drug) %>%
   summarize(
@@ -107,13 +107,13 @@ prepost %>%
 
 
 ## Testing for interaction
-```{r }
+```{r bAncova-post-4 }
 prepost.1 <- lm(after ~ before * drug, data = prepost)
 anova(prepost.1)
 drop1(prepost.1, test = "F")
 ```
  
-```{r}
+```{r bAncova-post-5}
 summary(prepost.1)
 ```
 
@@ -124,7 +124,7 @@ summary(prepost.1)
 ## Predictions, with interaction included
 
 Make combinations of before score and drug:
-```{r }
+```{r bAncova-post-6 }
 new <- crossing(
   before = c(5, 15, 25),
   drug = c("a", "b")
@@ -136,7 +136,7 @@ new
 
 ## Do predictions: 
 
-```{r size="small"}
+```{r bAncova-post-7, size="small"}
 pred <- predict(prepost.1, new)
 pred
 preds <- cbind(new, pred)
@@ -167,7 +167,7 @@ set} (`preds` rather than `prepost`),
 
 * Last line could (more easily) be 
 
-```{r eval=F}
+```{r bAncova-post-8, eval=F}
 geom_smooth(method = "lm", se = F)
 ```
 
@@ -195,7 +195,7 @@ g
 
 ## Taking out interaction
 \small
-```{r }
+```{r bAncova-post-9 }
 prepost.2 <- update(prepost.1, . ~ . - before:drug)
 anova(prepost.2)
 drop1(prepost.2, test = "F")
@@ -213,7 +213,7 @@ drop1(prepost.2, test = "F")
 
 
 ## Predicted values again (no-interaction model)
-```{r }
+```{r bAncova-post-10 }
 new
 pred <- predict(prepost.2, new)
 preds <- bind_cols(new, pred = pred)
@@ -226,7 +226,7 @@ score, *the same for both drugs*.
 
 
 ## Making a plot, again
-```{r }
+```{r bAncova-post-11 }
 g <- ggplot(
   prepost,
   aes(x = before, y = after, colour = drug)
@@ -257,7 +257,7 @@ before score and of drug, but doesn't help with interpretation.
 * `summary(prepost.2)` views as regression with slopes:
 
 \scriptsize
-```{r }
+```{r bAncova-post-12 }
 summary(prepost.2)
 ```
 
@@ -269,7 +269,7 @@ summary(prepost.2)
 ## Understanding those slopes
 
 \footnotesize
-```{r}
+```{r bAncova-post-13}
 tidy(prepost.2)
 ```
 

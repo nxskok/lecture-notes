@@ -13,7 +13,7 @@ quality of pavement depend on these?
 
 ## Packages for this section
 
-```{r, eval=F}
+```{r asphalt-1, eval=F}
 library(MASS)
 library(tidyverse)
 library(broom)
@@ -23,7 +23,7 @@ library(leaps)
 
 ## Getting set up 
 
-```{r}
+```{r asphalt-2}
 my_url <- "http://ritsokiguess.site/datafiles/asphalt.txt"
 asphalt <- read_delim(my_url, " ")
 ```
@@ -34,7 +34,7 @@ we go. (STAB27/STAC67 ideas.)
 
 ## The data (some)
 
-```{r}
+```{r asphalt-3}
 asphalt
 ```
 
@@ -43,7 +43,7 @@ asphalt
 Same idea as for plotting separate predictions on one plot:
 
 
-```{r}
+```{r asphalt-4}
 asphalt %>%
   pivot_longer(
     -rut.depth,
@@ -61,7 +61,7 @@ I saved this graph to plot later (on the next page).
 
 ## The plot
 
-```{r}
+```{r asphalt-5}
 g
 ```
 
@@ -89,7 +89,7 @@ ggplot(asphalt, aes(y = rut.depth, x = log(viscosity))) +
 
 ## Rut depth against log-viscosity
 
-```{r, ref.label="logvisplot", echo=FALSE, message=FALSE}
+```{r asphalt-6, ref.label="logvisplot", echo=FALSE, message=FALSE}
 
 ```
 
@@ -100,7 +100,7 @@ typically start by predicting from everything else.
 - Model formula has response on left, squiggle, explanatories on right
 joined by plusses:
 
-```{r}
+```{r asphalt-7}
 rut.1 <- lm(rut.depth ~ pct.a.surf + pct.a.base + fines +
   voids + log(viscosity) + run, data = asphalt)
 ```
@@ -108,7 +108,7 @@ rut.1 <- lm(rut.depth ~ pct.a.surf + pct.a.base + fines +
 ## Regression output: `summary(rut.1)` or:
 
 \footnotesize
-```{r}
+```{r asphalt-8}
 glance(rut.1)
 tidy(rut.1)
 ```
@@ -130,7 +130,7 @@ clearer picture of what is helpful.
 
 ## Plot fitted values against residuals
 
-```{r}
+```{r asphalt-9}
 ggplot(rut.1, aes(x = .fitted, y = .resid)) + geom_point()
 ```
 
@@ -141,19 +141,19 @@ observed $x$-values are in the original data frame `asphalt`.
 together so that they can later be plotted: start with a model first, and then augment with a
 data frame:
 
-```{r}
+```{r asphalt-10}
 rut.1 %>% augment(asphalt) -> rut.1a
 ```
 
 
 ## What does rut.1a contain?
 
-```{r, echo=FALSE}
+```{r asphalt-11, echo=FALSE}
 #options(width = 70)
 ```
 
 
-```{r}
+```{r asphalt-12}
 names(rut.1a)
 ```
 
@@ -164,7 +164,7 @@ names(rut.1a)
 ## Plotting residuals against $x$-variables 
 
 
-```{r}
+```{r asphalt-13}
 rut.1a %>%
   mutate(log_vis=log(viscosity)) %>% 
   pivot_longer(
@@ -177,7 +177,7 @@ rut.1a %>%
 
 ## The plot
 
-```{r}
+```{r asphalt-14}
 g
 ```
 
@@ -204,7 +204,7 @@ log.
 
 From package `MASS`:
 
-```{r}
+```{r asphalt-15}
 boxcox(rut.depth ~ pct.a.surf + pct.a.base + fines + voids +
   log(viscosity) + run, data = asphalt)
 ```
@@ -225,7 +225,7 @@ data:
 - As before: plot response (now `log(rut.depth)`) against other
 explanatory variables, all in one shot:
 
-```{r}
+```{r asphalt-16}
 asphalt %>%
   mutate(log_vis=log(viscosity)) %>% 
   pivot_longer(
@@ -238,7 +238,7 @@ asphalt %>%
 
 ## The new plots
 
-```{r}
+```{r asphalt-17}
 g3
 ```
 
@@ -249,7 +249,7 @@ g3
 - Start modelling from the beginning again.
 - Model `log.rut.depth` in terms of everything else, see what can be
 removed:
-```{r}
+```{r asphalt-18}
 rut.2 <- lm(log(rut.depth) ~ pct.a.surf + pct.a.base +
   fines + voids + log(viscosity) + run, data = asphalt)
 ```
@@ -257,7 +257,7 @@ rut.2 <- lm(log(rut.depth) ~ pct.a.surf + pct.a.base +
 - use `tidy` from `broom` to display just the coefficients.
 
 ## Output
-```{r}
+```{r asphalt-19}
 tidy(rut.2)
 ```
 
@@ -265,14 +265,14 @@ tidy(rut.2)
 - Try: remove everything but pct.a.surf and log.viscosity:
 
 \footnotesize
-```{r}
+```{r asphalt-20}
 rut.3 <- lm(log(rut.depth) ~ pct.a.surf + log(viscosity), data = asphalt)
 ```
 \normalsize
 
 \footnotesize
 - Check that removing all those variables wasn’t too much:
-```{r}
+```{r asphalt-21}
 anova(rut.3, rut.2)
 ```
 \normalsize
@@ -284,7 +284,7 @@ simpler smaller model `rut.3`.
 ## Find the largest P-value by eye:
 
 
-```{r}
+```{r asphalt-22}
 tidy(rut.2)
 ```
 
@@ -296,7 +296,7 @@ tidy(rut.2)
 
 - Output from `tidy` is itself a data frame, thus:
 
-```{r}
+```{r asphalt-23}
 tidy(rut.2) %>% arrange(p.value)
 ```
 
@@ -307,7 +307,7 @@ tidy(rut.2) %>% arrange(p.value)
 - Copy and paste the `lm` code and remove what you're removing:
 
 \small
-```{r}
+```{r asphalt-24}
 rut.4 <- lm(log(rut.depth) ~ pct.a.surf + fines + voids + 
               log(viscosity) + run, data = asphalt)
 tidy(rut.4) %>% arrange(p.value)
@@ -319,7 +319,7 @@ tidy(rut.4) %>% arrange(p.value)
 ## “Update”
 
 Another way to do the same thing:
-```{r}
+```{r asphalt-25}
 rut.4 <- update(rut.2, . ~ . - pct.a.base)
 tidy(rut.4) %>% arrange(p.value)
 ```
@@ -328,7 +328,7 @@ tidy(rut.4) %>% arrange(p.value)
 
 ## Take out fines:
 
-```{r}
+```{r asphalt-26}
 rut.5 <- update(rut.4, . ~ . - fines)
 tidy(rut.5) %>% arrange(p.value)
 ```
@@ -338,7 +338,7 @@ Can’t take out intercept, so `run`, with P-value 0.36, goes next.
 ## Take out run:
 
 
-```{r}
+```{r asphalt-27}
 rut.6 <- update(rut.5, . ~ . - run)
 tidy(rut.6) %>% arrange(p.value)
 ```
@@ -352,7 +352,7 @@ make fit significantly worse if removed. So they stay.
 - Different final result from taking things out one at a time (top), than
 by taking out 4 at once (bottom):
 
-```{r}
+```{r asphalt-28}
 coef(rut.6)
 coef(rut.3)
 ```
@@ -365,7 +365,7 @@ them should be important.
 - Best automatic method: what we did, “backward selection”.
 - Do not learn about “stepwise regression”! [**eg. here**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df)
 - R has function `step` that does backward selection, like this:
-```{r, eval=F}
+```{r asphalt-29, eval=F}
 step(rut.2, direction = "backward", test = "F")
 ```
 
@@ -381,7 +381,7 @@ cutoff like 0.20 or even bigger.
 
 Uses package `leaps`:
 
-```{r}
+```{r asphalt-30}
 leaps <- regsubsets(log(rut.depth) ~ pct.a.surf + 
                       pct.a.base + fines + voids + 
                       log(viscosity) + run, 
@@ -392,19 +392,19 @@ with(s, data.frame(rsq, outmat)) -> d
 
 ## The output
 
-```{r, echo=F}
+```{r asphalt-31, echo=F}
 wid=getOption("width")
 options(width=80)
 ```
 
 
 \scriptsize
-```{r}
+```{r asphalt-32}
 d %>% rownames_to_column("model") %>% arrange(desc(rsq))
 ```
 \normalsize
 
-```{r, echo=F}
+```{r asphalt-33, echo=F}
 options(width=wid)
 ```
 
@@ -421,13 +421,13 @@ variable makes it go down.
 
 ## All possible regressions, adjusted R-squared
 
-```{r, echo=F}
+```{r asphalt-34, echo=F}
 wid=getOption("width")
 options(width=80)
 ```
 
 \scriptsize
-```{r}
+```{r asphalt-35}
 with(s, data.frame(adjr2, outmat)) %>% 
   rownames_to_column("model") %>% 
   arrange(desc(adjr2))
@@ -435,14 +435,14 @@ with(s, data.frame(adjr2, outmat)) %>%
 \normalsize
 
 
-```{r, echo=F}
+```{r asphalt-36, echo=F}
 options(width=wid)
 ```
 
 ## Revisiting the best model
 - Best model was our rut.6:
 
-```{r}
+```{r asphalt-37}
 tidy(rut.6)
 ```
 
@@ -453,7 +453,7 @@ less checks out with out scatterplots against `log.viscosity`.
 - We should check residual plots again, though previous scatterplots say
 it’s unlikely that there will be a problem:
 
-```{r}
+```{r asphalt-38}
 g <- ggplot(rut.6, aes(y = .resid, x = .fitted)) + 
 geom_point()
 ```
@@ -461,14 +461,14 @@ geom_point()
 ## Residuals against fitted values
 
 
-```{r}
+```{r asphalt-39}
 g
 ```
 
 ## Plotting residuals against x’s
 - Do our trick again to put them all on one plot:
 
-```{r}
+```{r asphalt-40}
 augment(rut.6, asphalt) %>%
   mutate(log_vis=log(viscosity)) %>% 
   pivot_longer(
@@ -481,7 +481,7 @@ augment(rut.6, asphalt) %>%
 
 ## Residuals against the x’s
 
-```{r}
+```{r asphalt-41}
 g2
 ```
 

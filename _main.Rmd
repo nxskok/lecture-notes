@@ -88,11 +88,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="asphalt.Rmd"}
+```{r -main-2, child="asphalt.Rmd"}
 ```
 
 
@@ -164,11 +164,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-3, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="bootstrap.Rmd"}
+```{r -main-4, child="bootstrap.Rmd"}
 ```
 
 
@@ -284,12 +284,12 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-5, child="preliminaries.Rmd", echo=F}
 ```
 
 # Dates and times
 
-```{r, child="dates_and_times.Rmd"}
+```{r -main-6, child="dates_and_times.Rmd"}
 ```
 
 <!--chapter:end:dates_and_times_slides.Rmd-->
@@ -340,11 +340,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-7, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="dip.Rmd"}
+```{r -main-8, child="dip.Rmd"}
 ```
 
 
@@ -436,11 +436,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-9, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="functions.Rmd"}
+```{r -main-10, child="functions.Rmd"}
 ```
 
 
@@ -508,12 +508,12 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-11, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r, child="graphs_R.Rmd"}
+```{r -main-12, child="graphs_R.Rmd"}
 ```
 
 
@@ -594,11 +594,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-13, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="inference_1_R.Rmd"}
+```{r -main-14, child="inference_1_R.Rmd"}
 ```
 
 
@@ -697,12 +697,12 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-15, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r, child="inference_2_R.Rmd"}
+```{r -main-16, child="inference_2_R.Rmd"}
 ```
 
 
@@ -804,11 +804,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-17, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="inference_3_R.Rmd"}
+```{r -main-18, child="inference_3_R.Rmd"}
 ```
 
 
@@ -909,10 +909,10 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-19, child="preliminaries.Rmd", echo=F}
 ```
 
-```{r, child="inference_4_R.Rmd"}
+```{r -main-20, child="inference_4_R.Rmd"}
 ```
 
 
@@ -995,10 +995,10 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-21, child="preliminaries.Rmd", echo=F}
 ```
 
-```{r, child="inference_4a_R.Rmd"}
+```{r -main-22, child="inference_4a_R.Rmd"}
 ```
 
 
@@ -1062,10 +1062,10 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-23, child="preliminaries.Rmd", echo=F}
 ```
 
-```{r, child="inference_4b_R.Rmd"}
+```{r -main-24, child="inference_4b_R.Rmd"}
 ```
 
 
@@ -1146,12 +1146,12 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-25, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r, child="inference_5_R.Rmd"}
+```{r -main-26, child="inference_5_R.Rmd"}
 ```
 
 
@@ -1215,12 +1215,12 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-27, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r, child="inference_R.Rmd"}
+```{r -main-28, child="inference_R.Rmd"}
 ```
 
 
@@ -1418,7 +1418,7 @@ title: "athletes and knitr::kable"
 output: html_notebook
 ---
 
-```{r}
+```{r -main-29}
 library(tidyverse)
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
@@ -1426,19 +1426,19 @@ athletes <- read_tsv(my_url)
 
 one that works
 
-```{r}
+```{r -main-30}
 athletes %>% select(Sex:WCC) %>% knitr::kable()
 ```
 
 does this?
 
-```{r}
+```{r -main-31}
 athletes %>% sample_n(10) %>% knitr::kable()
 ```
 
 here it does
 
-```{r}
+```{r -main-32}
 athletes %>% slice(c(10, 13, 17, 42)) %>% knitr::kable()
 ```
 
@@ -1461,11 +1461,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-33, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="miscellanea.Rmd"}
+```{r -main-34, child="miscellanea.Rmd"}
 ```
 
 
@@ -1516,11 +1516,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-35, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="numsum_R.Rmd"}
+```{r -main-36, child="numsum_R.Rmd"}
 ```
 
 
@@ -1555,12 +1555,12 @@ output:
 ---
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-37, child="preliminaries.Rmd", echo=F}
 ```
 
 # Course outline 
 
-```{r, child="outline_20210101.Rmd"}
+```{r -main-38, child="outline_20210101.Rmd"}
 ```
 
 
@@ -1620,11 +1620,11 @@ output:
 ---
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-39, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="outline_c33_online.Rmd"}
+```{r -main-40, child="outline_c33_online.Rmd"}
 ```
 
 
@@ -1665,11 +1665,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-41, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="outline_c33.Rmd"}
+```{r -main-42, child="outline_c33.Rmd"}
 ```
 
 
@@ -1708,12 +1708,12 @@ output:
 ---
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-43, child="preliminaries.Rmd", echo=F}
 ```
 
 # Course outline 
 
-```{r, child="outline_c32.Rmd"}
+```{r -main-44, child="outline_c32.Rmd"}
 ```
 
 
@@ -1740,13 +1740,13 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-45, child="preliminaries.Rmd", echo=F}
 ```
 
 
 # Reading in data
 
-```{r child="readfile_R.Rmd"}
+```{r -main-46, child="readfile_R.Rmd"}
 ```
 
 
@@ -1791,7 +1791,7 @@ output: github_document
 - [STAC32 lecture notes](https://github.com/nxskok/notes/blob/master/slides_c32.pdf)
 - [STAC32 R Markdown file](https://raw.githubusercontent.com/nxskok/notes/master/slides_c32.Rmd)
 
-```{r}
+```{r -main-47}
 
 ```
 
@@ -1817,10 +1817,10 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-48, child="preliminaries.Rmd", echo=F}
 ```
 
-```{r, child="reports_R.Rmd"}
+```{r -main-49, child="reports_R.Rmd"}
 ```
 
 
@@ -1882,11 +1882,11 @@ output:
 ---
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-50, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="rstan.Rmd"}
+```{r -main-51, child="rstan.Rmd"}
 ```
 
 
@@ -1965,11 +1965,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-52, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r child="running_R.Rmd"}
+```{r -main-53, child="running_R.Rmd"}
 ```
 
 <!--chapter:end:running_R_slides.Rmd-->
@@ -2188,12 +2188,12 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-54, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r, child="tidying_R.Rmd"}
+```{r -main-55, child="tidying_R.Rmd"}
 ```
 
 
@@ -2285,11 +2285,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-56, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="vector_matrix.Rmd"}
+```{r -main-57, child="vector_matrix.Rmd"}
 ```
 
 
@@ -2401,11 +2401,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-58, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="windmill.Rmd"}
+```{r -main-59, child="windmill.Rmd"}
 ```
 
 
@@ -2500,11 +2500,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r -main-60, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="with_categ_R.Rmd"}
+```{r -main-61, child="with_categ_R.Rmd"}
 ```
 
 <!--chapter:end:with_categ_R_slides.Rmd-->

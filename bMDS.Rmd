@@ -32,7 +32,7 @@ failure.)
 The usual, plus some new stuff:
 
 
-```{r eval=F, message=F}
+```{r bMDS-1, eval=F, message=F}
 library(MASS)
 library(tidyverse)
 library(ggrepel)
@@ -47,13 +47,13 @@ CSV file `europe.csv` contains road distances (in km) between 16 European cities
 
 Read in data:
 
-```{r include=F}
+```{r bMDS-2, include=F}
 options(width = 65)
 ```
 
  
 \scriptsize
-```{r}
+```{r bMDS-3}
 my_url <- "http://ritsokiguess.site/datafiles/europe.csv"
 europe <- read_csv(my_url)
 ```
@@ -63,13 +63,13 @@ europe <- read_csv(my_url)
 
 ## The data
 
-```{r, echo=F}
+```{r bMDS-4, echo=F}
 options(width=70)
 ```
 
 
 \scriptsize
-```{r, echo=F}
+```{r bMDS-5, echo=F}
 europe
 ```
 \normalsize
@@ -83,7 +83,7 @@ europe
 into `dist` with `as.dist`.
 
 * Then run multidimensional scaling and look at result:
-```{r }
+```{r bMDS-6 }
 europe %>% select(-City) %>% as.dist() -> europe.d
 europe.scale <- cmdscale(europe.d)
 head(europe.scale)
@@ -100,7 +100,7 @@ head(europe.scale)
 We know how to plot data frames, so make one first. This gives a warning that you can ignore:
 
 \normalsize
-```{r, warning=F}
+```{r bMDS-7, warning=F}
 europe.scale %>%
   as_tibble() %>%
   mutate(city = europe$City) -> europe_coord
@@ -112,7 +112,7 @@ ggplot(europe_coord, aes(x = V1, y = V2, label = city)) +
 
 
 ## The map
-```{r fig.height=3.8}
+```{r bMDS-8, fig.height=3.8}
 g
 ```
 
@@ -126,7 +126,7 @@ g
 output a map (like the one on the previous page).
 
 \footnotesize
-```{r}
+```{r bMDS-9}
 mds_map <- function(filename) {
   x <- read_csv(filename)
   x %>%
@@ -156,7 +156,7 @@ data frame, acquires headers `V1` and `V2`.
 
 
 ## Does it work?
-```{r fig.height=4, message=F}
+```{r bMDS-10, fig.height=4, message=F}
 mds_map("europe.csv")
 ```
 
@@ -179,7 +179,7 @@ D,1.4,1  ,1  ,0
 \normalsize
 
 * The map:
-```{r message=F,fig.height=1.8,fig.width=1.6}
+```{r bMDS-11, message=F,fig.height=1.8,fig.width=1.6}
 mds_map("square.csv")
 ```
 
@@ -193,7 +193,7 @@ mds_map("square.csv")
 *geocoding*: 
 
 \small
-```{r cache=T, message=F, eval=F}
+```{r bMDS-12, cache=T, message=F, eval=F}
 latlong <- geocode(europe$City)
 latlong <- bind_cols(city = europe$City, latlong)
 latlong %>% slice(1:6)
@@ -201,7 +201,7 @@ latlong %>% slice(1:6)
 \normalsize
 
 \small
-```{r echo=F}
+```{r bMDS-13, echo=F}
 latlong <- readRDS("euro_latlong.rds")
 latlong %>% slice(1:6)
 ```
@@ -221,13 +221,13 @@ of 2500 queries per day (it queries Google Maps).
 map of any way you can in Google Maps). This one centres the map
 on the city shown and zooms it so all the cities appear (I had to
 experiment):
-```{r eval=F}
+```{r bMDS-14, eval=F}
 map <- get_map("Memmingen DE", zoom = 5)
 ```
 
      
 
-```{r echo=F}
+```{r bMDS-15, echo=F}
 map <- readRDS("memmingen.rds")
 ```
 
@@ -236,7 +236,7 @@ map <- readRDS("memmingen.rds")
 * Plot the map with `ggmap`. This is `ggplot`,
 so add anything to it that you would
 add to a `ggplot`, such as cities we want to show:
-```{r }
+```{r bMDS-16 }
 g2 <- ggmap(map) +
   geom_point(
     data = latlong, aes(x = lon, y = lat),
@@ -253,7 +253,7 @@ g2 <- ggmap(map) +
 
 
 ## The real Europe with our cities
-```{r fig.height=3.6}
+```{r bMDS-17, fig.height=3.6}
 g2
 ```
 
@@ -261,7 +261,7 @@ g2
 
 
 ## Compare our scaling map
-```{r fig.height=4,echo=F}
+```{r bMDS-18, fig.height=4,echo=F}
 g
 ```
 
@@ -290,7 +290,7 @@ exchanging west and east while leaving north and south same).
 to 1).
 
 * Try this code:
-```{r eval=F}
+```{r bMDS-19, eval=F}
 library(rgl)
 es.2 <- cbind(europe.scale, 1)
 es.2
@@ -309,14 +309,14 @@ text3d(es.2, text = europe$City)
 ## Ontario, the same way
 
 \footnotesize
-```{r}
+```{r bMDS-20}
 url <- 
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 
 ```
 
 \small
-```{r message=F,fig.height=3.5}
+```{r bMDS-21, message=F,fig.height=3.5}
 (g <- mds_map(url))
 ```
 \normalsize
@@ -351,7 +351,7 @@ those cities, then remove just those rows and columns.
 
 
 ## Square data
-```{r message=F}
+```{r bMDS-22, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/square.csv"
 square <- read_csv(my_url)
 square
@@ -363,7 +363,7 @@ square
 ## Make tidy
 
 \scriptsize
-```{r}
+```{r bMDS-23}
 square %>% gather(point, distance, -x)
 ```
 \normalsize
@@ -374,7 +374,7 @@ square %>% gather(point, distance, -x)
 In column `x` or `point`:
 
 \small
-```{r }
+```{r bMDS-24 }
 square %>%
   gather(point, distance, -1) %>%
   filter(x != "C", point != "C")
@@ -385,7 +385,7 @@ square %>%
 
 ## Put back as distance matrix
 and save as .csv when we are happy:
-```{r }
+```{r bMDS-25 }
 square %>%
   pivot_longer(-x, names_to="point", values_to="distance") %>%
   filter(x != "C", point != "C") %>%
@@ -398,7 +398,7 @@ noc %>% write_csv("no-c.csv")
 
 
 ## Make map of square-without-C
-```{r message=F,fig.height=4}
+```{r bMDS-26, message=F,fig.height=4}
 mds_map("no-c.csv")
 ```
 
@@ -406,7 +406,7 @@ mds_map("no-c.csv")
 
 
 ## Back to Ontario
-```{r fig.height=4}
+```{r bMDS-27, fig.height=4}
 g
 ```
 
@@ -418,7 +418,7 @@ Get rid of Thunder Bay and Sault Ste Marie.
 ## Tidy, remove, untidy
 
 \footnotesize
-```{r message=F}
+```{r bMDS-28, message=F}
 my_url <- 
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario2 <- read_csv(my_url) 
@@ -438,7 +438,7 @@ ontario2 %>%
 
 
 ## Map of Southern Ontario
-```{r fig.height=3.5, message=F}
+```{r bMDS-29, fig.height=3.5, message=F}
 (g <- mds_map("southern-ontario.csv"))
 ```
 
@@ -483,7 +483,7 @@ g2
 * First geocode the cities of interest:
 
 \footnotesize
-```{r message=F, cache=T, eval=F}
+```{r bMDS-30, message=F, cache=T, eval=F}
 cities <- c(
   "Kitchener ON", "Hamilton ON", "Niagara Falls ON",
   "St Catharines ON", "Brantford ON"
@@ -493,7 +493,7 @@ latlong <- bind_cols(city = cities, latlong) %>% print()
 ```
      
 
-```{r echo=F}
+```{r bMDS-31, echo=F}
 latlong <- readRDS("ontario_trouble.rds")
 latlong %>% print()
 ```
@@ -503,11 +503,11 @@ latlong %>% print()
 ## Get Google map
 
 * Get a Google map of the area (experiment with zoom):
-```{r message=F, eval=F}
+```{r bMDS-32, message=F, eval=F}
 map <- get_map("Hamilton ON", zoom = 8)
 ```
 
-```{r echo=F}
+```{r bMDS-33, echo=F}
 map <- readRDS("hamilton_map.rds")
 ```
 
@@ -520,7 +520,7 @@ map <- readRDS("hamilton_map.rds")
 
 ## Making the R Google map
 Plot the map, plus the cities, plus labels for the cities:
-```{r }
+```{r bMDS-34 }
 ggmap(map) +
   geom_point(
     data = latlong,
@@ -535,7 +535,7 @@ ggmap(map) +
 
 ## MDS and Google map side by side
 
-```{r, include=F, warning=F}
+```{r bMDS-35, include=F, warning=F}
 ggsave("g2.png", g2, "png")
 ggsave("gmap.png", gmap, "png")
 ```
@@ -553,7 +553,7 @@ Hamilton!
 * Read in "southern Ontario" data set from file. Calling `cmdscale` with `eig=T` gives more info:
 
 \footnotesize
-```{r message=F}
+```{r bMDS-36, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/southern-ontario.csv"
 ontario2 <- read_csv(my_url)
 ontario2.2 <- ontario2 %>%
@@ -588,7 +588,7 @@ than 2, presumably to accommodate St Catharines and Niagara Falls?
 ## 3-dimensional coordinates, cities attached
 
 \tiny
-```{r}
+```{r bMDS-37}
 ontario2.3$points %>%
   as_tibble() %>%
   mutate(city = ontario2$x)
@@ -598,7 +598,7 @@ ontario2.3$points %>%
 
 
 ## RGL code for 3 dimensions
-```{r eval=F}
+```{r bMDS-38, eval=F}
 library(rgl)
 plot3d(ontario2.3$points)
 text3d(ontario2.3$points, text = ontario2$x)
@@ -656,7 +656,7 @@ cube.d
 
 *   By default in 2 dimensions; save the extra stuff for later:
 
-```{r }
+```{r bMDS-39 }
 cube.2 <- cube.d %>% cmdscale(eig = T)
 ```
 
@@ -665,7 +665,7 @@ cube.2 <- cube.d %>% cmdscale(eig = T)
 
 * Make data frame to plot, remembering the points to plot are in
 `points` now:
-```{r }
+```{r bMDS-40 }
 d <- cube.2$points %>%
   as_tibble() %>%
   mutate(corners = cube$x)
@@ -674,7 +674,7 @@ d <- cube.2$points %>%
    
 
 * Plot points labelled by our names for the corners:
-```{r }
+```{r bMDS-41 }
 g <- ggplot(d, aes(x = V1, y = V2, label = corners)) +
   geom_point() + geom_text_repel()
 ```
@@ -692,7 +692,7 @@ g
 Not good.
 
 ## 2 and 3 dimensions
-```{r }
+```{r bMDS-42 }
 cube.3 <- cube.d %>% cmdscale(3, eig = T)
 cube.2$GOF
 cube.3$GOF
@@ -726,12 +726,12 @@ names, without requiring that 1 is "eight times better" than 8.
 
 * Recall language data (from cluster analysis): 1--10, measure dissimilarity between two languages by how many number names *differ* in first letter:
 
-```{r include=F}
+```{r bMDS-43, include=F}
 options(width = 65)
 ```
 
 \scriptsize     
-```{r message=F}
+```{r bMDS-44, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 number.d <- read_table(my_url)
 number.d
@@ -752,7 +752,7 @@ like `cmdscale`.
 * Map only reproduces *relative* closeness of languages.
 
 \small
-```{r}
+```{r bMDS-45}
 number.d %>%
   select_if(is.numeric) %>%
   as.dist() -> d
@@ -770,7 +770,7 @@ d %>% isoMDS() -> number.nm
 
 
 * Stress is very low (5\%, good):
-```{r }
+```{r bMDS-46 }
 number.nm$stress
 ```
 
@@ -778,7 +778,7 @@ number.nm$stress
 * Familiar process: make a data frame to plot. Use name
 `dd` for data frame this time since used `d` for
 distance object:
-```{r }
+```{r bMDS-47 }
 dd <- number.nm$points %>%
   as_tibble() %>%
   mutate(lang = number.d$la)
@@ -788,7 +788,7 @@ dd <- number.nm$points %>%
 
 
 * Make plot:
-```{r }
+```{r bMDS-48 }
 g <- ggplot(dd, aes(x = V1, y = V2, label = lang)) +
   geom_point() + geom_text_repel()
 ```
@@ -852,7 +852,7 @@ MDS higher too. (MDS working well.)
 ## Cube, revisited
 
 \small
-```{r}
+```{r bMDS-49}
 cube.d <- cube %>% select(-x) %>% as.dist(cube)
 cube.2 <- isoMDS(cube.d, trace = F)
 cube.2$stress
@@ -871,7 +871,7 @@ cube.3$stress
 ## Shepard diagrams
 
 \normalsize
-```{r}
+```{r bMDS-50}
 cube2.sh <- Shepard(cube.d, cube.2$points)
 g2 <- ggplot(as.data.frame(cube2.sh), aes(x = x, y = y)) +
   geom_point()
@@ -886,7 +886,7 @@ g3 <- ggplot(as.data.frame(cube3.sh), aes(x = x, y = y)) +
 
 ## Shepard diagram for 2-dimensional cube
 
-```{r fig.height=3.6}
+```{r bMDS-51, fig.height=3.6}
 g2
 ```
 
@@ -896,7 +896,7 @@ Poor correspondence (not much trend).
 
 
 ## Shepard diagram for 3-dimensional cube
-```{r fig.height=3.6}
+```{r bMDS-52, fig.height=3.6}
 g3
 ```
 

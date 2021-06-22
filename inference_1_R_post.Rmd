@@ -25,7 +25,7 @@ Certainly not. Actual attendance depends on many things, eg.:
   
 ## Packages for this section
 
-```{r, eval=F}
+```{r inference-1-R-post-1, eval=F}
 library(tidyverse)
 # library(smmr)
 # library(PMCMRplus)
@@ -35,7 +35,7 @@ library(tidyverse)
 ## Reading the attendances
 ...as a `.csv` file:
 
-```{r}
+```{r inference-1-R-post-2}
 my_url <- "http://ritsokiguess.site/STAC32/jays15-home.csv"
 jays <- read_csv(my_url)
 ```
@@ -43,7 +43,7 @@ jays <- read_csv(my_url)
 ## Taking a look (tiny)
 
 \tiny
-```{r}
+```{r inference-1-R-post-3}
 jays
 ```
 \normalsize
@@ -52,19 +52,19 @@ jays
 
 \tiny
 
-```{r, echo=FALSE}
+```{r inference-1-R-post-4, echo=FALSE}
 options(width=100)
 ```
 
 
-```{r}
+```{r inference-1-R-post-5}
 glimpse(jays)
 ```
 \normalsize
 
 ## Attendance histogram
 
-```{r, fig.height=3.8}
+```{r inference-1-R-post-6, fig.height=3.8}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
 ```
 
@@ -83,7 +83,7 @@ attendance in all possible games based on this evidence?
 ## Getting CI for mean attendance 
 - `t.test` function does CI and test. Look at CI first:
 
-```{r}
+```{r inference-1-R-post-7}
 t.test(jays$attendance)
 ```
 
@@ -92,7 +92,7 @@ t.test(jays$attendance)
 ## Or, 90% CI
 
 - by including a value for conf.level:
-```{r}
+```{r inference-1-R-post-8}
 t.test(jays$attendance, conf.level = 0.90)
 ```
 
@@ -112,7 +112,7 @@ chance that interval won’t contain pop. mean at all!
 
 ## Another way to access data frame columns
 
-```{r}
+```{r inference-1-R-post-9}
 with(jays, t.test(attendance))
 ```
 
@@ -202,7 +202,7 @@ typically 0.05.
   
 ## Using `t.test`:
 
-```{r}
+```{r inference-1-R-post-10}
 t.test(jays$attendance, mu=29327)
 ```
 
@@ -225,7 +225,7 @@ it is normal enough, given the sample size.
 - You might say that this is not normal enough for a sample size of $n = 25$,
 in which case you don’t trust the $t$-test result:
 
-```{r, fig.height=3}
+```{r inference-1-R-post-11, fig.height=3}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
 ```
 
@@ -250,20 +250,20 @@ reading method (t) or standard one (c).
 - Proper reading-in function is `read_delim` (check file to see)
 - Read in thus:
 
-```{r}
+```{r inference-1-R-post-12}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 
 ## The data (some) 
 
-```{r}
+```{r inference-1-R-post-13}
 kids
 ```
 
 ## Boxplots
 
-```{r, fig.height=3.7}
+```{r inference-1-R-post-14, fig.height=3.7}
 ggplot(kids, aes(x = group, y = score)) + geom_boxplot()
 ```
 
@@ -285,13 +285,13 @@ is “less”.
 
 ## Welch-Satterthwaite 
 
-```{r}
+```{r inference-1-R-post-15}
 t.test(score ~ group, data = kids, alternative = "less")
 ```
 
 ## The pooled t-test 
 
-```{r}
+```{r inference-1-R-post-16}
 t.test(score ~ group, data = kids, 
        alternative = "less", var.equal = TRUE)
 ```
@@ -299,7 +299,7 @@ t.test(score ~ group, data = kids,
 ## Two-sided test; CI
 - To do 2-sided test, leave out `alternative`:
 
-```{r}
+```{r inference-1-R-post-17}
 t.test(score ~ group, data = kids)
 ```
 

@@ -5,7 +5,7 @@
 - The leaflet package is the easiest way to draw maps in R.
 - Install these two packages, with two familiar ones:
 
-```{r, eval=FALSE}
+```{r mapping-1, eval=FALSE}
 library(tmaptools)
 library(leaflet)
 library(tidyverse)
@@ -19,7 +19,7 @@ The Ontario hockey divisions (the last example for cluster analysis) came with a
 
 - reload the Ontario road distances
 
-```{r}
+```{r mapping-2}
 my_url <-
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 # my_url <- "ontario-road-distances.csv"
@@ -28,7 +28,7 @@ ontario <- read_csv(my_url)
 
 ## Ontario road distances (some)
 
-```{r}
+```{r mapping-3}
 ontario
 ```
 
@@ -37,7 +37,7 @@ ontario
 
 - and append province ("ON") for reasons shortly to become clear:
 
-```{r}
+```{r mapping-4}
 tibble(place = ontario$place) %>% 
   mutate(prov = "ON") %>% 
   unite(place1, c(place, prov), sep = " ") -> ontario2
@@ -49,7 +49,7 @@ ontario2
 - find their latitudes and longitudes ("geocode"; slow). 
 - Save the geocoded places.
 
-```{r}
+```{r mapping-5}
 ontario2 %>% 
   rowwise() %>% 
   mutate(ll = list(geocode_OSM(place1))) -> d
@@ -60,7 +60,7 @@ d
 
 Untangle the lats and longs:
 
-```{r}
+```{r mapping-6}
 d %>% 
   unnest_wider(ll) %>% 
   unnest_wider(coords) -> ontario3
@@ -71,7 +71,7 @@ ontario3
 
 - finally:
 
-```{r}
+```{r mapping-7}
 leaflet(data = ontario3) %>% 
   addTiles() %>% 
   addCircleMarkers(lng = ~x, lat = ~y) -> locs
@@ -82,14 +82,14 @@ locs
 
 ## Cluster analysis revisited
 
-```{r}
+```{r mapping-8}
 ontario %>% select(-1) %>% as.dist() -> ontario.d
 ontario.hc <- hclust(ontario.d, method = "ward.D")
 ```
 
 ## Seven clusters:
 
-```{r fig.height=4} 
+```{r mapping-9, fig.height=4 }
 plot(ontario.hc)
 rect.hclust(ontario.hc, 7)
 ```
@@ -97,7 +97,7 @@ rect.hclust(ontario.hc, 7)
 ## Get the clusters
 
 \footnotesize
-```{r}
+```{r mapping-10}
 tibble(place = ontario$place, cluster = cutree(ontario.hc, 7)) -> clusters
 clusters %>% arrange(cluster)
 ```
@@ -110,7 +110,7 @@ clusters %>% arrange(cluster)
 - combine clusters 2 and 3 ("east")
 - make named divisions
 
-```{r}
+```{r mapping-11}
 clusters %>% 
   mutate(division = fct_collapse(factor(cluster),
                                 "north" = c("4", "6", "7"),
@@ -122,14 +122,14 @@ clusters %>%
 
 ## The divisions
 
-```{r}
+```{r mapping-12}
 divisions
 ```
 
 ## Take "ON" off of `ontario3`
 
 \footnotesize
-```{r}
+```{r mapping-13}
 ontario3 %>% 
   mutate(place = str_replace(place1, " ON$", "")) -> ontario3
 ontario3
@@ -140,7 +140,7 @@ ontario3
 
 - and draw map
 
-```{r}
+```{r mapping-14}
 pal <- colorFactor("Set1", divisions$division)
 
 ontario3 %>% left_join(divisions) %>% 
@@ -152,7 +152,7 @@ ontario3 %>% left_join(divisions) %>%
 
 ## The map with divisions
 
-```{r}
+```{r mapping-15}
 divmap
 ```
 
@@ -162,7 +162,7 @@ divmap
 
 The same idea gets a map of the original seven clusters:
 
-```{r}
+```{r mapping-16}
 pal <- colorFactor("Set1", divisions$cluster)
 ontario3 %>% left_join(divisions) %>% 
   select(place, x, y, cluster) %>% 
@@ -174,7 +174,7 @@ ontario3 %>% left_join(divisions) %>%
 
 ## Map with seven clusters
 
-```{r}
+```{r mapping-17}
 divmap
 ```
 

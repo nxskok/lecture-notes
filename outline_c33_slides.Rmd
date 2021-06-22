@@ -14,10 +14,10 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r outline-c33-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="outline_c33.Rmd"}
+```{r outline-c33-slides-2, child="outline_c33.Rmd"}
 ```
 

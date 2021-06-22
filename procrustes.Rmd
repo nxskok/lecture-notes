@@ -21,7 +21,7 @@ should be''?
 before. Glue "ON" onto city names to make sure we get right ones: xxx
 
 \footnotesize
-```{r message=F, cache=T, eval=F}
+```{r procrustes-1, message=F, cache=T, eval=F}
 lookup <- str_c(ontario2$x, " ON")
 latlong <- geocode(lookup)
 latlong <- bind_cols(city = ontario2$x, latlong) %>% print(n = 4)
@@ -31,7 +31,7 @@ latlong <- bind_cols(city = ontario2$x, latlong) %>% print(n = 4)
 xxx
 
 \footnotesize
-```{r echo=F}
+```{r procrustes-2, echo=F}
 latlong <- readRDS("ontario_all.rds")
 latlong %>% print(n = 4)
 ```
@@ -50,7 +50,7 @@ pole).
 * Make coordinates by multiplying by cosine of "typical" latitude.
 
 * Find mean latitude:
-```{r }
+```{r procrustes-3 }
 m <- mean(latlong$lat)
 m
 ```
@@ -59,7 +59,7 @@ m
 
 
 * Turn into radians and find its cosine:
-```{r }
+```{r procrustes-4 }
 mult <- cos(m * pi / 180)
 mult
 ```
@@ -71,7 +71,7 @@ mult
 that. This needs to be R `matrix`, not data frame: xxx
 
 \footnotesize
-```{r}
+```{r procrustes-5}
 truecoord <- with(latlong, cbind(V1 = lon * mult, V2 = lat))
 ```
 \normalsize
@@ -100,7 +100,7 @@ coordinates, second MDS coordinates.
 match as well as possible. xxx
 
 \footnotesize
-```{r message=F}
+```{r procrustes-6, message=F}
 ontario.pro <- procOPA(
   truecoord,
   ontario2.2$points
@@ -118,7 +118,7 @@ names(ontario.pro)
 `Bhat` are from MDS. xxx
 
 \scriptsize
-```{r}
+```{r procrustes-7}
 A <- ontario.pro$Ahat %>%
   as_tibble() %>%
   mutate(which = "actual", city = ontario2$x)
@@ -137,7 +137,7 @@ dp %>% sample_n(6)
 * Make data frames of each, glue together: xxx
 
 \small
-```{r, warning=F}
+```{r procrustes-8, warning=F}
 A=with(ontario.pro,data.frame(x=Ahat[,1],
    y=Ahat[,2],which="actual",city=ontario2$x)) 
  B=with(ontario.pro,data.frame(x=Bhat[,1],
@@ -164,7 +164,7 @@ was actually easy to join the two instances of a city by a line
 (in green, here, 3rd line) by setting `group=city`: xxx
 
 \footnotesize
-```{r}
+```{r procrustes-9}
 g_opa <- ggplot(dp, aes(
   x = V1, y = V2, colour = which,
   label = city
@@ -209,7 +209,7 @@ representation  `ontario2.3`.
 
 ## Rotation matrix
 Shows how MDS map needs to be rotated to get best match with actual coordinates:
-```{r }
+```{r procrustes-10 }
 ontario.pro$R
 ```
 
@@ -221,7 +221,7 @@ $ %$ %$
 
 
 ## Is that right? Look at MDS map again
-```{r fig.height=4}
+```{r procrustes-11, fig.height=4}
 g
 ```
 

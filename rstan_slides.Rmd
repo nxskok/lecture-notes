@@ -13,11 +13,11 @@ output:
 ---
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r rstan-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="rstan.Rmd"}
+```{r rstan-slides-2, child="rstan.Rmd"}
 ```
 
 

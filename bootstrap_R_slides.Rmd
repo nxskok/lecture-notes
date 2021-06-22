@@ -15,10 +15,10 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r bootstrap-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="bootstrap_R.Rmd"}
+```{r bootstrap-R-slides-2, child="bootstrap_R.Rmd"}
 ```
 

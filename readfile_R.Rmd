@@ -10,7 +10,7 @@ software to analyze.
   
 ## Packages for this section
 
-```{r, eval=F}
+```{r readfile-R-1, eval=F}
 library(tidyverse)
 ```
 
@@ -57,7 +57,7 @@ appear bottom right.
 - ...and get rid of the template document (leaving the first four lines).
 - Make a code chunk and in it put this. Run it.
 
-```{r, eval=F}
+```{r readfile-R-2, eval=F}
 library(tidyverse)
 ```
 
@@ -67,7 +67,7 @@ library(tidyverse)
 file in something, here called `mydata`. Make a new code chunk for
 this:
 
-```{r}
+```{r readfile-R-3}
 mydata <- read_csv("test1.csv")
 ```
 
@@ -101,7 +101,7 @@ control-shift-C or Mac equivalent with Cmd.)
 - Again, type the name of the thing to display it:
 
 \scriptsize
-```{r}
+```{r readfile-R-4}
 mydata
 ```
 \normalsize
@@ -116,7 +116,7 @@ rows or columns, it will say so.
 
 - Another way to examine your data frame is to View it, like this:
 
-```{r, eval=F}
+```{r readfile-R-5, eval=F}
 View(mydata)
 ```
 
@@ -146,7 +146,7 @@ individuals and variables).
 low, so the min and/or max will be unreasonable.
 - Five-number summary:
 
-```{r}
+```{r readfile-R-6}
 summary(mydata)
 ```
 
@@ -161,7 +161,7 @@ summary(mydata)
 long), and then put that variable in the `read_` function:
 
 \small
-```{r}
+```{r readfile-R-7}
 my_url <- "http://ritsokiguess.site/datafiles/global.csv"
 global <- read_csv(my_url)
 ```
@@ -169,7 +169,7 @@ global <- read_csv(my_url)
 
 ## The data
 
-```{r}
+```{r readfile-R-8}
 global
 ```
 
@@ -211,7 +211,7 @@ first.
 - This time, `read_delim`, and we also have to say what the thing is
 separating the values:
 
-```{r}
+```{r readfile-R-9}
 coffee <- read_delim("coffee.txt", " ")
 ```
 
@@ -219,7 +219,7 @@ coffee <- read_delim("coffee.txt", " ")
 
 ## Looking at the values (some)
 
-```{r}
+```{r readfile-R-10}
 coffee
 ```
 
@@ -230,14 +230,14 @@ the temperature of the coffee in the mug decreased over 30 minutes.
 - Use the URL in place of the filename.
 - Save the URL in a variable first:
 
-```{r}
+```{r readfile-R-11}
 url <- "http://ritsokiguess.site/datafiles/soap.txt"
 soap <- read_delim(url, " ")
 ```
 
 ## The soap data (some)
 
-```{r}
+```{r readfile-R-12}
 soap
 ```
 
@@ -253,13 +253,13 @@ is one fewer space before the 10.
 
 ## Reading in column-aligned data
 
-```{r}
+```{r readfile-R-13}
 drugs <- read_table("migraine.txt")
 ```
 
 ## The data
 
-```{r}
+```{r readfile-R-14}
 drugs
 ```
 
@@ -281,7 +281,7 @@ spreadsheet first.
 - Excel spreadsheets must be “local”:
 cannot read one in from a URL.
 
-```{r, warning=F}
+```{r readfile-R-15, warning=F}
 library(readxl)
 mydata2 <- read_excel("test2.xlsx", sheet = "data")
 mydata2

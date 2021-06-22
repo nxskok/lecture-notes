@@ -14,10 +14,10 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r vector-matrix-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="vector_matrix.Rmd"}
+```{r vector-matrix-slides-2, child="vector_matrix.Rmd"}
 ```
 

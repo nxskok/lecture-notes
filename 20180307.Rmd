@@ -19,7 +19,7 @@ output: html_notebook
 
 ##  Packages
   
-```{r }
+```{r 20180307-1 }
 library(car)
 library(tidyverse)
 ```   
@@ -33,7 +33,7 @@ library(tidyverse)
   -  Data (fertilizer, yield, seed weight):
 
  
-```{r }
+```{r 20180307-2 }
 my_url="http://www.utsc.utoronto.ca/~butler/d29/manova1.txt"
 hilo=read_delim(my_url," ")
 ```
@@ -45,7 +45,7 @@ hilo=read_delim(my_url," ")
 
 ##  The data
   
-```{r }
+```{r 20180307-3 }
 hilo
 ```   
   
@@ -65,7 +65,7 @@ Yields overlap for fertilizer groups.
 ##  Boxplot for weight for each fertilizer group
 
  
-```{r }
+```{r 20180307-4 }
 ggplot(hilo,aes(x=fertilizer,y=weight))+geom_boxplot()
 ``` 
 
@@ -76,7 +76,7 @@ Weights overlap for fertilizer groups.
 ##  ANOVAs for yield and weight
 
 
-```{r }
+```{r 20180307-5 }
 hilo.y=aov(yield~fertilizer,data=hilo)
 summary(hilo.y)
 hilo.w=aov(weight~fertilizer,data=hilo)
@@ -93,7 +93,7 @@ Have two response variables (not more), so can plot the
 response variables against *each other*, labelling points by
 which fertilizer group they're from.
 
-```{r }
+```{r 20180307-6 }
 g=ggplot(hilo,aes(x=yield,y=weight,
     colour=fertilizer))+geom_point(size=5)
 g
@@ -101,7 +101,7 @@ g
 
 Want line through points $(31,14)$ and $(38,10)$ (why? Later):
 
-```{r}
+```{r 20180307-7}
 d=tribble(
     ~line_x, ~line_y,
     31, 14,
@@ -124,7 +124,7 @@ no `fertilizer` (previous `colour`), so have to unset.
 ##  The plot
   
  
-```{r }
+```{r 20180307-8 }
 g
 ```
   
@@ -151,7 +151,7 @@ g
   -  Is difference found by diagonal line significant? MANOVA finds out.
 
 
-```{r size="footnotesize"}
+```{r 20180307-9, size="footnotesize"}
 response=with(hilo,cbind(yield,weight))
 response
 hilo.1=manova(response~fertilizer,data=hilo)
@@ -184,7 +184,7 @@ summary(hilo.1)
   
 Install (once) and load package `car`:
   
-```{r eval=F}
+```{r 20180307-10, eval=F}
 library(car)
 ```
 
@@ -195,7 +195,7 @@ library(car)
 
 ## Another way...
 
-```{r size="footnotesize"}
+```{r 20180307-11, size="footnotesize"}
 hilo.2.lm=lm(response~fertilizer,data=hilo)
 hilo.2=Manova(hilo.2.lm)
 hilo.2
@@ -220,7 +220,7 @@ locations.
   
 
  
-```{r message=F,size="small"}
+```{r 20180307-12, message=F,size="small"}
 peanuts.orig=read_delim("peanuts.txt"," ")
 peanuts.orig
 ```
@@ -230,7 +230,7 @@ peanuts.orig
 
 ## Setup for analysis
 
-```{r }
+```{r 20180307-13 }
 peanuts = peanuts.orig %>%
   mutate(location=factor(location),
          variety=factor(variety)) 
@@ -243,7 +243,7 @@ response
 
 ## Analysis (using `Manova`)
 
-```{r size="scriptsize"}
+```{r 20180307-14, size="scriptsize"}
 peanuts.1=lm(response~location*variety,data=peanuts)
 peanuts.2=Manova(peanuts.1)
 peanuts.2
@@ -282,7 +282,7 @@ peanuts.2
 
 ## Packages
   
-```{r }
+```{r 20180307-15 }
 library(car)
 library(tidyverse)
 ```   
@@ -303,7 +303,7 @@ library(tidyverse)
 
 ## Read in data
   
-```{r }
+```{r 20180307-16 }
 my_url="http://www.utsc.utoronto.ca/~butler/d29/dogs.txt"
 dogs=read_table(my_url)
 ```   
@@ -313,11 +313,11 @@ dogs=read_table(my_url)
 ## Setting things up
 
  
-```{r}
+```{r 20180307-17}
 dogs
 ```
 
-```{r}
+```{r 20180307-18}
 response=with(dogs,cbind(lh0,lh1,lh3,lh5))
 response
 dogs.lm=lm(response~drug,data=dogs)
@@ -333,13 +333,13 @@ in data frame.
 
 
  
-```{r }
+```{r 20180307-19 }
 class(response)
 times=colnames(response)
 times
 ```
 
-```{r}
+```{r 20180307-20}
 times.df=data.frame(times)
 times.df
 dogs.manova=Manova(dogs.lm,idata=times.df,
@@ -360,7 +360,7 @@ for the two drugs.
   -  Want to investigate interaction.
   -  But data frame has several observations per line (``wide format''):
  
-```{r}
+```{r 20180307-21}
 dogs
 ```
     
@@ -377,7 +377,7 @@ dogs
 ## Running `gather`, try 1
   
 
-```{r size="footnotesize"}
+```{r 20180307-22, size="footnotesize"}
 dogs %>% gather(time,lh,lh0:lh5) 
 ```   
   
@@ -390,7 +390,7 @@ letters `lh` every time. Want new variable
 containing just number in `time`:
 `parse\_number`. 
 
-```{r }
+```{r 20180307-23 }
 dogs %>% gather(timex,lh,lh0:lh5) %>% 
     mutate(time=parse_number(timex))
 
@@ -414,7 +414,7 @@ dogs %>% gather(timex,lh,lh0:lh5) %>%
 ## Saving the results
   
 
-```{r }
+```{r 20180307-24 }
 dogs.long = dogs %>% gather(timex,lh,lh0:lh5) %>% 
     mutate(time=parse_number(timex))
 ``` 
@@ -431,7 +431,7 @@ This says:
 
 ## Spaghetti plot   
 
-```{r}
+```{r 20180307-25}
 ggplot(dogs.long,aes(x=time,y=lh,colour=drug,group=dog))+
   geom_point()+geom_line()
 ```
@@ -440,7 +440,7 @@ ggplot(dogs.long,aes(x=time,y=lh,colour=drug,group=dog))+
 
 ## Interaction plot
   
-```{r }
+```{r 20180307-26 }
 ggplot(dogs.long,aes(x=time,y=lh,
                      colour=drug,group=drug))+
   stat_summary(fun.y=mean,geom="point")+
@@ -475,7 +475,7 @@ no longer be significant.
   
 
  
-```{r }
+```{r 20180307-27 }
 response=with(dogs,cbind(lh1,lh3,lh5)) # excluding time zero
 dogs.lm=lm(response~drug,data=dogs)
 times=colnames(response)
@@ -490,7 +490,7 @@ dogs.manova=Manova(dogs.lm,idata=times.df,
 ## Results and comments
 
  
-```{r}
+```{r 20180307-28}
 dogs.manova
 ``` 
 
@@ -518,7 +518,7 @@ dogs.manova
 -  This time, we want `group=dog` (want the measurements for each
 *dog* joined by lines), but `colour=drug`:
   
-```{r}
+```{r 20180307-29}
 g=ggplot(dogs.long,aes(x=time,y=lh,
     colour=drug,group=dog)) +
   geom_point()+geom_line()
@@ -529,7 +529,7 @@ g=ggplot(dogs.long,aes(x=time,y=lh,
 
 ## The spaghetti plot
   
-```{r}
+```{r 20180307-30}
 g
 ```   
   
@@ -561,7 +561,7 @@ g
 
 ## Fitting the model
 
-```{r}
+```{r 20180307-31}
 library(lme4)
 dogs.long
 dogs.2=lmer(lh~drug*time+(1|dog),data=dogs.long)
@@ -574,7 +574,7 @@ dogs.2=lmer(lh~drug*time+(1|dog),data=dogs.long)
 
 - using `drop1`:
 
-```{r}
+```{r 20180307-32}
 drop1(dogs.2,test="Chisq")
 ```
 
@@ -582,7 +582,7 @@ drop1(dogs.2,test="Chisq")
 
 ## Re-fit without interaction
 
-```{r}
+```{r 20180307-33}
 dogs.3=update(dogs.2,.~.-drug:time)
 drop1(dogs.3,test="Chisq")
 ```
@@ -612,7 +612,7 @@ drop1(dogs.3,test="Chisq")
   
   Separated by *tabs*:  
   
-```{r }
+```{r 20180307-34 }
 my_url="http://www.utsc.utoronto.ca/~butler/d29/exercise.txt"
 exercise.long=read_tsv(my_url)
 ```   
@@ -622,7 +622,7 @@ exercise.long=read_tsv(my_url)
 
 ## The data
 
-```{r}
+```{r 20180307-35}
 exercise.long
 ```   
 
@@ -640,7 +640,7 @@ exercise.long
   -  Spread needs three things: a data frame, a column that is
     going to be split, and the column to make the values out of:
     
-```{r size="footnotesize"}
+```{r 20180307-36, size="footnotesize"}
 exercise.wide=exercise.long %>% spread(time,pulse)
 exercise.wide 
 ```
@@ -655,20 +655,20 @@ exercise.wide
   
   
   -  Make a response variable consisting of `min01, min15, min30`:
-```{r }
+```{r 20180307-37 }
 response=with(exercise.wide,
            cbind(min01, min15, min30))
 ```
 -  Predict that from `diet` and `exertype` and
   interaction using `lm`:
-```{r }
+```{r 20180307-38 }
 exercise.1=lm(response~diet*exertype,
   data=exercise.wide)
 response
 ```   
 
 -  Run this through `Manova`:
-```{r }
+```{r 20180307-39 }
 times=colnames(response)
 times.df=data.frame(times)
 exercise.2=Manova(exercise.1,idata=times.df,
@@ -682,7 +682,7 @@ exercise.2=Manova(exercise.1,idata=times.df,
   
   
 
-```{r }
+```{r 20180307-40 }
 exercise.2
 ```       
 
@@ -706,7 +706,7 @@ exercise.2
     `diet-exertype` combo.
   -  `ggplot` again. Using *long* data frame:
 
-```{r}
+```{r 20180307-41}
 exercise.long
 ```
 
@@ -714,7 +714,7 @@ Try 1
 
 Use exercise type as colour and diet as shape, grouping by subject id
 
-```{r}
+```{r 20180307-42}
 ggplot(exercise.long,aes(x=time,y=pulse,colour=exertype,shape=diet,group=id))+
   geom_point()+geom_line()
 ```
@@ -722,7 +722,7 @@ ggplot(exercise.long,aes(x=time,y=pulse,colour=exertype,shape=diet,group=id))+
 Confusing. How about separate *facets* for diet and exercise type?
 
 
-```{r }
+```{r 20180307-43 }
 g=ggplot(exercise.long,aes(x=time,y=pulse,
   group=id))+geom_point()+geom_line()+
   facet_grid(diet~exertype)
@@ -740,7 +740,7 @@ g=ggplot(exercise.long,aes(x=time,y=pulse,
  
 ## The graph(s)
   
-```{r}
+```{r 20180307-44}
 g
 ```   
   
@@ -770,14 +770,14 @@ g
   -  Looks as if there is only any substantial time effect for the
     runners. For them, does diet have an effect?
   -  Pull out only the runners from the wide data:
-```{r }
+```{r 20180307-45 }
 runners.wide = exercise.wide %>%
   filter(exertype=="running")
 ```     
 -  Create response variable and do MANOVA. Some of this looks like
   before, but I have different data now:
   
-```{r size="footnotesize"}
+```{r 20180307-46, size="footnotesize"}
 response=with(runners.wide,cbind(min01,min15,min30))
 runners.1=lm(response~diet,data=runners.wide)
 times=colnames(response)
@@ -791,7 +791,7 @@ runners.2=Manova(runners.1,idata=times.df,
 
 ## Results`
   
-```{r }
+```{r 20180307-47 }
 runners.2
 ```   
 
@@ -813,7 +813,7 @@ runners.2
   -  Table of means. Only I need long data for this, so make it (in
     a pipeline):
     
-```{r }
+```{r 20180307-48 }
 summ = runners.wide %>%
   gather(time,pulse,min01:min30) %>%
   group_by(time,diet) %>%
@@ -828,7 +828,7 @@ summ = runners.wide %>%
 
   
     -  The summary:
-```{r }
+```{r 20180307-49 }
 summ
 ```   
   -  Pulse rates at any given time higher for `lowfat` (diet
@@ -848,7 +848,7 @@ summ
 -  We went to trouble of finding means by group, so making
   interaction plot is now mainly easy:
   
-```{r }
+```{r 20180307-50 }
 ggplot(summ,aes(x=time,y=mean_pulse,colour=diet,
   group=diet))+geom_point()+geom_line()
 ```   

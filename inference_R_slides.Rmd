@@ -15,11 +15,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r inference-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r, child="inference_R.Rmd"}
+```{r inference-R-slides-2, child="inference_R.Rmd"}
 ```
 

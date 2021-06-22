@@ -14,7 +14,7 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r slides-d29-1, child="preliminaries.Rmd", echo=F}
 ```
 
 ```{r outline,child="bOutline.Rmd"}

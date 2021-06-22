@@ -1,7 +1,7 @@
 
 ## Packages for this section
 
-```{r, eval=F}
+```{r bootstrap-1, eval=F}
 library(tidyverse)
 library(bootstrap)
 ```
@@ -13,13 +13,13 @@ library(bootstrap)
 
 - Recall the IRS data that we used as a motivation for the sign test:
 
-```{r, include=F}
+```{r bootstrap-2, include=F}
 my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
 irs <- read_csv(my_url)
 ```
 
 
-```{r, fig.height=3.2}
+```{r bootstrap-3, fig.height=3.2}
 ggplot(irs, aes(x=Time))+geom_histogram(bins=10)
 ```
 
@@ -55,7 +55,7 @@ ggplot(irs, aes(x=Time))+geom_histogram(bins=10)
 
 - Sampling with replacement is done like this (the default sample size is as long as the original data):
 
-```{r}
+```{r bootstrap-4}
 boot <- sample(irs$Time, replace=T)
 mean(boot)
 ```
@@ -66,12 +66,12 @@ mean(boot)
 
 - Use the same idea as for simulating power:
 
-```{r, echo=F}
+```{r bootstrap-5, echo=F}
 set.seed(457299)
 ```
 
 \small
-```{r}
+```{r bootstrap-6}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(boot_sample = list(sample(irs$Time, replace = TRUE)))
@@ -81,7 +81,7 @@ tibble(sim = 1:1000) %>%
 ## Get the mean of each of those
 
 \small
-```{r}
+```{r bootstrap-7}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(boot_sample = list(sample(irs$Time, replace = TRUE))) %>% 
@@ -92,7 +92,7 @@ samples
 
 ## Sampling distribution of sample mean
 
-```{r, fig.height=4}
+```{r bootstrap-8, fig.height=4}
 ggplot(samples, aes(x=my_mean)) + geom_histogram(bins=10)
 ```
 
@@ -102,7 +102,7 @@ ggplot(samples, aes(x=my_mean)) + geom_histogram(bins=10)
 
 might be better than a histogram:
 
-```{r, fig.height=3.5}
+```{r bootstrap-9, fig.height=3.5}
 ggplot(samples, aes(sample = my_mean)) + 
   stat_qq()+stat_qq_line()
 ```
@@ -116,7 +116,7 @@ There are two ways (at least):
 - percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to get the middle 95%). This is easy, but not always the best:
 
 \small
-```{r}
+```{r bootstrap-10}
 (b_p=quantile(samples$my_mean, c(0.025, 0.975)))
 ```
 \normalsize
@@ -124,7 +124,7 @@ There are two ways (at least):
 - bootstrap $t$: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a $t$ interval:
 
 \small
-```{r}
+```{r bootstrap-11}
 n <- length(irs$Time)
 t_star <- qt(0.975, n-1)
 b_t <- with(samples, mean(my_mean)+c(-1, 1)*t_star*sd(my_mean))
@@ -136,7 +136,7 @@ b_t
 
 - get ordinary $t$ interval:
 
-```{r}
+```{r bootstrap-12}
 my_names=c("LCL", "UCL")
 o_t <- t.test(irs$Time)$conf.int
 ```
@@ -144,7 +144,7 @@ o_t <- t.test(irs$Time)$conf.int
 
 - Compare the 2 bootstrap intervals with the ordinary $t$-interval: 
 
-```{r}
+```{r bootstrap-13}
 tibble(limit=my_names, o_t, b_t, b_p)
 ```
 
@@ -168,14 +168,14 @@ Brad Efron and Robert J. Tibshirani.
 
 ## Run this on the IRS data:
 
-```{r}
+```{r bootstrap-14}
 bca=bcanon(irs$Time, 1000, mean)
 bca$confpoints
 ```
 
 ## use 2.5% and 97.5% points for CI
 
-```{r}
+```{r bootstrap-15}
 bca$confpoints %>% as_tibble() %>% 
   filter(alpha %in% c(0.025, 0.975)) %>% 
   pull(`bca point`) -> b_bca
@@ -184,7 +184,7 @@ b_bca
 
 ## Comparing
 
-```{r}
+```{r bootstrap-16}
 tibble(limit=my_names, o_t, b_t, b_p, b_bca)
 ```
 
@@ -196,7 +196,7 @@ tibble(limit=my_names, o_t, b_t, b_p, b_bca)
 
 Recall the soap data:
 
-```{r, message=FALSE}
+```{r bootstrap-17, message=FALSE}
 url <- "http://ritsokiguess.site/datafiles/soap.txt"
 soap <- read_delim(url," ")
 soap
@@ -204,7 +204,7 @@ soap
 
 ## Scatterplot
 
-```{r, fig.height=3.75}
+```{r bootstrap-18, fig.height=3.75}
 ggplot(soap, aes(x=speed, y=scrap, colour=line))+
   geom_point()+geom_smooth(method="lm", se=F)
 ```
@@ -216,12 +216,12 @@ ggplot(soap, aes(x=speed, y=scrap, colour=line))+
 
 ## Extract the line B data; standard correlation test 
 
-```{r}
+```{r bootstrap-19}
 soap %>% filter(line=="b") -> line_b
 with(line_b, cor.test(speed, scrap))
 ```
 
-```{r, include=FALSE}
+```{r bootstrap-20, include=FALSE}
 o_c=with(line_b, cor.test(speed, scrap))$conf.int
 ```
 
@@ -232,7 +232,7 @@ o_c=with(line_b, cor.test(speed, scrap))$conf.int
 - Sample *rows* of the data frame rather than individual values of `speed` and `scrap`:
 
 \scriptsize
-```{r}
+```{r bootstrap-21}
 line_b %>% sample_frac(replace=T)
 ```
 \normalsize
@@ -241,7 +241,7 @@ line_b %>% sample_frac(replace=T)
 
 1000 times:
 
-```{r}
+```{r bootstrap-22}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(boot_df = list(sample_frac(line_b, replace = TRUE))) %>% 
@@ -250,7 +250,7 @@ tibble(sim = 1:1000) %>%
 
 ## A picture of this
 
-```{r, fig.height=4}
+```{r bootstrap-23, fig.height=4}
 ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 ```
 
@@ -259,7 +259,7 @@ ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 - This is very left-skewed.
 - Bootstrap percentile interval is:
 
-```{r}
+```{r bootstrap-24}
 (b_p=quantile(cors$my_cor, c(0.025, 0.975)))
 ```
 
@@ -270,7 +270,7 @@ ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 - To use `bcanon`, write a function that takes a vector of row numbers and returns the correlation between `speed` and `scrap` for those rows:
 
 \footnotesize
-```{r}
+```{r bootstrap-25}
 theta=function(rows, d) {
   d %>% slice(rows) %>% with(., cor(speed, scrap))
 }
@@ -289,7 +289,7 @@ line_b %>% slice(1:3)
   - the function we just wrote
   - the data frame:
 
-```{r}
+```{r bootstrap-26}
 points=bcanon(1:12, 1000, theta, line_b)$confpoints
 points %>% as_tibble() %>% 
   filter(alpha %in% c(0.025, 0.975)) %>% 
@@ -299,7 +299,7 @@ b_bca
 
 ## Comparing the results
 
-```{r}
+```{r bootstrap-27}
 tibble(limit=my_names, o_c, b_p, b_bca)
 ```
 
@@ -310,7 +310,7 @@ tibble(limit=my_names, o_c, b_p, b_bca)
 ## The $z$-transformed bootstrapped correlations
 
 \small
-```{r}
+```{r bootstrap-28}
 cors %>% 
   mutate(z = 0.5 * log((1+my_cor)/(1-my_cor))) %>% 
   ggplot(aes(sample=z)) + stat_qq() + stat_qq_line()

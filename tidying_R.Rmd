@@ -34,7 +34,7 @@ saying which feed that weight goes with.
   
 ## Packages for this section
 
-```{r, eval=F}
+```{r tidying-R-1, eval=F}
 library(tidyverse)
 library(readxl)
 ```
@@ -42,7 +42,7 @@ library(readxl)
   
 ## Reading in the pig data
 
-```{r, message=F}
+```{r tidying-R-2, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/pigs1.txt"
 pigs1 <- read_delim(my_url, " ")
 pigs1
@@ -51,7 +51,7 @@ pigs1
 ## Gathering up the columns (OLD)
 - This is a very common reorganization, and the magic “verb” is
 `pivot_longer`:
-```{r}
+```{r tidying-R-3}
 pigs1 %>% pivot_longer(feed1:feed4, names_to="feed", 
                        values_to="weight") -> pigs2
 ```
@@ -64,14 +64,14 @@ pigs1 %>% pivot_longer(feed1:feed4, names_to="feed",
 
 ## Long format pigs
 
-```{r}
+```{r tidying-R-4}
 pigs2
 ```
 
 <<<<<<< HEAD
 ## Another way to do this: (NEW)
 
-```{r}
+```{r tidying-R-5}
 pigs1 %>% 
   pivot_longer(feed1:feed4, names_to = "feed", 
                values_to="weight") -> pigs2
@@ -82,7 +82,7 @@ pigs2
 - Values in `pig` identify pigs *within each group*: pig 1 is four different pigs!
 - Create unique pig IDs by gluing pig number onto feed:
 
-```{r}
+```{r tidying-R-6}
 pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) -> pigs2
 pigs2 %>% slice_sample(n=7)
 >>>>>>> 2991ae36dff40038e717965e9023aeadbc00f334
@@ -91,7 +91,7 @@ pigs2 %>% slice_sample(n=7)
 
 ## ...and finally, the analysis
 - which is just what we saw before:
-```{r}
+```{r tidying-R-7}
 weight.1 <- aov(weight ~ feed, data = pigs2)
 summary(weight.1)
 ```
@@ -102,7 +102,7 @@ equal.
 
 ## Tukey
 
-```{r}
+```{r tidying-R-8}
 TukeyHSD(weight.1)
 ```
 
@@ -113,7 +113,7 @@ All of the feeds differ!
 To find the best and worst, get mean weight by 
 feed group. I borrowed an idea from later to put the means in descending order:
 
-```{r}
+```{r tidying-R-9}
 pigs2 %>%
   group_by(feed) %>%
   summarize(mean_weight = mean(weight))%>%
@@ -143,7 +143,7 @@ conclusion is so clear that I am OK with this.
 various diseases, eg. tuberculosis.
 - Some data:
 
-```{r}
+```{r tidying-R-10}
 my_url <- "http://ritsokiguess.site/datafiles/tb.csv"
 tb <- read_csv(my_url)
 ```
@@ -152,7 +152,7 @@ tb <- read_csv(my_url)
 ## The data
 
 <<<<<<< HEAD
-```{r}
+```{r tidying-R-11}
 tb
 =======
 ```{r glimpsetb}
@@ -171,7 +171,7 @@ Also `mu` and `fu`, where age is unknown.
 
 <<<<<<< HEAD
 OLD
-```{r}
+```{r tidying-R-12}
 tb %>% gather(genage, freq, m04:fu, na.rm = T) -> tb2
 ```
 =======
@@ -182,7 +182,7 @@ tb %>% gather(genage, freq, m04:fu, na.rm = T) -> tb2
 
 NEW
 
-```{r}
+```{r tidying-R-13}
 tb %>% 
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = T) -> tb2
@@ -195,7 +195,7 @@ tb %>%
 
 ## Results (some)
 
-```{r}
+```{r tidying-R-14}
 tb2
 ```
 
@@ -207,17 +207,17 @@ age group. Split that up using separate.
   - what to separate into (here you do need quotes),
   - how to split.
 - For “how to split”, here “after first character”:
-```{r}
+```{r tidying-R-15}
 tb2 %>% separate(genage, c("gender", "age"), 1) -> tb3
 ```
 
 ## Tidied tuberculosis data (some)
 
-```{r}
+```{r tidying-R-16}
 tb3
 ```
 
-```{r, echo=FALSE}
+```{r tidying-R-17, echo=FALSE}
 write_rds(tb3, "tb3.rds")
 ```
 
@@ -227,7 +227,7 @@ write_rds(tb3, "tb3.rds")
 - instead of doing the pipe one step at a time, you *debug* it one step at
 a time, and when you have each step working, you use that step’s
 output as input to the next step, thus:
-```{r}
+```{r tidying-R-18}
 tb %>%
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = T) %>% 
@@ -240,7 +240,7 @@ each line is incomplete, so that R knows more is to come.
 
 ## Total tuberculosis cases by year (some of the years)
 
-```{r}
+```{r tidying-R-19}
 tb3 %>%
   filter(between(year, 1991, 1998)) %>% 
   group_by(year) %>% summarize(total=sum(freq))
@@ -252,7 +252,7 @@ tb3 %>%
 
 - try counting up total cases by country:
 
-```{r}
+```{r tidying-R-20}
 tb3 %>% group_by(iso2) %>% 
   summarize(total=sum(freq)) %>% 
   arrange(desc(total))
@@ -262,7 +262,7 @@ tb3 %>% group_by(iso2) %>%
 
 China started recording in 1995, which is at least part of the problem:
 
-```{r}
+```{r tidying-R-21}
 tb3 %>% filter(iso2=="CN") %>% 
   group_by(year) %>% 
   summarize(total=sum(freq))
@@ -272,13 +272,13 @@ tb3 %>% filter(iso2=="CN") %>%
 
 - A lot of countries started recording in about 1995, in fact:
 
-```{r, echo=FALSE}
+```{r tidying-R-22, echo=FALSE}
 options(dplyr.summarise.inform = FALSE)
 ```
 
 \small
 
-```{r}
+```{r tidying-R-23}
 tb3 %>% group_by(iso2) %>% 
   summarize(first_year=min(year)) %>% 
   count(first_year)
@@ -288,7 +288,7 @@ tb3 %>% group_by(iso2) %>%
 
 ## Some Toronto weather data
 
-```{r}
+```{r tidying-R-24}
 my_url <- 
   "http://ritsokiguess.site/STAC32/toronto_weather.csv"
 weather <- read_csv(my_url)
@@ -296,7 +296,7 @@ weather <- read_csv(my_url)
 
 ## The data (some)
 
-```{r}
+```{r tidying-R-25}
 weather
 ```
 
@@ -312,7 +312,7 @@ weather
 - Numbers in data frame all temperatures (for different days of the month),
 so first step is
 
-```{r}
+```{r tidying-R-26}
 weather %>% 
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
@@ -321,7 +321,7 @@ weather %>%
 
 ## So far
 
-```{r}
+```{r tidying-R-27}
 d
 ```
 
@@ -332,7 +332,7 @@ should each be in separate column.
 two different factors, handled by separate.
 - Untangling names of variables handled by `pivot_wider`:
 
-```{r}
+```{r tidying-R-28}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
@@ -343,7 +343,7 @@ weather %>%
 
 ## So far
 
-```{r}
+```{r tidying-R-29}
 d
 ```
 
@@ -357,7 +357,7 @@ below.
 value to us:
 
 \small
-```{r}
+```{r tidying-R-30}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", values_drop_na = T) %>% 
@@ -368,7 +368,7 @@ weather %>%
 \normalsize
 ## So far
 
-```{r}
+```{r tidying-R-31}
 d
 ```
 
@@ -376,7 +376,7 @@ d
 - Make year-month-day into proper date.
 - Keep only date, tmax, tmin:
 \small
-```{r}
+```{r tidying-R-32}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", values_drop_na = T) %>% 
@@ -391,7 +391,7 @@ weather %>%
 
 ## Our tidy data frame
 
-```{r}
+```{r tidying-R-33}
 weather_tidy
 ```
 
@@ -400,7 +400,7 @@ weather_tidy
 for max and min. `ggplot` requires something like
 
 \footnotesize
-```{r, eval=F}
+```{r tidying-R-34, eval=F}
 ggplot(..., aes(x = date, y = temperature)) + geom_point() + 
   geom_line()
 ```
@@ -416,7 +416,7 @@ untidy for purposes of drawing graph only.
 - Then can do something like
 
 \footnotesize
-```{r, eval=F}
+```{r tidying-R-35, eval=F}
 ggplot(d, aes(x = date, y = temperature, colour = maxmin)) 
   + geom_point() + geom_line()
 ```
@@ -429,7 +429,7 @@ column-creation and plot in a pipeline.
 - For a `ggplot` in a pipeline, the initial data frame is omitted, because it
 is whatever came out of the previous step.
 - To make those “one column”s: `pivot_longer`. I save the graph to show overleaf:
-```{r}
+```{r tidying-R-36}
 weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%

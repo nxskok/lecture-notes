@@ -5,7 +5,7 @@ output: html_notebook
 
 ## Packages
 
-```{r}
+```{r survival-1}
 library(tidyverse)
 library(survival)
 library(survminer)
@@ -14,12 +14,12 @@ library(broom)
 
 ## Read in dance data
 
-```{r}
+```{r survival-2}
 dance=read_table("dancing.txt")
 dance
 ```
 
-```{r}
+```{r survival-3}
 mth=with(dance,Surv(Months,Quit))
 str(mth)
 print.default(mth)
@@ -27,7 +27,7 @@ print.default(mth)
 
 is it crossing instead of expand.grid?
 
-```{r}
+```{r survival-4}
 ages=c(20,40)
 treatments=c("no","yes")
 crossing(age=ages,treatment=treatments)

@@ -15,7 +15,7 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r bPrincomp-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 

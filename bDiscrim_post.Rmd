@@ -18,7 +18,7 @@ professions/activities data; remote-sensing data.
 
 
 ## Packages
-```{r eval=F}
+```{r bDiscrim-post-1, eval=F}
 # library(MASS)
 # library(tidyverse)
 # library(ggrepel)
@@ -35,7 +35,7 @@ overwrite each other.
 
 to demonstrate:
 
-```{r}
+```{r bDiscrim-post-2}
 library(tidyverse)
 library(MASS)
 library(ggrepel)
@@ -74,7 +74,7 @@ been the invisible one.
 
 ## Example 1: seed yields and weights
 \small
-```{r message=F}
+```{r bDiscrim-post-3, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/manova1.txt"
 # my_url <- "manova1.txt"
 hilo <- read_delim(my_url, " ")
@@ -86,7 +86,7 @@ g
 ```
 \normalsize
  
-```{r, include=F, message=F}
+```{r bDiscrim-post-4, include=F, message=F}
 ggsave("berzani.pdf", g, device="pdf")
 ```
  
@@ -103,7 +103,7 @@ or low fertilizer.
 
 ## Basic discriminant analysis
 
-```{r }
+```{r bDiscrim-post-5 }
 hilo.1 <- lda(fertilizer ~ yield + weight, data = hilo)
 ```
 
@@ -121,7 +121,7 @@ hilo.1 <- lda(fertilizer ~ yield + weight, data = hilo)
 ## Output
 
 \small
-```{r}
+```{r bDiscrim-post-6}
 hilo.1
 ```
 \normalsize
@@ -174,7 +174,7 @@ $\min(2,2-1)=1$.
 ## Getting LD scores
 Feed output from LDA into `predict`:
 
-```{r }
+```{r bDiscrim-post-7 }
 hilo.pred <- predict(hilo.1)
 hilo.pred
 ```
@@ -184,7 +184,7 @@ hilo.pred
 Component `x` contains LD score(s), here in descending order:
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-8}
 cbind(hilo, hilo.pred$x) %>% arrange(desc(LD1)) -> d
 d
 ```
@@ -192,7 +192,7 @@ d
 
 aside
 
-```{r}
+```{r bDiscrim-post-9}
 d.1 <- lm(LD1 ~ yield + weight, data = d)
 summary(d.1)
 ```
@@ -203,7 +203,7 @@ High fertilizer have yield and weight high, negative LD1 scores.
 
 ## Plotting LD1 scores
 With one LD score, plot against (true) groups, eg. boxplot: 
-```{r fig.height=3.4}
+```{r bDiscrim-post-10, fig.height=3.4}
 ggplot(d, aes(x = fertilizer, y = LD1)) + geom_boxplot()
 ```
 
@@ -215,7 +215,7 @@ ggplot(d, aes(x = fertilizer, y = LD1)) + geom_boxplot()
 
 
 
-```{r}
+```{r bDiscrim-post-11}
 hilo.1$scaling
 ```
 
@@ -227,7 +227,7 @@ change in LD1 score for 1-unit change in variables.
 
 * One-unit change in variables might not be comparable: 
 
-```{r}
+```{r bDiscrim-post-12}
 hilo %>% select(-fertilizer) %>% 
    map_df(~quantile(., c(0.25, 0.75)))
 ```
@@ -240,7 +240,7 @@ means same thing.
 ## What else is in `hilo.pred?`
 
 \small
-```{r}
+```{r bDiscrim-post-13}
 names(hilo.pred)
 hilo.pred
 ```
@@ -261,7 +261,7 @@ fertilizer given `yield` and `weight`.
 \ldots based on `yield` and `weight`: 
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-14}
 d <- cbind(hilo, predicted = hilo.pred$class)
 d
 with(d, table(obs = fertilizer, pred = predicted))
@@ -286,7 +286,7 @@ diagonal.
 show how clear-cut the classification decisions were:
 
 \small
-```{r}
+```{r bDiscrim-post-15}
 pp <- round(hilo.pred$posterior, 4)
 d <- cbind(hilo, hilo.pred$x, pp)
 d
@@ -301,7 +301,7 @@ but high `weight` makes up for it.
 ## Example 2: the peanuts 
 
 \scriptsize
-```{r message=F}
+```{r bDiscrim-post-16, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/peanuts.txt"
 # my_url <- "peanuts.txt"
 peanuts <- read_delim(my_url, " ")
@@ -328,7 +328,7 @@ peanuts.combo
 ## Discriminant analysis
 
 \small
-```{r}
+```{r bDiscrim-post-17}
 peanuts.1 <- lda(combo ~ y + smk + w, data = peanuts.combo)
 peanuts.1
 peanuts.1$svd
@@ -358,7 +358,7 @@ or low `y`.
 
 
 ## Group means by variable
-```{r }
+```{r bDiscrim-post-18 }
 peanuts.1$means
 ```
 
@@ -373,7 +373,7 @@ largest on `y`
 
 
 ## The predictions and misclassification
-```{r }
+```{r bDiscrim-post-19 }
 peanuts.pred <- predict(peanuts.1)
 table(
   obs = peanuts.combo$combo,
@@ -388,7 +388,7 @@ Actually classified very well. Only one `6_2` classified as a
 ## Posterior probabilities
 
 \scriptsize
-```{r}
+```{r bDiscrim-post-20}
 pp <- round(peanuts.pred$posterior, 2)
 peanuts.combo %>%
   select(-c(y, smk, w)) %>%
@@ -410,7 +410,7 @@ much. The one misclassified plant was a close call.
 scores side by side:
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-21}
 peanuts.1$scaling
 lds <- round(peanuts.pred$x, 2)
 mm <- with(peanuts.combo,
@@ -430,12 +430,12 @@ mm <- with(peanuts.combo,
 ## Discriminant scores for data
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-22}
 mm
 ```
 \normalsize
    
-```{r}
+```{r bDiscrim-post-23}
 ggplot(mm, aes(x=smk, y = LD1)) + geom_point()
 ```
    
@@ -450,7 +450,7 @@ small `w`.
 
 ## Predict typical LD1 scores
 First and third quartiles for three response variables:
-```{r }
+```{r bDiscrim-post-24 }
 peanuts %>%
    select(y:w) %>%
 summarize(across(everything(), ~quantile(., c(0.25, 0.75)))) -> quartiles
@@ -462,7 +462,7 @@ new <- with(quartiles, crossing(y, smk, w))
 
 
 ## The combinations
-```{r }
+```{r bDiscrim-post-25 }
 new
 pp <- predict(peanuts.1, new)
 ```
@@ -473,7 +473,7 @@ pp <- predict(peanuts.1, new)
 ## Predicted typical LD1 scores
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-26}
 cbind(new, pp$x) %>% arrange(LD2)
 ```
 \normalsize
@@ -497,7 +497,7 @@ cbind(new, pp$x) %>% arrange(LD2)
 
 `geom_text_repel` is from package `ggrepel`.
 
-```{r}
+```{r bDiscrim-post-27}
 g <- ggplot(mm, aes(x = LD1, y = LD2, colour = combo, 
                     label = combo)) + geom_point() +
   geom_text_repel() + guides(colour = FALSE)
@@ -510,7 +510,7 @@ g
 
 ## "Bi-plot" from `ggbiplot`
 
-```{r}
+```{r bDiscrim-post-28}
 library(ggbiplot)
 peanuts.1
 ggbiplot(peanuts.1,
@@ -526,14 +526,14 @@ ggbiplot(peanuts.1,
 `install.packages` will not work.
 
 * Install package `devtools` first (once):
-```{r eval=F}
+```{r bDiscrim-post-29, eval=F}
 install.packages("devtools")
 ```
 
      
 
 * Then install `ggbiplot` (once):
-```{r eval=F}
+```{r bDiscrim-post-30, eval=F}
 library(devtools)
 install_github("vqv/ggbiplot")
 ```
@@ -563,7 +563,7 @@ that left-out observation.
 * Fitting and prediction all in one go:
 
 \small
-```{r }
+```{r bDiscrim-post-31 }
 peanuts.cv <- lda(combo ~ y + smk + w,
   data = peanuts.combo, CV = TRUE)
 peanuts.cv
@@ -588,7 +588,7 @@ g
 ## Posterior probabilities
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-32}
 pp <- round(peanuts.cv$posterior, 3)
 pp
 data.frame(
@@ -653,7 +653,7 @@ admin 6 3 3 3
 ## Discriminant analysis
 
 \small
-```{r message=F}
+```{r bDiscrim-post-33, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/profile.txt"
 # my_url <- "profile.txt"
 active <- read_delim(my_url, " ")
@@ -676,7 +676,7 @@ on `tv`.
 
 
 ## Misclassification
-```{r }
+```{r bDiscrim-post-34 }
 active.pred <- predict(active.1)
 active.pred
 table(obs = active$job, pred = active.pred$class)
@@ -690,7 +690,7 @@ Everyone correctly classified.
 ## Plotting LDs 
 
 \small
-```{r}
+```{r bDiscrim-post-35}
 mm <- data.frame(job = active$job, active.pred$x, person = 1:15)
 mm
 g <- ggplot(mm, aes(x = LD1, y = LD2, colour = job, 
@@ -703,7 +703,7 @@ g
 
 
 ## Biplot 
-```{r fig.height=4.3}
+```{r bDiscrim-post-36, fig.height=4.3}
 ggbiplot(active.1, groups = active$job)
 ```
 
@@ -727,7 +727,7 @@ top right, politicians lower middle.
 ## Plotting individual `persons`
 Make `label` be identifier of person. Now need legend:
 
-```{r}
+```{r bDiscrim-post-37}
 ggplot(mm, aes(x = LD1, y = LD2,  colour = job, 
                label = person)) + 
   geom_point() + geom_text_repel()
@@ -739,7 +739,7 @@ ggplot(mm, aes(x = LD1, y = LD2,  colour = job,
 ## Posterior probabilities
 
 \scriptsize
-```{r}
+```{r bDiscrim-post-38}
 pp <- round(active.pred$posterior, 3)
 data.frame(obs = active$job, pred = active.pred$class, pp)
 ```
@@ -751,7 +751,7 @@ Not much doubt.
 ## Cross-validating the jobs-activities data
 Recall: no need for `predict`. Just pull out `class` and
 make a table:  
-```{r }
+```{r bDiscrim-post-39 }
 active.cv <- lda(job ~ reading + dance + tv + ski,
   data = active, CV = TRUE)
 active.cv
@@ -767,7 +767,7 @@ This time one of the bellydancers was classified as a politician.
 picking out the ones where things are not certain:
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-40}
 pp <- round(active.cv$posterior, 3)
 pp
 data.frame(obs = active$job, pred = active.cv$class, pp) %>%
@@ -784,7 +784,7 @@ data.frame(obs = active$job, pred = active.cv$class, pp) %>%
 
 ## Why did things get misclassified?
 
-```{r include=F, message=F}
+```{r bDiscrim-post-41, include=F, message=F}
 ggsave("nesta.pdf", g, "pdf")
 ```
 
@@ -819,7 +819,7 @@ ggsave("nesta.pdf", g, "pdf")
 
 ## Reading in
 \small
-```{r }
+```{r bDiscrim-post-42 }
 my_url <-
    "http://ritsokiguess.site/datafiles/remote-sensing.txt"
 # my_url <- "remote-sensing.txt"
@@ -830,7 +830,7 @@ crops
    
 
 ## Starting off: number of LDs
-```{r }
+```{r bDiscrim-post-43 }
 crops.lda <- lda(crop ~ x1 + x2 + x3 + x4, data = crops)
 crops.lda
 ```
@@ -846,7 +846,7 @@ crops.lda
 
 ## Connecting original variables and LDs
 \small
-```{r }
+```{r bDiscrim-post-44 }
 crops.lda$means
 round(crops.lda$scaling, 3)
 ```
@@ -860,7 +860,7 @@ round(crops.lda$scaling, 3)
 
 
 ## `LD1` and `LD2`
-```{r }
+```{r bDiscrim-post-45 }
 round(crops.lda$scaling, 3)
 ```
 
@@ -880,7 +880,7 @@ sugarbeets should be high on `LD2`.
 * Thus:
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-46}
 crops.pred <- predict(crops.lda)
 table(obs = crops$crop, pred = crops.pred$class)
 ```
@@ -890,7 +890,7 @@ table(obs = crops$crop, pred = crops.pred$class)
 * Not very good, eg. only 6 of 11 `Clover` classified correctly.
 
 * Set up for plot:
-```{r }
+```{r bDiscrim-post-47 }
 mm <- data.frame(crop = crops$crop, crops.pred$x)
 mm
 ```
@@ -908,7 +908,7 @@ ggplot(mm, aes(x = LD1, y = LD2, colour = crop)) +
 
 
 ## Biplot
-```{r}
+```{r bDiscrim-post-48}
 ggbiplot(crops.lda, groups = crops$crop)
 ```
 
@@ -934,7 +934,7 @@ ggbiplot(crops.lda, groups = crops$crop)
 
 
 * the `dplyr` way:
-```{r }
+```{r bDiscrim-post-49 }
 crops %>% filter(crop != "Clover") -> crops2
 crops2
 crops2.lda <- lda(crop ~ x1 + x2 + x3 + x4, data = crops2)
@@ -948,7 +948,7 @@ crops2.lda
 
 * Concentrate on plot and posterior probs.
 
-```{r }
+```{r bDiscrim-post-50 }
 crops2.pred <- predict(crops2.lda)
 mm <- data.frame(crop = crops2$crop, crops2.pred$x)
 ```
@@ -960,7 +960,7 @@ mm <- data.frame(crop = crops2$crop, crops2.pred$x)
 Different from before:
 
 \footnotesize
-```{r}
+```{r bDiscrim-post-51}
 crops2.lda$means
 crops2.lda$svd
 crops2.lda$scaling
@@ -981,7 +981,7 @@ ggplot(mm, aes(x = LD1, y = LD2, colour = crop)) +
 
 
 ## Biplot
-```{r fig.height=3.6}
+```{r bDiscrim-post-52, fig.height=3.6}
 ggbiplot(crops2.lda, groups = crops2$crop)
 ```
 
@@ -991,7 +991,7 @@ ggbiplot(crops2.lda, groups = crops2$crop)
 ## Quality of classification
 
 \small
-```{r}
+```{r bDiscrim-post-53}
 table(obs = crops2$crop, pred = crops2.pred$class)
 ```
 \normalsize
@@ -1001,12 +1001,12 @@ Better.
 
 
 ## Posterior probs, the wrong ones
-```{r echo=F}
+```{r bDiscrim-post-54, echo=F}
 options(width = 60)
 ```
 
 \footnotesize  
-```{r }
+```{r bDiscrim-post-55 }
 post <- round(crops2.pred$posterior, 3)
 data.frame(obs = crops2$crop, pred = crops2.pred$class, post) %>%
   filter(obs != pred)
@@ -1027,7 +1027,7 @@ of being correct was not usually too low.
 Began discriminant analysis as a followup to MANOVA. Do our variables
 significantly separate the crops (excluding Clover)?
 
-```{r }
+```{r bDiscrim-post-56 }
 response <- with(crops2, cbind(x1, x2, x3, x4))
 crops2.manova <- manova(response ~ crop, data = crops2)
 summary(crops2.manova)

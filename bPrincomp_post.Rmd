@@ -32,7 +32,7 @@
 You might not have installed the first of these. See over for
 instructions. 
 
-```{r eval=F}
+```{r bPrincomp-post-1, eval=F}
 library(ggbiplot) # see over
 library(tidyverse)
 library(ggrepel)
@@ -48,14 +48,14 @@ library(ggrepel)
 `install.packages` will not work. This is same procedure you used for `smmr` in C32:
 
 * Install package `devtools` first (once):
-```{r eval=F}
+```{r bPrincomp-post-2, eval=F}
 install.packages("devtools")
 ```
 
      
 
 * Then install `ggbiplot` (once):
-```{r eval=F}
+```{r bPrincomp-post-3, eval=F}
 library(devtools)
 install_github("vqv/ggbiplot")
 ```
@@ -67,19 +67,19 @@ install_github("vqv/ggbiplot")
 ##  Small example: 2 test scores for 8 people
 
 \small
-```{r testt,message=F}
+```{r bPrincomp-post-4,message=F}
 my_url <- "http://ritsokiguess.site/datafiles/test12.txt"
 test12 <- read_table2(my_url)
 test12
 ```
 
-```{r ff1}
+```{r bPrincomp-post-5 }
 ggplot(test12, aes(x = first, y = second, label = id)) +
   geom_point() + geom_text_repel() + geom_smooth(method = "lm", se = F)
 ```
 
 
-```{r ff1}
+```{r bPrincomp-post-6 }
 g <- ggplot(test12, aes(x = first, y = second, label = id)) +
   geom_point() + geom_text_repel()
 ```
@@ -90,7 +90,7 @@ g <- ggplot(test12, aes(x = first, y = second, label = id)) +
 
 ##  The plot
 
-```{r ff2,fig.height=3.8}
+```{r bPrincomp-post-7,fig.height=3.8}
 g + geom_smooth(method = "lm", se = F)
 ```
 
@@ -99,7 +99,7 @@ g + geom_smooth(method = "lm", se = F)
 
 
 * Grab just the numeric columns:
-```{r}
+```{r bPrincomp-post-8}
 test12 %>% select_if(is.numeric) -> test12_numbers
 # test12 %>% select(across(where(is.numeric)))
 test12_numbers
@@ -109,7 +109,7 @@ test12_numbers
 
 * Strongly correlated, so data nearly 1-dimensional:
 
-```{r}
+```{r bPrincomp-post-9}
 cor(test12_numbers)
 ```
 
@@ -118,7 +118,7 @@ cor(test12_numbers)
 
 * Make a score summarizing this one dimension. Like this:
 
-```{r plot12}
+```{r bPrincomp-post-10 }
 test12.pc <- princomp(test12_numbers, cor = TRUE)
 summary(test12.pc)
 ```
@@ -145,7 +145,7 @@ variables measured on same scale and expect similar variability.)
 
 
 ##   Scree plot
-```{r fig.height=3.5}
+```{r bPrincomp-post-11, fig.height=3.5}
 ggscreeplot(test12.pc)
 ```
 
@@ -160,7 +160,7 @@ explain how each principal component depends on (standardized)
 original variables (test scores):
 
 \footnotesize
-```{r }
+```{r bPrincomp-post-12 }
 test12.pc$loadings
 ```
 \normalsize
@@ -174,7 +174,7 @@ composite score would summarize performance.
 ##  Component scores
 
 \small
-```{r }
+```{r bPrincomp-post-13 }
 d <- data.frame(test12, test12.pc$scores)
 cbind(test12, test12.pc$scores)
 test12.pc$scores
@@ -198,7 +198,7 @@ d
 
 ##  Plot of scores
 
-```{r score-plot,fig.height=3.5,}
+```{r bPrincomp-post-14,fig.height=3.5,}
 ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
   geom_point() + geom_text_repel()
 ```
@@ -213,7 +213,7 @@ ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
 * Vertical scale exaggerates importance of `comp.2`.
 
 * Fix up to get axes on same scale:
-```{r eqsc}
+```{r bPrincomp-post-15 }
 g <- ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
   geom_point() + geom_text_repel() +
   coord_fixed()
@@ -223,7 +223,7 @@ g <- ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
 
 * Shows how exam scores really spread out along one dimension:
 
-```{r eqsc2}
+```{r bPrincomp-post-16 }
 g
 ```
 
@@ -242,7 +242,7 @@ g
 suggests how they score on each variable.
 
 * Add `labels` option to identify individuals:
-```{r }
+```{r bPrincomp-post-17 }
 g <- ggbiplot(test12.pc, labels = test12$id)
 ```
 
@@ -251,7 +251,7 @@ g <- ggbiplot(test12.pc, labels = test12$id)
 
 
 ##  The biplot
-```{r ff3,fig.height=4,echo=F}
+```{r bPrincomp-post-18,fig.height=4,echo=F}
 g
 ```
   
@@ -289,7 +289,7 @@ Track running records (1984) for distances 100m to marathon, arranged
 by country. Countries labelled by (mostly) Internet domain names (ISO
 2-letter codes):
 
-```{r echo=F}
+```{r bPrincomp-post-19, echo=F}
 w <- getOption("width")
 options(width = w + 10)
 ```
@@ -297,7 +297,7 @@ options(width = w + 10)
  
 
 \scriptsize
-```{r, message=F}
+```{r bPrincomp-post-20, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/men_track_field.txt"
 track <- read_table(my_url)
 track 
@@ -310,7 +310,7 @@ track
 Also read in a table to look country names up in later:
 
 \footnotesize
-```{r message=F}
+```{r bPrincomp-post-21, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/isocodes.csv"
 iso <- read_csv(my_url)
 iso
@@ -333,12 +333,12 @@ Times in seconds 100m--400m, in minutes for rest (800m up).
 
 
 ##  Fit and examine principal components
-```{r echo=FALSE}
+```{r bPrincomp-post-22, echo=FALSE}
 options(width = 50)
 ```
 
 \footnotesize
-```{r scree-a}
+```{r bPrincomp-post-23 }
 track %>% select_if(is.numeric) -> track_num
 track_num
 track.pc <- princomp(track_num, cor = TRUE)
@@ -350,7 +350,7 @@ summary(track.pc)
 
 ##   Scree plot
 
-```{r scree-b,fig.height=3.5,}
+```{r bPrincomp-post-24,fig.height=3.5,}
 ggscreeplot(track.pc)
 ```
 
@@ -383,7 +383,7 @@ components tell almost whole story.
 Loadings:
 
 \footnotesize
-```{r, echo=2}
+```{r bPrincomp-post-25, echo=2}
 options(width = 65)
 track.pc$loadings
 ```
@@ -418,7 +418,7 @@ distance running *positive* on `comp.2`.
 
 
 * Principal component scores (first two). Also need country IDs.
-```{r pc-plot}
+```{r bPrincomp-post-26 }
 d <- data.frame(track.pc$scores,
   country = track$country
 )
@@ -433,7 +433,7 @@ g1 <- ggplot(d, aes(x = Comp.1, y = Comp.2,
 
 
 * Biplot:
-```{r biplot}
+```{r bPrincomp-post-27 }
 g2 <- ggbiplot(track.pc, labels = track$country)
 ```
 
@@ -443,7 +443,7 @@ g2 <- ggbiplot(track.pc, labels = track$country)
 
 ##   Principal components plot
 
-```{r}
+```{r bPrincomp-post-28}
 g1
 ```
 
@@ -469,7 +469,7 @@ Turkey, Ireland, New Zealand, Mexico. `ke` is Kenya.
 
 ##   Biplot
 
-```{r biplot2}
+```{r bPrincomp-post-29 }
 g2
 ```
   
@@ -501,7 +501,7 @@ sprinting.
 Need to look up two-letter abbreviations in ISO table:
 
 \footnotesize
-```{r,warning=F}
+```{r bPrincomp-post-30,warning=F}
 iso
 d
 d %>%
@@ -517,7 +517,7 @@ d %>%
 ##  Worst 8 running countries
 
 \footnotesize
-```{r, warning=F}
+```{r bPrincomp-post-31, warning=F}
 d %>%
   arrange(desc(Comp.1)) %>%
   left_join(iso, by = c("country" = "ISO2")) %>%
@@ -531,7 +531,7 @@ d %>%
 ##  Better at distance running
 
 \footnotesize
-```{r, warning=F}
+```{r bPrincomp-post-32, warning=F}
 d %>%
   arrange(desc(Comp.2)) %>%
   left_join(iso, by = c("country" = "ISO2")) %>%
@@ -544,7 +544,7 @@ d %>%
 ##  Better at sprinting
 
 \footnotesize
-```{r, warning=F}
+```{r bPrincomp-post-33, warning=F}
 d %>%
   arrange(Comp.2) %>%
   left_join(iso, by = c("country" = "ISO2")) %>%
@@ -556,7 +556,7 @@ d %>%
 
 
 ##  Plot with country names
-```{r }
+```{r bPrincomp-post-34 }
 g <- d %>%
   left_join(iso, by = c("country" = "ISO2")) %>%
   select(Comp.1, Comp.2, Country) %>%
@@ -570,7 +570,7 @@ g <- d %>%
 
 ##  The plot
 
-```{r fig.height=5.5, warning=F}
+```{r bPrincomp-post-35, fig.height=5.5, warning=F}
 g
 ```
 
@@ -588,7 +588,7 @@ Create data file like this:
 ```
 
 and read in like this:
-```{r message=F}
+```{r bPrincomp-post-36, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/cov.txt"
 mat <- read_table(my_url, col_names = F)
 mat
@@ -605,7 +605,7 @@ A little pre-processing required:
 
 * Feed into `princomp` as `covmat=`
 
-```{r pc-cov,fig.height=4,}
+```{r bPrincomp-post-37,fig.height=4,}
 mat %>%
   as.matrix() %>%
   princomp(covmat = .) -> mat.pc
@@ -616,7 +616,7 @@ mat %>%
 
 ##  Scree plot: one component fine
 
-```{r palermo,fig.height=3.5}
+```{r bPrincomp-post-38,fig.height=3.5}
 ggscreeplot(mat.pc)
 ```
   
@@ -627,7 +627,7 @@ ggscreeplot(mat.pc)
 Compare correlation matrix:
 
 \scriptsize
-```{r}
+```{r bPrincomp-post-39}
 mat
 ```
 \normalsize
@@ -636,7 +636,7 @@ mat
 with component loadings
 
 \scriptsize
-```{r}
+```{r bPrincomp-post-40}
 mat.pc$loadings
 ```
 \normalsize

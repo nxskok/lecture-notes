@@ -1,7 +1,7 @@
 # Dates and Times
 
 ## Packages for this section
-```{r, eval=F}
+```{r dates-and-times-1, eval=F}
 library(tidyverse)
 library(lubridate)
 ```
@@ -10,7 +10,7 @@ library(lubridate)
 - Dates represented on computers as “days since an origin”,
 typically Jan 1, 1970, with a negative date being before the origin: 
 
-```{r, paged.print=T}
+```{r dates-and-times-2, paged.print=T}
 mydates <- c("1970-01-01", "2007-09-04", "1931-08-05")
 (somedates <- tibble(text = mydates) %>%
   mutate(
@@ -23,7 +23,7 @@ mydates <- c("1970-01-01", "2007-09-04", "1931-08-05")
 
 - Dates are "actually" numbers, so can add and subtract (difference is 2007 date in `d` minus others): 
 
-```{r, paged.print=T}
+```{r dates-and-times-3, paged.print=T}
 somedates %>% mutate(plus30 = d + 30, diffs = d[2] - d)
 ```
 
@@ -40,7 +40,7 @@ date,status,dunno
 
 - Then read them in:
 
-```{r}
+```{r dates-and-times-4}
 my_url <- "http://ritsokiguess.site/datafiles/mydates.csv"
 ddd <- read_csv(my_url)
 ```
@@ -49,7 +49,7 @@ ddd <- read_csv(my_url)
 
 ## The data as read in
 
-```{r, paged.print=T}
+```{r dates-and-times-5, paged.print=T}
 ddd
 ```
 
@@ -59,14 +59,14 @@ ddd
 yyyy-mm-dd (ISO standard).
 - To deal with dates in other formats, use package `lubridate` and
 convert. For example, dates in US format with month first:
-```{r, paged.print=T}
+```{r dates-and-times-6, paged.print=T}
 tibble(usdates = c("05/27/2012", "01/03/2016", "12/31/2015")) %>%
   mutate(iso = mdy(usdates))
 ```
 
 ## Trying to read these as UK dates 
 
-```{r, paged.print=T}
+```{r dates-and-times-7, paged.print=T}
 tibble(usdates = c("05/27/2012", "01/03/2016", "12/31/2015")) %>%
   mutate(uk = dmy(usdates))
 ```
@@ -78,7 +78,7 @@ but the other two make no sense.
 
 - Back to this: 
 
-```{r, paged.print=F}
+```{r dates-and-times-8, paged.print=F}
 ddd
 ```
 
@@ -86,7 +86,7 @@ ddd
 
 ## so interpret as such
 
-```{r, paged.print=T}
+```{r dates-and-times-9, paged.print=T}
 (ddd %>% mutate(date2 = mdy(dunno)) -> d4)
 ```
 
@@ -95,7 +95,7 @@ ddd
 
 - Column `date2` was correctly converted from column `dunno`: 
 
-```{r, paged.print=F}
+```{r dates-and-times-10, paged.print=F}
 d4 %>% mutate(equal = identical(date, date2))
 ```
 
@@ -111,14 +111,14 @@ year month day
 1940 4 15
 ```
 
-```{r}
+```{r dates-and-times-11}
 my_url <- "http://ritsokiguess.site/datafiles/pieces.txt"
 dates0 <- read_delim(my_url, " ")
 ```
 
 ## Making some dates 
 
-```{r}
+```{r dates-and-times-12}
 dates0
 dates0 %>%
   unite(dates, day, month, year) %>%
@@ -128,7 +128,7 @@ dates0 %>%
 
 ## The results
 
-```{r, paged.print=T}
+```{r dates-and-times-13, paged.print=T}
 newdates
 ```
 
@@ -141,7 +141,7 @@ created, other columns are what to make it out of.
 
 ## Extracting information from dates 
 
-```{r, paged.print=T}
+```{r dates-and-times-14, paged.print=T}
 newdates %>%
   mutate(
     mon = month(d),
@@ -153,7 +153,7 @@ newdates %>%
 ## Dates and times
 - Standard format for times is to put the time after the date, hours,
 minutes, seconds:
-```{r, paged.print=F}
+```{r dates-and-times-15, paged.print=F}
 (dd <- tibble(text = c(
   "1970-01-01 07:50:01", "2007-09-04 15:30:00",
   "1940-04-15 06:45:10", "2016-02-10 12:26:40"
@@ -163,7 +163,7 @@ minutes, seconds:
 ## Converting text to date-times: 
 
 - Then get from this text using `ymd_hms`:
-```{r, paged.print=F}
+```{r dates-and-times-16, paged.print=F}
 dd %>% mutate(dt = ymd_hms(text))
 ```
 
@@ -173,7 +173,7 @@ dd %>% mutate(dt = ymd_hms(text))
 - Default timezone is “Universal Coordinated Time”. Change it via `tz=`
 and the name of a timezone: 
 
-```{r, paged.print=T}
+```{r dates-and-times-17, paged.print=T}
 dd %>% 
   mutate(dt = ymd_hms(text, tz = "America/Toronto")) -> dd
 dd %>% mutate(zone = tz(dt))
@@ -181,7 +181,7 @@ dd %>% mutate(zone = tz(dt))
 
 ## Extracting time parts
 - As you would expect: 
-```{r, paged.print=F}
+```{r dates-and-times-18, paged.print=F}
 dd %>%
   select(-text) %>%
   mutate(
@@ -194,7 +194,7 @@ dd %>%
 
 ## Same times, but different time zone: 
 
-```{r, paged.print=T}
+```{r dates-and-times-19, paged.print=T}
 dd %>%
   select(dt) %>%
   mutate(oz = with_tz(dt, "Australia/Sydney"))
@@ -202,7 +202,7 @@ dd %>%
 
 In more detail: 
 
-```{r, echo=F}
+```{r dates-and-times-20, echo=F}
 dd %>%
   mutate(oz = with_tz(dt, "Australia/Sydney")) %>%
   pull(oz)
@@ -225,7 +225,7 @@ admit,discharge
 
 - These ought to get read in and converted to date-times:
 
-```{r}
+```{r dates-and-times-21}
 my_url <- "http://ritsokiguess.site/datafiles/hospital.csv"
 stays <- read_csv(my_url)
 ```
@@ -235,7 +235,7 @@ stays <- read_csv(my_url)
 ## Subtracting the date-times
 
 - In the obvious way, this gets us an answer:
-```{r}
+```{r dates-and-times-22}
 stays %>% mutate(stay = discharge - admit)
 ```
 
@@ -246,7 +246,7 @@ stays %>% mutate(stay = discharge - admit)
 - Fractional number of days would
 be better: 
 
-```{r, paged.print=T}
+```{r dates-and-times-23, paged.print=T}
 # stays %>% 
 #   mutate(stay_days = (discharge - admit) / ddays(1))
 stays %>% 
@@ -260,7 +260,7 @@ stays %>%
 
 error here ****
 
-```{r, error=TRUE}
+```{r dates-and-times-24, error=TRUE}
 stays %>% 
   mutate(
     stay = as.period(admit %--% discharge),

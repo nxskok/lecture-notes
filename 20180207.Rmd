@@ -5,12 +5,12 @@ output: html_notebook
 
 ## Packages
 
-```{r}
+```{r 20180207-1}
 # install.packages("survminer") from CRAN
 ```
 
 
-```{r}
+```{r 20180207-2}
 library(tidyverse)
 library(survival)
 library(survminer)
@@ -23,7 +23,7 @@ library(broom)
 
 ## The dancing data
 
-```{r}
+```{r 20180207-3}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/dancing.txt"
 dance=read_table(my_url)
 dance
@@ -38,21 +38,21 @@ dance
 
 Called `mth` in notes, but I now prefer `y`:
 
-```{r}
+```{r 20180207-4}
 y=with(dance,Surv(Months,Quit))
 y
 ```
 
 `+` means "censored": event (quitting) not observed.
 
-```{r}
+```{r 20180207-5}
 print.default(y)
 ```
 
 
 ## Fit a Cox proportional-hazards model
 
-```{r}
+```{r 20180207-6}
 dance.1=coxph(y~Treatment+Age,data=dance)
 summary(dance.1)
 ```
@@ -67,7 +67,7 @@ Keep both. (If one truly not significant, remove.)
 Make residual plot using "martingale residuals":
 
 
-```{r}
+```{r 20180207-7}
 ggcoxdiagnostics(dance.1)+geom_smooth()
 ```
 
@@ -77,7 +77,7 @@ Looking for no pattern. Martingale residuals can be very negative, so won't be n
 
 Make combinations of ages 20 and 40, treatment no or yes:
 
-```{r}
+```{r 20180207-8}
 treatments=c(0,1)
 ages=c(20,40)
 dance.new=crossing(Treatment=treatments,Age=ages)
@@ -86,20 +86,20 @@ dance.new
 
 Make the predictions. `data=` is not needed for predictions, but *is* needed for plot below:
 
-```{r}
+```{r 20180207-9}
 s=survfit(dance.1,newdata=dance.new,data=dance)
 summary(s)
 ```
 
 Number of each `survival` column is number of row in `dance.new`:
 
-```{r}
+```{r 20180207-10}
 dance.new
 ```
 
 but this is hard to see; a plot is much nicer:
 
-```{r}
+```{r 20180207-11}
 ggsurvplot(s,conf.int=F)
 ```
 
@@ -127,36 +127,36 @@ Purple, treatment, associated with keeping dancing for longer.
 
 ## The lung cancer data set
 
-```{r}
+```{r 20180207-12}
 lung
 ```
 
 or
 
-```{r}
+```{r 20180207-13}
 summary(lung)
 ```
 
 Remove missings:
 
-```{r}
+```{r 20180207-14}
 cc=complete.cases(lung)
 cc
 lung.complete = lung %>% filter(cc)
 ```
 
-```{r}
+```{r 20180207-15}
 lung.complete
 ```
 
-```{r}
+```{r 20180207-16}
 summary(lung.complete)
 ```
 
 
 ## Construct response, and model in terms of everything else but `inst`:
 
-```{r}
+```{r 20180207-17}
 y=with(lung.complete,Surv(time,status==2))
 lung.1=coxph(y~.-inst-time-status,
   data=lung.complete)
@@ -164,19 +164,19 @@ lung.1=coxph(y~.-inst-time-status,
 
 Summary:
 
-```{r}
+```{r 20180207-18}
 summary(lung.1)
 ```
 
 Using `broom` ideas to pick things out of the output:
 
-```{r}
+```{r 20180207-19}
 glance(lung.1)
 ```
 
 `p.value.log`, `p.value.sc` and `p.value.wald` all test for overall significance of the model. All small, so *something* predicts survival.
 
-```{r}
+```{r 20180207-20}
 tidy(lung.1) 
 ```
 
@@ -190,13 +190,13 @@ Can:
 
 `step`:
 
-```{r}
+```{r 20180207-21}
 step.back=step(lung.1,direction="backward",test="Chisq")
 ```
 
 Or take out a bunch and test:
 
-```{r}
+```{r 20180207-22}
 lung.2=update(lung.1,.~.-age-pat.karno-meal.cal)
 tidy(lung.2) %>% select(term,p.value)
 lung.3=update(lung.2,.~.-ph.karno-wt.loss)
@@ -208,7 +208,7 @@ Different results. Go with the model `lung.3` with just `sex` and `ph.ecog`.
 
 ## Problems with the model?
 
-```{r}
+```{r 20180207-23}
 ggcoxdiagnostics(lung.3)+geom_smooth(se=F)
 ```
 
@@ -218,7 +218,7 @@ apparently OK.
 
 The usual:
 
-```{r}
+```{r 20180207-24}
 sexes=c(1,2)
 ph.ecogs=0:3
 lung.new=crossing(sex=sexes,ph.ecog=ph.ecogs)
@@ -228,7 +228,7 @@ s=survfit(lung.3,newdata=lung.new,data=lung.complete)
 
 Plot:
 
-```{r}
+```{r 20180207-25}
 ggsurvplot(s,conf.int=F)
 ```
 
@@ -242,7 +242,7 @@ ggsurvplot(s,conf.int=F)
 
 Invent data set where survival with age goes up and then down:
 
-```{r}
+```{r 20180207-26}
 age=seq(20,60,5)
 survtime=c(10,12,11,21,15,20,8,9,11)
 stat=c(1,1,1,1,0,1,1,1,1)
@@ -253,38 +253,38 @@ y=with(d,Surv(survtime,stat))
 
 Fit model:
 
-```{r}
+```{r 20180207-27}
 y.1=coxph(y~age,data=d)
 summary(y.1)
 ```
 
 Check diagnostic plot:
 
-```{r}
+```{r 20180207-28}
 ggcoxdiagnostics(y.1)+geom_smooth()
 ```
 
 Apparently a curve; suggests adding age-squared to model:
 
-```{r}
+```{r 20180207-29}
 y.2=coxph(y~age+I(age^2),data=d)
 summary(y.2)
 ```
 
 Age-squared is significant at $\alpha=0.10$. Diagnostics now?
 
-```{r}
+```{r 20180207-30}
 ggcoxdiagnostics(y.2)+geom_smooth(se=F)
 ```
 
 Better.
 
-```{r}
+```{r 20180207-31}
 new=tibble(age=c(20,35,50,65))
 s=survfit(y.2,new,data=d)
 ```
 
-```{r}
+```{r 20180207-32}
 ggsurvplot(s,conf.int=F)
 new
 ```

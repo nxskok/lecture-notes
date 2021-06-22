@@ -8,20 +8,20 @@ output:
 
 packages
 
-```{r}
+```{r thing0-1}
 library(tidyverse)
 ```
 
 
 the mtcars data with stuff
 
-```{r}
+```{r thing0-2}
 mtcars
 ```
 
 make a summary
 
-```{r}
+```{r thing0-3}
 summary(mtcars)
 ```
 

@@ -32,7 +32,7 @@ options(width = 40)
 suppressMessages(library(tidyverse))
 ```
 def 
-```{r }
+```{r bRIntro-1 }
 x <- c(10, 11, 13, 14, 17, 18, 22, 24, 27, 41)
 ```
 def 
@@ -40,7 +40,7 @@ def
 * "Glue those numbers into a ``list" and save it in
 `x`'', `x` called a **variable**. To see what's
 in a variable, type its name:
-```{r }
+```{r bRIntro-2 }
 x
 ```
 def 
@@ -49,7 +49,7 @@ def
 * Another variable and its value, "5 through 37":
 
 {\small  
-```{r }
+```{r bRIntro-3 }
 z <- 5:37
 z
 ```
@@ -62,7 +62,7 @@ def
 
 
 * A "summary" of `x`:
-```{r }
+```{r bRIntro-4 }
 summary(x)
 ```
 def 
@@ -71,27 +71,27 @@ def
 
 
 * Or: mean:
-```{r }
+```{r bRIntro-5 }
 mean(x)
 ```
 def 
 
 
 * median:
-```{r }
+```{r bRIntro-6 }
 median(x)
 ```
 def 
 
 * standard deviation:
-```{r }
+```{r bRIntro-7 }
 sd(x)
 ```
 def 
 
 
 * inter-quartile range (note UPPERCASE):
-```{r }
+```{r bRIntro-8 }
 IQR(x)
 ```
 def 
@@ -159,7 +159,7 @@ xx yy   group
 
 * Saved in file `mydata.txt`. Read in via
 `read.table` and save in variable:
-```{r }
+```{r bRIntro-9 }
 my.data <- read.table("mydata.txt", header = T)
 my.data
 ```
@@ -194,7 +194,7 @@ observations, columns variables.
 * `read.table` automatically creates data frame from text file.
 
 * Columns by name:
-```{r }
+```{r bRIntro-10 }
 my.data$xx
 my.data$group
 ```
@@ -202,7 +202,7 @@ def
 
 
 * Or, to save the `$` stuff:
-```{r }
+```{r bRIntro-11 }
 attach(my.data)
 group
 ```
@@ -215,27 +215,27 @@ def
 
 
 * `my.data`:
-```{r }
+```{r bRIntro-12 }
 my.data
 ```
 def 
 
 * The value in 3rd row and 2nd column:
-```{r }
+```{r bRIntro-13 }
 my.data[3, 2]
 ```
 def 
 
 
 * Whole 3rd row:
-```{r }
+```{r bRIntro-14 }
 my.data[3, ]
 ```
 def 
 
 
 * Whole 2nd column:
-```{r }
+```{r bRIntro-15 }
 my.data[, 2]
 ```
 def 
@@ -248,21 +248,21 @@ def
 
 
 * All the columns *except* the second:
-```{r }
+```{r bRIntro-16 }
 my.data[, -2]
 ```
 def 
 
 
 * First through third rows:
-```{r }
+```{r bRIntro-17 }
 my.data[1:3, ]
 ```
 def 
 
 
 * Third and fifth rows:
-```{r }
+```{r bRIntro-18 }
 my.data[c(3, 5), ]
 ```
 def 
@@ -273,7 +273,7 @@ def
 
 
 * This:
-```{r }
+```{r bRIntro-19 }
 a <- 2
 a
 ```
@@ -282,14 +282,14 @@ is a **scalar** (one value).
 
 
 * This:
-```{r }
+```{r bRIntro-20 }
 x
 ```
 def 
 is a **vector** (several values).
 
 * This:
-```{r }
+```{r bRIntro-21 }
 group
 ```
 def 
@@ -309,7 +309,7 @@ is a **factor** (categorical/grouping variable).
 * Save as `.csv` file (Text/CSV).
 
 * Read in using `read.csv` (like `read.table`):
-```{r }
+```{r bRIntro-22 }
 tbl <- read.csv("myspread.csv", header = T)
 tbl
 ```

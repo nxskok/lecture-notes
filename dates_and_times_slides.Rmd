@@ -14,10 +14,10 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r dates-and-times-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 # Dates and times
 
-```{r, child="dates_and_times.Rmd"}
+```{r dates-and-times-slides-2, child="dates_and_times.Rmd"}
 ```

@@ -79,7 +79,7 @@ they depend on whatever is significant, and draw plot.
 * Load `survival`, `survminer`,
 `broom` and `tidyverse`:
 
-```{r, eval=F}
+```{r bSurvival-post-1, eval=F}
 library(tidyverse)
 library(survival)
 library(survminer)
@@ -93,7 +93,7 @@ library(broom)
 - Column-aligned: 
 
 \normalsize
-```{r}
+```{r bSurvival-post-2}
 url <- "http://ritsokiguess.site/datafiles/dancing.txt"
 # url <- "dancing.txt"
 dance <- read_table(url)
@@ -104,7 +104,7 @@ dance <- read_table(url)
 ## The data
 
 \small
-```{r}
+```{r bSurvival-post-3}
 dance
 ```
 \normalsize
@@ -116,7 +116,7 @@ dance
 * Response variable: 
 
 \small
-```{r}
+```{r bSurvival-post-4}
 dance %>% mutate(mth = Surv(Months, Quit)) -> dance
 dance
 ```
@@ -126,7 +126,7 @@ dance
   
 
 * Then fit model, predicting `mth` from explanatories:
-```{r }
+```{r bSurvival-post-5 }
 dance.1 <- coxph(mth ~ Treatment + Age, data = dance)
 ```
  
@@ -135,7 +135,7 @@ dance.1 <- coxph(mth ~ Treatment + Age, data = dance)
 ## Output looks a lot like regression
 
 \scriptsize
-```{r}
+```{r bSurvival-post-6}
 summary(dance.1)
 ```
 \normalsize
@@ -173,7 +173,7 @@ look normal.
 
 This looks good (with only 12 points):
 
-```{r fig.height=3}
+```{r bSurvival-post-7, fig.height=3}
 ggcoxdiagnostics(dance.1) + geom_smooth(se = F)
 ```
 
@@ -188,7 +188,7 @@ combos of ages 20 and 40, treatment and not, using
 `crossing` to get all the combos:
 
 \small
-```{r}
+```{r bSurvival-post-8}
 treatments <- c(0, 1)
 ages <- c(20, 40)
 dance.new <- crossing(Treatment = treatments, Age = ages)
@@ -199,14 +199,14 @@ dance.new
 ## The predictions  
 One prediction *for each time* for each combo of age and treatment in `dance.new`:
 
-```{r echo=F}
+```{r bSurvival-post-9, echo=F}
 options(width = 80)
 ```
 
 
 
 \footnotesize
-```{r}
+```{r bSurvival-post-10}
 s <- survfit(dance.1, newdata = dance.new, data = dance)
 summary(s)
 ```
@@ -225,7 +225,7 @@ dancing (compare "profiles" for same age for treatment group
 vs.\ not)
 
 * Would be nice to see this on a graph. This is `ggsurvplot` from package `survminer`:
-```{r }
+```{r bSurvival-post-11 }
 # s1 <- do.call(survfit, list(formula=dance.1, 
 #                             newdata=dance.new, 
 #                             data=dance))
@@ -239,7 +239,7 @@ g <- ggsurvplot(s, conf.int = F)
 
 \footnotesize
 
-```{r, echo=F}
+```{r bSurvival-post-12, echo=F}
 dance.new
 ```
 \normalsize
@@ -301,7 +301,7 @@ from the data set help file  (`?lung`).
 ## Uh oh, missing values
 
 \scriptsize
-```{r}
+```{r bSurvival-post-13}
 lung 
 ```
 \normalsize
@@ -310,14 +310,14 @@ lung
 ## A closer look 
 
 
-```{r echo=F}
+```{r bSurvival-post-14, echo=F}
 options(width = 90)
 ```
 
 
 \tiny
  
-```{r}
+```{r bSurvival-post-15}
 summary(lung)
 ```
 \normalsize
@@ -327,7 +327,7 @@ summary(lung)
 ## Remove obs with *any* missing values 
 
 \small
-```{r}
+```{r bSurvival-post-16}
 lung %>% drop_na() -> lung.complete
 lung.complete
 ```
@@ -339,7 +339,7 @@ Missing values seem to be gone.
 
 ## Check! 
 \tiny
-```{r}
+```{r bSurvival-post-17}
 summary(lung.complete)
 ```
 \normalsize
@@ -350,14 +350,14 @@ No missing values left.
 
 ## Model 1: use everything except `inst`
 \footnotesize
-```{r}
+```{r bSurvival-post-18}
 names(lung.complete)
 ```
 \normalsize
 
 - Event was death, goes with `status` of 2:
  
-```{r }
+```{r bSurvival-post-19 }
 lung.complete %>% 
    mutate(resp = Surv(time, status == 2)) ->
    lung.complete
@@ -371,7 +371,7 @@ lung.1 <- coxph(resp ~ . - inst - time - status,
 
 ## `summary` of model 1: too tiny to see! 
 \tiny
-```{r}
+```{r bSurvival-post-20}
 summary(lung.1)
 ```
 \normalsize
@@ -381,7 +381,7 @@ summary(lung.1)
 ## Overall significance
 The three tests of overall significance: 
 \small
-```{r}
+```{r bSurvival-post-21}
 glance(lung.1) %>% select(starts_with("p.value"))
 ```
 \normalsize
@@ -392,7 +392,7 @@ All strongly significant. *Something* predicts survival.
 
 ## Coefficients for model 1 
 \small
-```{r }
+```{r bSurvival-post-22 }
 tidy(lung.1) %>% select(term, p.value) %>% arrange(p.value)
 ```
 \normalsize
@@ -411,7 +411,7 @@ tidy(lung.1) %>% select(term, p.value) %>% arrange(p.value)
 
 ## Model 2
 \normalsize
-```{r}
+```{r bSurvival-post-23}
 lung.2 <- update(lung.1, . ~ . - age - pat.karno - meal.cal)
 tidy(lung.2) %>% select(term, p.value)
 ```
@@ -421,7 +421,7 @@ tidy(lung.2) %>% select(term, p.value)
 
 \normalsize
 
-```{r}
+```{r bSurvival-post-24}
 anova(lung.2, lung.1)
 ```
 \normalsize
@@ -437,7 +437,7 @@ anova(lung.2, lung.1)
 Take out `ph.karno` and `wt.loss` as well. 
 
 
-```{r}
+```{r bSurvival-post-25}
 lung.3 <- update(lung.2, . ~ . - ph.karno - wt.loss)
 ```
  
@@ -448,7 +448,7 @@ tidy(lung.3) %>% select(term, estimate, p.value)
 
 ## Check whether that was OK
 
-```{r}
+```{r bSurvival-post-26}
 anova(lung.3, lung.2)
 ```
 
@@ -473,7 +473,7 @@ anova(lung.3, lung.2)
 * Create new data frame of values to predict for, then predict:
 
 \footnotesize
-```{r}
+```{r bSurvival-post-27}
 sexes <- c(1, 2)
 ph.ecogs <- 0:3
 lung.new <- crossing(sex = sexes, ph.ecog = ph.ecogs)
@@ -485,14 +485,14 @@ lung.new
 
 
 ## Making the plot 
-```{r fig.height=3.2}
+```{r bSurvival-post-28, fig.height=3.2}
 s <- survfit(lung.3, data = lung.complete, newdata = lung.new)
 ggsurvplot(s, conf.int = F)
 ```
  
 ## The plot
 
-```{r, fig.height=3.8}
+```{r bSurvival-post-29, fig.height=3.8}
 g
 ```
 
@@ -516,7 +516,7 @@ survival.
 
 ## The coefficients in model 3 
 
-```{r ref.label="tidy-lung-3"}
+```{r bSurvival-post-30, ref.label="tidy-lung-3"}
 ```
 
 
@@ -534,7 +534,7 @@ how survival curves come in 3 pairs plus 2 odd.
 ## Martingale residuals for this model
 No problems here:
 
-```{r fig.height=3}
+```{r bSurvival-post-31, fig.height=3}
 ggcoxdiagnostics(lung.3) + geom_smooth(se = F)
 ```
 
@@ -545,7 +545,7 @@ ggcoxdiagnostics(lung.3) + geom_smooth(se = F)
 
 * Invent some data where survival is best at middling age, and
 worse at high *and* low age:
-```{r }
+```{r bSurvival-post-32 }
 age <- seq(20, 60, 5)
 survtime <- c(10, 12, 11, 21, 15, 20, 8, 9, 11)
 stat <- c(1, 1, 1, 1, 0, 1, 1, 1, 1)
@@ -564,7 +564,7 @@ have been longer if observed.
 
 \footnotesize
 
-```{r }
+```{r bSurvival-post-33 }
 y.1 <- coxph(y ~ age, data = d)
 summary(y.1)
 ```
@@ -577,7 +577,7 @@ summary(y.1)
 Down-and-up indicates incorrect relationship between age and
 survival: 
 
-```{r fig.height=3.4, message=F}
+```{r bSurvival-post-34, fig.height=3.4, message=F}
 ggcoxdiagnostics(y.1) + geom_smooth(se = F)
 ```
 
@@ -588,7 +588,7 @@ ggcoxdiagnostics(y.1) + geom_smooth(se = F)
 Add squared term in age:
 
 
-```{r}
+```{r bSurvival-post-35}
 y.2 <- coxph(y ~ age + I(age^2), data = d)
 tidy(y.2) %>% select(term, estimate, p.value)
 ```
@@ -600,7 +600,7 @@ tidy(y.2) %>% select(term, estimate, p.value)
 
 Not great, but less problematic than before:
 
-```{r fig.height=3.2, message=F}
+```{r bSurvival-post-36, fig.height=3.2, message=F}
 ggcoxdiagnostics(y.2) + geom_smooth(se = F)
 ```
 

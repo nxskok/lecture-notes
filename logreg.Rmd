@@ -5,14 +5,14 @@ date: "1/14/2019"
 output: html_document
 ---
 
-```{r}
+```{r logreg-1}
 library(tidyverse)
 library(broom)
 ```
 
 other rat data
 
-```{r}
+```{r logreg-2}
 my_url="notes/rat2.txt"
 rat2=read_delim(my_url," ")
 rat2
@@ -22,14 +22,14 @@ same 5 doses, but more rats (10 at each dose), summarized onto one line per dose
 
 To model, create two-column response, thing you model (living) in 1st:
 
-```{r}
+```{r logreg-3}
 response=with(rat2,cbind(lived,died))
 class(response)
 ```
 
 now fit model:
 
-```{r}
+```{r logreg-4}
 rat2.1=glm(response~dose,family="binomial",
   data=rat2)
 summary(rat2.1)
@@ -39,7 +39,7 @@ there is now a significant effect of dose. Negative slope: prob of living goes *
 
 Predictions:
 
-```{r}
+```{r logreg-5}
 p=predict(rat2.1,type="response")
 cbind(rat2,p)
 ```
@@ -50,7 +50,7 @@ graph with CIs again
 
 slide 105
 
-```{r}
+```{r logreg-6}
 my_url="sepsis.txt"
 sepsis=read_delim(my_url," ")
 sepsis
@@ -58,7 +58,7 @@ sepsis
 
 Predict from everything:
 
-```{r}
+```{r logreg-7}
 sepsis.1=glm(death~shock+malnut+alcohol+age+
               bowelinf,family="binomial",
 	      data=sepsis)
@@ -67,14 +67,14 @@ summary(sepsis.1)
 
 or
 
-```{r}
+```{r logreg-8}
 tidy(sepsis.1)
 ```
 
 
 Take out `malnut`:
 
-```{r}
+```{r logreg-9}
 sepsis.2=update(sepsis.1,.~.-malnut)
 tidy(sepsis.2)
 ```
@@ -83,7 +83,7 @@ Nothing else can be removed.
 
 Predictions:
 
-```{r}
+```{r logreg-10}
 sepsis.pred=predict(sepsis.2,type="response")
 d=data.frame(sepsis,sepsis.pred)
 myrows=c(4,1,2,11,32) ; slice(d,myrows)

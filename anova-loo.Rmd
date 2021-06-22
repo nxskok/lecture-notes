@@ -5,7 +5,7 @@ output: html_notebook
 
 ## packages
 
-```{r}
+```{r anova-loo-1}
 library(tidyverse)
 library(rstan)
 library(loo)
@@ -19,7 +19,7 @@ conflict_prefer("Position", "ggplot2")
 
 ## some data
 
-```{r}
+```{r anova-loo-2}
 my_url="http://ritsokiguess.site/datafiles/jumping.txt"
 rats0=read_delim(my_url," ")
 rats0
@@ -27,7 +27,7 @@ rats0
 
 turn the groups into numbers
 
-```{r}
+```{r anova-loo-3}
 rats0 %>% mutate(group_fct=fct_inorder(group),
               group_no=as.integer(group_fct)) -> rats
 rats
@@ -37,13 +37,13 @@ rats
 
 Use before, but add `generated quantities` section. See `anova-loo.stan`:
 
-```{r}
+```{r anova-loo-4}
 anova_loo_compiled=stan_model("anova-loo.stan")
 ```
 
 and then sample from it as usual
 
-```{r}
+```{r anova-loo-5}
 anova_data=list(n_obs=30, n_group=3, density=rats$density, group_no=rats$group_no)
 anova_loo_samples=sampling(anova_loo_compiled, data=anova_data)
 ```
@@ -52,30 +52,30 @@ anova_loo_samples=sampling(anova_loo_compiled, data=anova_data)
 
 We want to compare this model with a "null" model. In this case, the null would be that all the groups have the *same* mean. To fit that, go back to our Stan code, and replace `mu` as a vector with `mu` as a scalar. This is in `anova_loo_null.stan`.
 
-```{r}
+```{r anova-loo-6}
 anova_loo_null_compiled <- stan_model("anova_loo_null.stan")
 ```
 
 and then sample from *that*, using same data we used before (I didn't change the `data` section):
 
-```{r}
+```{r anova-loo-7}
 anova_loo_null_samples=sampling(anova_loo_null_compiled, data=anova_data)
 ```
 
 check that it worked:
 
-```{r}
+```{r anova-loo-8}
 anova_loo_samples
 ```
 
-```{r}
+```{r anova-loo-9}
 anova_loo_null_samples
 ```
 
 
 ## compare the fits of the two models, thus:
 
-```{r}
+```{r anova-loo-10}
 log_lik_a=extract_log_lik(anova_loo_samples, merge_chains = F)
 log_lik_0=extract_log_lik(anova_loo_null_samples, merge_chains = F)
 r_eff_a=relative_eff(log_lik_a)
@@ -85,11 +85,11 @@ r_eff_0=relative_eff(log_lik_0)
 
 and then
 
-```{r}
+```{r anova-loo-11}
 (loo_a <- loo(log_lik_a, r_eff=r_eff_a))
 ```
 
-```{r}
+```{r anova-loo-12}
 (loo_0 <- loo(log_lik_0, r_eff=r_eff_0))
 ```
 
@@ -97,13 +97,13 @@ The model with all three group means estimated has a better (lower) looic, but t
 
 Compare:
 
-```{r}
+```{r anova-loo-13}
 (v=compare(loo_a, loo_0))
 ```
 
 The negative sign means that the first model fits better, and so should be preferred. Is there a "substantial" difference? Divide by SE:
 
-```{r}
+```{r anova-loo-14}
 v[1]/v[2]
 ```
 

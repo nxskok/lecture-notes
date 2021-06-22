@@ -41,13 +41,13 @@ If you have a Mac, I imagine you only have one button on your mouse, I'm not sur
 
 All right, we have another `y` coming, so get rid of this `y`:
 
-```{r}
+```{r rgltest-1}
 rm(y)
 ```
 
 Go back to the peanuts data, from class. You can get the data [here](http://ritsokiguess.site/datafiles/peanuts.txt). If you are going to "knit" the R Markdown code, you'll need to save the data to the folder where the `.Rmd` is, so that it can be found when the R code in the code chunks is run.
 
-```{r}
+```{r rgltest-2}
 peanuts=read.table("peanuts.txt",header=T)
 head(peanuts)
 attach(peanuts)
@@ -55,7 +55,7 @@ attach(peanuts)
 
 Create location-variety combo:
 
-```{r}
+```{r rgltest-3}
 combo=paste(variety,location,sep="-")
 combo=factor(combo)
 combo
@@ -63,7 +63,7 @@ combo
 
 plot *original* peanuts data, with combos labelled:
 
-```{r,webgl=T}
+```{r rgltest-4,webgl=T}
 plot3d(y,smk,w,col=as.numeric(combo))
 text3d(y,smk,w,combo)
 ```
@@ -74,14 +74,14 @@ Play with this by rotating the plot (using the mouse) and seeing what direction 
 
 Let's do a discriminant analysis:
 
-```{r}
+```{r rgltest-5}
 library(MASS)
 peanuts.lda=lda(combo~y+smk+w)
 ```
 
 Now, there are three LDs (three variables, six combos,smaller of 3 and $6-1$ is 3). So if we pass the discriminant scores into `plot3d`, it will indeed make a 3D plot. (If we had just `plot`ted them the way we did before, we would have gotten a scatterplot matrix with all the pairs of LD scores plotted against each other.) Try playing with this plot.
 
-```{r, webgl=T}
+```{r rgltest-6, webgl=T}
 peanuts.pred=predict(peanuts.lda)
 names(peanuts.pred)
 peanuts.pred$class
@@ -95,7 +95,7 @@ Ontario road distances. These are (road) distances between places that have real
 
 First, some book-keeping (same thing as in lecture):
 
-```{r}
+```{r rgltest-7}
 library(rgl)
 ontario=read.csv("ontario-road-distances.csv")
 head(ontario)
@@ -106,7 +106,7 @@ ontario2.d=as.dist(ontario2)
 
 Let's start with a *two*-dimensional representation, which seems a bit odd with a 3D-plotting package, but bear with me:
 
-```{r,webgl=T}
+```{r rgltest-8,webgl=T}
 ontario2.2d=cmdscale(ontario2.d,2)
 coord=cbind(ontario2.2d,1)
 plot3d(coord,zlim=c(0,2))
@@ -121,7 +121,7 @@ This is rather more visceral than me saying "the multidimensional scaling map mi
 
 The real value of `rgl` is in visualizing a *three*-dimensional multidimensional scaling map. We saw in class that when we looked at two dimensions, St Catharines and Niagara Falls came out in about the same place as Hamilton and Brantford, which makes no sense. What was happening was that the lake was distorting road distances, so that you have to go a lot further to drive from Toronto to St Catharines than if you could take a ferry straight across the lake. Does a third dimension on the map help to compensate for that?
 
-```{r, webgl=T}
+```{r rgltest-9, webgl=T}
 ontario2.scale.3=cmdscale(ontario2.d,3)
 head(ontario2.scale.3)
 plot3d(ontario2.scale.3)
@@ -132,7 +132,7 @@ If you look at this in the first two dimensions, with the third one going into t
 
 We can ask whether three dimensions fits noticeably better than two:
 
-```{r}
+```{r rgltest-10}
 cmdscale(ontario2.d,2,eig=T)$GOF
 cmdscale(ontario2.d,3,eig=T)$GOF
 ```

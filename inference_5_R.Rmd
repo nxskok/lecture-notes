@@ -14,7 +14,7 @@ daylight savings time all year round. We ask 20 males and 20 females
 whether they each agree with having DST all year round (“yes”) or
 not (“no”). Some of the data:
 
-```{r, message=F}
+```{r inference-5-R-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
 dst %>% slice_sample(n=5) # randomly sample 5 rows
@@ -24,7 +24,7 @@ dst %>% slice_sample(n=5) # randomly sample 5 rows
 
 Count up individuals in each category combination, and arrange in
 contingency table:
-```{r}
+```{r inference-5-R-2}
 tab=with(dst,table(gender,agree))
 tab
 ```
@@ -38,7 +38,7 @@ there is really some association.
 
 ## ...And finally
 
-```{r}
+```{r inference-5-R-3}
 chisq.test(tab,correct=F)
 ```
 
@@ -65,19 +65,19 @@ mostly above grand median and other below.
 
 ## Mood’s median test for reading data
 
-```{r, echo=FALSE, message=FALSE}
+```{r inference-5-R-4, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 
 
 - Find overall median score: 
-```{r}
+```{r inference-5-R-5}
 (kids %>% summarize(med=median(score)) %>% pull(med) -> m)
 ```
 
 - Make table of above/below vs. group:
-```{r}
+```{r inference-5-R-6}
 tab=with(kids,table(group,score>m))
 tab
 ```
@@ -88,7 +88,7 @@ mostly below, as expected.
 
 ## The test
 - Do chi-squared test:
-```{r}
+```{r inference-5-R-7}
 chisq.test(tab,correct=F)
 ```
 
@@ -103,7 +103,7 @@ method.
 ## Or by smmr
 - `median_test` does the whole thing:
 
-```{r}
+```{r inference-5-R-8}
 median_test(kids,score,group)
 ```
 
@@ -142,7 +142,7 @@ Values separated by spaces:
 
 \small
 
-```{r}
+```{r inference-5-R-9}
 my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
 rats <- read_delim(my_url," ")
 ```
@@ -152,20 +152,20 @@ rats <- read_delim(my_url," ")
 ## The data (some random rows)
 
 \small
-```{r}
+```{r inference-5-R-10}
 rats %>% slice_sample(n=12)
 ```
 \normalsize
 
 ## Boxplots
 
-```{r, fig.height=3.7}
+```{r inference-5-R-11, fig.height=3.7}
 ggplot(rats,aes(y=density,x=group))+geom_boxplot()
 ```
 
 ## Or, arranging groups in data (logical) order
 
-```{r, fig.height=3.5}
+```{r inference-5-R-12, fig.height=3.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
@@ -180,7 +180,7 @@ others.
 
 ## Testing: ANOVA in R
 
-```{r}
+```{r inference-5-R-13}
 rats.aov=aov(density~group,data=rats)
 summary(rats.aov)
 ```
@@ -196,7 +196,7 @@ differences”, but doesn’t tell us which groups different.
 via two-sample t.
 - First pick out each group:
 
-```{r}
+```{r inference-5-R-14}
 rats %>% filter(group=="Control") -> controls
 rats %>% filter(group=="Lowjump") -> lows
 rats %>% filter(group=="Highjump") -> highs
@@ -204,7 +204,7 @@ rats %>% filter(group=="Highjump") -> highs
 
 ## Control vs. low
 
-```{r}
+```{r inference-5-R-15}
 t.test(controls$density,lows$density)
 ```
 
@@ -212,7 +212,7 @@ No sig. difference here.
 
 ## Control vs. high
 
-```{r}
+```{r inference-5-R-16}
 t.test(controls$density,highs$density)
 ```
 
@@ -220,7 +220,7 @@ These are different.
 
 ## Low vs. high
 
-```{r}
+```{r inference-5-R-17}
 t.test(lows$density,highs$density)
 ```
 
@@ -262,20 +262,20 @@ different.
 
 ## Tukey on rat data
 
-```{r, echo=F}
+```{r inference-5-R-18, echo=F}
 width=getOption("width")
 options(width=60)
 ```
 
 
 \small
-```{r}
+```{r inference-5-R-19}
 rats.aov=aov(density~group,data=rats)
 TukeyHSD(rats.aov)
 ```
 \normalsize
 
-```{r, echo=F}
+```{r inference-5-R-20, echo=F}
 options(width=width)
 ```
 
@@ -302,7 +302,7 @@ $\alpha = 0.01$.
 
 ## Checking assumptions
 
-```{r, fig.height=3.5}
+```{r inference-5-R-21, fig.height=3.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
@@ -314,7 +314,7 @@ Assumptions:
 
 ## Normal quantile plots by group
 
-```{r, fig.height=3.5}
+```{r inference-5-R-22, fig.height=3.5}
 ggplot(rats, aes(sample = density)) + stat_qq() + 
   stat_qq_line() + facet_wrap( ~ group)
 ```
@@ -338,7 +338,7 @@ number of groups.
 - Find median of all bone densities, regardless of group:
 
 \small
-```{r}
+```{r inference-5-R-23}
 (rats %>% summarize(med = median(density)) %>% pull(med) -> m)
 ```
 \normalsize
@@ -346,7 +346,7 @@ number of groups.
 - Count up how many observations in each group above or below
 overall median:
 
-```{r}
+```{r inference-5-R-24}
 tab = with(rats, table(group, density > m))
 tab
 ```
@@ -354,7 +354,7 @@ tab
 
 ## Mood’s median test 2/4 
 
-```{r}
+```{r inference-5-R-25}
 tab
 ```
 
@@ -368,7 +368,7 @@ median.
 - Test whether association between group and being above/below
 overall median significant using chi-squared test for association:
 
-```{r}
+```{r inference-5-R-26}
 chisq.test(tab,correct=F)
 ```
 
@@ -379,7 +379,7 @@ depends on group.
 ## Mood’s median test 4/4 
 Or with `median_test` from `smmr`, same as before. 
 
-```{r}
+```{r inference-5-R-27}
 median_test(rats,density,group)
 ```
 
@@ -392,7 +392,7 @@ median_test(rats,density,group)
 pairs of groups via (2-sample) Mood’s median tests, then adjust
 P-values by multiplying by number of 2-sample Mood tests done (Bonferroni):
 
-```{r}
+```{r inference-5-R-28}
 pairwise_median_test(rats,density,group)
 ```
 
@@ -404,7 +404,7 @@ both normality and equal spreads.
 - When normality OK but spreads differ, Welch ANOVA way to go.
 - Welch ANOVA done by `oneway.test` as shown (for illustration):
 
-```{r}
+```{r inference-5-R-29}
 oneway.test(density~group,data=rats)
 ```
 
@@ -416,7 +416,7 @@ oneway.test(density~group,data=rats)
 - Lives in package `PMCMRplus` (also `userfriendlyscience`). Install
 first.
 
-```{r, eval=F}
+```{r inference-5-R-30, eval=F}
 library(PMCMRplus)
 ```
 

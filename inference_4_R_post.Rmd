@@ -30,14 +30,14 @@ get drug B first.
 ## Paired t test: reading the data
 Values aligned in columns:  
 
-```{r}
+```{r inference-4-R-post-1}
 my_url <- "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
 ```
 
 ## The data
 
-```{r}
+```{r inference-4-R-post-2}
 pain
 ```
 
@@ -45,7 +45,7 @@ pain
 
 \small
 
-```{r}
+```{r inference-4-R-post-3}
 with(pain, t.test(druga, drugb, paired = TRUE))
 ```
 
@@ -62,7 +62,7 @@ do a 1-sample t-test on them.
 
 \footnotesize
 
-```{r}
+```{r inference-4-R-post-4}
 (pain %>% mutate(diff=druga-drugb) -> pain)
 ```
 
@@ -71,7 +71,7 @@ do a 1-sample t-test on them.
 ## t-test on the differences
 - then throw them into t.test, testing that the mean is zero, with
 same result as before:
-```{r}
+```{r inference-4-R-post-5}
 with(pain, t.test(diff, mu=0))
 ```
 
@@ -91,7 +91,7 @@ line.
 
 - of differences from matched pairs data
 
-```{r, fig.height=3.3}
+```{r inference-4-R-post-6, fig.height=3.3}
 ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
 ```
 
@@ -116,20 +116,20 @@ set.seed(457299)
 ```
 
 
-```{r, fig.height=3.5}
+```{r inference-4-R-post-7, fig.height=3.5}
 d=tibble(x=rnorm(200))
 ggplot(d,aes(x=x))+geom_histogram(bins=10)
 ```
 
 ## The normal quantile plot
 
-```{r, fig.height=3.8}
+```{r inference-4-R-post-8, fig.height=3.8}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
 ## Normal data, small sample
 
-```{r, echo=F}
+```{r inference-4-R-post-9, echo=F}
 set.seed(457299)
 ```
 
@@ -148,7 +148,7 @@ Good, apart from the highest and lowest points being slightly off. I’d call
 this good:
 
 
-```{r, fig.height=3.1}
+```{r inference-4-R-post-10, fig.height=3.1}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -156,7 +156,7 @@ ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 
 Somewhat skewed to right:
 
-```{r, fig.height=3.1}
+```{r inference-4-R-post-11, fig.height=3.1}
 d=tibble(x=rchisq(100,10))
 ggplot(d,aes(x=x))+geom_histogram(bins=10)
 ```
@@ -167,7 +167,7 @@ ggplot(d,aes(x=x))+geom_histogram(bins=10)
 
 Somewhat opening-up curve:
 
-```{r, fig.height=3.3}
+```{r inference-4-R-post-12, fig.height=3.3}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -187,7 +187,7 @@ ggplot(d,aes(x=x))+geom_histogram(bins=10)
 
 Clear upward-opening curve:
 
-```{r, fig.height=3.4}
+```{r inference-4-R-post-13, fig.height=3.4}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -208,7 +208,7 @@ ggplot(d,aes(x=x))+geom_histogram(bins=10)
 
 Low values too low and high values too high for normal.
 
-```{r, fig.height=3.4}
+```{r inference-4-R-post-14, fig.height=3.4}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -228,7 +228,7 @@ ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
 - Most easily: calculate differences in data frame, then use `smmr`.
 - Null median difference is 0:
 
-```{r}
+```{r inference-4-R-post-15}
 library(smmr)
 pain %>% mutate(mydiff=druga-drugb) %>%
   sign_test(mydiff,0)
@@ -244,7 +244,7 @@ pain %>% mutate(mydiff=druga-drugb) %>%
 
 ## blue jays data
 
-```{r}
+```{r inference-4-R-post-16}
 my_url <- "http://ritsokiguess.site/STAC32/jays15-home.csv"
 jays <- read_csv(my_url)
 jays
@@ -252,25 +252,25 @@ jays
 
 ## normal quantile plot of attendances
 
-```{r}
+```{r inference-4-R-post-17}
 ggplot(jays, aes(sample = attendance)) + stat_qq() + stat_qq_line()
 ```
 
 ## histogram
 
-```{r}
+```{r inference-4-R-post-18}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins=6)
 ```
 
 
 ## (Some of) the kids’ reading data, again
 
-```{r, echo=FALSE}
+```{r inference-4-R-post-19, echo=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 
-```{r}
+```{r inference-4-R-post-20}
 kids 
 ```
 
@@ -288,14 +288,14 @@ standard reading method.
 
 ## Boxplots for reading data
 
-```{r, fig.height=3.7}
+```{r inference-4-R-post-21, fig.height=3.7}
 ggplot(kids,aes(x=group,y=score))+geom_boxplot()
 ```
 
 ## Facetted normal quantile plots
 Done this way:
 
-```{r, fig.height=3.2}
+```{r inference-4-R-post-22, fig.height=3.2}
 ggplot(kids,aes(sample=score))+stat_qq()+stat_qq_line()+
 facet_wrap(~group)
 ```
@@ -310,7 +310,7 @@ or less symmetric/normal and there are no outliers.
 
 ## Welch two-sample test
 
-```{r}
+```{r inference-4-R-post-23}
 t.test(score~group,data=kids,alternative="less")
 ```
 

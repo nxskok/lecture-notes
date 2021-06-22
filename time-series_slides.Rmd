@@ -14,7 +14,7 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r time-series-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 

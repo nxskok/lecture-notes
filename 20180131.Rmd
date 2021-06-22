@@ -6,7 +6,7 @@ output: html_notebook
 
 ## packages
 
-```{r}
+```{r 20180131-1}
 library(MASS)
 library(tidyverse)
 library(nnet)
@@ -17,7 +17,7 @@ library(nnet)
 
 Aligned in columns:
 
-```{r}
+```{r 20180131-2}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/miners-tab.txt"
 freqs=read_table(my_url)
 freqs
@@ -25,7 +25,7 @@ freqs
 
 Not tidy: want *one* column of frequencies. Add a column of row proportions.
 
-```{r}
+```{r 20180131-3}
 miners = freqs %>% 
   gather(Severity,Freq,None:Severe) %>%
   group_by(Exposure) %>%
@@ -37,34 +37,34 @@ miners
 
 Plot proportions in each disease category against exposure:
 
-```{r}
+```{r 20180131-4}
 ggplot(miners,aes(x=Exposure,y=proportion,
     colour=Severity))+geom_point()+geom_line()
 ```
 
 Problem: severity categories *in wrong order*. For modelling, need in correct order. Fix that now (and get improved plot). First, get different severity categories:
 
-```{r}
+```{r 20180131-5}
 v=unique(miners$Severity)
 v
 ```
 
 These happen to be in right order (the order they were in data file). A more `tidyverse` way:
 
-```{r}
+```{r 20180131-6}
 miners %>% distinct(Severity)
 ```
 
 only this is a data frame and we want vector, so:
 
-```{r}
+```{r 20180131-7}
 v2 = miners %>% distinct(Severity) %>% pull(Severity)
 v2
 ```
 
 Now created **ordered factor** with categories in specified order:
 
-```{r}
+```{r 20180131-8}
 miners = miners %>% 
     mutate(sev_ord=ordered(Severity,v))
 miners
@@ -74,13 +74,13 @@ Note the `ord`.
 
 If you wanted the levels to be in a different order from how they appear in v:
 
-```{r}
+```{r 20180131-9}
 v
 ```
 
 say, severe, moderate, none, you use the square bracket thing to choose them in the right order:
 
-```{r}
+```{r 20180131-10}
 miners %>% 
   mutate(w=ordered(Severity,v[c(3,2,1)])) %>% 
   pull(w)
@@ -90,7 +90,7 @@ which here is logically backwards, but shows the procedure.
 
 Now redraw plot. Change is to use ordered factor as `colour`:
 
-```{r}
+```{r 20180131-11}
 ggplot(miners,aes(x=Exposure,y=proportion,
     colour=sev_ord))+geom_point()+geom_line()
 ```
@@ -99,7 +99,7 @@ ggplot(miners,aes(x=Exposure,y=proportion,
 
 There seems to be effect of exposure, so model it:
 
-```{r}
+```{r 20180131-12}
 sev.1=polr(sev_ord~Exposure,weights=Freq,
               data=miners)
 summary(sev.1)
@@ -111,7 +111,7 @@ Two ways to assess effect of exposure:
 
 (i) use `drop1` to see whether we can drop it from the model:
 
-```{r}
+```{r 20180131-13}
 drop1(sev.1,test="Chisq")
 ```
 
@@ -119,7 +119,7 @@ Story: no we can't.
 
 (ii) use `anova`. Fit model without `exposure`, and compare fits. `~1` is model with just intercept (no x's):
 
-```{r}
+```{r 20180131-14}
 sev.0=polr(sev_ord~1,weights=Freq,data=miners)
 anova(sev.0,sev.1)
 ```
@@ -128,7 +128,7 @@ Likewise, need the bigger model with `Exposure` in it, since it fits significant
 
 Another way is `update`:
 
-```{r}
+```{r 20180131-15}
 sev.0a=update(sev.1,.~.-Exposure)
 anova(sev.0a,sev.1)
 ```
@@ -137,14 +137,14 @@ Same.
 
 Usual way to understand effects of explanatory variables: do predictions. Let's predict for all exposures in original data set. Get all these exposures first:
 
-```{r}
+```{r 20180131-16}
 sev.new = freqs %>% select(Exposure)
 sev.new
 ```
 
 then do predictions:
 
-```{r}
+```{r 20180131-17}
 pr=predict(sev.1,sev.new,type="probs")
 miners.pred=cbind(sev.new,pr)
 miners.pred
@@ -155,7 +155,7 @@ miners.pred
 
 Need all the predictions in one column:
 
-```{r}
+```{r 20180131-18}
 preds = miners.pred %>% 
   gather(Severity,probability,None:Severe) 
 preds
@@ -163,7 +163,7 @@ preds
 
 Plot predictions joined by lines *and* observed proportions (as points):
 
-```{r}
+```{r 20180131-19}
 ggplot(preds,aes(x=Exposure,y=probability,
   colour=Severity)) + geom_line() +
   geom_point(data=miners,aes(y=proportion))
@@ -177,7 +177,7 @@ More exposure goes with a higher change of more disease, so association with dis
 
 Read in some data:
 
-```{r}
+```{r 20180131-20}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/mlogit.csv"
 brandpref=read_csv(my_url)
 brandpref
@@ -187,7 +187,7 @@ brandpref
 
 Brand and sex are really categorical variables expressed as numbers, so turn into factors:
 
-```{r}
+```{r 20180131-21}
 brandpref = brandpref %>% 
     mutate(sex=factor(sex)) %>%
     mutate(brand=factor(brand))
@@ -196,25 +196,25 @@ brandpref
 
 Values 1-3 for `brand` are just labels for different brands. **No ordering**. `brand` is "nominal". Compare miners (where severity of disease was ordered). Here, need a "multinomial" model, such as `multinom` from `nnet`:
 
-```{r}
+```{r 20180131-22}
 brands.1=multinom(brand~age+sex,data=brandpref,maxit=400)
 ```
 
 Again, looking at output not helpful:
 
-```{r}
+```{r 20180131-23}
 summary(brands.1)
 ```
 
 Search for a good model first (then think about predictions). Can we drop either explanatory variable? `drop1`:
 
-```{r}
+```{r 20180131-24}
 drop1(brands.1,test="Chisq")
 ```
 
 Doesn't work. So have to fit models without `age` and `sex` and compare fit with `anova`:
 
-```{r}
+```{r 20180131-25}
 brands.2=multinom(brand~age,data=brandpref)
 brands.3=multinom(brand~sex,data=brandpref)
 anova(brands.2,brands.1)
@@ -225,7 +225,7 @@ Both `age` and `sex` have to stay.
 
 Curiously, `step` works:
 
-```{r}
+```{r 20180131-26}
 step(brands.1)
 ```
 
@@ -235,7 +235,7 @@ Same conclusion: both `age` and `sex` have to stay in model.
 
 Some combinations of age and sex:
 
-```{r}
+```{r 20180131-27}
 ages=c(24,28,32,35,38)
 sexes=factor(0:1)
 new=crossing(age=ages,sex=sexes)
@@ -244,7 +244,7 @@ new
 
 Predict:
 
-```{r}
+```{r 20180131-28}
 p=predict(brands.1,new,type="probs")
 probs=cbind(new,p)
 probs
@@ -254,7 +254,7 @@ probs
 
 Plot these somehow, but first need all predicted probabilities in one column:
 
-```{r}
+```{r 20180131-29}
 probs.long = probs %>% 
     gather(brand,probability,-(age:sex))
 probs.long
@@ -262,7 +262,7 @@ probs.long
 
 Now plot predicted probability against age, labelling by sex:
 
-```{r}
+```{r 20180131-30}
 ggplot(probs.long,aes(x=age,y=probability,
   colour=brand,shape=sex))+
   geom_point()+geom_line(aes(linetype=sex))
@@ -272,7 +272,7 @@ Can we add the original data to that, to see how well the model fits? At the mom
 
 First, the grouping (actually easy):
 
-```{r}
+```{r 20180131-31}
 b = brandpref %>%
       group_by(age,sex,brand) %>%
       summarize(Freq=n())
@@ -281,7 +281,7 @@ b
 
 Check that nothing important changed by fitting models again, eg. test for `sex`:
 
-```{r}
+```{r 20180131-32}
 bf = b %>% ungroup() %>%
       mutate(sex=factor(sex)) %>%
       mutate(brand=factor(brand)) 
@@ -294,7 +294,7 @@ Same as before: good.
 
 Calculate proportions preferring each brand for each age-sex combo:
 
-```{r}
+```{r 20180131-33}
 brands = b %>%  
   group_by(age,sex) %>%
   mutate(proportion=prop.table(Freq)) 
@@ -302,7 +302,7 @@ brands = b %>%
 
 Check for age 32:
 
-```{r}
+```{r 20180131-34}
 brands %>% filter(age==32)
 ```
 
@@ -310,7 +310,7 @@ Everything that should add up to 1 does.
 
 So add these observed proportions to plot:
 
-```{r}
+```{r 20180131-35}
 ggplot(probs.long,aes(x=age,y=probability,
   colour=brand,shape=sex))+
   geom_line(aes(linetype=sex))+
@@ -319,7 +319,7 @@ ggplot(probs.long,aes(x=age,y=probability,
 
 or note that each proportion is based on a different #obs (in `Freq`), so use different sized points:
 
-```{r}
+```{r 20180131-36}
 ggplot(probs.long,aes(x=age,y=probability,
   colour=brand,shape=sex))+
   geom_line(aes(linetype=sex))+

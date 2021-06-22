@@ -15,11 +15,11 @@ obtaining quartiles or any percentile), n (for counting observations).
 
 ## Packages for this section
 
-```{r, eval=F}
+```{r numsum-R-1, eval=F}
 library(tidyverse)
 ```
 
-```{r, echo=F, message=F}
+```{r numsum-R-2, echo=F, message=F}
 my_url="http://ritsokiguess.site/datafiles/ais.txt"
 athletes=read_tsv(my_url)
 ```
@@ -28,13 +28,13 @@ athletes=read_tsv(my_url)
 ## Summarizing one column
 - Mean height: 
 
-```{r}
+```{r numsum-R-3}
 athletes %>% summarize(m=mean(Ht))
 ```
 
 or to get mean and SD of BMI:
 
-```{r}
+```{r numsum-R-4}
 athletes %>% summarize(m=mean(BMI),s=sd(BMI))
 ```
 
@@ -44,7 +44,7 @@ athletes %>% summarize(m=mean(BMI),s=sd(BMI))
 percentiles:
 
 
-```{r}
+```{r numsum-R-5}
 athletes %>% summarize( Q1=quantile(Wt, 0.25),
                         Q3=quantile(Wt, 0.75))
 ```
@@ -56,7 +56,7 @@ weights in pounds.
 - Convert kg to lb by multiplying by 2.2.
 - Create new column and summarize that: 
 
-```{r}
+```{r numsum-R-6}
 athletes %>% mutate(wt_lb=Wt*2.2) %>%
   summarize(Q1_lb=quantile(wt_lb, 0.25),
             Q3_lb=quantile(wt_lb, 0.75))
@@ -66,7 +66,7 @@ athletes %>% mutate(wt_lb=Wt*2.2) %>%
 for example, number of athletes in
 each sport: 
 
-```{r}
+```{r numsum-R-7}
 athletes %>% count(Sport)
 ```
 
@@ -76,7 +76,7 @@ Another way (which will make sense
 in a moment):
 
 \small
-```{r}
+```{r numsum-R-8}
 athletes %>% group_by(Sport) %>%
   summarize(count=n())
 ```
@@ -87,7 +87,7 @@ athletes %>% group_by(Sport) %>%
 of height for males and females. Strategy is `group_by` (to define the
 groups) and then `summarize`: 
 
-```{r}
+```{r numsum-R-9}
 athletes %>% group_by(Sex) %>% 
   summarize(m=mean(Ht), s=sd(Ht))
 ```
@@ -100,7 +100,7 @@ sport, how many athletes were there?”
 - Standard deviation of each (numeric) column: 
 
 \small
-```{r}
+```{r numsum-R-10}
 athletes %>% summarize_if(is.numeric, sd)
 ```
 \normalsize
@@ -108,7 +108,7 @@ athletes %>% summarize_if(is.numeric, sd)
 - Median and IQR of all columns whose name starts with H: 
 
 \small
-```{r}
+```{r numsum-R-11}
 athletes %>% summarize_at(vars(starts_with("H")),
                           list(med=median, iqr=IQR))
 ```

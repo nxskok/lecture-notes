@@ -24,7 +24,7 @@ Each city also has a numbered `id`.
 
 Places rated data:
 
-```{r}
+```{r places-rated-1}
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
 places0 <- read_table2(my_url)
 places0
@@ -32,7 +32,7 @@ places0
 
 ## Look at distributions of everything
 
-```{r}
+```{r places-rated-2}
 places0 %>% 
   pivot_longer(-id, names_to = "criterion", values_to = "rating") %>% 
   ggplot(aes(x = rating)) + geom_histogram(bins = 10) + 
@@ -41,7 +41,7 @@ places0 %>%
 
 ## The histograms
 
-```{r}
+```{r places-rated-3}
 g
 ```
 
@@ -51,7 +51,7 @@ g
 
 - Take logs of everything but id:
 
-```{r}
+```{r places-rated-4}
 places0 %>% 
   mutate(across(-id, ~log(.))) -> places
 places
@@ -61,21 +61,21 @@ places
 
 - get rid of the id column
 
-```{r}
+```{r places-rated-5}
 places %>% select(-id) -> places_numeric
 places_numeric
 ```
 
 ## Principal components
 
-```{r}
+```{r places-rated-6}
 places.1 <- princomp(places_numeric, cor = TRUE)
 summary(places.1)
 ```
 
 ## scree plot
 
-```{r}
+```{r places-rated-7}
 ggscreeplot(places.1)
 ```
 
@@ -83,7 +83,7 @@ ggscreeplot(places.1)
 
 ## What is in each component?
 
-```{r}
+```{r places-rated-8}
 places.1$loadings
 ```
 
@@ -111,7 +111,7 @@ Look at component loadings and make a call about "large" (in absolute value) vs 
 
 How can we make a visual showing the cities? We need a "score" for each city on each component, and we need to identify the cities (we have a numerical `id` in the original dataset):
 
-```{r}
+```{r places-rated-9}
 cbind(city_id = places$id, places.1$scores) %>% 
   as_tibble() -> places_score
 places_score
@@ -123,7 +123,7 @@ The `as_tibble` is needed at the end because the scores are a `matrix`.
 
 - Plot the first two scores against each other, labelling each point by the `id` of the city it belongs to:
 
-```{r}
+```{r places-rated-10}
 ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
                          label = city_id)) +
   geom_text() -> g
@@ -131,7 +131,7 @@ ggplot(places_score, aes(x = Comp.1, y = Comp.2,
 
 ## Making a plot 3/3
 
-```{r}
+```{r places-rated-11}
 g
 ```
 
@@ -146,7 +146,7 @@ g
 
 - The obvious way of checking this is in two steps: first, work out what high or low means for each variable:
 
-```{r}
+```{r places-rated-12}
 summary(places)
 ```
 
@@ -156,7 +156,7 @@ and then find the values on the variables of interest for our cities of interest
 
 Cities 270, 213, and 116 were extreme on component 1, which depended mainly on health and arts:
 
-```{r}
+```{r places-rated-13}
 places %>% select(id, health, arts) %>% 
   filter(id %in% c(270, 213, 166))
 ```
@@ -167,7 +167,7 @@ City 166 is near or below Q1 on both variables. City 213 is the highest of all o
 
 - Component 2 depended positively on economy and crime and negatively on education. City 195 was high and 322 was low:
 
-```{r}
+```{r places-rated-14}
 places %>% select(id, econ, crime, educate) %>% 
   filter(id %in% c(195, 322))
 ```
@@ -180,7 +180,7 @@ places %>% select(id, econ, crime, educate) %>%
 
 - A  better way is to work out the percentile ranks of each city on each variable and then look at those:
 
-```{r}
+```{r places-rated-15}
 places %>% 
   mutate(across(-id, ~percent_rank(.))) -> places_pr
 places_pr
@@ -188,7 +188,7 @@ places_pr
 
 ## Look up cities and variables again
 
-```{r}
+```{r places-rated-16}
 places_pr %>% select(id, health, arts) %>% 
   filter(id %in% c(270, 213, 166))
 ```
@@ -199,7 +199,7 @@ This shows that city 270 was also really high on these two variables: in the 97t
 
 - What about the extreme cities on component 2?
 
-```{r}
+```{r places-rated-17}
 places_pr %>% select(id, econ, crime, educate) %>% 
   filter(id %in% c(195, 322)) 
 ```

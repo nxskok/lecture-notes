@@ -1,6 +1,6 @@
 ## Packages for this section
 
-```{r, eval=F}
+```{r with-categ-R-1, eval=F}
 library(tidyverse)
 library(broom)
 ```
@@ -8,13 +8,13 @@ library(broom)
 
 ## The pigs revisited
 
-```{r, echo=FALSE}
+```{r with-categ-R-2, echo=FALSE}
 options(dplyr.summarise.inform = FALSE)
 ```
 
 - Recall pig feed data, after we tidied it: 
 
-```{r, message=F}
+```{r with-categ-R-3, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/pigs2.txt"
 pigs <- read_delim(my_url, " ")
 pigs 
@@ -22,7 +22,7 @@ pigs
 
 ## Summaries
 
-```{r}
+```{r with-categ-R-4}
 pigs %>%
   group_by(feed) %>%
   summarize(n = n(), mean_wt = mean(weight), 
@@ -33,7 +33,7 @@ pigs %>%
 - What happens if we run this through `lm` rather than `aov`? 
 - Recall `aov` first: 
 
-```{r}
+```{r with-categ-R-5}
 pigs.1 <- aov(weight ~ feed, data = pigs)
 summary(pigs.1)
 ```
@@ -41,7 +41,7 @@ summary(pigs.1)
 ## and now `lm`
 
 \footnotesize
-```{r}
+```{r with-categ-R-6}
 pigs.2 <- lm(weight ~ feed, data = pigs)
 tidy(pigs.2)
 glance(pigs.2)
@@ -63,7 +63,7 @@ feed 1.
 - Pass the fitted model object into `anova`:
 
 \footnotesize
-```{r}
+```{r with-categ-R-7}
 anova(pigs.2)
 ```
 \normalsize
@@ -72,7 +72,7 @@ anova(pigs.2)
 - But no Tukey this way:
 
 \footnotesize
-```{r, error=TRUE}
+```{r with-categ-R-8, error=TRUE}
 TukeyHSD(pigs.2)
 ```
 \normalsize
@@ -90,7 +90,7 @@ accounted for?
 Read the data:
 
 \small
-```{r, message=F}
+```{r with-categ-R-9, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/crickets2.csv"
 crickets <- read_csv(my_url)
 crickets %>% sample_n(10)
@@ -98,14 +98,14 @@ crickets %>% sample_n(10)
 \normalsize
 ## Fit model with `lm` 
 
-```{r}
+```{r with-categ-R-10}
 crickets.1 <- lm(pulse_rate ~ temperature + species, 
                  data = crickets)
 ```
 
 Can I remove anything? No:
 
-```{r}
+```{r with-categ-R-11}
 drop1(crickets.1, test = "F") %>%  select(-Df, -`Sum of Sq`)
 ```
 
@@ -113,7 +113,7 @@ drop1(crickets.1, test = "F") %>%  select(-Df, -`Sum of Sq`)
 
 ## The summary 
 
-```{r}
+```{r with-categ-R-12}
 glance(crickets.1)
 tidy(crickets.1)
 ```
@@ -134,7 +134,7 @@ rate from species and temperature is very good.
 
 \small
 
-```{r}
+```{r with-categ-R-13}
 t1 <- "Pulse rate against temperature for two species of crickets"
 t2 <- "Temperature in degrees Celsius"
 ```

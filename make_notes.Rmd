@@ -8,27 +8,27 @@ make notes
 
 packages
 
-```{r}
+```{r make-notes-1}
 library(tidyverse)
 ```
 
 read in notes parts file
 
-```{r}
+```{r make-notes-2}
 parts <- read_csv("notes_parts.txt")
 parts
 ```
 
 insert slides into names
 
-```{r}
+```{r make-notes-3}
 parts %>% mutate(full_part=str_replace(part, ".Rmd$", "_slides.Rmd")) -> parts
 parts
 ```
 
 knit a file
 
-```{r}
+```{r make-notes-4}
 fname <- parts$full_part[16]
 fname
 options(tinytex.verbose = TRUE)
@@ -37,7 +37,7 @@ rmarkdown::render(fname)
 
 works
 
-```{r}
+```{r make-notes-5}
 parts %>% 
   mutate(done=walk(full_part, ~rmarkdown::render(.)))
 ```

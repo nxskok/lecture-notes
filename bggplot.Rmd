@@ -19,7 +19,7 @@ overarching plan.
 [link](http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf).
 
 * In package `ggplot2`, thus first:
-```{r }
+```{r bggplot-1 }
 library(tidyverse)
 ```
 
@@ -63,7 +63,7 @@ was given a reading test at the end. How do the test scores
 compare for the two groups?
 
 * Read in and show some of the data:
-```{r }
+```{r bggplot-2 }
 drp <- read.table("drp.txt", header = T)
 head(drp)
 ```
@@ -75,7 +75,7 @@ head(drp)
 ## Histogram of all reading scores
 Histogram has only an $x$-scale (reading score), so do this:
 
-```{r fig.height=3.5}
+```{r bggplot-3, fig.height=3.5}
 ggplot(drp, aes(x = score)) +
   geom_histogram()
 ```
@@ -85,7 +85,7 @@ ggplot(drp, aes(x = score)) +
 
 ## Better histogram
 Set number of bins to 10:
-```{r fig.height=4.5}
+```{r bggplot-4, fig.height=4.5}
 ggplot(drp, aes(x = score)) + geom_histogram(bins = 10)
 ```
 
@@ -95,7 +95,7 @@ ggplot(drp, aes(x = score)) + geom_histogram(bins = 10)
 ## Histograms by group, side by side
 Add a `facet_grid`, thus:
 
-```{r fig.height=4.4}
+```{r bggplot-5, fig.height=4.4}
 ggplot(drp, aes(x = score)) + geom_histogram(bins = 10) +
   facet_grid(group ~ .)
 ```
@@ -128,7 +128,7 @@ up/down, variable after squiggle denotes left/right (like
 ## Boxplot of reading scores by group
 Boxplot has $y$ scale (measured variable) *and* $x$ scale
 (groups), so specify both:
-```{r fig.height=4}
+```{r bggplot-6, fig.height=4}
 ggplot(drp, aes(x = group, y = score)) + geom_boxplot()
 ```
 
@@ -148,7 +148,7 @@ ggplot(drp, aes(x = factor(1), y = score)) + geom_boxplot()
 ## Scatterplot
 For this, use analysis of covariance data from later:
 
-```{r }
+```{r bggplot-7 }
 prepost <- read.table("ancova.txt", header = T)
 str(prepost)
 ```
@@ -170,7 +170,7 @@ labelled by drug.
 
 
 ## Basic scatterplot
-```{r fig.height=5}
+```{r bggplot-8, fig.height=5}
 ggplot(prepost, aes(x = before, y = after)) + geom_point()
 ```
 
@@ -180,7 +180,7 @@ ggplot(prepost, aes(x = before, y = after)) + geom_point()
 ## Coloured by `drug`
 Add `colour=` to the *aesthetic*:
 
-```{r fig.height=4.3}
+```{r bggplot-9, fig.height=4.3}
 ggplot(prepost, aes(x = before, y = after, colour = drug)) +
   geom_point()
 ```
@@ -189,7 +189,7 @@ ggplot(prepost, aes(x = before, y = after, colour = drug)) +
 
 
 ## Adding a smooth trend
-```{r fig.height=4}
+```{r bggplot-10, fig.height=4}
 ggplot(prepost, aes(x = before, y = after)) +
   geom_point() + geom_smooth()
 ```
@@ -198,7 +198,7 @@ ggplot(prepost, aes(x = before, y = after)) +
 
 
 ## A smooth trend for each drug
-```{r fig.height=3.5}
+```{r bggplot-11, fig.height=3.5}
 ggplot(prepost, aes(x = before, y = after, colour = drug)) +
   geom_point() + geom_smooth()
 ```
@@ -208,7 +208,7 @@ ggplot(prepost, aes(x = before, y = after, colour = drug)) +
 
 ## A regression line
 
-```{r fig.height=4.5}
+```{r bggplot-12, fig.height=4.5}
 ggplot(prepost, aes(x = before, y = after)) +
   geom_point() + geom_smooth(method = "lm")
 ```
@@ -227,7 +227,7 @@ ggplot(prepost, aes(x = before, y = after, colour = drug)) +
 
 ## Think of before-after data as repeated measures
 Reorganize:
-```{r }
+```{r bggplot-13 }
 prepost %>%
   mutate(subject = row_number()) %>%
   pivot_longer(before:after, names_to="time", 
@@ -243,7 +243,7 @@ was before or after.
 
 
 ## A "spaghetti plot"
-```{r fig.height=4.5}
+```{r bggplot-14, fig.height=4.5}
 ggplot(prepost.long, aes(
   x = time, y = score, colour = drug,
   group = subject
@@ -257,7 +257,7 @@ ggplot(prepost.long, aes(
 
 
 * I made up these data:
-```{r }
+```{r bggplot-15 }
 x <- 0:5
 y <- c(2.0, 4.1, 8.2, 15.8, 31.6, 65.0)
 grow <- data.frame(x, y)
@@ -273,7 +273,7 @@ exponential growth.
 
 
 ## Scatter plot with line (bad)
-```{r fig.height=4.5}
+```{r bggplot-16, fig.height=4.5}
 ggplot(grow, aes(x = x, y = y)) +
   geom_point() + geom_smooth(method = "lm")
 ```
@@ -283,7 +283,7 @@ ggplot(grow, aes(x = x, y = y)) +
 
 ## Use log scale for $y$-axis
 
-```{r fig.height=4}
+```{r bggplot-17, fig.height=4}
 ggplot(grow, aes(x = x, y = y)) +
   geom_point() + coord_trans(y = "log10")
 ```

@@ -5,24 +5,24 @@ output: html_notebook
 
 ## packages
 
-```{r}
+```{r notebook1-1}
 library(tidyverse)
 ```
 
 ## read and inspect data
 
-```{r}
+```{r notebook1-2}
 mydata <- read_csv("test1.csv")
 mydata
 ```
 
-```{r}
+```{r notebook1-3}
 View(mydata)
 ```
 
 ## summary
 
-```{r}
+```{r notebook1-4}
 summary(mydata)
 ```
 

@@ -5,7 +5,7 @@ output: html_notebook
 
 ## Packages
 
-```{r}
+```{r stan-compare-1}
 library(tidyverse)
 library(rstan)
 library(loo)
@@ -40,7 +40,7 @@ To handle Bayes factors, we need to have Stan calculate the complete likelihood 
 
 I wanted to come up with the simplest example I could, to convince myself that I could make it work. I seem to need a two-parameter model, so that I can test a hypothesis about one of them while estimating the other. (I don't think Stan likes "estimating" models with zero parameters, but I might be wrong about that.) The obvious thing is a normal model for the mean, with SD to be estimated as well. Since this is a practice example, we'll make up some data:
 
-```{r}
+```{r stan-compare-2}
 set.seed(457299)
 z=rnorm(10, 2, 3)
 z 
@@ -82,7 +82,7 @@ The one new thing here is the `generated quantities` section at the bottom. In o
 
 All right, let's compile that. (I used the "check" button in the Stan code pane to check that there were no obvious errors in the code.) My code file is called `loo1.stan`:
 
-```{r}
+```{r stan-compare-3}
 loo1_compiled=stan_model("loo1.stan")
 ```
 
@@ -112,13 +112,13 @@ generated quantities {
 
 This is "syntactically correct", so compile it as well:
 
-```{r}
+```{r stan-compare-4}
 loo2_compiled=stan_model("loo2.stan")
 ```
 
 and then sample from each of these:
 
-```{r}
+```{r stan-compare-5}
 data_list=list(y=z)
 loo1_sample=sampling(loo1_compiled, data=data_list)
 loo2_sample=sampling(loo2_compiled, data=data_list)
@@ -126,7 +126,7 @@ loo2_sample=sampling(loo2_compiled, data=data_list)
 
 Did that work reasonably?
 
-```{r}
+```{r stan-compare-6}
 loo1_sample
 loo2_sample
 ```
@@ -135,7 +135,7 @@ In the first case, we have posterior distributions for `mu` and `sigma`, with a 
 
 Now, what we came here to do: what the `loo` package calls "the efficient PSIS-LOO approximation to exact LOO-CV". I'm copying from the vignette here. First, we have to extract those log-likelihood terms that we so carefully had Stan calculate for us:
 
-```{r}
+```{r stan-compare-7}
 log_lik_1=extract_log_lik(loo1_sample, merge_chains = F)
 log_lik_2=extract_log_lik(loo2_sample, merge_chains = F)
 r_eff_1=relative_eff(log_lik_1)
@@ -144,14 +144,14 @@ r_eff_2=relative_eff(log_lik_2)
 
 Next, look at the results for each model, first the one with `mu` estimated:
 
-```{r}
+```{r stan-compare-8}
 loo_1 <- loo(log_lik_1, r_eff=r_eff_1)
 loo_1
 ```
 
 Perhaps the easiest one of these to look at is the last one, `looic`. This is minus twice the expected log posterior density, and so is on the same scale as a deviance (that is to say, a smaller `looic` is better).
 
-```{r}
+```{r stan-compare-9}
 loo_2 <- loo(log_lik_2, r_eff=r_eff_2)
 loo_2
 ```
@@ -159,7 +159,7 @@ loo_2
 The first model fits better than the second one, since its `looic` is smaller.
 This is what we suspected (from the 95% posterior interval for `mu` not including zero). We can go one step further and *actually* compare the models, thus:
 
-```{r}
+```{r stan-compare-10}
 compare(loo_1, loo_2)
 ```
 
@@ -208,7 +208,7 @@ In the `model` section, I construct a quantity `target` that is the log-posterio
 
 Compile it:
 
-```{r}
+```{r stan-compare-11}
 bf1_compiled=stan_model("bf1.stan")
 ```
 
@@ -231,20 +231,20 @@ model { // target contains the complete log-posterior, constants and all
 
 and compile *that*:
 
-```{r}
+```{r stan-compare-12}
 bf2_compiled=stan_model("bf2.stan")
 ```
 
 The `bridgesampling` vignette suggests to use a lot more samples than default. We already have our data set up, so
 
-```{r}
+```{r stan-compare-13}
 bf1_sample=sampling(bf1_compiled, data=data_list, iter=50000, warmup=1000, chains=4)
 bf2_sample=sampling(bf2_compiled, data=data_list, iter=50000, warmup=1000, chains=4)
 ```
 
 Now compare the marginal likelihoods. This takes a bit longer than the Stan sampling. The 1 and 2 are the wrong way around because of how I set things up before:
 
-```{r}
+```{r stan-compare-14}
 h0_bridge=bridge_sampler(bf2_sample, silent=T)
 h0_bridge
 ha_bridge=bridge_sampler(bf1_sample, silent=T)
@@ -253,7 +253,7 @@ ha_bridge
 
 then obtain the Bayes factor:
 
-```{r}
+```{r stan-compare-15}
 bf(ha_bridge, h0_bridge)
 ```
 This is, according to [this talk](http://statmath.wu.ac.at/research/talks/resources/talkheld.pdf), "barely worth mentioning". 
@@ -264,7 +264,7 @@ The moral of this seems to be that the model with `mu` estimated fits better tha
 
 Of course, you're wondering how the $t$-test comes out:
 
-```{r}
+```{r stan-compare-16}
 t.test(z, mu=0)
 ```
 

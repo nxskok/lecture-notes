@@ -9,7 +9,7 @@ output: html_notebook
 
 ## Packages
 
-```{r}
+```{r 20180321-1}
 library(MASS) # for an LDA later
 library(ggrepel)
 library(tidyverse)
@@ -104,7 +104,7 @@ library(tidyverse)
 
 ## Two made-up clusters
   
-```{r}
+```{r 20180321-2}
 set.seed(457299)
 a=data.frame(x=runif(5,0,20),y=runif(5,0,20))
 b=data.frame(x=runif(5,20,40),y=runif(5,20,40))
@@ -123,7 +123,7 @@ ones?
   
   Find the red point and the blue point that are closest together:
   
-```{r}
+```{r 20180321-3}
 distance=function(p1,p2) {
   sqrt((p1[1]-p2[1])^2+(p1[2]-p2[2])^2)
 }
@@ -150,7 +150,7 @@ closest points.
   
   Find the red and blue points that are farthest apart:
   
-```{r}
+```{r 20180321-4}
 wm1=which.max(apply(distances,1,max))
 wm2=which.max(apply(distances,2,max))
 closest=bind_rows(a[wm1,],b[wm2,],.id="cluster")
@@ -165,7 +165,7 @@ Complete-linkage distance is distance between farthest points.
   
   Work out mean of each cluster and join point to its mean:
   
-```{r}
+```{r 20180321-5}
 xm=aggregate(x~cluster,ddd,mean)
 ym=aggregate(y~cluster,ddd,mean)
 dm=cbind(xm,y=ym[,2])
@@ -196,7 +196,7 @@ ggplot(ddd,aes(x=x,y=y,colour=cluster))+
 Now imagine combining the two clusters and working out overall
 mean. Join each point to this mean:
 
-```{r}
+```{r 20180321-6}
 ddd %>% summarize(x=mean(x),y=mean(y)) -> dm
 # loop through data frame and create grp that links to cluster's mean
 new=data.frame(x=double(),y=double(),cluster=character(),grp=integer(),
@@ -260,11 +260,11 @@ ggplot(ddd,aes(x=x,y=y,colour=cluster))+
 Dissimilarities for language data\label{p:numberd} were how many
 number names had *different* first letter:
 
-```{r}
+```{r 20180321-7}
 options(width=60)
 ``` 
 
-```{r}
+```{r 20180321-8}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/languages.txt"
 number.d=read_table(my_url)
 number.d
@@ -274,7 +274,7 @@ number.d
 
 ## Making a distance object
   
-```{r}
+```{r 20180321-9}
 d = number.d %>% 
     select(-la) %>%
     as.dist()
@@ -286,7 +286,7 @@ class(d)
 
 ## Cluster analysis and dendrogram
   
-```{r}
+```{r 20180321-10}
 d.hc=hclust(d,method="single")
 plot(d.hc)
 ```   
@@ -313,7 +313,7 @@ plot(d.hc)
 
 
   
-```{r}
+```{r 20180321-11}
 d.hc$labels
 d.hc$merge
 ``` 
@@ -336,7 +336,7 @@ d.hc$merge
 
 ## Complete linkage
   
-```{r}
+```{r 20180321-12}
 d.hc=hclust(d,method="complete")
 plot(d.hc)
 ```  
@@ -345,7 +345,7 @@ plot(d.hc)
 
 ## Ward
   
-```{r}
+```{r 20180321-13}
 d.hc=hclust(d,method="ward.D")
 plot(d.hc)
 ```   
@@ -356,7 +356,7 @@ plot(d.hc)
 
   
   - Three clusters (from Ward) looks good:
-```{r}
+```{r 20180321-14}
 v=cutree(d.hc,3)
 v
 tibble(la=d.hc$labels,cluster=v)
@@ -367,7 +367,7 @@ tibble(la=d.hc$labels,cluster=v)
 
 ## Drawing those clusters on the tree
   
-```{r}
+```{r 20180321-15}
 plot(d.hc)
 rect.hclust(d.hc,3)
 ```   
@@ -388,12 +388,12 @@ rect.hclust(d.hc,3)
 
 Original data:
 
-```{r}
+```{r 20180321-16}
 options(width=60)
 ```  
 
 
-```{r}
+```{r 20180321-17}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/one-ten.txt"
 lang=read_delim(my_url," ")
 lang 
@@ -406,7 +406,7 @@ names were all in one column.
 
 ## Tidy, and extract first letter
   
-```{r}
+```{r 20180321-18}
 lang.long = lang %>% mutate(number=row_number()) %>%
     gather(language,name,-number) 
 
@@ -428,7 +428,7 @@ lang.long
     
   - First get the lines for English:
     
-```{r}
+```{r 20180321-19}
 english = lang.long %>% filter(language=="en")
 english
 ```     
@@ -438,7 +438,7 @@ english
 
 ## And then the lines for Norwegian
   
-```{r}
+```{r 20180321-20}
 norwegian = lang.long %>% filter(language=="no")
 norwegian
 ```   
@@ -452,7 +452,7 @@ one table using another.)
 ## The join
   
 
-```{r}
+```{r 20180321-21}
 english %>% left_join(norwegian, by="number")
 ```   
 
@@ -463,7 +463,7 @@ letter of Norwegian word.
 
 ## Counting the different ones
   
-```{r}
+```{r 20180321-22}
 english %>% left_join(norwegian, by="number") %>%
   mutate(different=(first.x!=first.y)) %>%
   summarize(diff=sum(different))
@@ -475,7 +475,7 @@ Words for 1 and 8 start with different letter; rest are same.
 
 ## Function to do this for any two languages
   
-```{r}
+```{r 20180321-23}
 countdiff=function(lang.1,lang.2,d) {
     lang1d=d %>% filter(language==lang.1)
     lang2d=d %>% filter(language==lang.2)
@@ -488,7 +488,7 @@ countdiff=function(lang.1,lang.2,d) {
   
 Test:
 
-```{r}
+```{r 20180321-24}
 countdiff("en","no",lang.long)
 ``` 
 
@@ -499,21 +499,21 @@ countdiff("en","no",lang.long)
   
   - First need all the languages:
     
-```{r}
+```{r 20180321-25}
 languages=names(lang)
 languages
 ```     
 
 - and then all *pairs* of languages:
   
-```{r}
+```{r 20180321-26}
 pairs=crossing(lang=languages, lang2=languages) %>% print(n=12)
 ```   
   
   
 ## Run `countdiff` for all those language pairs
   
-```{r}
+```{r 20180321-27}
 thediffs = pairs %>% 
     mutate(diff=map2_int(lang,lang2,countdiff,lang.long)) %>% 
     print(n=12)
@@ -524,7 +524,7 @@ thediffs = pairs %>%
 ## Make square table of these
 
 
-```{r}
+```{r 20180321-28}
 thediffs %>% spread(lang2,diff)
 ```   
 
@@ -563,7 +563,7 @@ Birth, death and infant mortality rates for 97 countries (variables not dissimil
 ## Reading in
 
   
-```{r}
+```{r 20180321-29}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/birthrate.txt"
 vital=read_table(my_url)
 ``` 
@@ -572,7 +572,7 @@ vital=read_table(my_url)
 
 ## The data
 
-```{r}
+```{r 20180321-30}
 vital
 ```   
 
@@ -588,7 +588,7 @@ vital
   1, done by `scale`.
 
 
-```{r}
+```{r 20180321-31}
 vital.s = vital %>% mutate_if(is.numeric,scale) %>% print(n=10)
 ```   
   
@@ -600,11 +600,11 @@ vital.s = vital %>% mutate_if(is.numeric,scale) %>% print(n=10)
   countries) and run `kmeans` on the resulting data frame,
   asking for 3 clusters:
 
-```{r}
+```{r 20180321-32}
 set.seed(457299)
 ```   
 
-```{r}
+```{r 20180321-33}
 vital.km3 = vital.s %>% select(-4) %>% kmeans(3)
 names(vital.km3)
 ```   
@@ -621,13 +621,13 @@ names(vital.km3)
   - Cluster sizes:
     
 
-```{r}
+```{r 20180321-34}
 vital.km3$size
 ```  
 
 - Cluster centres:
   
-```{r}
+```{r 20180321-35}
 vital.km3$centers
 ```  
 
@@ -640,13 +640,13 @@ vital.km3$centers
 
 ## Cluster sums of squares and membership
   
-```{r}
+```{r 20180321-36}
 vital.km3$withinss
 ```  
 
 Cluster 1 compact relative to others (countries in cluster 1  more similar).
 
-```{r}
+```{r 20180321-37}
 vital.km3$cluster
 ```  
 
@@ -660,7 +660,7 @@ The cluster membership for each of the 97 countries.
 
 ## Store countries and clusters to which they belong
   
-```{r}
+```{r 20180321-38}
 vital.3=tibble(country=vital.s$country,
                cluster=vital.km3$cluster)
 vital.3 %>% arrange(cluster)
@@ -670,7 +670,7 @@ Next, which countries in which cluster?
 
 Write function to extract them:
 
-```{r}
+```{r 20180321-39}
 get_countries=function(i,d) {
     d %>% filter(cluster==i) %>% pull(country)
 }
@@ -681,21 +681,21 @@ get_countries=function(i,d) {
 ## Cluster membership: cluster 2
 
 
-```{r}
+```{r 20180321-40}
 get_countries(2,vital.3)
 ```   
 
 
 
 ## Cluster 3
-```{r}
+```{r 20180321-41}
 get_countries(3,vital.3)
 ```   
 
 
 ## Cluster 1
 
-```{r}
+```{r 20180321-42}
 get_countries(1,vital.3)
 ```   
 
@@ -706,11 +706,11 @@ get_countries(1,vital.3)
   - `kmeans` uses randomization. So result of one run might
     be different from another run.
   - Example: just run again on 3 clusters, `table` of results:
-```{r}
+```{r 20180321-43}
 set.seed(457298)
 ``` 
     
-```{r}
+```{r 20180321-44}
 vital.km3a=vital.s %>% select(-4) %>% kmeans(3)
 table(first=vital.km3$cluster,
       second=vital.km3a$cluster)
@@ -719,7 +719,7 @@ table(first=vital.km3$cluster,
   
 - Solution: `nstart` option on `kmeans` runs that
   many times, takes best. Should be same every time:
-```{r}
+```{r 20180321-45}
 vital.km3b = vital.s %>% select(-4) %>% 
     kmeans(3,nstart=20)
 ```   
@@ -747,7 +747,7 @@ vital.km3b = vital.s %>% select(-4) %>%
   ... for an input number of clusters, taking only numeric columns
   of input data frame:
   
-```{r}
+```{r 20180321-46}
 ss=function(i,d) {
     km = d %>% select_if(is.numeric) %>%
         kmeans(i,nstart=20)
@@ -766,7 +766,7 @@ re-use it later.
   the total within-group sums of squares. "For each number of
   clusters, run `ss`", so `map_dbl`.
   
-```{r}
+```{r 20180321-47}
 ssd = tibble(clusters=2:20) %>%
     mutate(wss=map_dbl(clusters,ss,vital.s)) %>% 
     print(n=10)
@@ -776,7 +776,7 @@ ssd = tibble(clusters=2:20) %>%
 
 ## Scree plot
 
-```{r}
+```{r 20180321-48}
 ggplot(ssd,aes(x=clusters,y=wss))+geom_point()+
   geom_line()
 ```   
@@ -798,7 +798,7 @@ ggplot(ssd,aes(x=clusters,y=wss))+geom_point()+
 
 ## Six clusters, using `nstart`
   
-```{r}
+```{r 20180321-49}
 vital.km6 = vital.s %>% select(-4) %>% 
     kmeans(6,nstart=20)
 vital.km6$size
@@ -814,7 +814,7 @@ vital.6=tibble(country=vital.s$country,
 High death rate:
 
   
-```{r}
+```{r 20180321-50}
 get_countries(1,vital.6)
 ```   
   
@@ -823,7 +823,7 @@ get_countries(1,vital.6)
 
 Lower than average on everything:
   
-```{r}
+```{r 20180321-51}
 options(width=60)
 get_countries(2,vital.6)
 options(width=50)
@@ -835,7 +835,7 @@ options(width=50)
 Very high on everything:
 
   
-```{r}
+```{r 20180321-52}
 get_countries(3,vital.6)
 ```   
   
@@ -845,7 +845,7 @@ get_countries(3,vital.6)
 Low on everything, especially death rate:
 
   
-```{r}
+```{r 20180321-53}
 get_countries(4,vital.6)
 ```   
   
@@ -854,7 +854,7 @@ get_countries(4,vital.6)
 
 Higher than average on everything, though not the highest:
   
-```{r}
+```{r 20180321-54}
 get_countries(5,vital.6)
 ```   
   
@@ -864,7 +864,7 @@ get_countries(5,vital.6)
 Low death rate compared to birth rate and infant mortality rate:
 
   
-```{r}
+```{r 20180321-55}
 get_countries(6,vital.6)
 ```   
   
@@ -872,7 +872,7 @@ get_countries(6,vital.6)
 
 ## Comparing our 3 and 6-cluster solutions
   
-```{r}
+```{r 20180321-56}
 table(three=vital.km3$cluster,six=vital.km6$cluster)
 ```   
 
@@ -907,7 +907,7 @@ Compared to 3-cluster solution:
     standardized), plus `cf` (cluster as factor).
     `clus` (6 clusters).
   - First, do they actually differ by group? (MANOVA):
-```{r}
+```{r 20180321-57}
 v = vital.s %>% select(-4) %>% as.matrix()
 cf = as.factor(vital.km6$cluster)
 vital.manova=manova(v~cf)
@@ -927,7 +927,7 @@ Oh yes.
   - Uses package `MASS` (loaded):
     
   
-```{r}
+```{r 20180321-58}
 vital.lda=lda(cf~birth+death+infant,data=vital.s)
 vital.lda$svd
 vital.lda$scaling
@@ -945,7 +945,7 @@ vital.lda$scaling
   
   
   - Get predictions first:
-```{r}
+```{r 20180321-59}
 vital.pred=predict(vital.lda)
 d=data.frame(country=vital.s$country,
   cluster=vital.km6$cluster,vital.pred$x)
@@ -957,7 +957,7 @@ glimpse(d)
   discriminant scores. Plot `LD1` against `LD2`,
   colouring points by cluster and labelling by country:
   
-```{r}
+```{r 20180321-60}
 g=ggplot(d,aes(x=LD1,y=LD2,colour=factor(cluster),
     label=country))+geom_point()+
     geom_text_repel(size=2)+guides(colour=F)
@@ -969,7 +969,7 @@ g=ggplot(d,aes(x=LD1,y=LD2,colour=factor(cluster),
 
 ## The plot
   
-```{r}
+```{r 20180321-61}
 g
 ```   
 
@@ -998,7 +998,7 @@ An Ontario hockey league has teams in 21 cities. How can we arrange those teams 
 
 Read in data:
 
-```{r}
+```{r 20180321-62}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/ontario-road-distances.csv"
 ontario=read_csv(my_url)
 ontario
@@ -1006,14 +1006,14 @@ ontario
 
 Make distance object
 
-```{r}
+```{r 20180321-63}
 ontario.d = ontario %>% select(-place) %>% as.dist()
 ontario.d
 ```
 
 ## Clustering: Ward's method
 
-```{r}
+```{r 20180321-64}
 ontario.hc=hclust(ontario.d,method="ward.D")
 cutree(ontario.hc,4)
 ```   
@@ -1022,7 +1022,7 @@ cutree(ontario.hc,4)
 
 ## Plot, with 4 clusters
   
-```{r}
+```{r 20180321-65}
 plot(ontario.hc)
 rect.hclust(ontario.hc,4)
 ```   
@@ -1041,7 +1041,7 @@ rect.hclust(ontario.hc,4)
 
 ## Seven clusters
   
-```{r} 
+```{r 20180321-66 }
 plot(ontario.hc)
 rect.hclust(ontario.hc,7)
 ```   

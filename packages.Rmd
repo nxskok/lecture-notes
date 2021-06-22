@@ -1,6 +1,6 @@
 My packages and conflicts:
 
-```{r, echo=F, message=F}
+```{r packages-1, echo=F, message=F}
 library(tidyverse)
 library(smmr)
 library(MASS)

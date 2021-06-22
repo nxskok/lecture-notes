@@ -15,95 +15,95 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r c32-all-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 # Course outline
 
-```{r, child="outline_c32.Rmd"}
+```{r c32-all-slides-2, child="outline_c32.Rmd"}
 ```
 
 # Running R
 
-```{r, child="running_R.Rmd"}
+```{r c32-all-slides-3, child="running_R.Rmd"}
 ```
 
 # Reading data files
 
-```{r, child="readfile_R.Rmd"}
+```{r c32-all-slides-4, child="readfile_R.Rmd"}
 ```
 
 # Making graphs
 
-```{r, child="graphs_R.Rmd"}
+```{r c32-all-slides-5, child="graphs_R.Rmd"}
 ```
 
 # Numerical summaries
 
-```{r, child="numsum_R.Rmd"}
+```{r c32-all-slides-6, child="numsum_R.Rmd"}
 ```
 
 # Inference 1: one- and two-sample t
 
-```{r, child="inference_1_R.Rmd"}
+```{r c32-all-slides-7, child="inference_1_R.Rmd"}
 ```
 
 # The bootstrap for assessing sampling distributions (for extra insight)
 
-```{r, child="bootstrap_R.Rmd"}
+```{r c32-all-slides-8, child="bootstrap_R.Rmd"}
 ```
 
 # Inference 2: power
 
-```{r, child="inference_2_R.Rmd"}
+```{r c32-all-slides-9, child="inference_2_R.Rmd"}
 ```
 
 # Inference 3: the sign test
 
-```{r, child="inference_3_R.Rmd"}
+```{r c32-all-slides-10, child="inference_3_R.Rmd"}
 ```
 
 # Inference 4: matched pairs, normal quantile plot
 
-```{r, child="inference_4_R.Rmd"}
+```{r c32-all-slides-11, child="inference_4_R.Rmd"}
 ```
 
 # Inference 5: Mood's median test, analysis of variance
 
-```{r, child="inference_5_R.Rmd"}
+```{r c32-all-slides-12, child="inference_5_R.Rmd"}
 ```
 
 # Writing reports
 
-```{r, child="reports_R.Rmd"}
+```{r c32-all-slides-13, child="reports_R.Rmd"}
 ```
 
 # Tidying data
 
-```{r, child="tidying_R.Rmd"}
+```{r c32-all-slides-14, child="tidying_R.Rmd"}
 ```
 
 # Choosing rows and columns
 
-```{r, child="choosing_R.Rmd"}
+```{r c32-all-slides-15, child="choosing_R.Rmd"}
 ```
 
 # Case study: the windmill data
 
-```{r, child="windmill.Rmd"}
+```{r c32-all-slides-16, child="windmill.Rmd"}
 ```
 
 # Case study: the asphalt data
 
-```{r, child="asphalt.Rmd"}
+```{r c32-all-slides-17, child="asphalt.Rmd"}
 ```
 
 # Regression with categorical data
 
-```{r, child="with_categ_R.Rmd"}
+```{r c32-all-slides-18, child="with_categ_R.Rmd"}
 ```
 
 # Functions
 
-```{r, child="functions.Rmd"}
+```{r c32-all-slides-19, child="functions.Rmd"}
 ```

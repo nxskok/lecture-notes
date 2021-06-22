@@ -6,7 +6,7 @@ knitr::opts_chunk$set(dev = 'pdf')
 ```
 
 
-```{r, results="hide", message=F, warning=F}
+```{r preliminaries-1, results="hide", message=F, warning=F}
 library(MASS)
 library(tidyverse)
 library(broom)

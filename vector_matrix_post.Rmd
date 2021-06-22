@@ -2,7 +2,7 @@
 
 - This is (almost) all base R! We only need this for one thing later:
 
-```{r, eval=F}
+```{r vector-matrix-post-1, eval=F}
 library(tidyverse)
 ```
 
@@ -13,7 +13,7 @@ library(tidyverse)
 Adds 2 to each element.
 
 - Adding vectors:
-```{r}
+```{r vector-matrix-post-2}
 u <- c(2, 3, 6, 5, 7)
 u
 v <- c(1, 8, 3, 2, 0)
@@ -28,7 +28,7 @@ u + v
 
 - Define a vector, then “add 2” to it:
 
-```{r}
+```{r vector-matrix-post-3}
 u
 k <- 2
 u
@@ -39,7 +39,7 @@ u + k
 
 this is as in a dataframe:
 
-```{r}
+```{r vector-matrix-post-4}
 d <- tribble(
   ~x, ~y,
   1, 2,
@@ -52,7 +52,7 @@ d %>% mutate(z = 5)
 ## Scalar multiplication
 As per linear algebra:
 
-```{r}
+```{r vector-matrix-post-5}
 k
 u
 k * u
@@ -62,7 +62,7 @@ k * u
 
 ## “Vector multiplication”
 What about this?
-```{r}
+```{r vector-matrix-post-6}
 u
 v
 u * v
@@ -77,7 +77,7 @@ for which the answer is a number.)
 
 ## Combining different-length vectors
 - No error here (you get a warning). What happens?
-```{r}
+```{r vector-matrix-post-7}
 u
 w <- c(1, 2)
 w
@@ -98,13 +98,13 @@ keeps getting recycled.
 
 ## Matrices
 - Create matrix like this:
-```{r}
+```{r vector-matrix-post-8}
 (A <- matrix(1:4, nrow = 2))
 ```
 
 - First: stuff to make matrix from, then how many rows and columns.
 - R goes down columns by default. To go along rows instead:
-```{r}
+```{r vector-matrix-post-9}
 (B <- matrix(5:8, nrow = 2, ncol = 2, byrow = TRUE))
 ```
 
@@ -114,7 +114,7 @@ the matrix.
 ## Adding matrices
 What happens if you add two matrices?
 
-```{r}
+```{r vector-matrix-post-10}
 A
 B
 A + B
@@ -126,7 +126,7 @@ A + B
 
 ## Multiplying matrices
 - Now, what happens here?
-```{r}
+```{r vector-matrix-post-11}
 A
 B
 A * B
@@ -140,7 +140,7 @@ A * B
 ## Legit matrix multiplication
 Like this:
 
-```{r}
+```{r vector-matrix-post-12}
 A
 B
 A %*% B
@@ -148,7 +148,7 @@ A %*% B
 
 ## Reading matrix from file
 - The usual:
-```{r}
+```{r vector-matrix-post-13}
 my_url <- "http://ritsokiguess.site/datafiles/m.txt"
 M <- read_delim(my_url, " ", col_names = F)
 M
@@ -158,7 +158,7 @@ class(M)
 ## but...
 
 - except that M is not an R matrix, and thus this doesn’t work:
-```{r, error=T}
+```{r vector-matrix-post-14, error=T}
 v <- c(1, 3)
 v
 M %*% v
@@ -167,20 +167,20 @@ M %*% v
 ## Making a genuine matrix
 
 Do this first:
-```{r}
+```{r vector-matrix-post-15}
 M <- as.matrix(M)
 M
 ```
 
 and then all is good:
-```{r}
+```{r vector-matrix-post-16}
 M %*% v
 ```
 
 ## Linear algebra stuff
 - To solve system of equations
 $Ax = w$ for $x$:
-```{r}
+```{r vector-matrix-post-17}
 A
 w
 solve(A, w)
@@ -189,7 +189,7 @@ solve(A, w)
 ## Matrix inverse
 
 - To find the inverse of A:
-```{r}
+```{r vector-matrix-post-18}
 A
 solve(A)
 A %*% solve(A)
@@ -201,7 +201,7 @@ correct.
 ## Inner product
 - Vectors in R are column vectors, so just do the matrix multiplication (`t()` is transpose): 
 
-```{r}
+```{r vector-matrix-post-19}
 a <- c(1, 2, 3)
 b <- c(4, 5, 6)
 t(a) %*% b
@@ -211,7 +211,7 @@ as.vector(t(a) %*% b)
 - Note that the answer is actually a 1 × 1 matrix.
 - Or as the sum of the elementwise multiplication:
 
-```{r}
+```{r vector-matrix-post-20}
 a
 b
 a*b
@@ -222,7 +222,7 @@ sum(a * b)
 
 - use square brackets and a number to get elements of a vector
 
-```{r}
+```{r vector-matrix-post-21}
 b
 b[3]
 ```
@@ -231,14 +231,14 @@ b[3]
 
 - use a row and column index to get an element of a matrix
 
-```{r}
+```{r vector-matrix-post-22}
 A
 A[2,1]
 ```
 
 - leave the row or column index empty to get whole row or column, eg.
 
-```{r}
+```{r vector-matrix-post-23}
 A[1,]
 A[,2]
 ```
@@ -253,14 +253,14 @@ $$ A v = \lambda v $$
 
 - In R, `eigen` gets these:
 
-```{r}
+```{r vector-matrix-post-24}
 A
 e <- eigen(A)
 ```
 
 ## The eigenvalues/vectors
 
-```{r}
+```{r vector-matrix-post-25}
 e
 ```
 
@@ -269,12 +269,12 @@ e
 
 - $\lambda_1 v_1$: (scalar) multiply first eigenvalue by first eigenvector (in column)
 
-```{r}
+```{r vector-matrix-post-26}
 e$values[1] * e$vectors[,1]
 ```
 - $A v_1$: (matrix) multiply matrix by first eigenvector (in column)
 
-```{r}
+```{r vector-matrix-post-27}
 A %*% e$vectors[,1]
 ```
 
@@ -286,7 +286,7 @@ A %*% e$vectors[,1]
 - A negative correlation:
 
 \footnotesize
-```{r}
+```{r vector-matrix-post-28}
 d <- tribble(
   ~x,  ~y,
   10,  20,
@@ -305,7 +305,7 @@ v
 
 ## Eigenanalysis of correlation matrix
 
-```{r}
+```{r vector-matrix-post-29}
 eigen(v)
 ```
 

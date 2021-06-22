@@ -1,5 +1,5 @@
 
-```{r}
+```{r inference-3-R-post-1}
 library(tidyverse)
 ```
 
@@ -9,7 +9,7 @@ library(tidyverse)
 way. They are both telling you something about a parameter, and
 they use same things about data.
 - To illustrate, some data (two groups):
-```{r}
+```{r inference-3-R-post-2}
 my_url <- "http://ritsokiguess.site/datafiles/duality.txt"
 twogroups <- read_delim(my_url," ")
 ```
@@ -18,18 +18,18 @@ twogroups <- read_delim(my_url," ")
 ## The data
 
 \footnotesize
-```{r}
+```{r inference-3-R-post-3}
 twogroups
 ```
 \normalsize
 
 ## 95% CI (default)
-```{r}
+```{r inference-3-R-post-4}
 t.test(y ~ group, data = twogroups)
 ```
 
 ## 90% CI
-```{r}
+```{r inference-3-R-post-5}
 t.test(y ~ group, data = twogroups, conf.level = 0.90)
 ```
 
@@ -37,7 +37,7 @@ t.test(y ~ group, data = twogroups, conf.level = 0.90)
 
 Null is that difference in means is zero:
 
-```{r}
+```{r inference-3-R-post-6}
 t.test(y ~ group, mu=0, data = twogroups)
 ```
 
@@ -87,7 +87,7 @@ than that on average.
 by anything.
   
 ## Read in data 
-```{r, message=FALSE}
+```{r inference-3-R-post-7, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
 irs <- read_csv(my_url)
 irs
@@ -96,7 +96,7 @@ irs
 
 ## Test whether mean is 160 or greater
 
-```{r}
+```{r inference-3-R-post-8}
 with(irs, t.test(Time, mu = 160, 
                  alternative = "greater"))
 ```
@@ -106,7 +106,7 @@ Reject null; mean (for all people to complete form) greater than 160.
 
 
 ## But, look at a graph
-```{r, fig.height=3.5}
+```{r inference-3-R-post-9, fig.height=3.5}
 ggplot(irs, aes(x = Time)) + geom_histogram(bins = 6)
 ```
 
@@ -136,7 +136,7 @@ hypothesized to be *median*).
 ## Getting P-value for sign test 2/3
 
 - Count values above/below 160:
-```{r}
+```{r inference-3-R-post-10}
 irs %>% count(Time > 160)
 ```
 
@@ -145,12 +145,12 @@ irs %>% count(Time > 160)
 ## Getting P-value for sign test 3/3
 - R function `dbinom` gives the probability of eg. exactly 17 successes in
 a binomial with $n = 30$ and $p = 0.5$:
-```{r}
+```{r inference-3-R-post-11}
 dbinom(17, 30, 0.5)
 ```
 
 - but we want probability of 17 *or more*, so get all of those, find probability of each,  and add them up: 
-```{r}
+```{r inference-3-R-post-12}
 tibble(x=17:30) %>% 
   mutate(prob=dbinom(x, 30, 0.5)) %>% 
   summarize(total=sum(prob))
@@ -162,19 +162,19 @@ tibble(x=17:30) %>%
 Installation is a bit fiddly:
   - Install devtools with `install.packages("devtools")`
   - then install smmr: 
-```{r, eval=F}
+```{r inference-3-R-post-13, eval=F}
 library(devtools)
 install_github("nxskok/smmr", force = TRUE)
 ```
 - Then load it:
-```{r, eval=F}
+```{r inference-3-R-post-14, eval=F}
 library(smmr)
 ```
 
 ## `smmr` for sign test
 - `smmr`’s function `sign_test` needs three inputs: a data frame, a
 column and a null median:
-```{r}
+```{r inference-3-R-post-15}
 sign_test(irs, Time, 160)
 ```
 
@@ -202,7 +202,7 @@ mean being bigger), but clearly *fail* to reject a median of 160 in
 favour of a bigger one.
 - Why is that? Obtain mean and median:
 
-```{r}
+```{r inference-3-R-post-16}
 irs %>% summarize(mean_time = mean(Time), 
                   median_time = median(Time))
 ```
@@ -234,12 +234,12 @@ sign test (at $\alpha = 0.05$).
 - The procedure is to try some values for the null median and see which
 ones are inside and which outside our CI.
 - smmr has pval_sign that gets just the 2-sided P-value:
-```{r}
+```{r inference-3-R-post-17}
 pval_sign(160, irs, Time)
 ```
 
 - Try a couple of null medians:
-```{r}
+```{r inference-3-R-post-18}
 pval_sign(200, irs, Time)
 pval_sign(300, irs, Time)
 ```
@@ -250,7 +250,7 @@ pval_sign(300, irs, Time)
 - Choose our null medians first:
 
 \small
-```{r}
+```{r inference-3-R-post-19}
 (d=tibble(null_median=seq(100,300,20)))
 ```
 \normalsize
@@ -261,14 +261,14 @@ pval_sign(300, irs, Time)
 each null median, run the function `pval_sign` for that null median
 and get the P-value”: 
 
-```{r}
+```{r inference-3-R-post-20}
 d %>% mutate(p_value = map_dbl(null_median, 
                                ~ pval_sign(., irs, Time)))
 ```
 
 ## Make it easier for ourselves 
 
-```{r}
+```{r inference-3-R-post-21}
 d %>% 
   mutate(p_value = map_dbl(null_median, 
                            ~ pval_sign(., irs, Time))) %>%
@@ -284,13 +284,13 @@ d %>%
 
 ## A more efficient way: bisection
 - Know that top end of CI between 200 and 220:
-```{r}
+```{r inference-3-R-post-22}
 lo=200 
 hi=220
 ```
 
 - Try the value halfway between: is it inside or outside?
-```{r}
+```{r inference-3-R-post-23}
 (try = (lo + hi) / 2)
 pval_sign(try,irs,Time)
 ```
@@ -299,7 +299,7 @@ pval_sign(try,irs,Time)
 
 ## ... bisection continued 
 
-```{r}
+```{r inference-3-R-post-24}
 lo = try
 (try = (lo + hi) / 2)
 pval_sign(try, irs, Time)
@@ -312,7 +312,7 @@ pval_sign(try, irs, Time)
 
 - A loop, but not a `for` since we don’t know how many times we’re
 going around. Keep going while a condition is true:
-```{r, eval=F}
+```{r inference-3-R-post-25, eval=F}
 lo = 200
 hi = 220
 while (hi - lo > 1) {
@@ -328,7 +328,7 @@ while (hi - lo > 1) {
 
 ## The output from this loop
 
-```{r, echo=F}
+```{r inference-3-R-post-26, echo=F}
 lo = 200
 hi = 220
 while (hi - lo > 1) {
@@ -346,13 +346,13 @@ while (hi - lo > 1) {
 
 ## Using smmr
 - `smmr` has function `ci_median` that does this (by default 95% CI):
-```{r}
+```{r inference-3-R-post-27}
 ci_median(irs,Time)
 ```
 
 - Uses a more accurate bisection than we did.
 - Or get, say, 90% CI for median:
-```{r}
+```{r inference-3-R-post-28}
 ci_median(irs,Time,conf.level=0.90)
 ```
 
@@ -363,12 +363,12 @@ ci_median(irs,Time,conf.level=0.90)
 - but, was the sample size (30) big enough to overcome the skewness?
 - Bootstrap, again:
 
-```{r, echo=FALSE}
+```{r inference-3-R-post-29, echo=FALSE}
 set.seed(457299)
 ```
 
 
-```{r}
+```{r inference-3-R-post-30}
 rerun(1000, sample(irs$Time, replace = TRUE)) %>% 
   map_dbl(~mean(.)) %>% 
   enframe() %>% 
@@ -378,7 +378,7 @@ rerun(1000, sample(irs$Time, replace = TRUE)) %>%
 
 ## The sampling distribution
 
-```{r}
+```{r inference-3-R-post-31}
 g
 ```
 

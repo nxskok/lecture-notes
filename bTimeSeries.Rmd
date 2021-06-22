@@ -25,7 +25,7 @@ To start, assess time trends using:
 
 ## World mean temperatures
 Since 1880:
-```{r }
+```{r bTimeSeries-1 }
 temp=read.csv("temperature.csv")
 head(temp)
 attach(temp)
@@ -55,7 +55,7 @@ lines(lowess(temperature~year))
 * Pearson (regular) correlation, tests for *linear* trend
 with *normal* residuals (no outliers):
 {\small
-```{r }
+```{r bTimeSeries-2 }
 cor.test(temperature,year)
 ```
 
@@ -71,7 +71,7 @@ cor.test(temperature,year)
 trend, resistant to outliers:
 
 {\small  
-```{r }
+```{r bTimeSeries-3 }
 cor.test(temperature,year,method="kendall")
 ```
 
@@ -82,7 +82,7 @@ cor.test(temperature,year,method="kendall")
 * Another way to do this: Mann-Kendall correlation (Kendall test
 against *time* or *order*:
 {\small  
-```{r }
+```{r bTimeSeries-4 }
 library(Kendall)
 MannKendall(temperature)
 ```
@@ -96,7 +96,7 @@ MannKendall(temperature)
 
 * Ordinary regression against time:
 {\small
-```{r }
+```{r bTimeSeries-5 }
 temp.lm=lm(temperature~year)
 tidy(temp.lm)
 ```
@@ -114,7 +114,7 @@ time period of study.
 
 
 * Slope that assumes linearity, but not affected by outliers:
-```{r }
+```{r bTimeSeries-6 }
 library(zyp)
 temp.zs=zyp.sen(temperature~year,data=temp)
 tidy(temp.zs)
@@ -123,7 +123,7 @@ tidy(temp.zs)
      
 
 * Or:
-```{r }
+```{r bTimeSeries-7 }
 z=zyp.trend.vector(temperature)
 z["trend"]
 detach(temp)
@@ -166,7 +166,7 @@ in actuality. To take care of dependence, need actual time series methods.}
 
 * Age at death of Kings and Queens of England since William the
 Conqueror (1066):
-```{r }
+```{r bTimeSeries-8 }
 kings=read.table("kings.txt",header=F)
 head(kings)
 ```
@@ -177,7 +177,7 @@ head(kings)
 * Data in one long column `V1`.
 
 * Turn into time series `ts` object.
-```{r }
+```{r bTimeSeries-9 }
 kings.ts=ts(kings)
 ```
 
@@ -228,7 +228,7 @@ to George VI (42).
 
 * Fix stationarity by taking differences: 2nd minus 1st, 3rd
 minus 2nd, etc:
-```{r }
+```{r bTimeSeries-10 }
 kings.diff.ts=diff(kings.ts)
 ```
 
@@ -248,7 +248,7 @@ lines(lowess(kings.diff.ts))
 
 
 * From  January 1946 to December 1959:
-```{r }
+```{r bTimeSeries-11 }
 ny=read.table("nybirths.txt",header=F)
 ny.ts=ts(ny,freq=12,start=c(1946,1))
 ```
@@ -268,7 +268,7 @@ ny.ts=ts(ny,freq=12,start=c(1946,1))
 
 ## Printing formats nicely
 {\tiny
-```{r echo=-1}
+```{r bTimeSeries-12, echo=-1}
 options(width=90)
 ny.ts
 ```
@@ -333,7 +333,7 @@ lowest in Feb, highest in Jul).
 Independent random normal. Knowing one value tells you nothing about
 the next.  "Random" process:
 
-```{r echo=F}
+```{r bTimeSeries-13, echo=F}
 set.seed(457299)
 ```
 
@@ -354,7 +354,7 @@ plot(wn.ts)
 
 Moving a time series one (or more) steps back in time:
 
-```{r }
+```{r bTimeSeries-14 }
 x=rnorm(5)
 x.1=c(NA,x)
 x.0=c(x,NA)
@@ -380,14 +380,14 @@ wn.1=c(NA,wn) ; wn.0=c(wn,NA) ; plot(wn.1,wn.0)
 * If you know about white noise at one time point, you know
 *nothing* about it at the next. This is shown by the scatterplot
 and the correlation:
-```{r }
+```{r bTimeSeries-15 }
 cor(wn.1,wn.0,use="c")
 ```
 
      
 
 * On the other hand, this:
-```{r }
+```{r bTimeSeries-16 }
 kings.1=c(NA,kings.ts)
 kings.0=c(kings.ts,NA)
 cor(kings.1,kings.0,use="c")
@@ -409,7 +409,7 @@ plot(kings.1,kings.0)
 
 
 ## Two steps back:
-```{r }
+```{r bTimeSeries-17 }
 # one step back
 cor(kings.1,kings.0,use="c")
 # one step plus one more
@@ -428,7 +428,7 @@ Still a correlation two steps back, but smaller.
 * Correlation of time series with *itself* one, two,... time
 steps back is useful idea, called **autocorrelation**. Make a plot
 of it with `acf`. White noise: 
-```{r ,fig.height=4}
+```{r bTimeSeries-18,fig.height=4}
 acf(wn.ts)
 ```
 
@@ -446,7 +446,7 @@ acf(wn.ts)
 
 
 ## Kings, differenced
-```{r ,fig.height=4.5}
+```{r bTimeSeries-19,fig.height=4.5}
 acf(kings.diff.ts)
 ```
 
@@ -491,7 +491,7 @@ Lots of stuff:
 ## Souvenir sales
 Monthly sales for a beach souvenir shop in Queensland, Australia:
 
-```{r }
+```{r bTimeSeries-20 }
 souv=read.table("souvenir.txt",header=F)
 souv.ts=ts(souv,frequency=12,start=1987)
 ```
@@ -499,7 +499,7 @@ souv.ts=ts(souv,frequency=12,start=1987)
  
 
 {\tiny
-```{r }
+```{r bTimeSeries-21 }
 souv.ts
 ```
 
@@ -572,14 +572,14 @@ plot(souv.d)
 ## Comments
 *Big* drop in one month's differences. Look at seasonal component to
 see which:  
-```{r echo=F}
+```{r bTimeSeries-22, echo=F}
 options(width=60)
 ```
 
  
 
 {\small
-```{r }
+```{r bTimeSeries-23 }
 round(souv.d$seasonal,2)
 ```
 
@@ -604,7 +604,7 @@ acf(souv.log.diff.ts)
 a few lags but not others. MA(1) process, with autocorrelation only at lag 1:
 
 {\footnotesize
-```{r }
+```{r bTimeSeries-24 }
 e=rnorm(100)
 y=numeric(0)
 y[1]=0
@@ -651,7 +651,7 @@ As promised, everything beyond lag 1 is just chance.
 Another kind of time series is AR process, where each value depends on previous one, like this:
 
 {\footnotesize
-```{r }
+```{r bTimeSeries-25 }
 e=rnorm(100)
 x=numeric(0)
 x[1]=0
@@ -694,7 +694,7 @@ acf(x)
 ## Partial autocorrelation function
 This cuts off for an AR series.
 The lag-2 autocorrelation should not be significant, and is only just:
-```{r ,fig.height=4.5}
+```{r bTimeSeries-26,fig.height=4.5}
 pacf(x)
 ```
 
@@ -703,7 +703,7 @@ pacf(x)
 ## PACF for an MA series
 Decays slowly for an MA series:
 
-```{r ,fig.height=4.5}
+```{r bTimeSeries-27,fig.height=4.5}
 pacf(y)
 ```
 
@@ -711,7 +711,7 @@ pacf(y)
 
 
 ## ACF for an MA series
-```{r ,fig.height=4.5}
+```{r bTimeSeries-28,fig.height=4.5}
 acf(y)
 ```
 
@@ -754,7 +754,7 @@ best fits data.
 
 
 ## Load package `forecast`
-```{r }
+```{r bTimeSeries-29 }
 library(forecast)
 ```
 
@@ -765,7 +765,7 @@ library(forecast)
 
 {\footnotesize  
 
-```{r }
+```{r bTimeSeries-30 }
 auto.arima(y)
 ```
 
@@ -797,7 +797,7 @@ auto.arima(y)
 Run `auto.arima` with `trace=T`:
 
 {\footnotesize
-```{r }
+```{r bTimeSeries-31 }
 auto.arima(y,trace=T)
 ```
 
@@ -808,7 +808,7 @@ Also possible were MA(2) and ARMA(1,1), both with `AICc`=289.5.
 
 
 ## Doing it all the new way: white noise
-```{r }
+```{r bTimeSeries-32 }
 wn.aa=auto.arima(wn.ts)
 wn.aa
 ```
@@ -820,7 +820,7 @@ Best fit *is* white noise (no AR, no MA, no differencing).
 
 ## Forecasts
 {\small  
-```{r }
+```{r bTimeSeries-33 }
 forecast(wn.aa)
 ```
 
@@ -832,7 +832,7 @@ Forecasts all 0, since the past doesn't help to predict future.
 
 
 ## MA(1)
-```{r }
+```{r bTimeSeries-34 }
 y.aa=auto.arima(y)
 y.aa
 y.f=forecast(y.aa)
@@ -850,7 +850,7 @@ plot(y.f)
 
 
 ## AR(1)
-```{r }
+```{r bTimeSeries-35 }
 x.aa=auto.arima(x)
 x.aa
 ```
@@ -861,7 +861,7 @@ x.aa
 ## Oops!
 Got it wrong! Fit right AR(1) model:
 
-```{r }
+```{r bTimeSeries-36 }
 x.arima=arima(x,order=c(1,0,0))
 x.arima
 ```
@@ -885,7 +885,7 @@ plot(forecast(x.aa))
 
 
 ## Kings
-```{r }
+```{r bTimeSeries-37 }
 kings.aa=auto.arima(kings.ts)
 kings.aa
 ```
@@ -894,7 +894,7 @@ kings.aa
 
 
 ## Kings forecasts
-```{r }
+```{r bTimeSeries-38 }
 kings.f=forecast(kings.aa)
 kings.f
 ```
@@ -912,7 +912,7 @@ plot(kings.f)
 
 ## NY births
 
-```{r }
+```{r bTimeSeries-39 }
 ny.aa=auto.arima(ny.ts)
 ny.aa
 ny.f=forecast(ny.aa,h=36)
@@ -928,7 +928,7 @@ Going 36 time periods (3 years) into future.
 Not *quite* same every year:
 
 {\small
-```{r }
+```{r bTimeSeries-40 }
 ny.f$mean
 ```
 
@@ -945,7 +945,7 @@ plot(ny.f)
 
 
 ## Log-souvenir sales
-```{r cache=T}
+```{r bTimeSeries-41, cache=T}
 souv.aa=auto.arima(souv.log.ts)
 souv.aa
 souv.f=forecast(souv.aa,h=27)
@@ -960,7 +960,7 @@ Differenced series showed low value for January (large drop). December
 highest, Jan and Feb lowest. Forecast actual sales, not log sales:
 
 {\footnotesize
-```{r }
+```{r bTimeSeries-42 }
 exp(souv.f$mean)
 ```
 
@@ -977,7 +977,7 @@ plot(souv.f)
 
 
 ## Global mean temperatures, revisited
-```{r }
+```{r bTimeSeries-43 }
 attach(temp)
 temp.ts=ts(temperature,start=1880)
 temp.aa=auto.arima(temp.ts)

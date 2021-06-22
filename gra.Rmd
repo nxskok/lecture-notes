@@ -14,82 +14,82 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r gra-1, child="preliminaries.Rmd", echo=F}
 ```
 
 # Course outline 
 
-```{r, child="outline_c32.Rmd"}
+```{r gra-2, child="outline_c32.Rmd"}
 ```
 
 
 # Running R
 
-```{r child="running_R.Rmd"}
+```{r gra-3, child="running_R.Rmd"}
 ```
 
 # Reading in data
 
-```{r child="readfile_R.Rmd"}
+```{r gra-4, child="readfile_R.Rmd"}
 ```
 
 # Making graphs
 
-```{r, child="graphs_R.Rmd"}
+```{r gra-5, child="graphs_R.Rmd"}
 ```
 
 # Numerical summaries: more detailed
 
-```{r, child="numsum_R.Rmd"}
+```{r gra-6, child="numsum_R.Rmd"}
 ```
 
 # Statistical Inference
 
-```{r, child="inference_R.Rmd"}
+```{r gra-7, child="inference_R.Rmd"}
 ```
 
 # Writing reports
 
-```{r, child="reports_R.Rmd"}
+```{r gra-8, child="reports_R.Rmd"}
 ```
 
 
 # Tidying and organizing data
 
-```{r, child="tidying_R.Rmd"}
+```{r gra-9, child="tidying_R.Rmd"}
 ```
 
 # Case study 1: the windmill data
 
-```{r, child="windmill.Rmd"}
+```{r gra-10, child="windmill.Rmd"}
 ```
 
 
 # Case study 3: Asphalt
 
-```{r, child="asphalt.Rmd"}
+```{r gra-11, child="asphalt.Rmd"}
 ```
 
 
 
 # Regression with categorical variables
 
-```{r, child="with_categ_R.Rmd"}
+```{r gra-12, child="with_categ_R.Rmd"}
 ```
 
 # Functions
 
-```{r, child="functions.Rmd"}
+```{r gra-13, child="functions.Rmd"}
 ```
 
 # Dates and times
 
-```{r, child="dates_and_times.Rmd"}
+```{r gra-14, child="dates_and_times.Rmd"}
 ```
 
 # Miscellanea
 
-```{r, child="miscellanea.Rmd"}
+```{r gra-15, child="miscellanea.Rmd"}
 ```
 
 

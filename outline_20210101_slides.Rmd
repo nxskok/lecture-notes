@@ -13,11 +13,11 @@ output:
 ---
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r outline-20210101-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 # Course outline 
 
-```{r, child="outline_20210101.Rmd"}
+```{r outline-20210101-slides-2, child="outline_20210101.Rmd"}
 ```
 

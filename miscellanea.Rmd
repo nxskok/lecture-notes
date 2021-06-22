@@ -1,6 +1,6 @@
 ## Packages needed for this section
 
-```{r, eval=F}
+```{r miscellanea-1, eval=F}
 library(tidyverse)
 library(ggrepel)
 ```
@@ -26,7 +26,7 @@ rat5T12
 
 ## Reading in delimiterless data
 - `read_fwf`, vector of widths and names for columns:
-```{r}
+```{r miscellanea-2}
 my_url <- "http://ritsokiguess.site/datafiles/rats7.txt"
 rat7 <- read_fwf(my_url, fwf_widths(
   c(4, 1, 2),
@@ -36,7 +36,7 @@ rat7 <- read_fwf(my_url, fwf_widths(
 
 ## The “rat7” data
 
-```{r, paged.print=T}
+```{r miscellanea-3, paged.print=T}
 rat7
 ```
 
@@ -47,14 +47,14 @@ characters each column is.
 
 ## Plotting series: The oranges data
 
-```{r}
+```{r miscellanea-4}
 my_url <- "http://ritsokiguess.site/datafiles/oranges.txt"
 oranges <- read_delim(my_url, " ")
 ```
 
 ## The data
 
-```{r, paged.print=T}
+```{r miscellanea-5, paged.print=T}
 oranges
 ```
 
@@ -69,7 +69,7 @@ values, which we do not have.
 - Gather up columns A through E, which are different trees but all
 circumferences.
 - Then construct a plot (shown over):
-```{r}
+```{r miscellanea-6}
 g <- oranges %>%
   gather(tree, circumf, A:E) %>%
   ggplot(aes(x = age, y = circumf, colour = tree)) +
@@ -78,7 +78,7 @@ g <- oranges %>%
 
 ## The plot
 
-```{r, fig.height=3.8}
+```{r miscellanea-7, fig.height=3.8}
 g
 ```
 
@@ -86,7 +86,7 @@ g
 
 - My car data
 
-```{r}
+```{r miscellanea-8}
 my_url <- "http://ritsokiguess.site/datafiles/cars.csv"
 cars <- read_csv(my_url)
 ```
@@ -96,21 +96,21 @@ magazine).
 
 ## Plot gas mileage against weight
 
-```{r, fig.height=3.5}
+```{r miscellanea-9, fig.height=3.5}
 ggplot(cars, aes(x = weight, y = MPG)) +
   geom_point()
 ```
 
 ## Label points with name of car they belong to
 
-```{r, fig.height=3.5}
+```{r miscellanea-10, fig.height=3.5}
 ggplot(cars, aes(x = weight, y = MPG, label = car)) +
   geom_point() + geom_text_repel()
 ```
 
 ## Make labels smaller
 
-```{r, fig.height=3.5}
+```{r miscellanea-11, fig.height=3.5}
 ggplot(cars, aes(x = weight, y = MPG, label = car)) +
   geom_point() + geom_text_repel(size = 2)
 ```
@@ -123,7 +123,7 @@ ggplot(cars, aes(x = weight, y = MPG, label = car)) +
   - blank text for those you don’t
 - Handy function ifelse, like Excel `=IF`.
 - Label cars with MPG over 34: 
-```{r}
+```{r miscellanea-12}
 cars %>%
   mutate(newlabel = ifelse(MPG > 34, car, "")) %>%
   ggplot(aes(x = weight, y = MPG, label = newlabel)) +
@@ -133,7 +133,7 @@ cars %>%
 
 ## The plot
 
-```{r, fig.height=3.8}
+```{r miscellanea-13, fig.height=3.8}
 g
 ```
 
@@ -142,7 +142,7 @@ g
 9 of data frame.
 - How to use `ifelse` with row numbers? Define new column of row
 numbers, and then use it in `ifelse`, thus: 
-```{r}
+```{r miscellanea-14}
 g <- cars %>%
   mutate(row = row_number()) %>%
   mutate(newlabel = ifelse(row == 4 | row == 9, car, "")) %>%
@@ -153,7 +153,7 @@ g <- cars %>%
 
 ## The plot
 
-```{r, fig.height=3.8}
+```{r miscellanea-15, fig.height=3.8}
 g
 ```
 
@@ -162,7 +162,7 @@ g
 - Suppose you didn’t know which cars were the ones you wanted. Then
 you have to find them first.
 - Now try for lightest weight and worst gas-mileage cars: 
-```{r}
+```{r miscellanea-16}
 cars %>%
   mutate(tolabel = (weight == min(weight) |
     MPG == min(MPG))) %>%
@@ -174,7 +174,7 @@ cars %>%
 
 ## The plot
 
-```{r, fig.height=4}
+```{r miscellanea-17, fig.height=4}
 g
 ```
 
@@ -184,13 +184,13 @@ g
 - We use previous graph as base (to save drawing again).
 
 ## With title
-```{r, fig.height=3.8}
+```{r miscellanea-18, fig.height=3.8}
 g + ggtitle("Gas mileage against weight")
 ```
 
 ## Axis labels
 
-```{r, fig.height=3.8}
+```{r miscellanea-19, fig.height=3.8}
 g + xlab("Weight (tons)") + ylab("MPG (miles per US gallon)")
 ```
 
@@ -215,7 +215,7 @@ want to do that every time.
 - It is possible to save and re-load large/complicated
 objects so that they don’t have to be re-created. Uses `saveRDS` and `readRDS`:
 
-```{r, error=T}
+```{r miscellanea-20, error=T}
 xx <- sample(1:10, 5)
 xx
 saveRDS(xx, "xx.rds")

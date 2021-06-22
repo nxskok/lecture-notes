@@ -15,11 +15,11 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r wider-wrong-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="wider_wrong.Rmd"}
+```{r wider-wrong-slides-2, child="wider_wrong.Rmd"}
 ```
 
 

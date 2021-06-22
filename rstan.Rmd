@@ -1,6 +1,6 @@
 ## Packages for this section
 
-```{r, eval=F}
+```{r rstan-1, eval=F}
 library(tidyverse)
 # library(rstan) 
 library(cmdstanr)
@@ -8,7 +8,7 @@ library(posterior)
 library(bayesplot)
 ```
 
-```{r, echo=FALSE}
+```{r rstan-2, echo=FALSE}
 set.seed(457299)
 ```
 
@@ -17,7 +17,7 @@ set.seed(457299)
 
 - `cmdstanr`:
 
-```{r, eval=FALSE}
+```{r rstan-3, eval=FALSE}
 install.packages("cmdstanr", 
                  repos = c("https://mc-stan.org/r-packages/", 
                            getOption("repos")))
@@ -25,7 +25,7 @@ install.packages("cmdstanr",
 
 - `posterior` and `bayesplot`, from the same place:
 
-```{r, eval=FALSE}
+```{r rstan-4, eval=FALSE}
 install.packages("posterior", 
                  repos = c("https://mc-stan.org/r-packages/", 
                             getOption("repos")))
@@ -38,13 +38,13 @@ install.packages("bayesplot",
 
 Then, to check that you have the C++ stuff needed to compile Stan code:
 
-```{r}
+```{r rstan-5}
 check_cmdstan_toolchain()
 ```
 
 and then:
 
-```{r, eval=FALSE}
+```{r rstan-6, eval=FALSE}
 install_cmdstan(cores = 2)
 ```
 
@@ -84,7 +84,7 @@ All of this is done once. If you have problems, go [here (link)](https://mc-stan
 
 - Suppose we have these (integer) observations:
 
-```{r}
+```{r rstan-7}
 (x <- c(0, 4, 3, 6, 3, 3, 2, 4))
 ```
 
@@ -156,19 +156,19 @@ parameters {
 
 - compile
 
-```{r}
+```{r rstan-8}
 poisson1 <- cmdstan_model("poisson1.stan")
 ```
 
 - set up data
 
-```{r}
+```{r rstan-9}
 poisson1_data <- list(x = x)
 ```
 
 - sample
 
-```{r}
+```{r rstan-10}
 poisson1_fit <- poisson1$sample(data = poisson1_data)
 ```
 
@@ -177,7 +177,7 @@ poisson1_fit <- poisson1$sample(data = poisson1_data)
 
 ## The output
 
-```{r}
+```{r rstan-11}
 poisson1_fit
 ```
 
@@ -213,7 +213,7 @@ x ~ poisson(lambda);
 
 - Compile again:
 
-```{r}
+```{r rstan-12}
 poisson2 <- cmdstan_model("poisson2.stan")
 poisson2
 ```
@@ -221,26 +221,26 @@ poisson2
 
 - set up the data again including the new things we need:
 
-```{r}
+```{r rstan-13}
 poisson2_data <- list(x = x, n = length(x), a = 1.1, b = 6)
 ```
 
 - sample again
 
-```{r, results="hide"}
+```{r rstan-14, results="hide"}
 poisson2_fit <- poisson2$sample(data = poisson2_data)
 ```
 
 
 ## output should be the same (to within randomness)
 
-```{r}
+```{r rstan-15}
 poisson2_fit
 ```
 
 ## Picture of posterior
 
-```{r}
+```{r rstan-16}
 mcmc_hist(poisson2_fit$draws("lambda"), binwidth = 0.25)
 ```
 
@@ -249,7 +249,7 @@ mcmc_hist(poisson2_fit$draws("lambda"), binwidth = 0.25)
 
 A little awkward at first:
 
-```{r}
+```{r rstan-17}
 poisson2_fit$draws()
 ```
 
@@ -258,7 +258,7 @@ A 3-dimensional array. A dataframe would be much better.
 ## Sampled values as dataframe
 
 
-```{r}
+```{r rstan-18}
 as_draws_df(poisson2_fit$draws()) %>% 
   as_tibble() -> poisson2_draws
 poisson2_draws
@@ -270,7 +270,7 @@ poisson2_draws
 
 - Another use for the actual sampled values is to see what kind of *response* values we might get in the future. This should look something like our data. For a Poisson distribution, the response values are integers: 
 
-```{r}
+```{r rstan-19}
 poisson2_draws %>% 
   rowwise() %>% 
   mutate(xsim = rpois(1, lambda)) -> d
@@ -283,14 +283,14 @@ d
 
 Our actual data values were these:
 
-```{r}
+```{r rstan-20}
 x
 ```
 
 - None of these are very unlikely according to our posterior predictive distribution, so our model is believable. 
 - Or make a plot: a bar chart with the data on it as well (over):
 
-```{r}
+```{r rstan-21}
 ggplot(d, aes(x = xsim)) + geom_bar() +
   geom_dotplot(data = tibble(x), aes(x = x), binwidth = 1) +
   scale_y_continuous(NULL, breaks = NULL) -> g
@@ -300,13 +300,13 @@ ggplot(d, aes(x = xsim)) + geom_bar() +
 
 ## The plot 
 
-```{r}
+```{r rstan-22}
 g
 ```
 
 ## Do they have the same distribution? 
 
-```{r, fig.height=4}
+```{r rstan-23, fig.height=4}
 qqplot(d$xsim, x, plot.it = F) %>% as_tibble() -> dd
 ggplot(dd, aes(x=x, y=y)) + geom_point()
 ```
@@ -318,7 +318,7 @@ the observed zero is a bit too small compared to expected (from the posterior), 
 
 Recall the jumping rats data: 
 
-```{r, message=F}
+```{r rstan-24, message=F}
 my_url <- 
   "http://ritsokiguess.site/datafiles/jumping.txt"
 rats0 <- read_delim(my_url, " ")
@@ -339,7 +339,7 @@ rats0
 - Turn the groups into group *numbers* first.
 - Take opportunity to put groups in logical order:
 
-```{r}
+```{r rstan-25}
 rats0 %>% mutate(
   group_fct = fct_inorder(group),
   group_no = as.integer(group_fct)
@@ -351,7 +351,7 @@ rats
 
 Most obviously, boxplots: 
 
-```{r, fig.height=4.2}
+```{r rstan-26, fig.height=4.2}
 ggplot(rats, aes(x = group_fct, y = density)) + 
   geom_boxplot()
 ```
@@ -447,7 +447,7 @@ data {
 
 Arrange these in order data, parameters, model in file `anova.stan`, then:
 
-```{r}
+```{r rstan-27}
 anova <- cmdstan_model("anova.stan")
 ```
 
@@ -470,7 +470,7 @@ anova_fit <- anova$sample(data = anova_data)
 
 \scriptsize
 
-```{r, fig.height=4}
+```{r rstan-28, fig.height=4}
 anova_fit$cmdstan_diagnose()
 ```
 \normalsize
@@ -488,7 +488,7 @@ anova_fit
 
 ## Plotting the posterior distributions for the `mu`
 
-```{r}
+```{r rstan-29}
 mcmc_hist(anova_fit$draws("mu"), binwidth = 10)
 ```
 
@@ -502,7 +502,7 @@ anova_draws
 
 ## estimated probability that $\mu_3 > \mu_1$ 
 
-```{r}
+```{r rstan-30}
 anova_draws %>% 
   count(`mu[3]`>`mu[1]`) %>% 
   mutate(prob = n/sum(n))
@@ -515,7 +515,7 @@ High jumping group almost certainly has larger mean than control group.
   - make longer
   - give `group` values their proper names back 
 
-```{r, warning=F}
+```{r rstan-31, warning=F}
 anova_draws %>% 
   pivot_longer(starts_with("mu"), 
                names_to = "group", 
@@ -529,14 +529,14 @@ anova_draws %>%
 
 ## What we have now:
 
-```{r}
+```{r rstan-32}
 sims %>% sample_n(8)
 ```
 
 
 ## Density plots of posterior mean distributions
 
-```{r, fig.height=4}
+```{r rstan-33, fig.height=4}
 ggplot(sims, aes(x = bone_density, colour = group)) + geom_density()
 ```
 
@@ -544,7 +544,7 @@ ggplot(sims, aes(x = bone_density, colour = group)) + geom_density()
 
 Randomly sample from posterior means and SDs in `sims`. There are 12000 rows in `sims`:
 
-```{r}
+```{r rstan-34}
 sims %>% mutate(sim_data = rnorm(12000, bone_density, sigma)) -> ppd
 ppd
 ```
@@ -576,7 +576,7 @@ ggplot(ppd, aes(x = sim_data)) +
 
 ## The plot
 
-```{r, fig.height=3.75}
+```{r rstan-35, fig.height=3.75}
 g
 ```
 

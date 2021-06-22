@@ -14,108 +14,108 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r slides-c32-1, child="preliminaries.Rmd", echo=F}
 ```
 
 # Course outline 
 
-```{r, child="outline_c32.Rmd"}
+```{r slides-c32-2, child="outline_c32.Rmd"}
 ```
 
 
 # Running R
 
-```{r child="running_R.Rmd"}
+```{r slides-c32-3, child="running_R.Rmd"}
 ```
 
 # Reading in data
 
-```{r child="readfile_R.Rmd"}
+```{r slides-c32-4, child="readfile_R.Rmd"}
 ```
 
 # Making graphs
 
-```{r, child="graphs_R.Rmd"}
+```{r slides-c32-5, child="graphs_R.Rmd"}
 ```
 
 # Numerical summaries: more detailed
 
-```{r, child="numsum_R.Rmd"}
+```{r slides-c32-6, child="numsum_R.Rmd"}
 ```
 
 # Statistical Inference part 1
 
-```{r, child="inference_1_R.Rmd"}
+```{r slides-c32-7, child="inference_1_R.Rmd"}
 ```
 
 # The Bootstrap
 
-```{r, child="bootstrap_R.Rmd"}
+```{r slides-c32-8, child="bootstrap_R.Rmd"}
 ```
 
 # Inference part 2
 
-```{r, child="inference_2_R.Rmd"}
+```{r slides-c32-9, child="inference_2_R.Rmd"}
 ```
 
 # Inference part 3
 
-```{r, child="inference_3_R.Rmd"}
+```{r slides-c32-10, child="inference_3_R.Rmd"}
 ```
 
 # Inference part 4
 
-```{r, child="inference_4_R.Rmd"}
+```{r slides-c32-11, child="inference_4_R.Rmd"}
 ```
 
 # Inference part 5
 
-```{r, child="inference_5_R.Rmd"}
+```{r slides-c32-12, child="inference_5_R.Rmd"}
 ```
 
 
 # Writing reports
 
-```{r, child="reports_R.Rmd"}
+```{r slides-c32-13, child="reports_R.Rmd"}
 ```
 
 
 # Tidying and organizing data
 
-```{r, child="tidying_R.Rmd"}
+```{r slides-c32-14, child="tidying_R.Rmd"}
 ```
 
 # Case study 1: the windmill data
 
-```{r, child="windmill.Rmd"}
+```{r slides-c32-15, child="windmill.Rmd"}
 ```
 
 
 # Case study 3: Asphalt
 
-```{r, child="asphalt.Rmd"}
+```{r slides-c32-16, child="asphalt.Rmd"}
 ```
 
 
 
 # Regression with categorical variables
 
-```{r, child="with_categ_R.Rmd"}
+```{r slides-c32-17, child="with_categ_R.Rmd"}
 ```
 
 # Functions
 
-```{r, child="functions.Rmd"}
+```{r slides-c32-18, child="functions.Rmd"}
 ```
 
 # Dates and times
 
-```{r, child="dates_and_times.Rmd"}
+```{r slides-c32-19, child="dates_and_times.Rmd"}
 ```
 
 # Miscellanea
 
-```{r, child="miscellanea.Rmd"}
+```{r slides-c32-20, child="miscellanea.Rmd"}
 ```
 
 

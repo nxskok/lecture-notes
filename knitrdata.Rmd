@@ -5,14 +5,14 @@ output: html_notebook
 
 trying `knitrdata`:
 
-```{r}
+```{r knitrdata-1}
 library(tidyverse)
 library(knitrdata)
 ```
 
 set up some data
 
-```{data output.var="analgesic", loader.function=read_table}
+```{data knitrdata-2, output.var="analgesic", loader.function=read_table}
 subject druga drugb
 1         2.0   3.5
 2         3.6   5.7
@@ -30,7 +30,7 @@ subject druga drugb
 
 did it work?
 
-```{r}
+```{r knitrdata-3}
 analgesic
 ```
 

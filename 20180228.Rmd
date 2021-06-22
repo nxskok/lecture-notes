@@ -77,19 +77,19 @@ output: html_notebook
   
   
   -  Comparing two home models A and D ($\mu_A-\mu_D=0$):
-```{r }
+```{r 20180228-1 }
 c.home=c(1,0,0,-1)
 ```     
 
 -  Comparing two industrial models B and C ($\mu_B-\mu_C=0$):
   
-```{r }
+```{r 20180228-2 }
 c.industrial=c(0,1,-1,0)
 ```   
 
 -  Comparing home average vs.\ industrial average ($0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$):
   
-```{r }
+```{r 20180228-3 }
 c.home.ind=c(0.5,-0.5,-0.5,0.5)
 ```   
   
@@ -100,7 +100,7 @@ c.home.ind=c(0.5,-0.5,-0.5,0.5)
   
   
   -  What happens if we multiply the contrast coefficients one by one?
-```{r }
+```{r 20180228-4 }
 c.home*c.industrial
 c.home*c.home.ind
 c.industrial*c.home.ind
@@ -116,7 +116,7 @@ c.industrial*c.home.ind
   
   
 -  Compare these:
-```{r }
+```{r 20180228-5 }
 c1=c(1,-1,0)
 c2=c(0,1,-1)
 c1*c2
@@ -129,14 +129,14 @@ orthogonal.
   beyond us).
   
 
-```{r}
+```{r 20180228-6}
 library(tidyverse)
 ```
 
 
 ## Starting the analysis
   
-```{r size="footnotesize"}
+```{r 20180228-7, size="footnotesize"}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/chainsaw.txt"
 chain.wide=read_table(my_url)
 chain.wide
@@ -149,13 +149,13 @@ chain.wide
   
 Need all the kickbacks in *one* column:
 
-```{r}
+```{r 20180228-8}
 chain.wide %>% 
   gather(model,kickback,A:D)
 ```
 
 
-```{r }
+```{r 20180228-9 }
 chain = chain.wide %>% 
   gather(model,kickback,A:D,factor_key=T)
 ``` 
@@ -167,14 +167,14 @@ chain = chain.wide %>%
   
   The proper data frame:
   
-```{r }
+```{r 20180228-10 }
 chain
 ``` 
 
 
 ## Setting up contrasts
   
-```{r }
+```{r 20180228-11 }
 m=cbind(c.home,c.industrial,c.home.ind)
 m
 contrasts(chain$model)=m
@@ -187,7 +187,7 @@ contrasts(chain$model)=m
 
   Now run ANOVA *as if regression*:
 
-```{r }
+```{r 20180228-12 }
 chain.1=lm(kickback~model,data=chain)
 summary(chain.1)
 ``` 
@@ -196,7 +196,7 @@ summary(chain.1)
 
 ## Conclusions
     
-```{r }
+```{r 20180228-13 }
 tidy(chain.1) %>% select(term,p.value)
 ```     
   
@@ -213,7 +213,7 @@ tidy(chain.1) %>% select(term,p.value)
 
   
     -  The means:
-```{r }
+```{r 20180228-14 }
 chain %>% group_by(model) %>%
   summarize(mean.kick=mean(kickback))
 ``` 
@@ -279,7 +279,7 @@ b 9 22
   
   `tidyverse` and `broom`:
   
-```{r }
+```{r 20180228-15 }
 library(tidyverse)
 library(broom)
 ```   
@@ -289,7 +289,7 @@ library(broom)
 ## Making a plot
 
  
-```{r}
+```{r 20180228-16}
 prepost=read_delim("ancova.txt"," ")
 prepost
 ggplot(prepost,aes(x=before,y=after,colour=drug))+
@@ -311,7 +311,7 @@ ggplot(prepost,aes(x=before,y=after,colour=drug))+
 ## The means
 
  
-```{r }
+```{r 20180228-17 }
 prepost %>% group_by(drug) %>%
   summarize(before_mean=mean(before), 
             after_mean=mean(after) 
@@ -330,7 +330,7 @@ prepost %>% group_by(drug) %>%
 ## Testing for interaction
 
  
-```{r }
+```{r 20180228-18 }
 prepost.1=lm(after~before*drug,data=prepost)
 anova(prepost.1)
 ``` 
@@ -349,7 +349,7 @@ anova(prepost.1)
 
   Make combinations of before score and drug:
   
-```{r }
+```{r 20180228-19 }
 new=crossing( 
       before=c(5,15,25),
       drug=c("a","b"))
@@ -358,7 +358,7 @@ new
 
 Do predictions:
 
-```{r}
+```{r 20180228-20}
 pred=predict(prepost.1,new)
 preds=bind_cols(new,pred=pred)
 preds
@@ -370,7 +370,7 @@ preds
 ## Making a plot with lines for each `drug`
 
  
-```{r }
+```{r 20180228-21 }
 g=ggplot(prepost,
   aes(x=before,y=after,colour=drug))+
   geom_point()+
@@ -381,7 +381,7 @@ g=ggplot(prepost,
 
 -  Last line could (more easily) be 
 
-```{r eval=F}
+```{r 20180228-22, eval=F}
 geom_smooth(method="lm",se=F)
 ``` 
 
@@ -403,7 +403,7 @@ which would work here, but not for later plot.
 ## The plot
  
   
-```{r}
+```{r 20180228-23}
 g
 ``` 
    
@@ -422,7 +422,7 @@ g
 
 
  
-```{r }
+```{r 20180228-24 }
 prepost.2=update(prepost.1,.~.-before:drug)
 anova(prepost.2)
 ``` 
@@ -438,7 +438,7 @@ anova(prepost.2)
 ## Predicted values again (no-interaction model)
 
    
-```{r }
+```{r 20180228-25 }
 pred=predict(prepost.2,new)
 preds=bind_cols(new,pred=pred)
 preds
@@ -453,7 +453,7 @@ score, *the same for both drugs*.
 ## Making a plot, again
 
  
-```{r }
+```{r 20180228-26 }
 g=ggplot(prepost,
   aes(x=before,y=after,colour=drug))+
   geom_point()+
@@ -468,7 +468,7 @@ Exactly same as before, but using new predictions.
 ## The no-interaction plot of predicted values
   
  
-```{r}
+```{r 20180228-27}
 g
 ``` 
 
@@ -486,7 +486,7 @@ to have the same slope.
   -  `summary(prepost.2)` views as regression with slopes:
     
     
-```{r }
+```{r 20180228-28 }
 summary(prepost.2)
 ```       
 
@@ -495,7 +495,7 @@ summary(prepost.2)
 
 ## Understanding those slopes
   
-```{r}
+```{r 20180228-29}
 tidy(prepost.2)
 ```     
 
@@ -549,7 +549,7 @@ tidy(prepost.2)
 
 ## Packages
   
-```{r }
+```{r 20180228-30 }
 library(car)
 library(tidyverse)
 ```   
@@ -563,7 +563,7 @@ library(tidyverse)
   -  Data (fertilizer, yield, seed weight):
 
  
-```{r }
+```{r 20180228-31 }
 hilo=read_delim("manova1.txt"," ")
 ``` 
 
@@ -574,7 +574,7 @@ hilo=read_delim("manova1.txt"," ")
 
 ## The data
   
-```{r }
+```{r 20180228-32 }
 hilo
 ```   
   
@@ -583,7 +583,7 @@ hilo
 ## Boxplot for yield for each fertilizer group
 
  
-```{r}
+```{r 20180228-33}
 ggplot(hilo,aes(x=fertilizer,y=yield))+geom_boxplot()
 ``` 
   
@@ -594,7 +594,7 @@ Yields overlap for fertilizer groups.
 ## Boxplot for weight for each fertilizer group
 
  
-```{r}
+```{r 20180228-34}
 ggplot(hilo,aes(x=fertilizer,y=weight))+geom_boxplot()
 ``` 
 
@@ -605,7 +605,7 @@ Weights overlap for fertilizer groups.
 ## ANOVAs for yield and weight
 
 
-```{r }
+```{r 20180228-35 }
 hilo.y=aov(yield~fertilizer,data=hilo)
 summary(hilo.y)
 hilo.w=aov(weight~fertilizer,data=hilo)
@@ -622,7 +622,7 @@ Have two response variables (not more), so can plot the
 response variables against *each other*, labelling points by
 which fertilizer group they're from.
 
-```{r }
+```{r 20180228-36 }
 g=ggplot(hilo,aes(x=yield,y=weight,
     colour=fertilizer))+geom_point()
 ``` 
@@ -631,7 +631,7 @@ Want line through points $(31,14)$ and $(38,10)$ (why? Later):
 
 explain `tribble`
 
-```{r size="footnotesize"}
+```{r 20180228-37, size="footnotesize"}
 d=tribble(
     ~line_x, ~line_y,
     31, 14,
@@ -651,7 +651,7 @@ no `fertilizer` (previous `colour`), so have to unset.
 ## The plot
   
  
-```{r}
+```{r 20180228-38}
 g
 ``` 
   
@@ -677,7 +677,7 @@ g
   -  Is difference found by diagonal line significant? MANOVA finds out.
 
 
-```{r}
+```{r 20180228-39}
 response=with(hilo,cbind(yield,weight))
 hilo.1=manova(response~fertilizer,data=hilo)
 summary(hilo.1)
@@ -709,7 +709,7 @@ summary(hilo.1)
   
 Install (once) and load package `car`:
   
-```{r eval=F}
+```{r 20180228-40, eval=F}
 library(car)
 ``` 
 
@@ -720,7 +720,7 @@ library(car)
 
 ## Another way...
 
-```{r }
+```{r 20180228-41 }
 hilo.2.lm=lm(response~fertilizer,data=hilo)
 hilo.2=Manova(hilo.2.lm)
 hilo.2
@@ -745,7 +745,7 @@ locations.
   
 
  
-```{r }
+```{r 20180228-42 }
 peanuts.orig=read_delim("peanuts.txt"," ")
 peanuts.orig
 ``` 
@@ -755,7 +755,7 @@ peanuts.orig
 
 ## Setup for analysis
 
-```{r }
+```{r 20180228-43 }
 peanuts = peanuts.orig %>%
   mutate(location=factor(location),
          variety=factor(variety)) 
@@ -768,7 +768,7 @@ head(response)
 
 ## Analysis (using `Manova`)
 
-```{r}
+```{r 20180228-44}
 peanuts.1=lm(response~location*variety,data=peanuts)
 peanuts.2=Manova(peanuts.1)
 peanuts.2

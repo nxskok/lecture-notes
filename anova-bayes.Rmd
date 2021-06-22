@@ -2,14 +2,14 @@
 
 ## packages
 
-```{r}
+```{r anova-bayes-1}
 library(tidyverse)
 library(rstan)
 ```
 
 ## grab some data
 
-```{r}
+```{r anova-bayes-2}
 my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
 rats0 <- read_delim(my_url," ")
 rats0
@@ -17,13 +17,13 @@ rats0
 
 plot
 
-```{r}
+```{r anova-bayes-3}
 ggplot(rats0, aes(x=group, y=density))+geom_boxplot()
 ```
 
 turn the group IDs into numbers
 
-```{r}
+```{r anova-bayes-4}
 rats0 %>% mutate(group_fct=fct_inorder(group),
               group_no=as.integer(group_fct)) -> rats
 rats
@@ -31,7 +31,7 @@ rats
 
 these groups are now in the right order:
 
-```{r}
+```{r anova-bayes-5}
 ggplot(rats, aes(x=group_fct, y=density))+geom_boxplot()
 ```
 
@@ -39,42 +39,42 @@ ggplot(rats, aes(x=group_fct, y=density))+geom_boxplot()
 
 model code in `anova.stan`:
 
-```{r}
+```{r anova-bayes-6}
 anova_compiled=stan_model("anova.stan")
 ```
 
 ## sample from it
 
-```{r}
+```{r anova-bayes-7}
 anova_data=list(n_obs=30, n_group=3, density=rats$density, group_no=rats$group_no)
 anova_samples=sampling(anova_compiled, data=anova_data)
 ```
 
-```{r}
+```{r anova-bayes-8}
 traceplot(anova_samples)
 ```
 
-```{r}
+```{r anova-bayes-9}
 anova_samples
 ```
 
 
-```{r}
+```{r anova-bayes-10}
 anova_ext=extract(anova_samples)
 glimpse(anova_ext)
 ```
 
-```{r}
+```{r anova-bayes-11}
 anova_ext$sigma %>% as_tibble() %>% 
   ggplot(aes(x=value))+geom_histogram(bins=20)
 ```
 
-```{r}
+```{r anova-bayes-12}
 anova_ext$sigma %>% as_tibble() %>% 
   ggplot(aes(x=value))+geom_density()
 ```
 
-```{r}
+```{r anova-bayes-13}
 anova_ext$mu %>% as_tibble() %>% 
   gather(group, density, everything()) %>% 
   ggplot(aes(x=group, y=density)) + geom_boxplot()
@@ -82,7 +82,7 @@ anova_ext$mu %>% as_tibble() %>%
 
 posterior distributions of group *means*
 
-```{r}
+```{r anova-bayes-14}
 anova_ext$mu %>% as_tibble() %>% 
   gather(group, density, everything()) %>% 
   ggplot(aes(x=density, colour=group)) + geom_density()
@@ -91,7 +91,7 @@ anova_ext$mu %>% as_tibble() %>%
 
 predictive distributions (compare with observed data)
 
-```{r}
+```{r anova-bayes-15}
 cbind(mu=anova_ext$mu, sigma=anova_ext$sigma) %>% 
   as_tibble() %>% 
   gather(group, mean, V1:V3) %>% 
@@ -102,7 +102,7 @@ sims %>%
 sims2
 ```
 
-```{r}
+```{r anova-bayes-16}
 ggplot(sims2, aes(x=sim_data)) + geom_density() +
   geom_point(data=rats, aes(x=density, y=0)) + 
   facet_wrap(~group)

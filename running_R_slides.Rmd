@@ -15,9 +15,9 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r running-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r child="running_R.Rmd"}
+```{r running-R-slides-2, child="running_R.Rmd"}
 ```

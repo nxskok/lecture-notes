@@ -5,7 +5,7 @@ output: html_notebook
 
 ## Packages
 
-```{r}
+```{r 20180124-1}
 library(tidyverse)
 library(broom) # for later
 ```
@@ -14,7 +14,7 @@ library(broom) # for later
 
 Read in the rat data:
 
-```{r}
+```{r 20180124-2}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/rat.txt"
 rats=read_delim(my_url," ")
 rats
@@ -25,7 +25,7 @@ These are 6 rats getting different doses of some poison, and what happened to th
 Response variable categorical,
 but needs to be `factor`, so make one (can overwrite):
 
-```{r}
+```{r 20180124-3}
 class(rats$status)
 rats = rats %>% mutate(status=factor(status))
 class(rats$status)
@@ -34,14 +34,14 @@ rats
 
 now fit model:
 
-```{r}
+```{r 20180124-4}
 rats.1=glm(status~dose,family="binomial",data=rats)
 summary(rats.1)
 ```
 
 what did we actually predict?
 
-```{r}
+```{r 20180124-5}
 rats$status
 ```
 
@@ -53,14 +53,14 @@ So negative slope means probability of **living** *decreases* as dose increases.
 
 Use `predict`. With just a model to predict from, uses original data `dose` values:
 
-```{r}
+```{r 20180124-6}
 p=predict(rats.1,se=T,type="response")
 cbind(rats,p)
 ```
 
 To predict for other doses, create a new data frame of them first:
 
-```{r}
+```{r 20180124-7}
 doses=c(2.5,3.5,6)
 new=tibble(dose=doses)
 new
@@ -72,7 +72,7 @@ cbind(new,p)
 
 More data (60 rats), arranged differently:
 
-```{r}
+```{r 20180124-8}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/rat2.txt"
 rat2=read_delim(my_url," ")
 rat2
@@ -85,7 +85,7 @@ Now have to *create* response variable (don't just have a "lived" or "died" in a
 
 Create two-column response, column of lived, column of died:
 
-```{r}
+```{r 20180124-9}
 response=with(rat2,cbind(lived,died))
 response
 class(response)
@@ -93,7 +93,7 @@ class(response)
 
 then use that on the left of the squiggle. Modelling probability of *first* column:
 
-```{r}
+```{r 20180124-10}
 rat2.1=glm(response~dose,family="binomial",
   data=rat2)
 summary(rat2.1)
@@ -103,14 +103,14 @@ Probability of living decreases with increasing dose, and is now significant.
 
 Using a data frame as response doesn't work:
 
-```{r}
+```{r 20180124-11}
 response = rat2 %>% select(lived,died)
 rat2.1a=glm(response~dose,family="binomial",data=rat2)
 ```
 
 but this does:
 
-```{r}
+```{r 20180124-12}
 response = rat2 %>% select(lived,died) %>% as.matrix()
 rat2.1b=glm(response~dose,family="binomial",data=rat2)
 summary(rat2.1b)
@@ -118,7 +118,7 @@ summary(rat2.1b)
 
 Predictions (using original doses in data set):
 
-```{r}
+```{r 20180124-13}
 p=predict(rat2.1,type="response")
 cbind(rat2,p)
 ```
@@ -133,7 +133,7 @@ With multiple observations per line, can plot predicted probabilities of a rat l
 - Plot predictions joined by lines
 - label the y-axis properly:
 
-```{r}
+```{r 20180124-14}
 rat2 %>% bind_cols(pred=p) %>% 
   mutate(obs=lived/(lived+died)) %>% 
   ggplot(aes(x=dose,y=obs))+geom_point()+
@@ -143,7 +143,7 @@ rat2 %>% bind_cols(pred=p) %>%
 
 ## Sepsis data
 
-```{r}
+```{r 20180124-15}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/sepsis.txt"
 sepsis=read_delim(my_url," ")
 sepsis
@@ -151,14 +151,14 @@ sepsis
 
 Predict probability of death (`death=1`) from everything else
 
-```{r}
+```{r 20180124-16}
 sepsis.1=glm(death~., family="binomial", data=sepsis)
 summary(sepsis.1)
 ```
 
 Take out `malnut`:
 
-```{r}
+```{r 20180124-17}
 sepsis.2=update(sepsis.1,.~.-malnut)
 summary(sepsis.2)
 ```
@@ -167,7 +167,7 @@ All coefficients positive (why?)
 
 Do some predictions, for individuals 4, 1, 2, 11, 32:
 
-```{r}
+```{r 20180124-18}
 my_rows=c(4,1,2,11,32)
 new = sepsis %>% slice(my_rows)
 p=predict(sepsis.2,new,type="response")
@@ -178,7 +178,7 @@ Note effect of age (first three rows) and of risk factors (last two) on prob of 
 
 Diagnostic: plot residuals against anything as usual:
 
-```{r}
+```{r 20180124-19}
 ggplot(sepsis.2,aes(x=.fitted,y=.resid))+geom_point()+geom_smooth()
 ```
 
@@ -186,13 +186,13 @@ Hard to read: positive residuals are from people who died, negative ones from pe
 
 Also need lack of trend of residuals vs. age. These are in different data frames, so either get them from right place:
 
-```{r}
+```{r 20180124-20}
 ggplot(sepsis.2,aes(x=sepsis$age,y=.resid))+geom_point()
 ```
 
 or use `augment` from `broom` (look at all the columns):
 
-```{r}
+```{r 20180124-21}
 library(broom)
 d=augment(sepsis.2)
 d
@@ -200,7 +200,7 @@ d
 
 and then plot (now in *same* data frame):
 
-```{r}
+```{r 20180124-22}
 ggplot(d,aes(x=age,y=.resid))+geom_point()+geom_smooth()
 ```
 
@@ -210,7 +210,7 @@ Apparently no trend on this plot, so relationship with age appears appropriate.
 
 The other explanatory variables are 0-1, so assess their relationship with residuals by boxplots, eg. `alcohol`:
 
-```{r}
+```{r 20180124-23}
 ggplot(d,aes(x=factor(alcohol),y=.resid))+geom_boxplot()
 ```
 
@@ -220,14 +220,14 @@ Centre of each group should be zero; median for alcoholics is a bit low.
 
 Let's create a much simpler model containing just age and alcoholism and do some predictions for it:
 
-```{r}
+```{r 20180124-24}
 sepsis.3=update(sepsis.2,.~.-shock-bowelinf)
 summary(sepsis.3)
 ```
 
 Let's do some predictions for all combinations of `age` 25, 50, 75 and `alcohol` 0 and 1. Here's my procedure for doing that:
 
-```{r}
+```{r 20180124-25}
 ages=c(25,50,75)
 alcohols=c(0,1)
 new=crossing(age=ages,alcohol=alcohols)
@@ -238,7 +238,7 @@ The column names in `new` must be *exactly* the same as in the original data fra
 
 Then, feed `new` into `predict` as usual:
 
-```{r}
+```{r 20180124-26}
 p=predict(sepsis.3,new,type="response")
 cbind(new,p)
 ```

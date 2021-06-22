@@ -13,7 +13,7 @@
 
 
 ## Packages
-```{r, eval=F }
+```{r bManova-post-1, eval=F }
 library(car)
 library(tidyverse)
 ```
@@ -27,7 +27,7 @@ library(tidyverse)
 * Measure yield and seed weight of plants grown under 2 conditions: low and high amounts of fertilizer.
 
 * Data (fertilizer, yield, seed weight):
-```{r }
+```{r bManova-post-2 }
 url <- "http://ritsokiguess.site/datafiles/manova1.txt"
 # url <- "manova1.txt"
 hilo <- read_delim(url, " ")
@@ -39,7 +39,7 @@ hilo <- read_delim(url, " ")
 
 
 ## The data
-```{r }
+```{r bManova-post-3 }
 hilo
 ```
 
@@ -66,7 +66,7 @@ Weights overlap for fertilizer groups.
 ## ANOVAs for yield and weight
 
 \small
-```{r }
+```{r bManova-post-4 }
 hilo.y <- aov(yield ~ fertilizer, data = hilo)
 summary(hilo.y)
 hilo.w <- aov(weight ~ fertilizer, data = hilo)
@@ -88,7 +88,7 @@ which fertilizer group they're from.
 
 - First, create data frame with points $(31,14)$ and $(38,10)$ (why? Later):
 
-```{r}
+```{r bManova-post-5}
 # hilo
 d <- tribble(
   ~line_x, ~line_y,
@@ -99,7 +99,7 @@ d <- tribble(
 
 - Then plot data as points, and add line through points in `d`:
 
-```{r }
+```{r bManova-post-6 }
 g <- ggplot(hilo, aes(x = yield, y = weight,
                       colour = fertilizer)) + geom_point() +
   geom_line(data = d,
@@ -138,12 +138,12 @@ no `fertilizer` (previous `colour`), so have to unset.
 
 \footnotesize
 
-```{r, echo=FALSE}
+```{r bManova-post-7, echo=FALSE}
 options(width = 60)
 ```
 
 
-```{r}
+```{r bManova-post-8}
 response <- with(hilo, cbind(yield, weight))
 hilo %>% select(yield, weight) %>% as.matrix() -> response
 response
@@ -179,7 +179,7 @@ responses, using `cbind`.
 
 ## Another way to do MANOVA
 Install (once) and load package `car`:
-```{r eval=F}
+```{r bManova-post-9, eval=F}
 library(car)
 ```
  
@@ -187,7 +187,7 @@ library(car)
 
 ## Another way\ldots
   
-```{r size="footnotesize"}
+```{r bManova-post-10, size="footnotesize"}
 hilo.2.lm <- lm(response ~ fertilizer, data = hilo)
 hilo.2 <- Manova(hilo.2.lm)
 hilo.2
@@ -214,7 +214,7 @@ locations.
 * Three response variables: `y`, `smk` and
 `w`.
 
-```{r size="footnotesize"}
+```{r bManova-post-11, size="footnotesize"}
 u <- "http://ritsokiguess.site/datafiles/peanuts.txt"
 # u <- "peanuts.txt"
 peanuts.orig <- read_delim(u, " ")
@@ -223,7 +223,7 @@ peanuts.orig <- read_delim(u, " ")
 ## The data
 
 \small
-```{r}
+```{r bManova-post-12}
 peanuts.orig
 ```
 
@@ -231,7 +231,7 @@ peanuts.orig
 
 ## Setup for analysis
 
-```{r }
+```{r bManova-post-13 }
 peanuts <- peanuts.orig %>%
   mutate(
     location = factor(location),
@@ -247,7 +247,7 @@ response
 ## Analysis (using `Manova)`
 
 \small
-```{r}
+```{r bManova-post-14}
 peanuts.1 <- lm(response ~ location * variety, data = peanuts)
 peanuts.2 <- Manova(peanuts.1)
 peanuts.2

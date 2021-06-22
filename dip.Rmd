@@ -1,5 +1,5 @@
 ## Packages for this section
-```{r, eval=F}
+```{r dip-1, eval=F}
 library(tidyverse)
 library(lubridate)
 ```
@@ -10,7 +10,7 @@ We previously got fractional days (of stays in hospital):
 
 \small
 
-```{r, message=FALSE}
+```{r dip-2, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/hospital.csv"
 stays <- read_csv(my_url)
 stays %>% mutate(stay_days = (discharge - admit) / ddays(1))
@@ -24,7 +24,7 @@ but what if we wanted days, hours and minutes?
 
 \footnotesize
 
-```{r}
+```{r dip-3}
 stays %>% mutate(stay = admit %--% discharge)
 ```
 
@@ -36,7 +36,7 @@ stays %>% mutate(stay = admit %--% discharge)
 
 To work out the exact length of an interval, in human units, turn it into a `period`:
 
-```{r}
+```{r dip-4}
 stays %>% mutate(stay = as.period(admit %--% discharge))
 ```
 
@@ -48,7 +48,7 @@ Take `day` of the periods:
 
 \small
 
-```{r}
+```{r dip-5}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
   mutate(days_of_stay = day(stay))
 ```
@@ -61,7 +61,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 \small
 
-```{r}
+```{r dip-6}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
   mutate(hours_of_stay = hour(stay))
 ```
@@ -76,7 +76,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 \small
 
-```{r}
+```{r dip-7}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
   mutate(hours_of_stay = hour(stay) + 24*day(stay))
 ```
@@ -87,7 +87,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 - What's the difference between `duration` and `period`?
 
-```{r}
+```{r dip-8}
 stays %>% mutate(stay = as.duration(admit %--% discharge)) 
 ```
 
@@ -104,7 +104,7 @@ stays %>% mutate(stay = as.duration(admit %--% discharge))
   
 \small
 
-```{r}
+```{r dip-9}
 tribble(
   ~start, ~end,
   ymd("2020-01-15"), ymd("2020-03-15"),
@@ -128,7 +128,7 @@ Sometime in December 2019 or January 2020, I downloaded some information about t
   
 \small
 
-```{r}
+```{r dip-10}
 my_url <- "http://ritsokiguess.site/STAD29/manu.csv"
 read_csv(my_url) %>% 
   select(name, date_of_birth, age) -> man_united
@@ -138,7 +138,7 @@ read_csv(my_url) %>%
 
 ## The data
 
-```{r}
+```{r dip-11}
 man_united
 ```
 
@@ -157,7 +157,7 @@ man_united
 
 Guess January 10, 2020 as download date (just to pick a date):
 
-```{r}
+```{r dip-12}
 guess <- ymd("2020-01-10")
 man_united %>% 
   mutate(dob = dmy(date_of_birth)) %>% 
@@ -169,7 +169,7 @@ man_united %>%
 
 \scriptsize
 
-```{r}
+```{r dip-13}
 d %>% select(name, age, age_years)
 ```
 
@@ -177,7 +177,7 @@ d %>% select(name, age, age_years)
 
 ## Which ones are different?
 
-```{r}
+```{r dip-14}
 d %>% filter(age != age_years) %>% 
   select(name, date_of_birth, age, age_years)
 ```
@@ -191,7 +191,7 @@ d %>% filter(age != age_years) %>%
 
 - say Dec 5:
 
-```{r}
+```{r dip-15}
 guess <- ymd("2019-12-05")
 man_united %>% 
   mutate(dob = dmy(date_of_birth)) %>% 
@@ -203,7 +203,7 @@ man_united %>%
 
 ## Results
 
-```{r}
+```{r dip-16}
 d2
 ```
 

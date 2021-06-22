@@ -24,7 +24,7 @@ assumptions of independence will fail.
 
 
 ## Packages
-```{r, eval=F}
+```{r bProfile-post-1, eval=F}
 library(car)
 library(tidyverse)
 ```
@@ -46,7 +46,7 @@ library(tidyverse)
 
 
 ## Read in data
-```{r }
+```{r bProfile-post-2 }
 my_url <- "http://ritsokiguess.site/datafiles/dogs.txt"
 dogs <- read_table(my_url)
 ```
@@ -55,7 +55,7 @@ dogs <- read_table(my_url)
 
 
 ## Setting things up
-```{r size="small"}
+```{r bProfile-post-3, size="small"}
 dogs
 response <- with(dogs, cbind(lh0, lh1, lh3, lh5))
 response
@@ -69,13 +69,13 @@ dogs.1 <- lm(response ~ drug, data = dogs)
 Get list of response variable names; we call them `times`. Save
 in data frame. 
 
-```{r, echo=FALSE}
+```{r bProfile-post-4, echo=FALSE}
 options(width = 70)
 ```
 
 
 \footnotesize 
-```{r, error=TRUE}
+```{r bProfile-post-5, error=TRUE}
 times <- colnames(response)
 times
 times.df <- data.frame(times=factor(times))
@@ -104,7 +104,7 @@ for the two drugs.
 * But data frame has several observations per line ("wide format"):
 
 \scriptsize
-```{r }
+```{r bProfile-post-6 }
 dogs 
 ```
  
@@ -122,7 +122,7 @@ one column, with the time they belong to labelled.
 
 \footnotesize
 
-```{r size="footnotesize"}
+```{r bProfile-post-7, size="footnotesize"}
 dogs %>% pivot_longer(starts_with("lh"), 
                       names_to = "time", values_to = "lh") 
 ```
@@ -140,7 +140,7 @@ containing just number in `time`:
 
 \footnotesize
 
-```{r}
+```{r bProfile-post-8}
 dogs %>%
   pivot_longer(starts_with("lh"), 
                names_to = "timex", values_to = "lh") %>% 
@@ -166,7 +166,7 @@ numeric time.
 
 
 ## Saving the pipelined results
-```{r }
+```{r bProfile-post-9 }
 dogs %>%
   pivot_longer(starts_with("lh"), 
                names_to = "timex", values_to = "lh") %>% 
@@ -194,7 +194,7 @@ value originally came from labelled by `timex`, and then:
 ## Interaction plot
 
 \small
-```{r fig.height=4}
+```{r bProfile-post-10, fig.height=4}
 # dogs.long
 ggplot(dogs.long, aes(x = time, y = lh, 
                       colour = drug, group = drug)) +
@@ -226,7 +226,7 @@ no longer be significant.
 
 * Go back to original "wide" `dogs` data frame.
 
-```{r size="footnotesize", error=TRUE}
+```{r bProfile-post-11, size="footnotesize", error=TRUE}
 response <- with(dogs, cbind(lh1, lh3, lh5)) # excl time 0
 dogs.1 <- lm(response ~ drug, data = dogs)
 times <- colnames(response)
@@ -242,7 +242,7 @@ dogs.2 <- Manova(dogs.1,
 ## Results and comments
 
 \footnotesize
-```{r, error=TRUE}
+```{r bProfile-post-12, error=TRUE}
 dogs.2
 ```
  
@@ -323,7 +323,7 @@ why the `drug` effect is not quite significant.
 
 ## Fitting the model
 
-```{r, message=FALSE}
+```{r bProfile-post-13, message=FALSE}
 library(lme4)
 # dogs.long
 dogs.2=lmer(lh~drug*time+(1|dog),data=dogs.long)
@@ -337,7 +337,7 @@ dogs.2=lmer(lh~drug*time+(1|dog),data=dogs.long)
 
 - using `drop1`:
 
-```{r}
+```{r bProfile-post-14}
 drop1(dogs.2,test="Chisq")
 ```
 
@@ -345,7 +345,7 @@ drop1(dogs.2,test="Chisq")
 
 ## Re-fit without interaction
 
-```{r}
+```{r bProfile-post-15}
 dogs.3=update(dogs.2,.~.-drug:time)
 drop1(dogs.3,test="Chisq")
 ```
@@ -377,7 +377,7 @@ exercise), so have repeated measures.
 
 ## Reading the data
 Separated by *tabs*:  
-```{r }
+```{r bProfile-post-16 }
 url <- "http://ritsokiguess.site/datafiles/exercise.txt"
 exercise.long <- read_tsv(url)
 ```
@@ -388,7 +388,7 @@ exercise.long <- read_tsv(url)
 ## The data
 
 \footnotesize
-```{r}
+```{r bProfile-post-17}
 exercise.long 
 ```
 \normalsize
@@ -411,7 +411,7 @@ exercise.long
 going to be split, and the column to make the values out of:
 
 \footnotesize
-```{r}
+```{r bProfile-post-18}
 # wrong
 # exercise.long %>% select(-id) %>% 
 #   pivot_wider(names_from=time, 
@@ -436,7 +436,7 @@ number of minutes. But `Manova` needs it the other way.
 * Make a response variable consisting of `min01, min15, min30`:
 
 \small
-```{r }
+```{r bProfile-post-19 }
 response <- with(exercise.wide, cbind(min01, min15, min30))
 ```
 \normalsize
@@ -446,7 +446,7 @@ response <- with(exercise.wide, cbind(min01, min15, min30))
 interaction using `lm`:
 
 \small
-```{r }
+```{r bProfile-post-20 }
 exercise.1 <- lm(response ~ diet * exertype,
   data = exercise.wide
 )
@@ -459,7 +459,7 @@ exercise.1 <- lm(response ~ diet * exertype,
 * Run this through `Manova`: 
 
 \small
-```{r, error=TRUE}
+```{r bProfile-post-21, error=TRUE}
 times <- colnames(response)
 # times
 times.df <- data.frame(times=factor(times))
@@ -475,12 +475,12 @@ exercise.2 <- Manova(exercise.1,
 
 ## Results
 
-```{r, echo=F}
+```{r bProfile-post-22, echo=F}
 options(width=70)
 ```
 
 \scriptsize
-```{r }
+```{r bProfile-post-23 }
 exercise.2
 ```
 \normalsize
@@ -506,7 +506,7 @@ lines, and make *separate* plots for each
 
 * `ggplot` again. Using *long* data frame:
 
-```{r }
+```{r bProfile-post-24 }
 exercise.long
 g <- ggplot(exercise.long, aes(
   x = time, y = pulse,
@@ -526,7 +526,7 @@ so have the factor `exertype` with more levels going across.)
 
 
 ## The graph(s)
-```{r fig.height=5}
+```{r bProfile-post-25, fig.height=5}
 g
 ```
 
@@ -561,7 +561,7 @@ group.
 runners. For them, does diet have an effect?
 
 * Pull out only the runners from the wide data:
-```{r }
+```{r bProfile-post-26 }
 exercise.wide %>%
   filter(exertype == "running") -> runners.wide
 ```
@@ -572,7 +572,7 @@ exercise.wide %>%
 before, but I have different data now:
 
 \footnotesize
-```{r}
+```{r bProfile-post-27}
 response <- with(runners.wide, cbind(min01, min15, min30))
 runners.1 <- lm(response ~ diet, data = runners.wide)
 times <- colnames(response)
@@ -592,7 +592,7 @@ runners.2 <- Manova(runners.1,
 
 
 \scriptsize
-```{r }
+```{r bProfile-post-28 }
 runners.2
 ```
 \normalsize
@@ -614,7 +614,7 @@ and `time`.
 
 * Table of means. Only I need long data for this, so make it (in
 a pipeline):
-```{r }
+```{r bProfile-post-29 }
 runners.wide %>%
   pivot_longer(starts_with("min"), 
                names_to = "time", values_to = "pulse") %>%
@@ -640,7 +640,7 @@ do more with it if needed).
 * The summary:
 
 \footnotesize
-```{r}
+```{r bProfile-post-30}
 summ
 ```
 \normalsize
@@ -660,7 +660,7 @@ time: `diet` by `time` interaction.
 
 * We went to trouble of finding means by group, so making
 interaction plot is now mainly easy:
-```{r}
+```{r bProfile-post-31}
 ggplot(summ, aes(x = time, y = mean, colour = diet,
                  group = diet)) + geom_point() + geom_line()
 ```

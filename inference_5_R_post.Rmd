@@ -14,7 +14,7 @@ daylight savings time all year round. We ask 20 males and 20 females
 whether they each agree with having DST all year round (“yes”) or
 not (“no”). Some of the data:
 
-```{r, message=F}
+```{r inference-5-R-post-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
 dst
@@ -26,12 +26,12 @@ dst
 Count up individuals in each category combination, and arrange in
 contingency table:
 
-```{r}
+```{r inference-5-R-post-2}
 dst %>% count(gender, agree)
 ```
 
 
-```{r}
+```{r inference-5-R-post-3}
 tab <- with(dst, table(gender, agree))
 tab
 ```
@@ -45,7 +45,7 @@ there is really some association.
 
 ## ...And finally
 
-```{r}
+```{r inference-5-R-post-4}
 chisq.test(tab, correct=FALSE)
 ```
 
@@ -72,7 +72,7 @@ mostly above grand median and other below.
 
 ## Mood’s median test for reading data
 - Find overall median score: 
-```{r}
+```{r inference-5-R-post-5}
 kids
 kids %>% summarize(med=median(score)) %>% pull(med) -> m
 # m <- kids %>% summarize(med=median(score)) %>% pull(med)
@@ -80,7 +80,7 @@ m
 ```
 
 - Make table of above/below vs. group:
-```{r}
+```{r inference-5-R-post-6}
 tab <- with(kids, table(group, score>m))
 tab
 ```
@@ -91,7 +91,7 @@ mostly below, as expected.
 
 ## The test
 - Do chi-squared test:
-```{r}
+```{r inference-5-R-post-7}
 chisq.test(tab, correct=FALSE)
 ```
 
@@ -106,7 +106,7 @@ method.
 ## Or by smmr
 - `median_test` does the whole thing:
 
-```{r}
+```{r inference-5-R-post-8}
 median_test(kids, score, group)
 ```
 
@@ -127,7 +127,7 @@ be trusted).
 
 ## graph
 
-```{r}
+```{r inference-5-R-post-9}
 ggplot(kids, aes(sample=score)) + stat_qq() + stat_qq_line() +
   facet_wrap(~group)
 ```
@@ -151,7 +151,7 @@ bone density.
 
 ## Reading the data
 Values separated by spaces:
-```{r}
+```{r inference-5-R-post-10}
 my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
 rats <- read_delim(my_url," ")
 ```
@@ -159,7 +159,7 @@ rats <- read_delim(my_url," ")
 ## The data (some random rows)
 
 \small
-```{r}
+```{r inference-5-R-post-11}
 rats
 rats %>% slice_sample(n=12)
 ```
@@ -167,20 +167,20 @@ rats %>% slice_sample(n=12)
 
 ## Boxplots
 
-```{r, fig.height=3.7}
+```{r inference-5-R-post-12, fig.height=3.7}
 ggplot(rats,aes(y=density,x=group))+geom_boxplot()
 ```
 
 ## Or, arranging groups in data (logical) order
 
-```{r, fig.height=3.5}
+```{r inference-5-R-post-13, fig.height=3.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
 
 or
 
-```{r}
+```{r inference-5-R-post-14}
 rats %>% 
   mutate(group1=fct_inorder(group)) %>% 
   ggplot(aes(x=group1, y=density)) + geom_boxplot()
@@ -197,7 +197,7 @@ others.
 
 ## Testing: ANOVA in R
 
-```{r}
+```{r inference-5-R-post-15}
 rats.aov <- aov(density~group, data=rats)
 summary(rats.aov)
 ```
@@ -213,7 +213,7 @@ differences”, but doesn’t tell us which groups different.
 via two-sample t.
 - First pick out each group:
 
-```{r}
+```{r inference-5-R-post-16}
 rats %>% filter(group=="Control") -> controls
 rats %>% filter(group=="Lowjump") -> lows
 rats %>% filter(group=="Highjump") -> highs
@@ -221,7 +221,7 @@ rats %>% filter(group=="Highjump") -> highs
 
 ## Control vs. low
 
-```{r}
+```{r inference-5-R-post-17}
 t.test(controls$density,lows$density)
 ```
 
@@ -229,7 +229,7 @@ No sig. difference here.
 
 ## Control vs. high
 
-```{r}
+```{r inference-5-R-post-18}
 t.test(controls$density,highs$density)
 ```
 
@@ -237,7 +237,7 @@ These are different.
 
 ## Low vs. high
 
-```{r}
+```{r inference-5-R-post-19}
 t.test(lows$density,highs$density)
 ```
 
@@ -279,21 +279,21 @@ different.
 
 ## Tukey on rat data
 
-```{r, echo=F}
+```{r inference-5-R-post-20, echo=F}
 width=getOption("width")
 options(width=60)
 ```
 
 
 \small
-```{r}
+```{r inference-5-R-post-21}
 rats.aov <- aov(density~group,data=rats)
 summary(rats.aov)
 TukeyHSD(rats.aov)
 ```
 \normalsize
 
-```{r, echo=F}
+```{r inference-5-R-post-22, echo=F}
 options(width=width)
 ```
 
@@ -320,7 +320,7 @@ $\alpha = 0.01$.
 
 ## Checking assumptions
 
-```{r, fig.height=3.5}
+```{r inference-5-R-post-23, fig.height=3.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
@@ -332,7 +332,7 @@ Assumptions:
 
 ## Normal quantile plots by group
 
-```{r, fig.height=3.5}
+```{r inference-5-R-post-24, fig.height=3.5}
 ggplot(rats, aes(sample = density)) + stat_qq() + 
   stat_qq_line() + facet_wrap( ~ group)
 ```
@@ -356,7 +356,7 @@ number of groups.
 - Find median of all bone densities, regardless of group:
 
 \small
-```{r}
+```{r inference-5-R-post-25}
 (rats %>% summarize(med = median(density)) %>% pull(med) -> m)
 ```
 \normalsize
@@ -364,7 +364,7 @@ number of groups.
 - Count up how many observations in each group above or below
 overall median:
 
-```{r}
+```{r inference-5-R-post-26}
 tab = with(rats, table(group, density > m))
 tab
 ```
@@ -372,7 +372,7 @@ tab
 
 ## Mood’s median test 2/4 
 
-```{r}
+```{r inference-5-R-post-27}
 tab
 ```
 
@@ -386,7 +386,7 @@ median.
 - Test whether association between group and being above/below
 overall median significant using chi-squared test for association:
 
-```{r}
+```{r inference-5-R-post-28}
 chisq.test(tab,correct=F)
 ```
 
@@ -397,7 +397,7 @@ depends on group.
 ## Mood’s median test 4/4 
 Or with `median_test` from `smmr`, same as before. 
 
-```{r}
+```{r inference-5-R-post-29}
 median_test(rats,density,group)
 ```
 
@@ -410,7 +410,7 @@ median_test(rats,density,group)
 pairs of groups via (2-sample) Mood’s median tests, then adjust
 P-values by multiplying by number of 2-sample Mood tests done (Bonferroni):
 
-```{r}
+```{r inference-5-R-post-30}
 pairwise_median_test(rats,density,group)
 ```
 
@@ -422,7 +422,7 @@ both normality and equal spreads.
 - When normality OK but spreads differ, Welch ANOVA way to go.
 - Welch ANOVA done by `oneway.test` as shown (for illustration):
 
-```{r}
+```{r inference-5-R-post-31}
 oneway.test(density~group,data=rats)
 ```
 
@@ -434,7 +434,7 @@ oneway.test(density~group,data=rats)
 - Lives in package `PMCMRplus` (also `userfriendlyscience`). Install
 first.
 
-```{r, eval=F}
+```{r inference-5-R-post-32, eval=F}
 library(PMCMRplus)
 ```
 

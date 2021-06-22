@@ -1,6 +1,6 @@
 principal components new example
 
-```{r}
+```{r food-1}
 food England Wales Scotland N_Ireland
 Cheese 105 103 103 66
 Carcass meat 245 227 242 267

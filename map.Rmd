@@ -1,6 +1,6 @@
 trying a map of ontario
 
-```{r}
+```{r map-1}
 # library(openstreetmap)
 library(tmaptools)
 library(leaflet)
@@ -10,7 +10,7 @@ library(conflicted)
 
 my locations
 
-```{r}
+```{r map-2}
 my_url <- 
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario <- read_csv(my_url)
@@ -19,7 +19,7 @@ ontario
 
 make a dataframe of lats and longs
 
-```{r}
+```{r map-3}
 tibble(place = ontario$place) %>% 
   mutate(prov = "ON") %>% 
   mutate(place1 = str_c(place, " ", prov)) %>% 
@@ -29,14 +29,14 @@ d %>% unnest_wider(ll) %>%
   unnest_wider(coords) -> coords
 ```
 
-```{r}
+```{r map-4}
 d %>% unnest_wider(ll) %>% 
   unnest_wider(coords) -> coords
 ```
 
 make a map with the coords
 
-```{r}
+```{r map-5}
 leaflet() %>% 
   addTiles() %>% 
   addMarkers(lng = coords$x, lat = coords$y)

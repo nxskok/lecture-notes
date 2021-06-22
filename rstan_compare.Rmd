@@ -32,7 +32,7 @@ generated quantities {
 
 ## Compile and sample
 
-```{r, results="hide"}
+```{r rstan-compare-1, results="hide"}
 anova_loo_compiled <- stan_model("anova-loo.stan")
 anova_data <- list(
   n_obs = 30,
@@ -90,7 +90,7 @@ generated quantities {
 
 ## Compile and sample again
 
-```{r, results="hide"}
+```{r rstan-compare-2, results="hide"}
 anova_loo_null_compiled <- stan_model("anova_loo_null.stan")
 anova_loo_null_samples <- sampling(anova_loo_null_compiled, data = anova_data)
 ```
@@ -100,7 +100,7 @@ anova_loo_null_samples <- sampling(anova_loo_null_compiled, data = anova_data)
 
 Setup
 
-```{r}
+```{r rstan-compare-3}
 library(loo)
 log_lik_a <- extract_log_lik(anova_loo_samples,
   merge_chains = F
@@ -115,7 +115,7 @@ r_eff_0 <- relative_eff(log_lik_0)
 ## Results 1/2
 
 \footnotesize
-```{r}
+```{r rstan-compare-4}
 loo(log_lik_a, r_eff = r_eff_a)
 ```
 \normalsize
@@ -123,7 +123,7 @@ loo(log_lik_a, r_eff = r_eff_a)
 ## Results 2/2
 
 \small
-```{r}
+```{r rstan-compare-5}
 loo(log_lik_0, r_eff = r_eff_0)
 ```
 \normalsize

@@ -30,7 +30,7 @@ get drug B first.
 ## Paired t test: reading the data
 Values aligned in columns:  
 
-```{r}
+```{r inference-4b-R-1}
 my_url <- 
   "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
@@ -38,7 +38,7 @@ pain <- read_table(my_url)
 
 ## The data
 
-```{r}
+```{r inference-4b-R-2}
 pain
 ```
 
@@ -46,7 +46,7 @@ pain
 
 \small
 
-```{r}
+```{r inference-4b-R-3}
 with(pain, t.test(druga, drugb, paired = T))
 ```
 
@@ -63,7 +63,7 @@ do a 1-sample t-test on them.
 
 \footnotesize
 
-```{r}
+```{r inference-4b-R-4}
 (pain %>% mutate(diff=druga-drugb) -> pain)
 ```
 
@@ -72,7 +72,7 @@ do a 1-sample t-test on them.
 ## t-test on the differences
 - then throw them into t.test, testing that the mean is zero, with
 same result as before:
-```{r}
+```{r inference-4b-R-5}
 with(pain, t.test(diff, mu=0))
 ```
 
@@ -86,7 +86,7 @@ normally distributed.
 ## The normal quantile plot (of differences)
 
 
-```{r, fig.height=4}
+```{r inference-4b-R-6, fig.height=4}
 ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
 ```
 
@@ -101,7 +101,7 @@ normality questionable here: outlier.
 - so do *sign test* on differences, null median 0:
 
 
-```{r}
+```{r inference-4b-R-7}
 sign_test(pain, diff, 0)
 ```
 

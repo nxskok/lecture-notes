@@ -14,11 +14,11 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r graphs-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r, child="graphs_R.Rmd"}
+```{r graphs-R-slides-2, child="graphs_R.Rmd"}
 ```
 

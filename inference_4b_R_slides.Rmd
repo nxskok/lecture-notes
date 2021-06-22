@@ -15,9 +15,9 @@ urlcolor: blue
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r inference-4b-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
-```{r, child="inference_4b_R.Rmd"}
+```{r inference-4b-R-slides-2, child="inference_4b_R.Rmd"}
 ```
 

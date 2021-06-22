@@ -26,7 +26,7 @@ Certainly not. Actual attendance depends on many things, eg.:
   
 ## Packages for this section
 
-```{r, eval=F}
+```{r inference-R-1, eval=F}
 library(tidyverse)
 library(smmr)
 library(PMCMRplus)
@@ -36,14 +36,14 @@ library(PMCMRplus)
 ## Reading the attendances
 ...as a `.csv` file:
 
-```{r}
+```{r inference-R-2}
 jays = read_csv("jays15-home.csv")
 ```
 
 ## Taking a look
 
 \scriptsize
-```{r}
+```{r inference-R-3}
 jays
 ```
 \normalsize
@@ -51,14 +51,14 @@ jays
 ## Another way
 
 \tiny
-```{r}
+```{r inference-R-4}
 glimpse(jays)
 ```
 \normalsize
 
 ## Attendance histogram
 
-```{r, fig.height=3.8}
+```{r inference-R-5, fig.height=3.8}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 10)
 ```
 
@@ -77,7 +77,7 @@ attendance in all possible games based on this evidence?
 ## Getting CI for mean attendance 
 - `t.test` function does CI and test. Look at CI first:
 
-```{r}
+```{r inference-R-6}
 t.test(jays$attendance)
 ```
 
@@ -86,7 +86,7 @@ t.test(jays$attendance)
 ## Or, 90% CI
 
 - by including a value for conf.level:
-```{r}
+```{r inference-R-7}
 t.test(jays$attendance, conf.level = 0.90)
 ```
 
@@ -106,7 +106,7 @@ chance that interval won’t contain pop. mean at all!
 
 ## Another way to access data frame columns
 
-```{r}
+```{r inference-R-8}
 with(jays, t.test(attendance))
 ```
 
@@ -196,7 +196,7 @@ typically 0.05.
   
 ## Using `t.test`:
 
-```{r}
+```{r inference-R-9}
 t.test(jays$attendance, mu=29327)
 ```
 
@@ -219,7 +219,7 @@ it is normal enough, given the sample size.
 - You might say that this is not normal enough for a sample size of $n = 25$,
 in which case you don’t trust the $t$-test result:
 
-```{r, fig.height=3}
+```{r inference-R-10, fig.height=3}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 10)
 ```
 
@@ -244,20 +244,20 @@ reading method (t) or standard one (c).
 - Proper reading-in function is `read_delim` (check file to see)
 - Read in thus:
 
-```{r}
+```{r inference-R-11}
 my_url="http://ritsokiguess.site/datafiles/drp.txt"
 kids=read_delim(my_url," ")
 ```
 
 ## The data (some) 
 
-```{r}
+```{r inference-R-12}
 kids
 ```
 
 ## Boxplots
 
-```{r, fig.height=3.7}
+```{r inference-R-13, fig.height=3.7}
 ggplot(kids, aes(x = group, y = score)) + geom_boxplot()
 ```
 
@@ -284,13 +284,13 @@ is “less”.
 
 ## Welch-Satterthwaite 
 
-```{r}
+```{r inference-R-14}
 t.test(score ~ group, data = kids, alternative = "less")
 ```
 
 ## The pooled t-test 
 
-```{r}
+```{r inference-R-15}
 t.test(score ~ group, data = kids, 
        alternative = "less", var.equal = T)
 ```
@@ -298,7 +298,7 @@ t.test(score ~ group, data = kids,
 ## Two-sided test; CI
 - To do 2-sided test, leave out `alternative`:
 
-```{r}
+```{r inference-R-16}
 t.test(score ~ group, data = kids)
 ```
 
@@ -410,12 +410,12 @@ its mean is 10 or not.
 ## Making it go
 - Random sample of 15 normal observations with mean 8 and SD 4:
 
-```{r, echo=F}
+```{r inference-R-17, echo=F}
 set.seed(457299)
 ```
 
 
-```{r}
+```{r inference-R-18}
 x = rnorm(15, 8, 4) 
 x
 ```
@@ -427,7 +427,7 @@ x
 
 
 
-```{r}
+```{r inference-R-19}
 t.test(x, mu = 10)
 ```
 
@@ -436,7 +436,7 @@ t.test(x, mu = 10)
 
 ## or get just P-value 
 
-```{r}
+```{r inference-R-20}
 t.test(x, mu = 10)$p.value
 ```
 
@@ -455,7 +455,7 @@ t.test(x, mu = 10)$p.value
 ## In code
 
 
-```{r}
+```{r inference-R-21}
 rerun(1000, rnorm(15, 8, 4)) %>%
   map( ~ t.test(., mu = 10)) %>%
   map_dbl("p.value") ->
@@ -475,7 +475,7 @@ be calculated.
 - `power.t.test`. delta difference between null and true mean: 
 
 \small
-```{r}
+```{r inference-R-22}
 power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
 ```
 \normalsize
@@ -517,7 +517,7 @@ true $\mu = 8$, $\sigma = 4$, but now aim for power 0.80.
 ## Using power.t.test
 - No `n=`, replaced by a `power=`:
 
-```{r}
+```{r inference-R-23}
 power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 ```
 
@@ -538,32 +538,32 @@ and null-hypothesis means and power.
 calculation for each one.
 - Do power for variety of sample sizes, from 10 to 100 in steps of 10:
 
-```{r}
+```{r inference-R-24}
 ns=seq(10,100,10)
 ```
 
 - Calculate powers:
-```{r}
+```{r inference-R-25}
 ans=power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
 ans$power
 ```
 
 ## Building a plot
 - Make a data frame out of the values to plot:
-```{r}
+```{r inference-R-26}
 d=tibble(n=ns, power=ans$power)
 ```
 
 - Plot these as points joined by lines, and add horizontal line at 1
 (maximum power): 
-```{r}
+```{r inference-R-27}
 g = ggplot(d, aes(x = n, y = power)) + geom_point() + 
   geom_line() + 
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
 ## The power curve
-```{r, fig.height=3.8}
+```{r inference-R-28, fig.height=3.8}
 g
 ```
 
@@ -575,7 +575,7 @@ will be).
 - Investigate for two different sample sizes, 15 and 30.
 - First make all combos of mean and sample size:
 
-```{r}
+```{r inference-R-29}
 means=seq(6,10,0.5)
 means
 ns=c(15,30)
@@ -585,26 +585,26 @@ combos=crossing(mean=means, n=ns)
 
 ## The combos
 
-```{r}
+```{r inference-R-30}
 combos
 ```
 
 ## Calculate and plot
 
 - Calculate the powers, carefully:
-```{r}
+```{r inference-R-31}
 ans=with(combos, power.t.test(n=n, delta=mean-10, sd=4, 
                               type="one.sample"))
 ```
 
 - Make a data frame to plot, pulling things from the right places:
-```{r}
+```{r inference-R-32}
 d=tibble(n=factor(combos$n), mean=combos$mean, 
          power=ans$power)
 ```
 
 - then make the plot:
-```{r}
+```{r inference-R-33}
 g = ggplot(d, aes(x = mean, y = power, colour = n)) +
   geom_point() + geom_line() +
   geom_hline(yintercept = 1, linetype = "dashed")
@@ -612,7 +612,7 @@ g = ggplot(d, aes(x = mean, y = power, colour = n)) +
 
 ## The power curves
 
-```{r, fig.height=3.8}
+```{r inference-R-34, fig.height=3.8}
 g
 ```
 
@@ -633,7 +633,7 @@ true mean needs to be less than 6.)
 ## Power by sample size for means 7 and 8
 Similar procedure to before:
 
-```{r}
+```{r inference-R-35}
 means=c(7, 8)
 ns=seq(10, 40, 5)
 combos=crossing(mean=means, n=ns)
@@ -648,7 +648,7 @@ g=ggplot(d, aes(x=n, y=power, colour=mean)) +
 
 ## The power curves
 
-```{r, fig.height=3.8}
+```{r inference-R-36, fig.height=3.8}
 g
 ```
 
@@ -657,7 +657,7 @@ g
 - For kids learning to read, had sample sizes of 22 (approx) in each group
 - and these group SDs:
 
-```{r}
+```{r inference-R-37}
 kids %>% group_by(group) %>% 
   summarize(n=n(), s=sd(score))
 ```
@@ -694,7 +694,7 @@ power.t.test(power=0.80, delta=5, sd=14, type="two.sample",
 way. They are both telling you something about a parameter, and
 they use same things about data.
 - To illustrate, some data (two groups):
-```{r}
+```{r inference-R-38}
 my_url <- "http://ritsokiguess.site/datafiles/duality.txt"
 twogroups <- read_delim(my_url," ")
 ```
@@ -703,18 +703,18 @@ twogroups <- read_delim(my_url," ")
 ## The data
 
 \footnotesize
-```{r}
+```{r inference-R-39}
 twogroups
 ```
 \normalsize
 
 ## 95% CI (default)
-```{r}
+```{r inference-R-40}
 t.test(y ~ group, data = twogroups)
 ```
 
 ## 90% CI
-```{r}
+```{r inference-R-41}
 t.test(y ~ group, data = twogroups, conf.level = 0.90)
 ```
 
@@ -722,7 +722,7 @@ t.test(y ~ group, data = twogroups, conf.level = 0.90)
 
 Null is that difference in means is zero:
 
-```{r}
+```{r inference-R-42}
 t.test(y ~ group, mu=0, data = twogroups)
 ```
 
@@ -772,21 +772,21 @@ than that on average.
 by anything.
   
 ## Read in data 
-```{r}
+```{r inference-R-43}
 my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
 irs <- read_csv(my_url)
 irs %>% glimpse()
 ```
 
 ## Test whether mean is 160 or greater
-```{r}
+```{r inference-R-44}
 t.test(irs$Time, mu = 160, alternative = "greater")
 ```
 
 Reject null; mean (for all people to complete form) greater than 160.
 
 ## But, look at a graph
-```{r, fig.height=3.5}
+```{r inference-R-45, fig.height=3.5}
 ggplot(irs, aes(x = Time)) + geom_histogram(bins = 10)
 ```
 
@@ -813,7 +813,7 @@ hypothesized to be *median*).
 ## Obtaining P-value for sign test 1/2
 
 - Count values above/below 160:
-```{r}
+```{r inference-R-46}
 irs %>% count(Time > 160)
 ```
 
@@ -822,12 +822,12 @@ irs %>% count(Time > 160)
 ## Obtaining P-value for sign test 2/2
 - R function `dbinom` gives the probability of eg. exactly 17 successes in
 a binomial with $n = 30$ and $p = 0.5$:
-```{r}
+```{r inference-R-47}
 dbinom(17, 30, 0.5)
 ```
 
 - but we want probability of 17 *or more*, so get all of those, find probability of each,  and add them up: 
-```{r}
+```{r inference-R-48}
 tibble(x=17:30) %>% 
   mutate(prob=dbinom(x, 30, 0.5)) %>% 
   summarize(total=sum(prob))
@@ -839,19 +839,19 @@ tibble(x=17:30) %>%
 Installation is a bit fiddly:
   - Install devtools with `install.packages("devtools")`
   - then install smmr: 
-```{r, eval=F}
+```{r inference-R-49, eval=F}
 library(devtools)
 install_github("nxskok/smmr")
 ```
 - Then load it:
-```{r, eval=F}
+```{r inference-R-50, eval=F}
 library(smmr)
 ```
 
 ## `smmr` for sign test
 - `smmr`’s function `sign_test` needs three inputs: a data frame, a
 column and a null median:
-```{r}
+```{r inference-R-51}
 sign_test(irs, Time, 160)
 ```
 
@@ -877,7 +877,7 @@ sign_test(irs, Time, 160)
 mean being bigger), but clearly *fail* to reject a median of 160 in
 favour of a bigger one.
 - Why is that? Obtain mean and median: 
-```{r}
+```{r inference-R-52}
 irs %>% summarize(mean = mean(Time), median = median(Time))
 ```
 
@@ -908,12 +908,12 @@ sign test (at $\alpha = 0.05$).
 - The procedure is to try some values for the null median and see which
 ones are inside and which outside our CI.
 - smmr has pval_sign that gets just the 2-sided P-value:
-```{r}
+```{r inference-R-53}
 pval_sign(160, irs, Time)
 ```
 
 - Try a couple of null medians:
-```{r}
+```{r inference-R-54}
 pval_sign(200, irs, Time)
 pval_sign(300, irs, Time)
 ```
@@ -924,7 +924,7 @@ pval_sign(300, irs, Time)
 - Choose our null medians first:
 
 \small
-```{r}
+```{r inference-R-55}
 (d=tibble(null_median=seq(100,300,20)))
 ```
 \normalsize
@@ -935,14 +935,14 @@ pval_sign(300, irs, Time)
 each null median, run the function `pval_sign` for that null median
 and get the P-value”: 
 
-```{r}
+```{r inference-R-56}
 d %>% mutate(p_value = map_dbl(null_median, 
                                ~ pval_sign(., irs, Time)))
 ```
 
 ## Make it easier for ourselves 
 
-```{r}
+```{r inference-R-57}
 d %>% 
   mutate(p_value = map_dbl(null_median, 
                            ~ pval_sign(., irs, Time))) %>%
@@ -958,13 +958,13 @@ d %>%
 
 ## A more efficient way: bisection
 - Know that top end of CI between 200 and 220:
-```{r}
+```{r inference-R-58}
 lo=200 
 hi=220
 ```
 
 - Try the value halfway between: is it inside or outside?
-```{r}
+```{r inference-R-59}
 (try = (lo + hi) / 2)
 pval_sign(try,irs,Time)
 ```
@@ -973,7 +973,7 @@ pval_sign(try,irs,Time)
 
 ## ... bisection continued 
 
-```{r}
+```{r inference-R-60}
 lo = try
 (try = (lo + hi) / 2)
 pval_sign(try, irs, Time)
@@ -986,7 +986,7 @@ pval_sign(try, irs, Time)
 
 - A loop, but not a `for` since we don’t know how many times we’re
 going around. Keep going while a condition is true:
-```{r, eval=F}
+```{r inference-R-61, eval=F}
 lo = 200
 hi = 220
 while (hi - lo > 1) {
@@ -1002,7 +1002,7 @@ while (hi - lo > 1) {
 
 ## The output from this loop
 
-```{r, echo=F}
+```{r inference-R-62, echo=F}
 lo = 200
 hi = 220
 while (hi - lo > 1) {
@@ -1020,13 +1020,13 @@ while (hi - lo > 1) {
 
 ## Using smmr
 - `smmr` has function `ci_median` that does this (by default 95% CI):
-```{r}
+```{r inference-R-63}
 ci_median(irs,Time)
 ```
 
 - Uses a more accurate bisection than we did.
 - Or get, say, 90% CI for median:
-```{r}
+```{r inference-R-64}
 ci_median(irs,Time,conf.level=0.90)
 ```
 
@@ -1059,20 +1059,20 @@ get drug B first.
 ## Paired t test: reading the data
 Values aligned in columns:  
 
-```{r}
+```{r inference-R-65}
 my_url <- "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
 ```
 
 ## The data
 
-```{r}
+```{r inference-R-66}
 pain
 ```
 
 ## Paired *t*-test 
 
-```{r}
+```{r inference-R-67}
 with(pain, t.test(druga, drugb, paired = T))
 ```
 
@@ -1081,14 +1081,14 @@ do a 1-sample t-test on them, over:
 
 ## t-testing the differences
 - First calculate a column of differences (in data frame):
-```{r}
+```{r inference-R-68}
 (pain %>% mutate(diff=druga-drugb) -> pain)
 ```
 
 ## t-test on the differences
 - then throw them into t.test, testing that the mean is zero, with
 same result as before:
-```{r}
+```{r inference-R-69}
 with(pain,t.test(diff,mu=0))
 ```
 
@@ -1108,7 +1108,7 @@ line.
 
 - of differences from matched pairs data
 
-```{r, fig.height=3.3}
+```{r inference-R-70, fig.height=3.3}
 ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
 ```
 
@@ -1133,20 +1133,20 @@ set.seed(457299)
 ```
 
 
-```{r, fig.height=3.5}
+```{r inference-R-71, fig.height=3.5}
 d=tibble(x=rnorm(200))
 ggplot(d,aes(x=x))+geom_histogram(bins=10)
 ```
 
 ## The normal quantile plot
 
-```{r, fig.height=3.8}
+```{r inference-R-72, fig.height=3.8}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
 ## Normal data, small sample
 
-```{r, echo=F}
+```{r inference-R-73, echo=F}
 set.seed(457299)
 ```
 
@@ -1165,7 +1165,7 @@ Good, apart from the highest and lowest points being slightly off. I’d call
 this good:
 
 
-```{r, fig.height=3.1}
+```{r inference-R-74, fig.height=3.1}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -1173,7 +1173,7 @@ ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 
 Somewhat skewed to right:
 
-```{r, fig.height=3.1}
+```{r inference-R-75, fig.height=3.1}
 d=tibble(x=rchisq(100,10))
 ggplot(d,aes(x=x))+geom_histogram(bins=10)
 ```
@@ -1184,7 +1184,7 @@ ggplot(d,aes(x=x))+geom_histogram(bins=10)
 
 Somewhat opening-up curve:
 
-```{r, fig.height=3.3}
+```{r inference-R-76, fig.height=3.3}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -1204,7 +1204,7 @@ ggplot(d,aes(x=x))+geom_histogram(bins=10)
 
 Clear upward-opening curve:
 
-```{r, fig.height=3.4}
+```{r inference-R-77, fig.height=3.4}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -1225,7 +1225,7 @@ ggplot(d,aes(x=x))+geom_histogram(bins=10)
 
 Low values too low and high values too high for normal.
 
-```{r, fig.height=3.4}
+```{r inference-R-78, fig.height=3.4}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -1245,7 +1245,7 @@ ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
 - Most easily: calculate differences in data frame, then use `smmr`.
 - Null median difference is 0:
 
-```{r}
+```{r inference-R-79}
 pain %>% mutate(mydiff=druga-drugb) %>%
 sign_test(mydiff,0)
 ```
@@ -1261,7 +1261,7 @@ sign_test(mydiff,0)
 
 ## (Some of) the kids’ reading data, again
 
-```{r}
+```{r inference-R-80}
 kids %>% sample_n(12)
 ```
 
@@ -1279,14 +1279,14 @@ standard reading method.
 
 ## Boxplots for reading data
 
-```{r, fig.height=3.7}
+```{r inference-R-81, fig.height=3.7}
 ggplot(kids,aes(x=group,y=score))+geom_boxplot()
 ```
 
 ## Facetted normal quantile plots
 Done this way:
 
-```{r, fig.height=3.2}
+```{r inference-R-82, fig.height=3.2}
 ggplot(kids,aes(sample=score))+stat_qq()+stat_qq_line()+
 facet_wrap(~group)
 ```
@@ -1301,7 +1301,7 @@ or less symmetric/normal and there are no outliers.
 
 ## Welch two-sample test
 
-```{r}
+```{r inference-R-83}
 t.test(score~group,data=kids,alternative="less")
 ```
 
@@ -1325,7 +1325,7 @@ daylight savings time all year round. We ask 20 males and 20 females
 whether they each agree with having DST all year round (“yes”) or
 not (“no”). Some of the data: 
 
-```{r, message=F}
+```{r inference-R-84, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
 dst %>% sample_n(5) # randomly sample 5 rows
@@ -1335,7 +1335,7 @@ dst %>% sample_n(5) # randomly sample 5 rows
 
 Count up individuals in each category combination, and arrange in
 contingency table:
-```{r}
+```{r inference-R-85}
 tab=with(dst,table(gender,agree))
 tab
 ```
@@ -1349,7 +1349,7 @@ there is really some association.
 
 ## ...And finally
 
-```{r}
+```{r inference-R-86}
 chisq.test(tab,correct=F)
 ```
 
@@ -1376,12 +1376,12 @@ mostly above grand median and other below.
 
 ## Mood’s median test for reading data
 - Find overall median score: 
-```{r}
+```{r inference-R-87}
 (kids %>% summarize(med=median(score)) %>% pull(med) -> m)
 ```
 
 - Make table of above/below vs. group:
-```{r}
+```{r inference-R-88}
 tab=with(kids,table(group,score>m))
 tab
 ```
@@ -1392,7 +1392,7 @@ mostly below, as expected.
 
 ## The test
 - Do chi-squared test:
-```{r}
+```{r inference-R-89}
 chisq.test(tab,correct=F)
 ```
 
@@ -1407,7 +1407,7 @@ method.
 ## Or by smmr
 - `median_test` does the whole thing:
 
-```{r}
+```{r inference-R-90}
 median_test(kids,score,group)
 ```
 
@@ -1443,7 +1443,7 @@ bone density.
 
 ## Reading the data
 Values separated by spaces:
-```{r}
+```{r inference-R-91}
 my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
 rats <- read_delim(my_url," ")
 ```
@@ -1451,20 +1451,20 @@ rats <- read_delim(my_url," ")
 ## The data (some random rows) 
 
 \small
-```{r}
+```{r inference-R-92}
 rats %>% sample_n(12)
 ```
 \normalsize
 
 ## Boxplots
 
-```{r, fig.height=3.7}
+```{r inference-R-93, fig.height=3.7}
 ggplot(rats,aes(y=density,x=group))+geom_boxplot()
 ```
 
 ## Or, arranging groups in data (logical) order
 
-```{r, fig.height=3.5}
+```{r inference-R-94, fig.height=3.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
@@ -1479,7 +1479,7 @@ others.
 
 ## Testing: ANOVA in R
 
-```{r}
+```{r inference-R-95}
 rats.aov=aov(density~group,data=rats)
 summary(rats.aov)
 ```
@@ -1495,7 +1495,7 @@ differences”, but doesn’t tell us which groups different.
 via two-sample t.
 - First pick out each group:
 
-```{r}
+```{r inference-R-96}
 rats %>% filter(group=="Control") -> controls
 rats %>% filter(group=="Lowjump") -> lows
 rats %>% filter(group=="Highjump") -> highs
@@ -1503,7 +1503,7 @@ rats %>% filter(group=="Highjump") -> highs
 
 ## Control vs. low
 
-```{r}
+```{r inference-R-97}
 t.test(controls$density,lows$density)
 ```
 
@@ -1511,7 +1511,7 @@ No sig. difference here.
 
 ## Control vs. high
 
-```{r}
+```{r inference-R-98}
 t.test(controls$density,highs$density)
 ```
 
@@ -1519,7 +1519,7 @@ These are different.
 
 ## Low vs. high
 
-```{r}
+```{r inference-R-99}
 t.test(lows$density,highs$density)
 ```
 
@@ -1561,20 +1561,20 @@ different.
 
 ## Tukey on rat data
 
-```{r, echo=F}
+```{r inference-R-100, echo=F}
 width=getOption("width")
 options(width=60)
 ```
 
 
 \small
-```{r}
+```{r inference-R-101}
 rats.aov=aov(density~group,data=rats)
 TukeyHSD(rats.aov)
 ```
 \normalsize
 
-```{r, echo=F}
+```{r inference-R-102, echo=F}
 options(width=width)
 ```
 
@@ -1601,7 +1601,7 @@ $\alpha = 0.01$.
 
 ## Checking assumptions
 
-```{r, fig.height=3.5}
+```{r inference-R-103, fig.height=3.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
@@ -1612,7 +1612,7 @@ Assumptions:
 
 ## Normal quantile plots by group
 
-```{r, fig.height=3.5}
+```{r inference-R-104, fig.height=3.5}
 ggplot(rats, aes(sample = density)) + stat_qq() + 
   stat_qq_line() + facet_wrap( ~ group)
 ```
@@ -1636,7 +1636,7 @@ number of groups.
 - Find median of all bone densities, regardless of group:
 
 \small
-```{r}
+```{r inference-R-105}
 (rats %>% summarize(med = median(density)) %>% pull(med) -> m)
 ```
 \normalsize
@@ -1644,7 +1644,7 @@ number of groups.
 - Count up how many observations in each group above or below
 overall median:
 
-```{r}
+```{r inference-R-106}
 tab = with(rats, table(group, density > m))
 tab
 ```
@@ -1652,7 +1652,7 @@ tab
 
 ## Mood’s median test 2/4 
 
-```{r}
+```{r inference-R-107}
 tab
 ```
 
@@ -1666,7 +1666,7 @@ median.
 - Test whether association between group and being above/below
 overall median significant using chi-squared test for association:
 
-```{r}
+```{r inference-R-108}
 chisq.test(tab,correct=F)
 ```
 
@@ -1677,7 +1677,7 @@ depends on group.
 ## Mood’s median test 4/4 
 Or with `median_test` from `smmr`, same as before. 
 
-```{r}
+```{r inference-R-109}
 median_test(rats,density,group)
 ```
 
@@ -1690,7 +1690,7 @@ median_test(rats,density,group)
 pairs of groups via (2-sample) Mood’s median tests, then adjust
 P-values by multiplying by number of 2-sample Mood tests done (Bonferroni):
 
-```{r}
+```{r inference-R-110}
 pairwise_median_test(rats,density,group)
 ```
 
@@ -1702,7 +1702,7 @@ both normality and equal spreads.
 - When normality OK but spreads differ, Welch ANOVA way to go.
 - Welch ANOVA done by `oneway.test` as shown (for illustration):
 
-```{r}
+```{r inference-R-111}
 oneway.test(density~group,data=rats)
 ```
 
@@ -1714,7 +1714,7 @@ oneway.test(density~group,data=rats)
 - Lives in package `PMCMRplus` (also `userfriendlyscience`). Install
 first.
 
-```{r, eval=F}
+```{r inference-R-112, eval=F}
 library(PMCMRplus)
 ```
 

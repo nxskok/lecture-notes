@@ -1,0 +1,93 @@
+---
+title: "All the slides"
+author: ""
+header-includes:
+   - \usepackage{multicol}
+output: 
+  beamer_presentation:
+    latex_engine: lualatex
+    slide_level: 2
+    df_print: kable
+    theme: "AnnArbor"
+    colortheme: "dove"
+urlcolor: blue
+---
+
+```{r all-slides-1}
+list.files(".", pattern = "*_slides.pdf")
+```
+
+
+
+```{r all-slides-2, child="preliminaries.Rmd", echo=F}
+```
+
+C32/C33
+
+# Running R
+
+```{r all-slides-3, child="running_R.Rmd"}
+```
+
+# Choosing things in a dataframe
+
+```{r all-slides-4, child="choosing_R.Rmd"}
+```
+
+# Inference part 2
+
+```{r all-slides-5, child="inference_2_R.Rmd"}
+```
+
+# The bootstrap for sampling distributions
+
+```{r all-slides-10, child="bootstrap_R.Rmd"}
+```
+
+
+#  Inference part 3
+
+```{r all-slides-7, child="inference_3_R.Rmd"}
+```
+
+# Inference part 5
+
+```{r all-slides-8, child="inference_5_R.Rmd"}
+```
+
+# Case study: windmill
+
+```{r all-slides-9, child="windmill.Rmd"}
+```
+
+
+C33 only
+
+
+# The bootstrap in more detail
+
+```{r all-slides-6, child="bootstrap.Rmd" }
+```
+
+D29
+
+# ANOVA revisited
+
+```{r all-slides-11, child="bAnova.Rmd"}
+```
+
+# Cluster analysis
+
+```{r all-slides-12, child="bCluster.Rmd"}
+```
+
+# Principal components
+
+```{r all-slides-13, child="bPrincomp.Rmd"}
+```
+
+# Factor analysis
+
+```{r all-slides-14, child="bFactor.Rmd"}
+```
+

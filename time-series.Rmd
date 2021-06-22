@@ -2,14 +2,14 @@
 
 Uses my package `mkac` which is on Github. Install with:
 
-```{r, eval=F}
+```{r time-series-1, eval=F}
 library(devtools)
 install_github("nxskok/mkac")
 ```
 
 Plus these. You might need to install some of them first:
 
-```{r, eval=F}
+```{r time-series-2, eval=F}
 library(ggfortify)
 library(forecast)
 library(tidyverse)
@@ -18,7 +18,7 @@ library(mkac)
 
 ## Time trends
 
-```{r,echo=FALSE}
+```{r time-series-3,echo=FALSE}
 knitr::opts_chunk$set(fig.cap="")
 ```
 
@@ -34,7 +34,7 @@ knitr::opts_chunk$set(fig.cap="")
 Global mean temperature every year since 1880:
 
 \small
-```{r, message=F, warning=F, fig.height=3.3}
+```{r time-series-4, message=F, warning=F, fig.height=3.3}
 temp=read_csv("temperature.csv")
 ggplot(temp, aes(x=year, y=temperature)) + 
   geom_point() + geom_smooth()
@@ -46,7 +46,7 @@ ggplot(temp, aes(x=year, y=temperature)) +
 * Temperatures increasing on average over time, but pattern very irregular.
 * Find (Pearson) correlation with time, and test for significance:
 
-```{r}
+```{r time-series-5}
 with(temp, cor.test(temperature,year))
 ```
 
@@ -61,7 +61,7 @@ Tests for *linear* trend with *normal* data.
 
 Alternative, Kendall (rank) correlation, which just tests for monotone trend (anything upward, anything downward) and is resistant to outliers:
 
-```{r}
+```{r time-series-6}
 with(temp, cor.test(temperature,year,method="kendall"))
 ```
 
@@ -74,7 +74,7 @@ Kendall correlation usually closer to 0 for same data, but here P-values compara
 - Use my package `mkac`:
 
 \footnotesize
-```{r}
+```{r time-series-7}
 kendall_Z_adjusted(temp$temperature)
 ```
 \normalsize
@@ -97,7 +97,7 @@ kendall_Z_adjusted(temp$temperature)
 
 ## Ordinary regression against time
 
-```{r}
+```{r time-series-8}
 lm(temperature~year, data=temp) %>% tidy() -> temp.tidy
 temp.tidy
 ```
@@ -105,7 +105,7 @@ temp.tidy
 - Slope about 0.006 degrees per year 
 - about this many degrees over course of data):
 
-```{r}
+```{r time-series-9}
 temp.tidy %>% pluck("estimate", 2)*130
 ```
 
@@ -114,7 +114,7 @@ temp.tidy %>% pluck("estimate", 2)*130
 
 also from `mkac`:
 
-```{r}
+```{r time-series-10}
 theil_sen_slope(temp$temperature)
 ```
 
@@ -134,14 +134,14 @@ theil_sen_slope(temp$temperature)
 
 Slope assumes that the rate of change is same over all years, but trend seemed to be accelerating:
 
-```{r, fig.height=3, message=F}
+```{r time-series-11, fig.height=3, message=F}
 ggplot(temp, aes(x=year, y=temperature)) + 
   geom_point() + geom_smooth()
 ```
 
 ## Pre-1970 and post-1970:
 
-```{r}
+```{r time-series-12}
 temp %>% 
   mutate(time_period=
            ifelse(year<=1970, "pre-1970", "post-1970")) %>% 
@@ -160,7 +160,7 @@ Theil-Sen slope is very nearly *four times* as big since 1970 vs. before.
 
 * Age at death of Kings and Queens of England since William the Conqueror (1066):
 
-```{r}
+```{r time-series-13}
 kings=read_table("kings.txt", col_names=F)
 ```
 
@@ -168,7 +168,7 @@ Data in one long column `X1`, so `kings` is data frame with one column.
 
 ## Turn into `ts` time series object
 
-```{r}
+```{r time-series-14}
 kings.ts=ts(kings)
 kings.ts
 ```
@@ -178,7 +178,7 @@ kings.ts
 
 `autoplot` from `ggfortify` gives time plot:
 
-```{r,"Kings-Time-Series", fig.height=3.7}
+```{r time-series-15,"Kings-Time-Series", fig.height=3.7}
 autoplot(kings.ts)
 ```
 
@@ -210,7 +210,7 @@ Kings time series seems to have:
 
 In R, `diff`:
 
-```{r}
+```{r time-series-16}
 kings.diff.ts=diff(kings.ts)
 ```
 
@@ -229,7 +229,7 @@ autoplot(kings.diff.ts)
 from January 1946 to December 1959:
 
 \small
-```{r, message=F}
+```{r time-series-17, message=F}
 ny=read_table("nybirths.txt",col_names=F)
 ny
 ```
@@ -237,19 +237,19 @@ ny
 
 ## As a time series
 
-```{r, echo=F}
+```{r time-series-18, echo=F}
 w=getOption("width")
 options(width=100)
 ```
 
 \tiny
-```{r}
+```{r time-series-19}
 ny.ts=ts(ny,freq=12,start=c(1946,1))
 ny.ts
 ```
 \normalsize
 
-```{r, echo=F}
+```{r time-series-20, echo=F}
 options(width=w)
 ```
 
@@ -269,7 +269,7 @@ Printing formats nicely.
 
 * Time plot shows extra pattern:
 
-```{r,fig.cap="", fig.height=3.8}
+```{r time-series-21,fig.cap="", fig.height=3.8}
 autoplot(ny.ts)
 ```
 
@@ -283,7 +283,7 @@ autoplot(ny.ts)
 
 Does differencing help here? Looks stationary, but some regular spikes:
 
-```{r, fig.height=3.6}
+```{r time-series-22, fig.height=3.6}
 ny.diff.ts=diff(ny.ts)
 autoplot(ny.diff.ts)
 ```
@@ -294,7 +294,7 @@ autoplot(ny.diff.ts)
 
 A visual (using original data):
 
-```{r fig.height=3.5}
+```{r time-series-23, fig.height=3.5}
 ny.d <- decompose(ny.ts) 
 ny.d %>% autoplot()
 ```
@@ -313,24 +313,24 @@ Shows:
 
 Fitted seasonal part is same every year, births lowest in February and highest in July:
 
-```{r, echo=F}
+```{r time-series-24, echo=F}
 w=getOption("width")
 options(width=100)
 ```
 
 
 \tiny
-```{r}
+```{r time-series-25}
 ny.d$seasonal
 ```
 \normalsize
 
-```{r, echo=F}
+```{r time-series-26, echo=F}
 options(width=w)
 ```
 
 
-```{r, echo=FALSE}
+```{r time-series-27, echo=FALSE}
 set.seed(457299)
 ```
 
@@ -352,7 +352,7 @@ autoplot(wn.ts)
 
 This means moving a time series one (or more) steps back in time:
 
-```{r}
+```{r time-series-28}
 x=rnorm(5)
 tibble(x) %>% mutate(x_lagged=lag(x)) -> with_lagged
 with_lagged
@@ -362,7 +362,7 @@ Gain a missing because there is nothing before the first observation.
 
 ##  Lagging white noise
 
-```{r, warning=F, fig.height=4}
+```{r time-series-29, warning=F, fig.height=4}
 tibble(wn) %>% mutate(wn_lagged=lag(wn)) -> wn_with_lagged
 ggplot(wn_with_lagged, aes(y=wn, x=wn_lagged))+geom_point()
 with(wn_with_lagged, cor.test(wn, wn_lagged, use="c")) # ignore the missing value
@@ -377,7 +377,7 @@ If you know about white noise at one time point, you know *nothing* about it at 
 On the other hand, this:
 
 \footnotesize
-```{r}
+```{r time-series-30}
 tibble(age=kings$X1) %>% 
   mutate(age_lagged=lag(age)) -> kings_with_lagged
 with(kings_with_lagged, cor.test(age, age_lagged))
@@ -386,7 +386,7 @@ with(kings_with_lagged, cor.test(age, age_lagged))
 
 ## Correlation with next value?
 
-```{r, warning=F, fig.height=4}
+```{r time-series-31, warning=F, fig.height=4}
 ggplot(kings_with_lagged, aes(x=age_lagged, y=age)) + 
   geom_point()
 ```
@@ -394,7 +394,7 @@ ggplot(kings_with_lagged, aes(x=age_lagged, y=age)) +
 ##  Two steps back:
 
 \small
-```{r}
+```{r time-series-32}
 kings_with_lagged %>% 
   mutate(age_lag_2=lag(age_lagged)) %>% 
   with(., cor.test(age, age_lag_2))
@@ -407,7 +407,7 @@ Still a correlation two steps back, but smaller (and no longer significant).
 
 Correlation of time series with *itself* one, two,... time steps back is useful idea, called **autocorrelation**. Make a plot of it with `acf` and `autoplot`. Here, white noise:
 
-```{r, fig.height=3.3}
+```{r time-series-33, fig.height=3.3}
 acf(wn.ts, plot=F) %>% autoplot()
 ```
 
@@ -417,7 +417,7 @@ Autocorrelations work best on *stationary* series.
 
 ##  Kings, differenced
 
-```{r, fig.height=4}
+```{r time-series-34, fig.height=4}
 acf(kings.diff.ts, plot=F) %>% autoplot()
 ```
 
@@ -430,7 +430,7 @@ Negative autocorrelation at lag 1, nothing beyond that.
 
 ## NY births, differenced
 
-```{r, fig.height=4}
+```{r time-series-35, fig.height=4}
 acf(ny.diff.ts, plot=F) %>% autoplot()
 ```
 
@@ -445,28 +445,28 @@ acf(ny.diff.ts, plot=F) %>% autoplot()
 
 Monthly sales for a beach souvenir shop in Queensland, Australia:
 
-```{r, echo=F}
+```{r time-series-36, echo=F}
 w=getOption("width")
 options(width=80)
 ```
 
 
 \scriptsize
-```{r, message=F}
+```{r time-series-37, message=F}
 souv=read_table("souvenir.txt", col_names=F)
 souv.ts=ts(souv,frequency=12,start=1987)
 souv.ts
 ```
 \normalsize
 
-```{r, echo=F}
+```{r time-series-38, echo=F}
 options(width=w)
 ```
 
 
 ##  Plot of souvenir sales
 
-```{r, fig.height=4}
+```{r time-series-39, fig.height=4}
 autoplot(souv.ts)
 ```
 
@@ -480,14 +480,14 @@ autoplot(souv.ts)
 
 Fix non-constant variability first by taking logs:
 
-```{r, fig.height=3.5}
+```{r time-series-40, fig.height=3.5}
 souv.log.ts=log(souv.ts)
 autoplot(souv.log.ts)
 ```
 
 ##  Mean still not constant, so try taking differences
 
-```{r, fig.height=4}
+```{r time-series-41, fig.height=4}
 souv.log.diff.ts=diff(souv.log.ts)
 autoplot(souv.log.diff.ts)
 ```
@@ -499,7 +499,7 @@ autoplot(souv.log.diff.ts)
 
 ##  Decomposing to see the seasonal effect
 
-```{r, fig.height=4}
+```{r time-series-42, fig.height=4}
 souv.d=decompose(souv.log.diff.ts)
 autoplot(souv.d)
 ```
@@ -509,18 +509,18 @@ autoplot(souv.d)
 **Big** drop in one month's differences. Look at seasonal component to see which:
 
 
-```{r, echo=F}
+```{r time-series-43, echo=F}
 w=getOption("width")
 options(width=90)
 ```
 
 \tiny
-```{r}
+```{r time-series-44}
 souv.d$seasonal
 ```
 \normalsize
 
-```{r, echo=F}
+```{r time-series-45, echo=F}
 options(width=w)
 ```
 
@@ -528,7 +528,7 @@ January.
 
 ##  Autocorrelations
 
-```{r, fig.height=4}
+```{r time-series-46, fig.height=4}
 acf(souv.log.diff.ts, plot=F) %>% autoplot()
 ```
 
@@ -542,7 +542,7 @@ acf(souv.log.diff.ts, plot=F) %>% autoplot()
 
 - Here's generation of MA(1) process, with autocorrelation at lag 1 but not otherwise:
 
-```{r}
+```{r time-series-47}
 beta=1
 tibble(e=rnorm(100)) %>% 
   mutate(e_lag=lag(e)) %>% 
@@ -553,7 +553,7 @@ tibble(e=rnorm(100)) %>%
 ## The series
 
 \small
-```{r}
+```{r time-series-48}
 ma
 ```
 \normalsize
@@ -571,7 +571,7 @@ ma
 
 Significant at lag 1, but beyond, just chance:
 
-```{r, fig.height=3.5}
+```{r time-series-49, fig.height=3.5}
 acf(ma$y, plot=F, na.rm=T) %>% autoplot()
 ```
 
@@ -581,7 +581,7 @@ acf(ma$y, plot=F, na.rm=T) %>% autoplot()
 
 Another kind of time series is AR process, where each value depends on previous one, like this (loop):
 
-```{r}
+```{r time-series-50}
 e=rnorm(100)
 x=numeric(0)
 x[1]=0
@@ -594,7 +594,7 @@ for (i in 2:100)
 
 ## The series
 
-```{r}
+```{r time-series-51}
 x
 ```
 
@@ -609,7 +609,7 @@ x
 
 ##  ACF for AR(1) series
 
-```{r, fig.height=4}
+```{r time-series-52, fig.height=4}
 acf(x, plot=F) %>% autoplot()
 ```
 
@@ -617,7 +617,7 @@ acf(x, plot=F) %>% autoplot()
 
 This cuts off for an AR series:
 
-```{r, fig.height=3.7}
+```{r time-series-53, fig.height=3.7}
 pacf(x, plot=F) %>% autoplot()
 ```
 
@@ -625,7 +625,7 @@ The lag-2 autocorrelation should not be significant, and isn't.
 
 ##  PACF for an MA series decays slowly
 
-```{r, fig.height=4}
+```{r time-series-54, fig.height=4}
 pacf(ma$y, plot=F) %>% autoplot()
 ```
 
@@ -651,7 +651,7 @@ Starting from a series with constant variability (eg. transform first to get it,
 
 ##  Anatomy of `auto.arima` output
 
-```{r}
+```{r time-series-55}
 auto.arima(ma$y)
 ```
 
@@ -672,7 +672,7 @@ Comments over.
 Run `auto.arima` with `trace=T`:
 
 \small
-```{r}
+```{r time-series-56}
 auto.arima(ma$y,trace=T)
 ```
 \normalsize
@@ -682,7 +682,7 @@ Also possible were MA(2) and ARMA(1,1), both with AICc=273.7.
 
 ##  Doing it all the new way: white noise
 
-```{r}
+```{r time-series-57}
 wn.aa=auto.arima(wn.ts)
 wn.aa
 ```
@@ -691,13 +691,13 @@ Best fit *is* white noise (no AR, no MA, no differencing).
 
 ##  Forecasts:
 
-```{r, echo=F}
+```{r time-series-58, echo=F}
 options(width=65)
 ```
 
 
 \small
-```{r}
+```{r time-series-59}
 forecast(wn.aa)
 ```
 \normalsize
@@ -707,7 +707,7 @@ Forecasts all 0, since the past doesn't help to predict future.
 
 ##  MA(1)
 
-```{r}
+```{r time-series-60}
 y.aa=auto.arima(ma$y)
 y.aa
 y.f=forecast(y.aa)
@@ -715,14 +715,14 @@ y.f=forecast(y.aa)
 
 ##  Plotting the forecasts for MA(1) 
 
-```{r, fig.height=4}
+```{r time-series-61, fig.height=4}
 autoplot(y.f)
 ```
 
 
 ##  AR(1)
 
-```{r}
+```{r time-series-62}
 x.aa=auto.arima(x)
 x.aa
 ```
@@ -731,27 +731,27 @@ Oops! Thought it was MA(1), not AR(1)!
 
 ## Fit right AR(1) model:
 
-```{r}
+```{r time-series-63}
 x.arima=arima(x,order=c(1,0,0))
 x.arima
 ```
 
 ##  Forecasts for `x`
 
-```{r, fig.height=4}
+```{r time-series-64, fig.height=4}
 forecast(x.arima) %>% autoplot()
 ```
 
 ## Comparing wrong model:
 
-```{r, fig.height=4}
+```{r time-series-65, fig.height=4}
 forecast(x.aa) %>% autoplot()
 ```
 
 
 ##  Kings
   
-```{r}
+```{r time-series-66}
 kings.aa=auto.arima(kings.ts)
 kings.aa
 ```
@@ -759,7 +759,7 @@ kings.aa
 ##  Kings forecasts:
 
 \small
-```{r}
+```{r time-series-67}
 kings.f=forecast(kings.aa)
 kings.f
 ```
@@ -767,7 +767,7 @@ kings.f
 
 ##  Kings forecasts, plotted
 
-```{r, fig.height=4}
+```{r time-series-68, fig.height=4}
 autoplot(kings.f) + labs(x="index", y= "age at death")
 ```
 
@@ -779,7 +779,7 @@ autoplot(kings.f) + labs(x="index", y= "age at death")
 Very complicated:
 
 \small
-```{r}
+```{r time-series-69}
 ny.aa=auto.arima(ny.ts)
 ny.aa
 ```
@@ -791,7 +791,7 @@ ny.aa
 Not *quite* same every year:
 
 \tiny
-```{r}
+```{r time-series-70}
 ny.f=forecast(ny.aa,h=36)
 ny.f
 ```
@@ -800,14 +800,14 @@ ny.f
 
 ##  Plotting the forecasts
 
-```{r, fig.height=4}
+```{r time-series-71, fig.height=4}
 autoplot(ny.f)+labs(x="time", y="births")
 ```
 
 
 ##  Log-souvenir sales
 
-```{r}
+```{r time-series-72}
 souv.aa=auto.arima(souv.log.ts)
 souv.aa
 souv.f=forecast(souv.aa,h=27)
@@ -818,7 +818,7 @@ souv.f=forecast(souv.aa,h=27)
 Differenced series showed low value for January (large drop). December highest, Jan and Feb lowest:
 
 \scriptsize
-```{r}
+```{r time-series-73}
 souv.f
 souv.f$mean
 exp(souv.f$mean)
@@ -828,14 +828,14 @@ print.default(souv.f)
 
 ##  Plotting the forecasts
 
-```{r, fig.height=4}
+```{r time-series-74, fig.height=4}
 autoplot(souv.f)
 ```
 
 
 ##  Global mean temperatures, revisited
 
-```{r}
+```{r time-series-75}
 temp.ts=ts(temp$temperature,start=1880)
 temp.aa=auto.arima(temp.ts)
 temp.aa
@@ -843,7 +843,7 @@ temp.aa
 
 ##  Forecasts
 
-```{r, fig.height=4}
+```{r time-series-76, fig.height=4}
 temp.f=forecast(temp.aa)
 autoplot(temp.f)+labs(x="year", y="temperature")
 ```

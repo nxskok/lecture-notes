@@ -40,7 +40,7 @@ male   42       37      85
 all frequencies.
 
 \footnotesize
-```{r message=F}
+```{r bMultiway-post-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/eyewear.txt"
 (eyewear <- read_delim(my_url, " "))
 ```
@@ -49,7 +49,7 @@ my_url <- "http://ritsokiguess.site/datafiles/eyewear.txt"
 
 
 ##  Tidying the data
-```{r size="footnotesize"}
+```{r bMultiway-post-2, size="footnotesize"}
 eyewear %>%
   pivot_longer(contacts:none, names_to="eyewear", 
                values_to="frequency") -> eyes
@@ -61,7 +61,7 @@ eyes
 - use `pivot_longer`
 - or this (we use it again later):
 
-```{r}
+```{r bMultiway-post-3}
 xt <- xtabs(frequency ~ gender + eyewear, data = eyes)
 xt
 ```
@@ -75,7 +75,7 @@ xt
 - `glm`
 with `poisson` family.
 
-```{r }
+```{r bMultiway-post-4 }
 eyes.1 <- glm(frequency ~ gender * eyewear,
   data = eyes,
   family = "poisson"
@@ -92,7 +92,7 @@ summary(eyes.1)
 ##  What can we get rid of?
 
 \small    
-```{r }
+```{r bMultiway-post-5 }
 drop1(eyes.1, test = "Chisq")
 ```
  
@@ -119,7 +119,7 @@ step. Significant = must stay.
 Original table:
 
 \footnotesize
-```{r }
+```{r bMultiway-post-6 }
 xt
 ```
 \normalsize
@@ -128,7 +128,7 @@ xt
 Calculate eg. row proportions like this:
 
 \small
-```{r }
+```{r bMultiway-post-7 }
 prop.table(xt, margin = 1)
 ```
 \normalsize
@@ -148,7 +148,7 @@ prop.table(xt, margin = 1)
 * Suppose table had been as shown below:
 
 \scriptsize
-```{r, message=F}
+```{r bMultiway-post-8, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/eyewear2.txt"
 eyewear2 <- read_table(my_url)
 eyewear2
@@ -170,7 +170,7 @@ prop.table(xt2, margin = 1)
 
 
 ##  Analysis for revised data
-```{r}
+```{r bMultiway-post-9}
 eyes.2 <- glm(frequency ~ gender * eyewear,
   data = eyes2,
   family = "poisson"
@@ -185,7 +185,7 @@ No longer any association. Take out interaction.
 
 ##  No interaction
 \small
-```{r }
+```{r bMultiway-post-10 }
 eyes.3 <- update(eyes.2, . ~ . - gender:eyewear)
 drop1(eyes.3, test = "Chisq")
 ```
@@ -238,7 +238,7 @@ normal normalweight no 30
 
 ##  First step
 \small
-```{r, message=F}
+```{r bMultiway-post-11, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/ecg.txt"
 chest <- read_delim(my_url, " ")
 chest
@@ -256,7 +256,7 @@ That 3-way interaction comes out.
 
 ##  Removing the 3-way interaction
 \small
-```{r}
+```{r bMultiway-post-12}
 chest.2 <- update(chest.1, . ~ . - ecg:bmi:smoke)
 drop1(chest.2, test = "Chisq")
 ```
@@ -268,7 +268,7 @@ At $\alpha=0.05$, `bmi:smoke` comes out.
 
 ##  Removing `bmi:smoke`
 \small
-```{r}
+```{r bMultiway-post-13}
 chest.3 <- update(chest.2, . ~ . - bmi:smoke)
 drop1(chest.3, test = "Chisq")
 ```
@@ -289,12 +289,12 @@ own and `smoke` on its own, but *not* the combination
 of both.
 
 * `ecg:bmi` table:
-```{r }
+```{r bMultiway-post-14 }
 xt <- xtabs(count ~ ecg + bmi, data = chest)
 xt
 ```
 
-```{r}
+```{r bMultiway-post-15}
 prop.table(xt, margin = 2)
 ```
      
@@ -310,12 +310,12 @@ knowing about BMI says something about likely ECG.
 
 
 * `ecg:smoke` table:
-```{r }
+```{r bMultiway-post-16 }
 xt <- xtabs(count ~ ecg + smoke, data = chest)
 xt
 ```
 
-```{r}
+```{r bMultiway-post-17}
 prop.table(xt, margin = 2)
 ```
    
@@ -326,7 +326,7 @@ normal and abnormal ECG.
 
 * Don't look at `smoke:bmi` table since not significant. 
 
-```{r}
+```{r bMultiway-post-18}
 xtabs(count ~ bmi + smoke, data = chest)
 ```
 
@@ -381,7 +381,7 @@ Seattle     1841         305       201         61
 
 - Read in:
 
-```{r, message=F}
+```{r bMultiway-post-19, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/airlines.txt"
 airlines <- read_table2(my_url)
 airlines
@@ -391,7 +391,7 @@ airlines
 
 the modern way
 
-```{r}
+```{r bMultiway-post-20}
 airlines %>% 
    pivot_longer(-airport, names_to = c("airline", "status"), names_sep = "_", values_to = "freq") -> punctual
 ```
@@ -399,7 +399,7 @@ airlines %>%
 
 * Some tidying gets us the right layout, with frequencies all in
 one column and the airline and delayed/on time status separated out: 
-```{r message=F, size="small"}
+```{r bMultiway-post-21, message=F, size="small"}
 airlines %>%
   gather(line.status, freq, contains("_")) %>%
   separate(line.status, c("airline", "status")) -> punctual
@@ -413,7 +413,7 @@ punctual
 ##  The data frame `punctual`
 
 \scriptsize
-```{r echo=F}
+```{r bMultiway-post-22, echo=F}
 punctual
 ```
 \normalsize
@@ -426,7 +426,7 @@ punctual
 * Two-step process: get appropriate subtable:
 
 \small
-```{r }
+```{r bMultiway-post-23 }
 xt <- xtabs(freq ~ airline + status, data = punctual)
 xt
 ```
@@ -437,7 +437,7 @@ xt
 * and then calculate appropriate proportions:
 
 \small
-```{r }
+```{r bMultiway-post-24 }
 prop.table(xt, margin = 1)
 ```
 \normalsize
@@ -449,7 +449,7 @@ prop.table(xt, margin = 1)
 ##  Proportion delayed by airport, for each airline
 
 \footnotesize
-```{r}
+```{r bMultiway-post-25}
 xt <- xtabs(freq ~ airline + status + airport, data = punctual)
 xp <- prop.table(xt, margin = c(1, 3))
 xp
@@ -489,7 +489,7 @@ Total & 13.3 & 10.9 \\
 
 
 ## Model 1 and output
-```{r}
+```{r bMultiway-post-26}
 punctual.1 <- glm(freq ~ airport * airline * status,
   data = punctual, family = "poisson"
 )
@@ -501,7 +501,7 @@ drop1(punctual.1, test = "Chisq")
 ##  Remove 3-way interaction
 
 \footnotesize
-```{r}
+```{r bMultiway-post-27}
 punctual.2 <- update(punctual.1, ~ . - airport:airline:status)
 drop1(punctual.2, test = "Chisq")
 ```
@@ -515,7 +515,7 @@ Stop here.
 
 * `airline:status`:
 
-```{r }
+```{r bMultiway-post-28 }
 xt <- xtabs(freq ~ airline + status, data = punctual)
 prop.table(xt, margin = 1)
 ```
@@ -533,7 +533,7 @@ prop.table(xt, margin = 1)
 
 
 * `airport:status`:
-```{r }
+```{r bMultiway-post-29 }
 xt <- xtabs(freq ~ airport + status, data = punctual)
 xt
 prop.table(xt, margin = 1)
@@ -552,7 +552,7 @@ flights into Phoenix are usually on time.
 
 
 * `airport:airline`:
-```{r }
+```{r bMultiway-post-30 }
 xt <- xtabs(freq ~ airport + airline, data = punctual)
 xt
 prop.table(xt, margin = 2)
@@ -647,7 +647,7 @@ advanced limited yes yes 5
 ## Reading in data
 
 \small
-```{r, message=F}
+```{r bMultiway-post-31, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/cancer.txt"
 cancer <- read_delim(my_url, " ")
 cancer
@@ -658,7 +658,7 @@ cancer
 ##  Model 1
 
 hopefully looking familiar by now:
-```{r}
+```{r bMultiway-post-32}
 cancer.1 <- glm(freq ~ stage * operation * xray * survival,
   data = cancer, family = "poisson"
 )
@@ -671,7 +671,7 @@ cancer.1 <- glm(freq ~ stage * operation * xray * survival,
 See what we can remove:
 
 \scriptsize
-```{r}
+```{r bMultiway-post-33}
 drop1(cancer.1, test = "Chisq")
 ```
 \normalsize
@@ -681,7 +681,7 @@ Non-significant interaction can come out.
 ##  Model 2
 
 \scriptsize
-```{r}
+```{r bMultiway-post-34}
 cancer.2 <- update(cancer.1, . ~ . - stage:operation:xray:survival)
 drop1(cancer.2, test = "Chisq")
 ```
@@ -692,7 +692,7 @@ Least significant term is `stage:xray:survival`: remove.
 ##  Take out `stage:xray:survival`
 
 \scriptsize
-```{r}
+```{r bMultiway-post-35}
 cancer.3 <- update(cancer.2, . ~ . - stage:xray:survival)
 drop1(cancer.3, test = "Chisq")
 ```
@@ -705,7 +705,7 @@ drop1(cancer.3, test = "Chisq")
 ##  Remove `operation:xray:survival`
 
 \scriptsize
-```{r}
+```{r bMultiway-post-36}
 cancer.4 <- update(cancer.3, . ~ . - operation:xray:survival)
 drop1(cancer.4, test = "Chisq")
 ```
@@ -730,7 +730,7 @@ remove) `xray:survival`.
 ##  Remove `xray:survival`
 
 \scriptsize
-```{r}
+```{r bMultiway-post-37}
 cancer.5 <- update(cancer.4, . ~ . - xray:survival)
 drop1(cancer.5, test = "Chisq")
 ```
@@ -741,7 +741,7 @@ drop1(cancer.5, test = "Chisq")
 ##  Remove `stage:operation:survival`
 
 \scriptsize
-```{r}
+```{r bMultiway-post-38}
 cancer.6 <- update(cancer.5, . ~ . - stage:operation:survival)
 drop1(cancer.6, test = "Chisq")
 ```
@@ -753,7 +753,7 @@ drop1(cancer.6, test = "Chisq")
 Remove `operation:survival`.  
 
 \footnotesize
-```{r size="footnotesize"}
+```{r bMultiway-post-39, size="footnotesize"}
 cancer.7 <- update(cancer.6, . ~ . - operation:survival)
 drop1(cancer.7, test = "Chisq")
 ```
@@ -769,7 +769,7 @@ Finally done!
 "response").
 
 * Only significant such term is `stage:survival`:
-```{r }
+```{r bMultiway-post-40 }
 xt <- xtabs(freq ~ stage + survival, data = cancer)
 xt
 prop.table(xt, margin = 1)
@@ -789,7 +789,7 @@ survival.
 ##  What about that other interaction?
 
 \footnotesize
-```{r }
+```{r bMultiway-post-41 }
 xt <- xtabs(freq ~ operation + xray + stage, data = cancer)
 ftable(prop.table(xt, margin = 3))
 ```

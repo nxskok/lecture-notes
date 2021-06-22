@@ -14,10 +14,10 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r numsum-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
-```{r, child="numsum_R.Rmd"}
+```{r numsum-R-slides-2, child="numsum_R.Rmd"}
 ```
 

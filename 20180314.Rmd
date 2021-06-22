@@ -27,7 +27,7 @@ output: html_notebook
 ## Packages
 
   
-```{r}
+```{r 20180314-1}
 library(MASS)
 library(tidyverse)
 library(ggrepel)
@@ -59,7 +59,7 @@ overwrite each other.
 ## Example 1: seed yields and weights
 
 
-```{r}
+```{r 20180314-2}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/manova1.txt"
 hilo=read_delim(my_url," ")
 g=ggplot(hilo,aes(x=yield,y=weight,
@@ -67,7 +67,7 @@ g=ggplot(hilo,aes(x=yield,y=weight,
 ``` 
 
 
-```{r}
+```{r 20180314-3}
 g
 ```   
 
@@ -86,7 +86,7 @@ g
 
 ## Basic discriminant analysis
 
-```{r}
+```{r 20180314-4}
 hilo.1=lda(fertilizer~yield+weight,data=hilo)
 ``` 
 
@@ -100,7 +100,7 @@ hilo.1=lda(fertilizer~yield+weight,data=hilo)
 ## Output
 
   
-```{r}
+```{r 20180314-5}
 hilo.1
 ``` 
 
@@ -146,14 +146,14 @@ hilo.1
   
 Feed output from LDA into `predict`:
 
-```{r}
+```{r 20180314-6}
 hilo.pred=predict(hilo.1)
 names(hilo.pred)
 ``` 
 
 Component $x$ contains LD score(s), here in descending order:
 
-```{r}
+```{r 20180314-7}
 d = cbind(hilo,hilo.pred$x) %>% arrange(desc(LD1))
 d
 ``` 
@@ -166,7 +166,7 @@ High fertilizer have yield and weight high, negative LD1 scores.
   
   With one LD score, plot against (true) groups, eg. boxplot:
   
-```{r}
+```{r 20180314-8}
 ggplot(d,aes(x=fertilizer,y=LD1))+geom_boxplot()
 ```   
   
@@ -177,14 +177,14 @@ ggplot(d,aes(x=fertilizer,y=LD1))+geom_boxplot()
   
   - These are like regression slopes:
     
-```{r}
+```{r 20180314-9}
 hilo.1$scaling
 ```     
 
 - Reflect change in LD1 score for 1-unit change in variables.
 - But one-unit change in variables might not be comparable:
   
-```{r}
+```{r 20180314-10}
 summary(hilo)
 ```   
 
@@ -196,7 +196,7 @@ summary(hilo)
 
 ## What else is in `hilo.pred?`
   
-```{r}
+```{r 20180314-11}
 names(hilo.pred)
 ```
 
@@ -213,14 +213,14 @@ names(hilo.pred)
   
 ... based on `yield` and `weight`:
 
-```{r}
+```{r 20180314-12}
 cbind(hilo,predicted=hilo.pred$class)
 table(obs=hilo$fertilizer,pred=hilo.pred$class)
 ``` 
 
 Or:
 
-```{r}
+```{r 20180314-13}
 d2=tibble(obs=hilo$fertilizer,pred=hilo.pred$class)
 d2
 d2 %>% count(obs,pred)
@@ -228,7 +228,7 @@ d2 %>% count(obs,pred)
 
 or even
 
-```{r}
+```{r 20180314-14}
 d2=tibble(obs=hilo$fertilizer,pred=hilo.pred$class)
 d2 %>% count(obs,pred) %>% 
   mutate(stat=ifelse(obs==pred,"correct","wrong"))
@@ -252,7 +252,7 @@ d2 %>% count(obs,pred) %>%
   
   show how clear-cut the classification decisions were:
   
-```{r}
+```{r 20180314-15}
 pp=round(hilo.pred$posterior,4)
 d=cbind(hilo,hilo.pred$x,pp)
 d
@@ -269,7 +269,7 @@ but high `weight` makes up for it.
 
 ## Example 2: the peanuts
 
-```{r}
+```{r 20180314-16}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/peanuts.txt"
 peanuts=read_delim(my_url," ")
 peanuts 
@@ -283,7 +283,7 @@ MANOVA. Make combo of them (over):
 
 ## Location-variety combos
   
-```{r}
+```{r 20180314-17}
 peanuts.combo = peanuts %>% unite(combo,variety,location) 
 peanuts.combo
 ```  
@@ -293,20 +293,20 @@ peanuts.combo
 
 ## Discriminant analysis
   
-```{r}
+```{r 20180314-18}
 peanuts.1=lda(combo~y+smk+w,data=peanuts.combo)
 peanuts.1
 ```   
 
 Or, in pieces:
 
-```{r}
+```{r 20180314-19}
 peanuts.1$scaling
 ```
 
 and
 
-```{r}
+```{r 20180314-20}
 peanuts.1$svd
 ```
 
@@ -326,7 +326,7 @@ peanuts.1$svd
 
 ## Group means by variable
   
-```{r}
+```{r 20180314-21}
 peanuts.1$means
 ```   
 
@@ -346,7 +346,7 @@ peanuts.1$means
 
 ## The predictions and misclassification
   
-```{r}
+```{r 20180314-22}
 peanuts.pred=predict(peanuts.1)
 table(obs=peanuts.combo$combo,
       pred=peanuts.pred$class)
@@ -358,7 +358,7 @@ Actually classified very well. Only one `6_2` classified as a
 Or: 
 
 
-```{r}
+```{r 20180314-23}
 dd=tibble(obs=peanuts.combo$combo,pred=peanuts.pred$class)
 dd
 dd %>% count(obs,pred)
@@ -366,7 +366,7 @@ dd %>% count(obs,pred)
 
 or even
 
-```{r}
+```{r 20180314-24}
 dd %>% count(obs,pred) %>% 
   mutate(stat=ifelse(obs==pred,"correct","wrong"))
 ```
@@ -375,7 +375,7 @@ dd %>% count(obs,pred) %>%
 
 ## Posterior probabilities
 
-```{r}
+```{r 20180314-25}
 pp=round(peanuts.pred$posterior,2)
 peanuts.combo %>% select(-c(y,smk,w)) %>%
    cbind(.,pred=peanuts.pred$class,pp)
@@ -392,7 +392,7 @@ much. The one misclassified plant was a close call.
   - How are discriminant scores related to original variables?
   - Construct data frame with original data and discriminant
     scores side by side:
-```{r}
+```{r 20180314-26}
 peanuts.1$scaling
 lds=round(peanuts.pred$x,2)
 mm=with(peanuts.combo,
@@ -408,7 +408,7 @@ mm=with(peanuts.combo,
 
 ## Discriminant scores for data
 
-```{r}
+```{r 20180314-27}
 mm
 ```   
   
@@ -418,7 +418,7 @@ mm
 - Obs. 4 has most negative `LD2`: small `w`.
 
 Plot:
-```{r,fig.width=10}
+```{r 20180314-28,fig.width=10}
 ggplot(mm,aes(x=LD1,y=LD2,colour=combo,shape=combo))+geom_point()
   ```
 
@@ -429,7 +429,7 @@ ggplot(mm,aes(x=LD1,y=LD2,colour=combo,shape=combo))+geom_point()
   
   First and third quartiles for three response variables (reading down):
   
-```{r}
+```{r 20180314-29}
 quartiles = peanuts %>% select(y:w) %>%
   map_df(quantile, c(0.25,0.75))
 quartiles
@@ -440,7 +440,7 @@ new=with(quartiles,crossing(y,smk,w))
 
 ## The combinations
   
-```{r}
+```{r 20180314-30}
 new
 pp=predict(peanuts.1,new)
 ```   
@@ -449,7 +449,7 @@ pp=predict(peanuts.1,new)
 
 ## Predicted typical LD1 scores
   
-```{r}
+```{r 20180314-31}
 cbind(new,pp$x) %>% arrange(LD1)
 ```   
 
@@ -468,7 +468,7 @@ cbind(new,pp$x) %>% arrange(LD1)
   
 ## Plot LD1 vs. LD2, labelling by combo
   
-```{r}
+```{r 20180314-32}
 g=ggplot(mm,aes(x=LD1,y=LD2,colour=combo,
   label=combo))+geom_point()+
   geom_text_repel()+guides(colour=F) ; g
@@ -480,7 +480,7 @@ g=ggplot(mm,aes(x=LD1,y=LD2,colour=combo,
   
 See installation notes below.  
   
-```{r}
+```{r 20180314-33}
 ggbiplot::ggbiplot(peanuts.1,
   groups=factor(peanuts.combo$combo))
 ``` 
@@ -492,11 +492,11 @@ ggbiplot::ggbiplot(peanuts.1,
     `install.packages` will not work.
   - Install package `devtools` first (once):
     
-```{r, eval=F}
+```{r 20180314-34, eval=F}
 install.packages("devtools")
 ```     
   - Then install `ggbiplot` (once):
-```{r, eval=FALSE}
+```{r 20180314-35, eval=FALSE}
 library(devtools)
 install_github("vqv/ggbiplot")
 ```     
@@ -524,7 +524,7 @@ For you, take the `eval=FALSE` out of the code chunk header (once) to install th
   
   - Fitting and prediction all in one go:
   
-```{r}
+```{r 20180314-36}
 peanuts.cv=lda(combo~y+smk+w,
   data=peanuts.combo,CV=T)
 table(obs=peanuts.combo$combo,
@@ -538,7 +538,7 @@ table(obs=peanuts.combo$combo,
 
 ## Repeat of LD plot
  
-```{r}
+```{r 20180314-37}
 g
 ```   
   
@@ -546,7 +546,7 @@ g
 
 ## Posterior probabilities
   
-```{r}
+```{r 20180314-38}
 pp=round(peanuts.cv$posterior,3)
 data.frame(obs=peanuts.combo$combo,
            pred=peanuts.cv$class,pp)
@@ -598,7 +598,7 @@ admin 6 3 3 3
 
 ## Discriminant analysis
 
-```{r}
+```{r 20180314-39}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/profile.txt"
 active=read_delim(my_url," ")
 active.1=lda(job~reading+dance+tv+ski,data=active)
@@ -619,14 +619,14 @@ active.1$scaling
 
 ## Misclassification
   
-```{r}
+```{r 20180314-40}
 active.pred=predict(active.1)
 table(obs=active$job,pred=active.pred$class)
 ```   
 
 Everyone correctly classified. Or:
 
-```{r}
+```{r 20180314-41}
 tibble(obs=active$job,pred=active.pred$class) %>% 
   count(obs,pred) %>% 
   mutate(stat=ifelse(obs==pred,"correct","wrong"))
@@ -637,7 +637,7 @@ tibble(obs=active$job,pred=active.pred$class) %>%
 
 ## Plotting LDs
   
-```{r}
+```{r 20180314-42}
 mm=data.frame(job=active$job,active.pred$x,person=1:15)
 g=ggplot(mm,aes(x=LD1,y=LD2,
     colour=job,label=job))+geom_point()+
@@ -648,7 +648,7 @@ g=ggplot(mm,aes(x=LD1,y=LD2,
 
 ## Biplot
   
-```{r}
+```{r 20180314-43}
 ggbiplot::ggbiplot(active.1,groups=active$job)
 ```   
   
@@ -670,7 +670,7 @@ ggbiplot::ggbiplot(active.1,groups=active$job)
   
 Make `label` be identifier of person. Now need legend:
 
-```{r}
+```{r 20180314-44}
 ggplot(mm,aes(x=LD1,y=LD2,
     colour=job,label=person))+geom_point()+
     geom_text_repel()
@@ -681,7 +681,7 @@ ggplot(mm,aes(x=LD1,y=LD2,
 
 ## Posterior probabilities
 
-```{r}
+```{r 20180314-45}
 pp=round(active.pred$posterior,3)
 data.frame(obs=active$job,pred=active.pred$class,pp)
 ```   
@@ -695,7 +695,7 @@ Not much doubt.
 Recall: no need for `predict`. Just pull out `class` and
 make a table:  
   
-```{r}
+```{r 20180314-46}
 active.cv=lda(job~reading+dance+tv+ski,
   data=active,CV=T)
 table(obs=active$job,pred=active.cv$class)
@@ -703,7 +703,7 @@ table(obs=active$job,pred=active.cv$class)
 
 Or:
 
-```{r}
+```{r 20180314-47}
 tibble(obs=active$job,pred=active.cv$class) %>% 
   count(obs,pred) %>% 
   mutate(is_correct=ifelse(obs==pred,"yes","no"))
@@ -719,7 +719,7 @@ This time one of the bellydancers was classified as a politician.
   
 picking out the ones where things are not (absolutely) certain:
 
-```{r}
+```{r 20180314-48}
 pp=round(active.cv$posterior,3)
 data.frame(obs=active$job,pred=active.cv$class,pp) %>%
   mutate(max=pmax(admin,bellydancer,politician)) %>%
@@ -737,7 +737,7 @@ data.frame(obs=active$job,pred=active.cv$class,pp) %>%
 ## Why did things get misclassified?
 
   
-```{r}
+```{r 20180314-49}
 g
 ```       
   
@@ -766,7 +766,7 @@ g
 
 ## Reading in
   
-```{r}
+```{r 20180314-50}
 my_url="http://www.utsc.utoronto.ca/~butler/d29/remote-sensing.txt"
 crops=read_table(my_url)
 crops
@@ -777,12 +777,12 @@ crops
 
 ## Starting off: number of LDs
   
-```{r}
+```{r 20180314-51}
 crops.lda=lda(crop~x1+x2+x3+x4,data=crops)
 crops.lda
 ``` 
 
-```{r}
+```{r 20180314-52}
 crops.lda$svd
 ```
 
@@ -796,7 +796,7 @@ crops.lda$svd
 
 ## Connecting original variables and LDs
   
-```{r}
+```{r 20180314-53}
 crops.lda$means
 round(crops.lda$scaling,3)
 ```   
@@ -808,7 +808,7 @@ round(crops.lda$scaling,3)
 
 ## `LD1 and \texttt{LD2`}
   
-```{r}
+```{r 20180314-54}
 round(crops.lda$scaling,3)
 ``` 
 %$
@@ -826,14 +826,14 @@ round(crops.lda$scaling,3)
   
   
   - Thus:
-```{r}
+```{r 20180314-55}
 crops.pred=predict(crops.lda)
 table(obs=crops$crop,pred=crops.pred$class)
 ```   
 - Not very good, eg. only 6 of 11 `Clover` classified correctly.
 - Set up for plot:
   
-```{r}
+```{r 20180314-56}
 mm=data.frame(crop=crops$crop,crops.pred$x)
 ```   
     
@@ -845,7 +845,7 @@ mm=data.frame(crop=crops$crop,crops.pred$x)
 
 ## Plotting the LDs
   
-```{r}
+```{r 20180314-57}
 ggplot(mm,aes(x=LD1,y=LD2,colour=crop,shape=crop))+
   geom_point()
 ```   
@@ -854,7 +854,7 @@ ggplot(mm,aes(x=LD1,y=LD2,colour=crop,shape=crop))+
 
 ## Biplot
   
-```{r}
+```{r 20180314-58}
 ggbiplot::ggbiplot(crops.lda,groups=crops$crop)
 ```   
   
@@ -875,7 +875,7 @@ ggbiplot::ggbiplot(crops.lda,groups=crops$crop)
 ## Try removing Clover
 
     
-```{r}
+```{r 20180314-59}
 crops %>% filter(crop!="Clover") -> crops2
 crops2.lda=lda(crop~x1+x2+x3+x4,data=crops2)
 ```   
@@ -883,7 +883,7 @@ crops2.lda=lda(crop~x1+x2+x3+x4,data=crops2)
 - LDs for `crops2` will be different from before.
 - Concentrate on plot and posterior probs.
 
-```{r}
+```{r 20180314-60}
 crops2.pred=predict(crops2.lda)
 mm=data.frame(crop=crops2$crop,crops2.pred$x)
 ```   
@@ -898,7 +898,7 @@ mm=data.frame(crop=crops2$crop,crops2.pred$x)
   
 Different from before:
 
-```{r}
+```{r 20180314-61}
 crops2.lda
 ```  
   
@@ -908,7 +908,7 @@ crops2.lda
 
 A bit more clustered:
   
-```{r}
+```{r 20180314-62}
 ggplot(mm,aes(x=LD1,y=LD2,colour=crop,shape=crop))+
   geom_point()
 ```   
@@ -917,7 +917,7 @@ ggplot(mm,aes(x=LD1,y=LD2,colour=crop,shape=crop))+
 
 ## Biplot
   
-```{r}
+```{r 20180314-63}
 ggbiplot::ggbiplot(crops2.lda,groups=crops2$crop)
 ```   
   
@@ -925,13 +925,13 @@ ggbiplot::ggbiplot(crops2.lda,groups=crops2$crop)
 
 ## Quality of classification
   
-```{r}
+```{r 20180314-64}
 table(obs=crops2$crop,pred=crops2.pred$class)
 ```   
 
 or:
 
-```{r}
+```{r 20180314-65}
 tibble(obs=crops2$crop,pred=crops2.pred$class) %>% 
   count(obs,pred) %>% 
   mutate(is_correct=ifelse(obs==pred,"yes","no"))
@@ -946,7 +946,7 @@ Better.
 ## Posterior probs, the wrong ones
  
 
-```{r}
+```{r 20180314-66}
 post=round(crops2.pred$posterior,3)
 data.frame(obs=crops2$crop,pred=crops2.pred$class,post) %>%
   filter(obs!=pred)
@@ -958,7 +958,7 @@ data.frame(obs=crops2$crop,pred=crops2.pred$class,post) %>%
   of being correct was not usually too low.
 - The correctly-classified ones are sometimes more clear-cut, but not completely convincing:
 
-```{r}
+```{r 20180314-67}
 data.frame(obs=crops2$crop,pred=crops2.pred$class,post) %>%
   filter(obs==pred)
 ```
@@ -973,7 +973,7 @@ data.frame(obs=crops2$crop,pred=crops2.pred$class,post) %>%
 Began discriminant analysis as a followup to MANOVA. Do our variables
 significantly separate the crops (excluding Clover)?
 
-```{r}
+```{r 20180314-68}
 response=with(crops2,cbind(x1,x2,x3,x4))
 crops2.manova=manova(response~crop,data=crops2)
 summary(crops2.manova)

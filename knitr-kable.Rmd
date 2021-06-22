@@ -3,7 +3,7 @@ title: "athletes and knitr::kable"
 output: html_notebook
 ---
 
-```{r}
+```{r knitr-kable-1}
 library(tidyverse)
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
@@ -11,19 +11,19 @@ athletes <- read_tsv(my_url)
 
 one that works
 
-```{r}
+```{r knitr-kable-2}
 athletes %>% select(Sex:WCC) %>% knitr::kable()
 ```
 
 does this?
 
-```{r}
+```{r knitr-kable-3}
 athletes %>% sample_n(10) %>% knitr::kable()
 ```
 
 here it does
 
-```{r}
+```{r knitr-kable-4}
 athletes %>% slice(c(10, 13, 17, 42)) %>% knitr::kable()
 ```
 

@@ -1,17 +1,17 @@
 
-```{r}
+```{r get-sascode-1}
 library(tidyverse)
 ```
 
 file containing sas code
 
-```{r}
+```{r get-sascode-2}
 fname <- "SAS/tidying-sas.Rnw"
 ```
 
 extract lines
 
-```{r}
+```{r get-sascode-3}
 v <- readLines(fname)
 v %>% enframe() %>% 
   filter(!str_detect(value, "^%%")) %>% 
@@ -26,7 +26,7 @@ writeLines(d$val2, "SAS/tidying.sas")
 
 make into function
 
-```{r}
+```{r get-sascode-4}
 get_code <- function(fname) {
   print(glue::glue("doing {fname}"))
   in_name <- str_c("SAS/", fname, "-sas.Rnw")
@@ -47,14 +47,14 @@ get_code <- function(fname) {
 }
 ```
 
-```{r}
+```{r get-sascode-5}
 get_code("tidying")
 ```
 
 
 get all sas rnws
 
-```{r}
+```{r get-sascode-6}
 list.files("./SAS/", pattern = "*-sas.Rnw") %>% 
   str_extract(".*(?=-sas.Rnw)") %>% 
   map_chr(~get_code(.))

@@ -1,6 +1,6 @@
 ## Some long data that should be wide
 
-```{r, echo=FALSE}
+```{r wider-wrong-post-1, echo=FALSE}
 d <- tribble(
   ~obs, ~time, ~y,
   1, "pre", 19,
@@ -19,7 +19,7 @@ d
 
 ## What happens here?
 
-```{r}
+```{r wider-wrong-post-2}
 d %>% pivot_wider(names_from = time, values_from = y)
 ```
 
@@ -30,7 +30,7 @@ d %>% pivot_wider(names_from = time, values_from = y)
 
 ## The problem
 
-```{r}
+```{r wider-wrong-post-3}
 d %>% pivot_wider(names_from = time, values_from = y)
 ```
 
@@ -41,7 +41,7 @@ d %>% pivot_wider(names_from = time, values_from = y)
 
 ## Fixing it up
 
-```{r, echo=FALSE}
+```{r wider-wrong-post-4, echo=FALSE}
 d2 <- tribble(
   ~subject, ~time, ~y,
   1, "pre", 19,
@@ -59,7 +59,7 @@ d2
 
 ## Coming out right
 
-```{r}
+```{r wider-wrong-post-5}
 d2 %>% pivot_wider(names_from = time, values_from = y)
 ```
 
@@ -69,7 +69,7 @@ d2 %>% pivot_wider(names_from = time, values_from = y)
 
 ## Spaghetti plot
 
-```{r}
+```{r wider-wrong-post-6}
 d2 %>% mutate(time = fct_inorder(time)) %>% 
   ggplot(aes(x = time, y = y, group = subject)) +
     geom_point() + geom_line() -> g
@@ -77,7 +77,7 @@ d2 %>% mutate(time = fct_inorder(time)) %>%
 
 ## The spaghetti plot
 
-```{r}
+```{r wider-wrong-post-7}
 g
 ```
 
@@ -87,7 +87,7 @@ g
 
 - Two independent samples this time
 
-```{r, echo=FALSE}
+```{r wider-wrong-post-8, echo=FALSE}
 d3 <- tribble(
   ~group, ~y,
   "control", 8,
@@ -106,7 +106,7 @@ d3
 
 ## wider
 
-```{r}
+```{r wider-wrong-post-9}
 d3 %>% pivot_wider(names_from = group, values_from = y)
 ```
 
@@ -119,7 +119,7 @@ d3 %>% pivot_wider(names_from = group, values_from = y)
 
 - To expand list-columns out into the data values they contain, can use `unnest`:
 
-```{r}
+```{r wider-wrong-post-10}
 d3 %>% pivot_wider(names_from = group, values_from = y) %>% 
   unnest(c(control, treatment))
 ```
@@ -127,7 +127,7 @@ d3 %>% pivot_wider(names_from = group, values_from = y) %>%
 
 ## A proper use of list-columns
 
-```{r}
+```{r wider-wrong-post-11}
 d3 %>% nest_by(group) %>% 
   summarize(n = nrow(data), 
             mean_y = mean(data$y), 

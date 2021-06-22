@@ -1,16 +1,16 @@
 ## Find weibull parameters to fit eg an interquartile range
 
-```{r}
+```{r weibull-1}
 library(tidyverse)
 ```
 
 cumulative distribution function
 
-```{r}
+```{r weibull-2}
 qweibull(0.75, 1, 1.5)
 ```
 
-```{r}
+```{r weibull-3}
 qw=function(a, b) {
   vec=c(0.25, 0.75)
   qweibull(vec, a, b)
@@ -21,7 +21,7 @@ qw(1, 1.5)
 
 sum of squared error
 
-```{r}
+```{r weibull-4}
 sse=function(x) {
   q=qw(x[1], x[2])
   (q[1]-2)^2+(q[2]-8)^2
@@ -30,13 +30,13 @@ sse=function(x) {
 
 optimize
 
-```{r}
+```{r weibull-5}
 optim(c(1,1),sse)
 ```
 
 check
 
-```{r}
+```{r weibull-6}
 pweibull(c(2,8),1.1, 6)
 ```
 

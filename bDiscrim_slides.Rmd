@@ -14,7 +14,7 @@ output:
 
 
 
-```{r child="preliminaries.Rmd", echo=F}
+```{r bDiscrim-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 

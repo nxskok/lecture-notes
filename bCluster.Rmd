@@ -17,7 +17,7 @@
 
 
 ## Packages
-```{r, eval=F}
+```{r bCluster-1, eval=F}
 library(MASS) # for lda later
 library(tidyverse)
 library(spatstat) # for crossdist later
@@ -102,7 +102,7 @@ is "best" for individuals? **K-means clustering** (`kmeans`).
 
 
 ## Two made-up clusters
-```{r echo=F, fig.height=4}
+```{r bCluster-2, echo=F, fig.height=4}
 set.seed(457299)
 a <- data.frame(x = runif(5, 0, 20), y = runif(5, 0, 20))
 b <- data.frame(x = runif(5, 20, 40), y = runif(5, 20, 40))
@@ -122,7 +122,7 @@ ones?
 
 
 Find the red point and the blue point that are closest together: 
-```{r echo=F,fig.height=3.1}
+```{r bCluster-3, echo=F,fig.height=3.1}
 distances <- crossdist(a$x, a$y, b$x, b$y)
 wm1 <- which.min(apply(distances, 1, min))
 wm2 <- which.min(apply(distances, 2, min))
@@ -139,7 +139,7 @@ closest points.
 
 ## Complete linkage
 Find the red and blue points that are farthest apart:
-```{r echo=F,fig.height=3.4}
+```{r bCluster-4, echo=F,fig.height=3.4}
 wm1 <- which.max(apply(distances, 1, max))
 wm2 <- which.max(apply(distances, 2, max))
 closest <- bind_rows(a[wm1, ], b[wm2, ], .id = "cluster")
@@ -153,7 +153,7 @@ Complete-linkage distance is distance between farthest points.
 
 ## Ward's method
 Work out mean of each cluster and join point to its mean:
-```{r fig.height=3.2,echo=F}
+```{r bCluster-5, fig.height=3.2,echo=F}
 xm <- aggregate(x ~ cluster, ddd, mean)
 ym <- aggregate(y ~ cluster, ddd, mean)
 dm <- cbind(xm, y = ym[, 2])
@@ -188,7 +188,7 @@ Work out (i) sum of squared distances of points from means.
 Now imagine combining the two clusters and working out overall
 mean. Join each point to this mean:
 
-```{r echo=F,fig.height=3.1}
+```{r bCluster-6, echo=F,fig.height=3.1}
 ddd %>% summarize(x = mean(x), y = mean(y)) -> dm
 # loop through data frame and create grp that links to cluster's mean
 new <- data.frame(
@@ -259,12 +259,12 @@ clusters can be very different apart from two closest points.
 Dissimilarities for language data were how many
 number names had *different* first letter:
 
-```{r include=F}
+```{r bCluster-7, include=F}
 options(width = 60)
 ```
  
 \footnotesize
-```{r size="scriptsize",message=F}
+```{r bCluster-8, size="scriptsize",message=F}
 my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 (number.d <- read_table(my_url))
 ```
@@ -275,7 +275,7 @@ my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 
 
 ## Making a distance object
-```{r size="footnotesize"}
+```{r bCluster-9, size="footnotesize"}
 d <- number.d %>%
   select(-la) %>%
   as.dist()
@@ -287,7 +287,7 @@ class(d)
 
 
 ## Cluster analysis and dendrogram
-```{r fig.height=4}
+```{r bCluster-10, fig.height=4}
 d.hc <- hclust(d, method = "single")
 plot(d.hc)
 ```
@@ -316,7 +316,7 @@ everything else.
 
 
 \small
-```{r }
+```{r bCluster-11 }
 d.hc$labels
 d.hc$merge
 ```
@@ -341,7 +341,7 @@ joined to `fr` and `it`).
 
 
 ## Complete linkage
-```{r fig.height=4}
+```{r bCluster-12, fig.height=4}
 d.hc <- hclust(d, method = "complete")
 plot(d.hc)
 ```
@@ -362,14 +362,14 @@ plot(d.hc)
 
 
 * Three clusters (from Ward) looks good:
-```{r }
+```{r bCluster-13 }
 cutree(d.hc, 3)
 ```
 
 ## Turning the "named vector" into a data frame
 
 \footnotesize
-```{r}
+```{r bCluster-14}
 cutree(d.hc, 3) %>% enframe(name="country", value="cluster")
 ```
 \scriptsize
@@ -399,7 +399,7 @@ rect.hclust(d.hc, 3)
 Original data:
 
 \tiny
-```{r message=F}
+```{r bCluster-15, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/one-ten.txt"
 lang <- read_delim(my_url, " ")
 lang
@@ -413,7 +413,7 @@ names were all in one column.
 
 ## Tidy, and extract first letter
 \footnotesize
-```{r}
+```{r bCluster-16}
 lang %>% mutate(number=row_number()) %>%
     pivot_longer(-number, names_to="language", values_to="name") %>%
     mutate(first=str_sub(name,1,1)) -> lang.long
@@ -432,7 +432,7 @@ Norwegian. It's the number of first letters that are different.
 * First get the lines for English:
 
 \scriptsize
-```{r}
+```{r bCluster-17}
 english <- lang.long %>% filter(language == "en")
 english
 ```
@@ -443,7 +443,7 @@ english
 
 ## And then the lines for Norwegian
 \footnotesize
-```{r}
+```{r bCluster-18}
 norwegian <- lang.long %>% filter(language == "no")
 norwegian
 ```
@@ -457,13 +457,13 @@ one table using another.)
 
 ## The join
 
-```{r, echo=F}
+```{r bCluster-19, echo=F}
 options(width=65)
 ```
 
    
 \scriptsize
-```{r}
+```{r bCluster-20}
 english %>% left_join(norwegian, by = "number")
 ```
 \normalsize
@@ -477,7 +477,7 @@ letter of Norwegian word.
 ## Counting the different ones
 
 \footnotesize
-```{r }
+```{r bCluster-21 }
 english %>%
   left_join(norwegian, by = "number") %>%
   count(different=(first.x != first.y)) 
@@ -487,7 +487,7 @@ english %>%
 or
 
 \footnotesize
-```{r }
+```{r bCluster-22 }
 english %>%
   left_join(norwegian, by = "number") %>%
   count(different=(first.x != first.y)) %>% 
@@ -502,7 +502,7 @@ Words for 1 and 8 start with different letter; rest are same.
 
 The answer should be zero:
 
-```{r}
+```{r bCluster-23}
 english %>%
   left_join(english, by = "number") %>%
   count(different=(first.x != first.y)) %>% 
@@ -516,7 +516,7 @@ ans
 
 
 ## Function to do this for any two languages
-```{r }
+```{r bCluster-24 }
 countdiff <- function(lang.1, lang.2, d) {
   d %>% filter(language == lang.1) -> lang1d
   d %>% filter(language == lang.2) -> lang2d
@@ -532,7 +532,7 @@ countdiff <- function(lang.1, lang.2, d) {
 ## Testing
    
 
-```{r }
+```{r bCluster-25 }
 countdiff("en", "no", lang.long)
 countdiff("en", "en", lang.long)
 ```
@@ -546,12 +546,12 @@ Check.
 
 
 * First need all the languages:
-```{r include=F}
+```{r bCluster-26, include=F}
 options(width = 50)
 ```
 
      
-```{r size="footnotesize"}
+```{r bCluster-27, size="footnotesize"}
 languages <- names(lang)
 languages
 ```
@@ -560,14 +560,14 @@ languages
 
 
 * and then all *pairs* of languages:
-```{r size="scriptsize"}
+```{r bCluster-28, size="scriptsize"}
 pairs <- crossing(lang = languages, lang2 = languages) 
 ```
 
 ## Some of these
 
 \scriptsize
-```{r}
+```{r bCluster-29}
 pairs %>% slice(1:12)
 ```
 \normalsize
@@ -578,7 +578,7 @@ pairs %>% slice(1:12)
 ## Run `countdiff` for all those language pairs
 
 \footnotesize
-```{r}
+```{r bCluster-30}
 pairs %>% rowwise() %>% 
   mutate(diff = countdiff(lang, lang2, lang.long)) -> thediff
 thediff
@@ -590,12 +590,12 @@ thediff
 
 ## Make square table of these
 
-```{r echo=F}
+```{r bCluster-31, echo=F}
 options(width = 60)
 ```
  
 \scriptsize
-```{r}
+```{r bCluster-32}
 thediff %>% pivot_wider(names_from=lang2, values_from=diff)
 ```
 \normalsize
@@ -635,7 +635,7 @@ Birth, death and infant mortality rates for 97 countries (variables not dissimil
 
 
 ## Reading in
-```{r }
+```{r bCluster-33 }
 url <- "http://ritsokiguess.site/datafiles/birthrate.txt"
 vital <- read_table(url)
 ```
@@ -646,7 +646,7 @@ vital <- read_table(url)
 
 ## The data
 
-```{r }
+```{r bCluster-34 }
 vital
 ```
 
@@ -664,7 +664,7 @@ measurement scale (arbitrary).
 1, done by `scale`.
 
 
-```{r size="footnotesize"}
+```{r bCluster-35, size="footnotesize"}
 vital %>% 
   mutate(across(where(is.numeric), ~scale(.))) -> vital.s
 ```
@@ -677,13 +677,13 @@ Pretend we know 3 clusters is good. Take off the column of
 countries, and run `kmeans` on the resulting data frame,
 asking for 3 clusters:
 
-```{r echo=FALSE}
+```{r bCluster-36, echo=FALSE}
 set.seed(457299)
 ```
 
    
 
-```{r }
+```{r bCluster-37 }
 vital.s %>% select(-country) %>% 
   kmeans(3) -> vital.km3
 names(vital.km3)
@@ -696,14 +696,14 @@ A lot of output, so look at these individually.
 
 
 * Cluster sizes:
-```{r }
+```{r bCluster-38 }
 vital.km3$size
 ```
  
 
 
 * Cluster centres:
-```{r }
+```{r bCluster-39 }
 vital.km3$centers
 ```
  
@@ -715,14 +715,14 @@ has much higher than average.
 
 
 ## Cluster sums of squares and membership
-```{r }
+```{r bCluster-40 }
 vital.km3$withinss
 ```
  
 
 Cluster 1 compact relative to others (countries in cluster 1  more similar).
 
-```{r size="scriptsize"}
+```{r bCluster-41, size="scriptsize"}
 vital.km3$cluster
 ```
  
@@ -730,7 +730,7 @@ vital.km3$cluster
 The cluster membership for each of the 97 countries.
 
 ## Store countries and clusters to which they belong
-```{r }
+```{r bCluster-42 }
 vital.3 <- tibble(
   country = vital.s$country,
   cluster = vital.km3$cluster
@@ -743,7 +743,7 @@ Next, which countries in which cluster?
 
 Write function to extract them:
 
-```{r }
+```{r bCluster-43 }
 get_countries <- function(i, d) {
   d %>% filter(cluster == i) %>% pull(country)
 }
@@ -755,25 +755,25 @@ get_countries <- function(i, d) {
 
 ## Cluster membership: cluster 2
 
-```{r, echo=F}
+```{r bCluster-44, echo=F}
 options(width=80)
 ```
 
 
 \scriptsize
-```{r}
+```{r bCluster-45}
 get_countries(2, vital.3)
 ```
 \normalsize
    
 
-```{r, echo=F}
+```{r bCluster-46, echo=F}
 options(width=60)
 ```
 
 
 ## Cluster 3 
-```{r}
+```{r bCluster-47}
 get_countries(3, vital.3)
 ```
 
@@ -781,7 +781,7 @@ get_countries(3, vital.3)
 
 ## Cluster 1
 
-```{r}
+```{r bCluster-48}
 get_countries(1, vital.3)
 ```
 
@@ -794,12 +794,12 @@ get_countries(1, vital.3)
 be different from another run.
 
 * Example: just run again on 3 clusters, `table` of results:
-```{r echo=FALSE}
+```{r bCluster-49, echo=FALSE}
 set.seed(457298)
 ```
 
 \small 
-```{r size="small"}
+```{r bCluster-50, size="small"}
 vital.s %>% 
   select(-country) %>% kmeans(3) -> vital.km3a
 table(
@@ -817,7 +817,7 @@ table(
 many times, takes best. Should be same every time:
 
 \small
-```{r eval=FALSE,size="small"}
+```{r bCluster-51, eval=FALSE,size="small"}
 vital.s %>%
   select(-country) %>%
   kmeans(3, nstart = 20) -> vital.km3b
@@ -844,7 +844,7 @@ goodness of fit for each, make plot.
 ## Function to get `tot.withinss`
 \ldots for an input number of clusters, taking only numeric columns
 of input data frame:
-```{r }
+```{r bCluster-52 }
 ss <- function(i, d) {
   d %>%
     select(where(is.numeric)) %>%
@@ -865,7 +865,7 @@ the total within-group sums of squares. `ss` expects a single number of clusters
 
 
 \normalsize
-```{r}
+```{r bCluster-53}
 tibble(clusters = 2:20) %>%
   rowwise() %>% 
   mutate(wss = ss(clusters, vital.s)) -> ssd
@@ -904,7 +904,7 @@ ggplot(ssd, aes(x = clusters, y = wss)) + geom_point() +
 
 
 ## Six clusters, using `nstart`
-```{r }
+```{r bCluster-54 }
 vital.s %>%
   select(-country) %>%
   kmeans(6, nstart = 20) -> vital.km6
@@ -914,7 +914,7 @@ vital.km6$centers
 
 ## Make a data frame of countries and clusters
 
-```{r}
+```{r bCluster-55}
 vital.6 <- tibble(
   country = vital.s$country,
   cluster = vital.km6$cluster
@@ -927,7 +927,7 @@ vital.6 %>% sample_n(10)
 
 ## Cluster 1
 Below-average death rate, though other rates a little higher than average:
-```{r }
+```{r bCluster-56 }
 get_countries(1, vital.6)
 ```
 
@@ -937,7 +937,7 @@ get_countries(1, vital.6)
 High on everything:
 
 \normalsize
-```{r echo=2}
+```{r bCluster-57, echo=2}
 options(width = 60)
 get_countries(2, vital.6)
 options(width = 50)
@@ -948,7 +948,7 @@ options(width = 50)
 ## Cluster 3
 Low on everything, though death rate close to average:
 \footnotesize
-```{r}
+```{r bCluster-58}
 get_countries(3, vital.6)
 ```
 \normalsize
@@ -957,7 +957,7 @@ get_countries(3, vital.6)
 ## Cluster 4
 Low on everything, especially death rate:
 \small
-```{r}
+```{r bCluster-59}
 get_countries(4, vital.6)
 ```
 \normalsize
@@ -965,7 +965,7 @@ get_countries(4, vital.6)
 
 ## Cluster 5
 Higher than average on everything, though not the highest:
-```{r }
+```{r bCluster-60 }
 get_countries(5, vital.6)
 ```
 
@@ -973,7 +973,7 @@ get_countries(5, vital.6)
 
 ## Cluster 6
 Very high death rate, just below average on all else:
-```{r }
+```{r bCluster-61 }
 get_countries(6, vital.6)
 ```
 
@@ -981,7 +981,7 @@ get_countries(6, vital.6)
 
 
 ## Comparing our 3 and 6-cluster solutions
-```{r }
+```{r bCluster-62 }
 table(three = vital.km3$cluster, six = vital.km6$cluster)
 ```
 
@@ -1016,7 +1016,7 @@ countries, divided by death rate).
 * Uses package `MASS` (loaded):
 
 \footnotesize
-```{r }
+```{r bCluster-63 }
 vital.lda <- lda(vital.km6$cluster ~ birth + death + infant, 
                  data = vital.s)
 vital.lda$svd
@@ -1037,7 +1037,7 @@ vital.lda$scaling
 * Get predictions first:
 
 \small
-```{r}
+```{r bCluster-64}
 vital.pred <- predict(vital.lda)
 d <- data.frame(
   country = vital.s$country,
@@ -1054,7 +1054,7 @@ glimpse(d)
 discriminant scores. 
 - Plot `LD1` against `LD2`,
 colouring points by cluster and labelling by country:
-```{r size="small"}
+```{r bCluster-65, size="small"}
 g <- ggplot(d, aes(
   x = LD1, y = LD2, colour = factor(cluster),
   label = country
@@ -1067,7 +1067,7 @@ g <- ggplot(d, aes(
 
 
 ## The plot
-```{r fig.height=5}
+```{r bCluster-66, fig.height=5}
 g
 ```
 
@@ -1099,7 +1099,7 @@ An Ontario hockey league has teams in 21 cities. How can we arrange those teams 
 
 ## Attempt 1
 
-```{r message=F}
+```{r bCluster-67, message=F}
 my_url <- 
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario <- read_csv(my_url)
@@ -1111,7 +1111,7 @@ ontario.hc <- hclust(ontario.d, method = "ward.D")
 
 
 ## Plot, with 4 clusters
-```{r fig.height=4}
+```{r bCluster-68, fig.height=4}
 plot(ontario.hc)
 rect.hclust(ontario.hc, 4)
 ```
@@ -1131,7 +1131,7 @@ rect.hclust(ontario.hc, 4)
 
 
 ## Seven clusters
-```{r fig.height=4} 
+```{r bCluster-69, fig.height=4 }
 plot(ontario.hc)
 rect.hclust(ontario.hc, 7)
 ```

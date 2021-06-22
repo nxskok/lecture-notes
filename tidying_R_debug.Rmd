@@ -34,7 +34,7 @@ saying which feed that weight goes with.
   
 ## Packages for this section
 
-```{r, eval=F}
+```{r tidying-R-debug-1, eval=F}
 library(tidyverse)
 library(readxl)
 ```
@@ -42,7 +42,7 @@ library(readxl)
   
 ## Reading in the pig data
 
-```{r, message=F}
+```{r tidying-R-debug-2, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/pigs1.txt"
 pigs1 <- read_delim(my_url, " ")
 pigs1
@@ -51,7 +51,7 @@ pigs1
 ## Gathering up the columns
 - This is a very common reorganization, and the magic “verb” is
 `gather`:
-```{r}
+```{r tidying-R-debug-3}
 pigs1 %>% gather(feed, weight, feed1:feed4) -> pigs2
 ```
 
@@ -62,13 +62,13 @@ combine.
 
 ## Long format pigs
 
-```{r}
+```{r tidying-R-debug-4}
 pigs2
 ```
 
 ## Another way to do this:
 
-```{r}
+```{r tidying-R-debug-5}
 pigs1 %>% 
   pivot_longer(feed1:feed4, names_to = "feed", 
                values_to="weight")
@@ -77,7 +77,7 @@ pigs1 %>%
 
 ## ...and finally, the analysis
 - which is just what we saw before:
-```{r}
+```{r tidying-R-debug-6}
 weight.1 <- aov(weight ~ feed, data = pigs2)
 summary(weight.1)
 ```
@@ -88,7 +88,7 @@ equal.
 
 ## Tukey
 
-```{r}
+```{r tidying-R-debug-7}
 TukeyHSD(weight.1)
 ```
 
@@ -99,7 +99,7 @@ All of the feeds differ!
 To find the best and worst, get mean weight by 
 feed group. I borrowed an idea from later to put the means in descending order:
 
-```{r}
+```{r tidying-R-debug-8}
 pigs2 %>%
   group_by(feed) %>%
   summarize(mean_weight = mean(weight))%>%
@@ -125,7 +125,7 @@ ggplot(pigs2, aes(x = feed, y = weight)) + geom_boxplot()
 various diseases, eg. tuberculosis.
 - Some data:
 
-```{r}
+```{r tidying-R-debug-9}
 my_url <- "http://ritsokiguess.site/datafiles/tb.csv"
 tb
 tb <- read_csv(my_url)
@@ -144,13 +144,13 @@ glimpse(tb)
 
 ## Gather the gender-age group columns
 
-```{r}
+```{r tidying-R-debug-10}
 tb %>% gather(genage, freq, m04:fu, na.rm = T) -> tb2
 ```
 
 or
 
-```{r}
+```{r tidying-R-debug-11}
 tb %>% 
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = T) -> tb2
@@ -163,7 +163,7 @@ tb %>%
 
 ## Results (some)
 
-```{r}
+```{r tidying-R-debug-12}
 tb2
 ```
 
@@ -175,13 +175,13 @@ age group. Split that up using separate.
   - what to separate into (here you do need quotes),
   - how to split.
 - For “how to split”, here “after first character”:
-```{r}
+```{r tidying-R-debug-13}
 tb2 %>% separate(genage, c("gender", "age"), 1) -> tb3
 ```
 
 ## Tidied tuberculosis data (some)
 
-```{r}
+```{r tidying-R-debug-14}
 tb3
 ```
 
@@ -190,7 +190,7 @@ tb3
 - instead of doing the pipe one step at a time, you *debug* it one step at
 a time, and when you have each step working, you use that step’s
 output as input to the next step, thus:
-```{r}
+```{r tidying-R-debug-15}
 tb %>%
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = T) %>% 
@@ -203,7 +203,7 @@ each line is incomplete, so that R knows more is to come.
 
 ## Total tuberculosis cases by year (some of the years) 
 
-```{r}
+```{r tidying-R-debug-16}
 tb3 %>%
   filter(between(year, 1991, 1998)) %>% 
   count(year, wt=freq) 
@@ -215,7 +215,7 @@ tb3 %>%
 
 - try counting up total cases by country:
 
-```{r}
+```{r tidying-R-debug-17}
 tb3 %>% 
   count(iso2, wt=freq) %>% 
   arrange(desc(n))
@@ -225,7 +225,7 @@ tb3 %>%
 
 China started recording in 1995, which is at least part of the problem:
 
-```{r}
+```{r tidying-R-debug-18}
 tb3 %>% filter(iso2=="CN") %>% 
   count(year, wt=freq)
 ```
@@ -234,7 +234,7 @@ tb3 %>% filter(iso2=="CN") %>%
 
 - A lot of countries started recording in about 1995:
 
-```{r}
+```{r tidying-R-debug-19}
 tb3 %>% group_by(iso2) %>% 
   summarize(first_year=min(year)) %>% 
   arrange(first_year)
@@ -243,7 +243,7 @@ tb3 %>% group_by(iso2) %>%
 
 ## Some Toronto weather data
 
-```{r}
+```{r tidying-R-debug-20}
 my_url <- 
   "http://ritsokiguess.site/STAC32/toronto_weather.csv"
 weather <- read_csv(my_url)
@@ -251,7 +251,7 @@ weather <- read_csv(my_url)
 
 ## The data (some)
 
-```{r}
+```{r tidying-R-debug-21}
 weather
 ```
 
@@ -267,7 +267,7 @@ weather
 - Numbers in data frame all temperatures (for different days of the month),
 so first step is
 
-```{r}
+```{r tidying-R-debug-22}
 weather %>% 
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
@@ -276,7 +276,7 @@ weather %>%
 
 ## So far
 
-```{r}
+```{r tidying-R-debug-23}
 d
 ```
 
@@ -287,7 +287,7 @@ should each be in separate column.
 two different factors, handled by separate.
 - Untangling names of variables handled by `pivot_wider`:
 
-```{r}
+```{r tidying-R-debug-24}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
@@ -298,7 +298,7 @@ weather %>%
 
 ## So far
 
-```{r}
+```{r tidying-R-debug-25}
 d
 ```
 
@@ -312,7 +312,7 @@ below.
 value to us:
 
 \small
-```{r}
+```{r tidying-R-debug-26}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", values_drop_na = T) %>% 
@@ -323,7 +323,7 @@ weather %>%
 \normalsize
 ## So far
 
-```{r}
+```{r tidying-R-debug-27}
 d
 ```
 
@@ -331,7 +331,7 @@ d
 - Make year-month-day into proper date.
 - Keep only date, tmax, tmin:
 \small
-```{r}
+```{r tidying-R-debug-28}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", values_drop_na = T) %>% 
@@ -346,7 +346,7 @@ weather %>%
 
 ## Our tidy data frame
 
-```{r}
+```{r tidying-R-debug-29}
 weather_tidy
 ```
 
@@ -355,7 +355,7 @@ weather_tidy
 for max and min. `ggplot` requires something like
 
 \footnotesize
-```{r, eval=F}
+```{r tidying-R-debug-30, eval=F}
 ggplot(..., aes(x = date, y = temperature)) + geom_point() + 
   geom_line()
 ```
@@ -371,7 +371,7 @@ untidy for purposes of drawing graph only.
 - Then can do something like
 
 \footnotesize
-```{r, eval=F}
+```{r tidying-R-debug-31, eval=F}
 ggplot(d, aes(x = date, y = temperature, colour = maxmin)) 
   + geom_point() + geom_line()
 ```
@@ -384,7 +384,7 @@ column-creation and plot in a pipeline.
 - For a `ggplot` in a pipeline, the initial data frame is omitted, because it
 is whatever came out of the previous step.
 - To make those “one column”s: `pivot_longer`. I save the graph to show overleaf:
-```{r}
+```{r tidying-R-debug-32}
 weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%
@@ -424,32 +424,32 @@ athletes <- read_tsv(my_url)
 
 \footnotesize
 
-```{r}
+```{r tidying-R-debug-33}
 athletes
 ```
 \normalsize
 
 ## Choosing a column
 
-```{r}
+```{r tidying-R-debug-34}
 athletes %>% select(Sport)
 ```
 
 ## Choosing several columns
 
-```{r}
+```{r tidying-R-debug-35}
 athletes %>% select(Sport, Hg, BMI)
 ```
 
 ## Choosing consecutive columns
 
-```{r}
+```{r tidying-R-debug-36}
 athletes %>% select(Sex:WCC)
 ```
 
 ## Choosing all-but some columns
 
-```{r}
+```{r tidying-R-debug-37}
 athletes %>% select(-(RCC:LBM))
 ```
 
@@ -465,7 +465,7 @@ Other ways to select columns: those whose name:
 
 ## Columns whose names begin with S 
 
-```{r}
+```{r tidying-R-debug-38}
 athletes %>% select(starts_with("S"))
 ```
 
@@ -473,20 +473,20 @@ athletes %>% select(starts_with("S"))
 
 either uppercase or lowercase:
 
-```{r}
+```{r tidying-R-debug-39}
 athletes %>% select(ends_with("c"))
 ```
 
 ## Case-sensitive
 
-```{r}
+```{r tidying-R-debug-40}
 athletes %>% select(ends_with("C", ignore.case=F))
 ```
 
 
 ## Column names containing letter R
 
-```{r}
+```{r tidying-R-debug-41}
 athletes %>% select(contains("r"))
 ```
 
@@ -497,7 +497,7 @@ In regular expression terms, this is `^.t$`:
 - `^` means “start of text”
 - `.` means “exactly one character, but could be anything”
 - `$` means “end of text”.
-```{r}
+```{r tidying-R-debug-42}
 athletes %>% select(matches("^.t$"))
 ```
 
@@ -506,7 +506,7 @@ athletes %>% select(matches("^.t$"))
 Make up a data frame to illustrate. This `sample` generates 5 random values
 equally likely to be anything 0–9 (without replacement): 
 
-```{r}
+```{r tidying-R-debug-43}
 (d <- tibble(
   y = sample(0:9, 5),
   x1 = sample(0:9, 5),
@@ -516,18 +516,18 @@ equally likely to be anything 0–9 (without replacement):
 ```
 
 ## Just display x2 and x3:
-```{r}
+```{r tidying-R-debug-44}
 d %>% select(num_range("x", 2:3))
 d %>% select(x2:x3)
 ```
 
 ## Choosing rows by number 
 
-```{r}
+```{r tidying-R-debug-45}
 athletes %>% slice(16:25)
 ```
 
-```{r}
+```{r tidying-R-debug-46}
 athletes %>% mutate(row=row_number()) %>% select(Sex, Sport, row) %>% 
   slice(16:25)
 ```
@@ -535,34 +535,34 @@ athletes %>% mutate(row=row_number()) %>% select(Sex, Sport, row) %>%
 
 ## Non-consecutive rows 
 
-```{r}
+```{r tidying-R-debug-47}
 athletes %>% 
   slice(10,13,17,42)
 ```
 
 ## A random sample of rows
 
-```{r}
+```{r tidying-R-debug-48}
 athletes %>% sample_n(8)
 ```
 
 ## Rows for which something is true
 
 \footnotesize
-```{r}
+```{r tidying-R-debug-49}
 athletes %>% filter(Sport == "Tennis")
 ```
 \normalsize
 
 ## More complicated selections
 
-```{r}
+```{r tidying-R-debug-50}
 athletes %>% filter(Sport == "Tennis", RCC < 5)
 ```
 
 ## Another way to do "and"
 
-```{r}
+```{r tidying-R-debug-51}
 athletes %>% filter(Sport == "Tennis") %>% 
   filter(RCC < 5)
 ```
@@ -570,32 +570,32 @@ athletes %>% filter(Sport == "Tennis") %>%
 
 ## Either/Or
 
-```{r}
+```{r tidying-R-debug-52}
 athletes %>% filter(Sport == "Tennis" | RCC > 5)
 ```
 
 ## Sorting into order
 
-```{r}
+```{r tidying-R-debug-53}
 athletes %>% arrange(RCC)
 ```
 
 ## Breaking ties by another variable
 
-```{r}
+```{r tidying-R-debug-54}
 athletes %>% arrange(RCC, BMI)
 ```
 
 ## Descending order
 
-```{r}
+```{r tidying-R-debug-55}
 athletes %>% arrange(desc(BMI))
 ```
 
 ## “The top ones”
 
 
-```{r}
+```{r tidying-R-debug-56}
 athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:7) %>%
@@ -622,7 +622,7 @@ athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1)
 Or the 20 heaviest weights in descending order:
 
 
-```{r}
+```{r tidying-R-debug-57}
 athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:20) %>%
@@ -631,7 +631,7 @@ athletes %>%
 
 ## Another way to do the last one
 
-```{r}
+```{r tidying-R-debug-58}
 athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:20) %>%
@@ -644,11 +644,11 @@ athletes %>%
 Two ways:
 
 \small
-```{r}
+```{r tidying-R-debug-59}
 athletes %>% group_by(Sex) %>% summarize(m = mean(Ht))
 ```
 
-```{r}
+```{r tidying-R-debug-60}
 athletes %>%
   filter(Sex == "female") %>%
   summarize(m = mean(Ht))
@@ -678,7 +678,7 @@ athletes %>%
   
 ## Looking things up in another data frame
 Recall the tuberculosis data set, tidied: 
-```{r}
+```{r tidying-R-debug-61}
 tb3
 ```
 
@@ -688,7 +688,7 @@ What are actual names of those countries in `iso2`?
 Found actual country names to go with those abbreviations, in spreadsheet: 
 
 \footnotesize
-```{r}
+```{r tidying-R-debug-62}
 my_url <- 
   "http://ritsokiguess.site/datafiles/ISOCountryCodes081507.xlsx"
 ```
@@ -703,7 +703,7 @@ country_names <- read_excel(f)
 
 ## The country names
 
-```{r}
+```{r tidying-R-debug-63}
 country_names
 ```
 
@@ -711,14 +711,14 @@ country_names
 Matching a variable in one data frame to one in another is called a **join**
 (database terminology):
 
-```{r}
+```{r tidying-R-debug-64}
 tb3 %>% left_join(country_names, by = c("iso2" = "Code_UC"))
 ```
 
 ## Total cases by country
 
 
-```{r}
+```{r tidying-R-debug-65}
 tb3 %>%
   group_by(iso2) %>%
   summarize(cases = sum(freq)) %>%
@@ -728,7 +728,7 @@ tb3 %>%
 
 ## or even sorted in order
 
-```{r}
+```{r tidying-R-debug-66}
 tb3 %>%
   group_by(iso2) %>%
   summarize(cases = sum(freq)) %>%
@@ -744,7 +744,7 @@ tb3 %>%
   - there is at least one country in `tb3` that was not in `country_names` (the NA above). Which?
   
 \footnotesize  
-```{r}
+```{r tidying-R-debug-67}
 tb3 %>%
   anti_join(country_names, by = c("iso2" = "Code_UC")) %>%
   distinct(iso2)
