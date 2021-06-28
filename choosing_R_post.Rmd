@@ -1,11 +1,6 @@
 ## Doing things with data frames
 Let’s go back to our Australian athletes: 
 
-```{r choosing-R-post-1}
-library(tidyverse)
-```
-
-
 ```{r read-athletes, echo=F}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
@@ -13,32 +8,32 @@ athletes <- read_tsv(my_url)
 
 \footnotesize
 
-```{r choosing-R-post-2}
+```{r choosing-R-1}
 athletes
 ```
 \normalsize
 
 ## Choosing a column
 
-```{r choosing-R-post-3}
+```{r choosing-R-2}
 athletes %>% select(Sport)
 ```
 
 ## Choosing several columns
 
-```{r choosing-R-post-4}
+```{r choosing-R-3}
 athletes %>% select(Sport, Hg, BMI)
 ```
 
 ## Choosing consecutive columns
 
-```{r choosing-R-post-5}
+```{r choosing-R-4}
 athletes %>% select(Sex:WCC)
 ```
 
 ## Choosing all-but some columns
 
-```{r choosing-R-post-6}
+```{r choosing-R-5}
 athletes %>% select(-(RCC:LBM))
 ```
 
@@ -53,7 +48,7 @@ Other ways to select columns: those whose name:
 
 ## Columns whose names begin with S 
 
-```{r choosing-R-post-7}
+```{r choosing-R-6}
 athletes %>% select(starts_with("S"))
 ```
 
@@ -61,7 +56,7 @@ athletes %>% select(starts_with("S"))
 
 either uppercase or lowercase:
 
-```{r choosing-R-post-8}
+```{r choosing-R-7}
 athletes %>% select(ends_with("c"))
 ```
 
@@ -69,14 +64,14 @@ athletes %>% select(ends_with("c"))
 
 This works with any of the select-helpers:
 
-```{r choosing-R-post-9}
-athletes %>% select(ends_with("C", ignore.case=FALSE))
+```{r choosing-R-8}
+athletes %>% select(ends_with("C", ignore.case=F))
 ```
 
 
 ## Column names containing letter R
 
-```{r choosing-R-post-10}
+```{r choosing-R-9}
 athletes %>% select(contains("r"))
 ```
 
@@ -87,13 +82,23 @@ In regular expression terms, this is `^.t$`:
 - `^` means “start of text”
 - `.` means “exactly one character, but could be anything”
 - `$` means “end of text”.
-```{r choosing-R-post-11}
+```{r choosing-R-10}
 athletes %>% select(matches("^.t$"))
 ```
 
+## Choosing columns by property
+
+- Use `where` as with summarizing several columns
+- eg, to choose text columns:
+
+```{r choosing-R-11}
+athletes %>% select(where(is.character))
+```
+
+
 ## Choosing rows by number 
 
-```{r choosing-R-post-12}
+```{r choosing-R-12}
 athletes %>% slice(16:25)
 ```
 
@@ -102,34 +107,34 @@ athletes %>% slice(16:25)
 
 ## Non-consecutive rows 
 
-```{r choosing-R-post-13}
+```{r choosing-R-13}
 athletes %>% 
   slice(10,13,17,42)
 ```
 
 ## A random sample of rows
 
-```{r choosing-R-post-14}
+```{r choosing-R-14}
 athletes %>% slice_sample(n=8)
 ```
 
 ## Rows for which something is true
 
 \footnotesize
-```{r choosing-R-post-15}
+```{r choosing-R-15}
 athletes %>% filter(Sport == "Tennis")
 ```
 \normalsize
 
 ## More complicated selections
 
-```{r choosing-R-post-16}
+```{r choosing-R-16}
 athletes %>% filter(Sport == "Tennis", RCC < 5)
 ```
 
 ## Another way to do "and"
 
-```{r choosing-R-post-17}
+```{r choosing-R-17}
 athletes %>% filter(Sport == "Tennis") %>% 
   filter(RCC < 5)
 ```
@@ -137,32 +142,32 @@ athletes %>% filter(Sport == "Tennis") %>%
 
 ## Either/Or
 
-```{r choosing-R-post-18}
+```{r choosing-R-18}
 athletes %>% filter(Sport == "Tennis" | RCC > 5)
 ```
 
 ## Sorting into order
 
-```{r choosing-R-post-19}
+```{r choosing-R-19}
 athletes %>% arrange(RCC)
 ```
 
 ## Breaking ties by another variable
 
-```{r choosing-R-post-20}
+```{r choosing-R-20}
 athletes %>% arrange(RCC, BMI)
 ```
 
 ## Descending order
 
-```{r choosing-R-post-21}
+```{r choosing-R-21}
 athletes %>% arrange(desc(BMI))
 ```
 
 ## “The top ones”
 
 
-```{r choosing-R-post-22}
+```{r choosing-R-22}
 athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:7) %>%
@@ -171,7 +176,7 @@ athletes %>%
 
 ## Another way
 
-```{r choosing-R-post-23}
+```{r choosing-R-23}
 athletes %>% 
   slice_max(order_by = Wt, n=7) %>% 
   select(Sport, Wt)
@@ -198,18 +203,16 @@ athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1)
 Or the 20 heaviest weights in descending order:
 
 
-```{r choosing-R-post-24}
+```{r choosing-R-24}
 athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:20) %>%
   pluck("Wt")
 ```
 
-
-
 ## Another way to do the last one
 
-```{r choosing-R-post-25}
+```{r choosing-R-25}
 athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:20) %>%
@@ -222,11 +225,11 @@ athletes %>%
 Two ways:
 
 \small
-```{r choosing-R-post-26}
+```{r choosing-R-26}
 athletes %>% group_by(Sex) %>% summarize(m = mean(Ht))
 ```
 
-```{r choosing-R-post-27}
+```{r choosing-R-27}
 athletes %>%
   filter(Sex == "female") %>%
   summarize(m = mean(Ht))
@@ -256,94 +259,119 @@ athletes %>%
   
 ## Looking things up in another data frame
 
-```{r choosing-R-post-28, echo=FALSE}
-tb3 <- read_rds("tb3.rds")
+- Suppose you are working in the nails department of a hardware store and you find that you have sold these items:
+
+```{r choosing-R-28, message=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/nail_sales.csv"
+sales <- read_csv(my_url)
+sales
 ```
 
 
-Recall the tuberculosis data set, tidied: 
-```{r choosing-R-post-29}
-tb3
-```
+## Product descriptions and prices
 
-What are actual names of those countries in `iso2`?
+- but you don't remember what these product codes are, and you would like to know the total revenue from these sales.
 
-## Actual country names
-Found actual country names to go with those abbreviations, in spreadsheet: 
+- Fortunately you found a list of product descriptions and prices:
 
-\footnotesize
-```{r choosing-R-post-30}
-my_url <- 
-  "http://ritsokiguess.site/datafiles/ISOCountryCodes081507.xlsx"
+\small
+
+```{r choosing-R-29, message=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/nail_desc.csv"
+desc <- read_csv(my_url)
+desc
 ```
 
 \normalsize
 
-Note trick for reading in `.xlsx` from URL:
+## The lookup
 
-```{r country-codes}
-f <- tempfile()
-download.file(my_url, f)
-country_names <- read_excel(f)
+- How do you "look up" the product codes to find the product descriptions and prices?
+- `left_join`.
+
+```{r choosing-R-30}
+sales %>% left_join(desc)
 ```
 
-- set up temporary file
-- download spreadsheet to there
-- read it from temporary file (which is "local")
+## What we have
 
+- this looks up all the rows in the *first* dataframe that are also in the *second*. 
+- by default matches all columns with same name in two dataframes (`product_code` here)
+- get *all* columns in *both* dataframes. The rows are the ones for that `product_code`.
 
-## The country names
+So now can work out how much the total revenue was:
 
-```{r choosing-R-post-31}
-country_names
-```
-
-## Looking up country codes
-Matching a variable in one data frame to one in another is called a **join**
-(database terminology):
-
-```{r choosing-R-post-32}
-tb3 %>% left_join(country_names, by = c("iso2" = "Code_UC"))
-```
-
-## Total cases by country
-
-```{r choosing-R-post-33}
-options(dplyr.summarise.inform=FALSE)
+```{r choosing-R-31}
+sales %>% left_join(desc) %>% 
+  mutate(product_revenue = sales*price) %>% 
+  summarize(total_revenue = sum(product_revenue))
 ```
 
 
+## More comments
 
-```{r choosing-R-post-34}
-tb3 %>%
-  group_by(iso2) %>%
-  summarize(cases = sum(freq)) %>%
-  left_join(country_names, by = c("iso2" = "Code_UC")) %>%
-  select(Country, cases)
-```
+- if any product codes are not matched, you get NA in the added columns
+- anything in the *second* dataframe that was not in the first does not appear (here, any products that were not sold)
+- other variations (examples follow):
+  - if there are two columns with the same name in the two dataframes, and you only want to match on one, use `by` with one column name
+  - if the columns you want to look up have different names in the two dataframes, use `by` with a "named list"
 
-## or even sorted in order
+## Matching on only some matching names
 
-```{r choosing-R-post-35}
-tb3 %>%
-  group_by(iso2) %>%
-  summarize(cases = sum(freq)) %>%
-  select(Country, cases) %>%
-  arrange(desc(cases))
-```
+- Suppose the `sales` dataframe *also* had a column `qty` (which was the quantity sold): 
 
-## Comments
-
-- This is probably not quite right because of:
-  - the 1994-1995 thing
-  - there is at least one country in `tb3` that was not in `country_names` (the NA above). Which?
-  
-\footnotesize  
-```{r choosing-R-post-36}
-tb3 %>%
-  anti_join(country_names, by = c("iso2" = "Code_UC")) %>%
-  distinct(iso2)
+\small
+```{r choosing-R-32}
+sales %>% rename("qty"="sales") -> sales1
+sales1
 ```
 \normalsize
 
+- The `qty` in `sales1` is the quantity sold, but the `qty` in `desc` is the number of nails in a package. These should *not* be matched: they are different things.
 
+## Matching only on product code
+
+```{r choosing-R-33}
+sales1 %>% 
+  left_join(desc, by = "product_code")
+```
+
+- Get `qty.x` (from `sales1`) and `qty.y` (from `desc`).
+
+## Matching on different names 1/2
+
+- Suppose the product code in `sales` was just `code`:
+
+\small
+```{r choosing-R-34}
+sales %>% rename("code" = "product_code") -> sales2
+sales2
+```
+\normalsize
+
+- How to match the two product codes that have different names?
+
+##  Matching on different names 2/2
+
+- Use `by`, but like this:
+
+```{r choosing-R-35}
+sales2 %>% 
+  left_join(desc, by = c("code"="product_code"))
+```
+
+## Other types of join
+
+- `right_join`: interchanges roles, looking up keys from second dataframe in first.
+- `anti_join`: give me all the rows in the first dataframe that are *not* in the second. (Use this eg. to see whether the product descriptions are incomplete.)
+- `full_join`: give me all the rows in both dataframes, with missings as needed.
+
+## Full join here
+
+\small
+```{r choosing-R-36}
+sales %>% full_join(desc)
+```
+\normalsize
+
+- The missing `sales` for "masonry nail" says that it was in the lookup table `desc`, but we didn't sell any.
