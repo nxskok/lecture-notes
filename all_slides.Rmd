@@ -7,7 +7,7 @@ output:
   beamer_presentation:
     latex_engine: lualatex
     slide_level: 2
-    df_print: kable
+    df_print: tibble
     theme: "AnnArbor"
     colortheme: "dove"
 urlcolor: blue
