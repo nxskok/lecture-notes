@@ -2,6 +2,7 @@
 Let’s go back to our Australian athletes: 
 
 ```{r read-athletes, echo=F}
+library(tidyverse)
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
@@ -324,6 +325,7 @@ sales %>% left_join(desc) %>%
 ```{r choosing-R-32}
 sales %>% rename("qty"="sales") -> sales1
 sales1
+desc
 ```
 \normalsize
 
@@ -346,6 +348,7 @@ sales1 %>%
 ```{r choosing-R-34}
 sales %>% rename("code" = "product_code") -> sales2
 sales2
+desc
 ```
 \normalsize
 
