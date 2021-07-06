@@ -29,7 +29,7 @@
 
 ## Packages
 These: 
-```{r bAnova-post-1, eval=F}
+```{r bAnova-1, eval=F}
 library(tidyverse)
 library(broom)
 library(car) # for Levene's text
@@ -86,10 +86,9 @@ darkbrown 35
 
 ## Summarizing the groups 
 \footnotesize
-```{r bAnova-post-2, message=F}
+```{r bAnova-2, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/hairpain.txt"
 hairpain <- read_delim(my_url, " ")
-hairpain
 hairpain %>%
   group_by(hair) %>%
   summarize(
@@ -142,7 +141,7 @@ ggplot(hairpain, aes(x = hair, y = pain)) + geom_boxplot()
 
 \small
 
-```{r bAnova-post-3}
+```{r bAnova-3}
 leveneTest(pain ~ hair, data = hairpain)
 ```
 
@@ -161,7 +160,7 @@ leveneTest(pain ~ hair, data = hairpain)
 
 \small
 
-```{r bAnova-post-4}
+```{r bAnova-4}
 hairpain.1 <- aov(pain ~ hair, data = hairpain)
 summary(hairpain.1)
 ```
@@ -207,7 +206,7 @@ different: significantly different.
 * `TukeyHSD:`
 
 \footnotesize
-```{r bAnova-post-5}
+```{r bAnova-5}
 TukeyHSD(hairpain.1)
 ```
  
@@ -312,7 +311,7 @@ Use $\alpha=0.05$.
 ## `pairwise.t.test`
 
 \tiny
-```{r bAnova-post-6 }
+```{r bAnova-6 }
 with(hairpain, pairwise.t.test(pain, hair, p.adj = "none"))
 with(hairpain, pairwise.t.test(pain, hair, p.adj = "holm"))
 ```
@@ -321,7 +320,7 @@ with(hairpain, pairwise.t.test(pain, hair, p.adj = "holm"))
 ## `pairwise.t.test` part 2 
 
 \tiny
-```{r bAnova-post-7 }
+```{r bAnova-7 }
 with(hairpain, pairwise.t.test(pain, hair, p.adj = "fdr"))
 with(hairpain, pairwise.t.test(pain, hair, p.adj = "bon"))
 ```
@@ -370,7 +369,7 @@ into size classes `lean` and `obese`.
 
 \small
 
-```{r bAnova-post-8 }
+```{r bAnova-8 }
 my_url <- "http://ritsokiguess.site/datafiles/vitaminb.txt"
 vitaminb <- read_delim(my_url, " ")
 ```
@@ -380,7 +379,7 @@ vitaminb <- read_delim(my_url, " ")
 
 
 ## The data
-```{r bAnova-post-9 }
+```{r bAnova-9 }
 vitaminb
 ```
 
@@ -388,7 +387,7 @@ vitaminb
 
 
 ## Grouped boxplot
-```{r bAnova-post-10, fig.height=3.0}
+```{r bAnova-10, fig.height=3.0}
 ggplot(vitaminb, aes(
   x = ratsize, y = kidneyweight,
   fill = diet
@@ -404,7 +403,7 @@ ggplot(vitaminb, aes(
 * Calculate group means: 
 
 \footnotesize
-```{r bAnova-post-11 }
+```{r bAnova-11 }
 summary <- vitaminb %>%
   group_by(ratsize, diet) %>%
   summarize(mean = mean(kidneyweight))
@@ -424,7 +423,7 @@ diet).
 
 
 ## ANOVA with interaction
-```{r bAnova-post-12 }
+```{r bAnova-12 }
 vitaminb.1 <- aov(kidneyweight ~ ratsize * diet,
   data = vitaminb
 )
@@ -443,11 +442,10 @@ interaction (can be removed).
 
 * Plot mean of response variable against one of the explanatory, using
 other one as groups. Start from `summary`: 
-```{r bAnova-post-13 }
-summary
+```{r bAnova-13 }
 g <- ggplot(summary, aes(
-  x = diet, y = mean,
-  colour = ratsize, group = ratsize
+  x = ratsize, y = mean,
+  colour = diet, group = diet
 )) +
   geom_point() + geom_line()
 ```
@@ -460,7 +458,7 @@ g <- ggplot(summary, aes(
 
 
 ## The interaction plot 
-```{r bAnova-post-14, fig.height=3.7}
+```{r bAnova-14, fig.height=3.7}
 g
 ```
 
@@ -472,7 +470,7 @@ Lines basically parallel, indicating no interaction.
 ## Take out interaction
 \small
 
-```{r bAnova-post-15}
+```{r bAnova-15}
 vitaminb.2 <- update(vitaminb.1, . ~ . - ratsize:diet)
 summary(vitaminb.2)
 ```
@@ -504,7 +502,7 @@ for size of rat.
 
 \scriptsize
 
-```{r bAnova-post-16}
+```{r bAnova-16}
 vitaminb.3 <- lm(kidneyweight ~ ratsize + diet, data = vitaminb)
 summary(vitaminb.3)
 ```
@@ -514,8 +512,8 @@ summary(vitaminb.3)
 
 \small
 
-```{r bAnova-post-17}
-drop1(vitaminb.3, test = "F")
+```{r bAnova-17}
+tidy(drop1(vitaminb.3, test = "F"))
 ```
 
 \normalsize
@@ -526,14 +524,14 @@ drop1(vitaminb.3, test = "F")
 
 ## Are the residuals normal?
 
-```{r bAnova-post-18}
+```{r bAnova-18}
 ggplot(vitaminb.3, aes(sample=.resid)) + 
   stat_qq() + stat_qq_line()
 ```
 
 ## Residuals against fitted
 
-```{r bAnova-post-19}
+```{r bAnova-19}
 ggplot(vitaminb.3, aes(x=.fitted, y=.resid)) + geom_point()
 ```
 
@@ -543,23 +541,22 @@ ggplot(vitaminb.3, aes(x=.fitted, y=.resid)) + geom_point()
 - larger fitted values have greater spread (fan-out, transformation?)
 - add residuals to data to plot residuals against size, diet (`augment` from `broom`):
 
-```{r bAnova-post-20}
+```{r bAnova-20}
 vitaminb.3 %>% augment(vitaminb) -> vitaminb.3a
-vitaminb.3a
 ```
 
 - explanatory `ratsize`, `diet` categorical, so plot resid vs. them with *boxplots*.
 
 ## Residuals vs rat size 
 
-```{r bAnova-post-21}
+```{r bAnova-21}
 ggplot(vitaminb.3a, aes(x = ratsize, y = .resid)) + 
   geom_boxplot()
 ```
 
 ## Residuals vs diet
 
-```{r bAnova-post-22}
+```{r bAnova-22}
 ggplot(vitaminb.3a, aes(x = diet, y = .resid)) + 
   geom_boxplot()
 ```
@@ -584,7 +581,7 @@ filter silencing. He referred to the data included in the report
 (and below) as evidence
 that the silencing properties of the Octel filter were at least
 equal to those of standard silencers. 
-```{r bAnova-post-23 }
+```{r bAnova-23 }
 u <- "http://ritsokiguess.site/datafiles/autonoise.txt"
 autonoise <- read_table(u)
 ```
@@ -593,7 +590,7 @@ autonoise <- read_table(u)
 
 
 ## The data
-```{r bAnova-post-24 }
+```{r bAnova-24 }
 autonoise
 ```
 
@@ -607,7 +604,7 @@ autonoise
 engine size.
 
 * Use grouped boxplot again, thus:
-```{r bAnova-post-25 }
+```{r bAnova-25 }
 g <- autonoise %>%
   ggplot(aes(x = size, y = noise, fill = type)) +
   geom_boxplot()
@@ -625,7 +622,7 @@ medium engine size than for large or small.
 * Some evidence of differences in spreads (ignore for now):
 
 
-```{r bAnova-post-26, fig.height=2.7}
+```{r bAnova-26, fig.height=2.7}
 g
 ```
 
@@ -637,7 +634,7 @@ g
 
 ## ANOVA
 \small
-```{r bAnova-post-27}
+```{r bAnova-27}
 autonoise.1 <- aov(noise ~ size * type, data = autonoise)
 summary(autonoise.1)
 ```
@@ -657,7 +654,7 @@ on 6 obs each.
 
 ## Tukey: ouch! 
 \scriptsize
-```{r bAnova-post-28}
+```{r bAnova-28}
 autonoise.2 <- TukeyHSD(autonoise.1)
 autonoise.2$`size:type`
 ```
@@ -677,7 +674,7 @@ combination.
 `ggplot` as in vitamin B example.
 
 * Or, have `ggplot` compute them for us, thus:
-```{r bAnova-post-29 }
+```{r bAnova-29 }
 g <- ggplot(autonoise, aes(
   x = size, y = noise,
   colour = type, group = type
@@ -687,7 +684,7 @@ g <- ggplot(autonoise, aes(
 ```
 
      
-  
+
 
 
 ## Interaction plot
@@ -695,7 +692,7 @@ g <- ggplot(autonoise, aes(
 The lines are definitely *not* parallel, showing that the effect
 of `type` is different for medium-sized engines than for others:
 
-```{r bAnova-post-30, fig.height=3}
+```{r bAnova-30, fig.height=3}
 g
 ```
 
@@ -709,7 +706,7 @@ g
 
 \footnotesize
 
-```{r bAnova-post-31}
+```{r bAnova-31, fig.height=2.2}
 autonoise %>%
   group_by(size, type) %>%
   summarize(mean_noise = mean(noise)) %>%
@@ -746,7 +743,7 @@ cars. (Three one-way ANOVAs.)
 
 
 * Small cars:
-```{r bAnova-post-32 }
+```{r bAnova-32 }
 autonoise %>%
   filter(size == "S") %>%
   aov(noise ~ type, data = .) %>%
@@ -766,7 +763,7 @@ autonoise %>%
 
 \small
 
-```{r bAnova-post-33 }
+```{r bAnova-33 }
 autonoise %>%
   filter(size == "M") %>%
   aov(noise ~ type, data = .) %>%
@@ -786,7 +783,7 @@ at means to investigate (over).
 \ldots for medium engine size: 
 
 
-```{r bAnova-post-34 }
+```{r bAnova-34 }
 autonoise %>%
   filter(size == "M") %>%
   group_by(type) %>%
@@ -803,7 +800,7 @@ autonoise %>%
 
 
 * Large cars:
-```{r bAnova-post-35 }
+```{r bAnova-35 }
 autonoise %>%
   filter(size == "L") %>%
   aov(noise ~ type, data = .) %>%
@@ -820,7 +817,7 @@ autonoise %>%
 
 The "split" part:
 
-```{r bAnova-post-36}
+```{r bAnova-36}
 autonoise %>%
   group_by(size) %>%
   nest()
@@ -839,7 +836,7 @@ as *one element* of this data frame.
 *   Write function to do `aov` on a
 data frame with columns `noise` and `type`,
 returning P-value:
-```{r bAnova-post-37 }
+```{r bAnova-37 }
 aov_pval <- function(x) {
   noise.1 <- aov(noise ~ type, data = x)
   gg <- tidy(noise.1)
@@ -849,7 +846,7 @@ aov_pval <- function(x) {
      
 
 * Test it:
-```{r bAnova-post-38 }
+```{r bAnova-38 }
 autonoise %>%
   filter(size == "L") %>%
   aov_pval()
@@ -866,18 +863,12 @@ autonoise %>%
 
 * Apply this function to each of the nested data frames (one per
 engine size):
-```{r bAnova-post-39}
+```{r bAnova-39}
 autonoise %>%
-  group_by(size) %>%
-  nest() %>%
-  mutate(p_val = map_dbl(data, ~ aov_pval(.)))
+  nest_by(size) %>% 
+  rowwise() %>% 
+  mutate(p_val = aov_pval(data))
 ```
-
-     
-
-* `map_dbl` because `aov_pval` returns a decimal
-number (a `dbl`). Investigate what happens if you use
-`map` instead.
 
 
 
@@ -889,12 +880,12 @@ answer. Don't need it any more:
 
 \small
 
-```{r bAnova-post-40}
-simple_effects <- autonoise %>%
-  group_by(size) %>%
-  nest() %>%
-  mutate(p_val = map_dbl(data, ~ aov_pval(.))) %>%
-  select(-data)
+```{r bAnova-40}
+autonoise %>%
+  nest_by(size) %>% 
+  rowwise() %>% 
+  mutate(p_val = aov_pval(data)) %>% 
+  select(-data) -> simple_effects
 simple_effects
 ```
 
@@ -912,7 +903,7 @@ this case, 3.) Have to adjust P-values for this. Eg.\ Holm:
 
 \footnotesize
 
-```{r bAnova-post-41}
+```{r bAnova-41}
 simple_effects %>% ungroup() %>% arrange(p_val) %>%
   mutate(multiplier = 4 - row_number()) %>%
   mutate(p_val_adj = p_val * multiplier)
@@ -978,7 +969,7 @@ is better.)
 ## CI for small cars
 Same idea as for simple effect test:
 
-```{r bAnova-post-42 }
+```{r bAnova-42 }
 autonoise %>%
   filter(size == "S") %>%
   t.test(noise ~ type, data = .) %>%
@@ -989,7 +980,7 @@ autonoise %>%
 
 ## CI for medium cars
 
-```{r bAnova-post-43 }
+```{r bAnova-43 }
 autonoise %>%
   filter(size == "M") %>%
   t.test(noise ~ type, data = .) %>%
@@ -999,7 +990,7 @@ autonoise %>%
  
 
 ## CI for large cars
-```{r bAnova-post-44 }
+```{r bAnova-44 }
 autonoise %>%
   filter(size == "L") %>%
   t.test(noise ~ type, data = .) %>%
@@ -1012,14 +1003,15 @@ autonoise %>%
 ## Or, all at once: split/apply/combine
 
 
-```{r bAnova-post-45}
+```{r bAnova-45}
 ci_func <- function(x) {
   tt <- t.test(noise ~ type, data = x)
   tt$conf.int
 }
-autonoise %>% group_by(size) %>%
-  nest() %>% 
-  mutate(ci = map(data, ~ ci_func(.))) %>%
+
+autonoise %>% nest_by(size) %>%
+  rowwise() %>% 
+  mutate(ci = list(ci_func(data))) %>%
   unnest_wider(ci) -> cis
 ```
 
@@ -1027,7 +1019,7 @@ autonoise %>% group_by(size) %>%
 
 ## Results
 
-```{r bAnova-post-46}
+```{r bAnova-46}
 cis
 ```
 
@@ -1036,12 +1028,11 @@ cis
 * Function to get CI of difference in noise means for types
 of filter on input data frame
 
-* Group by `size`, nest (mini-df per size)
+* Nest by `size` (mini-df `data` per size)
 
-* Calculate CI for each thing in `data` (ie.\ each
-`size`). `map`: CI is two numbers long
+* Calculate CI for each thing in `data`: CI is two numbers long
 
-* `unnest` `ci` column to see two numbers
+* `unnest` `ci` column (wider) to see two numbers
 in each CI.
 
 
@@ -1055,11 +1046,8 @@ equivalent. (I have no idea whether that is reasonable.)
 
 \small
 
-```{r bAnova-post-47}
-hilos=c("lower", "upper")
-cis %>%
-  mutate(hilo = hilos) %>%
-  pivot_wider(names_from=hilo, values_from=ci)
+```{r bAnova-47}
+cis
 ```
 
 \normalsize
@@ -1158,7 +1146,7 @@ side is 0.
 
 
 * Comparing two home models A and D ($\mu_A-\mu_D=0$):
-```{r bAnova-post-48 }
+```{r bAnova-48 }
 c.home <- c(1, 0, 0, -1)
 ```
 
@@ -1166,7 +1154,7 @@ c.home <- c(1, 0, 0, -1)
 
 
 * Comparing two industrial models B and C ($\mu_B-\mu_C=0$):
-```{r bAnova-post-49 }
+```{r bAnova-49 }
 c.industrial <- c(0, 1, -1, 0)
 ```
 
@@ -1174,7 +1162,7 @@ c.industrial <- c(0, 1, -1, 0)
 
 
 * Comparing home average vs.\ industrial average ($0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$):
-```{r bAnova-post-50 }
+```{r bAnova-50 }
 c.home.ind <- c(0.5, -0.5, -0.5, 0.5)
 ```
 
@@ -1186,7 +1174,7 @@ c.home.ind <- c(0.5, -0.5, -0.5, 0.5)
 
 
 * What happens if we multiply the contrast coefficients one by one?
-```{r bAnova-post-51 }
+```{r bAnova-51 }
 c.home * c.industrial
 c.home * c.home.ind
 c.industrial * c.home.ind
@@ -1205,7 +1193,7 @@ contrasts are called **orthogonal**.
 * Compare these:
 
 \normalsize
-```{r bAnova-post-52 }
+```{r bAnova-52 }
 c1 <- c(1, -1, 0)
 c2 <- c(0, 1, -1)
 sum(c1 * c2)
@@ -1224,7 +1212,7 @@ orthogonal.
 
 ## Read in data
 \small
-```{r bAnova-post-53, message=F}
+```{r bAnova-53, message=F}
 url <- "http://ritsokiguess.site/datafiles/chainsaw.txt"
 chain.wide <- read_table(url)
 chain.wide
@@ -1239,7 +1227,7 @@ chain.wide
 
 Need all the kickbacks in *one* column:
 
-```{r bAnova-post-54 }
+```{r bAnova-54 }
 chain.wide %>% 
   pivot_longer(A:D, names_to = "model", 
                names_ptypes = list(model=factor()), 
@@ -1253,7 +1241,7 @@ chain.wide %>%
 The proper data frame (tiny):
 
 \tiny
-```{r bAnova-post-55 }
+```{r bAnova-55 }
 chain 
 ```
 \normalsize
@@ -1263,7 +1251,7 @@ chain
 
 
 ## Setting up contrasts
-```{r bAnova-post-56 }
+```{r bAnova-56 }
 m <- cbind(c.home, c.industrial, c.home.ind)
 m
 contrasts(chain$model) <- m
@@ -1275,7 +1263,7 @@ contrasts(chain$model) <- m
 ## ANOVA *as if regression*
 
 \scriptsize
-```{r bAnova-post-57 }
+```{r bAnova-57 }
 chain.1 <- lm(kickback ~ model, data = chain)
 summary(chain.1)
 ```
@@ -1285,7 +1273,7 @@ summary(chain.1)
 
 
 ## Conclusions
-```{r bAnova-post-58 }
+```{r bAnova-58 }
 tidy(chain.1) %>% select(term, p.value)
 ```
 
@@ -1307,7 +1295,7 @@ models *are* sig.\ diff.\ (P-value 0.0032).
 * The means:
 
 \footnotesize
-```{r bAnova-post-59 }
+```{r bAnova-59 }
 chain %>%
   group_by(model) %>%
   summarize(mean.kick = mean(kickback)) %>%
