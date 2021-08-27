@@ -366,9 +366,11 @@ ggscreeplot(places.1)
 
 ## What is in each component?
 
+\small
 ```{r bPrincomp-19}
 places.1$loadings
 ```
+\normalsize
 
 ## Assessing the components
 

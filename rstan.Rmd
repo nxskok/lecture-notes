@@ -158,12 +158,14 @@ parameters {
 
 ```{r rstan-8}
 poisson1 <- cmdstan_model("poisson1.stan")
+poisson1
 ```
 
 - set up data
 
 ```{r rstan-9}
 poisson1_data <- list(x = x)
+poisson1_data
 ```
 
 - sample
@@ -307,7 +309,8 @@ g
 ## Do they have the same distribution? 
 
 ```{r rstan-23, fig.height=4}
-qqplot(d$xsim, x, plot.it = F) %>% as_tibble() -> dd
+qqplot(d$xsim, x, plot.it = FALSE) %>% as_tibble() -> dd
+dd
 ggplot(dd, aes(x=x, y=y)) + geom_point()
 ```
 
@@ -361,8 +364,8 @@ ggplot(rats, aes(x = group_fct, y = density)) +
 Another way: density plot (smoothed out histogram); can distinguish groups by colours: 
 
 ```{r density_plot, fig.height=4}
-ggplot(rats, aes(x = density, colour = group_fct)) +
-  geom_density()
+ggplot(rats, aes(x = density, fill = group_fct)) +
+  geom_density(alpha = 0.6)
 ```
 
 
@@ -489,7 +492,7 @@ anova_fit
 ## Plotting the posterior distributions for the `mu`
 
 ```{r rstan-29}
-mcmc_hist(anova_fit$draws("mu"), binwidth = 10)
+mcmc_hist(anova_fit$draws("mu"), binwidth = 5)
 ```
 
 
@@ -530,14 +533,15 @@ anova_draws %>%
 ## What we have now:
 
 ```{r rstan-32}
-sims %>% sample_n(8)
+sims 
 ```
 
 
 ## Density plots of posterior mean distributions
 
 ```{r rstan-33, fig.height=4}
-ggplot(sims, aes(x = bone_density, colour = group)) + geom_density()
+ggplot(sims, aes(x = bone_density, fill = group)) + 
+  geom_density(alpha = 0.6)
 ```
 
 ## Posterior predictive distributions

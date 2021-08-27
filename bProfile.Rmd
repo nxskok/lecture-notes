@@ -72,7 +72,7 @@ in data frame.
 options(width = 70)
 ```
 
-
+    
 \footnotesize 
 ```{r bProfile-5, error=TRUE}
 times <- colnames(response)
