@@ -1,12 +1,12 @@
 ## This course
 
--   STAC32, Applications of Statistical Methods
+-   STAC32, Applications of Statistical Methods (Fall 2021)
 
--   Online:
+-   Classes:
 
-    -   2 hours of recorded lectures / week, asynchronous (watch when you like)
-    -   1.5 hours of live tutorial / week, Wednesday 2:00 or 3:30, on Zoom
-    -   "office hours" also on Zoom, by appointment
+    -   2 hours of lectures / week, in person (LEC01), async recorded (LEC60)
+    -   1.5 hours of tutorial / week, in person or online 
+    -   "office hours" on Zoom only, by appointment.
 
 -   Instructor:
 
@@ -48,24 +48,24 @@
 
 ## Getting help
 
--   Option 1: come to tutorial and ask the TAs or me.
+-   Option 1: Quercus discussion boards:
 
--   Option 2: Quercus discussion boards:
-
-    -   First: look at the Quercus discussion board (Forum 2). Your question might have an answer there.
+    -   First: look at the Quercus discussion board. Your question might have an answer there.
     -   If you see a question there that you can answer, go ahead and answer it.
-    -   If you don't see an answer to your question, post your question on Forum 2.
-    -   If you don't get an answer to your question (from me or anyone else) in Forum 2, post it to Forum 3 and I will answer.
+    -   If you don't see an answer to your question, post your question (start a new thread).
     -   For an issue that is more personal, email me (below).
+
+-   Option 2: come to tutorial and ask the TAs or me.
 
 -   Option 3: I am also willing to meet at other times on Zoom if you want to chat. I will set up a mechanism for you to make an appointment.
 
 ## E-mail
 
+-   Personal issues, or questions about the Applied Minor *program*, only.
 -   Use a U of T email (so that I know who you are)
 -   Use a suitable subject, eg "STAC32" or "Applied Minor Program"
 -   Begin with "Dear Dr Butler"
--   State *clearly* how I can help you. (The quicker I can figure this out, the better your chances of a quick reply.)
+-   State *clearly* how I can help you. 
 -   Include your name (as U of T knows it) *and* student number
 -   I aim to reply within one working day.
 
@@ -90,15 +90,15 @@ The blue things are all links:
 
 -   [Computer requirements](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
 
-    -   to get the most out of tutorials, you will want a working camera and microphone
-    -   can use `rstudio.cloud` (needs only web browser) or install R and R Studio on your computer
+    -   to get the most out of online tutorials, you will want a working camera and microphone
+    -   can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
 ## Assessment
 
 -   Assignments: 10 total, due in weeks 2 through 10 and in the final exam period. Best 8 count, total 80% (10% each).
--   Project: can be done in groups (chosen by you) of up to 5 people. Due the last day of classes. Worth 20%.
+-   Project: can be done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 20%.
 
 ## Grading
 

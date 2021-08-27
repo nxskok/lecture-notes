@@ -224,14 +224,7 @@ vs.\ not)
 
 * Would be nice to see this on a graph. This is `ggsurvplot` from package `survminer`:
 ```{r bSurvival-11 }
-<<<<<<< HEAD
-s1 <- do.call(survfit, list(formula=dance.1, 
-                            newdata=dance.new, 
-                            data=dance))
-g <- ggsurvplot(s1, conf.int = F)
-=======
 g <- ggsurvplot(s, conf.int = F)
->>>>>>> 35890879ec51e4ffb93fb5fa7b2a58b87ba432ad
 ```
 
 ## "Strata" (groups)
@@ -485,19 +478,9 @@ lung.new
 
  
 
-<<<<<<< HEAD
 ## Making the plot 
-```{r bSurvival-28, fig.height=3.2}
-s <- survfit(lung.3, data = lung.complete, newdata = lung.new)
-s1 <- do.call(survfit, list(formula = lung.3, 
-                            data = lung.complete, 
-                            newdata = lung.new))
-g <- ggsurvplot(s1, conf.int = F)
-=======
-## The plot 
 ```{r bSurvival-29, fig.height=3.8}
 ggsurvplot(s, conf.int = F)
->>>>>>> 35890879ec51e4ffb93fb5fa7b2a58b87ba432ad
 ```
  
 ## The plot
