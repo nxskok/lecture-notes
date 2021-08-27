@@ -11,11 +11,7 @@
 -   Instructor:
 
     -   Ken Butler, `ken.butler@utoronto.ca`
-    -   I like sharing what I know about applied statistics, particularly with people who are not primarily statisticians
-    -   This course will help you develop the skills to use software to analyze data, and to communicate the results.
-    -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
-    -   I want you to demonstrate your understanding and insight about the data you're working with
-    -   I will help you to work towards this.
+    -   I like sharing what I know about applied statistics, particularly with people who are not primarily statisticians.
 
 ## Programs and Prerequisites
 
@@ -50,20 +46,21 @@
 
 -   Option 1: Quercus discussion boards:
 
-    -   First: look at the Quercus discussion board. Your question might have an answer there.
+    -   Look at the Quercus discussion board. Your question might have an answer there.
+    -   If you don't see an answer to your question, post your question (start a new thread, "+Discussion" top right).
     -   If you see a question there that you can answer, go ahead and answer it.
-    -   If you don't see an answer to your question, post your question (start a new thread).
     -   For an issue that is more personal, email me (below).
 
 -   Option 2: come to tutorial and ask the TAs or me.
 
--   Option 3: I am also willing to meet at other times on Zoom if you want to chat. I will set up a mechanism for you to make an appointment.
+-   Option 3: I am also willing to meet at other times on Zoom if you want to chat. Office hours are after lecture. Arrange a time through Calendly. (instructions)
 
 ## E-mail
 
--   Personal issues, or questions about the Applied Minor *program*, only.
+-   If you have a question about the Applied Minor program, look at FAQ first (address).
+-   Personal issues, or non-FAQ questions about the Applied Minor *program*, only.
 -   Use a U of T email (so that I know who you are)
--   Use a suitable subject, eg "STAC32" or "Applied Minor Program"
+-   Use a suitable subject, eg "Applied Minor Program"
 -   Begin with "Dear Dr Butler"
 -   State *clearly* how I can help you. 
 -   Include your name (as U of T knows it) *and* student number
@@ -71,11 +68,12 @@
 
 ## Course objectives
 
--   You will learn how to use software to analyze data, and to communicate what you found.
-
+-   This course will help you develop the skills to use software to analyze data, and to communicate the results.
+    -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
+-   I want you to demonstrate your understanding and insight about the data you're working with
 -   This will be assessed through assignments (approximately weekly) and a final project.
 
-    -   Some questions will ask for software output, and some for explanation.
+    -   Expect to be asked for software output, explanation, or both.
     -   The grading will reward evidence of clear understanding and insight.
 
 -   Along the way you will learn how to use R Notebooks and how to turn these into reports.
@@ -118,10 +116,10 @@ The blue things are all links:
 
 ## Policies
 
--   I do not generally accept late work, because I will want to post my solutions for everyone to learn from.
--   I am willing to be a little flexible (say, a few minutes), but work that is handed in after my solutions have been posted will definitely not be graded.
--   You have two "free" assignments (since only the best 8 count); you may miss these without explanation. If circumstances make it impossible to hand in work beyond that, email me and we'll see what we can work out.
+-   There is a penalty for late work, and no work is accepted more than three days late. I will want to post my solutions for everyone to learn from. (In any case, allowing extensions will shorten your time to prepare for the next assignment, and thus offers you no advantage.)
+-   You have two "free" assignments (since only the best 8 count); you may miss these without explanation. If circumstances make it impossible to hand in work beyond that, you may not learn enough from this course to be successful in the next one (STAD29).
 -   There are no make-up assessments.
+-   Accommodations (through Accessability) consist of extra time to work on assignments, *not* of delays to the due date. The due date is the same for everyone.
 -   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
 
 ## Course material
@@ -138,12 +136,12 @@ In R:
 -   Case studies
 -   Functions
 -   Dates and times
--   Miscellaneous tasks
+-   Miscellaneous tasks (as time permits)
 
 
 ## Accessibility statement
 
-> Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confiden- tial. The UTSC AccessAbility Services staff (located in S302) are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability@utsc.utoronto.ca`.
+> Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confidential. The UTSC AccessAbility Services staff (located in SW 302) are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability@utsc.utoronto.ca`.
 
 ## Expectations 1/3
 
