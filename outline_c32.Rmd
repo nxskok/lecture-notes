@@ -5,7 +5,7 @@
 -   Classes:
 
     -   2 hours of lectures / week, in person (LEC01), async recorded (LEC60)
-    -   1.5 hours of tutorial / week, in person or online 
+    -   1.5 hours of tutorial / week, in person or online **starting in week 1**
     -   "office hours" on Zoom only, by appointment.
 
 -   Instructor:
@@ -53,12 +53,14 @@
 
 -   Option 2: come to tutorial and ask the TAs or me.
 
--   Option 3: I am also willing to meet at other times on Zoom if you want to chat. Office hours are after lecture. Arrange a time through Calendly. (instructions)
+-   Option 3: I am also willing to meet at other times on Zoom if you want to chat. Office hours are after lecture. Arrange a time through [Calendly](https://calendly.com/ken-butler). 
+    - click on 15-minute meeting, select date and time.
+    - if you don't want to meet after all, *cancel* the meeting (see email confirmation).
 
 ## E-mail
 
--   If you have a question about the Applied Minor program, look at FAQ first (address).
--   Personal issues, or non-FAQ questions about the Applied Minor *program*, only.
+-   If you have a question about the Applied Minor program, look at [FAQ](http://ritsokiguess.site/home/faq.html) first
+-   Personal issues, or non-FAQ questions about the Applied Minor *program*, only. (Questions about the STAC32 course material go on the discussion board.)
 -   Use a U of T email (so that I know who you are)
 -   Use a suitable subject, eg "Applied Minor Program"
 -   Begin with "Dear Dr Butler"
@@ -96,6 +98,11 @@ The blue things are all links:
 ## Assessment
 
 -   Assignments: 10 total, due in weeks 2 through 10 and in the final exam period. Best 8 count, total 80% (10% each).
+    - these are like small take-home exams, so do not expect help on the assignments themselves
+    - expect that each assignment will cover up to the Tuesday lecture before it is due
+    - will become available after the Friday tutorial, and will be due Monday at 11:59pm
+    - you will have a certain time (eg 3 hours) from when you open the assignment to when you must hand it in. A countdown clock will display in Quercus.
+    - you will need to hand in your previewed/knitted notebook showing your code, output and questions (in the first tutorial you will learn how to do this)
 -   Project: can be done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 20%.
 
 ## Grading
