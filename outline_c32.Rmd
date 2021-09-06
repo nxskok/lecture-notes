@@ -92,6 +92,8 @@ The blue things are all links:
 
     -   to get the most out of online tutorials, you will want a working camera and microphone
     -   can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer
+    
+-   [Practice problems (PASIAS)](http://ritsokiguess.site/pasias/) for you to practice on and for tutorials.
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
@@ -102,8 +104,8 @@ The blue things are all links:
     - expect that each assignment will cover up to the Tuesday lecture before it is due
     - will become available after the Friday tutorial, and will be due Monday at 11:59pm
     - you will have a certain time (eg 3 hours) from when you open the assignment to when you must hand it in. A countdown clock will display in Quercus.
-    - you will need to hand in your previewed/knitted notebook showing your code, output and questions (in the first tutorial you will learn how to do this)
--   Project: can be done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 20%.
+    - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
+-   Project: done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 20%.
 
 ## Grading
 
