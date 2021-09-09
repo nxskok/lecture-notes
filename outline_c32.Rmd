@@ -92,6 +92,9 @@ The blue things are all links:
 
     -   to get the most out of online tutorials, you will want a working camera and microphone
     -   can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer
+    
+- [PASIAS](http://ritsokiguess.site/PASIAS/)
+    - problems and solutions in applied statistics
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 

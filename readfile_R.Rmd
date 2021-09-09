@@ -46,7 +46,7 @@ p6,17,31,lower
 
 To read this in:
 
-- Fire up rstudio.cloud.
+- Fire up  R Studio at `jupyter.utoronto.ca`. (this said `rstudio.cloud` until a few minutes ago)
 - Upload this .csv file. (Bottom right, next to New Folder, Upload.)
 Click Choose File, find the file, click Open. Click OK. See the file
 appear bottom right.
@@ -84,12 +84,17 @@ variable”: identifies individuals.
 - Put the .csv file in the same folder as your project. Then read it in
 as above like `read_csv("test1.csv")`.
 - Or, use
-`f=file.choose()`
+
+```{r, eval=FALSE}
+f <- file.choose()
+```
+
 which brings up a file selector (as if you were going to find a file to
 load or save it). Find your `.csv` file, the address of which will be
 saved in `f`, and then:
-```
-mydata=read_csv(f)
+
+```{r, eval=FALSE}
+mydata <- read_csv(f)
 ```
 
 - When you have selected the file, comment out the `file.choose` line
@@ -162,7 +167,7 @@ long), and then put that variable in the `read_` function:
 
 \small
 ```{r readfile-R-7}
-my_url <- "http://ritsokiguess.site/datafiles/global.csv"
+my_url <- url("http://ritsokiguess.site/datafiles/global.csv")
 global <- read_csv(my_url)
 ```
 \normalsize
@@ -206,7 +211,7 @@ CUPPS 10
 
 ## Reading the coffee data
 
-- This file was on my computer so I uploaded it to <http://rstudio.cloud>
+- This file was on my computer so I uploaded it to `jupyter.utoronto.ca`
 first.
 - This time, `read_delim`, and we also have to say what the thing is
 separating the values:
@@ -231,7 +236,7 @@ the temperature of the coffee in the mug decreased over 30 minutes.
 - Save the URL in a variable first:
 
 ```{r readfile-R-11}
-url <- "http://ritsokiguess.site/datafiles/soap.txt"
+url <- url("http://ritsokiguess.site/datafiles/soap.txt")
 soap <- read_delim(url, " ")
 ```
 

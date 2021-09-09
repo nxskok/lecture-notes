@@ -1,0 +1,7 @@
+id,x,y,group
+p1,10,21,upper
+p2,11,20,lower
+p3,13,25,upper
+p4,15,27,lower
+p5,16,30,upper
+p6,17,31,lower
