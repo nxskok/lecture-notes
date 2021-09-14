@@ -87,6 +87,7 @@ as above like `read_csv("test1.csv")`.
 
 ```{r, eval=FALSE}
 f <- file.choose()
+f
 ```
 
 which brings up a file selector (as if you were going to find a file to
@@ -218,6 +219,7 @@ separating the values:
 
 ```{r readfile-R-9}
 coffee <- read_delim("coffee.txt", " ")
+coffee
 ```
 
 - Name of the cup, text, and tempdiff, a decimal number.
@@ -288,7 +290,7 @@ cannot read one in from a URL.
 
 ```{r readfile-R-15, warning=F}
 library(readxl)
-mydata2 <- read_excel("test2.xlsx", sheet = "data")
+mydata2 <- read_excel("test2.xlsx", sheet = "fred")
 mydata2
 ```
 
