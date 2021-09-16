@@ -92,24 +92,44 @@ athletes %>% group_by(Sex) %>%
   summarize(m=mean(Ht), s=sd(Ht))
 ```
 
+
+## Count plus stats
+
+- If you want number of observations per group plus some stats, you need to
+go the `n()` way:
+
+```{r}
+athletes %>% group_by(Sex) %>%
+summarize(n=n(), m=mean(Ht), s=sd(Ht))
+```
+
 - This explains second variation on counting within group: “within each
-sport, how many athletes were there?”
+sport/Sex, how many athletes were there?”
 
 ## Summarizing several columns
 
 - Standard deviation of each (numeric) column: 
 
+
 \small
+
 ```{r numsum-R-10}
-athletes %>% summarize_if(is.numeric, sd)
+athletes %>% summarize(across(where(is.numeric), ~sd(.))) -> d
 ```
+
+\scriptsize
+
+```{r}
+d
+```
+
 \normalsize
 
 - Median and IQR of all columns whose name starts with H: 
 
 \small
 ```{r numsum-R-11}
-athletes %>% summarize_at(vars(starts_with("H")),
-                          list(med=median, iqr=IQR))
+athletes %>% summarize(across(starts_with("H"),
+                       list(med=~median(.), iqr=~IQR(.))))
 ```
 \normalsize
