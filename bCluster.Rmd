@@ -183,7 +183,7 @@ ggplot(ddd, aes(x = x, y = y, colour = cluster)) +
 Work out (i) sum of squared distances of points from means.
 
 
-## Ward's method part 2 xxx
+## Ward's method part 2 
 
 Now imagine combining the two clusters and working out overall
 mean. Join each point to this mean:
