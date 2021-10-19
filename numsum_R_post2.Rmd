@@ -22,6 +22,7 @@ library(tidyverse)
 ```{r numsum-R-2, echo=F, message=F}
 my_url <- url("http://ritsokiguess.site/datafiles/ais.txt")
 athletes <- read_tsv(my_url)
+athletes
 ```
 
 
