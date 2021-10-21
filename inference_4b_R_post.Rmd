@@ -47,7 +47,7 @@ pain
 \small
 
 ```{r inference-4b-R-post-3}
-with(pain, t.test(druga, drugb, paired = T))
+with(pain, t.test(druga, drugb, paired = TRUE))
 ```
 
 \normalsize
@@ -64,7 +64,8 @@ do a 1-sample t-test on them.
 \footnotesize
 
 ```{r inference-4b-R-post-4}
-(pain %>% mutate(diff=druga-drugb) -> pain)
+pain %>% mutate(diff=druga-drugb) -> pain
+pain
 ```
 
 \normalsize
@@ -111,4 +112,17 @@ sign_test(pain, diff, 0)
 - no evidence of any difference between drugs (P-value 0.1460)
 - in $t$-test, the low outlier difference pulled mean difference downward and made it look more negative than it should have been
 - therefore, there really isn't any difference between the drugs.
+
+
+
+## Bootstrap
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) -> d
+ggplot(d, aes(sample = my_mean)) + stat_qq() + stat_qq_line()
+ggplot(d, aes(x = my_mean)) + geom_histogram(bins = 10)
+```
 

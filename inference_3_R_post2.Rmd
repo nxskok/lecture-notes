@@ -249,7 +249,8 @@ pval_sign(300, irs, Time)
 
 \small
 ```{r inference-3-R-18}
-(d <- tibble(null_median=seq(100,300,20)))
+d <- tibble(null_median=seq(100,300,20))
+d
 ```
 \normalsize
 
@@ -282,13 +283,14 @@ d %>% rowwise() %>%
 ## A more efficient way: bisection
 - Know that top end of CI between 200 and 220:
 ```{r inference-3-R-21}
-lo=200 
-hi=220
+lo <- 200 
+hi <- 220
 ```
 
 - Try the value halfway between: is it inside or outside?
 ```{r inference-3-R-22}
-(try = (lo + hi) / 2)
+try <- (lo + hi) / 2
+try
 pval_sign(try,irs,Time)
 ```
 
@@ -297,8 +299,9 @@ pval_sign(try,irs,Time)
 ## ... bisection continued 
 
 ```{r inference-3-R-23}
-lo = try
-(try = (lo + hi) / 2)
+lo <- try
+try <- (lo + hi) / 2
+try
 pval_sign(try, irs, Time)
 ```
 
@@ -310,32 +313,32 @@ pval_sign(try, irs, Time)
 - A loop, but not a `for` since we don’t know how many times we’re
 going around. Keep going while a condition is true:
 ```{r inference-3-R-24, eval=F}
-lo = 200
-hi = 220
+lo <-  200
+hi <-  220
 while (hi - lo > 1) {
-  try = (hi + lo) / 2
-  ptry = pval_sign(try, irs, Time)
+  try <- (hi + lo) / 2
+  ptry <- pval_sign(try, irs, Time)
   print(c(try, ptry))
   if (ptry <= 0.05)
-    hi = try
+    hi <- try
   else
-    lo = try
+    lo <- try
 }
 ```
 
 ## The output from this loop
 
 ```{r inference-3-R-25, echo=F}
-lo = 200
-hi = 220
+lo <- 200
+hi <- 220
 while (hi - lo > 1) {
-  try = (hi + lo) / 2
-  ptry = pval_sign(try, irs, Time)
+  try <- (hi + lo) / 2
+  ptry <- pval_sign(try, irs, Time)
   print(c(try, ptry))
   if (ptry <= 0.05)
-    hi = try
+    hi <- try
   else
-    lo = try
+    lo <- try
 }
 ```
 
