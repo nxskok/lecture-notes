@@ -83,6 +83,7 @@ m
 
 - Make table of above/below vs. group:
 ```{r inference-5-R-post-6}
+kids %>% count(group, score>m)
 tab <- with(kids, table(group, score>m))
 tab
 ```
@@ -163,7 +164,7 @@ rats <- read_delim(my_url," ")
 \small
 ```{r inference-5-R-post-11}
 rats
-rats %>% slice_sample(n=12)
+# rats %>% slice_sample(n=12)
 ```
 \normalsize
 
@@ -219,6 +220,8 @@ via two-sample t.
 rats %>% filter(group=="Control") -> controls
 rats %>% filter(group=="Lowjump") -> lows
 rats %>% filter(group=="Highjump") -> highs
+controls
+lows
 ```
 
 ## Control vs. low
