@@ -17,7 +17,7 @@ urlcolor: blue
 
 ```{r tidying-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
-
+    
 
 
 ```{r tidying-R-slides-2, child="tidying_R.Rmd"}

@@ -29,7 +29,7 @@ d %>% pivot_wider(names_from = time, values_from = y)
 - Uses combo of columns *not* named in `pivot_wider`, here `obs` (only).
 
 ## The problem
-
+O
 ```{r wider-wrong-post-3}
 d %>% pivot_wider(names_from = time, values_from = y)
 ```

@@ -48,7 +48,8 @@ pigs1 <- read_delim(my_url, " ")
 pigs1
 ```
 
-## Gathering up the columns (OLD)
+## Gathering up the columns
+
 - This is a very common reorganization, and the magic “verb” is
 `pivot_longer`:
 ```{r tidying-R-3}
@@ -68,15 +69,6 @@ pigs1 %>% pivot_longer(feed1:feed4, names_to="feed",
 pigs2
 ```
 
-<<<<<<< HEAD
-## Another way to do this: (NEW)
-
-```{r tidying-R-5}
-pigs1 %>% 
-  pivot_longer(feed1:feed4, names_to = "feed", 
-               values_to="weight") -> pigs2
-pigs2
-=======
 ## Identifying the pigs
 
 - Values in `pig` identify pigs *within each group*: pig 1 is four different pigs!
@@ -85,12 +77,12 @@ pigs2
 ```{r tidying-R-6}
 pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) -> pigs2
 pigs2 %>% slice_sample(n=7)
->>>>>>> 2991ae36dff40038e717965e9023aeadbc00f334
 ```
 
 
 ## ...and finally, the analysis
 - which is just what we saw before:
+
 ```{r tidying-R-7}
 weight.1 <- aov(weight ~ feed, data = pigs2)
 summary(weight.1)
@@ -111,7 +103,7 @@ All of the feeds differ!
 ## Mean weights by feed 
 
 To find the best and worst, get mean weight by 
-feed group. I borrowed an idea from later to put the means in descending order:
+feed group. I borrowed an idea from earlier to put the means in descending order:
 
 ```{r tidying-R-9}
 pigs2 %>%
@@ -149,16 +141,14 @@ tb <- read_csv(my_url)
 ```
 
 
-## The data
+## The data (messed up)
 
-<<<<<<< HEAD
+
+
 ```{r tidying-R-11}
 tb
-=======
-```{r glimpsetb}
-glimpse(tb)
->>>>>>> 2991ae36dff40038e717965e9023aeadbc00f334
 ```
+
 
 ## What we have
 
@@ -169,23 +159,10 @@ Also `mu` and `fu`, where age is unknown.
 - Abbreviations [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 
 
-<<<<<<< HEAD
-OLD
-```{r tidying-R-12}
-tb %>% gather(genage, freq, m04:fu, na.rm = T) -> tb2
-```
-=======
->>>>>>> 2991ae36dff40038e717965e9023aeadbc00f334
-
-
-## All frequencies in one column
-
-NEW
-
 ```{r tidying-R-13}
 tb %>% 
   pivot_longer(m04:fu, names_to = "genage", 
-               values_to = "freq", values_drop_na = T) -> tb2
+               values_to = "freq", values_drop_na = TRUE) -> tb2
 ```
 
 - columns to make longer
@@ -207,6 +184,7 @@ age group. Split that up using separate.
   - what to separate into (here you do need quotes),
   - how to split.
 - For “how to split”, here “after first character”:
+
 ```{r tidying-R-15}
 tb2 %>% separate(genage, c("gender", "age"), 1) -> tb3
 ```
@@ -227,6 +205,7 @@ write_rds(tb3, "tb3.rds")
 - instead of doing the pipe one step at a time, you *debug* it one step at
 a time, and when you have each step working, you use that step’s
 output as input to the next step, thus:
+
 ```{r tidying-R-18}
 tb %>%
   pivot_longer(m04:fu, names_to = "genage", 
@@ -294,7 +273,7 @@ my_url <-
 weather <- read_csv(my_url)
 ```
 
-## The data (some)
+## The data (some, messed up)
 
 ```{r tidying-R-25}
 weather
