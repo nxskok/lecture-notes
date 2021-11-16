@@ -92,7 +92,7 @@ prevalence_longer
 prevalence_longer %>% 
   pivot_wider(names_from=c(Species, location), values_from=frequency)
 ```
-
+ 
 ```{r tidy-extra-R-post-10}
 prevalence_longer %>% 
   pivot_wider(names_from=location, values_from=frequency)
@@ -126,6 +126,12 @@ pigs_longer %>%
   unnest_wider(r)
 ```
 
+```{r tidy-extra-R-post-13, error=T}
+pigs_longer %>% 
+  group_by(feed) %>% 
+  summarize(r=list(quantile(weight))) %>% # this does 5-number summary 
+  unnest_wider(r)
+```
 
 
 ## or, even better, use `enframe`:
