@@ -268,7 +268,7 @@ take 12 minutes to walk 1 km, called your pace. So 1 over
 
 ```{r straightness, fig.keep="none"}
 windmill %>% mutate(wind_pace = 1 / wind_velocity) -> windmill
-# windmill
+windmill
 ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
   geom_point() + geom_smooth(se = F)
 ```
