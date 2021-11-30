@@ -170,13 +170,13 @@ rats
 
 ## Boxplots
 
-```{r inference-5-R-post-12, fig.height=3.7}
+```{r inference-5-R-post-12, fig.height=6.7}
 ggplot(rats,aes(y=density,x=group))+geom_boxplot()
 ```
 
 ## Or, arranging groups in data (logical) order
 
-```{r inference-5-R-post-13, fig.height=3.5}
+```{r inference-5-R-post-13, fig.height=6.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
@@ -325,7 +325,7 @@ $\alpha = 0.01$.
 
 ## Checking assumptions
 
-```{r inference-5-R-post-23, fig.height=3.5}
+```{r inference-5-R-post-23, fig.height=6.5}
 ggplot(rats,aes(y=density,x=fct_inorder(group)))+
 geom_boxplot()
 ```
@@ -337,7 +337,7 @@ Assumptions:
 
 ## Normal quantile plots by group
 
-```{r inference-5-R-post-24, fig.height=3.5}
+```{r inference-5-R-post-24, fig.height=6.5}
 ggplot(rats, aes(sample = density)) + stat_qq() + 
   stat_qq_line() + facet_wrap( ~ group)
 ```

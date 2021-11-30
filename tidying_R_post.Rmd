@@ -34,7 +34,7 @@ saying which feed that weight goes with.
   
 ## Packages for this section
 
-```{r tidying-R-post-1, eval=F}
+```{r tidying-R-1, eval=F}
 library(tidyverse)
 library(readxl)
 ```
@@ -42,17 +42,18 @@ library(readxl)
   
 ## Reading in the pig data
 
-```{r tidying-R-post-2, message=F}
+```{r tidying-R-2, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/pigs1.txt"
+# my_url <- "../datafiles/pigs1.txt"
 pigs1 <- read_delim(my_url, " ")
 pigs1
 ```
 
 ## Gathering up the columns
+
 - This is a very common reorganization, and the magic “verb” is
 `pivot_longer`:
-
-```{r tidying-R-post-3}
+```{r tidying-R-3}
 pigs1 %>% pivot_longer(feed1:feed4, names_to="feed", 
                        values_to="weight") -> pigs2
 ```
@@ -65,7 +66,7 @@ pigs1 %>% pivot_longer(feed1:feed4, names_to="feed",
 
 ## Long format pigs
 
-```{r tidying-R-post-4}
+```{r tidying-R-4}
 pigs2
 ```
 
@@ -74,15 +75,16 @@ pigs2
 - Values in `pig` identify pigs *within each group*: pig 1 is four different pigs!
 - Create unique pig IDs by gluing pig number onto feed:
 
-```{r tidying-R-post-5}
+```{r tidying-R-6}
 pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) -> pigs2
-pigs2 %>% slice_sample(n=7)
+pigs2 
 ```
 
 
 ## ...and finally, the analysis
 - which is just what we saw before:
-```{r tidying-R-post-6}
+
+```{r tidying-R-7}
 weight.1 <- aov(weight ~ feed, data = pigs2)
 summary(weight.1)
 ```
@@ -93,7 +95,7 @@ equal.
 
 ## Tukey
 
-```{r tidying-R-post-7}
+```{r tidying-R-8}
 TukeyHSD(weight.1)
 ```
 
@@ -102,9 +104,9 @@ All of the feeds differ!
 ## Mean weights by feed 
 
 To find the best and worst, get mean weight by 
-feed group. I borrowed an idea from later to put the means in descending order:
+feed group. I borrowed an idea from earlier to put the means in descending order:
 
-```{r tidying-R-post-8}
+```{r tidying-R-9}
 pigs2 %>%
   group_by(feed) %>%
   summarize(mean_weight = mean(weight))%>%
@@ -134,17 +136,17 @@ conclusion is so clear that I am OK with this.
 various diseases, eg. tuberculosis.
 - Some data:
 
-```{r tidying-R-post-9}
+```{r tidying-R-10}
 my_url <- "http://ritsokiguess.site/datafiles/tb.csv"
+# my_url <- "../datafiles/tb.csv"
 tb <- read_csv(my_url)
 ```
 
 
 ## The data
 
-```{r glimpsetb}
-View(tb)
-glimpse(tb)
+```{r tidying-R-11}
+tb
 ```
 
 ## What we have
@@ -156,11 +158,7 @@ Also `mu` and `fu`, where age is unknown.
 - Abbreviations [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 
 
-
-
-## All frequencies in one column
-
-```{r tidying-R-post-10}
+```{r tidying-R-13}
 tb %>% 
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = TRUE) -> tb2
@@ -173,7 +171,7 @@ tb %>%
 
 ## Results (some)
 
-```{r tidying-R-post-11}
+```{r tidying-R-14}
 tb2
 ```
 
@@ -185,17 +183,18 @@ age group. Split that up using separate.
   - what to separate into (here you do need quotes),
   - how to split.
 - For “how to split”, here “after first character”:
-```{r tidying-R-post-12}
+
+```{r tidying-R-15}
 tb2 %>% separate(genage, c("gender", "age"), 1) -> tb3
 ```
 
 ## Tidied tuberculosis data (some)
 
-```{r tidying-R-post-13}
+```{r tidying-R-16}
 tb3
 ```
 
-```{r tidying-R-post-14, echo=FALSE}
+```{r tidying-R-17, echo=FALSE}
 write_rds(tb3, "tb3.rds")
 ```
 
@@ -205,7 +204,8 @@ write_rds(tb3, "tb3.rds")
 - instead of doing the pipe one step at a time, you *debug* it one step at
 a time, and when you have each step working, you use that step’s
 output as input to the next step, thus:
-```{r tidying-R-post-15}
+
+```{r tidying-R-18}
 tb %>%
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = T) %>% 
@@ -218,7 +218,7 @@ each line is incomplete, so that R knows more is to come.
 
 ## Total tuberculosis cases by year (some of the years)
 
-```{r tidying-R-post-16}
+```{r tidying-R-19}
 tb3 %>%
   filter(between(year, 1991, 1998)) %>% 
   group_by(year) %>% summarize(total=sum(freq))
@@ -230,7 +230,7 @@ tb3 %>%
 
 - try counting up total cases by country:
 
-```{r tidying-R-post-17}
+```{r tidying-R-20}
 tb3 %>% group_by(iso2) %>% 
   summarize(total=sum(freq)) %>% 
   arrange(desc(total))
@@ -240,7 +240,7 @@ tb3 %>% group_by(iso2) %>%
 
 China started recording in 1995, which is at least part of the problem:
 
-```{r tidying-R-post-18}
+```{r tidying-R-21}
 tb3 %>% filter(iso2=="CN") %>% 
   group_by(year) %>% 
   summarize(total=sum(freq))
@@ -250,13 +250,13 @@ tb3 %>% filter(iso2=="CN") %>%
 
 - A lot of countries started recording in about 1995, in fact:
 
-```{r tidying-R-post-19, echo=FALSE}
+```{r tidying-R-22, echo=FALSE}
 options(dplyr.summarise.inform = FALSE)
 ```
 
 \small
 
-```{r tidying-R-post-20}
+```{r tidying-R-23}
 tb3 %>% group_by(iso2) %>% 
   summarize(first_year=min(year)) %>% 
   count(first_year)
@@ -266,16 +266,17 @@ tb3 %>% group_by(iso2) %>%
 
 ## Some Toronto weather data
 
-```{r tidying-R-post-21}
+```{r tidying-R-24}
 my_url <- 
-  "http://ritsokiguess.site/STAC32/toronto_weather.csv"
+  "http://ritsokiguess.site/datafiles/toronto_weather.csv"
+# my_url <- "../datafiles/toronto_weather.csv"
 weather <- read_csv(my_url)
 ```
 
 ## The data (some)
 
-```{r tidying-R-post-22}
-View(weather)
+```{r tidying-R-25}
+weather
 ```
 
 ## The columns
@@ -290,16 +291,16 @@ View(weather)
 - Numbers in data frame all temperatures (for different days of the month),
 so first step is
 
-```{r tidying-R-post-23}
+```{r tidying-R-26}
 weather %>% 
-  pivot_longer(d01:d31, names_to="day", 
+  pivot_longer(starts_with("d"), names_to="day", 
                values_to="temperature", 
-               values_drop_na = T) -> d
+               values_drop_na = TRUE) -> d
 ```
 
 ## So far
 
-```{r tidying-R-post-24}
+```{r tidying-R-27}
 d
 ```
 
@@ -310,7 +311,7 @@ should each be in separate column.
 two different factors, handled by separate.
 - Untangling names of variables handled by `pivot_wider`:
 
-```{r tidying-R-post-25}
+```{r tidying-R-28}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
@@ -321,7 +322,7 @@ weather %>%
 
 ## So far
 
-```{r tidying-R-post-26}
+```{r tidying-R-29}
 d
 ```
 
@@ -335,10 +336,10 @@ below.
 value to us:
 
 \small
-```{r tidying-R-post-27}
+```{r tidying-R-30}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
-               values_to="temperature", values_drop_na = T) %>% 
+               values_to="temperature", values_drop_na = TRUE) %>% 
   pivot_wider(names_from=element, values_from=temperature) %>% 
   mutate(Day = parse_number(day)) %>%
   select(-station) -> d
@@ -346,7 +347,7 @@ weather %>%
 \normalsize
 ## So far
 
-```{r tidying-R-post-28}
+```{r tidying-R-31}
 d
 ```
 
@@ -354,7 +355,7 @@ d
 - Make year-month-day into proper date.
 - Keep only date, tmax, tmin:
 \small
-```{r tidying-R-post-29}
+```{r tidying-R-32}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", values_drop_na = T) %>% 
@@ -369,16 +370,22 @@ weather %>%
 
 ## Our tidy data frame
 
-```{r tidying-R-post-30}
+```{r tidying-R-33}
 weather_tidy
 ```
+
+```{r}
+ggplot(weather_tidy, aes(x = date, y = tmax)) + geom_line(colour = "red") +
+  geom_line(aes(y = tmin), colour = "blue")
+```
+
 
 ## Plotting the temperatures
 - Plot temperature against date joined by lines, but with separate lines
 for max and min. `ggplot` requires something like
 
 \footnotesize
-```{r tidying-R-post-31, eval=F}
+```{r tidying-R-34, eval=F}
 ggplot(..., aes(x = date, y = temperature)) + geom_point() + 
   geom_line()
 ```
@@ -394,7 +401,7 @@ untidy for purposes of drawing graph only.
 - Then can do something like
 
 \footnotesize
-```{r tidying-R-post-32, eval=F}
+```{r tidying-R-35, eval=F}
 ggplot(d, aes(x = date, y = temperature, colour = maxmin)) 
   + geom_point() + geom_line()
 ```
@@ -407,7 +414,7 @@ column-creation and plot in a pipeline.
 - For a `ggplot` in a pipeline, the initial data frame is omitted, because it
 is whatever came out of the previous step.
 - To make those “one column”s: `pivot_longer`. I save the graph to show overleaf:
-```{r tidying-R-post-33}
+```{r tidying-R-36}
 weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%

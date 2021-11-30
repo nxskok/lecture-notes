@@ -46,7 +46,7 @@ methods.
 
 ```{r windmill-post-4, eval=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth(se=FALSE) 
+  geom_point() + geom_smooth() 
 ```
 
 ## Scatterplot
@@ -91,7 +91,8 @@ options(width=wid)
 
 \footnotesize
 ```{r windmill-post-9}
-glance(DC.1)
+glance(DC.1) 
+# %>% pull(r.squared)
 ```
 \normalsize
 
@@ -121,7 +122,7 @@ residuals, observed minus predicted, plotted against fitted (predicted).
 
 ```{r windmill-post-11, eval=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth(method="lm", se = F)
+  geom_point() + geom_smooth(method="lm", se = FALSE)
 ```
 
 ## The plot
@@ -141,8 +142,6 @@ ggplot(DC.1, aes(y = .resid, x = .fitted)) + geom_point()
 ## Comments on residual plot
 - Residual plot should be a random scatter of points.
 - Should be no pattern “left over” after fitting the regression.
-- Smooth trend should be more or less straight across at 0.
-- Here, have a curved trend on residual plot.
 - This means original relationship must have been a curve (as we saw
 on original scatterplot).
 - Possible ways to fit a curve:
@@ -150,6 +149,14 @@ on original scatterplot).
   - Transform response variable (doesn’t work well here).
   - See what science tells you about mathematical form of relationship,
 and try to apply.
+
+## normal quantile plot of residuals
+
+```{r}
+ggplot(DC.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+```
+
+This ought to be normal, but is actually left-skewed.
 
 ## Parabolas and fitting parabola model
 - A parabola has equation
@@ -161,6 +168,7 @@ line.
 DC.2 <- lm(DC_output ~ wind_velocity + I(wind_velocity^2),
   data = windmill
 )
+summary(DC.2)
 ```
 
 - The `I()` necessary because `^` in model formula otherwise means
@@ -177,6 +185,11 @@ tidy(DC.2)
 ```{r windmill-post-16}
 glance(DC.2)
 ```
+
+```{r}
+bind_rows(glance(DC.1), glance(DC.2))
+```
+
 
 ## Comments on output
 
@@ -255,7 +268,7 @@ take 12 minutes to walk 1 km, called your pace. So 1 over
 
 ```{r straightness, fig.keep="none"}
 windmill %>% mutate(wind_pace = 1 / wind_velocity) -> windmill
-# windmill
+windmill
 ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
   geom_point() + geom_smooth(se = F)
 ```
@@ -294,7 +307,7 @@ parabola model (`wind.velocity` and its square).
 - Looks good, but check residual plot (over). 
 
 
-## Residual plot for asymptote model
+## Residual plots for asymptote model
 
 ```{r resida}
 ggplot(DC.3, aes(y = .resid, x = .fitted)) + geom_point()
