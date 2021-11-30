@@ -15,10 +15,12 @@ output:
 
 # Assignments
 
+1. Assignments are designed so that you can do them using material presented in lecture and the other course materials, except where otherwise stated. 
+1. Any ideas that come from outside the course materials *must be cited*: that is, you must say where you got them from. This might be a website, or another course. Be aware that ideas from outside the course may confuse you, and that using ideas from within the course is generally better than using ideas from outside.
 1. Assignments are due on the advertised due date (the one advertised as the "due date" on Quercus, if a conflict).
 1. Assignments will be accepted up to 2 days late, with a penalty of 20% (2 marks out of 10) per day.
 1. There are no extensions on assignments. Do not ask for one. This is because assignments are due (approximately) weekly and giving you an extension would delay your preparation for the next assignment.
-1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file. (Hint: an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
+1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file by the due date. (Hint: an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
 1. There are no extensions given for failure of technology. It is your responsibility to allow enough time to complete your work.
 1. Assignments are graded out of 10. Your grade starts at 8 out of 10; errors result in a deduction of marks, while work that exceeds expectations for this course (for example, an especially clear explanation or evidence of extra insight) gains you marks. The grader will indicate where you have lost or gained marks.
 1. My solutions, with extensive discussion, will be available after the assignment has closed.

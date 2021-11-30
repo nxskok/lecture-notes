@@ -140,6 +140,14 @@ sqrt_minus_value <- function(x, d = 1) {
 ```{r functions-post-14}
 sqrt_minus_value(51, 2)
 sqrt_minus_value(51)
+sqrt_minus_value(d = 2)
+```
+
+```{r}
+junk <- function(x, d = 1) {
+  3
+}
+junk()
 ```
 
 ## Catching errors before they happen
@@ -156,7 +164,10 @@ negative number.
 
 ```{r functions-post-16}
 sqrt_minus_value <- function(x, d = 1) {
-  stopifnot(x - d >= 0)
+  if (x-d < 0) stop("x less than d") else print("OK")
+  # print("x should be greater than d")
+  # stopifnot(x - d >= 0)
+  # print(x)
   sqrt(x - d)
 }
 ```
@@ -164,7 +175,8 @@ sqrt_minus_value <- function(x, d = 1) {
 ## What happens with `stopifnot`
 - This should be good, and is:
 ```{r functions-post-17, error=TRUE}
-sqrt_minus_value(8, 6)
+z <- sqrt_minus_value(8, 6)
+z
 ```
 
 - This should fail, and see how it does:
