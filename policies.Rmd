@@ -1,0 +1,51 @@
+---
+title: "Course Policies"
+author: "Ken Butler"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    number_sections: true
+---
+
+# General
+
+1. By continuing in this course, you agree to be bound by these policies.
+
+# Getting help
+
+# Assignments
+
+1. Assignments are due on the advertised due date (the one advertised as the "due date" on Quercus, if a conflict).
+1. Assignments will be accepted up to 2 days late, with a penalty of 20% (2 marks out of 10) per day.
+1. There are no extensions on assignments. Do not ask for one. This is because assignments are due (approximately) weekly and giving you an extension would delay your preparation for the next assignment.
+1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file. (Hint: an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
+1. There are no extensions given for failure of technology. It is your responsibility to allow enough time to complete your work.
+1. Assignments are graded out of 10. Your grade starts at 8 out of 10; errors result in a deduction of marks, while work that exceeds expectations for this course (for example, an especially clear explanation or evidence of extra insight) gains you marks. The grader will indicate where you have lost or gained marks.
+1. My solutions, with extensive discussion, will be available after the assignment has closed.
+1. You are expected to read through your assignment with my solutions, to learn what could have been done better. (In applied work, there is always something that can be done better.)
+1. The worst two assignment grades will be dropped (for everyone). This is to allow for circumstances beyond your control that might prevent you from completing those assignments.
+1. If you miss an assignment, you will need to make sure that you understand the material on it, because later assessments may depend on the work in this one.
+1. Apart from the worst two assignment grades being dropped, any other assignments missed for any reason receive a grade of zero. 
+1. There are no make-up assignments.
+1. It is my opinion that students who miss more than two assignments will have trouble catching up on the missed work in time to demonstrate sufficient mastery of the material in the course. If you have health or other concerns that result in your missing more than two assignments, you are invited to consider whether your interests are best served by remaining enrolled in the course.
+1. Assignment grades may be appealed. There will be a short window (typically from one to two weeks after the grades are released) during which you may appeal your grade. To do so, you should send me an email with a subject heading containing the course number, the assignment number and the word "appeal". In your email, you need to indicate the question part that you feel has been misgraded, and to include a complete justification, considering my solution, of why the grade given is in error. (Asserting that "my solution is the same as the instructor's" is not a complete justification. You need to say *how* it's equivalent.) 
+1. If your appeal rests on the grader's opinion or judgment, be aware that the grader has been as consistent as possible and your grade is very unlikely to change.
+1. Sending a grade appeal to any TA is never appropriate and may (at the instructor's discretion) bar you from any further grade appeals on that assignment.
+1. The instructor's decision about grade appeals is final.
+1. Assignment grade appeals sent outside the short window will be ignored, and, at the instructor's discretion, may bar the student from any further appeals of the grade on that assignment.
+
+# Exams
+
+# Grades
+
+1. Grades on assignments and on the midterm exam may only be appealed during the announced windows of time for appealing them. After that time, they are final.
+1. Grades on the final exam may only be appealed through the Registrar's office following their procedures. 
+1. There is no extra credit in the course. Do not ask for it.
+1. I am not allowed to discuss or negotiate course grades. It is a waste of your time and mine to attempt to do so, and reflects badly on you.
+1. After you receive your course grade, if you have good reason to believe that it has been wrongly calculated, you should request a Clerical Check through the Registrar's office.
+
+# Finally
+
+1. For situations not covered in these policies, the instructor will use his best judgment.
+1. Policies may be added to this document at any time.
+1. Circumstances may change during the course. The instructor reserves the right to adapt these policies as he sees fit. If a policy change requires a class vote, a class vote will be taken.
