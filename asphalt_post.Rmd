@@ -103,6 +103,7 @@ joined by plusses:
 ```{r asphalt-post-7}
 rut.1 <- lm(rut.depth ~ pct.a.surf + pct.a.base + fines +
   voids + log(viscosity) + run, data = asphalt)
+summary(rut.1)
 ```
 
 ## Regression output: `summary(rut.1)` or:
@@ -253,6 +254,7 @@ removed:
 ```{r asphalt-post-18}
 rut.2 <- lm(log(rut.depth) ~ pct.a.surf + pct.a.base +
   fines + voids + log(viscosity) + run, data = asphalt)
+summary(rut.2)
 ```
 
 - use `tidy` from `broom` to display just the coefficients.
@@ -392,7 +394,9 @@ leaps <- regsubsets(log(rut.depth) ~ pct.a.surf +
                       pct.a.base + fines + voids + 
                       log(viscosity) + run, 
                     data = asphalt, nbest = 2)
+# leaps
 s <- summary(leaps)
+# s
 with(s, data.frame(rsq, outmat)) -> d
 ```
 

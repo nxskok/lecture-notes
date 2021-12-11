@@ -75,6 +75,7 @@ anova(pigs.2)
 \footnotesize
 ```{r with-categ-R-post-8, error=TRUE}
 TukeyHSD(pigs.2)
+# drop1(pigs.2, test = "F")
 ```
 \normalsize
 
@@ -104,6 +105,14 @@ crickets.1 <- lm(pulse_rate ~ temperature + species,
                  data = crickets)
 summary(crickets.1)
 ```
+
+```{r}
+crickets.2 <- lm(pulse_rate ~ temperature + species + temperature:species, 
+                 data = crickets)
+summary(crickets.2)
+
+```
+
 
 Can I remove anything? No:
 
