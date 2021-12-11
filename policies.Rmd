@@ -5,47 +5,69 @@ date: "`r Sys.Date()`"
 output: 
   pdf_document:
     number_sections: true
+urlcolor: blue
 ---
 
 # General
 
 1. By continuing in this course, you agree to be bound by these policies.
+1. This document is not intended to cover every possible contingency, but the most common issues you will face are addressed here.
 
 # Getting help
 
+1. The Quercus discussion board is where you should post questions about the course material. This is because other students may also have a similar question and will be interested in the response.
+1. I will have office hours where you may ask specific questions about the course and course material. You are expected to have made a reasonable effort to seek help on your own (eg. by working through the lecture material) before asking questions. If you miss lecture, *you* are responsible for getting caught up; do not expect me to repeat lecture material for your benefit.
+1. In tutorial, you can expect that the TA will lead you through some relevant examples, and that you will also have a chance to ask questions of the TA about the course material. (In STAD29, the tutorial is drop-in, where you are expected to bring your own questions or issues you want to raise.)
+1. If you have a personal course-related issue that is *not* addressed in these policies, or I have otherwise given you permission to do so, you may email me at `ken.butler@utoronto.ca`. Your email should have a subject header that contains the course number and describes what you are asking about. An appropriate opening to your email is "Dear Dr Butler". Your email should clearly state what information you have for me and/or what action you would like me to take. The body of your email should contain your name and student number.  (It is helpful for you to put your name and student number in your email signature, to save yourself having to remember to type them.) For example, if I have to access Degree Explorer on your behalf, your student number is needed to make sure that access is for the correct student. 
+1. It should be rare for you to need to email me.
+1. If your TA gives out their email, it should only be used as a way of clarifying issues raised in the tutorial. Other issues should go to the Quercus discussion board (if about course material) or to me (if personal issues).
+1. If you have a question about the Statistics Applied Minor program, you should first consult [the FAQ](https://ritsokiguess.site/home/faq.html) (clickable link) to see whether your question has an answer there. If not, send an email following the instructions above. Questions about other Statistics programs should be sent to the Supervisor of Studies for the appropriate program. See [here](https://www.utsc.utoronto.ca/cms/statistics) (clickable link).
+1. Only mail from email addresses ending in `utoronto.ca` will receive a reply. Privacy issues do not allow me to respond to email from other addresses.
+1. I attempt to respond to email within two working days. Do not expect to receive a response in time if you send your email close to a course deadline, and do not expect to receive a response outside of normal working hours. 
+
 # Assignments
 
+1. The purpose of assignments is to enable you to see what *you* have learned in the course so far. Do not, therefore, expect to get help on the specific questions that are in an assignment. You should attend tutorial and, if needed, office hours, before starting on an assignment, so as to be confident that you have a good understanding of the material that will be on the assignment.
+1. The material that will appear on an assignment will be advertised in class and on the course website.
 1. Assignments are due on the advertised due date (the one advertised as the "due date" on Quercus, if a conflict).
 1. Assignments will be accepted up to 2 days late, with a penalty of 20% (2 marks out of 10) per day.
 1. There are no extensions on assignments. Do not ask for one. This is because assignments are due (approximately) weekly and giving you an extension would delay your preparation for the next assignment.
-1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file. (Hint: an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
+1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file. (Hint: in this course, an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
 1. There are no extensions given for failure of technology. It is your responsibility to allow enough time to complete your work.
 1. Assignments are graded out of 10. Your grade starts at 8 out of 10; errors result in a deduction of marks, while work that exceeds expectations for this course (for example, an especially clear explanation or evidence of extra insight) gains you marks. The grader will indicate where you have lost or gained marks.
 1. My solutions, with extensive discussion, will be available after the assignment has closed.
 1. You are expected to read through your assignment with my solutions, to learn what could have been done better. (In applied work, there is always something that can be done better.)
 1. The worst two assignment grades will be dropped (for everyone). This is to allow for circumstances beyond your control that might prevent you from completing those assignments.
-1. If you miss an assignment, you will need to make sure that you understand the material on it, because later assessments may depend on the work in this one.
+1. If you miss an assignment, you will need to make sure that you understand the material on it, because later assessments may depend on the work in the one you missed.
 1. Apart from the worst two assignment grades being dropped, any other assignments missed for any reason receive a grade of zero. 
 1. There are no make-up assignments.
-1. It is my opinion that students who miss more than two assignments will have trouble catching up on the missed work in time to demonstrate sufficient mastery of the material in the course. If you have health or other concerns that result in your missing more than two assignments, you are invited to consider whether your interests are best served by remaining enrolled in the course.
-1. Assignment grades may be appealed. There will be a short window (typically from one to two weeks after the grades are released) during which you may appeal your grade. To do so, you should send me an email with a subject heading containing the course number, the assignment number and the word "appeal". In your email, you need to indicate the question part that you feel has been misgraded, and to include a complete justification, considering my solution, of why the grade given is in error. (Asserting that "my solution is the same as the instructor's" is not a complete justification. You need to say *how* it's equivalent.) 
+1. It is my opinion that students who miss more than two assignments will have trouble catching up on the missed work in time to demonstrate sufficient mastery of the material in the course. If you have health or other concerns that result in your missing more than two assignments, you are invited to consider whether your interests are best served by remaining enrolled in the course. You can only earn a passing grade by demonstrating sufficient mastery of the material in the course contained in assignments and exams at the appointed times.
+1. Assignment grades may be appealed. There will be a short window (typically from one to two weeks after the grades are released) during which you may appeal your grade. To do so, you should send me an email with a subject heading containing the course number, the assignment number and the word "appeal". In your email, you need to indicate the question part that you feel has been misgraded, and to include a complete justification, considering my solution, of why the grade given is in error. (Asserting that "my solution is the same as the instructor's" is not a complete justification. You need to say *how* you addressed the issues raised in my solutions.) 
 1. If your appeal rests on the grader's opinion or judgment, be aware that the grader has been as consistent as possible and your grade is very unlikely to change.
-1. Sending a grade appeal to any TA is never appropriate and may (at the instructor's discretion) bar you from any further grade appeals on that assignment.
-1. The instructor's decision about grade appeals is final.
-1. Assignment grade appeals sent outside the short window will be ignored, and, at the instructor's discretion, may bar the student from any further appeals of the grade on that assignment.
+1. Sending a grade appeal to any TA is never appropriate and may (at my discretion) bar you from any further grade appeals on that assignment.
+1. My decision about grade appeals is final.
+1. Assignment grade appeals sent outside the short window will be ignored, and, if sent too early, may at my discretion bar the student from any further appeals of the grade on that assignment.
 
 # Exams
+
+1. Exams follow the University regulations at all times.
+1. A two-hour midterm exam will be scheduled outside of class time at around the halfway point of the course. Midterm marks may be appealed, following the same procedure as an appeal of assignment marks, during a time window that will be announced.
+1. Students who do not attend the midterm exam will be required to take the weight of the midterm on the final exam. You are warned that students usually find the final exam in my courses more difficult than the midterm exam.
+1. There is *no* makeup midterm exam.
+1. A three-hour final exam will be scheduled by the Registrar's office during the final exam period. (According to university regulations, students are required to be available to write an exam at any of the advertised times during the final exam period.)
+1. Students who do not attend the final exam should request a deferred final exam through the Registrar's office following their procedures.
+1. If it becomes clear (for example for health reasons) that you will write neither the midterm nor the final exam, you are advised to seek a late withdrawal from the course rather than putting yourself in the position of having to write a deferred final exam which is worth a substantial percentage of your grade in the course.
 
 # Grades
 
 1. Grades on assignments and on the midterm exam may only be appealed during the announced windows of time for appealing them. After that time, they are final.
 1. Grades on the final exam may only be appealed through the Registrar's office following their procedures. 
 1. There is no extra credit in the course. Do not ask for it.
-1. I am not allowed to discuss or negotiate course grades. It is a waste of your time and mine to attempt to do so, and reflects badly on you.
+1. I am not allowed to discuss or negotiate course grades. It is a waste of your time and mine to attempt to do so, and reflects badly on you. For equity reasons, any adjustments to the course grades are made for *all* students.
 1. After you receive your course grade, if you have good reason to believe that it has been wrongly calculated, you should request a Clerical Check through the Registrar's office.
 
 # Finally
 
-1. For situations not covered in these policies, the instructor will use his best judgment.
+1. For situations not covered in these policies, I will use my best judgment.
 1. Policies may be added to this document at any time.
-1. Circumstances may change during the course. The instructor reserves the right to adapt these policies as he sees fit. If a policy change requires a class vote, a class vote will be taken.
+1. Circumstances may change during the course. I reserve the right to adapt these policies as he sees fit. If a policy change requires a class vote, a class vote will be taken.
