@@ -36,7 +36,6 @@ urlcolor: blue
 1. Assignments are designed so that you can do them using material presented in lecture and the other course materials, except where otherwise stated. 
 1. Any ideas that come from outside the course materials *must be cited*: that is, you must say where you got them from. This might be a website, or another course. Be aware that ideas from outside the course may confuse you, and that using ideas from within the course is generally better than using ideas from outside.
 1. Assignments are due on the advertised due date (the one advertised as the "due date" on Quercus, if a conflict).
-1. Assignments will be accepted up to 2 days late, with a penalty of 20% (2 marks out of 10) per day.
 1. There are no extensions on assignments. Do not ask for one. This is because assignments are due (approximately) weekly and giving you an extension would delay your preparation for the next assignment.
 1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file by the due date. (Hint: an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
 1. There are no extensions given for failure of technology. It is your responsibility to allow enough time to complete your work.
@@ -70,6 +69,7 @@ urlcolor: blue
 1. Grades on the final exam may only be appealed through the Registrar's office following their procedures. 
 1. There is no extra credit in the course. Do not ask for it.
 1. I am not allowed to discuss or negotiate course grades. It is a waste of your time and mine to attempt to do so, and reflects badly on you. For equity reasons, any adjustments to the course grades are made for *all* students.
+1. If you nonetheless try to contact me on this matter, it is more likely to convince me that you should *not* receive what you are asking for, because it indicates that you do not pay attention to procedures and cannot follow simple instructions.
 1. After you receive your course grade, if you have good reason to believe that it has been wrongly calculated, you should request a Clerical Check through the Registrar's office.
 
 # Finally
