@@ -2,11 +2,11 @@
 
 -   STAD29 / STA 1007, Statistics for the Life and Social Sciences
 
--   Online:
+-   Online for Jan and in-person after:
 
-    -   2 hours or so of recorded lectures / week, asynchronous (watch when you like)
-    -   1 hour of live tutorial / week, Monday afternoon, on Zoom
-    -   "office hours" also on Zoom, by appointment
+    -   2 hours or so lectures / week, recorded (asynchoronous at first) 
+    -   1 hour of live tutorial / week, Monday afternoon, on Zoom at first
+    -   "office hours" also on Zoom at first, by appointment
 
 -   Instructor:
 
@@ -74,22 +74,22 @@ The first thing on each line is a link:
 -   [Computer requirements](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
 
     -   to get the most out of tutorials, you will want a working camera and microphone
-    -   as in C32, can use `rstudio.cloud` (needs only web browser) or install R and R Studio on your computer.
+    -   as in C32, can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer.
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
 ## Assessment
 
--   Assignments: weekly.
-    - 10 total, due in weeks 2 through 11. Best 8 count (12.5% each).
+-   Assignments: 8 or so, approx weekly.
+    - Best 6 count.
     - available on Tuesdays, due on Thursdays at 11:59pm
-    - based on the previous week's recorded lectures
-    - these assignments are like little take-home exams, so *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems that I will attach to each recorded lecture.
-- for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course. 
-  - assessment for you: 80% assignments (10% each), 20% project.
-  - project is due on the last day of classes (Apr 12).
+    - based on the previous week's lectures
+    - *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems that I will attach to each recorded lecture.
+    - for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
+    - project is due on the last day of classes (Apr 12).
+    - midterm exam, **%, final exam **%. Current plan is for in-person. See course website for old exams. 
 
-## Grading
+## Grading (change?)
 
 -   The work you hand in will be graded out of 10 on this scale:
 
@@ -150,8 +150,6 @@ The first thing on each line is a link:
 ## Expectations 3/3
 
 -   I expect you to learn how to do things *as they are done in this course*. 
--   If you tell me you're having trouble, I will not judge you or think less of you. I hope you'll extend me the same grace. (From [here](https://econf20.classes.andrewheiss.com/syllabus/).)
--   [This (video)](https://twitter.com/i/status/1293543531496308736).
 -   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.
 
 
