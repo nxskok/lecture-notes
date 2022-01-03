@@ -149,6 +149,7 @@ The first thing on each line is a link:
 
 ## Expectations 3/3
 
+-   Detailed course policies [here](policies.pdf).
 -   I expect you to learn how to do things *as they are done in this course*. 
 -   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.
 

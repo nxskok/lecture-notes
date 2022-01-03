@@ -30,16 +30,14 @@ urlcolor: blue
 1. The purpose of assignments is to enable you to see what *you* have learned in the course so far. Do not, therefore, expect to get help on the specific questions that are in an assignment. You should attend tutorial and, if needed, office hours, before starting on an assignment, so as to be confident that you have a good understanding of the material that will be on the assignment.
 1. The material that will appear on an assignment will be advertised in class and on the course website.
 1. Assignments are due on the advertised due date (the one advertised as the "due date" on Quercus, if a conflict).
-1. Assignments will be accepted up to 2 days late, with a penalty of 20% (2 marks out of 10) per day.
+1. Assignments will be accepted up to 2 days late, with a penalty of 1% per hour until the assignment closes.
 1. There are no extensions on assignments. Do not ask for one. This is because assignments are due (approximately) weekly and giving you an extension would delay your preparation for the next assignment.
-1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file. (Hint: in this course, an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
+1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file. (Hint: in my courses, an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
 1. Assignments are designed so that you can do them using material presented in lecture and the other course materials, except where otherwise stated. 
 1. Any ideas that come from outside the course materials *must be cited*: that is, you must say where you got them from. This might be a website, or another course. Be aware that ideas from outside the course may confuse you, and that using ideas from within the course is generally better than using ideas from outside.
-1. Assignments are due on the advertised due date (the one advertised as the "due date" on Quercus, if a conflict).
-1. There are no extensions on assignments. Do not ask for one. This is because assignments are due (approximately) weekly and giving you an extension would delay your preparation for the next assignment.
-1. Assignments are *only* accepted on Quercus and must be readable by the grader in order to receive any credit. It is your responsibility to ensure that you have handed in the correct file by the due date. (Hint: an R Markdown Notebook is not the correct file.) Assignments are not accepted by e-mail.
+1. There is *no credit* for uncited ideas from outside the course.
 1. There are no extensions given for failure of technology. It is your responsibility to allow enough time to complete your work.
-1. Assignments are graded out of 10. Your grade starts at 8 out of 10; errors result in a deduction of marks, while work that exceeds expectations for this course (for example, an especially clear explanation or evidence of extra insight) gains you marks. The grader will indicate where you have lost or gained marks.
+1. To get full marks on an assignment, you may need to display evidence of clear understanding or extra insight.
 1. My solutions, with extensive discussion, will be available after the assignment has closed.
 1. You are expected to read through your assignment with my solutions, to learn what could have been done better. (In applied work, there is always something that can be done better.)
 1. The worst two assignment grades will be dropped (for everyone). This is to allow for circumstances beyond your control that might prevent you from completing those assignments.
@@ -61,7 +59,7 @@ urlcolor: blue
 1. There is *no* makeup midterm exam.
 1. A three-hour final exam will be scheduled by the Registrar's office during the final exam period. (According to university regulations, students are required to be available to write an exam at any of the advertised times during the final exam period.)
 1. Students who do not attend the final exam should request a deferred final exam through the Registrar's office following their procedures.
-1. If it becomes clear (for example for health reasons) that you will write neither the midterm nor the final exam, you are advised to seek a late withdrawal from the course rather than putting yourself in the position of having to write a deferred final exam which is worth a substantial percentage of your grade in the course.
+1. If it becomes clear (for example for health reasons) that you will write neither the midterm nor the final exam, you are advised to seek a late withdrawal from the course rather than putting yourself in the position of having to write a deferred final exam that is worth a substantial percentage of your grade in the course.
 
 # Grades
 
@@ -76,4 +74,4 @@ urlcolor: blue
 
 1. For situations not covered in these policies, I will use my best judgment.
 1. Policies may be added to this document at any time.
-1. Circumstances may change during the course. I reserve the right to adapt these policies as he sees fit. If a policy change requires a class vote, a class vote will be taken.
+1. Circumstances may change during the course. I reserve the right to adapt these policies as I see fit. If a policy change requires a class vote, a class vote will be taken.
