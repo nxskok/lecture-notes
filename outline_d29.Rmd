@@ -4,7 +4,7 @@
 
 -   Online for Jan and in-person after:
 
-    -   2 hours or so lectures / week, recorded (asynchoronous at first) 
+    -   2 hours or so lectures / week, recorded-asynchoronous at first
     -   1 hour of live tutorial / week, Monday afternoon, on Zoom at first
     -   "office hours" also on Zoom at first, by appointment
 
@@ -73,7 +73,7 @@ The first thing on each line is a link:
 
 -   [Computer requirements](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
 
-    -   to get the most out of tutorials, you will want a working camera and microphone
+    -   to get the most out of online tutorials, you will want a working camera and microphone
     -   as in C32, can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer.
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
@@ -81,44 +81,32 @@ The first thing on each line is a link:
 ## Assessment
 
 -   Assignments: 8 or so, approx weekly.
-    - Best 6 count.
+    - Best 6 count, 30% of grade.
     - available on Tuesdays, due on Thursdays at 11:59pm
     - based on the previous week's lectures
     - *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems that I will attach to each recorded lecture.
-    - for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
+- for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
     - project is due on the last day of classes (Apr 12).
-    - midterm exam, **%, final exam **%. Current plan is for in-person. See course website for old exams. 
+- midterm exam, 30%, final exam 40%. Current plan is for in-person. See [course website](https://ritsokiguess.site/STAD29/old_exams.html) for old exams. 
+    - you *must pass* the final exam to pass the course.
 
-## Grading (change?)
+## Grading
 
--   The work you hand in will be graded out of 10 on this scale:
-
-    -   6/10 or less: Falls short of expectations for this course, with serious errors in coding or absent or deficient explanations.
-    -   7/10: As expected in this course. May be small coding errors or misconceptions.
-    -   8/10: Good work, no obvious coding errors, mostly accurate explanations.
-    -   9/10: Excellent work, showing clear understanding throughout.
-    -   10/10 (rare): Excellent work that shows additional insight.
-
--   Grader will also give feedback on how you can improve for the next assignment.
-
--   Grades are the grader's best assessment of the quality of the work, and are unlikely to change on appeal.
-
+- in contrast to STAC32, assignments will be graded more generously, because we will (I hope) have exams this time.
+- the grader may still have a few marks to allocate for excellent work.
 -   My (detailed) solutions will be available after each assignment is handed in.
-
-## Policies
-
--   I do not generally accept late work, because I will want to post my solutions for everyone to learn from.
--   I am willing to be a little flexible (at my discretion), but work that is handed in after my solutions have been posted will definitely not be graded.
--   You have two "free" assignments (since only the best 8 count); you may miss these without explanation. If circumstances make it impossible to hand in work beyond that, email me and we'll see what we can work out, *before* the assignments in question are due.
+-   Assignments will be accepted up to 2 days late, at a penalty of 1% per *hour*.
+-   You have two "free" assignments (since only the best 6 count); you may miss these without explanation. 
 -   There are no make-up assessments.
 -   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
-
+- Detailed course policies are [here](https://ritsokiguess.site/STAD29/policies.pdf).
 
 
 ## Course material
 
 - More about regression
 - Logistic regression
+- Dates and times
 - Survival analysis
 - ANOVA revisited
 - Analysis of covariance
