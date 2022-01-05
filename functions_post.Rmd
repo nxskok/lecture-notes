@@ -282,6 +282,10 @@ in regressions, along with the `y` we had before:
 (d <- tibble(x1 = 1:4, x2 = c(8, 7, 6, 5), x3 = c(2, 4, 6, 9)))
 ```
 
+```{r}
+my_df
+```
+
 - Want to use these as different x’s for a regression with `y` from `my_df` as the
 response, and collect together the three different slopes.
 - Python-like way: a `for` loop.
