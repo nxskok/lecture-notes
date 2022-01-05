@@ -2,11 +2,12 @@
 
 -   STAC33, Introduction to Applied Statistics
 
--   Online:
+-   Online, then in person
 
-    -   2-3 hours of recorded lectures / week, asynchronous (watch when you like)
-    -   1 hour of live tutorial / week, Monday morning, on Zoom
-    -   "office hours" also on Zoom, by appointment
+    -   2-3 hours of recorded lectures / week, asynchronous, then in person
+    -   1 hour of live tutorial / week, Monday, on Zoom, then in person
+    -   "office hours" also on Zoom by appointment at first, then in person
+    -   all exams (midterm and final) planned to be in person
 
 -   Instructor:
 

@@ -1,12 +1,21 @@
-## In this course
-- Data analysis: use mostly known (to you) statistical methods to gain
-insight about data.
-- Use two software packages, SAS and R — I assume you know nothing
-about these.
-- Look at lots of examples.
-- “Get your hands dirty”.
-- Writing reports.
-- Other tasks in R and SAS.
+## This course
+
+-   STAC33, Introduction to Applied Statistics
+
+-   Online, then in person
+
+    -   2-3 hours of recorded lectures / week, asynchronous, then in person
+    -   1 hour of live tutorial / week, Monday, on Zoom, then in person
+    -   "office hours" also on Zoom by appointment at first, then in person
+    -   all exams (midterm and final) planned to be in person
+
+-   Instructor:
+
+    -   Ken Butler, `ken.butler@utoronto.ca`
+    -   I like sharing what I know about applied statistics and the use of R
+    -   This course will help you develop the skills to use software to analyze data, and to communicate the results.
+    -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
+    -   I will help you to work towards this.
 
 ## Prerequisites
 
@@ -18,183 +27,123 @@ one of these:
 - I check prerequisites.
 - You need STAB57 for the Statistics Minor/Major/Specialist programs.
 
-## The instructor, lectures and tutorials
-- Ken Butler, office IC 471, e-mail:
-mailto:butler@utsc.utoronto.ca
-- Lectures (section LEC01): both of
-  - Tuesday 12:00-13:00 in IC 220 
-  - Thursday 14:00-15:00 in SW 128. 
-- Students in section LEC60 should watch the videotaped lectures (access from Quercus).
-- Tutorial: one of 
-  - Monday 09:00, 10:00, 11:00, 12:00,  in BV 498 (1 hour each).
-- Office hours: Tuesday 14:00-15:00, Thursday 15:00-16:30. Or by appointment (e-mail me, address
-above, to set one up).
-- course website [**here**](http://ritsokiguess.site/STAC33). 
-- This course is on Quercus. Go [**here**](http://q.utoronto.ca), log in, and find
-this course among your courses. Assignment hand-in, grading and
-marks will be done through Quercus.
-- E-mail: Use only UTSC/UToronto e-mail address. I aim to respond
-within two working days. Non-simple questions: office hours/tutorial.
+## Getting help
 
-## Text(s)
+-   Option 1: come to tutorial and ask the TA.
 
-  \begin{columns}
-    \begin{column}{0.7\textwidth}
-Recommended:
-  \begin{itemize}
-\item ``SAS Essentials: Mastering SAS for data analytics'' by Alan C.\
-  Elliott and Wayne A.\ Woodward, publ.\ Wiley. ISBN 978-1-119-04216-7.
-\item ``R for Data Science'' by Hadley Wickham and Garrett Grolemund,
-  publ.\ O'Reilly, ISBN 978-1-491-91039-9. Also available (free)
-  online at \url{http://r4ds.had.co.nz/}.
-  \item ``Problems and Solutions in Applied Statistics'' by your instructor, free online at \url{ritsokiguess.site/pasias}
-\end{itemize}
-    \end{column}
-    \begin{column}{0.3\textwidth}
-      \includegraphics[width=1in]{Screenshot_2018-08-17_12-24-26.png}
+-   Option 2: Quercus discussion board:
 
-      \includegraphics[width=1in]{r4ds}
-    \end{column}
-  \end{columns}
+    -   If it's a question about course procedures, look in this course outline and the [course policies](https://ritsokiguess.site/STAC33/policies.pdf) first.
+    -   Then: look at the Quercus discussion forum. Your question might have an answer there.
+    -   If you see a question there that you can answer, go ahead and answer it.
+    -   If you don't see an answer to your question, post your question on the discussion forum.
+    -   For an issue that is more personal, email me (below).
 
+-   Option 3: office hours, on Zoom to start. I will set up a mechanism for you to make an appointment.
 
+## E-mail (if you must)
 
-## Structure of course
-- 3 hours/week of class time.
-- Of these, 1 hour in computer lab (“tutorial”):
-  - practice what you learned from lecture
-  - you can work on your assignment or on the additional problems listed there.
-  - Get help if needed (instructor/TA available)
+-   Use a U of T email (so that I know who you are)
+-   Use a suitable subject, eg "STAC33" 
+-   Begin with "Dear Dr Butler"
+-   State *clearly* how I can help you. (The quicker I can figure this out, the better your chances of a quick reply.)
+-   Include your name (as U of T knows it) *and* student number
+-   I aim to reply within one working day, but with so many of you in the course, it may take longer.
 
+## Course objectives
 
-## Course material (C33)
+-   You will learn how to use software to analyze data, and to communicate what you found.
 
-\begin{columns}
-  \begin{column}{0.6\textwidth}
-    R:
-    \begin{itemize}
-\item Installation / connection
-\item Reading data files (of different sorts)
-\item Making graphs
-\item Numerical summaries
-\item Statistical inference
-\item Reports
-\item Tidying and organizing data
-\item Case studies
-\item Functions
-\item Dates and times
-\item Miscellaneous tasks
-\item Bootstrap
-\item Bayesian inference with \texttt{rstan}
+-   This will be assessed through assignments (approximately weekly).
 
-    \end{itemize}
-  \end{column}
-  
-  \begin{column}{0.4\textwidth}
-  SAS:
-  \begin{itemize}
-  \item Connection 
-\item Reading in data
-\item Graphics
-\item Basic inference
-\item ANOVA
-\item Regression 
-  
-  \end{itemize}
-  \end{column}
-\end{columns}
+    -   Some questions will ask for software output, and some for explanation.
+    -   The grading will reward evidence of clear understanding and insight.
 
+-   Along the way you will learn how to use R Notebooks and how to turn these into reports.
 
-## Laptop use
-- If you have a laptop, you may find it useful for following along with
-the use of the software or for taking notes.
-- Checking social media or other non-course-specific activity during
-class distracts from your learning. If you are going to get the most
-from this course, you need to pay full attention in class. Multi-tasking
-will not help you.
-- Using your laptop for non-course activity will also distract those
-around you and creates a worse learning experience for everybody. If
-somebody’s inappropriate laptop use is distracting you, let me know. I
-will create laptop-free zones in class if necessary.
+## Course materials
+
+The first thing on each line is a link:
+
+-   [Quercus](https://q.utoronto.ca/): lecture videos, hand in assignments/projects, receive grades.
+
+-   [Course website](http://ritsokiguess.site/STAC33/): course news, reminders, lecture notes and code, assignment solutions, other stuff I want to share with you
+
+-   [Problems and Solutions in Applied Statistics](http://ritsokiguess.site/pasias/): what it says; PASIAS for short.
+
+-   [Computer requirements for online](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
+
+    -   to get the most out of tutorials, you will want a working camera and microphone
+    -   can use `rstudio.cloud` (needs only web browser) or install R and R Studio on your computer. Instructions in lecture notes.
+
+-   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
 ## Assessment
 
+-   Assignments: approx weekly, starting in week 3, worth 30% in total.
+    - week 2 tutorial contains a practice assignment, to get you used to the process.
+    - worst two assignments are dropped.
+    - available on Tuesdays, due on Thursdays at 11:59pm
+    - based on the previous week's lectures
+    - these assignments are like little take-home exams, so *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems that I will attach to each recorded lecture.
+    - you are responsible for making sure that you have handed in the correct file in the correct format. If the grader cannot read it, it is zero.
+    - each assignment is intended to take you no more than four hours to complete, if you have done a reasonable job of preparing for it. If you have a registered accommodation, you should bear this in mind, and start work early enough. (For example, if you have 50% extra time, you should start work at least 6 hours before the due date.)
+   
+## Grading
 
- \begin{tabular}{p{3.5in}r}
-    \hline
-    Item & Weight\\
-    \hline
-    Assignments (most weeks after first). Can study with classmates, but what you hand in must
-    be \textbf{entirely your own work}. Due Thursdays at 11:59pm. & 15\\
-    \hline
-    Midterm exam, 2 hours, open book (see over) & 30\\
-    \hline
-    Group data analysis report (1--5 people/group). Data analysis on data set of your choosing,
-    using R/SAS/both, report written as described in class.
-    Due last
-    day of classes at 11:59pm. & 10 \\
-    \hline
-    Final exam, 3 hours, open book (see over). \textbf{You must pass
-    the final exam to guarantee passing the course.} & 45\\
-    \hline
-    Total & 100\\
-    \hline
-  \end{tabular}
+-   Graders will also give feedback on how you can improve for the next assignment.
 
-## Open book, defined
-“Open book” means these are permissible, written/printed versions only: 
+-   Grades are the grader's best assessment of the quality of the work, and are unlikely to change on appeal.
 
-- the SAS text
-- the R text
-- my lecture notes
-- assignments, yours (graded) and mine (with solutions)
-- any other notes that you have made in this course.
+-   My (detailed) solutions will be available after each assignment is handed in.
 
-Old exams are not permitted.
+- There may be extra points on assignments that can be awarded at the grader's discretion for exceptionally clear explanations or evidence of clear understanding.
 
-## Missed work and documentation
-- No make-up assignments or tests in this course.
-- Work handed in late may or may not be accepted (instructor’s
-discretion; instructor’s decision is final).
-- If you miss assessed work due to illness/injury, complete form 
-[**here**](http://www.illnessverification.utoronto.ca/)
-and submit to instructor within 10 working days of due date.
-- Weight of missed work with appropriate documentation transferred to
-other assessments of same type.
+## Policies
 
-## Academic integrity
-- Read and understand [**this**](http://www.utoronto.ca/academicintegrity/).
-- Academic dishonesty devalues your degree and those of all other
-students.
-- Cheating and plagiarism taken very seriously.
-- Examples of academic offences:
-- Using someone else’s words/ideas without acknowledgement.
-- Obtaining or providing unauthorized assistance on an assignment.
-- On test/exam, looking at someone else’s answers or allowing someone
-else to look at yours.
-- Pretending to be someone else.
-- Falsifying or altering required documentation (eg. doctor’s notes).
+- Assignments may be handed in up to two days late, with a penalty of *1% per hour*. It will not be possible to hand in work later than this (and in any case does you no good, because you will need to be preparing for the next assignment).
+-   You have two "free" assignments; you may miss these without explanation. If circumstances make it impossible to hand in work beyond that, consider whether it is worth your while remaining in the course, because you will have missed a substantial proportion of the material that will be on the exams.
+-   There are no make-up assessments.
+-   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
+- [Detailed course policies](https://ritsokiguess.site/STAC33/policies.pdf)
 
-## Penalties
-- Penalties include (depending on seriousness of offence) a mark of zero
-for the work concerned, a mark of zero for the entire course, or
-suspension/expulsion from the University.
-- Penalties are (much) more severe for those caught a second (or third)
-time.
-- “Students who cheat and are not caught will be haunted by the
-memory of their misdeeds for the rest of their miserable lives.” (From 
-[here](https://philosophy.osu.edu/sites/philosophy.osu.edu/files/1100%20Brown_2.pdf).)
+## Course material
+
+-   Installation / connection for R
+-   Reading data files (of different sorts)
+-   Making graphs
+-   Numerical summaries
+-   Statistical inference
+-   Reports
+-   Tidying and organizing data
+-   Case studies
+-   Functions
+-   Dates and times
+-   Miscellaneous tasks
+-   Vector and matrix algebra in R
+-   The bootstrap
+-   Bayesian statistics with Stan
+
+
 
 ## Accessibility statement
 
-> Students with diverse learning styles and needs are welcome in this
-> course. In particular, if you have a disability/health consideration
-> that may require accommodations, please feel free to approach
-> me and/or the AccessAbility Services Office as soon as possible.
-> I will work with you and AccessAbility Services to ensure you can
-> achieve your learning goals in this course. Enquiries are confiden-
-> tial. The UTSC AccessAbility Services staff (located in S302) are
-> available by appointment to assess specific needs, provide referrals
-> and arrange appropriate accommodations: (416) 287-7560 or by
-> e-mail at `ability@utsc.utoronto.ca`.
+> Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confiden- tial. The UTSC AccessAbility Services staff (located in S302) are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability@utsc.utoronto.ca`.
 
+## Expectations 1/3
+
+-   I expect that you will do your own work in this course, and not seek help from outside this course. Expect consequences if you do not. 
+-   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
+
+## Expectations 2/3
+
+-   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me.
+-   Anything from outside the course, for example, material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there. If you learned it in another course, say which course, but be aware that things may be done differently in other courses (see first point on next page).
+-   If you want credit for any ideas that come from outside the course materials, you *must* say where they came from.
+-   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view.
+
+## Expectations 3/3
+
+-   I expect you to learn how to do things *as they are done in this course*. 
+-   [This (video)](https://twitter.com/i/status/1293543531496308736).
+-   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.
