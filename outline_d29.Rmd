@@ -61,6 +61,8 @@
     -   Some questions will ask for software output, and some for explanation.
     -   The grading will reward evidence of clear understanding and insight.
 
+- Also (by current plans) written midterm and final exam. See below.
+
 ## Course materials
 
 The first thing on each line is a link:
@@ -125,7 +127,7 @@ The first thing on each line is a link:
 
 ## Expectations 1/3
 
--   I expect that you will do your own work in this course, and not seek help from outside this course. Expect consequences if you do not. (The Chair's Designate for Academic Integrity is currently investigating an incident from my Fall course.)
+-   I expect that you will do your own work in this course, and not seek help from outside this course. Expect consequences if you do not. 
 -   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
 
 ## Expectations 2/3
