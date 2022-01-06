@@ -83,14 +83,19 @@ The first thing on each line is a link:
 ## Assessment
 
 -   Assignments: 8 or so, approx weekly.
-    - Best 6 count, 30% of grade.
+    - Best 6 count.
     - available on Tuesdays, due on Thursdays at 11:59pm
     - based on the previous week's lectures
     - *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems that I will attach to each recorded lecture.
 - for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
-    - project is due on the last day of classes (Apr 12).
-- midterm exam, 30%, final exam 40%. Current plan is for in-person. See [course website](https://ritsokiguess.site/STAD29/old_exams.html) for old exams. 
+    - project is due on the last day of classes.
+- midterm exam, final exam. Current plan is for in-person. See [course website](https://ritsokiguess.site/STAD29/old_exams.html) for old exams. 
     - you *must pass* the final exam to pass the course.
+
+## Grading schemes
+
+- if you are taking STA29, 30% assignments (dropping worst 2), 30% midterm, 40% final.
+- if you are taking STA 1007, 15% project, 25% assignments (dropping worst 2), 25% midterm, 35% final.
 
 ## Grading
 
