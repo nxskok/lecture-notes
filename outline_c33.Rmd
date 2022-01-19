@@ -74,13 +74,13 @@ The first thing on each line is a link:
 -   [Computer requirements for online](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
 
     -   to get the most out of tutorials, you will want a working camera and microphone
-    -   can use `rstudio.cloud` (needs only web browser) or install R and R Studio on your computer. Instructions in lecture notes.
+    -   can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer. Instructions in lecture notes.
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
-## Assessment
+## Assignments
 
--   Assignments: approx weekly, starting in week 3, worth 30% in total.
+-   Assignments: approx weekly, starting in week 3.
     - week 2 tutorial contains a practice assignment, to get you used to the process.
     - worst two assignments are dropped.
     - available on Tuesdays, due on Thursdays at 11:59pm
@@ -98,6 +98,12 @@ The first thing on each line is a link:
 -   My (detailed) solutions will be available after each assignment is handed in.
 
 - There may be extra points on assignments that can be awarded at the grader's discretion for exceptionally clear explanations or evidence of clear understanding.
+
+## Exams and course grades
+
+- there will be (per current plans) in-person midterm and final exams.
+- you *must pass* the final exam to pass the course. If you do not pass the final exam but would have otherwise passed the course, your grade is 45.
+- course grade computed as 30% assignments, 30% midterm, 40% final.
 
 ## Policies
 
