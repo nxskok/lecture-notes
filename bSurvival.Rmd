@@ -117,6 +117,7 @@ dance
 \small
 ```{r bSurvival-4}
 dance %>% mutate(mth = Surv(Months, Quit)) -> dance
+dance
 ```
 \normalsize
 
