@@ -165,7 +165,7 @@ responses, using `cbind`.
 * Use `manova` with new response, looks like `lm` otherwise.
 
 * With more than 2 responses, cannot draw graph. What then?
-
+`
 * If MANOVA test significant, cannot use Tukey. What then?
 
 * Use *discriminant analysis* (of which more later).
@@ -227,18 +227,19 @@ peanuts.orig
 ## Setup for analysis
 
 ```{r bManova-13 }
-peanuts <- peanuts.orig %>%
-  mutate(
-    location = factor(location),
-    variety = factor(variety)
-  )
+# peanuts <- peanuts.orig %>%
+#   mutate(
+#     location = factor(location),
+#     variety = factor(variety)
+#   )
+peanuts <- peanuts.orig
 response <- with(peanuts, cbind(y, smk, w))
 head(response)
 ```
- 
+ `
 
 
-## Analysis (using `Manova)`
+## Analysis (using `Manova`)
 
 \small
 ```{r bManova-14}
