@@ -295,7 +295,7 @@ so first step is
 weather %>% 
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
-               values_drop_na = T) -> d
+               values_drop_na = TRUE) -> d
 ```
 
 ## So far
@@ -339,7 +339,7 @@ value to us:
 ```{r tidying-R-30}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
-               values_to="temperature", values_drop_na = T) %>% 
+               values_to="temperature", values_drop_na = TRUE) %>% 
   pivot_wider(names_from=element, values_from=temperature) %>% 
   mutate(Day = parse_number(day)) %>%
   select(-station) -> d

@@ -15,9 +15,9 @@ pigs
 ## Make longer (as before)
 
 ```{r tidy-extra-R-3}
-pigs
 pigs %>% pivot_longer(-pig, names_to="feed", 
                       values_to="weight") -> pigs_longer
+pigs_longer
 ```
 
 ## Make wider two ways 1/2
@@ -77,7 +77,7 @@ prevalence %>%
 ```{r tidy-extra-R-8}
 prevalence %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
-               names_sep="_", values_to="frequency")%>% 
+               names_sep="_", values_to="frequency") %>% 
   arrange(Species, location, disease) -> prevalence_longer
 prevalence_longer
 ```

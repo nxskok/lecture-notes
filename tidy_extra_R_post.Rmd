@@ -1,12 +1,12 @@
 ## Packages
 
-```{r tidy-extra-R-post-1}
+```{r tidy-extra-R-1}
 library(tidyverse)
 ```
 
 ## The pig feed data again
 
-```{r tidy-extra-R-post-2, message=F}
+```{r tidy-extra-R-2, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/pigs1.txt"
 pigs <- read_table(my_url)
 pigs
@@ -14,19 +14,17 @@ pigs
 
 ## Make longer (as before)
 
-```{r tidy-extra-R-post-3}
-pigs
+```{r tidy-extra-R-3}
 pigs %>% pivot_longer(-pig, names_to="feed", 
                       values_to="weight") -> pigs_longer
 pigs_longer
 ```
 
-
 ## Make wider two ways 1/2
 
 `pivot_wider` is inverse of `pivot_longer`:
 
-```{r tidy-extra-R-post-4}
+```{r tidy-extra-R-4}
 pigs_longer %>% 
   pivot_wider(names_from=feed, values_from=weight)
 ```
@@ -37,8 +35,7 @@ we are back where we started.
 
 Or
 
-```{r tidy-extra-R-post-5}
-pigs_longer
+```{r tidy-extra-R-5}
 pigs_longer %>% 
   pivot_wider(names_from=pig, values_from=weight)
 ```
@@ -60,7 +57,7 @@ This has two rows of headers, so I rewrote the data file:
 
 Read into data frame called `prevalence`.
 
-```{r tidy-extra-R-post-6, echo=F, message=F}
+```{r tidy-extra-R-6, echo=F, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/disease.txt"
 prevalence <- read_table(my_url)
 prevalence
@@ -68,7 +65,7 @@ prevalence
 
 ## Lengthen and separate
 
-```{r tidy-extra-R-post-7}
+```{r tidy-extra-R-7}
 prevalence %>% 
   pivot_longer(-Species, names_to = "column", 
                values_to = "freq") %>% 
@@ -77,30 +74,31 @@ prevalence %>%
 
 ## Making longer, the better way
 
-```{r tidy-extra-R-post-8}
-prevalence 
+```{r tidy-extra-R-8}
 prevalence %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
-               names_sep="_", values_to="frequency") %>% 
+               names_sep="_", values_to="frequency") 
+
+%>% 
   arrange(Species, location, disease) -> prevalence_longer
 prevalence_longer
 ```
 
 ## Making wider, different ways
 
-```{r tidy-extra-R-post-9}
+```{r tidy-extra-R-9}
 prevalence_longer %>% 
   pivot_wider(names_from=c(Species, location), values_from=frequency)
 ```
- 
-```{r tidy-extra-R-post-10}
+
+```{r tidy-extra-R-10}
 prevalence_longer %>% 
   pivot_wider(names_from=location, values_from=frequency)
 ```
 
 ## Interlude
 
-```{r tidy-extra-R-post-11}
+```{r tidy-extra-R-11}
 pigs_longer
 pigs_longer %>% 
   group_by(feed) %>% 
@@ -111,7 +109,7 @@ pigs_longer %>%
 
 eg. quartiles:
 
-```{r tidy-extra-R-post-12, error=T}
+```{r tidy-extra-R-12, error=T}
 pigs_longer %>% 
   group_by(feed) %>% 
   summarize(r=quantile(weight, c(0.25, 0.75)))
@@ -119,24 +117,18 @@ pigs_longer %>%
 
 ## this also works
 
-```{r tidy-extra-R-post-13, error=T}
+```{r tidy-extra-R-13, error=T}
 pigs_longer %>% 
   group_by(feed) %>% 
   summarize(r=list(quantile(weight, c(0.25, 0.75)))) %>% 
-  unnest_wider(r)
+  unnest(r)
 ```
 
-```{r tidy-extra-R-post-13, error=T}
-pigs_longer %>% 
-  group_by(feed) %>% 
-  summarize(r=list(quantile(weight))) %>% # this does 5-number summary 
-  unnest_wider(r)
-```
 
 
 ## or, even better, use `enframe`:
 
-```{r tidy-extra-R-post-14}
+```{r tidy-extra-R-14}
 quantile(pigs_longer$weight, c(0.25, 0.75))
 enframe(quantile(pigs_longer$weight, c(0.25, 0.75)))
 ```
@@ -144,7 +136,7 @@ enframe(quantile(pigs_longer$weight, c(0.25, 0.75)))
 ## A nice look
 
 
-```{r tidy-extra-R-post-15, warning=FALSE}
+```{r tidy-extra-R-15, warning=FALSE}
 pigs_longer %>% 
   group_by(feed) %>% 
   summarize(r=list(enframe(quantile(weight, c(0.25, 0.75))))) %>% 
@@ -156,10 +148,9 @@ pigs_longer %>%
 
 18 people receive one of three treatments. At 3 different times (pre, post, followup) two variables `y` and `z` are measured on each person:
 
-```{r tidy-extra-R-post-16, echo=F, message=F}
+```{r tidy-extra-R-16, echo=F, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
-repmes0
 repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
   select(-rep) %>% 
   select(id, everything()) -> repmes
@@ -168,7 +159,7 @@ repmes
 
 ## Attempt 1
 
-```{r tidy-extra-R-post-17}
+```{r tidy-extra-R-17}
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", "var"),
                         names_sep="_"
@@ -177,7 +168,7 @@ repmes %>% pivot_longer(contains("_"),
 
 ## Attempt 2
 
-```{r tidy-extra-R-post-18}
+```{r tidy-extra-R-18}
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", ".value"),
                         names_sep="_"
@@ -187,7 +178,7 @@ repmes3
 
 ## make a graph
 
-```{r tidy-extra-R-post-19}
+```{r tidy-extra-R-19}
 ggplot(repmes3, aes(x=fct_inorder(time), y=y, 
                     colour=treatment, group=id)) +
   geom_point() + geom_line()
@@ -195,7 +186,7 @@ ggplot(repmes3, aes(x=fct_inorder(time), y=y,
 
 ## or do the plot with means
 
-```{r tidy-extra-R-post-20}
+```{r tidy-extra-R-20}
 repmes3 %>% group_by(treatment, ftime=fct_inorder(time)) %>% 
   summarize(mean_y=mean(y)) %>% 
   ggplot(aes(x=ftime, y=mean_y, colour=treatment, 
@@ -205,7 +196,7 @@ repmes3 %>% group_by(treatment, ftime=fct_inorder(time)) %>%
 
 ## the plot
 
-```{r tidy-extra-R-post-21}
+```{r tidy-extra-R-21}
 g
 ```
 
