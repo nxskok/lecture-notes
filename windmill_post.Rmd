@@ -13,7 +13,7 @@ generalize to “this windmill at all times”.
   
 ## Packages for this section
 
-```{r windmill-post-1}
+```{r windmill-1, eval=F}
 library(tidyverse)
 library(broom)
 ```
@@ -21,15 +21,16 @@ library(broom)
 
 ## Reading in the data
 
-```{r windmill-post-2}
-my_url <- "http://ritsokiguess.site/datafiles/windmill.csv"
+```{r windmill-2}
+my_url <- 
+  "http://ritsokiguess.site/datafiles/windmill.csv"
 windmill <- read_csv(my_url)
 ```
 
 ## The data
 
 
-```{r windmill-post-3}
+```{r windmill-3}
 windmill
 ```
 
@@ -44,14 +45,14 @@ methods.
   - Put `DC_output` on vertical scale.
 - Add trend, but don’t want to assume linear:
 
-```{r windmill-post-4, eval=FALSE}
+```{r windmill-4, eval=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth() 
+  geom_point() + geom_smooth(se=FALSE) 
 ```
 
 ## Scatterplot
 
-```{r windmill-post-5, echo=FALSE, message=FALSE}
+```{r windmill-5, echo=FALSE, message=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
   geom_point() + geom_smooth(se = F) 
 ```
@@ -67,20 +68,20 @@ line not so good here.
 
 ## Fit a straight line (and see what happens)
 
-```{r windmill-post-6, echo=F}
+```{r windmill-6, echo=F}
 wid <- getOption("width")
 options(width=60)
 ```
 
 
-\footnotesize
-```{r windmill-post-7}
+\scriptsize
+```{r windmill-7}
 DC.1 <- lm(DC_output ~ wind_velocity, data = windmill)
 summary(DC.1)
 ```
 \normalsize
 
-```{r windmill-post-8, echo=F}
+```{r windmill-8, echo=F}
 options(width=wid)
 ```
 
@@ -89,17 +90,16 @@ options(width=wid)
 
 - The standard output tends to go off the bottom of the page rather easily. Package `broom` has these:
 
-\footnotesize
-```{r windmill-post-9}
-glance(DC.1) 
-# %>% pull(r.squared)
+\scriptsize
+```{r windmill-9}
+glance(DC.1)
 ```
 \normalsize
 
 showing that the R-squared is 87%, and
 
 \footnotesize
-```{r windmill-post-10}
+```{r windmill-10}
 tidy(DC.1)
 ```
 \normalsize
@@ -120,14 +120,14 @@ residuals, observed minus predicted, plotted against fitted (predicted).
 
 ## back to scatterplot, but this time add line
 
-```{r windmill-post-11, eval=FALSE}
+```{r windmill-11, eval=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth(method="lm", se = FALSE)
+  geom_point() + geom_smooth(method="lm", se = F)
 ```
 
 ## The plot
 
-```{r windmill-post-12, echo=FALSE, message=FALSE}
+```{r windmill-12, echo=FALSE, message=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
   geom_point() + geom_smooth(method="lm", se = F)
 ```
@@ -135,13 +135,15 @@ ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
 
 ## Plot of residuals against fitted values
 
-```{r windmill-post-13}
+```{r windmill-13}
 ggplot(DC.1, aes(y = .resid, x = .fitted)) + geom_point()
 ```
 
 ## Comments on residual plot
 - Residual plot should be a random scatter of points.
 - Should be no pattern “left over” after fitting the regression.
+- Smooth trend should be more or less straight across at 0.
+- Here, have a curved trend on residual plot.
 - This means original relationship must have been a curve (as we saw
 on original scatterplot).
 - Possible ways to fit a curve:
@@ -150,24 +152,20 @@ on original scatterplot).
   - See what science tells you about mathematical form of relationship,
 and try to apply.
 
-## normal quantile plot of residuals
-
-```{r}
-ggplot(DC.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
-```
-
-This ought to be normal, but is actually left-skewed.
-
 ## Parabolas and fitting parabola model
 - A parabola has equation
 $$y = ax^2 + bx + c$$
 with coefficients $a, b, c$. About the simplest function that is not a straight
 line.
 - Fit one using `lm` by adding $x^2$ to right side of model formula with +:
-```{r windmill-post-14}
+```{r windmill-14}
 DC.2 <- lm(DC_output ~ wind_velocity + I(wind_velocity^2),
   data = windmill
 )
+```
+
+
+```{r windmill-15}
 summary(DC.2)
 ```
 
@@ -178,18 +176,15 @@ something different (to do with interactions in ANOVA).
 
 ## Parabola model output
 
-```{r windmill-post-15}
+```{r windmill-16}
 tidy(DC.2)
 ```
 
-```{r windmill-post-16}
+\scriptsize
+```{r windmill-17}
 glance(DC.2)
 ```
-
-```{r}
-bind_rows(glance(DC.1), glance(DC.2))
-```
-
+\normalsize
 
 ## Comments on output
 
@@ -202,11 +197,18 @@ bind_rows(glance(DC.1), glance(DC.2))
 
 ## Residual plot from parabola model
 
-```{r windmill-post-17}
+```{r windmill-18}
 ggplot(DC.2, aes(y = .resid, x = .fitted)) +
   geom_point()
-ggplot(DC.2, aes(sample=.resid)) + stat_qq() + stat_qq_line()
 ```
+
+also, residuals should look normally distributed
+
+```{r}
+ggplot(DC.2, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+```
+
+this has long tails compared to normal.
 
 ## Make scatterplot with fitted line and curve 
 
@@ -234,7 +236,7 @@ by lines.
 
 ## Scatterplot with fitted line and curve
 
-```{r windmill-post-18, ref.label="fitcurve", echo=F}
+```{r windmill-19, ref.label="fitcurve", echo=F}
 ```
 
 Curve clearly fits better than line. 
@@ -242,20 +244,20 @@ Curve clearly fits better than line.
 
 ## Another approach to a curve
 - There is a problem with parabolas, which we’ll see later.
-- Go back to engineer with findings so far. Ask, “what should happen
+- Ask engineer,  “what should happen
 as wind velocity increases?”:
 
     - Upper limit on electricity generated, but otherwise, the larger the
        wind velocity, the more electricity generated.
 
-- Mathematically, sounds like asymptote. Straight lines and parabolas
+- Mathematically, *asymptote*. Straight lines and parabolas
 don’t have them, but eg. $y = 1/x$ does: as $x$ gets bigger, $y$
 approaches zero without reaching it.
 - What happens to $y = a + b(1/x)$ as $x$ gets large?
   - $y$ gets closer and closer to $a$: that is, $a$ is asymptote.
 - Fit this, call it asymptote model.
 - Fitting the model here because we have math to justify it.
-- Alternative, $y = a + be^{−x}$ , approaches asymptote faster.
+  - Alternative, $y = a + be^{−x}$ , approaches asymptote faster.
 
 ## How to fit asymptote model?
 - Define new explanatory variable to be $1/x$,
@@ -268,7 +270,6 @@ take 12 minutes to walk 1 km, called your pace. So 1 over
 
 ```{r straightness, fig.keep="none"}
 windmill %>% mutate(wind_pace = 1 / wind_velocity) -> windmill
-windmill
 ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
   geom_point() + geom_smooth(se = F)
 ```
@@ -284,7 +285,7 @@ summary(DC.3)
 
 Pretty straight. Blue actually smooth curve not line:
 
-```{r windmill-post-19, ref.label="straightness", echo=F}
+```{r windmill-20, ref.label="straightness", echo=F}
 ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
   geom_point() + geom_smooth(se = F)
 ```
@@ -294,8 +295,15 @@ ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
 
 ## Regression output
 
-```{r windmill-post-20}
+\scriptsize
+
+```{r windmill-21}
 glance(DC.3)
+```
+
+\normalsize
+
+```{r windmill-22}
 tidy(DC.3)
 ```
 
@@ -307,14 +315,10 @@ parabola model (`wind.velocity` and its square).
 - Looks good, but check residual plot (over). 
 
 
-## Residual plots for asymptote model
+## Residual plot for asymptote model
 
 ```{r resida}
 ggplot(DC.3, aes(y = .resid, x = .fitted)) + geom_point()
-```
-
-```{r windmill-post-21}
-ggplot(DC.3, aes(sample=.resid)) + stat_qq() + stat_qq_line()
 ```
 
 
@@ -327,7 +331,7 @@ comparison), with legend saying which is which.
 - First make data frame containing what we need, taken from the right
 places:
 
-```{r windmill-post-22}
+```{r windmill-23}
 w2 <- tibble(
   wind_velocity = windmill$wind_velocity,
   DC_output = windmill$DC_output,
@@ -339,7 +343,7 @@ w2 <- tibble(
 
 ## What’s in `w2`
 
-```{r windmill-post-23}
+```{r windmill-24}
 w2
 ```
 
@@ -352,15 +356,16 @@ into one.
 
 ```{r allcurves, eval=F}
 w2 %>%
-  pivot_longer(linear:asymptote, names_to="model", values_to="fit") %>%
+  pivot_longer(linear:asymptote, names_to="model", 
+               values_to="fit") %>%
   ggplot(aes(x = wind_velocity, y = DC_output)) +
   geom_point() +
-  geom_line(aes(y = fit, colour = model))
+  geom_line(aes(y = fit, colour = model)) 
 ```
 
 ## Scatterplot with fitted curves
 
-```{r windmill-post-24, ref.label= "allcurves", echo=F}
+```{r windmill-25, ref.label= "allcurves", echo=F}
 
 ```
 
@@ -372,7 +377,7 @@ w2 %>%
 
 ## Asymptote model summary
 
-```{r windmill-post-25}
+```{r windmill-26}
 tidy(DC.3)
 ```
 
@@ -407,7 +412,7 @@ range of the data, doesn’t necessarily mean they agree everywhere.
 - Extend range of wind.velocity to 1 to 16 (steps of 0.5), and
 predict DC.output according to the two models:
 
-```{r windmill-post-26}
+```{r windmill-27}
 wv <- seq(1, 16, 0.5)
 wv
 ```
@@ -423,27 +428,27 @@ explanatory variables in regression(s).
 - Asymptote model had just `wind_pace` (reciprocal of velocity).
 - So create data frame called `wv_new` with those in:
 
-```{r windmill-post-27}
+```{r windmill-28}
 wv_new <- tibble(wind_velocity = wv, wind_pace = 1 / wv)
 ```
 
 ## `wv_new`
 
-```{r windmill-post-28}
+```{r windmill-29}
 wv_new
 ```
 
 ## Doing predictions, one for each model
 - Use same names as before:
 
-```{r windmill-post-29}
+```{r windmill-30}
 linear <- predict(DC.1, wv_new)
 parabola <- predict(DC.2, wv_new)
 asymptote <- predict(DC.3, wv_new)
 ```
 - Put it all into a data frame for plotting, along with original data:
 
-```{r windmill-post-30}
+```{r windmill-31}
 my_fits <- tibble(
   wind_velocity = wv_new$wind_velocity,
   linear, parabola, asymptote
@@ -454,7 +459,7 @@ my_fits <- tibble(
 
 
 
-```{r windmill-post-31}
+```{r windmill-32}
 my_fits
 ```
 
@@ -464,7 +469,7 @@ my_fits
 - To make a plot, we use the same trick as last time to get all three
 predictions on a plot with a legend (saving result to add to later):
 
-```{r windmill-post-32}
+```{r windmill-33}
 my_fits %>%
     pivot_longer(
     linear:asymptote,
@@ -480,8 +485,7 @@ my_fits %>%
 ## Making a plot 2/2
 
 - The observed wind velocities were in this range:
-```{r windmill-post-33}
-g
+```{r windmill-34}
 (vels <- range(windmill$wind_velocity))
 ```
 
@@ -497,7 +501,7 @@ g + geom_rect(
 
 ## The plot
 
-```{r windmill-post-34, ref.label="rectangle", echo=F}
+```{r windmill-35, ref.label="rectangle", echo=F}
 ```
 
 ## Comments (1)
@@ -512,7 +516,7 @@ parabola model does not.
 
 - For parabola model:
 
-```{r windmill-post-35}
+```{r windmill-36}
 tidy(DC.2)
 ```
 
@@ -522,7 +526,7 @@ zero.
 ## Comments (3): asymptote model
 
 \small
-```{r windmill-post-36}
+```{r windmill-37}
 tidy(DC.3)
 ```
 \normalsize
