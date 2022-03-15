@@ -38,9 +38,7 @@ Or
 ```{r tidy-extra-R-5}
 pigs_longer
 pigs_longer %>% 
-  pivot_wider(names_from=pig, values_from=weight) 
-
--> d
+  pivot_wider(names_from=pig, values_from=weight) -> d
 d
 d$`1`
 ```
@@ -153,6 +151,7 @@ pigs_longer %>%
 ```{r tidy-extra-R-16, echo=F, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
+repmes0
 repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
   select(-rep) %>% 
   select(id, everything()) -> repmes

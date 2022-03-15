@@ -127,8 +127,16 @@ d3 %>% pivot_wider(names_from = group, values_from = y) %>%
 
 ## A proper use of list-columns
 
+```{r}
+d3
+```
+
+
 ```{r wider-wrong-post-11}
-d3 %>% nest_by(group) %>% 
+d3
+d3 %>% nest_by(group) 
+
+%>% 
   summarize(n = nrow(data), 
             mean_y = mean(data$y), 
             sd_y = sd(data$y))
