@@ -276,9 +276,11 @@ my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 
 ## Making a distance object
 ```{r bCluster-9, size="footnotesize"}
-d <- number.d %>%
+# d <- 
+  
+number.d %>%
   select(-la) %>%
-  as.dist()
+  as.dist() -> d
 d
 class(d)
 ```
@@ -287,7 +289,7 @@ class(d)
 
 
 ## Cluster analysis and dendrogram
-```{r bCluster-10, fig.height=4}
+```{r bCluster-10, fig.height=7}
 d.hc <- hclust(d, method = "single")
 plot(d.hc)
 ```
@@ -341,7 +343,7 @@ joined to `fr` and `it`).
 
 
 ## Complete linkage
-```{r bCluster-12, fig.height=4}
+```{r bCluster-12, fig.height=7}
 d.hc <- hclust(d, method = "complete")
 plot(d.hc)
 ```
@@ -350,7 +352,7 @@ plot(d.hc)
 
 
 ## Ward
-```{r wardo,fig.height=4}
+```{r wardo,fig.height=7}
 d.hc <- hclust(d, method = "ward.D")
 plot(d.hc)
 ```
@@ -378,12 +380,15 @@ cutree(d.hc, 3) %>% enframe(name="country", value="cluster")
 
 
 ## Drawing those clusters on the tree
-```{r asfsagd,fig.height=4}
+```{r asfsagd,fig.height=7}
 plot(d.hc)
-rect.hclust(d.hc, 3)
 ```
 
+```{r}
+rect.hclust(d.hc, 3)
+```
    
+   for Maheka, doesn't work
 
 
 ## Comparing single-linkage and Ward
@@ -417,7 +422,7 @@ names were all in one column.
 lang %>% mutate(number=row_number()) %>%
     pivot_longer(-number, names_to="language", values_to="name") %>%
     mutate(first=str_sub(name,1,1)) -> lang.long
-lang.long %>% print(n=12)
+lang.long 
 ```
 \normalsize
    
@@ -562,6 +567,7 @@ languages
 * and then all *pairs* of languages:
 ```{r bCluster-28, size="scriptsize"}
 pairs <- crossing(lang = languages, lang2 = languages) 
+pairs
 ```
 
 ## Some of these
@@ -667,6 +673,7 @@ measurement scale (arbitrary).
 ```{r bCluster-35, size="footnotesize"}
 vital %>% 
   mutate(across(where(is.numeric), ~scale(.))) -> vital.s
+vital.s
 ```
 
    
@@ -709,7 +716,7 @@ vital.km3$centers
  
 
 
-* Cluster 2 has lower than average rates on everything; cluster 3
+* Cluster 1 has lower than average rates on everything; cluster 2
 has much higher than average.
 
 
@@ -735,6 +742,7 @@ vital.3 <- tibble(
   country = vital.s$country,
   cluster = vital.km3$cluster
 )
+vital.3
 ```
 
    
@@ -762,7 +770,7 @@ options(width=80)
 
 \scriptsize
 ```{r bCluster-45}
-get_countries(2, vital.3)
+get_countries(1, vital.3)
 ```
 \normalsize
    
@@ -933,13 +941,13 @@ get_countries(1, vital.6)
 
    
 
-## Cluster 2
+## Cluster 6
 High on everything:
 
 \normalsize
 ```{r bCluster-57, echo=2}
 options(width = 60)
-get_countries(2, vital.6)
+get_countries(6, vital.6)
 options(width = 50)
 ```
 \normalsize
@@ -1067,7 +1075,7 @@ g <- ggplot(d, aes(
 
 
 ## The plot
-```{r bCluster-66, fig.height=5}
+```{r bCluster-66, fig.height=10}
 g
 ```
 
