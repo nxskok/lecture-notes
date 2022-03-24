@@ -385,7 +385,7 @@ them should be important.
 - Best automatic method: what we did, “backward selection”.
 - Do not learn about “stepwise regression”! [**eg. here**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df)
 - R has function `step` that does backward selection, like this:
-```{r asphalt-post-29, eval=F}
+```{r asphalt-post-29}
 rut.7 <- step(rut.2, direction = "backward", test = "F")
 ```
 
@@ -413,6 +413,7 @@ leaps <- regsubsets(log(rut.depth) ~ pct.a.surf +
                     data = asphalt, nbest = 2)
 # leaps
 s <- summary(leaps)
+s
 # s
 with(s, data.frame(rsq, outmat)) -> d
 ```
@@ -455,7 +456,7 @@ options(width=80)
 
 \scriptsize
 ```{r asphalt-post-36}
-with(s, data.frame(adjr2, outmat)) %>% 
+with(s, data.frame(adjr2, outmat))%>% 
   rownames_to_column("model") %>% 
   arrange(desc(adjr2))
 ```

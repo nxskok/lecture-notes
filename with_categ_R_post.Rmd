@@ -152,7 +152,7 @@ t2 <- "Temperature in degrees Celsius"
 
 \normalsize
 
-```{r spectemp, fig.keep="none", warning=F, message=F}
+```{r spectemp, fig.keep="none", warning=F, message=F, fig.height=7}
 ggplot(crickets, aes(x = temperature, y = pulse_rate,
   colour = species)) +
   geom_point() + geom_smooth(method = "lm", se = F) +

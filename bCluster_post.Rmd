@@ -385,10 +385,11 @@ plot(d.hc)
 ```
 
 ```{r}
+plot(d.hc)
 rect.hclust(d.hc, 3)
 ```
    
-   for Maheka, doesn't work
+
 
 
 ## Comparing single-linkage and Ward
@@ -1111,7 +1112,9 @@ An Ontario hockey league has teams in 21 cities. How can we arrange those teams 
 my_url <- 
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario <- read_csv(my_url)
+ontario
 ontario.d <- ontario %>% select(-1) %>% as.dist()
+ontario.d
 ontario.hc <- hclust(ontario.d, method = "ward.D")
 ```
 
@@ -1119,7 +1122,7 @@ ontario.hc <- hclust(ontario.d, method = "ward.D")
 
 
 ## Plot, with 4 clusters
-```{r bCluster-68, fig.height=4}
+```{r bCluster-68, fig.height=7}
 plot(ontario.hc)
 rect.hclust(ontario.hc, 4)
 ```
@@ -1139,7 +1142,7 @@ rect.hclust(ontario.hc, 4)
 
 
 ## Seven clusters
-```{r bCluster-69, fig.height=4 }
+```{r bCluster-69, fig.height=7 }
 plot(ontario.hc)
 rect.hclust(ontario.hc, 7)
 ```
