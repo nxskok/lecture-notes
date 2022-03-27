@@ -22,11 +22,7 @@ mydates <- c("1970-01-01", "2007-09-04", "1931-08-05")
 - Dates are "actually" numbers, so can add and subtract: 
 
 ```{r dates-and-times-post-3, paged.print=T}
-<<<<<<< HEAD
 somedates %>% mutate(plus30 = d + 30, diffs = d[2] - d, diff2 = d - 30)
-=======
-somedates %>% mutate(plus30 = d + 30, diffs = d[2] - d)
->>>>>>> b205a97177f89183506745f89a90d7e0a28e6030
 ```
 
 ## Reading in dates from a file
@@ -146,16 +142,10 @@ created, other columns are what to make it out of.
 ```{r dates-and-times-post-14, paged.print=T}
 newdates %>%
   mutate(
-<<<<<<< HEAD
     year = year(d),
     mon = month(d, label = TRUE),
     day = day(d),
     weekday = wday(d, label = TRUE)
-=======
-    mon = month(d),
-    day = day(d),
-    weekday = wday(d, label = T)
->>>>>>> b205a97177f89183506745f89a90d7e0a28e6030
   )
 ```
 

@@ -354,19 +354,20 @@ $y$’s, with another column for distinguishing things.
 into one.
 - `pivot_longer`, then plot:
 
-```{r allcurves, eval=F}
+```{r allcurves, eval=FALSE, fig.height=7}
 w2 %>%
   pivot_longer(linear:asymptote, names_to="model", 
                values_to="fit") %>%
   ggplot(aes(x = wind_velocity, y = DC_output)) +
   geom_point() +
-  geom_line(aes(y = fit, colour = model)) 
+  geom_line(aes(y = fit, colour = model)) -> g
+g
 ```
 
 ## Scatterplot with fitted curves
 
 ```{r windmill-25, ref.label= "allcurves", echo=F}
-
+g
 ```
 
 ## Comments
@@ -480,6 +481,7 @@ my_fits %>%
     y = fit, x = wind_velocity,
     colour = model
   )) + geom_line() -> g
+g
 ```
 
 ## Making a plot 2/2

@@ -1,0 +1,33 @@
+
+shapefile of Toronto neighbourhoods
+
+following https://r-graph-gallery.com/168-load-a-shape-file-into-r.html
+
+data from https://mdl.library.utoronto.ca/collections/geospatial-data/toronto-neighbourhoods
+
+```{r}
+system("unzip ~/Downloads/ttc-subway-shapefile-wgs84.zip")
+```
+
+read in
+
+```{r}
+library(rgdal)
+```
+
+```{r}
+my_shp <- readOGR( 
+  dsn= "TTC_SUBWAY_LINES_WGS84.shp" )
+```
+
+```{r}
+my_shp
+```
+
+
+```{r}
+plot(my_shp)
+```
+
+
+

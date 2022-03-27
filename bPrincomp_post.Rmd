@@ -32,7 +32,7 @@
 You might not have installed the first of these. See over for
 instructions. 
 
-```{r bPrincomp-post-1, eval=F}
+```{r bPrincomp-1, eval=FALSE}
 library(ggbiplot) # see over
 library(tidyverse)
 library(ggrepel)
@@ -48,14 +48,14 @@ library(ggrepel)
 `install.packages` will not work. This is same procedure you used for `smmr` in C32:
 
 * Install package `devtools` first (once):
-```{r bPrincomp-post-2, eval=F}
+```{r bPrincomp-2, eval=F}
 install.packages("devtools")
 ```
 
      
 
 * Then install `ggbiplot` (once):
-```{r bPrincomp-post-3, eval=F}
+```{r bPrincomp-3, eval=F}
 library(devtools)
 install_github("vqv/ggbiplot")
 ```
@@ -67,19 +67,14 @@ install_github("vqv/ggbiplot")
 ##  Small example: 2 test scores for 8 people
 
 \small
-```{r bPrincomp-post-4,message=F}
+```{r testt,message=F}
 my_url <- "http://ritsokiguess.site/datafiles/test12.txt"
 test12 <- read_table2(my_url)
 test12
 ```
 
-```{r bPrincomp-post-5 }
-ggplot(test12, aes(x = first, y = second, label = id)) +
-  geom_point() + geom_text_repel() + geom_smooth(method = "lm", se = F)
-```
 
-
-```{r bPrincomp-post-6 }
+```{r ff1}
 g <- ggplot(test12, aes(x = first, y = second, label = id)) +
   geom_point() + geom_text_repel()
 ```
@@ -90,7 +85,7 @@ g <- ggplot(test12, aes(x = first, y = second, label = id)) +
 
 ##  The plot
 
-```{r bPrincomp-post-7,fig.height=3.8}
+```{r ff2,fig.height=7}
 g + geom_smooth(method = "lm", se = F)
 ```
 
@@ -99,9 +94,8 @@ g + geom_smooth(method = "lm", se = F)
 
 
 * Grab just the numeric columns:
-```{r bPrincomp-post-8}
-test12 %>% select_if(is.numeric) -> test12_numbers
-# test12 %>% select(across(where(is.numeric)))
+```{r bPrincomp-4}
+test12 %>% select(where(is.numeric)) -> test12_numbers
 test12_numbers
 ```
      
@@ -109,7 +103,7 @@ test12_numbers
 
 * Strongly correlated, so data nearly 1-dimensional:
 
-```{r bPrincomp-post-9}
+```{r bPrincomp-5}
 cor(test12_numbers)
 ```
 
@@ -118,8 +112,8 @@ cor(test12_numbers)
 
 * Make a score summarizing this one dimension. Like this:
 
-```{r bPrincomp-post-10 }
-test12.pc <- princomp(test12_numbers, cor = TRUE)
+```{r plot12}
+test12.pc <- princomp(test12_numbers, cor = T)
 summary(test12.pc)
 ```
 
@@ -145,7 +139,7 @@ variables measured on same scale and expect similar variability.)
 
 
 ##   Scree plot
-```{r bPrincomp-post-11, fig.height=3.5}
+```{r bPrincomp-6, fig.height=3.5}
 ggscreeplot(test12.pc)
 ```
 
@@ -160,7 +154,7 @@ explain how each principal component depends on (standardized)
 original variables (test scores):
 
 \footnotesize
-```{r bPrincomp-post-12 }
+```{r bPrincomp-7 }
 test12.pc$loadings
 ```
 \normalsize
@@ -174,10 +168,8 @@ composite score would summarize performance.
 ##  Component scores
 
 \small
-```{r bPrincomp-post-13 }
+```{r bPrincomp-8 }
 d <- data.frame(test12, test12.pc$scores)
-cbind(test12, test12.pc$scores)
-test12.pc$scores
 d
 ```
 \normalsize
@@ -198,12 +190,11 @@ d
 
 ##  Plot of scores
 
-```{r bPrincomp-post-14,fig.height=3.5,}
+```{r score-plot,fig.height=7}
 ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
   geom_point() + geom_text_repel()
 ```
   
-![](bPrincomp-score-plot.png)
 
 
 
@@ -213,7 +204,7 @@ ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
 * Vertical scale exaggerates importance of `comp.2`.
 
 * Fix up to get axes on same scale:
-```{r bPrincomp-post-15 }
+```{r eqsc}
 g <- ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
   geom_point() + geom_text_repel() +
   coord_fixed()
@@ -223,7 +214,7 @@ g <- ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
 
 * Shows how exam scores really spread out along one dimension:
 
-```{r bPrincomp-post-16 }
+```{r eqsc2,fig.height=7}
 g
 ```
 
@@ -242,7 +233,7 @@ g
 suggests how they score on each variable.
 
 * Add `labels` option to identify individuals:
-```{r bPrincomp-post-17 }
+```{r bPrincomp-9}
 g <- ggbiplot(test12.pc, labels = test12$id)
 ```
 
@@ -251,7 +242,7 @@ g <- ggbiplot(test12.pc, labels = test12$id)
 
 
 ##  The biplot
-```{r bPrincomp-post-18,fig.height=4,echo=F}
+```{r ff3,fig.height=7,echo=F}
 g
 ```
   
@@ -283,299 +274,261 @@ relative to first.
 
 
 
-##  Track running data
+## Places rated
 
-Track running records (1984) for distances 100m to marathon, arranged
-by country. Countries labelled by (mostly) Internet domain names (ISO
-2-letter codes):
+Every year, a new edition of the Places Rated Almanac is produced. This rates a large number (in our data 329) of American cities on a number of different criteria, to help people find the ideal place for them to live (based on what are important criteria for them).
 
-```{r bPrincomp-post-19, echo=F}
-w <- getOption("width")
-options(width = w + 10)
-```
+The data for one year are in [http://ritsokiguess.site/datafiles/places.txt](http://ritsokiguess.site/datafiles/places.txt). The data columns are aligned but the column headings are not.
 
- 
+## The criteria
 
-\scriptsize
-```{r bPrincomp-post-20, message=F}
-my_url <- "http://ritsokiguess.site/datafiles/men_track_field.txt"
-track <- read_table(my_url)
-track 
-```
-\normalsize
- 
+There are nine of them:
 
+- `climate`: a higher value means that the weather is better
+- `housing`: a higher value means that there is more good housing or a greater choice of different types of housing
+- `health`: higher means better healthcare facilities
+- `crime`: higher means more crime (bad)
+- `trans`: higher means better transportation (this being the US, probably more roads)
+- `educate`: higher means better educational facilities, schools, colleges etc.
+- `arts`: higher means better access to the arts (theatre, music etc)
+- `recreate`: higher means better access to recreational facilities
+- `econ`: higher means a better economy (more jobs, spending power etc)
 
-##  Country names
-Also read in a table to look country names up in later:
+Each city also has a numbered `id`.
 
-\footnotesize
-```{r bPrincomp-post-21, message=F}
-my_url <- "http://ritsokiguess.site/datafiles/isocodes.csv"
-iso <- read_csv(my_url)
-iso
+## Read in the data
+
+\small
+```{r bPrincomp-10}
+my_url <- "http://ritsokiguess.site/datafiles/places.txt"
+places0 <- read_table2(my_url)
 ```
 \normalsize
- 
 
+## Look at distributions of everything
 
-##  Data and aims
-
-
-* 
-Times in seconds 100m--400m, in minutes for rest (800m up).
-
-* This taken care of by standardization.
-
-* 8 variables; can we summarize by fewer and gain some insight?
-
-* In particular, if 2 components tell most of story, what do we see in a plot?
-
-
-##  Fit and examine principal components
-```{r bPrincomp-post-22, echo=FALSE}
-options(width = 50)
+```{r bPrincomp-11}
+places0 %>% 
+  pivot_longer(-id, names_to = "criterion", 
+               values_to = "rating") %>% 
+  ggplot(aes(x = rating)) + geom_histogram(bins = 10) + 
+  facet_wrap(~criterion, scales = "free") -> g
 ```
 
-\footnotesize
-```{r bPrincomp-post-23 }
-track %>% select_if(is.numeric) -> track_num
-track_num
-track.pc <- princomp(track_num, cor = TRUE)
-summary(track.pc)
-```
-\normalsize
- 
+## The histograms
 
-
-##   Scree plot
-
-```{r bPrincomp-post-24,fig.height=3.5,}
-ggscreeplot(track.pc)
-```
-
- 
-
-
-##  How many components?
-
-
-* As for discriminant analysis, look for "elbow" in scree plot.
-
-* See one here at 3 components; everything 3 and beyond is "scree".
-
-* So take 2 components.
-
-* Note difference from discriminant analysis: want "large"
-rather than "small", so go 1 step left of elbow.
-
-* Another criterion: any component with eigenvalue bigger than
-about 1 is worth including. 2nd one here has eigenvalue just less
-than 1.
-
-* Refer back to `summary`: cumulative proportion of
-variance explained for 2 components is 93.7\%, pleasantly high. 2
-components tell almost whole story.
-
-
-
-##  How do components depend on original variables?
-Loadings:
-
-\footnotesize
-```{r bPrincomp-post-25, echo=2}
-options(width = 65)
-track.pc$loadings
-```
-\normalsize
-   
-
-
-##  Comments
-
-
-* `comp.1` loads about equally (has equal weight) on
-times over all distances.
-
-* `comp.2` has large positive loading for short
-distances, large negative for long ones.
-
-* `comp.3`: large negative for middle distance, large
-positive especially for short distances.
-
-* Country overall good at running will have lower than average record
-times at all distances, so `comp.1`
-*small*. Conversely, for countries bad at running,
-`comp.1` very positive.
-
-* Countries relatively better at sprinting (low times) will be
-*negative* on `comp.2`; countries relatively better at
-distance running *positive* on `comp.2`.
-
-
-
-##  Commands for plots
-
-
-* Principal component scores (first two). Also need country IDs.
-```{r bPrincomp-post-26 }
-d <- data.frame(track.pc$scores,
-  country = track$country
-)
-d
-names(d)
-g1 <- ggplot(d, aes(x = Comp.1, y = Comp.2,
-  label = country)) +
-  geom_point() + geom_text_repel() + coord_fixed()
-```
-
-     
-
-
-* Biplot:
-```{r bPrincomp-post-27 }
-g2 <- ggbiplot(track.pc, labels = track$country)
-```
-
-   
-
-
-
-##   Principal components plot
-
-```{r bPrincomp-post-28}
-g1
-```
-
-     
-
-
-##   Comments on principal components plot
-
-
-* Good running countries at left of plot: US, UK, Italy,
-Russia, East and West Germany.
-
-* Bad running countries at right: Western Samoa, Cook Islands.
-
-* Better sprinting countries at bottom: US, Italy, Russia,
-Brazil, Greece. `do` is Dominican Republic, where sprinting
-records relatively good, distance records very bad.
-
-* Better distance-running countries at top: Portugal, Norway,
-Turkey, Ireland, New Zealand, Mexico. `ke` is Kenya.
-
-
-
-##   Biplot
-
-```{r bPrincomp-post-29 }
-g2
-```
-  
-
-
-
-##  Comments on biplot
-
-
-* Had to do some pre-work to interpret PC plot. Biplot more self-contained.
-
-* All variable arrows point right; countries on right have large
-(bad) record times overall, countries on left good overall.
-
-* Imagine that variable arrows extend negatively as well. Bottom right = bad at
-distance running, top left = good at distance running.
-
-* Top right = bad at sprinting, bottom left = good at
-sprinting.
-
-* Doesn't require so much pre-interpretation of components.
-
-
-
-
-
-##  Best 8 running countries
-
-Need to look up two-letter abbreviations in ISO table:
-
-\footnotesize
-```{r bPrincomp-post-30,warning=F}
-iso
-d
-d %>%
-  arrange(Comp.1) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.1, country, Country) %>%
-  slice(1:8)
-```
-\normalsize
-   
-
-
-##  Worst 8 running countries
-
-\footnotesize
-```{r bPrincomp-post-31, warning=F}
-d %>%
-  arrange(desc(Comp.1)) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.1, country, Country) %>%
-  slice(1:8)
-```
-\normalsize
-   
-
-
-##  Better at distance running
-
-\footnotesize
-```{r bPrincomp-post-32, warning=F}
-d %>%
-  arrange(desc(Comp.2)) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.2, country, Country) %>%
-  slice(1:10)
-```
-\normalsize
-   
-
-##  Better at sprinting
-
-\footnotesize
-```{r bPrincomp-post-33, warning=F}
-d %>%
-  arrange(Comp.2) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.2, country, Country) %>%
-  slice(1:10)
-```
-\normalsize
-   
-
-
-##  Plot with country names
-```{r bPrincomp-post-34 }
-g <- d %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Comp.1, Comp.2, Country) %>%
-  ggplot(aes(x = Comp.1, y = Comp.2, label = Country)) +
-  geom_point() + geom_text_repel(size = 3) +
-  coord_fixed()
-```
-
-   
-
-
-##  The plot
-
-```{r bPrincomp-post-35, fig.height=5.5, warning=F}
+```{r bPrincomp-12}
 g
 ```
 
-   
+## Transformations
 
+- Several of these variables have long right tails
+
+- Take logs of everything but id:
+
+```{r bPrincomp-13}
+places0 %>% 
+  mutate(across(-id, ~log(.))) -> places
+```
+
+## Just the numerical columns
+
+- get rid of the id column
+
+```{r bPrincomp-14}
+places %>% select(-id) -> places_numeric
+```
+
+## Principal components
+
+```{r bPrincomp-15, include=FALSE}
+options(width = 80)
+```
+
+\scriptsize
+```{r bPrincomp-16}
+places.1 <- princomp(places_numeric, cor = TRUE)
+summary(places.1)
+```
+\normalsize
+
+```{r bPrincomp-17, include=FALSE}
+options(width = 60)
+```
+
+## scree plot
+
+```{r bPrincomp-18}
+ggscreeplot(places.1)
+```
+
+- big elbow at 2 (1 component); smaller elbow at 6 (5) and maybe 4 (3).
+
+## What is in each component?
+
+\small
+```{r bPrincomp-19}
+places.1$loadings
+```
+\normalsize
+
+## Assessing the components
+
+Look at component loadings and make a call about "large" (in absolute value) vs "small". Large loadings are a part of the component and small ones are not. Thus, if we use 0.4 as cutoff:
+
+- component #1 depends on health and arts
+- #2 depends on economy and crime, and negatively on education. 
+- #3 depends on climate, and negatively on economy.
+- #4 depends on education and the economy, negatively on transportation and recreation opportunities.
+- #5 depends on crime and negatively on housing.
+
+## Comments
+
+- The use of 0.4 is arbitrary; you can use whatever you like. It can be difficult to decide whether a variable is "in" or "out". 
+
+- The large (far from zero) loadings indicate what distinguishes the cities as places to live, for example:
+
+  - places that are rated high for health also tend to be rated high for arts
+  - places that have a good economy tend to have a bad climate (and vice versa)
+  - places that have a lot of crime tend to have bad housing.
+
+## Making a plot 1/3
+
+How can we make a visual showing the cities? We need a "score" for each city on each component, and we need to identify the cities (we have a numerical `id` in the original dataset):
+
+```{r bPrincomp-20}
+cbind(city_id = places$id, places.1$scores) %>% 
+  as_tibble() -> places_score
+```
+
+The `as_tibble` is needed at the end because the scores are a `matrix`.
+
+## Making a plot 2/3
+
+- Plot the first two scores against each other, labelling each point by the `id` of the city it belongs to:
+
+```{r bPrincomp-21}
+ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
+                         label = city_id)) +
+  geom_text() -> g
+```
+
+## Making a plot 3/3
+
+```{r bPrincomp-22}
+g
+```
+
+
+## Comments
+
+- Cities 213 and 270 are high on component 1, and city 116 is low. City 195 is high on component 2, and city 322 is low.
+
+- This suggests that cities 213 and 270 are high on health and arts, and city 116 is low. City 195 should be high on economy and crime and low on education, and city 322 should be the other way around. 
+
+## Checking this 1/2
+
+- The obvious way of checking this is in two steps: first, work out what high or low means for each variable:
+
+```{r bPrincomp-23, include=FALSE}
+options(width = 100)
+```
+
+
+\tiny
+```{r bPrincomp-24}
+summary(places)
+```
+\normalsize
+
+```{r bPrincomp-25, include=FALSE}
+options(width = 80)
+```
+
+## Checking this 2/2
+
+- and then find the values on the variables of interest for our cities of interest, and see where they sit on here.
+
+- Cities 270, 213, and 116 were extreme on component 1, which depended mainly on health and arts:
+
+```{r bPrincomp-26}
+places %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+```
+
+City 166 is near or below Q1 on both variables. City 213 is the highest of all on both `health` and `arts`, while city 270 is well above Q3 on both.
+
+## Checking component 2
+
+- Component 2 depended positively on economy and crime and negatively on education. City 195 was high and 322 was low:
+
+```{r bPrincomp-27}
+places %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322))
+```
+
+- City 195 is the highest on economy, just above Q3 on crime, and below Q1 on education. City 322 should be the other way around: nearly the lowest on economy, below Q1 on crime, and between the median and Q3 on education. This is as we'd expect.
+
+## A better way: percentile ranks
+
+- It is a lot of work to find the value of each city on each variable in the data summary. 
+
+- A  better way is to work out the percentile ranks of each city on each variable and then look at those:
+
+```{r bPrincomp-28}
+places %>% 
+  mutate(across(-id, ~percent_rank(.))) -> places_pr
+```
+
+## Look up cities and variables again
+
+```{r bPrincomp-29}
+places_pr %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+```
+
+This shows that city 270 was also really high on these two variables: in the 97th percentile for `health` and the 98th for `arts`. 
+
+## Component 2
+
+- What about the extreme cities on component 2?
+
+```{r bPrincomp-30}
+places_pr %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322)) 
+```
+
+- City 322 was really low on economy and crime, but only just above average on education. City 195 was the highest on economy and really low on education, but only somewhat high on crime (76th percentile).
+
+- This, as you see, is much easier once you have set it up.
+
+## The biplot
+
+```{r bPrincomp-31, fig.height=3}
+ggbiplot(places.1, labels = places$id)
+```
+
+## Comments
+
+- This is hard to read!
+- There are a lot of cities that overshadow the red arrows for the variables.
+- reduce the size of the city labels
+
+## Biplot, attempt 2
+
+```{r bPrincomp-32, fig.height=3}
+ggbiplot(places.1, labels = places$id,
+         labels.size = 0.8)
+```
+
+## Comments on attempt #2
+
+- Now at least can see the variables
+- All of them point somewhat right (all belong partly to component 1)
+- Some of them (economy, crime, education) point up/down, belong to component 2 as well.
+- In this case, cannot really see both observations (cities) and variables (criteria) together, which defeats the purpose of the biplot. 
+- Have to try it and see.
 
 
 ##  Principal components from correlation matrix
@@ -588,7 +541,7 @@ Create data file like this:
 ```
 
 and read in like this:
-```{r bPrincomp-post-36, message=F}
+```{r bPrincomp-33, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/cov.txt"
 mat <- read_table(my_url, col_names = F)
 mat
@@ -605,10 +558,10 @@ A little pre-processing required:
 
 * Feed into `princomp` as `covmat=`
 
-```{r bPrincomp-post-37,fig.height=4,}
-mat %>%
+```{r pc-cov,fig.height=4,}
+mat.pc <- mat %>%
   as.matrix() %>%
-  princomp(covmat = .) -> mat.pc
+  princomp(covmat = .)
 ```
 
    
@@ -616,7 +569,7 @@ mat %>%
 
 ##  Scree plot: one component fine
 
-```{r bPrincomp-post-38,fig.height=3.5}
+```{r palermo,fig.height=3.5}
 ggscreeplot(mat.pc)
 ```
   
@@ -627,7 +580,7 @@ ggscreeplot(mat.pc)
 Compare correlation matrix:
 
 \scriptsize
-```{r bPrincomp-post-39}
+```{r bPrincomp-34}
 mat
 ```
 \normalsize
@@ -636,7 +589,7 @@ mat
 with component loadings
 
 \scriptsize
-```{r bPrincomp-post-40}
+```{r bPrincomp-35}
 mat.pc$loadings
 ```
 \normalsize

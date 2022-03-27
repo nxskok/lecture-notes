@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Statistical Inference and Science
 
 - Previously: descriptive statistics. “Here are data; what do they say?”.
@@ -686,8 +685,6 @@ power.t.test(power=0.80, delta=5, sd=14, type="two.sample",
 
 - The power for the sample sizes we have is very small (to detect a 5-point increase).
 - To get power 0.80, we need 98 kids in *each* group!
-=======
->>>>>>> 2991ae36dff40038e717965e9023aeadbc00f334
 
 ## Duality between confidence intervals and hypothesis tests 
 - Tests and CIs really do the same thing, if you look at them the right

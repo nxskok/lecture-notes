@@ -61,7 +61,7 @@ I saved this graph to plot later (on the next page).
 
 ## The plot
 
-```{r asphalt-post-5}
+```{r asphalt-post-5, fig.height=7}
 g
 ```
 
@@ -105,6 +105,21 @@ rut.1 <- lm(rut.depth ~ pct.a.surf + pct.a.base + fines +
   voids + log(viscosity) + run, data = asphalt)
 summary(rut.1)
 ```
+
+```{r}
+rut.1a <- lm(rut.depth ~ pct.a.surf + pct.a.base +
+  voids + log(viscosity) + run, data = asphalt)
+summary(rut.1a)
+
+```
+
+
+```{r}
+rut.1a <- lm(rut.depth ~ pct.a.base + fines +
+  voids + log(viscosity) + run, data = asphalt)
+summary(rut.1a)
+```
+
 
 ## Regression output: `summary(rut.1)` or:
 
@@ -179,7 +194,7 @@ rut.1a %>%
 
 ## The plot
 
-```{r asphalt-post-14}
+```{r asphalt-post-14, fig.height=7}
 g
 ```
 
@@ -206,7 +221,7 @@ log.
 
 From package `MASS`:
 
-```{r asphalt-post-15}
+```{r asphalt-post-15, fig.height=7}
 boxcox(rut.depth ~ pct.a.surf + pct.a.base + fines + voids +
   log(viscosity) + run, data = asphalt)
 ```
@@ -240,7 +255,7 @@ asphalt %>%
 
 ## The new plots
 
-```{r asphalt-post-17}
+```{r asphalt-post-17, fig.height=7}
 g3
 ```
 
@@ -270,6 +285,7 @@ tidy(rut.2)
 \footnotesize
 ```{r asphalt-post-20}
 rut.3 <- lm(log(rut.depth) ~ pct.a.surf + log(viscosity), data = asphalt)
+summary(rut.3)
 ```
 \normalsize
 
@@ -344,6 +360,7 @@ Can’t take out intercept, so `run`, with P-value 0.36, goes next.
 ```{r asphalt-post-27}
 rut.6 <- update(rut.5, . ~ . - run)
 tidy(rut.6) %>% arrange(p.value)
+summary(rut.6)
 ```
 
 Again, can’t take out intercept, so largest P-value is for `voids`, 0.044. But
@@ -368,7 +385,7 @@ them should be important.
 - Best automatic method: what we did, “backward selection”.
 - Do not learn about “stepwise regression”! [**eg. here**](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df)
 - R has function `step` that does backward selection, like this:
-```{r asphalt-post-29, eval=F}
+```{r asphalt-post-29}
 rut.7 <- step(rut.2, direction = "backward", test = "F")
 ```
 
@@ -396,6 +413,7 @@ leaps <- regsubsets(log(rut.depth) ~ pct.a.surf +
                     data = asphalt, nbest = 2)
 # leaps
 s <- summary(leaps)
+s
 # s
 with(s, data.frame(rsq, outmat)) -> d
 ```
@@ -438,7 +456,7 @@ options(width=80)
 
 \scriptsize
 ```{r asphalt-post-36}
-with(s, data.frame(adjr2, outmat)) %>% 
+with(s, data.frame(adjr2, outmat))%>% 
   rownames_to_column("model") %>% 
   arrange(desc(adjr2))
 ```
@@ -496,7 +514,7 @@ augment(rut.6, asphalt) %>%
 
 ## Residuals against the x’s
 
-```{r asphalt-post-43}
+```{r asphalt-post-43, fig.height=7}
 g2
 ```
 
