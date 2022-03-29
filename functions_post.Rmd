@@ -1,6 +1,6 @@
 ## Packages for this section
 
-```{r functions-post-1, eval=F}
+```{r functions-1, eval=F}
 library(tidyverse)
 library(broom)
 ```
@@ -8,7 +8,7 @@ library(broom)
 
 ## Don’t repeat yourself
 - See this:
-```{r functions-post-2}
+```{r functions-2}
 a <- 50
 b <- 11
 d <- 3
@@ -36,7 +36,7 @@ editing.
 - Body with calculation of values to output/return.
 - Return value: the output from function.
 In our case:
-```{r functions-post-3}
+```{r functions-3}
 sqrt_minus_1 <- function(x) {
   ans <- sqrt(x - 1)
   return(ans)
@@ -45,7 +45,7 @@ sqrt_minus_1 <- function(x) {
 
 or more simply
 
-```{r functions-post-4}
+```{r functions-4}
 sqrt_minus_1 <- function(x) {
   sqrt(x - 1)
 }
@@ -59,11 +59,10 @@ returned.
 This is the name used inside the function.
 - The function is a “machine” for calculating square-root-minus-1. It
 doesn’t do anything until you call it:
-```{r functions-post-5}
+```{r functions-5}
 sqrt_minus_1(50)
 sqrt_minus_1(11)
 sqrt_minus_1(3)
-sqrt_minus_1(x=3)
 ```
 
 - It works!
@@ -71,12 +70,12 @@ sqrt_minus_1(x=3)
 ## Vectorization 1/2 
 
 - We conceived our function to work on numbers:
-```{r functions-post-6}
+```{r functions-6}
 sqrt_minus_1(3.25)
 ```
 
 - but it actually works on vectors too, as a free bonus of R:
-```{r functions-post-7}
+```{r functions-7}
 sqrt_minus_1(c(50, 11, 3))
 ```
 
@@ -85,7 +84,7 @@ sqrt_minus_1(c(50, 11, 3))
 ## Vectorization 2/2 
 
 - or even data frames:
-```{r functions-post-8}
+```{r functions-8}
 d <- tibble(x = 1:2, y = 3:4)
 d
 sqrt_minus_1(d)
@@ -95,26 +94,26 @@ sqrt_minus_1(d)
 
 - Allow the value to be subtracted, before taking square root, to be
 input to function as well, thus:
-```{r functions-post-9}
+```{r functions-9}
 sqrt_minus_value <- function(x, d) {
   sqrt(x - d)
 }
 ```
 
 - Call the function with the x and d inputs in the right order:
-```{r functions-post-10}
+```{r functions-10}
 sqrt_minus_value(51, 2)
 ```
 
 - or give the inputs names, in which case they can be in *any order*:
-```{r functions-post-11}
+```{r functions-11}
 sqrt_minus_value(d = 2, x = 51)
 ```
 
 ## Defaults 1/2
 - Many R functions have values that you can change if you want to,
 but usually you don’t want to, for example:
-```{r functions-post-12}
+```{r functions-12}
 x <- c(3, 4, 5, NA, 6, 7)
 mean(x)
 mean(x, na.rm = TRUE)
@@ -129,7 +128,7 @@ you change it.
 
 ## Defaults 2/2
 - In our function, set a default value for d like this:
-```{r functions-post-13}
+```{r functions-13}
 sqrt_minus_value <- function(x, d = 1) {
   sqrt(x - d)
 }
@@ -137,23 +136,16 @@ sqrt_minus_value <- function(x, d = 1) {
 
 - If you specify a value for d, it will be used. If you don't, 1 will be used instead: 
 
-```{r functions-post-14}
+```{r functions-14}
 sqrt_minus_value(51, 2)
 sqrt_minus_value(51)
 sqrt_minus_value(d = 2)
 ```
 
-```{r}
-junk <- function(x, d = 1) {
-  3
-}
-junk()
-```
-
 ## Catching errors before they happen
 - What happened here?
 
-```{r functions-post-15, error=TRUE, warning=TRUE}
+```{r functions-15, error=TRUE, warning=TRUE}
 sqrt_minus_value(6, 8)
 ```
 
@@ -162,25 +154,21 @@ negative number.
 - In fact, not even error, just warning.
 - Check that the square root will be OK first. Here’s how:
 
-```{r functions-post-16}
+```{r functions-16}
 sqrt_minus_value <- function(x, d = 1) {
-  if (x-d < 0) stop("x less than d") else print("OK")
-  # print("x should be greater than d")
-  # stopifnot(x - d >= 0)
-  # print(x)
+  stopifnot(x - d >= 0)
   sqrt(x - d)
 }
 ```
 
 ## What happens with `stopifnot`
 - This should be good, and is:
-```{r functions-post-17, error=TRUE}
-z <- sqrt_minus_value(8, 6)
-z
+```{r functions-17, error=TRUE}
+sqrt_minus_value(8, 6)
 ```
 
 - This should fail, and see how it does:
-```{r functions-post-18, error=TRUE}
+```{r functions-18, error=TRUE}
 sqrt_minus_value(6, 8)
 ```
 
@@ -198,7 +186,7 @@ you don’t have to do this from scratch: you can use R’s regression
 calculations, like this:
 
 
-```{r functions-post-19}
+```{r functions-19}
 my_df <- tibble(x = 1:4, y = c(10, 11, 10, 14))
 my_df
 my_df.1 <- lm(y ~ x, data = my_df)
@@ -209,7 +197,7 @@ tidy(my_df.1)
 
 Use `pluck`:
 
-```{r functions-post-20}
+```{r functions-20}
 tidy(my_df.1) %>% pluck("estimate", 2)
 ```
 
@@ -219,7 +207,7 @@ tidy(my_df.1) %>% pluck("estimate", 2)
 - Inputs: two, an `x` and a `y`.
 - Output: just the slope, a number. Thus:
 
-```{r functions-post-21}
+```{r functions-21}
 slope <- function(xx, yy) {
   y.1 <- lm(yy ~ xx)
   tidy(y.1) %>% pluck("estimate", 2)
@@ -227,7 +215,7 @@ slope <- function(xx, yy) {
 ```
 
 - Check using our data from before: correct:
-```{r functions-post-22}
+```{r functions-22}
 with(my_df, slope(x, y))
 ```
 
@@ -235,7 +223,7 @@ with(my_df, slope(x, y))
 - `lm` has a lot of options, with defaults, that we might want to change.
 Instead of intercepting all the possibilities and passing them on, we
 can do this:
-```{r functions-post-23}
+```{r functions-23}
 slope <- function(xx, yy, ...) {
   y.1 <- lm(yy ~ xx, ...)
   tidy(y.1) %>% pluck("estimate", 2)
@@ -252,20 +240,19 @@ on to `lm`”.
 the list of observations to include in the regression.
 - So we should be able to do this:
 
-```{r functions-post-24}
+```{r functions-24}
 with(my_df, slope(x, y, subset = 3:4))
 ```
 
-```{r functions-post-25}
-with(my_df, slope(x, y, hair="spiky"))
+```{r}
+with(my_df, slope(x, y, hair = "spiky"))
 ```
 
 
 - Just uses the last two observations in `x` and `y`:
 
-```{r functions-post-26}
+```{r functions-25}
 my_df %>% slice(3:4)
-my_df
 ```
 
 
@@ -278,12 +265,8 @@ be $(14 − 10)/(4 − 3) = 4$ and is.
 - Suppose we have a data frame containing several different `x`’s to use
 in regressions, along with the `y` we had before:
 
-```{r functions-post-27}
+```{r functions-26}
 (d <- tibble(x1 = 1:4, x2 = c(8, 7, 6, 5), x3 = c(2, 4, 6, 9)))
-```
-
-```{r}
-my_df
 ```
 
 - Want to use these as different x’s for a regression with `y` from `my_df` as the
@@ -295,7 +278,7 @@ response, and collect together the three different slopes.
 - “Pull out” column `i` of data frame `d` as `d %>% pull(i)`.
 - Create empty vector `slopes` to store the slopes.
 - Looping variable `i` goes from 1 to 3 (3 columns, thus 3 slopes):
-```{r functions-post-28}
+```{r functions-27}
 slopes <- numeric(3)
 for (i in 1:3) {
   d %>% pull(i) -> xx
@@ -312,7 +295,7 @@ slopes
 - Since slope returns a decimal number (a `dbl`), appropriate
 function-running function is `map_dbl`:
 
-```{r functions-post-29}
+```{r functions-28}
 map_dbl(d, ~slope(., my_df$y))
 ```
 
@@ -322,12 +305,7 @@ map_dbl(d, ~slope(., my_df$y))
 
 - “Find the square roots of each of the numbers 1 through 10”:
 
-```{r functions-post-30}
-sqrt(1:10)
-```
-
-
-```{r functions-post-31}
+```{r functions-29}
 map_dbl(1:10, ~ sqrt(.))
 ```
 
@@ -335,8 +313,7 @@ map_dbl(1:10, ~ sqrt(.))
 
 - use my `d` from above: 
 
-```{r functions-post-32}
-d
+```{r functions-30}
 map_dbl(d, ~ mean(.))
 d %>% summarize(across(everything(), ~ mean(.)))
 ```
@@ -345,7 +322,7 @@ The mean of each column, with the columns labelled.
 
 ## What if summary returns more than one thing?
 - For example, finding quartiles:
-```{r functions-post-33}
+```{r functions-31}
 quartiles <- function(x) {
   quantile(x, c(0.25, 0.75))
 }
@@ -357,7 +334,7 @@ of `map_dbl`.
 
 ## map results
 - Try:
-```{r functions-post-34}
+```{r functions-32}
 map(d, ~ quartiles(.))
 ```
 
@@ -368,12 +345,12 @@ map(d, ~ quartiles(.))
 - Better: pretend output from quartiles is one-column data
 frame: 
 
-```{r functions-post-35}
+```{r functions-33}
 map_df(d, ~ quartiles(.))
 ```
 
 ## Or even
-```{r functions-post-36}
+```{r functions-34}
 d %>% map_df(~ quartiles(.))
 ```
 
@@ -387,7 +364,7 @@ default definition (see help for `quantile`).
 ## `Map` in data frames with `mutate`
 - `map` can also be used within data frames to calculate new columns.
 Let’s do the square roots of 1 through 10 again:
-```{r functions-post-37}
+```{r functions-35}
 d <- tibble(x = 1:10)
 d %>% mutate(root = map_dbl(x, ~ sqrt(.)))
 ```
@@ -402,7 +379,7 @@ the input is odd or even, and then we have to do the right thing with
 it.
 - Odd or even? Work out the remainder when dividing by 2:
 
-```{r functions-post-38}
+```{r functions-36}
 6 %% 2
 5 %% 2
 ```
@@ -412,7 +389,7 @@ it.
 ## Write the function
 - First test for odd or even, and then do the appropriate calculation:
 
-```{r functions-post-39, error=TRUE}
+```{r functions-37, error=TRUE}
 hotpo <- function(x) {
   stopifnot(round(x) == x)
   remainder <- x %% 2
@@ -428,7 +405,7 @@ hotpo <- function(x) {
 
 ## Test it 
 
-```{r functions-post-40, error=T}
+```{r functions-38, error=T}
 hotpo(3)
 hotpo(12)
 hotpo(4.5)
@@ -438,8 +415,8 @@ hotpo(4.5)
 ## One through ten
 - Use a data frame of numbers 1 through 10 again:
 
-```{r functions-post-41}
-tibble(x = 1:20) %>% mutate(y = map_int(x, ~hotpo(.)))
+```{r functions-39}
+tibble(x = 1:10) %>% mutate(y = map_int(x, ~hotpo(.)))
 ```
 
 ## Until I get to 1 (if I ever do)
@@ -448,7 +425,7 @@ and keep going, what happens?
 - If I get to 4, 2, 1, 4, 2, 1 I’ll repeat for ever, so let’s stop when we get
 to 1:
 
-```{r functions-post-42}
+```{r functions-40}
 hotpo_seq <- function(x) {
   ans <- x
   while (x != 1) {
@@ -466,8 +443,8 @@ out of the `while` and return the whole `ans`.
 ## Trying it 1/2
 - Start at 6:
 
-```{r functions-post-43}
-hotpo_seq(3)
+```{r functions-41}
+hotpo_seq(6)
 ```
 
 ## Trying it 2/2 
@@ -475,7 +452,7 @@ hotpo_seq(3)
 - Start at 27:
 
 \footnotesize
-```{r functions-post-44}
+```{r functions-42}
 hotpo_seq(27)
 ```
 \normalsize
@@ -487,7 +464,7 @@ took to get to 1.
 sequence?
 
 \small
-```{r functions-post-45}
+```{r functions-43}
 tibble(start = 1:100) %>%
   mutate(seq_length = map_int(start, ~ length(hotpo_seq(.)))) %>%
   arrange(desc(seq_length)) %>%
@@ -496,7 +473,7 @@ tibble(start = 1:100) %>%
 \normalsize
 ## What happens if we save the entire sequence? 
 
-```{r functions-post-46, results="hide"}
+```{r functions-44, results="hide"}
 tibble(start = 1:7) %>%
   mutate(sequence = map(start, ~ hotpo_seq(.)))
 ```
@@ -509,7 +486,7 @@ tibble(start = 1:7) %>%
 
 ## Using the whole sequence to find its length and its max 
 
-```{r functions-post-47, results="hide"}
+```{r functions-45, results="hide"}
 tibble(start = 1:7) %>%
   mutate(sequence = map(start, ~ hotpo_seq(.))) %>%
   mutate(
@@ -524,7 +501,7 @@ tibble(start = 1:7) %>%
 
 \scriptsize
 
-```{r functions-post-48}
+```{r functions-46}
 tibble(start=1:7) %>% 
   rowwise() %>% 
   mutate(sequence = list(hotpo_seq(start))) %>% 
@@ -538,7 +515,7 @@ tibble(start=1:7) %>%
 
 \footnotesize
 
-```{r functions-post-49}
+```{r functions-47}
 tibble(start=1:7) %>% 
   rowwise() %>% 
   mutate(sequence = list(hotpo_seq(start))) %>% 
