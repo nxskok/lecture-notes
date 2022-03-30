@@ -85,7 +85,7 @@ g <- ggplot(test12, aes(x = first, y = second, label = id)) +
 
 ##  The plot
 
-```{r ff2,fig.height=7}
+```{r ff2,fig.height=3.8}
 g + geom_smooth(method = "lm", se = F)
 ```
 
@@ -96,7 +96,6 @@ g + geom_smooth(method = "lm", se = F)
 * Grab just the numeric columns:
 ```{r bPrincomp-4}
 test12 %>% select(where(is.numeric)) -> test12_numbers
-test12_numbers
 ```
      
 
@@ -190,7 +189,7 @@ d
 
 ##  Plot of scores
 
-```{r score-plot,fig.height=7}
+```{r score-plot,fig.height=3.5,}
 ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
   geom_point() + geom_text_repel()
 ```
@@ -214,7 +213,7 @@ g <- ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
 
 * Shows how exam scores really spread out along one dimension:
 
-```{r eqsc2,fig.height=7}
+```{r eqsc2,fig.height=2}
 g
 ```
 
@@ -242,7 +241,7 @@ g <- ggbiplot(test12.pc, labels = test12$id)
 
 
 ##  The biplot
-```{r ff3,fig.height=7,echo=F}
+```{r ff3,fig.height=3,echo=F}
 g
 ```
   
@@ -308,6 +307,7 @@ places0 <- read_table2(my_url)
 ## Look at distributions of everything
 
 ```{r bPrincomp-11}
+places0
 places0 %>% 
   pivot_longer(-id, names_to = "criterion", 
                values_to = "rating") %>% 
@@ -317,7 +317,7 @@ places0 %>%
 
 ## The histograms
 
-```{r bPrincomp-12}
+```{r bPrincomp-12, fig.height=7}
 g
 ```
 
@@ -330,6 +330,7 @@ g
 ```{r bPrincomp-13}
 places0 %>% 
   mutate(across(-id, ~log(.))) -> places
+places
 ```
 
 ## Just the numerical columns
@@ -400,6 +401,7 @@ How can we make a visual showing the cities? We need a "score" for each city on 
 ```{r bPrincomp-20}
 cbind(city_id = places$id, places.1$scores) %>% 
   as_tibble() -> places_score
+places_score
 ```
 
 The `as_tibble` is needed at the end because the scores are a `matrix`.
@@ -410,13 +412,12 @@ The `as_tibble` is needed at the end because the scores are a `matrix`.
 
 ```{r bPrincomp-21}
 ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
-                         label = city_id)) +
-  geom_text() -> g
+                         label = city_id)) + geom_text() -> g
 ```
 
 ## Making a plot 3/3
 
-```{r bPrincomp-22}
+```{r bPrincomp-22, fig.height=7}
 g
 ```
 
