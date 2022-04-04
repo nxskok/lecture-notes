@@ -25,8 +25,8 @@
 
 
 ##  Packages
-```{r bFactor-post-1, eval=F, warning=F, message=F}
-library(lavaan) # for confirmatory, later
+
+```{r bFactor-1, eval=F, warning=F, message=F}
 library(ggbiplot)
 library(tidyverse)
 ```
@@ -71,23 +71,19 @@ kids
 
 ## Principal components on correlation matrix
 
-```{r bFactor-post-2}
+```{r bFactor-2}
 kids %>%
-  select_if(is.numeric) 
-
-kids %>% 
   select(where(is.numeric)) %>%
-  as.matrix() %>%
-  princomp(covmat = .) -> kids.pc
-names(kids.pc)
+  as.matrix() -> m
+kids.0 <- princomp(covmat = m) 
 ```
 
-
+I used `kids.0` here since I want `kids.1` and `kids.2` later.
 
 
 ##  Scree plot
-```{r bFactor-post-3, fig.height=3.5}
-ggscreeplot(kids.pc)
+```{r bFactor-3, fig.height=3.5}
+ggscreeplot(kids.0)
 ```
 
    
@@ -99,8 +95,8 @@ ggscreeplot(kids.pc)
 * Need 2 components. Loadings:
 
 \footnotesize
-```{r bFactor-post-4}
-kids.pc$loadings
+```{r bFactor-4}
+kids.0$loadings
 ```
 \normalsize
 
@@ -112,6 +108,8 @@ first three tests.
 * Second component rather more clearly `add` and `dots`.
 
 * No scores, plots since no actual data.
+
+- See how factor analysis compares on these data.
 
 
 ##  Factor analysis
@@ -139,13 +137,12 @@ wrote the tests.
 
 * Feed this into `factanal`, specifying how many factors (2).
 
-```{r bFactor-post-5 }
-km <- kids %>%
-  select(where(is.numeric)) %>%
-  as.matrix()
-km
-km2 <- list(cov = km, n.obs = 145)
-kids.f2 <- factanal(factors = 2, covmat = km2)
+- Start with the matrix we made before.
+
+```{r bFactor-5 }
+m
+ml <- list(cov = m, n.obs = 145)
+kids.2 <- factanal(factors = 2, covmat = ml)
 ```
 
    
@@ -154,8 +151,8 @@ kids.f2 <- factanal(factors = 2, covmat = km2)
 
 ##  Uniquenesses
 
-```{r bFactor-post-6 }
-kids.f2$uniquenesses
+```{r bFactor-6 }
+kids.2$uniquenesses
 ```
 
 
@@ -172,8 +169,8 @@ uniqueness means that the variable is summarized by a factor (good).
 ##  Loadings
 
 \footnotesize
-```{r bFactor-post-7}
-kids.f2$loadings
+```{r bFactor-7}
+kids.2$loadings
 ```
 \normalsize
 
@@ -191,10 +188,10 @@ regression R-squared).
 - Which variables belong to which factor is *much* clearer than with principal components.
 
 ##  Are 2 factors enough? 
-```{r bFactor-post-8 }
-kids.f2$STATISTIC
-kids.f2$dof
-kids.f2$PVAL
+```{r bFactor-8 }
+kids.2$STATISTIC
+kids.2$dof
+kids.2$PVAL
 ```
 
    
@@ -204,148 +201,214 @@ P-value not small, so 2 factors OK.
 
 ##  1 factor
 
-```{r bFactor-post-9 }
-kids.f1 <- factanal(factors = 1, covmat = km2)
-kids.f1$STATISTIC
-kids.f1$dof
-kids.f1$PVAL
+```{r bFactor-9 }
+kids.1 <- factanal(factors = 1, covmat = ml)
+kids.1$STATISTIC
+kids.1$dof
+kids.1$PVAL
 ```
 
    
 
 1 factor rejected (P-value small). Definitely need more than 1.
 
+## Places rated, again
 
-##  Track running records revisited
+- Read data, transform, rerun principal components, get biplot: 
 
-Read the data, run principal components, get biplot: 
-
-```{r bFactor-post-10, message=FALSE}
-my_url <- "http://ritsokiguess.site/datafiles/men_track_field.txt"
-track <- read_table(my_url)
-track %>% select_if(is.numeric) -> track_num
-track.pc <- princomp(track_num, cor = T)
-g2 <- ggbiplot(track.pc, labels = track$country)
+```{r bFactor-10, message=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/places.txt"
+places0 <- read_table2(my_url)
+places0 %>% 
+  mutate(across(-id, ~log(.))) -> places
+places %>% select(-id) -> places_numeric
+places.1 <- princomp(places_numeric, cor = TRUE)
+g <- ggbiplot(places.1, labels = places$id,
+         labels.size = 0.8)
 ```
+
+- This is all exactly as for principal components (nothing new here).
 
 ## The biplot
 
-```{r bFactor-post-11, fig.height=3.7}
-g2
+```{r bFactor-11, fig.height=3}
+g
 ```
 
-   
+## Comments
 
+- Most of the criteria are part of components 1 *and* 2. 
+- If we can rotate the arrows counterclockwise:
+  - economy and crime would point straight up
+    - part of component 2 only
+  - health and education would point to the right
+    - part of component 1 only
+- would be easier to see which variables belong to which component.
+- Factor analysis includes a rotation to help with interpretation.
 
+## Factor analysis
 
-##  Benefit of rotation
+- Have to pick a number of factors *first*. 
+- Do this by running principal components and looking at scree plot.
+- In this case, 3 factors seemed good (revisit later):
 
-
-* 100m and marathon arrows almost perpendicular, but components
-don't match anything much:
-
-
-* sprinting: bottom left and top right
-
-* distance running: top left and bottom right.
-
-
-* Can we arrange things so that components (factors) correspond
-to something meaningful?
-
-
-
-##  Track records by factor analysis
-Obtain factor scores (have actual data):
-
-\normalsize
-```{r track-factor-biplot}
-track %>%
-  select_if(is.numeric) %>%
-  factanal(2, scores = "r") -> track.f
-```
-\normalsize
-   
-
-
-##  Track data biplot
-Not so nice-looking:  
-```{r siracusa,fig.height=3.5}
-biplot(track.f$scores, track.f$loadings,
-  xlabs = track$country
-)
+```{r bFactor-12}
+places.3 <- factanal(places_numeric, 3, scores = "r")
 ```
 
-   
+- There are different ways to get factor scores. These called "regression" scores.
+
+## A bad biplot 
+
+```{r bFactor-13, fig.height=4}
+biplot(places.3$scores, places.3$loadings,
+  xlabs = places$id)
+```
 
 
-##  Comments
+## Comments
 
+- I have to find a way to make a better biplot!
+- Some of the variables now point straight up and some straight across (if you look carefully for the red arrows among the black points).
+- This should make the factors more interpretable than the components were.
 
-* This time 100m "up" (factor 2), marathon "right" (factor 1).
+## Factor loadings
 
-* Countries most negative on factor 2 good at sprinting.
-
-* Countries most negative on factor 1 good at distance running.
-
-
-
-##  Rotated factor loadings
 \small
-```{r bFactor-post-12 }
-track.f$loadings
+```{r bFactor-14}
+places.3$loadings
 ```
 \normalsize
 
+## Comments on loadings
 
-## Which countries are good at sprinting or distance running?
+- These are at least somewhat clearer than for the principal components:
+  - Factor 1: health, education, arts: "well-being"
+  - Factor 2: housing, transportation, arts (again), recreation: "places to be"
+  - Factor 3: climate (only): "climate"
+- In this analysis, economic factors don't seem to be important.
 
-Make a data frame with the countries and scores in:
+## Factor scores
 
-```{r bFactor-post-13 }
-scores <- data.frame(
-  country = track$country,
-  track.f$scores
-)
-scores %>% slice(1:6)
+- Make a dataframe with the city IDs and factor scores:
+
+```{r bFactor-15}
+cbind(id = places$id, places.3$scores) %>% 
+  as_tibble() -> places_scores
 ```
 
- 
+- Make percentile ranks again (for checking):
+
+```{r bFactor-16}
+places %>% 
+  mutate(across(-id, ~percent_rank(.))) -> places_pr
+```
+
+## Highest scores on factor 1, "well-being":
+
+- for the top 4 places:
+
+```{r bFactor-17}
+places_scores %>% 
+  arrange(desc(Factor1))
+```
+
+## Check percentile ranks for factor 1
+
+```{r bFactor-18}
+places_pr %>% 
+  select(id, health, educate, arts) %>% 
+  filter(id %in% c(213, 65, 234, 314))
+```
+
+- These are definitely high on the well-being variables.
+- City #213 is not so high on education, but is highest of all on the others.
+
+## Highest scores on factor 2, "places to be":
+
+```{r bFactor-19}
+places_scores %>% 
+  arrange(desc(Factor2))
+```
+
+## Check percentile ranks for factor 2
+
+```{r bFactor-20}
+places_pr %>% 
+  select(id, housing, trans, arts, recreate) %>% 
+  filter(id %in% c(318, 12, 168, 44))
+```
+
+- These are definitely high on housing and recreation.
+- Some are (very) high on transportation, but not so much on arts.
+- Could look at more cities to see if #168 being low on arts is a fluke.
+
+## Highest scores on factor 3, "climate":
+
+```{r bFactor-21}
+places_scores %>% 
+  arrange(desc(Factor3))
+```
+
+## Check percentile ranks for factor 3
+
+```{r bFactor-22}
+places_pr %>% 
+  select(id, climate) %>% 
+  filter(id %in% c(227, 218, 269, 270))
+```
+
+This is very clear.
+
+## Uniquenesses
+
+- We said earlier that the economy was not part of any of our factors:
+
+```{r bFactor-23}
+places.3$uniquenesses
+```
+
+- The higher the uniqueness, the less the variable concerned is part of any of our factors (and that  maybe another factor is needed to accommodate it).
+- This includes economy and maybe crime.
 
 
-##  The best sprinting countries
-Most negative on factor 2:
+## Test of significance
 
-```{r bFactor-post-14, message=F, include=F}
-my_url <- "http://ritsokiguess.site/datafiles/isocodes.csv"
-iso <- read_csv(my_url)
-iso
+We can test whether the three factors that we have is enough, or whether we need more to describe our data:
+
+```{r bFactor-24}
+places.3$PVAL
+```
+
+- 3 factors are not enough. 
+- What would 5 factors look like?
+
+## Five factors
+
+```{r bFactor-25}
+places.5 <- factanal(places_numeric, 5, scores = "r")
+places.5$loadings
 ```
 
 
-\footnotesize
-```{r bFactor-post-15, warning=F}
-scores %>%
-  arrange(Factor2) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Country, Factor1, Factor2)
+## Comments
+
+- On (new) 5 factors:
+  - Factor 1 is health, education, arts: same as factor 1 before.
+  - Factor 2 is housing, transportation, arts, recreation: as factor 2 before.
+  - Factor 3 is economy.
+  - Factor 4 is crime.
+  - Factor 5 is climate and housing: like factor 3 before.
+  
+- The two added factors include the two "missing" variables.
+- Is this now enough?
+
+```{r bFactor-26}
+places.5$PVAL
 ```
-\normalsize
- 
 
+- No. My guess is that the authors of Places Rated chose their 9 criteria to capture different aspects of what makes a city good or bad to live in, and so it was too much to hope that a small number of factors would come out of these.
 
-##  The best distance-running countries
-Most negative on factor 1:
-
-\footnotesize
-```{r bFactor-post-16, warning=F}
-scores %>%
-  arrange(Factor1) %>%
-  left_join(iso, by = c("country" = "ISO2")) %>%
-  select(Country, Factor1, Factor2) 
-```
-\normalsize
- 
 
 ##  A bigger example: BEM sex role inventory
 
@@ -385,10 +448,10 @@ bem
 
 ##  Principal components first
 \ldots to decide on number of factors:
-```{r bFactor-post-17 }
-bem %>%
+```{r bFactor-27 }
+bem.pc <- bem %>%
   select(-subno) %>%
-  princomp(cor = T) -> bem.pc
+  princomp(cor = T)
 ```
 
    
@@ -421,13 +484,19 @@ g + scale_x_continuous(limits = c(0, 8))
 
 ##  but is 2 really good?
 
+```{r bFactor-28, include=FALSE}
+options(width = 80)
+```
+
 \scriptsize
-```{r bFactor-post-18 }
+```{r bFactor-29 }
 summary(bem.pc)
 ```
 \normalsize
 
-
+```{r bFactor-30, include=FALSE}
+options(width = 60)
+```
 
 ##  Comments
 
@@ -458,17 +527,17 @@ ggbiplot(bem.pc, alpha = 0.3)
 
 * Ignore individuals for now.
 
-* Most variables point to 10 o'clock or 7 o'clock.
+* Most variables point to 1 o'clock or 4 o'clock.
 
 * Suggests factor analysis with rotation will get interpretable
-factors (rotate to 6 o'clock and 9 o'clock, for example).
+factors (rotate to 12 o'clock and 3 o'clock, for example).
 
 * Try for 2-factor solution (rough interpretation, will be bad):
 
-```{r bFactor-post-19 }
-bem.2 <- bem %>%
+```{r bFactor-31 }
+bem %>%
   select(-subno) %>%
-  factanal(factors = 2)
+  factanal(factors = 2) -> bem.2
 ```
 
 
@@ -480,10 +549,9 @@ bem.2 <- bem %>%
 ##  Uniquenesses, sorted
 
 \scriptsize
-```{r bFactor-post-20, echo=-1}
-# options(width = 60)
+```{r bFactor-32, echo=-1}
+options(width = 60)
 sort(bem.2$uniquenesses)
-enframe(bem.2$uniquenesses) %>% arrange(value)
 ```
 \normalsize
    
@@ -505,7 +573,7 @@ Tender (0.493).
 ##  Factor loadings, some
 
 \scriptsize
-```{r bFactor-post-21}
+```{r bFactor-33}
 bem.2$loadings
 ```
 \normalsize
@@ -517,11 +585,12 @@ There are too many to read easily, so make a data frame. A
 bit tricky:
 
 \footnotesize
-```{r bFactor-post-22}
-class(bem.2$loadings)
-loadings <- as.data.frame(unclass(bem.2$loadings)) %>%
-  mutate(trait = rownames(bem.2$loadings))
-loadings 
+```{r bFactor-34}
+bem.2$loadings %>% 
+  unclass() %>% 
+  as_tibble() %>% 
+  mutate(trait = rownames(bem.2$loadings)) -> loadings
+loadings %>% slice(1:8)
 ```
 \normalsize
    
@@ -532,7 +601,7 @@ loadings
 Arbitrarily defining $>0.4$ or $<-0.4$ as "big":
 
 \scriptsize
-```{r bFactor-post-23}
+```{r bFactor-35}
 loadings %>% filter(abs(Factor1) > 0.4) 
 ```
 \normalsize
@@ -542,7 +611,7 @@ loadings %>% filter(abs(Factor1) > 0.4)
 ##  Factor 2, the big ones
 
 \footnotesize
-```{r bFactor-post-24}
+```{r bFactor-36}
 loadings %>% filter(abs(Factor2) > 0.4)
 ```
 \normalsize
@@ -593,7 +662,7 @@ accomplished by rotation.
 ##  Individual 366
 
 \tiny
-```{r bFactor-post-25}
+```{r bFactor-37}
 bem %>% slice(366) %>% glimpse()
 ```
 \normalsize
@@ -605,7 +674,10 @@ bem %>% slice(366) %>% glimpse()
 * Individual 366 high on factor 2, but hard to see which traits should have high scores
 (unless we remember).
 
-* Idea: *tidy* original data frame to make easier to look
+- Idea 1: use percentile ranks as before.
+
+* Idea 2: Rating scale is easy to interpret. So
+*tidy* original data frame to make easier to look
 things up.
 
 
@@ -613,7 +685,7 @@ things up.
 ##  Tidying original data
 
 \scriptsize
-```{r bFactor-post-26}
+```{r bFactor-38}
 bem %>%
   mutate(row = row_number()) %>%
   pivot_longer(c(-subno, -row), names_to="trait", 
@@ -627,7 +699,7 @@ bem_tidy
 ##  Recall data frame of loadings
 
 \footnotesize
-```{r bFactor-post-27}
+```{r bFactor-39}
 loadings %>% slice(1:10)
 ```
 \normalsize
@@ -641,9 +713,9 @@ Want to add the factor scores for each trait to our tidy data frame
 ##  Looking up loadings
 
 \scriptsize
-```{r bFactor-post-28}
+```{r bFactor-40}
 bem_tidy %>% left_join(loadings) -> bem_tidy
-bem_tidy 
+bem_tidy %>% sample_n(12)
 ```
 \normalsize
    
@@ -655,7 +727,7 @@ individual 366 (`row=366`) and for which the `Factor2`
 score exceeds 0.4 in absolute value (our "big" from before):
 
 \scriptsize
-```{r bFactor-post-29}
+```{r bFactor-41}
 bem_tidy %>% filter(row == 366, abs(Factor2) > 0.4)
 ```
 \normalsize
@@ -667,8 +739,9 @@ As expected, high scorer on these.
 Rows 311 and 214 were *low* on Factor 2, so their scores should
 be low. Can we do them all at once?
 
-\footnotesize
-```{r bFactor-post-30}
+
+\scriptsize
+```{r bFactor-42}
 bem_tidy %>% filter(
   row %in% c(366, 311, 214),
   abs(Factor2) > 0.4
@@ -681,10 +754,10 @@ Can we display each individual in own column?
 
 
 ##  Individual by column
-Un-`tidy`, that is, `spread`:
+Un-`tidy`, that is, `pivot_wider`:
 
 \tiny
-```{r bFactor-post-31}
+```{r bFactor-43}
 bem_tidy %>%
   filter(
     row %in% c(366, 311, 214),
@@ -702,7 +775,7 @@ bem_tidy %>%
 These were high, low, low on factor 1. Adapt code:
 
 \tiny
-```{r bFactor-post-32}
+```{r bFactor-44}
 bem_tidy %>%
   filter(row %in% c(359, 258, 230), abs(Factor1) > 0.4) %>%
   select(-subno, -Factor1, -Factor2) %>%
@@ -714,7 +787,7 @@ bem_tidy %>%
 
 ##  Is 2 factors enough?
 Suspect not:
-```{r bFactor-post-33 }
+```{r bFactor-45 }
 bem.2$PVAL
 ```
 
@@ -723,10 +796,10 @@ bem.2$PVAL
 2 factors resoundingly rejected. Need more. Have to go all the way to
 15 factors to not reject:
 
-```{r bFactor-post-34 }
-bem.15 <- bem %>%
+```{r bFactor-46 }
+bem %>%
   select(-subno) %>%
-  factanal(factors = 15)
+  factanal(factors = 15) -> bem.15
 bem.15$PVAL
 ```
 
@@ -734,30 +807,30 @@ bem.15$PVAL
 
 Even then, only just over 50\% of variability explained.
 
-Let's have a look at the important things in those 15 factors.
+## What's important in 15 factors?
 
+- Let's take a look at the important things in those 15 factors.
 
-
-##  Get 15-factor loadings
-into a data frame, as before:  
+- Get 15-factor loadings into a data frame, as before:  
 
 \small
-```{r bFactor-post-35}
-loadings <- as.data.frame(unclass(bem.15$loadings)) %>%
-  mutate(trait = rownames(bem.15$loadings))
-loadings
+```{r bFactor-47}
+bem.15$loadings %>% 
+  unclass() %>% 
+  as_tibble() %>% 
+  mutate(trait = rownames(bem.15$loadings)) -> loadings
 ```
 \normalsize
    
 
-then show the highest few loadings on each factor.
+- then show the highest few loadings on each factor.
 
 
 
 ##  Factor 1 (of 15)
 
 \footnotesize
-```{r bFactor-post-36}
+```{r bFactor-48}
 loadings %>%
   arrange(desc(abs(Factor1))) %>%
   select(Factor1, trait) %>%
@@ -773,7 +846,7 @@ others.
 ##  Factor 2
 
 \footnotesize
-```{r bFactor-post-37}
+```{r bFactor-49}
 loadings %>%
   arrange(desc(abs(Factor2))) %>%
   select(Factor2, trait) %>%
@@ -789,7 +862,7 @@ Strong personality, forceful, assertive, dominant: getting ahead.
 ##  Factor 3
 
 \footnotesize
-```{r bFactor-post-38}
+```{r bFactor-50}
 loadings %>%
   arrange(desc(abs(Factor3))) %>%
   select(Factor3, trait) %>%
@@ -805,7 +878,7 @@ Self-reliant, self-sufficient, independent: going it alone.
 ##  Factor 4
 
 \footnotesize
-```{r bFactor-post-39}
+```{r bFactor-51}
 loadings %>%
   arrange(desc(abs(Factor4))) %>%
   select(Factor4, trait) %>%
@@ -820,8 +893,8 @@ Gentle, tender, warm (affectionate): caring for others.
 
 ##  Factor 5
 
-\footnotesize
-```{r bFactor-post-40}
+\scriptsize
+```{r bFactor-52}
 loadings %>%
   arrange(desc(abs(Factor5))) %>%
   select(Factor5, trait) %>%
@@ -837,8 +910,8 @@ Being the best.
 
 ##  Factor 6
 
-\footnotesize
-```{r bFactor-post-41}
+\scriptsize
+```{r bFactor-53}
 loadings %>%
   arrange(desc(abs(Factor6))) %>%
   select(Factor6, trait) %>%
@@ -855,7 +928,7 @@ Taking charge.
 ##  Factor 7
 
 \footnotesize
-```{r bFactor-post-42}
+```{r bFactor-54}
 loadings %>%
   arrange(desc(abs(Factor7))) %>%
   select(Factor7, trait) %>%
@@ -863,13 +936,13 @@ loadings %>%
 ```
 \normalsize
    
-
+Happy and cheerful.
 
 
 ##  Factor 8
 
 \footnotesize
-```{r bFactor-post-43}
+```{r bFactor-55}
 loadings %>%
   arrange(desc(abs(Factor8))) %>%
   select(Factor8, trait) %>%
@@ -884,7 +957,7 @@ Affectionate, flattering: Making others feel good.
 ##  Factor 9
 
 \footnotesize
-```{r bFactor-post-44}
+```{r bFactor-56}
 loadings %>%
   arrange(desc(abs(Factor9))) %>%
   select(Factor9, trait) %>%
@@ -900,7 +973,7 @@ Taking a stand.
 ##  Factor 10
 
 \footnotesize
-```{r bFactor-post-45}
+```{r bFactor-57}
 loadings %>%
   arrange(desc(abs(Factor10))) %>%
   select(Factor10, trait) %>%
@@ -917,7 +990,7 @@ Feminine. (A little bit of not-masculine!)
 ##  Factor 11
 
 \footnotesize
-```{r bFactor-post-46}
+```{r bFactor-58}
 loadings %>%
   arrange(desc(abs(Factor11))) %>%
   select(Factor11, trait) %>%
@@ -933,7 +1006,7 @@ Loyal.
 ##  Factor 12
 
 \footnotesize
-```{r bFactor-post-47}
+```{r bFactor-59}
 loadings %>%
   arrange(desc(abs(Factor12))) %>%
   select(Factor12, trait) %>%
@@ -949,7 +1022,7 @@ Childlike. (With a bit of moody, shy, not-self-sufficient, not-conscientious.)
 ##  Factor 13
 
 \footnotesize
-```{r bFactor-post-48}
+```{r bFactor-60}
 loadings %>%
   arrange(desc(abs(Factor13))) %>%
   select(Factor13, trait) %>%
@@ -965,7 +1038,7 @@ Truthful. (With a bit of happy and not-gullible.)
 ##  Factor 14
 \footnotesize
 
-```{r bFactor-post-49}
+```{r bFactor-61}
 loadings %>%
   arrange(desc(abs(Factor14))) %>%
   select(Factor14, trait) %>%
@@ -980,7 +1053,7 @@ Decisive. (With a bit of self-sufficient and not-soft-spoken.)
 
 ##  Factor 15
 \footnotesize
-```{r bFactor-post-50}
+```{r bFactor-62}
 loadings %>%
   arrange(desc(abs(Factor15))) %>%
   select(Factor15, trait) %>%
@@ -995,7 +1068,7 @@ Not-compassionate, athletic, sensitive: A mixed bag. ("Cares about self"?)
 ##  Anything left out? Uniquenesses
 
 \scriptsize
-```{r bFactor-post-51}
+```{r bFactor-63}
 enframe(bem.15$uniquenesses, name="quality", value="uniq") %>%
   arrange(desc(uniq)) %>%
   slice(1:10)
@@ -1005,250 +1078,5 @@ enframe(bem.15$uniquenesses, name="quality", value="uniq") %>%
 
 Uses foul language especially, also loves children and analytical. So
 could use even more factors.
-
-
-
-
-##  Confirmatory factor analysis
-
-
-* Exploratory: what do data suggest as hidden underlying factors (in terms of variables observed)?
-
-* Confirmatory: have *theory* about how underlying factors depend on observed variables; test whether theory supported by data:
-
-
-* does theory provide *some* explanation (better than nothing)
-
-* can we do better?
-
-
-* Also can compare two theories about factors: is more complicated one significantly better than simpler one?
-
-
-
-##  Children and tests again
-
-
-
-* Previously had this correlation matrix of test scores (based on 145
-children):
-
-```{r bFactor-post-52 }
-km
-```
- 
-
-
-* Will use package `lavaan` for confirmatory analysis.
-
-* Can use actual data or correlation matrix.
-
-* Latter (a bit) more work, as we see.
-
-
-
-
-##  Two or three steps
-
-
-* Make sure correlation matrix (if needed) is handy.
-
-* Specify factor model (from theory)
-
-* Fit factor model: does it fit acceptably? 
-
-## Terminology
-
-* Thing you cannot observe called **latent variable**.
-
-* Thing you *can* observe called **manifest variable**.
-
-* Model predicts latent variables from manifest variables.
-  - asserts a relationship between latent and manifest.
-
-- We need to invent names for the latent variables.
-
-
-##  Specifying a factor model
-
-
-
-* Model with one factor including all the tests:
-```{r bFactor-post-53 }
-test.model.1 <- "ability=~para+sent+word+add+dots"
-```
- 
-
-
-* and a model that we really believe, that there are two factors,
-a verbal and a mathematical:
-```{r bFactor-post-54 }
-test.model.2 <- "verbal=~para+sent+word
-                 math=~add+dots"
-```
- 
-
-* Note the format: really all one line between single quotes, but
-putting it on several lines makes the layout clearer.
-
-* Also note special notation `=~` for ``this latent
-variable depends on these observed variables''.  
-
-
-
-##  Fitting a 1-factor model
-
-
-* Need to specify model, correlation matrix, $n$ like this:
-
-```{r bFactor-post-55 }
-fit1 <- cfa(test.model.1,
-  sample.cov = km,
-  sample.nobs = 145
-)
-```
- 
-
-
-* Has `summary`, or briefer version like this:
-
-\scriptsize
-```{r bFactor-post-56}
-fit1
-```
-\normalsize
-
-* Test of fit: null "model fits" *rejected*. We can do better.
-
-
-
-##  Two-factor model
-
-\scriptsize
-```{r bFactor-post-57}
-fit2 <- cfa(test.model.2, sample.cov = km, sample.nobs = 145)
-fit2
-```
-\normalsize
-
-
-
-* This fits OK: 2-factor model supported by the data.
-
-* 1-factor model did not fit. We really need 2 factors.
-
-* Same conclusion as from `factanal` earlier.
-
-
-
-##  Comparing models
-
-
-* Use `anova` as if this were a regression:
-
-\scriptsize
-```{r bFactor-post-58}
-anova(fit1, fit2)
-```
-\normalsize
-
-
-* 2-factor model fits significantly better than 1-factor.
-
-* No surprise!
-
-
-
-##  Track and field data, yet again
-
-
-* `cfa` works easier on actual data, such as the running records:
-
-\footnotesize
-```{r bFactor-post-59}
-track %>% print(n = 6)
-```
-\normalsize
-
-
-* Specify factor model. Factors seemed to be "sprinting" (up to
-800m) and "distance running" (beyond):
-
-\footnotesize
-```{r bFactor-post-60}
-track.model <- "sprint=~m100+m200+m400+m800
-                distance=~m1500+m5000+m10000+marathon"
-```
-\normalsize
-
-
-##  Fit and examine the model
-
-
-* Fit the model. The observed variables are on different
-scales, so we should standardize them first via `std.ov`:
-
-\scriptsize
-```{r bFactor-post-61}
-track.1 <- track %>%
-  select(-country) %>%
-  cfa(track.model, data = ., std.ov = T)
-track.1
-```
-\normalsize
-
-
-* This fits badly. Can we do better?
-
-* Idea: move middle distance races (800m, 1500m) into a third factor.
-
-
-##  Factor model 2
-
-
-* Define factor model:
-
-```{r bFactor-post-62 }
-track.model.2 <- "sprint=~m100+m200+m400
-                  middle=~m800+m1500
-                  distance=~m5000+m10000+marathon"
-```
- 
-
-
-* Fit:
-
-```{r bFactor-post-63}
-track %>%
-  select(-country) %>%
-  cfa(track.model.2, data = ., std.ov = T) -> track.2
-```
-
-## Examine
-
-```{r bFactor-post-64}
-track.2
-```
-
-
-* Fits  marginally better, though still badly.
-
-
-
-##  Comparing the two models
-
-
-* Second model doesn't fit well, but is it better than first?
-
-\footnotesize
-```{r bFactor-post-65}
-anova(track.1, track.2)
-```
-\normalsize
-
-* Oh yes, a lot better.
-
-
-
 
 
