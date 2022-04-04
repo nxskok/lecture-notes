@@ -156,16 +156,14 @@ parameters {
 
 - compile
 
-```{r rstan-8}
+```{r rstan-8, message=FALSE}
 poisson1 <- cmdstan_model("poisson1.stan")
-poisson1
 ```
 
 - set up data
 
 ```{r rstan-9}
 poisson1_data <- list(x = x)
-poisson1_data
 ```
 
 - sample
@@ -215,7 +213,7 @@ x ~ poisson(lambda);
 
 - Compile again:
 
-```{r rstan-12}
+```{r rstan-12, message=FALSE}
 poisson2 <- cmdstan_model("poisson2.stan")
 poisson2
 ```
@@ -311,9 +309,13 @@ g
 ```{r rstan-23, fig.height=4}
 qqplot(d$xsim, x, plot.it = FALSE) %>% as_tibble() -> dd
 dd
-ggplot(dd, aes(x=x, y=y)) + geom_point()
 ```
 
+## The plot
+
+```{r, fig.height=4}
+ggplot(dd, aes(x=x, y=y)) + geom_point()
+```
 
 the observed zero is a bit too small compared to expected (from the posterior), but the other points seem pretty well on a line.
 
@@ -450,7 +452,7 @@ data {
 
 Arrange these in order data, parameters, model in file `anova.stan`, then:
 
-```{r rstan-27}
+```{r rstan-27, message=FALSE}
 anova <- cmdstan_model("anova.stan")
 ```
 
