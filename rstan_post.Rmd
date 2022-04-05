@@ -219,7 +219,7 @@ poisson2
 ```
 
 
-- set up the data again including the new things we need:
+- set up the data again including the new things we need, in any order:
 
 ```{r rstan-13}
 poisson2_data <- list(x = x, n = length(x), a = 1.1, b = 6)
