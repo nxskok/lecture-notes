@@ -1,0 +1,596 @@
+## Packages for this section
+
+```{r rstan-1, eval=F}
+library(tidyverse)
+# library(rstan) 
+library(cmdstanr)
+library(posterior)
+library(bayesplot)
+```
+
+```{r rstan-2, echo=FALSE}
+set.seed(457299)
+```
+
+
+## Installation 1/2
+
+- `cmdstanr`:
+
+```{r rstan-3, eval=FALSE}
+install.packages("cmdstanr", 
+                 repos = c("https://mc-stan.org/r-packages/", 
+                           getOption("repos")))
+```
+
+- `posterior` and `bayesplot`, from the same place:
+
+```{r rstan-4, eval=FALSE}
+install.packages("posterior", 
+                 repos = c("https://mc-stan.org/r-packages/", 
+                            getOption("repos")))
+install.packages("bayesplot", 
+                 repos = c("https://mc-stan.org/r-packages/", 
+                            getOption("repos")))
+```
+
+## Installation 2/2
+
+Then, to check that you have the C++ stuff needed to compile Stan code:
+
+```{r rstan-5}
+check_cmdstan_toolchain()
+```
+
+and then:
+
+```{r rstan-6, eval=FALSE}
+install_cmdstan(cores = 2)
+```
+
+If you happen to know how many cores (processors) your computer has, insert the appropriate number. (My laptop has 4 and my desktop 6.)
+
+All of this is done once. If you have problems, go [here (link)](https://mc-stan.org/cmdstanr/articles/cmdstanr.html).
+
+## Bayesian and frequentist inference
+
+- The inference philosophy that we have learned so far says that:
+  - parameters to be estimated are *fixed* but *unknown*
+  - Data random; if we took another sample we'd get different data.
+- This is called "frequentist" or "repeated-sampling" inference.
+- Bayesian inference says:
+  - *parameters* are random, *data* is *given*
+- Ingredients:
+  - **prior distribution**: distribution of parameters before seeing data.
+  - **likelihood**: model for data if the parameters are known 
+  - **posterior distribution**: distribution of parameters *after* seeing data.
+  
+## Distribution of parameters
+
+- Instead of having a point or interval estimate of a parameter, we have an entire distribution
+- so in Bayesian statistics we can talk about eg.
+  - probability that a parameter is bigger than some value
+  - probability that a parameter is close to some value
+  - probability that one parameter is bigger than another
+  
+- Name comes from Bayes' Theorem, which here says
+
+> posterior is proportional to likelihood times prior
+
+- more discussion about this is in 
+[**a blog post**](http://ritsokiguess.site/docs/2018/02/28/working-my-way-back-to-you-a-re-investigation-of-rstan/). 
+
+## An example
+
+- Suppose we have these (integer) observations:
+
+```{r rstan-7}
+(x <- c(0, 4, 3, 6, 3, 3, 2, 4))
+```
+
+- Suppose we believe that these come from a Poisson distribution with a mean $\lambda$ that we want to estimate.
+- We need a prior distribution for $\lambda$. I will (for some reason) take a $Weibull$ distribution with parameters 1.1 and 6, that has quartiles 2 and 6. Normally this would come from your knowledge of the data-generating *process*.
+- The Poisson likelihood can be written down (see over).
+
+## Some algebra
+
+- We have $n=8$ observations $x_i$, so the Poisson likelihood is proportional to
+
+$$ \prod_{i=1}^n e^{-\lambda} \lambda^{x_i} = e^{-n\lambda} \lambda^S, $$
+where $S=\sum_{i=1}^n x_i$. 
+
+- then you write the Weibull prior density (as a function of $\lambda$):
+
+$$ C (\lambda/6)^{0.1} e^{-(\lambda/6)^{1.1}}  $$
+where $C$ is a constant.
+
+- and then you multiply these together and try to recognize the distributional form. Only, here you can't. The powers 0.1 and 1.1 get in the way.
+
+## Sampling from the posterior distribution
+
+- Wouldn't it be nice if we could just *sample* from the posterior distribution? Then we would be able to compute it as accurately as we want.
+
+- Metropolis and Hastings: devise a Markov chain (C62) whose limiting distribution is the posterior you want, and then sample from that Markov chain (easy), allowing enough time to get close enough to the limiting distribution.
+
+- Stan: uses a modern variant that is more efficient (called Hamiltonian Monte Carlo), implemented in R packages `cmdstanr`.
+
+- Write Stan code in a file, compile it and sample from it.
+
+## Components of Stan code: the model
+
+```
+model {
+  // likelihood
+  x ~ poisson(lambda);
+}
+```
+
+This is how you say "$X$ has a Poisson distribution with mean $\lambda$". **Note that lines of Stan code have semicolons on the end.**
+
+## Components of Stan code: the prior distribution
+
+```
+model {
+  // prior
+  lambda ~ weibull(1.1, 6);
+  // likelihood
+  x ~ poisson(lambda);
+}
+```
+
+## Components of Stan code: data and parameters 
+
+- first in the Stan code:
+
+```
+data {
+  int x[8];
+}
+
+parameters {
+  real<lower=0> lambda;
+}
+```
+
+## Compile and sample from the model
+
+- compile
+
+```{r rstan-8, message=FALSE}
+poisson1 <- cmdstan_model("poisson1.stan")
+```
+
+- set up data
+
+```{r rstan-9}
+poisson1_data <- list(x = x)
+```
+
+- sample
+
+```{r rstan-10}
+poisson1_fit <- poisson1$sample(data = poisson1_data)
+```
+
+
+
+
+## The output
+
+```{r rstan-11}
+poisson1_fit
+```
+
+
+## Comments
+
+- This summarizes the posterior distribution of $\lambda$
+- the posterior mean is 3.19
+- with a 90% posterior interval of 2.24 to 4.31.
+- The probability that $\lambda$ is between these two values really is 90%.
+
+## Making the code more general
+
+- The coder in you is probably offended by hard-coding the sample size and the parameters of the prior distribution. More generally:
+
+```
+data {
+  int<lower=1> n;
+  real<lower=0> a;
+  real<lower=0> b;
+  int x[n];
+}
+...
+model {
+// prior
+lambda ~ weibull(a, b);
+// likelihood
+x ~ poisson(lambda);
+}
+```
+
+## Set up again and sample:
+
+- Compile again:
+
+```{r rstan-12, message=FALSE}
+poisson2 <- cmdstan_model("poisson2.stan")
+poisson2
+```
+
+
+- set up the data again including the new things we need:
+
+```{r rstan-13}
+poisson2_data <- list(x = x, n = length(x), a = 1.1, b = 6)
+```
+
+- sample again
+
+```{r rstan-14, results="hide"}
+poisson2_fit <- poisson2$sample(data = poisson2_data)
+```
+
+
+## output should be the same (to within randomness)
+
+```{r rstan-15}
+poisson2_fit
+```
+
+## Picture of posterior
+
+```{r rstan-16}
+mcmc_hist(poisson2_fit$draws("lambda"), binwidth = 0.25)
+```
+
+
+## Extracting actual sampled values
+
+A little awkward at first:
+
+```{r rstan-17}
+poisson2_fit$draws()
+```
+
+A 3-dimensional array. A dataframe would be much better.
+
+## Sampled values as dataframe
+
+
+```{r rstan-18}
+as_draws_df(poisson2_fit$draws()) %>% 
+  as_tibble() -> poisson2_draws
+poisson2_draws
+```
+
+
+
+## Posterior predictive distribution
+
+- Another use for the actual sampled values is to see what kind of *response* values we might get in the future. This should look something like our data. For a Poisson distribution, the response values are integers: 
+
+```{r rstan-19}
+poisson2_draws %>% 
+  rowwise() %>% 
+  mutate(xsim = rpois(1, lambda)) -> d
+d
+```
+
+
+
+## Comparison
+
+Our actual data values were these:
+
+```{r rstan-20}
+x
+```
+
+- None of these are very unlikely according to our posterior predictive distribution, so our model is believable. 
+- Or make a plot: a bar chart with the data on it as well (over):
+
+```{r rstan-21}
+ggplot(d, aes(x = xsim)) + geom_bar() +
+  geom_dotplot(data = tibble(x), aes(x = x), binwidth = 1) +
+  scale_y_continuous(NULL, breaks = NULL) -> g
+```
+
+- This also shows that the distribution of the data conforms well enough to the posterior predictive distribution (over).
+
+## The plot 
+
+```{r rstan-22}
+g
+```
+
+## Do they have the same distribution? 
+
+```{r rstan-23, fig.height=4}
+qqplot(d$xsim, x, plot.it = FALSE) %>% as_tibble() -> dd
+dd
+```
+
+## The plot
+
+```{r, fig.height=4}
+ggplot(dd, aes(x=x, y=y)) + geom_point()
+```
+
+the observed zero is a bit too small compared to expected (from the posterior), but the other points seem pretty well on a line.
+
+## Analysis of variance, the Bayesian way
+
+Recall the jumping rats data: 
+
+```{r rstan-24, message=F}
+my_url <- 
+  "http://ritsokiguess.site/datafiles/jumping.txt"
+rats0 <- read_delim(my_url, " ")
+rats0
+```
+
+## Our aims here
+
+- Estimate the mean bone density of all rats under each of the experimental conditions
+- Model: given the group means, each observation normally distributed with common variance $\sigma^2$
+- Three parameters to estimate, plus the common variance.
+- Obtain posterior distributions for the group means.
+- Ask whether the posterior distributions of these means are sufficiently different.
+
+## Numbering the groups
+
+- Stan doesn't handle categorical variables (everything is `real` or `int`).
+- Turn the groups into group *numbers* first.
+- Take opportunity to put groups in logical order:
+
+```{r rstan-25}
+rats0 %>% mutate(
+  group_fct = fct_inorder(group),
+  group_no = as.integer(group_fct)
+) -> rats
+rats
+```
+
+## Plotting the data 1/2
+
+Most obviously, boxplots: 
+
+```{r rstan-26, fig.height=4.2}
+ggplot(rats, aes(x = group_fct, y = density)) + 
+  geom_boxplot()
+```
+
+## Plotting the data 2/2
+
+Another way: density plot (smoothed out histogram); can distinguish groups by colours: 
+
+```{r density_plot, fig.height=4}
+ggplot(rats, aes(x = density, fill = group_fct)) +
+  geom_density(alpha = 0.6)
+```
+
+
+## The procedure
+
+- For each observation, find out which (numeric) group it belongs to, 
+- then model it as having a normal distribution with that group's mean and the common variance.
+- Stan does `for` loops.
+
+## The model part
+
+Suppose we have `n_obs` observations:
+
+```
+model {
+  // likelihood
+  for (i in 1:n_obs) {
+    g=group_no[i];
+    density[i] ~ normal(mu[g], sigma);
+  }
+}
+```
+
+## The variables here
+
+- `n_obs` is data.
+- `g` is a temporary integer variable only used here
+- `i` is only used in the loop (integer) and does not need to be declared
+- `density` is data, a real vector of length `n_obs`
+- `mu` is a parameter, a real vector of length 3 (3 groups)
+- `sigma` is a real parameter
+
+`mu` and `sigma` need prior distributions: 
+
+  - for `mu`, each component independently normal with mean 600 and SD 50 (my guess at how big and variable they will be)
+  - for `sigma`, chi-squared with 50 df (my guess at typical amount of variability from obs to obs)
+
+## Complete the `model` section:
+
+```
+model {
+  int g;
+  // priors
+  mu ~ normal(600, 50);
+  sigma ~ chi_square(50);
+  // likelihood
+  for (i in 1:n_obs) {
+    g=group_no[i];
+    density[i] ~ normal(mu[g], sigma);
+  }
+}
+```
+
+## Parameters
+
+The elements of `mu`, one per group, and also `sigma`, scalar, lower limit zero:
+
+```
+parameters {
+  real mu[n_group];
+  real<lower=0> sigma;
+}
+```
+
+- Declare `sigma` to have lower limit zero here, so that the sampling runs smoothly. 
+- declare `n_group` in data section 
+
+## Data
+
+Everything else:
+
+```
+data {
+  int n_obs;
+  int n_group;
+  real density[n_obs];
+  int<lower=1, upper=n_group> group_no[n_obs];
+}
+```
+
+## Compile
+
+Arrange these in order data, parameters, model in file `anova.stan`, then:
+
+```{r rstan-27, message=FALSE}
+anova <- cmdstan_model("anova.stan")
+```
+
+
+## Set up data and sample
+
+Supply values for *everything* declared in `data`: 
+
+```{r anova_data_samples}
+anova_data <- list(
+  n_obs = 30,
+  n_group = 3,
+  density = rats$density,
+  group_no = rats$group_no
+)
+anova_fit <- anova$sample(data = anova_data)
+```
+
+## Check that the sampling worked properly 
+
+\scriptsize
+
+```{r rstan-28, fig.height=4}
+anova_fit$cmdstan_diagnose()
+```
+\normalsize
+
+## Look at the results
+
+```{r anova_samples}
+anova_fit
+```
+
+## Comments
+
+- The posterior 95% intervals for control (group 1) and highjump (group 3) do not quite overlap, suggesting that these exercise groups really are different.
+- Bayesian approach does not normally do tests: look at posterior distributions and decide whether they are different enough to be worth treating as different.
+
+## Plotting the posterior distributions for the `mu`
+
+```{r rstan-29}
+mcmc_hist(anova_fit$draws("mu"), binwidth = 5)
+```
+
+
+## Extract the sampled values 
+
+```{r anova_ext}
+as_draws_df(anova_fit$draws()) %>% as_tibble() -> anova_draws
+anova_draws
+```
+
+## estimated probability that $\mu_3 > \mu_1$ 
+
+```{r rstan-30}
+anova_draws %>% 
+  count(`mu[3]`>`mu[1]`) %>% 
+  mutate(prob = n/sum(n))
+```
+High jumping group almost certainly has larger mean than control group.
+
+## More organizing
+
+- for another plot
+  - make longer
+  - give `group` values their proper names back 
+
+```{r rstan-31, warning=F}
+anova_draws %>% 
+  pivot_longer(starts_with("mu"), 
+               names_to = "group", 
+               values_to = "bone_density") %>% 
+  mutate(group = fct_recode(group,
+    Control = "mu[1]",
+    Lowjump = "mu[2]",
+    Highjump = "mu[3]"
+  )) -> sims
+```
+
+## What we have now:
+
+```{r rstan-32}
+sims 
+```
+
+
+## Density plots of posterior mean distributions
+
+```{r rstan-33, fig.height=4}
+ggplot(sims, aes(x = bone_density, fill = group)) + 
+  geom_density(alpha = 0.6)
+```
+
+## Posterior predictive distributions
+
+Randomly sample from posterior means and SDs in `sims`. There are 12000 rows in `sims`:
+
+```{r rstan-34}
+sims %>% mutate(sim_data = rnorm(12000, bone_density, sigma)) -> ppd
+ppd
+```
+
+## Compare posterior predictive distribution with actual data
+
+- Check that the model works: distributions of data similar to what we'd predict
+- Idea: make plots of posterior predictive distribution, and plot actual data as points on them
+- Use facets, one for each treatment group:
+
+\scriptsize
+
+```{r ppdgraph}
+my_binwidth <- 15
+ggplot(ppd, aes(x = sim_data)) +
+  geom_histogram(binwidth = my_binwidth) +
+  geom_dotplot(
+    data = rats, aes(x = density),
+    binwidth = my_binwidth
+  ) +
+  facet_wrap(~group) +
+  scale_y_continuous(NULL, breaks = NULL) -> g
+```
+
+\normalsize
+
+- See (over) that the data values are mainly in the middle of the predictive distributions.
+- Even for the control group that had outliers. 
+
+## The plot
+
+```{r rstan-35, fig.height=3.75}
+g
+```
+
+## Extensions 
+
+- if you want a different model other than normal, change distribution in `model` section
+- if you want to allow unequal spreads, create `sigma[n_group]` and in model `density[i] ~ normal(mu[g], sigma[g]);`
+- Stan will work just fine after you recompile
+- very flexible.
+- Typical modelling strategy: start simple, add complexity as warranted by data.
+
