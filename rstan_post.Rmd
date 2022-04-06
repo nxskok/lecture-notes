@@ -45,7 +45,7 @@ check_cmdstan_toolchain()
 and then:
 
 ```{r rstan-6, eval=FALSE}
-install_cmdstan(cores = 2)
+install_cmdstan(cores = 4)
 ```
 
 If you happen to know how many cores (processors) your computer has, insert the appropriate number. (My laptop has 4 and my desktop 6.)
@@ -163,7 +163,9 @@ poisson1 <- cmdstan_model("poisson1.stan")
 - set up data
 
 ```{r rstan-9}
+x
 poisson1_data <- list(x = x)
+poisson1_data
 ```
 
 - sample
