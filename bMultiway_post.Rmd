@@ -150,7 +150,9 @@ prop.table(xt, margin = 1)
 ```{r bMultiway-8, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/eyewear2.txt"
 eyewear2 <- read_table(my_url)
-eyewear2 %>% 
+eyewear2 
+
+%>% 
    pivot_longer(contacts:none, names_to = "eyewear", 
                 values_to = "frequency") -> eyes2
 xt2 <- xtabs(frequency ~ gender + eyewear, data = eyes2)
@@ -240,6 +242,7 @@ normal normalweight no 30
 ```{r bMultiway-11, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/ecg.txt"
 chest <- read_delim(my_url, " ")
+chest
 chest.1 <- glm(count ~ ecg * bmi * smoke,
   data = chest,
   family = "poisson"
@@ -288,7 +291,9 @@ of both.
 
 * `ecg:bmi` table:
 ```{r bMultiway-14 }
-xtabs(count ~ ecg + bmi, data = chest)
+xt <- xtabs(count ~ ecg + bmi, data = chest)
+xt
+prop.table(xt, margin = 2)
 ```
 
      
@@ -305,7 +310,9 @@ knowing about BMI says something about likely ECG.
 
 * `ecg:smoke` table:
 ```{r bMultiway-15 }
-xtabs(count ~ ecg + smoke, data = chest)
+xt <- xtabs(count ~ ecg + smoke, data = chest)
+xt
+prop.table(xt, margin = 2)
 ```
 
    
