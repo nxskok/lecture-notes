@@ -267,6 +267,7 @@ in regressions, along with the `y` we had before:
 
 ```{r functions-26}
 (d <- tibble(x1 = 1:4, x2 = c(8, 7, 6, 5), x3 = c(2, 4, 6, 9)))
+my_df
 ```
 
 - Want to use these as different x’s for a regression with `y` from `my_df` as the
@@ -314,6 +315,7 @@ map_dbl(1:10, ~ sqrt(.))
 - use my `d` from above: 
 
 ```{r functions-30}
+d
 map_dbl(d, ~ mean(.))
 d %>% summarize(across(everything(), ~ mean(.)))
 ```
@@ -327,6 +329,7 @@ quartiles <- function(x) {
   quantile(x, c(0.25, 0.75))
 }
 quartiles(1:5)
+d
 ```
 
 - When function returns more than one thing, `map` (or `map_df`) instead
@@ -366,6 +369,7 @@ default definition (see help for `quantile`).
 Let’s do the square roots of 1 through 10 again:
 ```{r functions-35}
 d <- tibble(x = 1:10)
+d
 d %>% mutate(root = map_dbl(x, ~ sqrt(.)))
 ```
 
@@ -465,10 +469,8 @@ sequence?
 
 \small
 ```{r functions-43}
-tibble(start = 1:100) %>%
-  mutate(seq_length = map_int(start, ~ length(hotpo_seq(.)))) %>%
-  arrange(desc(seq_length)) %>%
-  slice(1:5)
+tibble(start = 1:100) %>% mutate(seq_length = map_int(start, ~ length(hotpo_seq(.)))) %>%
+  arrange(desc(seq_length)) 
 ```
 \normalsize
 ## What happens if we save the entire sequence? 
