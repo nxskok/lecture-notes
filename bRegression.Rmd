@@ -24,6 +24,7 @@
 library(MASS) # for Box-Cox, later
 library(tidyverse)
 library(broom)
+library(marginaleffects)
 library(conflicted)
 ```
 
@@ -187,6 +188,35 @@ Once useful regression exists, use it for prediction:
 
 
 * Also do above for a child aged 5.
+
+## The `marginaleffects` package 1/?
+
+This shows predictions for values in the data or values that you give. The default is for all the data:
+
+```{r}
+predictions(sleep.1)
+```
+
+## The `marginaleffects` package 2/?
+
+To get predictions for a representative collection of values, use `variables`:
+
+```{r}
+predictions(sleep.1, variables = "age")
+```
+
+
+## The `marginaleffects` package 3/?
+
+To get predictions for specific values, set up a dataframe with those values first, then feed that into `newdata`:
+
+```{r}
+new <- datagrid(model = sleep.1, age = c(10, 5))
+new
+predictions(sleep.1, newdata = new)
+```
+
+## The `marginaleffects` package 4/?
 
 
 
@@ -400,7 +430,7 @@ logs to get $\ln y=\ln a + bx$.
 
 ## Some made-up data
 ```{r bRegression-22, message=F}
-my_url <- "http://ritsokiguess.site/datafiles/madeup.csv"
+my_url <- "http://ritsokiguess.site/datafiles/madeup2.csv"
 madeup <- read_csv(my_url)
 madeup
 ```
