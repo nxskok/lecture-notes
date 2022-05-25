@@ -1,5 +1,5 @@
 ---
-title: "Bayesian Statistics with Stan"
+title: "1-way ANOVA with Stan"
 author: ""
 header-includes:
    - \usepackage{multicol}
@@ -17,7 +17,7 @@ output:
 ```
 
 
-```{r rstan-slides-2, child="rstan.Rmd"}
+```{r rstan-slides-2, child="anova-loo.Rmd"}
 ```
 
 

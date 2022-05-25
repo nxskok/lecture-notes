@@ -69,12 +69,21 @@ kids <- read_delim(my_url, " ")
 kids
 ```
 
+
 ## Principal components on correlation matrix
 
-```{r bFactor-2}
-kids %>%
-  select(where(is.numeric)) %>%
+
+Turn into R `matrix`, using column `test` as column names:
+
+```{r}
+kids %>% 
+  column_to_rownames("test") %>% 
   as.matrix() -> m
+```
+
+Principal components:
+
+```{r bFactor-2}
 kids.0 <- princomp(covmat = m) 
 ```
 
@@ -274,7 +283,7 @@ biplot(places.3$scores, places.3$loadings,
 
 ## Factor loadings
 
-\small
+\footnotesize
 ```{r bFactor-14}
 places.3$loadings
 ```
@@ -310,7 +319,7 @@ places %>%
 
 ```{r bFactor-17}
 places_scores %>% 
-  arrange(desc(Factor1))
+  slice_max(Factor1, n = 4)
 ```
 
 ## Check percentile ranks for factor 1
@@ -328,7 +337,7 @@ places_pr %>%
 
 ```{r bFactor-19}
 places_scores %>% 
-  arrange(desc(Factor2))
+  slice_max(Factor2, n = 4)
 ```
 
 ## Check percentile ranks for factor 2
@@ -347,7 +356,7 @@ places_pr %>%
 
 ```{r bFactor-21}
 places_scores %>% 
-  arrange(desc(Factor3))
+  slice_max(Factor3, n = 4)
 ```
 
 ## Check percentile ranks for factor 3
@@ -385,11 +394,12 @@ places.3$PVAL
 
 ## Five factors
 
+\footnotesize
 ```{r bFactor-25}
 places.5 <- factanal(places_numeric, 5, scores = "r")
 places.5$loadings
 ```
-
+\normalsize
 
 ## Comments
 
