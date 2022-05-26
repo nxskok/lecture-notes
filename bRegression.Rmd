@@ -155,24 +155,27 @@ that can be used in pipe (later):
 tidy(sleep.1)
 ```
 
-## also one-line summary of model:
+## also one-line summary of model
 
+\tiny
 ```{r bRegression-9}
 glance(sleep.1)
 ```
+\normalsize
 
 
 
+## Broom part 2 xxx
 
-## Broom part 2
+\scriptsize
 ```{r bRegression-10, size="footnotesize",warning=F}
 sleep.1 %>% augment(sleep) %>% slice(1:8)
 ```
-
+\normalsize
    
 Useful for plotting residuals against an $x$-variable.
 
-## CI for mean response and prediction intervals
+## CI for mean response and prediction intervals xxx
 
 Once useful regression exists, use it for prediction:
 
@@ -182,31 +185,34 @@ Once useful regression exists, use it for prediction:
 * To express uncertainty of this prediction:
 
 
-* *CI for mean response* expresses uncertainty about mean ATST for all children aged 10, based on data.
+  * *CI for mean response* expresses uncertainty about mean ATST for all children aged 10, based on data.
 
-* *Prediction interval* expresses uncertainty about predicted ATST for a new child aged 10 whose ATST not known. More uncertain.
+  * *Prediction interval* expresses uncertainty about predicted ATST for a new child aged 10 whose ATST not known. More uncertain.
 
 
 * Also do above for a child aged 5.
 
-## The `marginaleffects` package 1/?
+## The `marginaleffects` package 1/6 
 
 This shows predictions for values in the data or values that you give. The default is for all the data:
 
+\footnotesize
 ```{r}
 predictions(sleep.1)
 ```
+\normalsize
 
-## The `marginaleffects` package 2/?
+## The `marginaleffects` package 2/6
 
 To get predictions for a representative collection of values, use `variables`:
 
+\footnotesize
 ```{r}
 predictions(sleep.1, variables = "age")
 ```
+\normalsize
 
-
-## The `marginaleffects` package 3/?
+## The `marginaleffects` package 3/6
 
 To get predictions for specific values, set up a dataframe with those values first, then feed that into `newdata`:
 
@@ -216,71 +222,41 @@ new
 predictions(sleep.1, newdata = new)
 ```
 
-## The `marginaleffects` package 4/?
+## Comments xxx
 
 
+* Age 10 closer to centre of data, so interval is narrower than for age 5.
+- Also true for representative ages, or all the ages. 
+- See over.
 
-## Intervals
+## The `marginaleffects` package 4/6 xxx
 
-
-* Make new data frame with these values for `age`
-```{r bRegression-11 }
-my.age <- c(10, 5)
-ages.new <- tibble(age = my.age)
-ages.new
+```{r}
+plot_cap(model = sleep.1, condition = "age")
 ```
 
-   
 
+## The `marginaleffects` package 5/6 xxx
 
-* Feed into `predict`:
-```{r bRegression-12 }
-pc <- predict(sleep.1, ages.new, interval = "c")
-pp <- predict(sleep.1, ages.new, interval = "p")
+\tiny
+```{r}
+comparisons(model = sleep.1)
 ```
- 
+\normalsize
 
+## The `marginaleffects` package 6/6 xxx
 
+One for each row of data, but slope is the same for any obs, so can summarize:
 
-
-## The intervals
-Confidence intervals for mean response:
-```{r bRegression-13 }
-cbind(ages.new, pc)
+\tiny
+```{r}
+comparisons(model = sleep.1) %>% 
+  summary()
 ```
- 
+\normalsize
 
-Prediction intervals for new response:
-```{r bRegression-14 }
-cbind(ages.new, pp)
-```
- 
+For any age of child, a child that is one year older is expected to sleep for 14 minutes less.
 
-## Comments
-
-
-
-* Age 10 closer to centre of data, so intervals are both narrower than those for age 5.
-
-* Prediction intervals bigger than CI for mean (additional uncertainty).
-
-* Technical note: output from `predict` is R
-`matrix`, not data frame, so Tidyverse `bind_cols`
-does not work. Use base R `cbind`.
-
-
-
-## That grey envelope
-
-Marks confidence interval for mean for all $x$: 
-
-```{r bRegression-15, fig.height=3.0}
-ggplot(sleep, aes(x = age, y = atst)) + geom_point() +
-  geom_smooth(method = "lm") +
-  scale_y_continuous(breaks = seq(420, 600, 20))
-```
-
-   
 
 
 
