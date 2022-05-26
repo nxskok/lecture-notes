@@ -20,12 +20,13 @@
 
 
 ## Packages
-```{r bRegression-1, eval=F }
+```{r bRegression-1}
 library(MASS) # for Box-Cox, later
 library(tidyverse)
 library(broom)
 library(marginaleffects)
 library(conflicted)
+conflict_prefer("select", "dplyr")
 ```
 
    
@@ -165,7 +166,7 @@ glance(sleep.1)
 
 
 
-## Broom part 2 xxx
+## Broom part 2
 
 \scriptsize
 ```{r bRegression-10, size="footnotesize",warning=F}
@@ -175,7 +176,7 @@ sleep.1 %>% augment(sleep) %>% slice(1:8)
    
 Useful for plotting residuals against an $x$-variable.
 
-## CI for mean response and prediction intervals xxx
+## CI for mean response and prediction intervals
 
 Once useful regression exists, use it for prediction:
 
@@ -187,7 +188,7 @@ Once useful regression exists, use it for prediction:
 
   * *CI for mean response* expresses uncertainty about mean ATST for all children aged 10, based on data.
 
-  * *Prediction interval* expresses uncertainty about predicted ATST for a new child aged 10 whose ATST not known. More uncertain.
+  * *Prediction interval* expresses uncertainty about predicted ATST for a single new child aged 10 whose ATST not known. More uncertain. 
 
 
 * Also do above for a child aged 5.
@@ -219,33 +220,45 @@ To get predictions for specific values, set up a dataframe with those values fir
 ```{r}
 new <- datagrid(model = sleep.1, age = c(10, 5))
 new
+
 ```
 
 
-## The intervals xxx this doesn't work
+## The intervals
 
+Confidence interval for mean response
+
+\small
 ```{r}
 predictions(sleep.1, newdata = new)
-predictions(sleep.1, newdata = new, interval = "p")
 ```
+\normalsize
 
+Prediction interval for a single response
 
-
-## Comments xxx
-
-
-* Age 10 closer to centre of data, so interval is narrower than for age 5.
-- Also true for representative ages, or all the ages. 
-- See over.
-
-## The `marginaleffects` package 4/6 xxx
-
+\small
 ```{r}
+p <- predict(sleep.1, newdata = new, interval = "p")
+cbind(p, new)
+```
+\normalsize
+
+
+## Comments
+
+
+* Age 10 closer to centre of data, so intervals are narrower than for age 5.
+- Also true for representative ages, or all the ages. 
+- See over (for CI for mean response).
+
+## The `marginaleffects` package 4/6
+
+```{r, fig.height=4}
 plot_cap(model = sleep.1, condition = "age")
 ```
 
 
-## The `marginaleffects` package 5/6 xxx
+## The `marginaleffects` package 5/6
 
 \tiny
 ```{r}
@@ -253,9 +266,10 @@ comparisons(model = sleep.1)
 ```
 \normalsize
 
-## The `marginaleffects` package 6/6 xxx
+## The `marginaleffects` package 6/6
 
 One for each row of data, but slope is the same for any obs, so can summarize:
+
 
 \tiny
 ```{r}
@@ -346,13 +360,17 @@ curvy.2a <- update(curvy.1, . ~ . + I(xx^2))
  
 
 
-## Regression 2 
+## Regression 2
 
 ```{r bRegression-20 }
 tidy(curvy.2)
-glance(curvy.2) #
 ```
 
+\tiny
+```{r}
+glance(curvy.2) 
+```
+\normalsize
 
 ## Comments
 
@@ -390,15 +408,15 @@ handling curved relationships.
 * Can guess how to change $y$, or might be theory:
 
 
-* example: relationship $y=ae^{bx}$ (exponential growth): 
+  * example: relationship $y=ae^{bx}$ (exponential growth): 
 
-* take
+  * take
 logs to get $\ln y=\ln a + bx$.
 
-* Taking logs has made relationship linear ($\ln y$ as response).
+  * Taking logs has made relationship linear ($\ln y$ as response).
 
 
-* Or, *estimate* transformation, using Box-Cox method. 
+* Or, *estimate* transformation, using Box-Cox method (over). 
 
 
 
@@ -491,14 +509,18 @@ Looks much straighter.
 ## Regression with transformed $y$
 
 
-
-\footnotesize
+\tiny
 ```{r bRegression-25}
 madeup.1 <- lm(log(y) ~ x, data = madeup)
 glance(madeup.1)
+```
+\normalsize
+
+```{r}
 tidy(madeup.1)
 ```
 \normalsize
+
 
 R-squared now decently high.
 
@@ -560,12 +582,13 @@ visits
    
 ## Fit multiple regression
 
+\tiny
 ```{r bRegression-28}
 visits.1 <- lm(timedrs ~ phyheal + menheal + stress,
   data = visits)
 glance(visits.1)
 ```
-
+\normalsize
 
 ## The slopes
 
@@ -582,15 +605,17 @@ However, look at prediction of `timedrs` from `menheal` by itself:
 
 ## Just `menheal` 
 
-\footnotesize 
+\tiny
 ```{r bRegression-30 }
 visits.2 <- lm(timedrs ~ menheal, data = visits)
 glance(visits.2)
-tidy(visits.2)
 ```
- 
+
 \normalsize
 
+```{r}
+tidy(visits.2)
+```
 
 
 ## `menheal` by itself
@@ -640,8 +665,10 @@ Apparently random. But\ldots
 
 
 ## Normal quantile plot of residuals
+
 ```{r bRegression-32, fig.height=3.5}
-ggplot(visits.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+ggplot(visits.1, aes(sample = .resid)) + 
+  stat_qq() + stat_qq_line()
 ```
 
    
@@ -706,7 +733,8 @@ guess. How to find good transformation?
 * Extra problem: some of `timedrs` values are 0, but
 Box-Cox expects all +. Note response for `boxcox`:
 ```{r bRegression-35, eval=F}
-boxcox(timedrs + 1 ~ phyheal + menheal + stress, data = visits)
+boxcox(timedrs + 1 ~ phyheal + menheal + stress, 
+       data = visits)
 ```
  
 
@@ -814,7 +842,8 @@ ggplot(visits.3, aes(x = .fitted, y = .resid)) +
 
 ## Normal quantile plot of residuals
 ```{r bRegression-42, fig.height=3.8}
-ggplot(visits.3, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+ggplot(visits.3, aes(sample = .resid)) + 
+  stat_qq() + stat_qq_line()
 ```
 
    
@@ -928,13 +957,17 @@ punting
 
 ## Regression and output
 
-\small
+\tiny
 ```{r bRegression-48}
 punting.1 <- lm(punt ~ left + right + fred, data = punting)
 glance(punting.1)
-tidy(punting.1)
 ```
 \normalsize
+
+```{r}
+tidy(punting.1)
+```
+
 
 ## Comments
 
@@ -1001,8 +1034,8 @@ tidy(punting.2)
 * Check: plot *residuals* from previous regression (without
 `left`) against `left`.
 
-* Residuals here are ``punting distance adjusted for right
-leg strength''.
+* Residuals here are "punting distance adjusted for right
+leg strength".
 
 * If there is some kind of relationship with `left`, we
 should include in model.
@@ -1013,7 +1046,7 @@ from `broom`.
 
 
 ## Augmenting `punting.2`
-\footnotesize
+\tiny
 ```{r bRegression-53 }
 punting.2 %>% augment(punting) -> punting.2.aug
 punting.2.aug %>% slice(1:8)
@@ -1068,8 +1101,5 @@ summary(punting.3)
 * Negative slope for `leftsq` means that increased left-leg
 strength only increases punting distance up to a point: beyond that,
 it decreases again.
-
-
- 
 
 
