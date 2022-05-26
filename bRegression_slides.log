@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.5.24)  25 MAY 2022 21:29
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.5.24)  25 MAY 2022 23:05
  restricted system commands enabled.
 **bRegression_slides.tex
 (./bRegression_slides.tex
@@ -1411,8 +1411,18 @@ Overfull \vbox (9.94234pt too high) detected at line 647
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb)
-Overfull \vbox (5.3027pt too high) detected at line 744
+ (./bRegression_slides.vrb
+Overfull \hbox (8.37831pt too wide) in paragraph at lines 50--50
+[]\TU/lmtt/m/n/10.95 ## you believe that additional arguments should be supported:[] 
+ []
+
+
+Overfull \hbox (19.87581pt too wide) in paragraph at lines 50--50
+[]\TU/lmtt/m/n/10.95 ## https://github.com/vincentarelbundock/marginaleffects/issues[] 
+ []
+
+)
+Overfull \vbox (161.94966pt too high) detected at line 767
  []
 
 [19
@@ -1872,7 +1882,7 @@ Overfull \hbox (3.19179pt too wide) in paragraph at lines 77--77
  []
 
 )
-Overfull \vbox (10.45834pt too high) detected at line 852
+Overfull \vbox (10.45834pt too high) detected at line 875
  []
 
 [22
@@ -1881,31 +1891,17 @@ Overfull \vbox (10.45834pt too high) detected at line 852
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb) [23
 
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [24
+] [24
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-15-1.pdf, id=253, 712.6625pt x 206.7725pt>
-File: bRegression_slides_files/figure-beamer/bRegression-15-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-15-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-15-1.pdf  used on input line 17.
-(luatex.def)             Requested size: 342.2916pt x 99.31276pt.
-) [25
-
-<./bRegression_slides_files/figure-beamer/bRegression-15-1.pdf>] [26
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf, id=280, 712.6625pt x 233.87375pt>
+<bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf, id=253, 712.6625pt x 233.87375pt>
 File: bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf  used on input line 11.
 (luatex.def)             Requested size: 342.2916pt x 112.32948pt.
-) [27
+) [25
 
 <./bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf>]
 \openout4 = bRegression_slides.vrb
@@ -1924,35 +1920,35 @@ Overfull \hbox (140.59953pt too wide) in paragraph at lines 20--20
 []\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.[] 
  []
 
-) [28
+) [26
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-16-1.pdf, id=303, 710.655pt x 262.9825pt>
+<bRegression_slides_files/figure-beamer/bRegression-16-1.pdf, id=277, 710.655pt x 262.9825pt>
 File: bRegression_slides_files/figure-beamer/bRegression-16-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-16-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-16-1.pdf  used on input line 9.
 (luatex.def)             Requested size: 342.30333pt x 126.67155pt.
-) [29
+) [27
 
 <./bRegression_slides_files/figure-beamer/bRegression-16-1.pdf>]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [30
+ (./bRegression_slides.vrb) [28
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/altoadige-1.pdf, id=326, 712.6625pt x 262.9825pt>
+<bRegression_slides_files/figure-beamer/altoadige-1.pdf, id=300, 712.6625pt x 262.9825pt>
 File: bRegression_slides_files/figure-beamer/altoadige-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/altoadige-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/altoadige-1.pdf  used on input line 9.
 (luatex.def)             Requested size: 342.2916pt x 126.31041pt.
-) [31
+) [29
 
 <./bRegression_slides_files/figure-beamer/altoadige-1.pdf>]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [32
+ (./bRegression_slides.vrb) [30
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2051,33 +2047,33 @@ Overfull \hbox (1.16223pt too wide) in paragraph at lines 68--69
  []|\TU/lmss/m/n/10.95 10|
  []
 
-) [33
+) [31
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [34
+ (./bRegression_slides.vrb) [32
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-21-1.pdf, id=366, 712.6625pt x 233.87375pt>
+<bRegression_slides_files/figure-beamer/bRegression-21-1.pdf, id=340, 712.6625pt x 233.87375pt>
 File: bRegression_slides_files/figure-beamer/bRegression-21-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-21-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-21-1.pdf  used on input line 11.
 (luatex.def)             Requested size: 342.2916pt x 112.32948pt.
-) [35
+) [33
 
 <./bRegression_slides_files/figure-beamer/bRegression-21-1.pdf>] (/home/ken/.TinyTeX/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
 File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Modern Roman (RS)
-) [36
+) [34
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [37
+ (./bRegression_slides.vrb) [35
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [38
+ (./bRegression_slides.vrb) [36
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2086,36 +2082,36 @@ Overfull \hbox (8.37831pt too wide) in paragraph at lines 12--12
 []\TU/lmtt/m/n/10.95 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'[] 
  []
 
-<bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf, id=407, 710.655pt x 218.8175pt>
+<bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf, id=380, 710.655pt x 218.8175pt>
 File: bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf  used on input line 14.
 (luatex.def)             Requested size: 342.30333pt x 105.39847pt.
-) [39
+) [37
 
 <./bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf>]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [40
+ (./bRegression_slides.vrb) [38
 
 ]
-<bRegression_slides_files/figure-beamer/trento-1.pdf, id=433, 689.57625pt x 212.795pt>
+<bRegression_slides_files/figure-beamer/trento-1.pdf, id=407, 689.57625pt x 212.795pt>
 File: bRegression_slides_files/figure-beamer/trento-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/trento-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/trento-1.pdf  used on input line 1282.
+Package luatex.def Info: bRegression_slides_files/figure-beamer/trento-1.pdf  used on input line 1271.
 (luatex.def)             Requested size: 342.29353pt x 105.62769pt.
-[41
+[39
 
-<./bRegression_slides_files/figure-beamer/trento-1.pdf>] [42
+<./bRegression_slides_files/figure-beamer/trento-1.pdf>] [40
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-24-1.pdf, id=458, 712.6625pt x 218.8175pt>
+<bRegression_slides_files/figure-beamer/bRegression-24-1.pdf, id=431, 712.6625pt x 218.8175pt>
 File: bRegression_slides_files/figure-beamer/bRegression-24-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-24-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-24-1.pdf  used on input line 16.
 (luatex.def)             Requested size: 342.2916pt x 105.09798pt.
-) [43
+) [41
 
 <./bRegression_slides_files/figure-beamer/bRegression-24-1.pdf>]
 \openout4 = bRegression_slides.vrb
@@ -2209,15 +2205,15 @@ Overfull \hbox (16.88747pt too wide) in paragraph at lines 54--54
  []|\TU/lmss/m/n/9 2.072249|
  []
 
-) [44
+) [42
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [45
+ (./bRegression_slides.vrb) [43
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [46
+ (./bRegression_slides.vrb) [44
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2236,15 +2232,15 @@ Overfull \hbox (140.59953pt too wide) in paragraph at lines 19--19
 []\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.[] 
  []
 
-) [47
+) [45
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb)
-Overfull \vbox (5412.80832pt too high) detected at line 1951
+Overfull \vbox (5412.80832pt too high) detected at line 1940
  []
 
-[48
+[46
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2338,11 +2334,11 @@ Overfull \hbox (6.36087pt too wide) in paragraph at lines 53--54
  []|\TU/lmss/m/n/10.95 465|
  []
 
-) [49
+) [47
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [50
+ (./bRegression_slides.vrb) [48
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2436,81 +2432,89 @@ Overfull \hbox (3.6755pt too wide) in paragraph at lines 54--55
  []|\TU/lmss/m/n/9 465|
  []
 
-) [51
+) [49
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [52
+ (./bRegression_slides.vrb) [50
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [53
+ (./bRegression_slides.vrb) [51
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/iffy8-1.pdf, id=558, 712.6625pt x 240.9pt>
+<bRegression_slides_files/figure-beamer/iffy8-1.pdf, id=532, 712.6625pt x 240.9pt>
 File: bRegression_slides_files/figure-beamer/iffy8-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/iffy8-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/iffy8-1.pdf  used on input line 9.
 (luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [54
+) [52
 
-<./bRegression_slides_files/figure-beamer/iffy8-1.pdf>] [55
+<./bRegression_slides_files/figure-beamer/iffy8-1.pdf>] [53
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-32-1.pdf, id=581, 710.655pt x 240.9pt>
+<bRegression_slides_files/figure-beamer/bRegression-32-1.pdf, id=555, 710.655pt x 240.9pt>
 File: bRegression_slides_files/figure-beamer/bRegression-32-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-32-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-32-1.pdf  used on input line 9.
 (luatex.def)             Requested size: 342.30333pt x 116.03502pt.
-) [56
+) [54
 
 <./bRegression_slides_files/figure-beamer/bRegression-32-1.pdf>]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [55
+
+]
+<bRegression_slides_files/figure-beamer/bRegression-34-1.pdf, id=578, 712.6625pt x 299.1175pt>
+File: bRegression_slides_files/figure-beamer/bRegression-34-1.pdf Graphic file (type pdf)
+<use bRegression_slides_files/figure-beamer/bRegression-34-1.pdf>
+Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-34-1.pdf  used on input line 2195.
+(luatex.def)             Requested size: 342.2916pt x 143.66605pt.
+[56
+
+<./bRegression_slides_files/figure-beamer/bRegression-34-1.pdf>]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb) [57
 
 ]
-<bRegression_slides_files/figure-beamer/bRegression-34-1.pdf, id=604, 712.6625pt x 299.1175pt>
-File: bRegression_slides_files/figure-beamer/bRegression-34-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-34-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-34-1.pdf  used on input line 2206.
-(luatex.def)             Requested size: 342.2916pt x 143.66605pt.
-[58
-
-<./bRegression_slides_files/figure-beamer/bRegression-34-1.pdf>]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [59
+ (./bRegression_slides.vrb) [58
 
 ]
+<bRegression_slides_files/figure-beamer/bRegression-36-1.pdf, id=612, 689.57625pt x 252.945pt>
+File: bRegression_slides_files/figure-beamer/bRegression-36-1.pdf Graphic file (type pdf)
+<use bRegression_slides_files/figure-beamer/bRegression-36-1.pdf>
+Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-36-1.pdf  used on input line 2251.
+(luatex.def)             Requested size: 342.29353pt x 125.55745pt.
+[59
+
+<./bRegression_slides_files/figure-beamer/bRegression-36-1.pdf>]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb) [60
 
 ]
-<bRegression_slides_files/figure-beamer/bRegression-36-1.pdf, id=638, 689.57625pt x 252.945pt>
-File: bRegression_slides_files/figure-beamer/bRegression-36-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-36-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-36-1.pdf  used on input line 2262.
-(luatex.def)             Requested size: 342.29353pt x 125.55745pt.
-[61
-
-<./bRegression_slides_files/figure-beamer/bRegression-36-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [62
-
-]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-38-1.pdf, id=664, 689.57625pt x 176.66pt>
+<bRegression_slides_files/figure-beamer/bRegression-38-1.pdf, id=636, 689.57625pt x 176.66pt>
 File: bRegression_slides_files/figure-beamer/bRegression-38-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-38-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-38-1.pdf  used on input line 12.
 (luatex.def)             Requested size: 342.29353pt x 87.69092pt.
-) [63
+) [61
 
-<./bRegression_slides_files/figure-beamer/bRegression-38-1.pdf>] [64
+<./bRegression_slides_files/figure-beamer/bRegression-38-1.pdf>] [62
+
+]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [63
+
+]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [64
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2518,55 +2522,47 @@ Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-38-1
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [66
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [67
-
-]
-\openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-41-1.pdf, id=712, 712.6625pt x 240.9pt>
+<bRegression_slides_files/figure-beamer/bRegression-41-1.pdf, id=686, 712.6625pt x 240.9pt>
 File: bRegression_slides_files/figure-beamer/bRegression-41-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-41-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-41-1.pdf  used on input line 10.
 (luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [68
+) [66
 
 <./bRegression_slides_files/figure-beamer/bRegression-41-1.pdf>]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-42-1.pdf, id=727, 710.655pt x 262.9825pt>
+<bRegression_slides_files/figure-beamer/bRegression-42-1.pdf, id=701, 710.655pt x 262.9825pt>
 File: bRegression_slides_files/figure-beamer/bRegression-42-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-42-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-42-1.pdf  used on input line 9.
 (luatex.def)             Requested size: 342.30333pt x 126.67155pt.
-) [69
+) [67
 
 <./bRegression_slides_files/figure-beamer/bRegression-42-1.pdf>]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-43-1.pdf, id=742, 712.6625pt x 240.9pt>
+<bRegression_slides_files/figure-beamer/bRegression-43-1.pdf, id=716, 712.6625pt x 240.9pt>
 File: bRegression_slides_files/figure-beamer/bRegression-43-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/bRegression-43-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-43-1.pdf  used on input line 10.
 (luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [70
+) [68
 
-<./bRegression_slides_files/figure-beamer/bRegression-43-1.pdf>] [71
+<./bRegression_slides_files/figure-beamer/bRegression-43-1.pdf>] [69
+
+]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [70
+
+]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [71
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb) [72
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [73
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [74
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2611,14 +2607,14 @@ Overfull \hbox (111.85579pt too wide) in paragraph at lines 37--37
  []
 
 )
-Overfull \vbox (79.127pt too high) detected at line 2573
+Overfull \vbox (79.127pt too high) detected at line 2562
  []
 
-[75
+[73
 
 ]
 \openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [76
+ (./bRegression_slides.vrb) [74
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2712,9 +2708,17 @@ Overfull \hbox (19.65485pt too wide) in paragraph at lines 54--54
  []|\TU/lmss/m/n/10 1938.254|
  []
 
-) [77
+) [75
 
-] [78
+] [76
+
+]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [77
+
+]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [78
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -2727,14 +2731,6 @@ Overfull \hbox (19.65485pt too wide) in paragraph at lines 54--54
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb) [81
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [82
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [83
 
 ]
 \openout4 = bRegression_slides.vrb
@@ -3038,29 +3034,29 @@ Overfull \hbox (8.09856pt too wide) in paragraph at lines 62--63
  \TU/lmss/m/n/9 0.5541435|
  []
 
-) [84
+) [82
 
 ]
 \openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/basingstoke-1.pdf, id=875, 712.6625pt x 240.9pt>
+<bRegression_slides_files/figure-beamer/basingstoke-1.pdf, id=849, 712.6625pt x 240.9pt>
 File: bRegression_slides_files/figure-beamer/basingstoke-1.pdf Graphic file (type pdf)
 <use bRegression_slides_files/figure-beamer/basingstoke-1.pdf>
 Package luatex.def Info: bRegression_slides_files/figure-beamer/basingstoke-1.pdf  used on input line 10.
 (luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [85
+) [83
 
 <./bRegression_slides_files/figure-beamer/basingstoke-1.pdf>]
 \openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [84
+
+]
+\openout4 = bRegression_slides.vrb
+ (./bRegression_slides.vrb) [85
+
+]
+\openout4 = bRegression_slides.vrb
  (./bRegression_slides.vrb) [86
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [87
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [88
 
 ]
 \tf@nav=\write7
@@ -3078,19 +3074,19 @@ Package rerunfilecheck Info: File `bRegression_slides.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 34667 strings out of 477742
- 477240,1373583 words of node,token memory allocated
+ 34628 strings out of 477742
+ 477243,1373583 words of node,token memory allocated
  5522 words of node memory still in use:
    57 hlist, 11 vlist, 12 rule, 19 disc, 9 local_par, 143 glue, 34 kern, 29 penalty, 4 margin_kern, 301 glyph, 128 attribute, 73 glue_spec, 128 attribute_list, 1 shape, 5 write, 1 user_defined, 1 pdf_dest, 46 pdf_colorstack nodes
-   avail lists: 1:4,2:9843,3:1741,4:400,5:223,6:565,7:47888,8:21,9:10112,10:18,11:209
- 52883 multiletter control sequences out of 65536+600000
+   avail lists: 1:4,2:9843,3:1741,4:401,5:229,6:565,7:47888,8:21,9:10112,10:18,11:209
+ 52874 multiletter control sequences out of 65536+600000
  84 fonts using 23612463 bytes
  99i,16n,121p,1014b,660s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono12-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-italic.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-oblique.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans12-regular.otf>
-Output written on bRegression_slides.pdf (88 pages, 440062 bytes).
+Output written on bRegression_slides.pdf (86 pages, 431437 bytes).
 
-PDF statistics: 1006 PDF objects out of 1200 (max. 8388607)
- 800 compressed objects within 8 object streams
- 264 named destinations out of 1000 (max. 131072)
+PDF statistics: 980 PDF objects out of 1000 (max. 8388607)
+ 779 compressed objects within 8 object streams
+ 258 named destinations out of 1000 (max. 131072)
  36 words of extra memory for PDF output out of 10000 (max. 100000000)
 

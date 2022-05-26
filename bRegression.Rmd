@@ -219,8 +219,17 @@ To get predictions for specific values, set up a dataframe with those values fir
 ```{r}
 new <- datagrid(model = sleep.1, age = c(10, 5))
 new
-predictions(sleep.1, newdata = new)
 ```
+
+
+## The intervals xxx this doesn't work
+
+```{r}
+predictions(sleep.1, newdata = new)
+predictions(sleep.1, newdata = new, interval = "p")
+```
+
+
 
 ## Comments xxx
 
