@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.5.24)  26 MAY 2022 22:32
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.5.24)  27 MAY 2022 13:17
  restricted system commands enabled.
 **bLogistic_slides.tex
 (./bLogistic_slides.tex
@@ -1580,42 +1580,42 @@ Overfull \hbox (3.1029pt too wide) in paragraph at lines 49--49
 ]
 \openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb
-Overfull \hbox (0.78166pt too wide) in paragraph at lines 31--32
+Overfull \hbox (0.78166pt too wide) in paragraph at lines 33--34
 []\TU/lmss/m/n/9 death  
  []
 
 
-Overfull \hbox (0.94635pt too wide) in paragraph at lines 39--40
+Overfull \hbox (0.94635pt too wide) in paragraph at lines 41--42
 []\TU/lmss/m/n/9 shock  
  []
 
 
-Overfull \hbox (5.04964pt too wide) in paragraph at lines 43--43
+Overfull \hbox (5.04964pt too wide) in paragraph at lines 45--45
  []|\TU/lmss/m/n/9 0.0135497|
  []
 
 
-Overfull \hbox (5.04964pt too wide) in paragraph at lines 43--43
+Overfull \hbox (5.04964pt too wide) in paragraph at lines 45--45
  []|\TU/lmss/m/n/9 0.0124824|
  []
 
 
-Overfull \hbox (3.88722pt too wide) in paragraph at lines 43--43
+Overfull \hbox (3.88722pt too wide) in paragraph at lines 45--45
  []|\TU/lmss/m/n/9 51.28302|
  []
 
 
-Overfull \hbox (5.04964pt too wide) in paragraph at lines 44--44
+Overfull \hbox (5.04964pt too wide) in paragraph at lines 46--46
  []|\TU/lmss/m/n/9 0.3574261|
  []
 
 
-Overfull \hbox (5.04964pt too wide) in paragraph at lines 44--44
+Overfull \hbox (5.04964pt too wide) in paragraph at lines 46--46
  []|\TU/lmss/m/n/9 0.2065571|
  []
 
 
-Overfull \hbox (3.88722pt too wide) in paragraph at lines 44--44
+Overfull \hbox (3.88722pt too wide) in paragraph at lines 46--46
  []|\TU/lmss/m/n/9 51.28302|
  []
 
@@ -1682,11 +1682,7 @@ Overfull \hbox (93.45464pt too wide) in paragraph at lines 23--23
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (120.80832pt too high) detected at line 1569
- []
-
-[48
+ (./bLogistic_slides.vrb) [48
 
 ]
 \openout4 = bLogistic_slides.vrb
@@ -1701,7 +1697,7 @@ Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-28-1.pdf
 <./bLogistic_slides_files/figure-beamer/bLogistic-28-1.pdf>]
 \openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb)
-Overfull \vbox (94.20631pt too high) detected at line 1633
+Overfull \vbox (94.20631pt too high) detected at line 1648
  []
 
 [50
@@ -1725,26 +1721,26 @@ Overfull \vbox (94.20631pt too high) detected at line 1633
 ]
 \openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb)
-Overfull \vbox (198.28682pt too high) detected at line 1798
+Overfull \vbox (1.01831pt too high) detected at line 1795
  []
 
 [55
 
 ]
 \openout4 = bLogistic_slides.vrb
+ (./bLogistic_slides.vrb) [56
+
+]
+\openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/unnamed-chunk-8-1.pdf, id=515, 706.64pt x 495.8525pt>
-File: bLogistic_slides_files/figure-beamer/unnamed-chunk-8-1.pdf Graphic file (type pdf)
-<use bLogistic_slides_files/figure-beamer/unnamed-chunk-8-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-8-1.pdf  used on input line 16.
-(luatex.def)             Requested size: 342.29947pt x 240.19308pt.
-)
-Overfull \vbox (109.59665pt too high) detected at line 1816
- []
+<bLogistic_slides_files/figure-beamer/unnamed-chunk-9-1.pdf, id=523, 706.64pt x 279.0425pt>
+File: bLogistic_slides_files/figure-beamer/unnamed-chunk-9-1.pdf Graphic file (type pdf)
+<use bLogistic_slides_files/figure-beamer/unnamed-chunk-9-1.pdf>
+Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-9-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29947pt x 135.16939pt.
+) [57
 
-[56
-
-<./bLogistic_slides_files/figure-beamer/unnamed-chunk-8-1.pdf>] [57
+<./bLogistic_slides_files/figure-beamer/unnamed-chunk-9-1.pdf>] [58
 
 ]
 \openout4 = bLogistic_slides.vrb
@@ -1763,19 +1759,19 @@ Overfull \hbox (140.59953pt too wide) in paragraph at lines 29--29
 []\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.[] 
  []
 
-) [58
+) [59
 
 ]
 \openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb)
-Overfull \vbox (9835.07863pt too high) detected at line 2610
+Overfull \vbox (9835.07863pt too high) detected at line 2621
  []
 
-[59
+[60
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [60
+ (./bLogistic_slides.vrb) [61
 
 ]
 \openout4 = bLogistic_slides.vrb
@@ -1784,11 +1780,7 @@ Overfull \hbox (37.12206pt too wide) in paragraph at lines 21--21
 []\TU/lmtt/m/n/10.95 ## Error in if (trace) {: argument is not interpretable as logical[] 
  []
 
-) [61
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [62
+) [62
 
 ]
 \openout4 = bLogistic_slides.vrb
@@ -1820,19 +1812,19 @@ Overfull \hbox (37.12206pt too wide) in paragraph at lines 21--21
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [70
+ (./bLogistic_slides.vrb
+<bLogistic_slides_files/figure-beamer/unnamed-chunk-11-1.pdf, id=636, 706.64pt x 279.0425pt>
+File: bLogistic_slides_files/figure-beamer/unnamed-chunk-11-1.pdf Graphic file (type pdf)
+<use bLogistic_slides_files/figure-beamer/unnamed-chunk-11-1.pdf>
+Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-11-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29947pt x 135.16939pt.
+) [70
+
+<./bLogistic_slides_files/figure-beamer/unnamed-chunk-11-1.pdf>] [71
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/bLogistic-59-1.pdf, id=644, 706.64pt x 192.72pt>
-File: bLogistic_slides_files/figure-beamer/bLogistic-59-1.pdf Graphic file (type pdf)
-<use bLogistic_slides_files/figure-beamer/bLogistic-59-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-59-1.pdf  used on input line 13.
-(luatex.def)             Requested size: 342.29947pt x 93.35439pt.
-) [71
-
-<./bLogistic_slides_files/figure-beamer/bLogistic-59-1.pdf>] [72
+ (./bLogistic_slides.vrb) [72
 
 ]
 \openout4 = bLogistic_slides.vrb
@@ -1840,16 +1832,7 @@ Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-59-1.pdf
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (2.62956pt too wide) in paragraph at lines 15--15
-[]\TU/lmtt/m/n/10.95 ## `summarise()` has grouped output by 'age', 'sex'. You can[] 
- []
-
-)
-Overfull \vbox (18.5133pt too high) detected at line 3043
- []
-
-[74
+ (./bLogistic_slides.vrb) [74
 
 ]
 \openout4 = bLogistic_slides.vrb
@@ -1857,15 +1840,15 @@ Overfull \vbox (18.5133pt too high) detected at line 3043
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [76
+ (./bLogistic_slides.vrb)
+Overfull \vbox (15.02611pt too high) detected at line 3059
+ []
+
+[76
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (15.02611pt too high) detected at line 3138
- []
-
-[77
+ (./bLogistic_slides.vrb) [77
 
 ]
 \openout4 = bLogistic_slides.vrb
@@ -1877,37 +1860,57 @@ Overfull \vbox (15.02611pt too high) detected at line 3138
 
 ]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [80
-
-]
-\openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf, id=732, 706.64pt x 256.96pt>
+<bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf, id=724, 706.64pt x 279.0425pt>
 File: bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf Graphic file (type pdf)
 <use bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf>
 Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 124.47253pt.
-) [81
+(luatex.def)             Requested size: 342.29947pt x 135.16939pt.
+) [80
 
 <./bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf>]
 \openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [82
+ (./bLogistic_slides.vrb) [81
 
 ]
 \openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf, id=757, 706.64pt x 256.96pt>
+<bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf, id=749, 706.64pt x 315.1775pt>
 File: bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf Graphic file (type pdf)
 <use bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf>
 Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 124.47253pt.
-) [83
+(luatex.def)             Requested size: 342.29947pt x 152.67334pt.
+) [82
 
 <./bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf>]
+\openout4 = bLogistic_slides.vrb
+ (./bLogistic_slides.vrb) [83
+
+]
 \openout4 = bLogistic_slides.vrb
  (./bLogistic_slides.vrb) [84
 
 ]
+\openout4 = bLogistic_slides.vrb
+ (./bLogistic_slides.vrb
+<bLogistic_slides_files/figure-beamer/unnamed-chunk-13-1.pdf, id=780, 706.64pt x 315.1775pt>
+File: bLogistic_slides_files/figure-beamer/unnamed-chunk-13-1.pdf Graphic file (type pdf)
+<use bLogistic_slides_files/figure-beamer/unnamed-chunk-13-1.pdf>
+Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-13-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29947pt x 152.67334pt.
+) [85
+
+<./bLogistic_slides_files/figure-beamer/unnamed-chunk-13-1.pdf>]
+\openout4 = bLogistic_slides.vrb
+ (./bLogistic_slides.vrb
+<bLogistic_slides_files/figure-beamer/unnamed-chunk-14-1.pdf, id=795, 706.64pt x 315.1775pt>
+File: bLogistic_slides_files/figure-beamer/unnamed-chunk-14-1.pdf Graphic file (type pdf)
+<use bLogistic_slides_files/figure-beamer/unnamed-chunk-14-1.pdf>
+Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-14-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29947pt x 152.67334pt.
+) [86
+
+<./bLogistic_slides_files/figure-beamer/unnamed-chunk-14-1.pdf>]
 \tf@nav=\write7
 
 \openout7 = bLogistic_slides.nav
@@ -1923,19 +1926,19 @@ Package rerunfilecheck Info: File `bLogistic_slides.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 34253 strings out of 477742
- 477247,1373583 words of node,token memory allocated
- 11480 words of node memory still in use:
-   180 hlist, 44 vlist, 62 rule, 13 disc, 41 local_par, 418 glue, 36 kern, 140 penalty, 1 margin_kern, 411 glyph, 340 attribute, 73 glue_spec, 340 attribute_list, 1 shape, 5 write, 1 user_defined, 1 pdf_dest, 72 pdf_colorstack nodes
-   avail lists: 1:5,2:8725,3:666,4:357,5:310,6:204,7:41776,8:19,9:11142,10:17,11:116
- 52626 multiletter control sequences out of 65536+600000
- 52 fonts using 12586247 bytes
+ 34302 strings out of 477742
+ 477240,1373583 words of node,token memory allocated
+ 2877 words of node memory still in use:
+   51 hlist, 13 vlist, 12 rule, 5 disc, 7 local_par, 88 glue, 17 kern, 29 penalty, 39 glyph, 103 attribute, 73 glue_spec, 103 attribute_list, 1 shape, 5 write, 1 user_defined, 1 pdf_dest, 38 pdf_colorstack, 1 pdf_setmatrix, 1 pdf_save, 1 pdf_restore nodes
+   avail lists: 1:6,2:9225,3:774,4:394,5:330,6:237,7:42487,8:19,9:11352,10:17,11:124
+ 52639 multiletter control sequences out of 65536+600000
+ 52 fonts using 12586287 bytes
  99i,16n,121p,1012b,675s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono12-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-italic.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-oblique.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans12-regular.otf>
-Output written on bLogistic_slides.pdf (84 pages, 220764 bytes).
+Output written on bLogistic_slides.pdf (86 pages, 235230 bytes).
 
-PDF statistics: 871 PDF objects out of 1000 (max. 8388607)
- 705 compressed objects within 8 object streams
- 252 named destinations out of 1000 (max. 131072)
+PDF statistics: 902 PDF objects out of 1000 (max. 8388607)
+ 728 compressed objects within 8 object streams
+ 258 named destinations out of 1000 (max. 131072)
  36 words of extra memory for PDF output out of 10000 (max. 100000000)
 
