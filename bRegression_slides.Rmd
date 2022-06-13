@@ -14,11 +14,7 @@ output:
 
 
 
-```{r bRegression-slides-1, child="preliminaries.Rmd", echo=F}
-```
-
-
 ```{r Regression, child="bRegression.Rmd"}
-
 ```
+
 
