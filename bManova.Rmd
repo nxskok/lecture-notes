@@ -13,9 +13,10 @@
 
 
 ## Packages
-```{r bManova-1, eval=F }
-library(car)
+```{r bManova-1, results='hide', message=FALSE}
+library(car) # may need to install first
 library(tidyverse)
+library(MVTests) # also may need to install
 ```
 
    
@@ -98,10 +99,10 @@ d <- tribble(
 - Then plot data as points, and add line through points in `d`:
 
 ```{r bManova-6 }
-g <- ggplot(hilo, aes(x = yield, y = weight,
+ggplot(hilo, aes(x = yield, y = weight,
                       colour = fertilizer)) + geom_point() +
   geom_line(data = d,
-            aes(x = line_x, y = line_y, colour = NULL))
+            aes(x = line_x, y = line_y, colour = NULL)) -> g
 ```
 
 \normalsize
@@ -165,7 +166,7 @@ responses, using `cbind`.
 * Use `manova` with new response, looks like `lm` otherwise.
 
 * With more than 2 responses, cannot draw graph. What then?
-`
+
 * If MANOVA test significant, cannot use Tukey. What then?
 
 * Use *discriminant analysis* (of which more later).
@@ -174,22 +175,15 @@ responses, using `cbind`.
 
 
 ## Another way to do MANOVA
-Install (once) and load package `car`:
-```{r bManova-9, eval=F}
-library(car)
-```
- 
 
+using `Manova` from package `car`:
 
-## Another way\ldots
-  
 ```{r bManova-10, size="footnotesize"}
 hilo.2.lm <- lm(response ~ fertilizer, data = hilo)
 hilo.2 <- Manova(hilo.2.lm)
 hilo.2
 ```
 
-   
 
 
 * Same result as small-m `manova`.
@@ -198,7 +192,48 @@ hilo.2
 later.
 
 
+## Assumptions
 
+- normal distribution of *each* response within each treatment group (actually *multivariate* normal with correlations between response variables)
+
+  - assess with boxplots as usual (or normal quantile plots)
+
+- each response has same spread across all treatment groups, and constant correlation between response variables across treatment groups
+
+  - assess with Box M test. This is very sensitive to unequal spread, so there is only a problem if P-value less than say 0.001. (`BoxM` in package `MVTests`.)
+
+## Assumptions for yield-weight data
+
+For normal quantile plots, need "extra-long" with all the data values in one column:
+
+```{r}
+hilo %>% 
+  pivot_longer(-fertilizer, names_to = "xname", 
+               values_to = "xvalue") %>% 
+  ggplot(aes(sample = xvalue)) + stat_qq() + 
+    stat_qq_line() +
+    facet_grid(xname ~ fertilizer, scales = "free") -> g
+```
+
+There are only four observations per response variable - treatment group combination, so graphs are not very informative (over):
+
+## The plots
+
+```{r, fig.height=4}
+g
+```
+
+## Box M test
+
+- Make sure package `MVTests` loaded first. 
+- Then pull out the numeric columns from dataframe, and (separately) the grouping column:
+
+```{r}
+hilo %>% select(yield, weight) -> numeric_values
+summary(BoxM(numeric_values, hilo$fertilizer))
+```
+
+No problem at all with unequal spreads.
 
 ## Another example: peanuts
 
@@ -227,27 +262,37 @@ peanuts.orig
 ## Setup for analysis
 
 ```{r bManova-13 }
-# peanuts <- peanuts.orig %>%
-#   mutate(
-#     location = factor(location),
-#     variety = factor(variety)
-#   )
-peanuts <- peanuts.orig
+peanuts.orig %>%
+  mutate(
+    location = factor(location),
+    variety = factor(variety)
+  ) -> peanuts
 response <- with(peanuts, cbind(y, smk, w))
 head(response)
 ```
- `
+
 
 
 ## Analysis (using `Manova`)
 
-\small
+```{r, include=FALSE}
+w <- getOption("width")
+options(width = 100)
+```
+
+
+\footnotesize
 ```{r bManova-14}
 peanuts.1 <- lm(response ~ location * variety, data = peanuts)
 peanuts.2 <- Manova(peanuts.1)
 peanuts.2
 ```
 \normalsize 
+ 
+```{r, include=FALSE}
+options(width = w)
+```
+ 
  
 ## Comments
 
@@ -261,5 +306,59 @@ on location and on variety
 
 * Understanding that dependence beyond our scope right now.
 
+## Normal quantile plots
 
+Setup for normal quantile plots
+
+```{r}
+peanuts %>% 
+  pivot_longer(y:w, names_to = "xname", 
+               values_to = "xvals") -> d
+```
+
+Make the plots (save to show on next page)
+
+```{r}
+ggplot(d, aes(sample = xvals)) + stat_qq() + 
+  stat_qq_line() +
+  facet_grid(xname ~ location, scales = "free") -> g1
+
+ggplot(d, aes(sample = xvals)) + stat_qq() + 
+  stat_qq_line() +
+  facet_grid(xname ~ variety, scales = "free") -> g2
+```
+
+## The plot for location
+
+```{r, fig.height=4}
+g1
+```
+
+## The plot for variety
+
+```{r, fig.height=4}
+g2
+```
+
+
+## Comments
+
+- this time there are only six observations per location  and four per variety, so normality is still difficult to be confident about
+
+- `y` at location 1 seems to be the worst for normality (long tails / outliers), and maybe `y` at location 2 is skewed left, but the others are not bad
+
+- there is some evidence of unequal spread (slopes of lines), but is it bad enough to worry about? (Box M-test, over).
+
+
+## Box's M tests
+
+- One for location, one for variety:
+
+```{r}
+peanuts %>% select(y:w) -> numbers 
+summary(BoxM(numbers, peanuts$location))
+summary(BoxM(numbers, peanuts$variety))
+```
+
+- Neither of these P-values is low enough to worry about. (Remember, the P-value here has to be *really* small to indicate a problem.)
 

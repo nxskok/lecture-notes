@@ -24,7 +24,7 @@ assumptions of independence will fail.
 
 
 ## Packages
-```{r bProfile-1, eval=F}
+```{r bProfile-1, results="hide", message=FALSE}
 library(car)
 library(tidyverse)
 ```
@@ -47,7 +47,8 @@ library(tidyverse)
 
 ## Read in data
 ```{r bProfile-2 }
-my_url <- "http://ritsokiguess.site/datafiles/dogs.txt"
+# my_url <- "http://ritsokiguess.site/datafiles/dogs.txt"
+my_url <- "~/teaching/d29/notes/dogs.txt"
 dogs <- read_table(my_url)
 ```
 
@@ -81,12 +82,43 @@ dogs.2 <- Manova(dogs.1,
   idata = times.df,
   idesign = ~times
 )
-dogs.2
 ```
  
 \normalsize
 
 
+## The output (some; there is a lot)
+
+\tiny
+```{r}
+summary(dogs.2)
+```
+\normalsize
+```{r}
+names(summary(dogs.2))
+```
+
+```{r}
+summary(dogs.2)$multivariate.tests$times
+```
+
+
+## What there is here xxx
+
+- three sets of tests, for
+  - times
+  - drug
+  - their interaction
+  
+- two *types* of test for each of these:
+  - multivariate
+  - univariate
+  
+- multivariate is the same as MANOVA
+
+- univariate is more powerful *if* it applies
+
+## 
 
 ## Wide and long format
 
@@ -96,7 +128,7 @@ for the two drugs.
 
 * Want to investigate interaction.
 
-## The wrong shape
+## The wrong shapeF
 
 * But data frame has several observations per line ("wide format"):
 
@@ -309,6 +341,10 @@ profiles like the trimethaphan dogs. This ambiguity is probably
 why the `drug` effect is not quite significant.
 
 
+## Assumptions
+
+sphericity (or earlier)
+
 ## Mixed models
 
 - Another way to fit repeated measures
@@ -370,10 +406,11 @@ exercise), so have repeated measures.
 
 
 
-## Reading the data
+## Reading the data xxx
 Separated by *tabs*:  
 ```{r bProfile-16 }
-url <- "http://ritsokiguess.site/datafiles/exercise.txt"
+# url <- "http://ritsokiguess.site/datafiles/exercise2.txt"
+url <- "~/teaching/d29/notes/exercise.txt"
 exercise.long <- read_tsv(url)
 ```
 
