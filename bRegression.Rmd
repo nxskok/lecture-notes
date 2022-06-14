@@ -20,13 +20,12 @@
 
 
 ## Packages
-```{r bRegression-1}
+```{r bRegression-1, eval=F }
 library(MASS) # for Box-Cox, later
 library(tidyverse)
 library(broom)
 library(marginaleffects)
 library(conflicted)
-conflict_prefer("select", "dplyr")
 ```
 
    
@@ -156,23 +155,20 @@ that can be used in pipe (later):
 tidy(sleep.1)
 ```
 
-## also one-line summary of model
+## also one-line summary of model:
 
-\tiny
 ```{r bRegression-9}
 glance(sleep.1)
 ```
-\normalsize
+
 
 
 
 ## Broom part 2
-
-\scriptsize
 ```{r bRegression-10, size="footnotesize",warning=F}
 sleep.1 %>% augment(sleep) %>% slice(1:8)
 ```
-\normalsize
+
    
 Useful for plotting residuals against an $x$-variable.
 
@@ -186,100 +182,105 @@ Once useful regression exists, use it for prediction:
 * To express uncertainty of this prediction:
 
 
-  * *CI for mean response* expresses uncertainty about mean ATST for all children aged 10, based on data.
+* *CI for mean response* expresses uncertainty about mean ATST for all children aged 10, based on data.
 
-  * *Prediction interval* expresses uncertainty about predicted ATST for a single new child aged 10 whose ATST not known. More uncertain. 
+* *Prediction interval* expresses uncertainty about predicted ATST for a new child aged 10 whose ATST not known. More uncertain.
 
 
 * Also do above for a child aged 5.
 
-## The `marginaleffects` package 1/6 
+## The `marginaleffects` package 1/?
 
 This shows predictions for values in the data or values that you give. The default is for all the data:
 
-\footnotesize
 ```{r}
 predictions(sleep.1)
 ```
-\normalsize
 
-## The `marginaleffects` package 2/6
+## The `marginaleffects` package 2/?
 
 To get predictions for a representative collection of values, use `variables`:
 
-\footnotesize
 ```{r}
 predictions(sleep.1, variables = "age")
 ```
-\normalsize
 
-## The `marginaleffects` package 3/6
+
+## The `marginaleffects` package 3/?
 
 To get predictions for specific values, set up a dataframe with those values first, then feed that into `newdata`:
 
 ```{r}
 new <- datagrid(model = sleep.1, age = c(10, 5))
 new
-
+predictions(sleep.1, newdata = new)
 ```
+
+## The `marginaleffects` package 4/?
+
+
+
+## Intervals
+
+
+* Make new data frame with these values for `age`
+```{r bRegression-11 }
+my.age <- c(10, 5)
+ages.new <- tibble(age = my.age)
+ages.new
+```
+
+   
+
+
+* Feed into `predict`:
+```{r bRegression-12 }
+pc <- predict(sleep.1, ages.new, interval = "c")
+pp <- predict(sleep.1, ages.new, interval = "p")
+```
+ 
+
+
 
 
 ## The intervals
-
-Confidence interval for mean response
-
-\small
-```{r}
-predictions(sleep.1, newdata = new)
+Confidence intervals for mean response:
+```{r bRegression-13 }
+cbind(ages.new, pc)
 ```
-\normalsize
+ 
 
-Prediction interval for a single response
-
-\small
-```{r}
-p <- predict(sleep.1, newdata = new, interval = "p")
-cbind(p, new)
+Prediction intervals for new response:
+```{r bRegression-14 }
+cbind(ages.new, pp)
 ```
-\normalsize
-
+ 
 
 ## Comments
 
 
-* Age 10 closer to centre of data, so intervals are narrower than for age 5.
-- Also true for representative ages, or all the ages. 
-- See over (for CI for mean response).
 
-## The `marginaleffects` package 4/6
+* Age 10 closer to centre of data, so intervals are both narrower than those for age 5.
 
-```{r, fig.height=4}
-plot_cap(model = sleep.1, condition = "age")
+* Prediction intervals bigger than CI for mean (additional uncertainty).
+
+* Technical note: output from `predict` is R
+`matrix`, not data frame, so Tidyverse `bind_cols`
+does not work. Use base R `cbind`.
+
+
+
+## That grey envelope
+
+Marks confidence interval for mean for all $x$: 
+
+```{r bRegression-15, fig.height=3.0}
+ggplot(sleep, aes(x = age, y = atst)) + geom_point() +
+  geom_smooth(method = "lm") +
+  scale_y_continuous(breaks = seq(420, 600, 20))
 ```
 
-
-## The `marginaleffects` package 5/6
-
-\tiny
-```{r}
-comparisons(model = sleep.1)
-```
-\normalsize
-
-## The `marginaleffects` package 6/6
-
-One for each row of data, but slope is the same for any obs, so can summarize:
-
-
-\tiny
-```{r}
-comparisons(model = sleep.1) %>% 
-  summary()
-```
-\normalsize
-
-For any age of child, a child that is one year older is expected to sleep for 14 minutes less.
-
+   
 
 
 
@@ -360,17 +361,13 @@ curvy.2a <- update(curvy.1, . ~ . + I(xx^2))
  
 
 
-## Regression 2
+## Regression 2 
 
 ```{r bRegression-20 }
 tidy(curvy.2)
+glance(curvy.2) #
 ```
 
-\tiny
-```{r}
-glance(curvy.2) 
-```
-\normalsize
 
 ## Comments
 
@@ -408,15 +405,15 @@ handling curved relationships.
 * Can guess how to change $y$, or might be theory:
 
 
-  * example: relationship $y=ae^{bx}$ (exponential growth): 
+* example: relationship $y=ae^{bx}$ (exponential growth): 
 
-  * take
+* take
 logs to get $\ln y=\ln a + bx$.
 
-  * Taking logs has made relationship linear ($\ln y$ as response).
+* Taking logs has made relationship linear ($\ln y$ as response).
 
 
-* Or, *estimate* transformation, using Box-Cox method (over). 
+* Or, *estimate* transformation, using Box-Cox method. 
 
 
 
@@ -509,18 +506,14 @@ Looks much straighter.
 ## Regression with transformed $y$
 
 
-\tiny
+
+\footnotesize
 ```{r bRegression-25}
 madeup.1 <- lm(log(y) ~ x, data = madeup)
 glance(madeup.1)
-```
-\normalsize
-
-```{r}
 tidy(madeup.1)
 ```
 \normalsize
-
 
 R-squared now decently high.
 
@@ -582,13 +575,12 @@ visits
    
 ## Fit multiple regression
 
-\tiny
 ```{r bRegression-28}
 visits.1 <- lm(timedrs ~ phyheal + menheal + stress,
   data = visits)
 glance(visits.1)
 ```
-\normalsize
+
 
 ## The slopes
 
@@ -605,17 +597,15 @@ However, look at prediction of `timedrs` from `menheal` by itself:
 
 ## Just `menheal` 
 
-\tiny
+\footnotesize 
 ```{r bRegression-30 }
 visits.2 <- lm(timedrs ~ menheal, data = visits)
 glance(visits.2)
-```
-
-\normalsize
-
-```{r}
 tidy(visits.2)
 ```
+ 
+\normalsize
+
 
 
 ## `menheal` by itself
@@ -665,10 +655,8 @@ Apparently random. But\ldots
 
 
 ## Normal quantile plot of residuals
-
 ```{r bRegression-32, fig.height=3.5}
-ggplot(visits.1, aes(sample = .resid)) + 
-  stat_qq() + stat_qq_line()
+ggplot(visits.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 ```
 
    
@@ -733,8 +721,7 @@ guess. How to find good transformation?
 * Extra problem: some of `timedrs` values are 0, but
 Box-Cox expects all +. Note response for `boxcox`:
 ```{r bRegression-35, eval=F}
-boxcox(timedrs + 1 ~ phyheal + menheal + stress, 
-       data = visits)
+boxcox(timedrs + 1 ~ phyheal + menheal + stress, data = visits)
 ```
  
 
@@ -842,8 +829,7 @@ ggplot(visits.3, aes(x = .fitted, y = .resid)) +
 
 ## Normal quantile plot of residuals
 ```{r bRegression-42, fig.height=3.8}
-ggplot(visits.3, aes(sample = .resid)) + 
-  stat_qq() + stat_qq_line()
+ggplot(visits.3, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 ```
 
    
@@ -957,17 +943,13 @@ punting
 
 ## Regression and output
 
-\tiny
+\small
 ```{r bRegression-48}
 punting.1 <- lm(punt ~ left + right + fred, data = punting)
 glance(punting.1)
-```
-\normalsize
-
-```{r}
 tidy(punting.1)
 ```
-
+\normalsize
 
 ## Comments
 
@@ -1034,8 +1016,8 @@ tidy(punting.2)
 * Check: plot *residuals* from previous regression (without
 `left`) against `left`.
 
-* Residuals here are "punting distance adjusted for right
-leg strength".
+* Residuals here are ``punting distance adjusted for right
+leg strength''.
 
 * If there is some kind of relationship with `left`, we
 should include in model.
@@ -1046,7 +1028,7 @@ from `broom`.
 
 
 ## Augmenting `punting.2`
-\tiny
+\footnotesize
 ```{r bRegression-53 }
 punting.2 %>% augment(punting) -> punting.2.aug
 punting.2.aug %>% slice(1:8)
@@ -1101,5 +1083,8 @@ summary(punting.3)
 * Negative slope for `leftsq` means that increased left-leg
 strength only increases punting distance up to a point: beyond that,
 it decreases again.
+
+
+ 
 
 
