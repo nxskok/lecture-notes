@@ -102,7 +102,7 @@ The first thing on each line is a link:
 ## Exams and course grades
 
 - there will be (per current plans) in-person midterm and final exams.
-- you *must pass* the final exam to pass the course. If you do not pass the final exam but would have otherwise passed the course, your grade is 45.
+- you *must pass* the final exam (that is, get at least 50%) to guarantee passing the course. If you do not pass the final exam but would have otherwise passed the course, your grade is 45.
 - course grade computed as 30% assignments, 30% midterm, 40% final.
 
 ## Policies

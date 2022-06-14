@@ -1,7 +1,7 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.5.24)  2 JUN 2022 12:47
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022)  (format=lualatex 2022.5.24)  2 JUN 2022 12:56
  restricted system commands enabled.
-**bRegression_slides.tex
-(./bRegression_slides.tex
+**bAncova_slides.tex
+(./bAncova_slides.tex
 LaTeX2e <2021-11-15> patch level 1
 Lua module: luaotfload 2022-03-18 3.21 Lua based OpenType font support
 Lua module: lualibs 2021-05-20 2.74 ConTeXt Lua standard libraries.
@@ -846,8 +846,8 @@ Package: ctablestack 2015/10/01 v1.0 Catcode table stable support
 \CatcodeTableOther=\catcodetable12
 \CatcodeTableExpl=\catcodetable13
 )
-Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (./bRegression_slides.aux)
-\openout1 = bRegression_slides.aux
+Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (./bAncova_slides.aux)
+\openout1 = bAncova_slides.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
 LaTeX Font Info:    ... okay on input line 158.
@@ -910,10 +910,10 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring OFF on input line 158.
-(./bRegression_slides.out) (./bRegression_slides.out)
+(./bAncova_slides.out) (./bAncova_slides.out)
 \@outlinefile=\write6
 
-\openout6 = bRegression_slides.out
+\openout6 = bAncova_slides.out
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/translator/translator-basic-dictionary-English.dict
 Dictionary: translator-basic-dictionary, Language: English 
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/translator/translator-bibliography-dictionary-English.dict
@@ -1226,41 +1226,20 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-(./bRegression_slides.nav) [1
+(./bAncova_slides.nav) [1
 
 {/home/ken/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 188.
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.30151pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.21106pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.15076pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.30258pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.2118pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.15129pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.3006pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.21042pt on input line 188.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.1503pt on input line 188.
-(/home/ken/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msa.cfg
-File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
-) (/home/ken/.TinyTeX/texmf-dist/tex/latex/microtype/mt-msb.cfg
-File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-) [2
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [2
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (134.85078pt too wide) in paragraph at lines 12--12
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [3
+
+]
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb
+Overfull \hbox (134.85078pt too wide) in paragraph at lines 13--13
 []\TU/lmtt/m/n/10.95 ## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --[] 
  []
 
@@ -1269,1319 +1248,110 @@ Overfull \hbox (134.85078pt too wide) in paragraph at lines 26--26
 []\TU/lmtt/m/n/10.95 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --[] 
  []
 
-
-Overfull \hbox (25.62456pt too wide) in paragraph at lines 39--39
-[]\TU/lmtt/m/n/10.95 ## [conflicted] Will prefer dplyr::select over any other package[] 
- []
-
-)
-Overfull \vbox (41.68858pt too high) detected at line 229
- []
-
-[3
+) [4
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (134.85078pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10.95 ## -- Column specification --------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (83.11205pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10.95 ## i Use `spec()` to retrieve the full column specification for this data.[] 
- []
-
-
-Overfull \hbox (140.59953pt too wide) in paragraph at lines 22--22
-[]\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.[] 
- []
-
-)
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 14.83417pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 14.83571pt on input line 253.
-LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 14.83284pt on input line 253.
-[4
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [5
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [5
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/suggo-1.pdf, id=67, 712.6625pt x 264.99pt>
-File: bRegression_slides_files/figure-beamer/suggo-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/suggo-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/suggo-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.2916pt x 127.27461pt.
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb
+<bAncova_slides_files/figure-beamer/ancova-plot-1.pdf, id=64, 706.64pt x 240.9pt>
+File: bAncova_slides_files/figure-beamer/ancova-plot-1.pdf Graphic file (type pdf)
+<use bAncova_slides_files/figure-beamer/ancova-plot-1.pdf>
+Package luatex.def Info: bAncova_slides_files/figure-beamer/ancova-plot-1.pdf  used on input line 10.
+(luatex.def)             Requested size: 342.29947pt x 116.693pt.
 ) [6
 
-<./bRegression_slides_files/figure-beamer/suggo-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [7
+<./bAncova_slides_files/figure-beamer/ancova-plot-1.pdf>]
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 300.
+[7
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [8
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [8
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (8.37831pt too wide) in paragraph at lines 12--12
-[]\TU/lmtt/m/n/10.95 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'[] 
- []
-
-<bRegression_slides_files/figure-beamer/icko-1.pdf, id=98, 712.6625pt x 206.7725pt>
-File: bRegression_slides_files/figure-beamer/icko-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/icko-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/icko-1.pdf  used on input line 14.
-(luatex.def)             Requested size: 342.2916pt x 99.31276pt.
-) [9
-
-<./bRegression_slides_files/figure-beamer/icko-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [10
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [9
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [11
-
-] [12
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [10
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [13
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb
+<bAncova_slides_files/figure-beamer/unnamed-chunk-2-1.pdf, id=112, 706.64pt x 277.035pt>
+File: bAncova_slides_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic file (type pdf)
+<use bAncova_slides_files/figure-beamer/unnamed-chunk-2-1.pdf>
+Package luatex.def Info: bAncova_slides_files/figure-beamer/unnamed-chunk-2-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29947pt x 134.19695pt.
+) [11
+
+<./bAncova_slides_files/figure-beamer/unnamed-chunk-2-1.pdf>]
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [12
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (4.19702pt too wide) in paragraph at lines 26--27
- []\TU/lmss/m/n/6 r.squared
- []
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [13
 
-
-Overfull \hbox (6.04431pt too wide) in paragraph at lines 28--29
- []\TU/lmss/m/n/6 adj.r.squared
- []
-
-
-Overfull \hbox (2.75165pt too wide) in paragraph at lines 34--35
- []\TU/lmss/m/n/6 p.value
- []
-
-
-Overfull \hbox (2.23602pt too wide) in paragraph at lines 48--49
- []\TU/lmss/m/n/6 nobs
- []
-
-
-Overfull \hbox (7.23836pt too wide) in paragraph at lines 52--52
- []|\TU/lmss/m/n/6 0.9054416|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 52--52
- []|\TU/lmss/m/n/6 13.15238|
- []
-
-
-Overfull \hbox (4.11607pt too wide) in paragraph at lines 52--52
- []|\TU/lmss/m/n/6 105.3302|
- []
-
-
-Overfull \hbox (4.11607pt too wide) in paragraph at lines 52--52
- \TU/lmss/m/n/6 50.85618|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 107.7124|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 109.4072|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 1902.835|
- []
-
+]
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb
+<bAncova_slides_files/figure-beamer/unnamed-chunk-4-1.pdf, id=148, 706.64pt x 277.035pt>
+File: bAncova_slides_files/figure-beamer/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+<use bAncova_slides_files/figure-beamer/unnamed-chunk-4-1.pdf>
+Package luatex.def Info: bAncova_slides_files/figure-beamer/unnamed-chunk-4-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29947pt x 134.19695pt.
 ) [14
 
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [15
-
-] [16
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb)
-Overfull \vbox (9.94234pt too high) detected at line 676
+<./bAncova_slides_files/figure-beamer/unnamed-chunk-4-1.pdf>]
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb)
+Overfull \vbox (34.53314pt too high) detected at line 601
  []
 
-[17
+[15
 
 ]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [18
+\openout4 = bAncova_slides.vrb
+ (./bAncova_slides.vrb) [16
 
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [19
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [20
-
-] [21
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/unnamed-chunk-6-1.pdf, id=219, 712.6625pt x 279.0425pt>
-File: bRegression_slides_files/figure-beamer/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/unnamed-chunk-6-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/unnamed-chunk-6-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.2916pt x 134.02403pt.
-) [22
-
-<./bRegression_slides_files/figure-beamer/unnamed-chunk-6-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (1.92511pt too wide) in paragraph at lines 26--27
- []\TU/lmss/m/n/6 rowid
- []
-
-
-Overfull \hbox (2.01614pt too wide) in paragraph at lines 30--31
-[]\TU/lmss/m/n/6 term  
- []
-
-
-Overfull \hbox (2.16122pt too wide) in paragraph at lines 40--41
- []\TU/lmss/m/n/6 p.value
- []
-
-
-Overfull \hbox (1.23477pt too wide) in paragraph at lines 42--43
- []\TU/lmss/m/n/6 conf.low
- []
-
-
-Overfull \hbox (3.60571pt too wide) in paragraph at lines 44--45
- []\TU/lmss/m/n/6 conf.high
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 52--52
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 52--52
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 52--52
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 53--53
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 53--53
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 586.00|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 54--54
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 54--54
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 55--55
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 55--55
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 55--55
- []|\TU/lmss/m/n/6 461.75|
- []
-
-
-Overfull \hbox (2.09108pt too wide) in paragraph at lines 55--56
- []|\TU/lmss/m/n/6 14.00|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 56--56
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 56--56
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 56--56
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 57--57
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 57--57
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 57--57
- []|\TU/lmss/m/n/6 491.10|
- []
-
-
-Overfull \hbox (2.09108pt too wide) in paragraph at lines 57--58
- []|\TU/lmss/m/n/6 10.10|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 58--58
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 58--58
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 58--58
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 59--59
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 59--59
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 59--59
- []|\TU/lmss/m/n/6 565.00|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 60--60
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 60--60
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 60--60
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 61--61
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 61--61
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 61--61
- []|\TU/lmss/m/n/6 462.00|
- []
-
-
-Overfull \hbox (2.09108pt too wide) in paragraph at lines 61--62
- []|\TU/lmss/m/n/6 11.50|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 62--62
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 62--62
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 62--62
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 63--63
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 63--63
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 63--63
- []|\TU/lmss/m/n/6 532.10|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 64--64
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 64--64
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 64--64
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 65--65
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 65--65
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 65--65
- []|\TU/lmss/m/n/6 477.60|
- []
-
-
-Overfull \hbox (2.09108pt too wide) in paragraph at lines 65--66
- []|\TU/lmss/m/n/6 12.40|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 66--66
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 66--66
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 66--66
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 67--67
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 67--67
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 67--67
- []|\TU/lmss/m/n/6 515.20|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 68--68
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 68--68
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 68--68
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 69--69
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 69--69
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 69--69
- []|\TU/lmss/m/n/6 493.00|
- []
-
-
-Overfull \hbox (2.09108pt too wide) in paragraph at lines 69--70
- []|\TU/lmss/m/n/6 11.10|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 70--70
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 70--70
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 70--70
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 71--71
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 71--71
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 71--71
- []|\TU/lmss/m/n/6 528.30|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 72--72
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 72--72
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 72--72
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 73--73
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 73--73
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 73--73
- []|\TU/lmss/m/n/6 575.90|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 74--74
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 74--74
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 74--74
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 75--75
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 75--75
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 75--75
- []|\TU/lmss/m/n/6 532.50|
- []
-
-
-Overfull \hbox (1.34041pt too wide) in paragraph at lines 76--76
- \TU/lmss/m/n/6 14.04105|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 76--76
- []|\TU/lmss/m/n/6 1.368116|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 76--76
- \TU/lmss/m/n/6 10.26305|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 77--77
- \TU/lmss/m/n/6 16.72251|
- []
-
-
-Overfull \hbox (3.35878pt too wide) in paragraph at lines 77--77
- \TU/lmss/m/n/6 11.35959|
- []
-
-
-Overfull \hbox (3.19179pt too wide) in paragraph at lines 77--77
- []|\TU/lmss/m/n/6 530.50|
- []
-
-)
-Overfull \vbox (10.45834pt too high) detected at line 913
- []
-
-[23
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [24
-
-] [25
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf, id=261, 712.6625pt x 233.87375pt>
-File: bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf  used on input line 11.
-(luatex.def)             Requested size: 342.2916pt x 112.32948pt.
-) [26
-
-<./bRegression_slides_files/figure-beamer/akjhkadjfhjahnkkk-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (19.87581pt too wide) in paragraph at lines 20--20
-[]\TU/lmtt/m/n/10.95 ## -- Column specification ------------------------------------[] 
- []
-
-
-Overfull \hbox (83.11205pt too wide) in paragraph at lines 20--20
-[]\TU/lmtt/m/n/10.95 ## i Use `spec()` to retrieve the full column specification for this data.[] 
- []
-
-
-Overfull \hbox (140.59953pt too wide) in paragraph at lines 20--20
-[]\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.[] 
- []
-
-) [27
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-16-1.pdf, id=285, 710.655pt x 262.9825pt>
-File: bRegression_slides_files/figure-beamer/bRegression-16-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-16-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-16-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.30333pt x 126.67155pt.
-) [28
-
-<./bRegression_slides_files/figure-beamer/bRegression-16-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [29
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/altoadige-1.pdf, id=308, 712.6625pt x 262.9825pt>
-File: bRegression_slides_files/figure-beamer/altoadige-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/altoadige-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/altoadige-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.2916pt x 126.31041pt.
-) [30
-
-<./bRegression_slides_files/figure-beamer/altoadige-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [31
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (4.55641pt too wide) in paragraph at lines 43--44
- []\TU/lmss/m/n/6 r.squared
- []
-
-
-Overfull \hbox (6.52563pt too wide) in paragraph at lines 45--46
- []\TU/lmss/m/n/6 adj.r.squared
- []
-
-
-Overfull \hbox (1.13118pt too wide) in paragraph at lines 51--52
- []\TU/lmss/m/n/6 p.value
- []
-
-
-Overfull \hbox (2.4029pt too wide) in paragraph at lines 65--66
- []\TU/lmss/m/n/6 nobs
- []
-
-
-Overfull \hbox (4.47546pt too wide) in paragraph at lines 69--69
- []|\TU/lmss/m/n/6 0.950234|
- []
-
-
-Overfull \hbox (7.59775pt too wide) in paragraph at lines 69--69
- []|\TU/lmss/m/n/6 0.9833021|
- []
-
-
-Overfull \hbox (4.47546pt too wide) in paragraph at lines 69--69
- []|\TU/lmss/m/n/6 66.82908|
- []
-
-
-Overfull \hbox (4.47546pt too wide) in paragraph at lines 69--69
- \TU/lmss/m/n/6 12.23762|
- []
-
-
-Overfull \hbox (6.38794pt too wide) in paragraph at lines 70--70
- []|\TU/lmss/m/n/6 32.47524|
- []
-
-
-Overfull \hbox (6.38794pt too wide) in paragraph at lines 70--70
- []|\TU/lmss/m/n/6 33.68559|
- []
-
-
-Overfull \hbox (6.38794pt too wide) in paragraph at lines 70--70
- []|\TU/lmss/m/n/6 6.768182|
- []
-
-) [32
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [33
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-21-1.pdf, id=348, 712.6625pt x 233.87375pt>
-File: bRegression_slides_files/figure-beamer/bRegression-21-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-21-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-21-1.pdf  used on input line 11.
-(luatex.def)             Requested size: 342.2916pt x 112.32948pt.
-) [34
-
-<./bRegression_slides_files/figure-beamer/bRegression-21-1.pdf>] (/home/ken/.TinyTeX/texmf-dist/tex/latex/microtype/mt-LatinModernRoman.cfg
-File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Modern Roman (RS)
-) [35
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [36
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [37
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (8.37831pt too wide) in paragraph at lines 12--12
-[]\TU/lmtt/m/n/10.95 ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'[] 
- []
-
-<bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf, id=388, 710.655pt x 218.8175pt>
-File: bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf  used on input line 14.
-(luatex.def)             Requested size: 342.30333pt x 105.39847pt.
-) [38
-
-<./bRegression_slides_files/figure-beamer/dsljhsdjlhf-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [39
-
-]
-<bRegression_slides_files/figure-beamer/trento-1.pdf, id=415, 689.57625pt x 212.795pt>
-File: bRegression_slides_files/figure-beamer/trento-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/trento-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/trento-1.pdf  used on input line 1316.
-(luatex.def)             Requested size: 342.29353pt x 105.62769pt.
-[40
-
-<./bRegression_slides_files/figure-beamer/trento-1.pdf>] [41
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-24-1.pdf, id=440, 712.6625pt x 218.8175pt>
-File: bRegression_slides_files/figure-beamer/bRegression-24-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-24-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-24-1.pdf  used on input line 16.
-(luatex.def)             Requested size: 342.2916pt x 105.09798pt.
-) [42
-
-<./bRegression_slides_files/figure-beamer/bRegression-24-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (4.38634pt too wide) in paragraph at lines 27--28
- []\TU/lmss/m/n/6 r.squared
- []
-
-
-Overfull \hbox (6.2946pt too wide) in paragraph at lines 29--30
- []\TU/lmss/m/n/6 adj.r.squared
- []
-
-
-Overfull \hbox (2.31946pt too wide) in paragraph at lines 49--50
- []\TU/lmss/m/n/6 nobs
- []
-
-
-Overfull \hbox (7.42767pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 0.8109538|
- []
-
-
-Overfull \hbox (6.22108pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 0.587686|
- []
-
-
-Overfull \hbox (4.30539pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 25.73828|
- []
-
-
-Overfull \hbox (7.42767pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 0.0022806|
- []
-
-
-Overfull \hbox (3.0988pt too wide) in paragraph at lines 53--53
- \TU/lmss/m/n/6 5.94828|
- []
-
-
-Overfull \hbox (6.22108pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 17.89656|
- []
-
-
-Overfull \hbox (6.22108pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 18.13488|
- []
-
-
-Overfull \hbox (6.22108pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 2.072249|
- []
-
-) [43
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [44
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [45
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (19.87581pt too wide) in paragraph at lines 19--19
-[]\TU/lmtt/m/n/10.95 ## -- Column specification ------------------------------------[] 
- []
-
-
-Overfull \hbox (83.11205pt too wide) in paragraph at lines 19--19
-[]\TU/lmtt/m/n/10.95 ## i Use `spec()` to retrieve the full column specification for this data.[] 
- []
-
-
-Overfull \hbox (140.59953pt too wide) in paragraph at lines 19--19
-[]\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.[] 
- []
-
-) [46
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb)
-Overfull \vbox (5412.80832pt too high) detected at line 1987
- []
-
-[47
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (4.19702pt too wide) in paragraph at lines 28--29
- []\TU/lmss/m/n/6 r.squared
- []
-
-
-Overfull \hbox (6.04431pt too wide) in paragraph at lines 30--31
- []\TU/lmss/m/n/6 adj.r.squared
- []
-
-
-Overfull \hbox (2.75165pt too wide) in paragraph at lines 36--37
- []\TU/lmss/m/n/6 p.value
- []
-
-
-Overfull \hbox (2.23602pt too wide) in paragraph at lines 50--51
- []\TU/lmss/m/n/6 nobs
- []
-
-
-Overfull \hbox (7.23836pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 0.2187781|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 9.708454|
- []
-
-
-Overfull \hbox (4.11607pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 43.03373|
- []
-
-
-Overfull \hbox (4.11607pt too wide) in paragraph at lines 54--54
- \TU/lmss/m/n/6 1714.741|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 55--55
- []|\TU/lmss/m/n/6 3439.483|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 55--55
- []|\TU/lmss/m/n/6 3460.193|
- []
-
-
-Overfull \hbox (6.07347pt too wide) in paragraph at lines 55--55
- []|\TU/lmss/m/n/6 43451.13|
- []
-
-) [48
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [49
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (3.84084pt too wide) in paragraph at lines 27--28
- []\TU/lmss/m/n/6 r.squared
- []
-
-
-Overfull \hbox (5.51807pt too wide) in paragraph at lines 29--30
- []\TU/lmss/m/n/6 adj.r.squared
- []
-
-
-Overfull \hbox (2.45644pt too wide) in paragraph at lines 35--36
- []\TU/lmss/m/n/6 p.value
- []
-
-
-Overfull \hbox (2.0467pt too wide) in paragraph at lines 49--50
- []\TU/lmss/m/n/6 nobs
- []
-
-
-Overfull \hbox (6.88217pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 0.0653162|
- []
-
-
-Overfull \hbox (5.73654pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 10.59632|
- []
-
-
-Overfull \hbox (3.75989pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 32.35466|
- []
-
-
-Overfull \hbox (2.61426pt too wide) in paragraph at lines 53--53
- \TU/lmss/m/n/6 1756.44|
- []
-
-
-Overfull \hbox (4.59091pt too wide) in paragraph at lines 53--54
- []|\TU/lmss/m/n/6 3518.88|
- []
-
-
-Overfull \hbox (5.73654pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 3531.306|
- []
-
-
-Overfull \hbox (2.61426pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 51986.6|
- []
-
-) [50
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [51
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [52
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/iffy8-1.pdf, id=540, 712.6625pt x 240.9pt>
-File: bRegression_slides_files/figure-beamer/iffy8-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/iffy8-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/iffy8-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [53
-
-<./bRegression_slides_files/figure-beamer/iffy8-1.pdf>] [54
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-32-1.pdf, id=563, 710.655pt x 240.9pt>
-File: bRegression_slides_files/figure-beamer/bRegression-32-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-32-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-32-1.pdf  used on input line 10.
-(luatex.def)             Requested size: 342.30333pt x 116.03502pt.
-) [55
-
-<./bRegression_slides_files/figure-beamer/bRegression-32-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [56
-
-]
-<bRegression_slides_files/figure-beamer/bRegression-34-1.pdf, id=586, 712.6625pt x 299.1175pt>
-File: bRegression_slides_files/figure-beamer/bRegression-34-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-34-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-34-1.pdf  used on input line 2247.
-(luatex.def)             Requested size: 342.2916pt x 143.66605pt.
-[57
-
-<./bRegression_slides_files/figure-beamer/bRegression-34-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [58
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [59
-
-]
-<bRegression_slides_files/figure-beamer/bRegression-36-1.pdf, id=620, 689.57625pt x 252.945pt>
-File: bRegression_slides_files/figure-beamer/bRegression-36-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-36-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-36-1.pdf  used on input line 2304.
-(luatex.def)             Requested size: 342.29353pt x 125.55745pt.
-[60
-
-<./bRegression_slides_files/figure-beamer/bRegression-36-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [61
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-38-1.pdf, id=646, 689.57625pt x 176.66pt>
-File: bRegression_slides_files/figure-beamer/bRegression-38-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-38-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-38-1.pdf  used on input line 12.
-(luatex.def)             Requested size: 342.29353pt x 87.69092pt.
-) [62
-
-<./bRegression_slides_files/figure-beamer/bRegression-38-1.pdf>] [63
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [64
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [65
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [66
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-41-1.pdf, id=694, 712.6625pt x 240.9pt>
-File: bRegression_slides_files/figure-beamer/bRegression-41-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-41-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-41-1.pdf  used on input line 10.
-(luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [67
-
-<./bRegression_slides_files/figure-beamer/bRegression-41-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-42-1.pdf, id=709, 710.655pt x 262.9825pt>
-File: bRegression_slides_files/figure-beamer/bRegression-42-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-42-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-42-1.pdf  used on input line 10.
-(luatex.def)             Requested size: 342.30333pt x 126.67155pt.
-) [68
-
-<./bRegression_slides_files/figure-beamer/bRegression-42-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/bRegression-43-1.pdf, id=724, 712.6625pt x 240.9pt>
-File: bRegression_slides_files/figure-beamer/bRegression-43-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/bRegression-43-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/bRegression-43-1.pdf  used on input line 10.
-(luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [69
-
-<./bRegression_slides_files/figure-beamer/bRegression-43-1.pdf>] [70
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [71
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [72
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [73
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (19.87581pt too wide) in paragraph at lines 25--25
-[]\TU/lmtt/m/n/10.95 ## -- Column specification ------------------------------------[] 
- []
-
-) [74
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [75
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-Overfull \hbox (4.38634pt too wide) in paragraph at lines 27--28
- []\TU/lmss/m/n/6 r.squared
- []
-
-
-Overfull \hbox (6.2946pt too wide) in paragraph at lines 29--30
- []\TU/lmss/m/n/6 adj.r.squared
- []
-
-
-Overfull \hbox (2.31946pt too wide) in paragraph at lines 49--50
- []\TU/lmss/m/n/6 nobs
- []
-
-
-Overfull \hbox (7.42767pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 0.7781401|
- []
-
-
-Overfull \hbox (5.03374pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 14.6752|
- []
-
-
-Overfull \hbox (4.30539pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 10.52204|
- []
-
-
-Overfull \hbox (7.42767pt too wide) in paragraph at lines 53--53
- []|\TU/lmss/m/n/6 0.0026702|
- []
-
-
-Overfull \hbox (4.30539pt too wide) in paragraph at lines 53--53
- \TU/lmss/m/n/6 50.97606|
- []
-
-
-Overfull \hbox (6.22108pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 111.9521|
- []
-
-
-Overfull \hbox (6.22108pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 114.7769|
- []
-
-
-Overfull \hbox (6.22108pt too wide) in paragraph at lines 54--54
- []|\TU/lmss/m/n/6 1938.254|
- []
-
-) [76
-
-] [77
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [78
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [79
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [80
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [81
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [82
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [83
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb
-<bRegression_slides_files/figure-beamer/basingstoke-1.pdf, id=857, 712.6625pt x 240.9pt>
-File: bRegression_slides_files/figure-beamer/basingstoke-1.pdf Graphic file (type pdf)
-<use bRegression_slides_files/figure-beamer/basingstoke-1.pdf>
-Package luatex.def Info: bRegression_slides_files/figure-beamer/basingstoke-1.pdf  used on input line 10.
-(luatex.def)             Requested size: 342.2916pt x 115.7042pt.
-) [84
-
-<./bRegression_slides_files/figure-beamer/basingstoke-1.pdf>]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [85
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [86
-
-]
-\openout4 = bRegression_slides.vrb
- (./bRegression_slides.vrb) [87
+] [17
 
 ]
 \tf@nav=\write7
 
-\openout7 = bRegression_slides.nav
+\openout7 = bAncova_slides.nav
 \tf@toc=\write8
 
-\openout8 = bRegression_slides.toc
+\openout8 = bAncova_slides.toc
 \tf@snm=\write9
 
-\openout9 = bRegression_slides.snm
-(./bRegression_slides.aux)
-Package rerunfilecheck Info: File `bRegression_slides.out' has not changed.
+\openout9 = bAncova_slides.snm
+(./bAncova_slides.aux)
+Package rerunfilecheck Info: File `bAncova_slides.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 )
 
 Here is how much of LuaTeX's memory you used:
- 34642 strings out of 477742
- 477240,1373583 words of node,token memory allocated
- 5522 words of node memory still in use:
-   57 hlist, 11 vlist, 12 rule, 19 disc, 9 local_par, 143 glue, 34 kern, 29 penalty, 4 margin_kern, 301 glyph, 128 attribute, 73 glue_spec, 128 attribute_list, 1 shape, 5 write, 1 user_defined, 1 pdf_dest, 46 pdf_colorstack nodes
-   avail lists: 1:4,2:9843,3:1741,4:401,5:399,6:564,7:47888,8:21,9:10112,10:18,11:209
- 52876 multiletter control sequences out of 65536+600000
- 84 fonts using 23612551 bytes
- 99i,16n,121p,1014b,660s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono12-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-italic.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-oblique.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans12-regular.otf>
-Output written on bRegression_slides.pdf (87 pages, 430481 bytes).
+ 33302 strings out of 477742
+ 125086,1144653 words of node,token memory allocated
+ 6929 words of node memory still in use:
+   69 hlist, 11 vlist, 14 rule, 40 disc, 11 local_par, 172 glue, 42 kern, 35 penalty, 6 margin_kern, 396 glyph, 146 attribute, 73 glue_spec, 146 attribute_list, 1 shape, 5 write, 1 user_defined, 1 pdf_dest, 54 pdf_colorstack nodes
+   avail lists: 1:3,2:1419,3:715,4:291,5:341,6:344,7:4126,8:12,9:2277,10:15,11:110
+ 52401 multiletter control sequences out of 65536+600000
+ 51 fonts using 12460159 bytes
+ 99i,16n,121p,1010b,513s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono9-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-oblique.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-italic.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf></home/ken/.TinyTeX/texmf-dist/fonts/opentype/public/lm/lmsans12-regular.otf>
+Output written on bAncova_slides.pdf (17 pages, 79456 bytes).
 
-PDF statistics: 988 PDF objects out of 1000 (max. 8388607)
- 786 compressed objects within 8 object streams
- 261 named destinations out of 1000 (max. 131072)
- 36 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 258 PDF objects out of 1000 (max. 8388607)
+ 190 compressed objects within 2 object streams
+ 51 named destinations out of 1000 (max. 131072)
+ 26 words of extra memory for PDF output out of 10000 (max. 100000000)
 

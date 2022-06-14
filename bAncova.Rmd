@@ -52,9 +52,10 @@ b 9 22
 
 ## Packages
 `tidyverse` and `broom`:
-```{r bAncova-1, eval=FALSE }
+```{r bAncova-1}
 library(tidyverse)
 library(broom)
+library(marginaleffects)
 ```
 
 ## Read in data
@@ -115,76 +116,23 @@ anova(prepost.1)
 
 * Interaction not significant. Will remove later.
 
+## Predictions
 
-## Predictions, with interaction included
+\tiny
+```{r}
+predictions(prepost.1, variables = c("before", "drug"))
+```
+\normalsize
 
-Make combinations of before score and drug:
-```{r bAncova-5 }
-new <- crossing(
-  before = c(5, 15, 25),
-  drug = c("a", "b")
-)
-new
+## Predictions (with interaction included), plotted
+
+```{r, fig.height=4}
+plot_cap(model = prepost.1, condition = c("before", "drug"))
 ```
 
-   
-
-## Do predictions: 
-
-```{r bAncova-6, size="small"}
-pred <- predict(prepost.1, new)
-preds <- bind_cols(new, pred = pred)
-preds
-```
-
- 
+Lines almost parallel, but not quite.
 
 
-
-## Making a plot with lines for each `drug`
-```{r AJHSA}
-g <- ggplot(prepost,
-  aes(x = before, y = after, colour = drug)) +
-  geom_point() + geom_line(data = preds, aes(y = pred))
-```
- 
-* Here, final line:
-
-
-  *   joins points by lines \emph{for different data
-set} (`preds` rather than `prepost`),
-
-  *   *different $y$* (`pred` rather than `after`),
-
-  * but same $x$ (`x=before` inherited from first `aes`).
-
-* Last line could (more easily) be 
-
-```{r bAncova-7, eval=F}
-geom_smooth(method = "lm", se = F)
-```
-
-which would work here, but not for later plot.
-
-
-
-
-
-
-## The plot
-
-* Lines almost parallel, but not quite.
- 
-* Non-parallelism (interaction) not significant:
-
-```{r nachwazzo, fig.height=3.5, echo=F}
-g
-```
- 
-
- 
-
- 
 
 ## Taking out interaction
 \small
@@ -202,39 +150,22 @@ anova(prepost.2)
 
 * Do predictions again and plot them.
 
+## Predictions
 
-
-## Predicted values again (no-interaction model)
-```{r bAncova-9 }
-pred <- predict(prepost.2, new)
-preds <- bind_cols(new, pred = pred)
-preds
+\tiny
+```{r}
+predictions(prepost.2, variables = c("before", "drug"))
 ```
 
- 
-Each increase of 10 in before score results in 8.3 in predicted after
-score, *the same for both drugs*.
+\normalsize
 
+## Plot of predicted values
 
-## Making a plot, again
-```{r bAncova-10 }
-g <- ggplot(
-  prepost,
-  aes(x = before, y = after, colour = drug)
-) +
-  geom_point() +
-  geom_line(data = preds, aes(y = pred))
+```{r, fig.height=4}
+plot_cap(prepost.2, condition = c("before", "drug"))
 ```
- 
-Exactly same as before, but using new predictions.
 
-
-## The no-interaction plot of predicted values
-```{r cabazzo,fig.height=3}
-g
-```
- 
-Lines now *parallel*. No-interaction model forces them
+This time the lines are *exactly* parallel. No-interaction model forces them
 to have the same slope. 
 
 

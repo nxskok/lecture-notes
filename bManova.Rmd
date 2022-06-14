@@ -197,7 +197,21 @@ hilo.2
 * `Manova` will also do *repeated measures*, coming up
 later.
 
+## Assumptions
 
+- normality of each response variable within each treatment group
+  - this is actually *multivariate* normality, with correlations
+
+- equal spreads: each response variable has same variances and correlations (with other response variables) within each treatment group. Here:
+  - yield has same spread for low and high fertilizer
+  - weight has same spread for low and high fertilizer
+  - correlation between yield and weight is same for low and high fertilizer
+- test equal spread using Box's $M$ test
+  - a certain amount of unequalness is OK, so only a concern if P-value from $M$-test is very small (eg. less than 0.001).
+  
+## Box's M test here
+
+vvv
 
 
 ## Another example: peanuts
@@ -261,5 +275,5 @@ on location and on variety
 
 * Understanding that dependence beyond our scope right now.
 
-
+- M-test?
 

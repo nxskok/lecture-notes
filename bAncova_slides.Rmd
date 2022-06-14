@@ -14,10 +14,6 @@ output:
 
 
 
-```{r bAncova-slides-1, child="preliminaries.Rmd", echo=F}
-```
-
-
 
 ```{r ancova, child="bAncova.Rmd"}
 

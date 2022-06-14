@@ -99,25 +99,16 @@ The blue things are all links:
 
 ## Assessment
 
--   Assignments: 10 total, due in weeks 2 through 10 and in the final exam period. Best 8 count, total 80% (10% each).
-    - these are like small take-home exams, so do not expect help on the assignments themselves
+-   Assignments: 8 total, due in weeks 2 through 10 and in the final exam period. Best 6 count, total 30% (5% each).
     - expect that each assignment will cover up to the Tuesday lecture before it is due
-    - will become available after the Friday tutorial, and will be due Monday at 11:59pm
-    - you will have a certain time (eg 3 hours) from when you open the assignment to when you must hand it in. A countdown clock will display in Quercus.
+    - will become available after the Friday tutorial, and will be due Monday at 11:59pm xxx
     - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
 -   Project: done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 20%.
+-   Midterm, final exams (in person). You *must pass* the final exam (50%) to pass the course.
 
 ## Grading
 
--   Assignments and projects will be graded out of 10 on this scale:
-
-    -   6/10 or less: Falls short of expectations for this course, with serious errors in coding or absent or deficient explanations.
-    -   7/10: As expected in this course. May be small coding errors or misconceptions.
-    -   8/10: Good work, no obvious coding errors, mostly accurate explanations.
-    -   9/10: Excellent work, showing clear understanding throughout.
-    -   10/10 (rare): Excellent work that shows additional insight.
-
--   Graders will also give feedback on how you can improve for the next assignment.
+-   Graders will give feedback on how you can improve for the next assignment.
 
 -   Grades are the grader's best assessment of the quality of the work, and are unlikely to change on appeal.
 

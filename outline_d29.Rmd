@@ -86,11 +86,11 @@ The first thing on each line is a link:
     - Best 6 count.
     - available on Tuesdays, due on Thursdays at 11:59pm
     - based on the previous week's lectures
-    - *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems that I will attach to each recorded lecture.
+    - *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems from PASIAS.
 - for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
     - project is due on the last day of classes.
-- midterm exam, final exam. Current plan is for in-person. See [course website](https://ritsokiguess.site/STAD29/old_exams.html) for old exams. 
-    - you *must pass* the final exam to pass the course.
+- midterm exam, final exam. See [course website](https://ritsokiguess.site/STAD29/old_exams.html) for old exams. 
+    - you *must pass* (50%) the final exam to pass the course.
 
 ## Grading schemes
 
@@ -99,14 +99,12 @@ The first thing on each line is a link:
 
 ## Grading
 
-- in contrast to STAC32, assignments will be graded more generously, because we will (I hope) have exams this time.
-- the grader may still have a few marks to allocate for excellent work.
 -   My (detailed) solutions will be available after each assignment is handed in.
 -   Assignments will be accepted up to 2 days late, at a penalty of 1% per *hour*.
 -   You have two "free" assignments (since only the best 6 count); you may miss these without explanation. 
--   There are no make-up assessments.
+-   There are no make-up assessments or other extensions.
 -   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
-- Detailed course policies are [here](https://ritsokiguess.site/STAD29/policies.pdf).
+
 
 
 ## Course material
@@ -132,7 +130,7 @@ The first thing on each line is a link:
 
 ## Expectations 1/3
 
--   I expect that you will do your own work in this course, and not seek help from outside this course. Expect consequences if you do not. 
+-   I expect that you will do your own work in this course, and not seek help from outside this course. Expect consequences if you do not do your own work. 
 -   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
 
 ## Expectations 2/3
