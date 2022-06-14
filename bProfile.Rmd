@@ -118,7 +118,50 @@ summary(dogs.2)$multivariate.tests$times
 
 - univariate is more powerful *if* it applies
 
-## 
+## Sphericity
+
+- The thing that decides whether the univariate tests apply is called "sphericity".
+- This holds if the outcomes have equal variance (to each other) and have the same (positive) correlation across subjects.
+- Tested using Mauchly's test (part of output)
+- If sphericity rejected, there are adjustments to the univariate P-values due to Huynh-Feldt and Greenhouse-Geisser. Huynh-Feldt better if responses not actually normal (safer). Or use multivariate test.
+
+## Univariate tests xxx
+
+\scriptsize
+
+```{r}
+summary(dogs.2)$sphericity.tests
+summary(dogs.2)$pval.adjustments
+summary(dogs.2)$univariate.tests
+```
+
+\normalsize
+
+## Comments
+
+- The sphericity test for the interaction is almost significant
+- The H-F adjusted P-value for the interaction is a bit bigger than the univariate one, but still strongly significant.
+- Therefore any lack of sphericity does not affect our conclusion: there is an interaction between drug and time
+- ie that the effect of time on log-histamine is different for the two drugs.
+
+## The multivariate test for interaction
+
+\tiny
+
+```{r}
+summary(dogs.2)$multivariate.tests$`drug:times`
+```
+
+\normalsize
+
+## Comments
+
+- The (appropriately adjusted) univariate test and the multivariate test should give similar results.
+- Here, univariate with Huynh-Feldt P-value was 0.00073, multivariate was 0.0200, rather different but both significant.
+- Significant interaction *is* the conclusion here.
+- If the interaction had not been significant:
+  - cannot remove interaction with time
+  - so look at univariate (better, especially if adjusted for sphericity) or multivariate tests of main effects in *this* model
 
 ## Wide and long format
 
@@ -128,7 +171,7 @@ for the two drugs.
 
 * Want to investigate interaction.
 
-## The wrong shapeF
+## The wrong shape
 
 * But data frame has several observations per line ("wide format"):
 
@@ -267,24 +310,38 @@ dogs.2 <- Manova(dogs.1,
  
 
 
-## Results and comments
+## Results (univariate)
 
-\footnotesize
+\scriptsize
+
+```{r}
+summary(dogs.2)$sphericity.tests
+summary(dogs.2)$pval.adjustments
+summary(dogs.2)$univariate.tests
+```
+
+\normalsize
+
+## Comments
+
+- sphericity: no problem (P-value 0.25)
+- univariate test for interaction no longer significant (P-value 0.082)
+- Huynh-Feldt adjusted P-value for interaction very similar, 0.094 (adjustment not really worth doing)
+- look at main effects:
+  - strong significance of time, even after taking out time 0
+  - actually *not* significant drug effect, despite interaction plot
+
+## Multivariate tests, all at once
+
+\small
+
 ```{r bProfile-12, error=TRUE}
 dogs.2
 ```
+
+\normalsize 
  
-\normalsize
-
-
-
-
-* Correct: interaction no longer significant.
-
-* Significant effect of time.
-
-* Drug effect not quite significant (some variety among dogs
-within drug).
+Same conclusions as for univariate tests, though with bigger P-values.
 
 
 
@@ -341,10 +398,6 @@ profiles like the trimethaphan dogs. This ambiguity is probably
 why the `drug` effect is not quite significant.
 
 
-## Assumptions
-
-sphericity (or earlier)
-
 ## Mixed models
 
 - Another way to fit repeated measures
@@ -357,8 +410,8 @@ sphericity (or earlier)
 
 ```{r bProfile-13, message=FALSE}
 library(lme4)
-# dogs.long
-dogs.2=lmer(lh~drug*time+(1|dog),data=dogs.long)
+# dogs.long including time zero
+dogs.3 <- lmer(lh~drug*time+(1|dog), data=dogs.long)
 ```
 
 - note specification of random effect: each dog has "random intercept" that moves log-histamine up or down for that dog over all times
@@ -369,16 +422,16 @@ dogs.2=lmer(lh~drug*time+(1|dog),data=dogs.long)
 - using `drop1`:
 
 ```{r bProfile-14}
-drop1(dogs.2,test="Chisq")
+drop1(dogs.3,test="Chisq")
 ```
 
 - Interaction again not significant, but P-value smaller than before
 
-## Re-fit without interaction
+## Re-fit without interaction xxx
 
 ```{r bProfile-15}
-dogs.3=update(dogs.2,.~.-drug:time)
-drop1(dogs.3,test="Chisq")
+dogs.4 <- update(dogs.3,.~.-drug:time)
+drop1(dogs.4,test="Chisq")
 ```
 
 - This time neither drug nor (surprisingly) time is significant.
@@ -417,7 +470,7 @@ exercise.long <- read_tsv(url)
    
 
 
-## The data
+## The data (some) xxx
 
 \footnotesize
 ```{r bProfile-17}
@@ -495,14 +548,28 @@ exercise.2 <- Manova(exercise.1,
 ```
 \normalsize
    
+## Sphericity tests
+
+```{r}
+summary(exercise.2)$sphericity.tests
+```
+
+No problem with sphericity; go to univariate tests.
+
+## Univariate tests
+
+```{r}
+summary(exercise.2)$univariate.tests
+```
 
 
-
-## Results
+## Univariate results xxx
 
 ```{r bProfile-22, echo=F}
 options(width=70)
 ```
+
+## Multivariate very similar xxx
 
 \scriptsize
 ```{r bProfile-23 }
@@ -608,10 +675,24 @@ runners.2 <- Manova(runners.1,
 ```
 \normalsize
    
+## Sphericity test
 
+```{r}
+summary(runners.2)$sphericity.tests
+```
 
+No problem, look at univariate tests
 
-## Results
+## Univariate tests xxx
+
+```{r}
+summary(runners.2)$univariate.tests
+```
+
+- Interaction still significant
+  - dependence of pulse rate on time still different for the two diets
+
+## Multivariate results (comparison) xxxx
 
 
 
@@ -621,23 +702,13 @@ runners.2
 ```
 \normalsize
    
-text under 
-
-* The `diet` by `time` interaction is still
-significant (at $\alpha=0.05$): the effect of time on pulse rates is different for
-the two diets.
-
-* At $\alpha=0.01$, the interaction is not significant, and then
-we have only two (very) significant main effects of `diet`
-and `time`. 
-
-
+Same.
 
 ## How is the effect of diet different over time?
 
 
-* Table of means. Only I need long data for this, so make it (in
-a pipeline):
+* Table of means. Only I need long data for this:
+
 ```{r bProfile-29 }
 runners.wide %>%
   pivot_longer(starts_with("min"), 
@@ -698,6 +769,5 @@ and time for the runners.
 
 
    
-
 
 
