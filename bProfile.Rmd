@@ -5,9 +5,9 @@
 * More than one response *measurement* for each subject. Might be
 
 
-* measurements of the same thing at different times
+  * measurements of the same thing at different times
 
-* measurements of different but related things
+  * measurements of different but related things
 
 
 * Generalization of matched pairs ("matched triples", etc.).
@@ -27,6 +27,7 @@ assumptions of independence will fail.
 ```{r bProfile-1, results="hide", message=FALSE}
 library(car)
 library(tidyverse)
+library(lme4) # for mixed models later
 ```
 
    
@@ -47,8 +48,7 @@ library(tidyverse)
 
 ## Read in data
 ```{r bProfile-2 }
-# my_url <- "http://ritsokiguess.site/datafiles/dogs.txt"
-my_url <- "~/teaching/d29/notes/dogs.txt"
+my_url <- "http://ritsokiguess.site/datafiles/dogs.txt"
 dogs <- read_table(my_url)
 ```
 
@@ -56,7 +56,7 @@ dogs <- read_table(my_url)
 
 
 ## Setting things up
-```{r bProfile-3, size="small"}
+```{r bProfile-3}
 dogs
 response <- with(dogs, cbind(lh0, lh1, lh3, lh5))
 dogs.1 <- lm(response ~ drug, data = dogs)
@@ -74,7 +74,7 @@ options(width = 70)
 ```
 
     
-\footnotesize 
+\small
 ```{r bProfile-5, error=TRUE}
 times <- colnames(response)
 times.df <- data.frame(times=factor(times))
@@ -94,16 +94,9 @@ dogs.2 <- Manova(dogs.1,
 summary(dogs.2)
 ```
 \normalsize
-```{r}
-names(summary(dogs.2))
-```
-
-```{r}
-summary(dogs.2)$multivariate.tests$times
-```
 
 
-## What there is here xxx
+## What there is here
 
 - three sets of tests, for
   - times
@@ -125,7 +118,7 @@ summary(dogs.2)$multivariate.tests$times
 - Tested using Mauchly's test (part of output)
 - If sphericity rejected, there are adjustments to the univariate P-values due to Huynh-Feldt and Greenhouse-Geisser. Huynh-Feldt better if responses not actually normal (safer). Or use multivariate test.
 
-## Univariate tests xxx
+## Univariate tests
 
 \scriptsize
 
@@ -163,7 +156,7 @@ summary(dogs.2)$multivariate.tests$`drug:times`
   - cannot remove interaction with time
   - so look at univariate (better, especially if adjusted for sphericity) or multivariate tests of main effects in *this* model
 
-## Wide and long format
+## Next
 
 - Interaction significant. Pattern of response over time different
 for the two drugs.
@@ -406,10 +399,9 @@ why the `drug` effect is not quite significant.
 - Use package `lme4` function `lmer` (like `lm` in some ways)
 - Uses long-format "tidy" data
 
-## Fitting the model
+## Fitting the model (uses `lme4`)
 
 ```{r bProfile-13, message=FALSE}
-library(lme4)
 # dogs.long including time zero
 dogs.3 <- lmer(lh~drug*time+(1|dog), data=dogs.long)
 ```
@@ -427,7 +419,7 @@ drop1(dogs.3,test="Chisq")
 
 - Interaction again not significant, but P-value smaller than before
 
-## Re-fit without interaction xxx
+## Re-fit without interaction
 
 ```{r bProfile-15}
 dogs.4 <- update(dogs.3,.~.-drug:time)
@@ -444,8 +436,8 @@ drop1(dogs.4,test="Chisq")
 * 30 people took part in an exercise study.
 
 * Each subject was
-randomly assigned to one of two diets ("low fat" or ``non-low
-fat'') and to one of three exercise programs ("at rest",
+randomly assigned to one of two diets ("low fat" or "non-low
+fat") and to one of three exercise programs ("at rest",
 "walking", "running").
 
 * There are $2\times3 = 6$ experimental treatments, and thus
@@ -459,18 +451,17 @@ exercise), so have repeated measures.
 
 
 
-## Reading the data xxx
+## Reading the data
 Separated by *tabs*:  
 ```{r bProfile-16 }
-# url <- "http://ritsokiguess.site/datafiles/exercise2.txt"
-url <- "~/teaching/d29/notes/exercise.txt"
+url <- "http://ritsokiguess.site/datafiles/exercise2.txt"
 exercise.long <- read_tsv(url)
 ```
 
    
 
 
-## The data (some) xxx
+## The data (some)
 
 \footnotesize
 ```{r bProfile-17}
@@ -558,18 +549,26 @@ No problem with sphericity; go to univariate tests.
 
 ## Univariate tests
 
+```{r, include=FALSE}
+w <- getOption("width")
+options(width = 120)
+```
+
+
+\scriptsize
 ```{r}
 summary(exercise.2)$univariate.tests
 ```
+\normalsize
 
-
-## Univariate results xxx
-
-```{r bProfile-22, echo=F}
-options(width=70)
+```{r, include=FALSE}
+options(width = w)
 ```
 
-## Multivariate very similar xxx
+- The three-way interaction is significant
+  - the effect of diet on pulse rate over time is different for the different exercise types
+
+## Multivariate very similar
 
 \scriptsize
 ```{r bProfile-23 }
@@ -675,28 +674,30 @@ runners.2 <- Manova(runners.1,
 ```
 \normalsize
    
-## Sphericity test
+## Sphericity tests
 
 ```{r}
 summary(runners.2)$sphericity.tests
 ```
 
-No problem, look at univariate tests
+- No problem, look at univariate tests.
 
-## Univariate tests xxx
+## Univariate tests
 
+\footnotesize
 ```{r}
 summary(runners.2)$univariate.tests
 ```
+\normalsize
 
 - Interaction still significant
   - dependence of pulse rate on time still different for the two diets
 
-## Multivariate results (comparison) xxxx
+## Multivariate results (comparison)
 
 
 
-\scriptsize
+\footnotesize
 ```{r bProfile-28 }
 runners.2
 ```

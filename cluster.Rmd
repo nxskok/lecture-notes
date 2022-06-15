@@ -4,10 +4,6 @@ output: html_notebook
 ---
 
 
-# Cluster analysis
-
-
-
 ## Cluster Analysis
 
   
@@ -27,6 +23,7 @@ output: html_notebook
 library(MASS) # for lda later
 library(tidyverse)
 library(ggrepel)
+library(MVTests) # for Box M
 ```   
 
   
@@ -913,16 +910,14 @@ Compared to 3-cluster solution:
     `clus` (6 clusters).
   - First, do they actually differ by group? (MANOVA):
 ```{r cluster-59}
-v = vital.s %>% select(-4) %>% as.matrix()
-cf = as.factor(vital.km6$cluster)
+v <- vital.s %>% select(-4) %>% as.matrix()
+cf <- as.factor(vital.km6$cluster)
 vital.manova=manova(v~cf)
 summary(vital.manova)
 ```  
 
 Oh yes.
     
-   
-  
 
 
 ## Discriminant analysis

@@ -18,18 +18,26 @@ professions/activities data; remote-sensing data.
 
 
 ## Packages
-```{r bDiscrim-1, eval=F}
+
+```{r bDiscrim-1, message=FALSE, warning=FALSE}
 library(MASS)
 library(tidyverse)
 library(ggrepel)
 library(ggbiplot)
+library(MVTests) # for Box M test
+library(conflicted)
+conflict_prefer("arrange", "dplyr")
+conflict_prefer("summarize", "dplyr")
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("mutate", "dplyr")
 ```
 
    
 
-`ggrepel` allows labelling points on a plot so they don't
+- `ggrepel` allows labelling points on a plot so they don't
 overwrite each other.
-
+- `ggbiplot` uses `plyr` rather than `dplyr`, which has functions by similar names.
 
 ## About `select`
 
@@ -198,9 +206,10 @@ change in LD1 score for 1-unit change in variables.
 
 * One-unit change in variables might not be comparable: 
 
+
 ```{r bDiscrim-10}
 hilo %>% select(-fertilizer) %>% 
-   summarize(across(everything(), ~quantile(., c(0.25, 0.75))))
+   summarize(across(yield:weight, ~quantile(., c(0.25, 0.75))))
 ```
 
 * Here, IQRs both 2.2, *identical*, so 1-unit change in each variable
@@ -968,6 +977,7 @@ of being correct was not usually too low.
 
 
 ## MANOVA
+
 Began discriminant analysis as a followup to MANOVA. Do our variables
 significantly separate the crops (excluding Clover)?
 
@@ -977,12 +987,22 @@ crops2.manova <- manova(response ~ crop, data = crops2)
 summary(crops2.manova)
 ```
 
- 
+## Box's M test
 
-Yes, at least one of the crops differs (in means) from the others. So
+We should also run Box's M test to check for equal variance of each variable across crops:
+
+\small
+```{r}
+summary(BoxM(response, crops2$crop))
+```
+\normalsize
+
+- The P-value for the M test is smaller even than our guideline of 0.001. So we should not take the MANOVA seriously.
+
+- *Apparently* at least one of the crops differs (in means) from the others. So
 it is worth doing this analysis.
 
-We did this the wrong way around, though!
+- We did this the wrong way around, though!
 
 
 ## The right way around
@@ -991,15 +1011,17 @@ We did this the wrong way around, though!
 * *First*, do a MANOVA to see whether any of the groups
 differ significantly on any of the variables.
 
+- Check that the MANOVA is believable by using Box's M test.
+
 * *If the MANOVA is significant*, do a discriminant
 analysis in the hopes of understanding how the groups are different.
 
 * For remote-sensing data (without Clover):
 
 
-* LD1 a fair bit more important than LD2 (definitely ignore LD3).
+  * LD1 a fair bit more important than LD2 (definitely ignore LD3).
 
-* LD1 depends mostly on `x1`, on which Cotton was high
+  * LD1 depends mostly on `x1`, on which Cotton was high
 and Corn was low. 
 
 
