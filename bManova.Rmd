@@ -356,6 +356,21 @@ g1
 g2
 ```
 
+## Alternative: show both these plots at once:
+
+```{r}
+ggplot(d, aes(sample = xvals)) + stat_qq() + 
+  stat_qq_line() +
+  facet_grid(xname ~ location + variety, 
+             scales = "free") -> g3
+```
+
+## The combined plot
+
+```{r, echo = FALSE, fig.height=5.5}
+g3
+```
+
 
 ## Comments
 
