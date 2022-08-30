@@ -1,12 +1,12 @@
 ## This course
 
--   STAC32, Applications of Statistical Methods (Fall 2021)
+-   STAC32, Applications of Statistical Methods (Fall 2022)
 
 -   Classes:
 
-    -   2 hours of lectures / week, in person (LEC01), async recorded (LEC60)
-    -   1.5 hours of tutorial / week, in person or online **starting in week 1**
-    -   "office hours" on Zoom only, by appointment.
+    -   2 hours of lectures / week, in person.
+    -   1 hour of tutorial / week, in person **starting in week 1**
+    -   "office hours" in person only
 
 -   Instructor:
 
@@ -25,11 +25,11 @@
 
 -   STAB57 is *not* suitable preparation for this course. If you have that, you should take STAC33.
 
--   Note that you may not combine the Applied Minor Program in Statistics with any other Statistics, Mathematics or Computer Science program.
+-   Note that you may not combine the Applied Minor Program in Statistics with any other Statistics, Mathematics or Computer Science program, with the exception of the Computer Science Minor.
 
 -   I check prerequisites.
 
-## STAC53
+## STAC53 (not relevant for most of you)
 
 -   Check your Degree Explorer.
 
@@ -53,9 +53,7 @@
 
 -   Option 2: come to tutorial and ask the TAs or me.
 
--   Option 3: I am also willing to meet at other times on Zoom if you want to chat. Office hours are after lecture. Arrange a time through [Calendly](https://calendly.com/ken-butler). 
-    - click on 15-minute meeting, select date and time.
-    - if you don't want to meet after all, *cancel* the meeting (see email confirmation).
+-   Option 3: office hours. 
 
 ## E-mail
 
@@ -88,12 +86,7 @@ The blue things are all links:
 
 -   [Course website](http://ritsokiguess.site/STAC32/): course news, reminders, lecture notes and code, assignment solutions, other stuff I want to share with you
 
--   [Computer requirements](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
-
-    -   to get the most out of online tutorials, you will want a working camera and microphone
-    -   can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer
-    
--   [Practice problems (PASIAS)](http://ritsokiguess.site/pasias/) for you to practice on and for tutorials.
+-   [PASIAS](http://ritsokiguess.site/pasias/) practice problems for you to work through, with my solutions.
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
@@ -101,10 +94,10 @@ The blue things are all links:
 
 -   Assignments: 8 total, due in weeks 2 through 10 and in the final exam period. Best 6 count, total 30% (5% each).
     - expect that each assignment will cover up to the Tuesday lecture before it is due
-    - will become available after the Friday tutorial, and will be due Monday at 11:59pm xxx
+    - will become available after the Wednesday tutorial, and will be due Monday at 11:59pm
     - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
--   Project: done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 20%.
--   Midterm, final exams (in person). You *must pass* the final exam (50%) to pass the course.
+-   Project: done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 10%.
+-   Midterm (25%), final (35%) exams  (in person). You *must pass* the final exam (get at least 50% on that exam) to guarantee passing the course.
 
 ## Grading
 
@@ -116,10 +109,10 @@ The blue things are all links:
 
 ## Policies
 
--   There is a penalty for late work, and no work is accepted more than three days late. I will want to post my solutions for everyone to learn from. (In any case, allowing extensions will shorten your time to prepare for the next assignment, and thus offers you no advantage.)
--   You have two "free" assignments (since only the best 8 count); you may miss these without explanation. If circumstances make it impossible to hand in work beyond that, you may not learn enough from this course to be successful in the next one (STAD29).
--   There are no make-up assessments.
--   Accommodations (through Accessability) consist of extra time to work on assignments, *not* of delays to the due date. The due date is the same for everyone.
+-   There is a penalty for late work (1% per *hour*), and no work is accepted more than two days late. I will want to post my solutions for everyone to learn from. 
+-   You have two "free" assignments (since only the best 6 count); you may miss these without explanation. If you have to miss more assignments than this, consider whether you will be able to catch up the missed work in time to write good exams.
+-   There are no make-up assessments. If you miss the midterm exam, the weight automatically goes onto the final exam.
+-   Accommodations (through Accessability only) consist of a maximum extension of two days, that you must request individually before the due date. With weekly assignments, longer extensions do you no favours because you are taking away time to prepare for the next one.
 -   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
 
 ## Course material
@@ -150,14 +143,15 @@ In R:
 
 ## Expectations 2/3
 
--   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me.
+-   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me. Everything in the course, unless otherwise stated, can be completed using this material.
 -   Anything else, for example, material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there.
 -   If you want credit for any ideas that come from outside the course materials, you must say where they came from.
--   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view.
+-   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view, and claiming that an idea from outside the course is yours when it is not is *plagiarism*.
 
 ## Expectations 3/3
 
 -   I expect you to learn how to do things *as they are done in this course*. You will also make STAD29 much easier if you do that.
--   If you tell me you're having trouble, I will not judge you or think less of you. I hope you'll extend me the same grace. (From [here](https://econf20.classes.andrewheiss.com/syllabus/).)
+-   Detailed [course policies](https://ritsokiguess.site/STAC32/policies.pdf). If you have a question about administrative policies in the course, look here first.
+-   If you tell me you're having trouble, I will not judge you or think less of you. (From [here](https://econf20.classes.andrewheiss.com/syllabus/).)
 -   [This (video)](https://twitter.com/i/status/1293543531496308736).
 -   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.

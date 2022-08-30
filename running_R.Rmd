@@ -1,29 +1,22 @@
 ## Running R online
 
-Go to [https://jupyter.utoronto.ca/hub/login](https://jupyter.utoronto.ca/hub/login). 
+Go to [https://jupyter.utoronto.ca](https://jupyter.utoronto.ca). 
 
-You want to see this (if you don't, see next two slides):
+You want to see this:
 
 ![](Screenshot_2021-06-14_14-39-44.png){height=50%}
 
 If you do, find the line that says "after logging in, open" and click the button next to R Studio to make it blue. Then click the orange Log In to Start, and log in with UTorID and password.
 
 
-## Problems 1
 
-You might instead see this:
+## Next
 
-![](Screenshot_2021-06-14_14-46-12.png){height=50%}
-
-It looks exactly the same, but has no option to start R Studio. Log in anyway, which will bring you to the screen shown in Problems 2.
-
-## Problems 2
-
-You might see something that looks like this:
+You'll see something that looks like this, with some files (maybe):
 
 ![](Screenshot_2021-06-14_15-00-24.png){height=50%}
 
-Click Logout (top right), even if you just logged in. This should bring you back to where you should be, from where you can select R Studio and log in.
+Click on New, on the right. From the dropdown, select R Studio (near the bottom).
 
 ## How R Studio looks
 
@@ -123,7 +116,7 @@ save it, and run Preview again.
 
 ![](r30.png)
 
-## Click on Download
+## Click on Download R
 
 - R is stored on numerous “mirrors”, sites around the world. The top
 one, “0-Cloud”, picks one for you. Or you can choose one close to
@@ -151,36 +144,30 @@ you (might be faster), eg. U of T:
 
 ## The actual download
 
-- The version number, here 3.5.3, will be different for you.
+- The version number is, as I write this, 4.2.1, but the layout is the same.
 - Click something like the top link below:
 
 ![](dlr35.png)
 
 - Then install usual way.
-- Or, for Mac, download and install `R-3-5-1.pkg`.
-- Or, for Linux, click your distribution (eg. Ubuntu), then one of the
-cran35 links according to your version, then eg.
-`r-base-core_3.5.1-1bionic_amd64.deb`.
+- Or, for Mac, download and install `R-4-2-1.pkg` (High Sierra) or `R-4.2.1-arm64.pkg` (Big Sur).
+- Or, for Linux, click your distribution (eg. Ubuntu), then follow the instructions.
 
 ## Now, R Studio
 
 - Go [here](https://www.rstudio.com/). (The word "here" is clickable link.)
-- Find this, and click Download:
-
-![](rst1.png){height=200px}
+- Scroll right down to the bottom, find Products, and click R Studio Desktop.
 
 
 ## Scroll down...
 
-- to this:
-
-![](rstlic.png)
+- There are two choices. You want the free one on the left.
 
 - Click left-side Download.
 
 ## Find the one for you
 
-- Scroll down, and click the installer for your machine
+- Scroll down to All Installers, and click the installer for your machine
     (Windows, Mac, several flavours of Linux). Install as usual.
     
 ![](rr40.png)
@@ -198,7 +185,7 @@ cran35 links according to your version, then eg.
 
 - First time you run R Studio, click on Console window, and, next to the
 `>`, type `install.packages("tidyverse")`. Let it do
-what it needs to.
+what it needs to. (You need to do this on your machine. On `jupyter.utoronto.ca`, it's already been done.)
 
 ## Projects
 
