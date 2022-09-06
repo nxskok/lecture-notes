@@ -92,7 +92,7 @@ The blue things are all links:
 
 ## Assessment
 
--   Assignments: 8 total, due in weeks 2 through 10 and in the final exam period. Best 6 count, total 30% (5% each).
+-   Assignments: 8 total, due after weeks 2 through 10. Best 6 count, total 30% (5% each).
     - expect that each assignment will cover up to the Tuesday lecture before it is due
     - will become available after the Wednesday tutorial, and will be due Monday at 11:59pm
     - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
