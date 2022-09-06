@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  31 AUG 2022 11:03
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  6 SEP 2022 10:41
  restricted system commands enabled.
 **outline_c32_slides.tex
 (./outline_c32_slides.tex
@@ -1401,7 +1401,7 @@ alty, 8 margin_kern, 445 glyph, 161 attribute, 67 glue_spec, 161 attribute_list,
  3 pdf_action, 60 pdf_colorstack nodes
    avail lists: 1:2,2:456,3:138,4:313,5:240,6:53,7:2971,8:18,9:449,10:18,11:171
  51468 multiletter control sequences out of 65536+600000
- 49 fonts using 12216455 bytes
+ 49 fonts using 12216295 bytes
  128i,16n,121p,1014b,673s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/opentype/public/lm/lmmono10-italic.otf></usr/share/texmf
 /fonts/opentype/public/lm/lmsans10-oblique.otf></usr/share/texmf/fonts/opentype/
@@ -1409,7 +1409,7 @@ public/lm/lmmono10-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans
 10-bold.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-regular.otf></us
 r/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf/fon
 ts/opentype/public/lm/lmsans12-regular.otf>
-Output written on outline_c32_slides.pdf (16 pages, 51447 bytes).
+Output written on outline_c32_slides.pdf (16 pages, 51439 bytes).
 
 PDF statistics: 212 PDF objects out of 1000 (max. 8388607)
  162 compressed objects within 2 object streams
