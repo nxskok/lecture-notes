@@ -23,7 +23,7 @@ library(tidyverse)
 
 - `.csv` or “comma-separated values” is a way of turning spreadsheet
 values into plain text.
-- Easy to read into R (or SAS, later)
+- Easy to read into R
 - but does not preserve formulas. (This is a reason for doing all your
 calculations in your statistical software, and only having data in your
 spreadsheet.)
