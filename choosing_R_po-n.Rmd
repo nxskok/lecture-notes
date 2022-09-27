@@ -1,16 +1,9 @@
 ## Doing things with data frames
-
-```{r}
-library(tidyverse)
-```
-
-
 Let’s go back to our Australian athletes: 
 
 ```{r read-athletes, echo=F}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
-# athletes <- read_delim(my_url, "\t")
 ```
 
 \footnotesize
@@ -36,7 +29,6 @@ athletes %>% select(Sport, Hg, BMI)
 
 ```{r choosing-R-4}
 athletes %>% select(Sex:WCC)
-# athletes %>% select(2:6)
 ```
 
 ## Choosing all-but some columns
@@ -65,7 +57,6 @@ athletes %>% select(starts_with("S"))
 either uppercase or lowercase:
 
 ```{r choosing-R-7}
-# Athletes
 athletes %>% select(ends_with("c"))
 ```
 
@@ -74,7 +65,7 @@ athletes %>% select(ends_with("c"))
 This works with any of the select-helpers:
 
 ```{r choosing-R-8}
-athletes %>% select(ends_with("C", ignore.case=FALSE))
+athletes %>% select(ends_with("C", ignore.case=F))
 ```
 
 
@@ -102,7 +93,6 @@ athletes %>% select(matches("^.t$"))
 
 ```{r choosing-R-11}
 athletes %>% select(where(is.character))
-athletes %>% select(where(is.numeric))
 ```
 
 

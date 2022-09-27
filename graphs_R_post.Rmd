@@ -81,8 +81,10 @@ ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
 Grouped bar chart:
 
 ```{r graphs-R-6, fig.height=3.15}
-ggplot(athletes, aes(x = Sport, fill = Sex)) +
+ggplot(athletes, aes(x = Sport, fill = Sex)) + 
   geom_bar(position = "dodge")
+
+
 ```
 
 ## BMI by gender
@@ -117,7 +119,7 @@ ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
 
 ```{r graphs-R-11, fig.height=3.6}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
-  geom_point()
+  geom_point() + geom_smooth(method = "lm")
 ```
 
 ## Height by weight for each sport, with facets
