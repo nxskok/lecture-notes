@@ -17,18 +17,18 @@
 
 ## Blue Jays attendances
 
-```{r bootstrap-R-post-1, echo=FALSE, message=FALSE}
+```{r bootstrap-R-1, echo=FALSE, message=FALSE}
 jays <- read_csv("http://ritsokiguess.site/datafiles/jays15-home.csv")
 set.seed(457299)
 ```
 
-```{r bootstrap-R-post-2}
+```{r bootstrap-R-2}
 jays$attendance
 ```
 
 - A bootstrap sample:
 
-```{r bootstrap-R-post-3}
+```{r bootstrap-R-3}
 s <- sample(jays$attendance, replace = TRUE)
 s
 ```
@@ -38,13 +38,13 @@ s
 - A bootstrap sample is same size as original, but contains repeated values (eg. 15062) and missing ones (42917).
 - We need the mean of our bootstrap sample:
 
-```{r bootstrap-R-post-4}
+```{r bootstrap-R-4}
 mean(s)
 ```
 
 - This is a little different from the mean of our actual sample:
 
-```{r bootstrap-R-post-5}
+```{r bootstrap-R-5}
 mean(jays$attendance)
 ```
 
@@ -55,7 +55,7 @@ mean(jays$attendance)
 
 - Begin by setting up a dataframe that contains a row for each bootstrap sample. I usually call this column `sim`. Do just 4 to get the idea:
 
-```{r bootstrap-R-post-6}
+```{r bootstrap-R-6}
 tibble(sim = 1:4)
 ```
 
@@ -64,12 +64,10 @@ tibble(sim = 1:4)
 - Then set up to work one row at a time, and draw a bootstrap sample of the attendances in each row:
 
 \small
-```{r bootstrap-R-post-7}
+```{r bootstrap-R-7}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
-  mutate(sample = list(sample(jays$attendance, replace = TRUE))) 
-# %>% 
-  # unnest(sample)
+  mutate(sample = list(sample(jays$attendance, replace = TRUE)))
 ```
 \normalsize
 
@@ -82,7 +80,7 @@ tibble(sim = 1:4) %>%
 - Find the mean of each sample:
 
 \footnotesize
-```{r bootstrap-R-post-8}
+```{r bootstrap-R-8}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
@@ -97,7 +95,7 @@ tibble(sim = 1:4) %>%
 - rather pointless here, but to get the idea:
 
 \footnotesize
-```{r bootstrap-R-post-9}
+```{r bootstrap-R-9}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
@@ -108,7 +106,7 @@ tibble(sim = 1:4) %>%
 
 ## The (pointless) histogram
 
-```{r bootstrap-R-post-10}
+```{r bootstrap-R-10}
 g
 ```
 
@@ -117,7 +115,7 @@ g
 - say 1000, and put a decent number of bins on the histogram also:
 
 \footnotesize
-```{r bootstrap-R-post-11}
+```{r bootstrap-R-11}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
@@ -128,7 +126,7 @@ tibble(sim = 1:1000) %>%
 
 ## The (better) histogram
 
-```{r bootstrap-R-post-12}
+```{r bootstrap-R-12}
 g
 ```
 
@@ -146,7 +144,7 @@ g
 - You might have been wondering about this:
 
 \small
-```{r bootstrap-R-post-13}
+```{r bootstrap-R-13}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE)))
@@ -168,13 +166,12 @@ tibble(sim = 1:4) %>%
 
 ## Kids learning to read
 
-```{r bootstrap-R-post-14, echo=FALSE, message=FALSE}
+```{r bootstrap-R-14, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
-kids
 ```
 
-```{r bootstrap-R-post-15}
+```{r bootstrap-R-15}
 ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 ```
 
@@ -183,7 +180,7 @@ ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 
 - Use `filter` to select rows where something is true:
 
-```{r bootstrap-R-post-16}
+```{r bootstrap-R-16}
 kids %>% filter(group=="c") -> controls
 controls
 ```
@@ -191,7 +188,7 @@ controls
 ## Bootstrap these
 
 \footnotesize
-```{r bootstrap-R-post-17}
+```{r bootstrap-R-17}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(controls$score, replace = TRUE))) %>% 
@@ -202,16 +199,15 @@ tibble(sim = 1:1000) %>%
 
 ## Plot
 
-```{r bootstrap-R-post-18}
+```{r bootstrap-R-18}
 g
 ```
 
 ## ... and the treatment group:
 
 \footnotesize
-```{r bootstrap-R-post-19}
+```{r bootstrap-R-19}
 kids %>% filter(group=="t") -> treats
-# treats
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
@@ -222,7 +218,7 @@ tibble(sim = 1:1000) %>%
 
 ## Histogram
 
-```{r bootstrap-R-post-20}
+```{r bootstrap-R-20}
 g
 ```
 

@@ -4,8 +4,6 @@
 ```{r bootstrap-1, eval=F}
 library(tidyverse)
 library(bootstrap)
-library(conflicted)
-conflict_prefer("filter", "dplyr")
 ```
 
 [My source for this](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
@@ -253,8 +251,7 @@ tibble(sim = 1:1000) %>%
 ## A picture of this
 
 ```{r bootstrap-23, fig.height=4}
-cors
-ggplot(cors, aes(x=my_cor))+geom_histogram(bins=20)
+ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 ```
 
 ## Comments and next steps

@@ -73,7 +73,7 @@ set.seed(457299)
 
 
 ```{r inference-2-R-2}
-x = rnorm(15, 8, 4)
+x  <-  rnorm(15, 8, 4)
 x
 ```
 
@@ -200,13 +200,13 @@ calculation for each one.
 - Do power for variety of sample sizes, from 10 to 100 in steps of 10:
 
 ```{r inference-2-R-9}
-ns=seq(10,100,10)
+ns <- seq(10,100,10)
 ns
 ```
 
 - Calculate powers:
 ```{r inference-2-R-10}
-ans=power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
+ans <- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
 ans$power
 ```
 
@@ -216,7 +216,7 @@ ans$power
 ## Building a plot (1/2)
 - Make a data frame out of the values to plot:
 ```{r inference-2-R-11}
-d=tibble(n=ns, power=ans$power)
+d <- tibble(n=ns, power=ans$power)
 d
 ```
 
@@ -225,7 +225,7 @@ d
 - Plot these as points joined by lines, and add horizontal line at 1
 (maximum power): 
 ```{r inference-2-R-12}
-g = ggplot(d, aes(x = n, y = power)) + geom_point() + 
+g  <-  ggplot(d, aes(x = n, y = power)) + geom_point() + 
   geom_line() + 
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
@@ -263,11 +263,11 @@ will be).
 - First make all combos of mean and sample size:
 
 ```{r inference-2-R-16}
-means=seq(6,10,0.5)
+means <- seq(6,10,0.5)
 means
-ns=c(15,30)
+ns <- c(15,30)
 ns
-combos=crossing(mean=means, n=ns)
+combos <- crossing(mean=means, n=ns)
 ```
 
 ## The combos
@@ -282,7 +282,7 @@ combos
 
 
 ```{r inference-2-R-18}
-ans=with(combos, power.t.test(n=n, delta=mean-10, sd=4, 
+ans <- with(combos, power.t.test(n=n, delta=mean-10, sd=4, 
                               type="one.sample"))
 ans
 ```
@@ -298,7 +298,7 @@ ans$power
 ##  Make a data frame to plot, pulling things from the right places:
 
 ```{r inference-2-R-20}
-d=tibble(n=factor(combos$n), mean=combos$mean, 
+d <- tibble(n=factor(combos$n), mean=combos$mean, 
          power=ans$power)
 d
 ```
@@ -306,7 +306,7 @@ d
 ##  then make the plot:
 
 ```{r inference-2-R-21}
-g = ggplot(d, aes(x = mean, y = power, colour = n)) +
+g  <-  ggplot(d, aes(x = mean, y = power, colour = n)) +
   geom_point() + geom_line() +
   geom_hline(yintercept = 1, linetype = "dashed") +
   geom_vline(xintercept = 10, linetype = "dotted")
@@ -336,14 +336,14 @@ true mean needs to be less than 6.)
 Similar procedure to before:
 
 ```{r inference-2-R-23}
-means=c(7, 8)
-ns=seq(10, 40, 5)
-combos=crossing(mean=means, n=ns)
-ans=with(combos, power.t.test(n=n, delta=10-mean, sd=4, 
+means <- c(7, 8)
+ns <- seq(10, 40, 5)
+combos <- crossing(mean=means, n=ns)
+ans <- with(combos, power.t.test(n=n, delta=10-mean, sd=4, 
                               type="one.sample"))
-d=tibble(mean=factor(combos$mean), n=combos$n, 
+d <- tibble(mean=factor(combos$mean), n=combos$n, 
          power=ans$power)
-g=ggplot(d, aes(x=n, y=power, colour=mean)) + 
+g <- ggplot(d, aes(x=n, y=power, colour=mean)) + 
   geom_point() + geom_line() +
   geom_hline(yintercept=1,linetype="dashed")  
 ```
