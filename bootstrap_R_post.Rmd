@@ -26,6 +26,11 @@ set.seed(457299)
 jays$attendance
 ```
 
+```{r}
+ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
+```
+
+
 - A bootstrap sample:
 
 ```{r bootstrap-R-3}
@@ -100,7 +105,7 @@ tibble(sim = 1:4) %>%
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3) -> g
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3)
 ```
 \normalsize
 
@@ -116,11 +121,11 @@ g
 
 \footnotesize
 ```{r bootstrap-R-11}
-tibble(sim = 1:1000) %>% 
+tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) 
 ```
 \normalsize
 
@@ -129,6 +134,8 @@ tibble(sim = 1:1000) %>%
 ```{r bootstrap-R-12}
 g
 ```
+
+
 
 ## Comments
 
@@ -181,6 +188,7 @@ ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 - Use `filter` to select rows where something is true:
 
 ```{r bootstrap-R-16}
+kids
 kids %>% filter(group=="c") -> controls
 controls
 ```
@@ -193,7 +201,8 @@ tibble(sim = 1:1000) %>%
   rowwise() %>% 
   mutate(sample = list(sample(controls$score, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
+  # ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
 ```
 \normalsize
 
@@ -208,6 +217,7 @@ g
 \footnotesize
 ```{r bootstrap-R-19}
 kids %>% filter(group=="t") -> treats
+treats
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
@@ -222,8 +232,26 @@ tibble(sim = 1:1000) %>%
 g
 ```
 
+```{r bootstrap-R-19}
+kids %>% filter(group=="t") -> treats
+treats
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
+  mutate(my_mean = mean(sample)) %>% 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
+```
+
 ## Comments
 
 - sampling distributions of sample means both look pretty normal
 - as we thought, no problems with our two-sample $t$ at all.
+
+## if time
+
+talk about normal quantile plot
+
+```{r}
+t.test(score~group, data = kids, alternative = "greater")
+```
 

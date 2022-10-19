@@ -185,7 +185,7 @@ Long tails (or a very sharp peak):
 
 ```{r t-small, fig.height=4.5}
 d <- tibble(x=rt(300, 3))
-ggplot(d, aes(x=x)) + geom_histogram(bins=10)
+ggplot(d, aes(x=x)) + geom_histogram(bins=15)
 ```
 
 

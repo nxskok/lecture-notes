@@ -1,4 +1,11 @@
 
+packages
+
+```{r}
+libra
+```
+
+
 ## Duality between confidence intervals and hypothesis tests 
 - Tests and CIs really do the same thing, if you look at them the right
 way. They are both telling you something about a parameter, and
