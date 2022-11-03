@@ -17,7 +17,7 @@ not (“no”). Some of the data:
 ```{r inference-5-R-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
-dst %>% slice_sample(n=5) # randomly sample 5 rows
+dst  # randomly sample 5 rows
 ```
 
 ## ... continued
@@ -25,7 +25,7 @@ dst %>% slice_sample(n=5) # randomly sample 5 rows
 Count up individuals in each category combination, and arrange in
 contingency table:
 ```{r inference-5-R-2}
-tab=with(dst,table(gender,agree))
+tab <- with(dst, table(gender, agree))
 tab
 ```
 
@@ -39,7 +39,7 @@ there is really some association.
 ## ...And finally
 
 ```{r inference-5-R-3}
-chisq.test(tab,correct=F)
+chisq.test(tab, correct=FALSE)
 ```
 
 - Reject null hypothesis of no association
@@ -78,7 +78,7 @@ kids <- read_delim(my_url," ")
 
 - Make table of above/below vs. group:
 ```{r inference-5-R-6}
-tab=with(kids,table(group,score>m))
+tab <- with(kids, table(group, score > m))
 tab
 ```
 
@@ -160,14 +160,14 @@ rats %>% slice_sample(n=12)
 ## Boxplots
 
 ```{r inference-5-R-11, fig.height=3.7}
-ggplot(rats,aes(y=density,x=group))+geom_boxplot()
+ggplot(rats, aes(y=density, x=group)) + geom_boxplot()
 ```
 
 ## Or, arranging groups in data (logical) order
 
 ```{r inference-5-R-12, fig.height=3.5}
-ggplot(rats,aes(y=density,x=fct_inorder(group)))+
-geom_boxplot()
+ggplot(rats, aes(y=density, x=fct_inorder(group))) +
+  geom_boxplot()
 ```
 
 ## Analysis of Variance
@@ -181,7 +181,7 @@ others.
 ## Testing: ANOVA in R
 
 ```{r inference-5-R-13}
-rats.aov=aov(density~group,data=rats)
+rats.aov <- aov(density~group,data=rats)
 summary(rats.aov)
 ```
 
@@ -205,7 +205,7 @@ rats %>% filter(group=="Highjump") -> highs
 ## Control vs. low
 
 ```{r inference-5-R-15}
-t.test(controls$density,lows$density)
+t.test(controls$density, lows$density)
 ```
 
 No sig. difference here.
@@ -213,7 +213,7 @@ No sig. difference here.
 ## Control vs. high
 
 ```{r inference-5-R-16}
-t.test(controls$density,highs$density)
+t.test(controls$density, highs$density)
 ```
 
 These are different.
@@ -221,7 +221,7 @@ These are different.
 ## Low vs. high
 
 ```{r inference-5-R-17}
-t.test(lows$density,highs$density)
+t.test(lows$density, highs$density)
 ```
 
 These are different too.
@@ -263,14 +263,14 @@ different.
 ## Tukey on rat data
 
 ```{r inference-5-R-18, echo=F}
-width=getOption("width")
-options(width=60)
+width <- getOption("width")
+options(width = 60)
 ```
 
 
 \small
 ```{r inference-5-R-19}
-rats.aov=aov(density~group,data=rats)
+rats.aov <- aov(density~group, data = rats)
 TukeyHSD(rats.aov)
 ```
 \normalsize
@@ -297,14 +297,12 @@ Lowjump-Highjump 0.0298     0.0045
 - Tukey P-values (mostly) higher.
 - Proper adjustment for doing three t-tests at once, not just one in
 isolation.
-- `lowjump-highjump` comparison would no longer be significant at
-$\alpha = 0.01$.
 
 ## Checking assumptions
 
 ```{r inference-5-R-21, fig.height=3.5}
-ggplot(rats,aes(y=density,x=fct_inorder(group)))+
-geom_boxplot()
+ggplot(rats,aes(y = density, x = fct_inorder(group)))+
+  geom_boxplot()
 ```
 
 Assumptions:
@@ -322,16 +320,16 @@ ggplot(rats, aes(sample = density)) + stat_qq() +
 ## The assumptions
 - Normally-distributed data within each group
 - Equal group SDs.
-These are shaky here because:
-- control group has outliers
-- highjump group appears to have less spread than others.
-Possible remedies (in general):
-- Transformation of response (usually works best when SD increases
+- These are shaky here because:
+  - control group has outliers
+  - highjump group appears to have less spread than others.
+- Possible remedies (in general):
+  - Transformation of response (usually works best when SD increases
 with mean)
-- If normality OK but equal spreads not, can use Welch ANOVA.
+  - If normality OK but equal spreads not, can use Welch ANOVA.
 (Regular ANOVA like pooled t-test; Welch ANOVA like
 Welch-Satterthwaite t-test.)
-- Can also use Mood’s Median Test (see over). This works for any
+  - Can also use Mood’s Median Test (see over). This works for any
 number of groups.
 
 ## Mood’s median test 1/4
@@ -347,7 +345,7 @@ number of groups.
 overall median:
 
 ```{r inference-5-R-24}
-tab = with(rats, table(group, density > m))
+tab <- with(rats, table(group, density > m))
 tab
 ```
 
@@ -413,7 +411,7 @@ oneway.test(density~group,data=rats)
 
 ## Games-Howell
 
-- Lives in package `PMCMRplus` (also `userfriendlyscience`). Install
+- Lives in package `PMCMRplus`. Install
 first.
 
 ```{r inference-5-R-30, eval=F}

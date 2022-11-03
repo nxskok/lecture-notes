@@ -36,11 +36,8 @@ we are back where we started.
 Or
 
 ```{r tidy-extra-R-5}
-pigs_longer
 pigs_longer %>% 
-  pivot_wider(names_from=pig, values_from=weight) -> d
-d
-d$`1`
+  pivot_wider(names_from=pig, values_from=weight)
 ```
 
 ## Disease presence and absence at two locations
@@ -80,7 +77,8 @@ prevalence %>%
 ```{r tidy-extra-R-8}
 prevalence %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
-               names_sep="_", values_to="frequency") -> prevalence_longer
+               names_sep="_", values_to="frequency") %>% 
+  arrange(Species, location, disease) -> prevalence_longer
 prevalence_longer
 ```
 
@@ -140,7 +138,7 @@ enframe(quantile(pigs_longer$weight, c(0.25, 0.75)))
 pigs_longer %>% 
   group_by(feed) %>% 
   summarize(r=list(enframe(quantile(weight, c(0.25, 0.75))))) %>% 
-    unnest(r) %>% 
+  unnest(r) %>% 
   pivot_wider(names_from=name, values_from=value) 
 ```
 
@@ -151,7 +149,6 @@ pigs_longer %>%
 ```{r tidy-extra-R-16, echo=F, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
-repmes0
 repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
   select(-rep) %>% 
   select(id, everything()) -> repmes
@@ -161,7 +158,6 @@ repmes
 ## Attempt 1
 
 ```{r tidy-extra-R-17}
-repmes
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", "var"),
                         names_sep="_"
