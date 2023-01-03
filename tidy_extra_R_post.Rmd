@@ -77,8 +77,7 @@ prevalence %>%
 ```{r tidy-extra-R-8}
 prevalence %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
-               names_sep="_", values_to="frequency") %>% 
-  arrange(Species, location, disease) -> prevalence_longer
+               names_sep="_", values_to="frequency")  -> prevalence_longer
 prevalence_longer
 ```
 
@@ -149,6 +148,7 @@ pigs_longer %>%
 ```{r tidy-extra-R-16, echo=F, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
+repmes0
 repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
   select(-rep) %>% 
   select(id, everything()) -> repmes
@@ -160,13 +160,15 @@ repmes
 ```{r tidy-extra-R-17}
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", "var"),
-                        names_sep="_"
+                        names_sep="_",
+                        values_to = "score"
                          )
 ```
 
 ## Attempt 2
 
 ```{r tidy-extra-R-18}
+repmes
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", ".value"),
                         names_sep="_"

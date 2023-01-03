@@ -76,9 +76,7 @@ pigs2
 - Create unique pig IDs by gluing pig number onto feed:
 
 ```{r tidying-R-6}
-pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) 
-
--> pigs2
+pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) -> pigs2
 pigs2 %>% slice_sample(n=7)
 ```
 
@@ -399,7 +397,7 @@ untidy for purposes of drawing graph only.
 - Then can do something like
 
 \footnotesize
-```{r tidying-R-35, eval=F}
+```{r tidying-R-35, eval=F, error=TRUE}
 ggplot(d, aes(x = date, y = temperature, colour = maxmin)) 
   + geom_point() + geom_line()
 ```
@@ -417,7 +415,7 @@ weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%
   ggplot(aes(x = date, y = temperature, colour = maxmin)) +
-      geom_line() -> g
+      geom_line() 
 ```
 
 ## The plot
