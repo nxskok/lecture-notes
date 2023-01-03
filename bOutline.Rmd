@@ -21,7 +21,7 @@
 
 - If you are taking this course as STAD29, you *must* have completed STAC32.
 - If you are taking this course as STA 1007: 
-  - it is best if you know about R and the Tidyverse, at least up to the level of running regressions.
+  - You should know or be willing to learn about R and the Tidyverse, at least up to the level of running regressions.
   - please reach out to me as soon as you can so that I can learn something about your background.
 
 
