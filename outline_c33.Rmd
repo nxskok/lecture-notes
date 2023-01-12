@@ -66,7 +66,7 @@ one of these:
 
 ## Course materials
 
-The first thing on each line is a link:
+The blue thing on each line is a link:
 
 -   [Quercus](https://q.utoronto.ca/): lecture videos, hand in assignments/projects, receive grades.
 
@@ -74,10 +74,9 @@ The first thing on each line is a link:
 
 -   [Problems and Solutions in Applied Statistics](http://ritsokiguess.site/pasias/): what it says; PASIAS for short.
 
-    -   to get the most out of tutorials, you will want a working camera and microphone
-    -   can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer. Instructions in lecture notes.
+-   To run R, can use [jupyter.utoronto.ca](jupyter.utoronto.ca) (needs only web browser) or install R and R Studio on your computer. Instructions in lecture notes.
 
--   [Reference: R for Data Science](https://r4ds.had.co.nz/)
+-   [Reference: R for Data Science](https://r4ds.hadley.nz/)
 
 ## Assignments
 

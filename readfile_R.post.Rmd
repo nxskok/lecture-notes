@@ -168,7 +168,7 @@ long), and then put that variable in the `read_` function:
 
 \small
 ```{r readfile-R-7}
-my_url <- "http://ritsokiguess.site/datafiles/global.csv"
+my_url <- url("http://ritsokiguess.site/datafiles/global.csv")
 global <- read_csv(my_url)
 ```
 \normalsize

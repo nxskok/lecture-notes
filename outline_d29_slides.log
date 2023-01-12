@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  3 JAN 2023 14:29
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  11 JAN 2023 13:19
  restricted system commands enabled.
 **outline_d29_slides.tex
 (./outline_d29_slides.tex
@@ -1501,7 +1501,7 @@ lty, 4 margin_kern, 234 glyph, 129 attribute, 67 glue_spec, 129 attribute_list,
 1 pdf_action, 48 pdf_colorstack nodes
    avail lists: 1:2,2:564,3:162,4:347,5:225,6:60,7:3328,8:20,9:502,10:19,11:251
  51528 multiletter control sequences out of 65536+600000
- 68 fonts using 19829543 bytes
+ 68 fonts using 19829619 bytes
  128i,15n,121p,1014b,673s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf></usr/share/texmf/f
 onts/opentype/public/lm/lmmono10-italic.otf></usr/share/texmf/fonts/opentype/pub
