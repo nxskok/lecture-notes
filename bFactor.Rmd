@@ -26,9 +26,14 @@
 
 ##  Packages
 
-```{r bFactor-1, eval=F, warning=F, message=F}
+```{r bFactor-1, warning=F, message=F}
 library(ggbiplot)
 library(tidyverse)
+library(conflicted)
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("arrange", "dplyr")
 ```
 
    
@@ -37,8 +42,7 @@ library(tidyverse)
 ##  Example
 
 
-* 
-145 children given 5 tests, called PARA, SENT, WORD, ADD and DOTS. 3 linguistic tasks (paragraph comprehension, sentence completion  and word meaning), 2 mathematical ones (addition and counting dots).
+* 145 children given 5 tests, called PARA, SENT, WORD, ADD and DOTS. 3 linguistic tasks (paragraph comprehension, sentence completion  and word meaning), 2 mathematical ones (addition and counting dots).
 
 * Correlation matrix of scores on the tests:
 
@@ -229,7 +233,7 @@ kids.1$PVAL
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
 places0 <- read_table2(my_url)
 places0 %>% 
-  mutate(across(-id, ~log(.))) -> places
+  mutate(across(-id, \(x) log(x))) -> places
 places %>% select(-id) -> places_numeric
 places.1 <- princomp(places_numeric, cor = TRUE)
 g <- ggbiplot(places.1, labels = places$id,
@@ -310,7 +314,7 @@ cbind(id = places$id, places.3$scores) %>%
 
 ```{r bFactor-16}
 places %>% 
-  mutate(across(-id, ~percent_rank(.))) -> places_pr
+  mutate(across(-id, \(x) percent_rank(x))) -> places_pr
 ```
 
 ## Highest scores on factor 1, "well-being":
@@ -529,7 +533,7 @@ proportion'') to be reasonably high.
 ggbiplot(bem.pc, alpha = 0.3)
 ```
   
-![](bFactor-bem-biplot.png)
+
 
 
 ##  Comments
@@ -697,6 +701,7 @@ things up.
 \scriptsize
 ```{r bFactor-38}
 bem %>%
+  ungroup() %>% 
   mutate(row = row_number()) %>%
   pivot_longer(c(-subno, -row), names_to="trait", 
                values_to="score") -> bem_tidy

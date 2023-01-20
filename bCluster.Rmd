@@ -17,11 +17,15 @@
 
 
 ## Packages
-```{r bCluster-1, eval=F}
+```{r bCluster-1}
+#| message = FALSE
 library(MASS) # for lda later
 library(tidyverse)
 library(spatstat) # for crossdist later
 library(ggrepel)
+library(conflicted)
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
 ```
 
    
@@ -276,9 +280,9 @@ my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 
 ## Making a distance object
 ```{r bCluster-9, size="footnotesize"}
-d <- number.d %>%
+number.d %>%
   select(-la) %>%
-  as.dist()
+  as.dist() -> d
 d
 class(d)
 ```
@@ -666,7 +670,7 @@ measurement scale (arbitrary).
 
 ```{r bCluster-35, size="footnotesize"}
 vital %>% 
-  mutate(across(where(is.numeric), ~scale(.))) -> vital.s
+  mutate(across(where(is.numeric), \(x) scale(x))) -> vital.s
 ```
 
    
@@ -1059,7 +1063,7 @@ g <- ggplot(d, aes(
   x = LD1, y = LD2, colour = factor(cluster),
   label = country
 )) + geom_point() +
-  geom_text_repel(size = 2, max.overlaps = Inf) + guides(colour = F)
+  geom_text_repel(size = 2, max.overlaps = Inf) + guides(colour = "none")
 ```
 
    

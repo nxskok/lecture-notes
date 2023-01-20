@@ -13,8 +13,9 @@ output:
 ---
 
 
-
-```{r bFactor-slides-1, child="preliminaries.Rmd", echo=F}
+```{r}
+#| echo = FALSE
+tar_load(bFactor)
 ```
 
 

@@ -13,10 +13,12 @@ output:
 urlcolor: blue
 ---
 
-
-
-```{r functions-slides-1, child="preliminaries.Rmd", echo=F}
+```{r}
+#| echo = FALSE
+tar_load(functions)
 ```
+
+
 
 
 ```{r functions-slides-2, child="functions.Rmd"}

@@ -12,9 +12,9 @@ output:
     colortheme: "dove"
 ---
 
-
-
-```{r bCluster-slides-1, child="preliminaries.Rmd", echo=F}
+```{r}
+#| echo = FALSE
+tar_load(bCluster)
 ```
 
 
