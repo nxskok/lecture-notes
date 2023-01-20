@@ -2,11 +2,10 @@
 
 -   STAD29 / STA 1007, Statistics for the Life and Social Sciences
 
--   Online for Jan and in-person after:
+-   In-person:
 
-    -   2 hours or so lectures / week, recorded-asynchoronous at first
-    -   1 hour of live tutorial / week, Monday afternoon, on Zoom at first
-    -   "office hours" also on Zoom at first, by appointment
+    -   2 hours of lectures / week, Wed afternoon
+    -   1 hour tutorial / week, Mon afternoon
 
 -   Instructor:
 
@@ -20,6 +19,7 @@
 ## Prerequisites
 
 - If you are taking this course as STAD29, you *must* have completed STAC32.
+- This course *only* offers program credit for the Statistics Applied Minor program. It *may not* be taken for credit by students in the Statistics Specialist, Major, or Minor programs.
 - If you are taking this course as STA 1007: 
   - it is best if you know about R and the Tidyverse, at least up to the level of running regressions.
   - please reach out to me as soon as you can so that I can learn something about your background.
@@ -28,7 +28,7 @@
 
 ## Getting help
 
--   Option 1: come to tutorial and ask me.
+-   Option 1: come to tutorial and ask.
 
 -   Option 2: Quercus discussion board:
 
@@ -38,8 +38,7 @@
     -   If you don't see an answer to your question, post your question on the discussion forum.
     -   For an issue that is more personal, email me (below).
 
--   Option 3: I am also willing to meet at other times on Zoom if you want to chat. I will set up a mechanism for you to make an appointment.
-
+- Option 3: talk with me after class (that's assuming I have any voice left after a two-hour lecture)
 
 ## E-mail
 
@@ -59,9 +58,8 @@
 -   This will be assessed through assignments (approximately weekly).
 
     -   Some questions will ask for software output, and some for explanation.
-    -   The grading will reward evidence of clear understanding and insight.
 
-- Also (by current plans) written midterm and final exam. See below.
+- Also written midterm and final exam. See below.
 
 ## Course materials
 
@@ -73,35 +71,30 @@ The first thing on each line is a link:
 
 -   [Problems and Solutions in Applied Statistics](http://ritsokiguess.site/pasias/): what it says; PASIAS for short.
 
--   [Computer requirements](https://www.viceprovoststudents.utoronto.ca/covid-19/tech-requirements-online-learning/)
-
-    -   to get the most out of online tutorials, you will want a working camera and microphone
-    -   as in C32, can use `jupyter.utoronto.ca` (needs only web browser) or install R and R Studio on your computer.
-
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
 ## Assessment
 
--   Assignments: 8 or so, approx weekly.
-    - Best 6 count.
-    - available on Tuesdays, due on Thursdays at 11:59pm
+-   Assignments: $n = 8$ or so, approx weekly.
+    - Best $n-2$ count.
+    - available on Tuesdays, due on Sundays at 11:59pm
     - based on the previous week's lectures
-    - *do not ask for or expect to get help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems from PASIAS.
+    - *do not expect to get much help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems from PASIAS.
 - for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
     - project is due on the last day of classes.
 - midterm exam, final exam. See [course website](https://ritsokiguess.site/STAD29/old_exams.html) for old exams. 
-    - you *must pass* (50%) the final exam to pass the course.
+    - you *must get at least 40%* on the final exam to pass the course.
 
 ## Grading schemes
 
-- if you are taking STA29, 30% assignments (dropping worst 2), 30% midterm, 40% final.
+- if you are taking STAD29, 30% assignments (dropping worst 2), 30% midterm, 40% final.
 - if you are taking STA 1007, 15% project, 25% assignments (dropping worst 2), 25% midterm, 35% final.
 
 ## Grading
 
 -   My (detailed) solutions will be available after each assignment is handed in.
 -   Assignments will be accepted up to 2 days late, at a penalty of 1% per *hour*.
--   You have two "free" assignments (since only the best 6 count); you may miss these without explanation. 
+-   You have two "free" assignments (since only the best other ones count); you may miss these without explanation. 
 -   There are no make-up assessments or other extensions.
 -   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
 
@@ -121,12 +114,13 @@ The first thing on each line is a link:
 - Cluster analysis
 - Principal components
 - Factor analysis
-- Time series (if we have time)
 - Multiway frequency tables
 
 ## Accessibility statement
 
 > Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confidential. The UTSC AccessAbility Services staff (located in S302) are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability@utsc.utoronto.ca`.
+
+Extensions on assignments, if part of your accommodation, are limited to two days, because (a) I will be sharing my solutions with the class after that, and (b) you need to be preparing for the next assignment. Any longer extension would be setting you up for failure.
 
 ## Expectations 1/3
 

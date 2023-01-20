@@ -1,7 +1,7 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  11 JAN 2023 15:04
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  29 SEP 2022 11:52
  restricted system commands enabled.
-**outline_c33_slides.tex
-(./outline_c33_slides.tex
+**inference_2_R_slides.tex
+(./inference_2_R_slides.tex
 LaTeX2e <2021-11-15> patch level 1
 Lua module: luaotfload 2021-05-21 3.18 Lua based OpenType font support
 Lua module: lualibs 2021-05-20 2.74 ConTeXt Lua standard libraries.
@@ -787,37 +787,123 @@ Package microtype Info: Loading configuration file microtype.cfg.
 File: microtype.cfg 2021/12/10 v3.0b microtype main configuration file (RS)
 )) (/usr/share/texlive/texmf-dist/tex/latex/parskip/parskip.sty
 Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
+Package: xurl 2022/01/09 v 0.10 modify URL breaks
+) (/usr/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+(/usr/share/texlive/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
+File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
+\BKM@id=\count353
+))
+Package hyperref Info: Option `colorlinks' set `true' on input line 87.
+(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
+\FV@CodeLineNo=\count354
+\FV@InFile=\read3
+\FV@TabBox=\box78
+\c@FancyVerbLine=\count355
+\FV@StepNumber=\count356
+\FV@OutFile=\write5
+) (/usr/share/texlive/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip68
+\fb@frw=\dimen291
+\fb@frh=\dimen292
+\FrameRule=\dimen293
+\FrameSep=\dimen294
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
+\LTleft=\skip69
+\LTright=\skip70
+\LTpre=\skip71
+\LTpost=\skip72
+\LTchunksize=\count357
+\LTcapwidth=\dimen295
+\LT@head=\box79
+\LT@firsthead=\box80
+\LT@foot=\box81
+\LT@lastfoot=\box82
+\LT@gbox=\box83
+\LT@cols=\count358
+\LT@rows=\count359
+\c@LT@tables=\count360
+\c@LT@chunks=\count361
+\LT@p@ftn=\toks47
+) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen296
+\lightrulewidth=\dimen297
+\cmidrulewidth=\dimen298
+\belowrulesep=\dimen299
+\belowbottomsep=\dimen300
+\aboverulesep=\dimen301
+\abovetopsep=\dimen302
+\cmidrulesep=\dimen303
+\cmidrulekern=\dimen304
+\defaultaddspace=\dimen305
+\@cmidla=\count362
+\@cmidlb=\count363
+\@aboverulesep=\dimen306
+\@belowrulesep=\dimen307
+\@thisruleclass=\count364
+\@lastruleclass=\count365
+\@thisrulewidth=\dimen308
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen309
+\ar@mcellbox=\box84
+\extrarowheight=\dimen310
+\NC@list=\toks48
+\extratabsurround=\skip73
+\backup@length=\skip74
+\ar@cellbox=\box85
+) (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen311
+\captionmargin@=\dimen312
+\captionwidth=\dimen313
+\caption@tempdima=\dimen314
+\caption@indent=\dimen315
+\caption@parindent=\dimen316
+\caption@hangindent=\dimen317
+Package caption Info: beamer document class detected.
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption-beamer.sto
+File: caption-beamer.sto 2020/08/22 v2.0 Adaption of the caption package to the
+ beamer document classes (AR)
+))
+\c@caption@flags=\count366
+\c@continuedfloat=\count367
+Package caption Info: hyperref package is loaded.
+Package caption Info: Hyperref support is turned off
+(caption)             because hyperref has stopped early.
+Package caption Info: longtable package is loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
+)) (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
-\c@tracingmulticols=\count353
-\mult@box=\box78
-\multicol@leftmargin=\dimen291
-\c@unbalance=\count354
-\c@collectmore=\count355
-\doublecol@number=\count356
-\multicoltolerance=\count357
-\multicolpretolerance=\count358
-\full@width=\dimen292
-\page@free=\dimen293
-\premulticols=\dimen294
-\postmulticols=\dimen295
-\multicolsep=\skip68
-\multicolbaselineskip=\skip69
-\partial@page=\box79
-\last@line=\box80
-\maxbalancingoverflow=\dimen296
-\mult@rightbox=\box81
-\mult@grightbox=\box82
-\mult@firstbox=\box83
-\mult@gfirstbox=\box84
-\@tempa=\box85
-\@tempa=\box86
-\@tempa=\box87
-\@tempa=\box88
-\@tempa=\box89
-\@tempa=\box90
-\@tempa=\box91
-\@tempa=\box92
+\c@tracingmulticols=\count368
+\mult@box=\box86
+\multicol@leftmargin=\dimen318
+\c@unbalance=\count369
+\c@collectmore=\count370
+\doublecol@number=\count371
+\multicoltolerance=\count372
+\multicolpretolerance=\count373
+\full@width=\dimen319
+\page@free=\dimen320
+\premulticols=\dimen321
+\postmulticols=\dimen322
+\multicolsep=\skip75
+\multicolbaselineskip=\skip76
+\partial@page=\box87
+\last@line=\box88
+\maxbalancingoverflow=\dimen323
+\mult@rightbox=\box89
+\mult@grightbox=\box90
+\mult@firstbox=\box91
+\mult@gfirstbox=\box92
 \@tempa=\box93
 \@tempa=\box94
 \@tempa=\box95
@@ -846,15 +932,23 @@ Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
 \@tempa=\box118
 \@tempa=\box119
 \@tempa=\box120
-\c@minrows=\count359
-\c@columnbadness=\count360
-\c@finalcolumnbadness=\count361
-\last@try=\dimen297
-\multicolovershoot=\dimen298
-\multicolundershoot=\dimen299
-\mult@nat@firstbox=\box121
-\colbreak@box=\box122
-\mc@col@check@num=\count362
+\@tempa=\box121
+\@tempa=\box122
+\@tempa=\box123
+\@tempa=\box124
+\@tempa=\box125
+\@tempa=\box126
+\@tempa=\box127
+\@tempa=\box128
+\c@minrows=\count374
+\c@columnbadness=\count375
+\c@finalcolumnbadness=\count376
+\last@try=\dimen324
+\multicolovershoot=\dimen325
+\multicolundershoot=\dimen326
+\mult@nat@firstbox=\box129
+\colbreak@box=\box130
+\mc@col@check@num=\count377
 ) (/usr/share/texlive/texmf-dist/tex/lualatex/selnolig/selnolig.sty
 === Package selnolig, Version 0.302, Date 2015/10/26 ===
 Package: selnolig 2015/10/26
@@ -864,44 +958,35 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 Package: luatexbase 2015/10/04 v1.3 luatexbase interface to LuaTeX 
 (/usr/share/texlive/texmf-dist/tex/luatex/ctablestack/ctablestack.sty
 Package: ctablestack 2015/10/01 v1.0 Catcode table stable support
-\@catcodetablestackcnt=\count363
+\@catcodetablestackcnt=\count378
 )
 \CatcodeTableOther=\catcodetable12
 \CatcodeTableExpl=\catcodetable13
 )
-Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (/us
-r/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
-Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
-(/usr/share/texlive/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
-File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
-\BKM@id=\count364
-)) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
-Package: xurl 2022/01/09 v 0.10 modify URL breaks
-)
-Package hyperref Info: Option `colorlinks' set `true' on input line 97.
-(./outline_c33_slides.aux)
-\openout1 = outline_c33_slides.aux
+Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (./i
+nference_2_R_slides.aux)
+\openout1 = inference_2_R_slides.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 103.
-LaTeX Font Info:    ... okay on input line 103.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 163.
+LaTeX Font Info:    ... okay on input line 163.
 *geometry* driver: auto-detecting
 *geometry* detected driver: luatex
 *geometry* verbose mode - [ preamble ] result:
@@ -938,17 +1023,17 @@ LaTeX Font Info:    ... okay on input line 103.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count365
-\scratchdimen=\dimen300
-\scratchbox=\box123
-\nofMPsegments=\count366
-\nofMParguments=\count367
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count368
-\MPscratchDim=\dimen301
-\MPnumerator=\count369
-\makeMPintoPDFobject=\count370
-\everyMPtoPDFconversion=\toks48
+\scratchcounter=\count379
+\scratchdimen=\dimen327
+\scratchbox=\box131
+\nofMPsegments=\count380
+\nofMParguments=\count381
+\everyMPshowfont=\toks49
+\MPscratchCnt=\count382
+\MPscratchDim=\dimen328
+\MPnumerator=\count383
+\makeMPintoPDFobject=\count384
+\everyMPtoPDFconversion=\toks50
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -957,7 +1042,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 103.
+Package hyperref Info: Link coloring ON on input line 163.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -965,11 +1050,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count371
+\c@section@level=\count385
 )
-LaTeX Info: Redefining \ref on input line 103.
-LaTeX Info: Redefining \pageref on input line 103.
-LaTeX Info: Redefining \nameref on input line 103.
+LaTeX Info: Redefining \ref on input line 163.
+LaTeX Info: Redefining \pageref on input line 163.
+LaTeX Info: Redefining \nameref on input line 163.
 
 (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary
 -English.dict
@@ -996,19 +1081,19 @@ ry-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 103.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 103.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 103.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 103.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 103.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 103.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 163.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 103.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 163.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1043,7 +1128,7 @@ tdimens:
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 11.28015pt on input line 103.
+(Font)              scaled to size 11.28015pt on input line 163.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1088,18 +1173,18 @@ n-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-6.57>s*[1.0301589097
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 11.28015pt on input line 103.
+(Font)              scaled to size 11.28015pt on input line 163.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 103.
+(Font)              `operators' in the math version `normal' on input line 163.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 103.
+ line 163.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 103.
+(Font)              `operators' in the math version `bold' on input line 163.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 103.
+t line 163.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1190,15 +1275,15 @@ e;script=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 103.
+(Font)              `symbols' in the math version `normal' on input line 163.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 103.
+t line 163.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 103.
+(Font)              `symbols' in the math version `bold' on input line 163.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 103.
+t line 163.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1272,53 +1357,53 @@ e;script=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 1
-03.
+63.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 103.
+t line 163.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 103
+(Font)              `largesymbols' in the math version `bold' on input line 163
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 103.
+t line 163.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.8961pt on input line 103.
+(Font)              scaled to size 7.8961pt on input line 163.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.64008pt on input line 103.
+(Font)              scaled to size 5.64008pt on input line 163.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-03.
+63.
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 11.28131pt on input line 103.
+(Font)              scaled to size 11.28131pt on input line 163.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.89691pt on input line 103.
+(Font)              scaled to size 7.89691pt on input line 163.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.64066pt on input line 103.
+(Font)              scaled to size 5.64066pt on input line 163.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.27914pt on input line 103.
+(Font)              scaled to size 11.27914pt on input line 163.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.8954pt on input line 103.
+(Font)              scaled to size 7.8954pt on input line 163.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.63957pt on input line 103.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 103
+(Font)              scaled to size 5.63957pt on input line 163.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 163
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 103
+LaTeX Font Info:    Trying to load font information for U+msb on input line 163
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Info: Redefining \microtypecontext on input line 103.
-Package microtype Info: Applying patch `item' on input line 103.
-Package microtype Info: Applying patch `toc' on input line 103.
-Package microtype Info: Applying patch `eqnum' on input line 103.
+LaTeX Info: Redefining \microtypecontext on input line 163.
+Package microtype Info: Applying patch `item' on input line 163.
+Package microtype Info: Applying patch `toc' on input line 163.
+Package microtype Info: Applying patch `eqnum' on input line 163.
 
-Package microtype Warning: Unable to apply patch `footnote' on input line 103.
+Package microtype Warning: Unable to apply patch `footnote' on input line 163.
 
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
@@ -1326,7 +1411,7 @@ Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 103.
+LaTeX Info: Redefining \showhyphens on input line 163.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of spacing.
 Package microtype Info: No adjustment of kerning.
@@ -1334,84 +1419,282 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-(./outline_c33_slides.nav) [1
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+(./inference_2_R_slides.nav) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-\openout4 = outline_c33_slides.vrb
- (./outline_c33_slides.vrb) [2
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 196.
+[2
 
 ]
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 168.
-[3
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 10.30151pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 7.21106pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 5.15076pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 10.30258pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 7.2118pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 5.15129pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 10.3006pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 7.21042pt on input line 228.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 5.1503pt on input line 228.
+(/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+) (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+) [3
 
 ] [4
 
 ] [5
 
-] [6
-
-] [7
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [6
 
 ]
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 303.
-[8
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [7
 
-] [9
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [8
 
-] [10
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [9
 
-] [11
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [10
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [11
 
 ] [12
 
-]
-\openout4 = outline_c33_slides.vrb
- (./outline_c33_slides.vrb) [13
-
-] [14
+] [13
 
 ]
-\openout4 = outline_c33_slides.vrb
- (./outline_c33_slides.vrb) [15
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [14
 
-] [16
+] [15
 
 ]
-\tf@nav=\write5
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [16
 
-\openout5 = outline_c33_slides.nav
-\tf@toc=\write6
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb)
+Overfull \vbox (7.56325pt too high) detected at line 609
+ []
 
-\openout6 = outline_c33_slides.toc
-\tf@snm=\write7
+[17
 
-\openout7 = outline_c33_slides.snm
-(./outline_c33_slides.aux))
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [18
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb
+<inference_2_R_slides_files/figure-beamer/inference-2-R-13-1.pdf, id=173, 710.6
+55pt x 349.305pt>
+File: inference_2_R_slides_files/figure-beamer/inference-2-R-13-1.pdf Graphic f
+ile (type pdf)
+<use inference_2_R_slides_files/figure-beamer/inference-2-R-13-1.pdf>
+Package luatex.def Info: inference_2_R_slides_files/figure-beamer/inference-2-R
+-13-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.30333pt x 168.25078pt.
+) [19
+
+<./inference_2_R_slides_files/figure-beamer/inference-2-R-13-1.pdf>]
+\openout4 = inference_2_R_slides.vrb
+ (./inferen
+ce_2_R_slides.vrb) [20
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb
+<inference_2_R_slides_files/figure-beamer/inference-2-R-15-1.pdf, id=196, 710.6
+55pt x 349.305pt>
+File: inference_2_R_slides_files/figure-beamer/inference-2-R-15-1.pdf Graphic f
+ile (type pdf)
+<use inference_2_R_slides_files/figure-beamer/inference-2-R-15-1.pdf>
+Package luatex.def Info: inference_2_R_slides_files/figure-beamer/inference-2-R
+-15-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.30333pt x 168.25078pt.
+) [21
+
+<./inference_2_R_slides_files/figure-beamer/inference-2-R-15-1.pdf>]
+\openout4 = inference_2_R_slides.vrb
+ (./inferen
+ce_2_R_slides.vrb) [22
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb)
+Overfull \vbox (81.4543pt too high) detected at line 741
+ []
+
+[23
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb
+Overfull \hbox (180.84077pt too wide) in paragraph at lines 27--27
+[]\TU/lmtt/m/n/10.95 ##               n = 15, 30, 15, 30, 15, 30, 15, 30, 15, 30
+, 15, 30, 15, 30, 15, 30, 15, 30[] 
+ []
+
+
+Overfull \hbox (284.31825pt too wide) in paragraph at lines 27--27
+[]\TU/lmtt/m/n/10.95 ##           delta = 4.0, 4.0, 3.5, 3.5, 3.0, 3.0, 2.5, 2.5
+, 2.0, 2.0, 1.5, 1.5, 1.0, 1.0, 0.5, 0.5, 0.0, 0.0[] 
+ []
+
+
+Overfull \hbox (1008.6606pt too wide) in paragraph at lines 27--27
+[]\TU/lmtt/m/n/10.95 ##           power = 0.94908647, 0.99956360, 0.88277128, 0.
+99619287, 0.77070660, 0.97770385, 0.61513033, 0.91115700, 0.43784659, 0.75396272
+, 0.27216777, 0.51028173, 0.14530058, 0.26245348, 0.06577280, 0.09719303, 0.0250
+0000, 0.02500000[] 
+ []
+
+) [24
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [25
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb)
+Overfull \vbox (127.56317pt too high) detected at line 837
+ []
+
+[26
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [27
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb
+<inference_2_R_slides_files/figure-beamer/inference-2-R-22-1.pdf, id=260, 704.6
+325pt x 262.9825pt>
+File: inference_2_R_slides_files/figure-beamer/inference-2-R-22-1.pdf Graphic f
+ile (type pdf)
+<use inference_2_R_slides_files/figure-beamer/inference-2-R-22-1.pdf>
+Package luatex.def Info: inference_2_R_slides_files/figure-beamer/inference-2-R
+-22-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29471pt x 127.75099pt.
+) [28
+
+<./inference_2_R_slides_files/figure-beamer/inference-2-R-22-1.pdf>]
+\openout4 = inference_2_R_slides.vrb
+ (./inferen
+ce_2_R_slides.vrb) [29
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [30
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb
+<inference_2_R_slides_files/figure-beamer/inference-2-R-24-1.pdf, id=292, 704.6
+325pt x 262.9825pt>
+File: inference_2_R_slides_files/figure-beamer/inference-2-R-24-1.pdf Graphic f
+ile (type pdf)
+<use inference_2_R_slides_files/figure-beamer/inference-2-R-24-1.pdf>
+Package luatex.def Info: inference_2_R_slides_files/figure-beamer/inference-2-R
+-24-1.pdf  used on input line 9.
+(luatex.def)             Requested size: 342.29471pt x 127.75099pt.
+) [31
+
+<./inference_2_R_slides_files/figure-beamer/inference-2-R-24-1.pdf>]
+\openout4 = inference_2_R_slides.vrb
+ (./inferen
+ce_2_R_slides.vrb
+Overfull \hbox (83.11205pt too wide) in paragraph at lines 12--12
+[]\TU/lmtt/m/n/10.95 ## i Use `spec()` to retrieve the full column specification
+ for this data.[] 
+ []
+
+
+Overfull \hbox (140.59953pt too wide) in paragraph at lines 12--12
+[]\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALS
+E` to quiet this message.[] 
+ []
+
+)
+Overfull \vbox (690.28467pt too high) detected at line 1014
+ []
+
+[32
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [33
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [34
+
+]
+\openout4 = inference_2_R_slides.vrb
+ (./inference_2_R_slides.vrb) [35
+
+] [36
+
+]
+\tf@nav=\write6
+
+\openout6 = inference_2_R_slides.nav
+\tf@toc=\write7
+
+\openout7 = inference_2_R_slides.toc
+\tf@snm=\write8
+
+\openout8 = inference_2_R_slides.snm
+(./inference_2_R_slides.aux))
 
 Here is how much of LuaTeX's memory you used:
- 32294 strings out of 477805
- 125086,1144653 words of node,token memory allocated
- 4812 words of node memory still in use:
-   55 hlist, 11 vlist, 12 rule, 13 disc, 9 local_par, 139 glue, 35 kern, 27 pena
-lty, 4 margin_kern, 217 glyph, 127 attribute, 67 glue_spec, 127 attribute_list, 
-1 shape, 5 write, 1 user_defined, 1 pdf_start_link, 1 pdf_end_link, 1 pdf_dest, 
-1 pdf_action, 48 pdf_colorstack nodes
-   avail lists: 1:2,2:598,3:173,4:362,5:218,6:63,7:3177,8:23,9:523,10:22,11:236
- 51479 multiletter control sequences out of 65536+600000
- 50 fonts using 12347983 bytes
- 128i,16n,121p,1014b,673s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf></usr/share/texmf/f
-onts/opentype/public/lm/lmmono10-italic.otf></usr/share/texmf/fonts/opentype/pub
-lic/lm/lmsans10-oblique.otf></usr/share/texmf/fonts/opentype/public/lm/lmmono10-
-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-regular.otf></us
-r/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf/fon
-ts/opentype/public/lm/lmsans12-regular.otf>
-Output written on outline_c33_slides.pdf (16 pages, 49771 bytes).
+ 34845 strings out of 477805
+ 125086,1373583 words of node,token memory allocated
+ 3675 words of node memory still in use:
+   49 hlist, 11 vlist, 11 rule, 5 disc, 8 local_par, 108 glue, 26 kern, 24 penal
+ty, 3 margin_kern, 127 glyph, 111 attribute, 73 glue_spec, 111 attribute_list, 1
+ shape, 5 write, 1 user_defined, 1 pdf_dest, 42 pdf_colorstack nodes
+   avail lists: 1:2,2:968,3:570,4:505,5:276,6:59,7:4135,8:12,9:1097,10:18,11:118
+ 53623 multiletter control sequences out of 65536+600000
+ 65 fonts using 19440231 bytes
+ 128i,16n,121p,1016b,647s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texmf/fonts/opentype/public/lm/lmmono10-regular.otf></usr/share/texm
+f/fonts/opentype/public/lm-math/latinmodern-math.otf></usr/share/texmf/fonts/ope
+ntype/public/lm/lmsans10-oblique.otf></usr/share/texmf/fonts/opentype/public/lm/
+lmsans10-bold.otf></usr/share/texmf/fonts/opentype/public/lm-math/latinmodern-ma
+th.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-regular.otf></usr/sha
+re/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf/fonts/op
+entype/public/lm/lmsans12-regular.otf>
+Output written on inference_2_R_slides.pdf (36 pages, 100343 bytes).
 
-PDF statistics: 212 PDF objects out of 1000 (max. 8388607)
- 162 compressed objects within 2 object streams
- 48 named destinations out of 1000 (max. 131072)
+PDF statistics: 405 PDF objects out of 1000 (max. 8388607)
+ 318 compressed objects within 4 object streams
+ 108 named destinations out of 1000 (max. 131072)
  36 words of extra memory for PDF output out of 10000 (max. 100000000)
 

@@ -30,7 +30,7 @@ get drug B first.
 ## Paired t test: reading the data
 Values aligned in columns:  
 
-```{r inference-4b-R-post-1}
+```{r inference-4b-R-1}
 my_url <- 
   "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
@@ -38,7 +38,7 @@ pain <- read_table(my_url)
 
 ## The data
 
-```{r inference-4b-R-post-2}
+```{r inference-4b-R-2}
 pain
 ```
 
@@ -46,7 +46,7 @@ pain
 
 \small
 
-```{r inference-4b-R-post-3}
+```{r inference-4b-R-3}
 with(pain, t.test(druga, drugb, paired = TRUE))
 ```
 
@@ -63,9 +63,8 @@ do a 1-sample t-test on them.
 
 \footnotesize
 
-```{r inference-4b-R-post-4}
-pain %>% mutate(diff=druga-drugb) -> pain
-pain
+```{r inference-4b-R-4}
+(pain %>% mutate(diff=druga-drugb) -> pain)
 ```
 
 \normalsize
@@ -73,7 +72,7 @@ pain
 ## t-test on the differences
 - then throw them into t.test, testing that the mean is zero, with
 same result as before:
-```{r inference-4b-R-post-5}
+```{r inference-4b-R-5}
 with(pain, t.test(diff, mu=0))
 ```
 
@@ -87,8 +86,8 @@ normally distributed.
 ## The normal quantile plot (of differences)
 
 
-```{r inference-4b-R-post-6, fig.height=4}
-ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
+```{r inference-4b-R-6, fig.height=4}
+ggplot(pain,aes(sample = diff)) + stat_qq() + stat_qq_line()
 ```
 
 - Points should follow the straight line. Bottom left one way off, so
@@ -102,7 +101,7 @@ normality questionable here: outlier.
 - so do *sign test* on differences, null median 0:
 
 
-```{r inference-4b-R-post-7}
+```{r inference-4b-R-7}
 sign_test(pain, diff, 0)
 ```
 
@@ -113,16 +112,30 @@ sign_test(pain, diff, 0)
 - in $t$-test, the low outlier difference pulled mean difference downward and made it look more negative than it should have been
 - therefore, there really isn't any difference between the drugs.
 
+## How bad is the normality? 
 
-
-## Bootstrap
+Bootstrap sampling distribution of sample mean (of the differences):
 
 ```{r}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
-  mutate(my_mean = mean(my_sample)) -> d
-ggplot(d, aes(sample = my_mean)) + stat_qq() + stat_qq_line()
-ggplot(d, aes(x = my_mean)) + geom_histogram(bins = 10)
+  mutate(my_mean = mean(my_sample)) %>% 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
 ```
+
+Skewed to the *left* (lowest values too low, highest not high enough). 
+
+Bootstrap sample means can be very low, depending how often the low outlier shows up in bootstrap sample:
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) %>% 
+  mutate(lows = sum(my_sample < (-5.5))) %>% 
+  ggplot(aes(x = factor(lows), y = my_mean)) + geom_boxplot()
+```
+
+The more times that very low value shows up in the bootstrap sample, the lower the sample mean is (on average), so the one data value has an outsized influence on the sampling distribution of the sample mean.
 

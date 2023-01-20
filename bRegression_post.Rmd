@@ -1,4 +1,5 @@
-# Regression
+
+## Regression
 
 
 * Use regression when one variable is an outcome (*response*, $y$).
@@ -19,10 +20,13 @@
 
 
 ## Packages
-```{r bRegression-post-1, eval=F }
+```{r bRegression-1}
 library(MASS) # for Box-Cox, later
 library(tidyverse)
 library(broom)
+library(marginaleffects)
+library(conflicted)
+conflict_prefer("select", "dplyr")
 ```
 
    
@@ -31,17 +35,16 @@ library(broom)
 ## A regression with one $x$
 
 13 children, measure average total sleep time (ATST, mins) and age (years) for each. See if ATST depends on age. Data in `sleep.txt`, ATST then age. Read in data:
-```{r bRegression-post-2 }
+```{r bRegression-2 }
 my_url <- "http://ritsokiguess.site/datafiles/sleep.txt"
-# my_url <- "sleep.txt"
 sleep <- read_delim(my_url, " ")
+sleep
 ```
 
 
 
 ## Check data 
-```{r bRegression-post-3, size="footnotesize"}
-sleep
+```{r bRegression-3, size="footnotesize"}
 summary(sleep)
 ```
 
@@ -51,8 +54,8 @@ code overleaf:
 
 
 ## The scatterplot
-```{r suggo, fig.height=3.8}
-ggplot(sleep, aes(x = age, y = atst)) + geom_point()
+```{r suggo}
+ggplot(sleep, aes(x = age, y = atst)) + geom_point() + geom_smooth()
 ```
  
 
@@ -65,7 +68,7 @@ ggplot(sleep, aes(x = age, y = atst)) + geom_point()
 
 
 * Measures how well a straight line fits the data:
-```{r bRegression-post-4 }
+```{r bRegression-4 }
 with(sleep, cor(atst, age))
 ```
  
@@ -77,7 +80,7 @@ is no trend.
 * This one close to perfect downward trend.
 
 * Can do correlations of all pairs of variables:
-```{r bRegression-post-5 }
+```{r bRegression-5 }
 cor(sleep)
 ```
  
@@ -110,7 +113,7 @@ ggplot(sleep, aes(x = age, y = atst)) + geom_point() +
 
 Scatterplot shows no obvious curve, and a pretty clear downward trend. So we can run the regression:
 
-```{r bRegression-post-6, echo=-1}
+```{r bRegression-6, echo=-1}
 options(width = 60)
 sleep.1 <- lm(atst ~ age, data = sleep)
 ```
@@ -118,7 +121,7 @@ sleep.1 <- lm(atst ~ age, data = sleep)
 ## The output 
 
 \scriptsize
-```{r bRegression-post-7}
+```{r bRegression-7}
 summary(sleep.1)
 ```
 \normalsize
@@ -150,13 +153,13 @@ look at, but hard to extract and re-use information from.
 
 * Package `broom` extracts info from model output in way
 that can be used in pipe (later):
-```{r bRegression-post-8, size="footnotesize"}
-tidy(sleep.1)
+```{r bRegression-8, size="footnotesize"}
+tidy(sleep.1) 
 ```
 
 ## also one-line summary of model:
 
-```{r bRegression-post-9}
+```{r bRegression-9}
 glance(sleep.1)
 ```
 
@@ -164,7 +167,7 @@ glance(sleep.1)
 
 
 ## Broom part 2
-```{r bRegression-post-10, size="footnotesize",warning=F}
+```{r bRegression-10, size="footnotesize",warning=F}
 sleep.1 %>% augment(sleep) 
 ```
 
@@ -188,15 +191,45 @@ Once useful regression exists, use it for prediction:
 
 * Also do above for a child aged 5.
 
+## The `marginaleffects` package 1/?
 
+This shows predictions for values in the data or values that you give. The default is for all the data:
+
+```{r}
+predictions(sleep.1)
+```
+
+## The `marginaleffects` package 2/?
+
+To get predictions for a representative collection of values, use `variables`:
+
+```{r}
+predictions(sleep.1, variables = "age")
+```
+
+
+## The `marginaleffects` package 3/?
+
+To get predictions for specific values, set up a dataframe with those values first, then feed that into `newdata`:
+
+```{r}
+new <- datagrid(model = sleep.1, age = c(10, 5))
+new
+new <- tibble(age = c(5, 10))
+new
+predictions(sleep.1, newdata = new)
+```
+
+## The `marginaleffects` package 4/?
+
+  
 
 ## Intervals
 
 
 * Make new data frame with these values for `age`
-```{r bRegression-post-11 }
+```{r bRegression-11 }
 my.age <- c(10, 5)
-my.age
 ages.new <- tibble(age = my.age)
 ages.new
 ```
@@ -205,11 +238,10 @@ ages.new
 
 
 * Feed into `predict`:
-```{r bRegression-post-12 }
-pc <- predict(sleep.1, ages.new, interval = "c")
-cbind(ages.new, pc)
+```{r bRegression-12 }
+# pc <- predict(sleep.1, ages.new, interval = "c")
 pp <- predict(sleep.1, ages.new, interval = "p")
-cbind(ages.new, pp)
+pp
 ```
  
 
@@ -218,15 +250,13 @@ cbind(ages.new, pp)
 
 ## The intervals
 Confidence intervals for mean response:
-```{r bRegression-post-13 }
-ages.new
-pc
-cbind(ages.new, pc)
+```{r bRegression-13 }
+cbind(ages.new, pp)
 ```
  
 
 Prediction intervals for new response:
-```{r bRegression-post-14 }
+```{r bRegression-14 }
 cbind(ages.new, pp)
 ```
  
@@ -249,7 +279,7 @@ does not work. Use base R `cbind`.
 
 Marks confidence interval for mean for all $x$: 
 
-```{r bRegression-post-15, fig.height=3.0}
+```{r bRegression-15, fig.height=3.0}
 ggplot(sleep, aes(x = age, y = atst)) + geom_point() +
   geom_smooth(method = "lm") +
   scale_y_continuous(breaks = seq(420, 600, 20))
@@ -274,7 +304,7 @@ How to tell whether a straight-line regression is appropriate?
 
 Not much pattern here --- regression appropriate.
 
-```{r akjhkadjfhjahnkkk,fig.height=3.4}
+```{r akjhkadjfhjahnkkk}
 ggplot(sleep.1, aes(x = .fitted, y = .resid)) + geom_point()
 ```
  
@@ -287,13 +317,12 @@ ggplot(sleep.1, aes(x = .fitted, y = .resid)) + geom_point()
 Different data:  
 ```{r curvy}
 my_url <- "http://ritsokiguess.site/datafiles/curvy.txt"
-# my_url <- "curvy.txt"
 curvy <- read_delim(my_url, " ")
 ```
 
 
 ## Scatterplot 
-```{r bRegression-post-16, fig.height=3.8}
+```{r bRegression-16}
 ggplot(curvy, aes(x = xx, y = yy)) + geom_point()
 ```
 
@@ -301,14 +330,14 @@ ggplot(curvy, aes(x = xx, y = yy)) + geom_point()
 
 
 \scriptsize
-```{r bRegression-post-17}
+```{r bRegression-17}
 curvy.1 <- lm(yy ~ xx, data = curvy)
 summary(curvy.1)
 ```
 \normalsize
 
 ## Residual plot 
-```{r altoadige,fig.height=3.8}
+```{r altoadige}
 ggplot(curvy.1, aes(x = .fitted, y = .resid)) + geom_point()
 ```
  
@@ -321,8 +350,9 @@ ggplot(curvy.1, aes(x = .fitted, y = .resid)) + geom_point()
 * Residual plot has *curve*: middle residuals positive, high and low ones negative. Bad.
 
 * Fitting a curve would be better. Try this:
-```{r bRegression-post-18 }
+```{r bRegression-18 }
 curvy.2 <- lm(yy ~ xx + I(xx^2), data = curvy)
+summary(curvy.2)
 ```
  
 
@@ -330,8 +360,9 @@ curvy.2 <- lm(yy ~ xx + I(xx^2), data = curvy)
 * Adding `xx`-squared term, to allow for curve.
 
 * Another way to do same thing: specify how model *changes*:
-```{r bRegression-post-19 }
+```{r bRegression-19 }
 curvy.2a <- update(curvy.1, . ~ . + I(xx^2))
+summary(curvy.2a)
 ```
 
  
@@ -339,7 +370,7 @@ curvy.2a <- update(curvy.1, . ~ . + I(xx^2))
 
 ## Regression 2 
 
-```{r bRegression-post-20 }
+```{r bRegression-20 }
 tidy(curvy.2)
 glance(curvy.2) #
 ```
@@ -361,7 +392,7 @@ glance(curvy.2) #
 ## The residual plot now  
 No problems any more:
 
-```{r bRegression-post-21, size="small", fig.height=3.4}
+```{r bRegression-21, size="small"}
 ggplot(curvy.2, aes(x = .fitted, y = .resid)) + geom_point()
 ```
  
@@ -405,9 +436,8 @@ logs to get $\ln y=\ln a + bx$.
 
 
 ## Some made-up data
-```{r bRegression-post-22, message=F}
-my_url <- "http://ritsokiguess.site/datafiles/madeup.csv"
-# my_url <- "madeup.csv"
+```{r bRegression-22, message=F}
+my_url <- "http://ritsokiguess.site/datafiles/madeup2.csv"
 madeup <- read_csv(my_url)
 madeup
 ```
@@ -416,7 +446,7 @@ Seems to be faster-than-linear growth, maybe exponential growth.
 
 
 ## Scatterplot: faster than linear growth 
-```{r dsljhsdjlhf,fig.height=3.2}
+```{r dsljhsdjlhf}
 ggplot(madeup, aes(x = x, y = y)) + geom_point() +
   geom_smooth()
 ```
@@ -432,7 +462,7 @@ ggplot(madeup, aes(x = x, y = y)) + geom_point() +
 such as you would use for `lm`.
 
 * Output: a graph (next page):
-```{r bRegression-post-23, eval=F}
+```{r bRegression-23, eval=F}
 boxcox(y ~ x, data = madeup)
 ```
  
@@ -471,7 +501,7 @@ $2,1,0.5,0,-0.5,-1$. Here 0 and 0.5 good values to pick.
 ## Did transformation straighten things?
 
 * Plot transformed $y$ against $x$. Here, log:
-```{r bRegression-post-24, message=FALSE, fig.height=3.2 }
+```{r bRegression-24, message=FALSE }
 ggplot(madeup, aes(x = x, y = log(y))) + geom_point() +
   geom_smooth()
 ```
@@ -485,7 +515,7 @@ Looks much straighter.
 
 
 \footnotesize
-```{r bRegression-post-25}
+```{r bRegression-25}
 madeup.1 <- lm(log(y) ~ x, data = madeup)
 glance(madeup.1)
 tidy(madeup.1)
@@ -533,10 +563,9 @@ Study of women and visits to health professionals, and how the number of visits 
 
 
 ## The data 
-```{r bRegression-post-26 }
-my_url <-
+```{r bRegression-26 }
+my_url <- 
   "http://ritsokiguess.site/datafiles/regressx.txt"
-# my_url <- "regressx.txt"
 visits <- read_delim(my_url, " ")
 ```
  
@@ -545,7 +574,7 @@ visits <- read_delim(my_url, " ")
 ## Check data
 
 \small
-```{r bRegression-post-27}
+```{r bRegression-27}
 visits
 ```
 \normalsize
@@ -553,7 +582,7 @@ visits
    
 ## Fit multiple regression
 
-```{r bRegression-post-28}
+```{r bRegression-28}
 visits.1 <- lm(timedrs ~ phyheal + menheal + stress,
   data = visits)
 glance(visits.1)
@@ -564,20 +593,19 @@ glance(visits.1)
 
 Model as a whole strongly significant even though R-sq not very big (lots of data). At least one of the $x$'s predicts `timedrs`.
 
-```{r bRegression-post-29 }
+```{r bRegression-29 }
 tidy(visits.1)
-summary(visits.1)
 ```
  
 
-The physical health and stress variables definitely help to predict the number of visits, but *with those in the model* we don't need `menheal`.
+The physical health and stress variables initely help to predict the number of visits, but *with those in the model* we don't need `menheal`.
 However, look at prediction of `timedrs` from `menheal` by itself:
 
 
 ## Just `menheal` 
 
 \footnotesize 
-```{r bRegression-post-30 }
+```{r bRegression-30 }
 visits.2 <- lm(timedrs ~ menheal, data = visits)
 glance(visits.2)
 tidy(visits.2)
@@ -602,7 +630,7 @@ tidy(visits.2)
 
 ## Investigating via correlation
 Leave out first column (`subjno`):
-```{r bRegression-post-31 }
+```{r bRegression-31 }
 visits %>% select(-subjno) %>% cor()
 ```
  
@@ -634,7 +662,7 @@ Apparently random. But\ldots
 
 
 ## Normal quantile plot of residuals
-```{r bRegression-post-32, fig.height=3.5}
+```{r bRegression-32, fig.height=3.5}
 ggplot(visits.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 ```
 
@@ -645,14 +673,14 @@ ggplot(visits.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 Is there trend in *size* of residuals (fan-out)? Plot
 *absolute value* of residual against fitted value (graph next page):
 
-```{r bRegression-post-33, fig.height=2.8, message=FALSE}
+```{r bRegression-33, fig.height=2.8, message=FALSE}
 g <- ggplot(visits.1, aes(x = .fitted, y = abs(.resid))) +
   geom_point() + geom_smooth()
 ```
 
 ## The plot
 
-```{r bRegression-post-34, echo=F, message=F, fig.height=4.3}
+```{r bRegression-34, echo=F, message=F, fig.height=4.3}
 g
 ```
 
@@ -699,7 +727,7 @@ guess. How to find good transformation?
 
 * Extra problem: some of `timedrs` values are 0, but
 Box-Cox expects all +. Note response for `boxcox`:
-```{r bRegression-post-35, eval=F}
+```{r bRegression-35, eval=F}
 boxcox(timedrs + 1 ~ phyheal + menheal + stress, data = visits)
 ```
  
@@ -707,7 +735,7 @@ boxcox(timedrs + 1 ~ phyheal + menheal + stress, data = visits)
 
 
 ## Try 1
-```{r bRegression-post-36, echo=F,fig.height=4.5}
+```{r bRegression-36, echo=F,fig.height=4.5}
   boxcox(timedrs + 1 ~ phyheal + menheal + stress, 
          data = visits)
 ```
@@ -725,7 +753,7 @@ boxcox(timedrs + 1 ~ phyheal + menheal + stress, data = visits)
 
 
 \footnotesize
-```{r bRegression-post-37, size="footnotesize"}
+```{r bRegression-37, size="footnotesize"}
 my.lambda <- seq(-0.3, 0.1, 0.01)
 my.lambda
 ```
@@ -734,7 +762,7 @@ my.lambda
 
 
 ## Try 2
-```{r bRegression-post-38, fig.height=3.5}
+```{r bRegression-38, fig.height=3.5}
 boxcox(timedrs + 1 ~ phyheal + menheal + stress,
   lambda = my.lambda,
   data = visits
@@ -760,7 +788,7 @@ boxcox(timedrs + 1 ~ phyheal + menheal + stress,
 original one.
 
 * Then check residual plot to see that it is OK now.
-```{r bRegression-post-39 }
+```{r bRegression-39 }
 visits.3 <- lm(log(timedrs + 1) ~ phyheal + menheal + stress,
   data = visits
 )
@@ -777,7 +805,7 @@ be zero/negative, fix that before transformation.
 ## Output 
 
 \scriptsize
-```{r bRegression-post-40 }
+```{r bRegression-40 }
 summary(visits.3)
 ```
  
@@ -798,7 +826,7 @@ summary(visits.3)
 
 
 ## Residuals against fitted values
-```{r bRegression-post-41, fig.height=3.5}
+```{r bRegression-41, fig.height=3.5}
 ggplot(visits.3, aes(x = .fitted, y = .resid)) +
   geom_point()
 ```
@@ -807,7 +835,7 @@ ggplot(visits.3, aes(x = .fitted, y = .resid)) +
 
 
 ## Normal quantile plot of residuals
-```{r bRegression-post-42, fig.height=3.8}
+```{r bRegression-42, fig.height=3.8}
 ggplot(visits.3, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 ```
 
@@ -815,7 +843,7 @@ ggplot(visits.3, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 
 
 ## Absolute residuals against fitted
-```{r bRegression-post-43, fig.height=3.5, message=F}
+```{r bRegression-43, fig.height=3.5, message=F}
 ggplot(visits.3, aes(x = .fitted, y = abs(.resid))) +
   geom_point() + geom_smooth()
 ```
@@ -846,7 +874,7 @@ variable at once, fit model with and without variables
   - then use `anova` to compare fit of models:
 
 
-```{r bRegression-post-44 }
+```{r bRegression-44 }
 visits.5 <- lm(log(timedrs + 1) ~ phyheal + menheal + stress, 
                data = visits)
 visits.6 <- lm(log(timedrs + 1) ~ stress, data = visits)
@@ -856,7 +884,7 @@ visits.6 <- lm(log(timedrs + 1) ~ stress, data = visits)
 
 ## Results of tests
 
-```{r bRegression-post-45}
+```{r bRegression-45}
 anova(visits.6, visits.5)
 ```
 
@@ -902,9 +930,8 @@ left            right               punt         fred
 
 
 * Separated by *multiple spaces* with *columns lined up*:
-```{r bRegression-post-46 }
+```{r bRegression-46 }
 my_url <- "http://ritsokiguess.site/datafiles/punting.txt"
-# my_url <- "punting.txt"
 punting <- read_table(my_url)
 ```
 
@@ -914,7 +941,7 @@ punting <- read_table(my_url)
 
 ## The data
 \small
-```{r bRegression-post-47}
+```{r bRegression-47}
 punting
 ```
 \normalsize
@@ -924,11 +951,10 @@ punting
 ## Regression and output
 
 \small
-```{r bRegression-post-48}
+```{r bRegression-48}
 punting.1 <- lm(punt ~ left + right + fred, data = punting)
-summary(punting.1)
-# glance(punting.1)
-# tidy(punting.1)
+glance(punting.1)
+tidy(punting.1)
 ```
 \normalsize
 
@@ -946,7 +972,7 @@ summary(punting.1)
 
 
 ## The correlations  
-```{r bRegression-post-49 }
+```{r bRegression-49 }
 cor(punting)
 ```
  
@@ -962,9 +988,8 @@ with each other (bad, at least confusing).
 
 ## Just `right`
 \small
-```{r bRegression-post-50 }
+```{r bRegression-50 }
 punting.2 <- lm(punt ~ right, data = punting)
-summary(punting.2)
 anova(punting.2, punting.1)
 ```
  
@@ -974,7 +999,7 @@ No significant loss by dropping other two variables.
 
 
 ## Comparing R-squareds
-```{r bRegression-post-51 }
+```{r bRegression-51 }
 summary(punting.1)$r.squared
 summary(punting.2)$r.squared
 ```
@@ -985,7 +1010,7 @@ Basically no difference. In regression (over), `right` significant:
 ## Regression results
 
 
-```{r bRegression-post-52 }
+```{r bRegression-52 }
 tidy(punting.2)
 ```
  
@@ -1011,9 +1036,9 @@ from `broom`.
 
 ## Augmenting `punting.2`
 \footnotesize
-```{r bRegression-post-53 }
+```{r bRegression-53 }
 punting.2 %>% augment(punting) -> punting.2.aug
-punting.2.aug
+punting.2.aug %>% slice(1:8)
 ```
 \normalsize
    
@@ -1035,7 +1060,7 @@ ggplot(punting.2.aug, aes(x = left, y = .resid)) +
 
 * We should add `left`-squared to the regression (and
 therefore put `left` back in when we do that):
-```{r bRegression-post-54 }
+```{r bRegression-54 }
 punting.3 <- lm(punt ~ left + I(left^2) + right,
   data = punting
 )
@@ -1047,7 +1072,7 @@ punting.3 <- lm(punt ~ left + I(left^2) + right,
 
 ## Regression with `left-squared`
 \scriptsize
-```{r bRegression-post-55}
+```{r bRegression-55}
 summary(punting.3)
 ```
 \normalsize

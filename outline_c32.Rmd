@@ -6,7 +6,7 @@
 
     -   2 hours of lectures / week, in person.
     -   1 hour of tutorial / week, in person **starting in week 1**
-    -   "office hours" in person only
+    -   "office hours" in person only. For 1 hour after each lecture in IC 471.
 
 -   Instructor:
 
@@ -51,7 +51,7 @@
     -   If you see a question there that you can answer, go ahead and answer it.
     -   For an issue that is more personal, email me (below).
 
--   Option 2: come to tutorial and ask the TAs or me.
+-   Option 2: come to tutorial and ask the TA.
 
 -   Option 3: office hours. 
 
@@ -92,7 +92,7 @@ The blue things are all links:
 
 ## Assessment
 
--   Assignments: 8 total, due in weeks 2 through 10 and in the final exam period. Best 6 count, total 30% (5% each).
+-   Assignments: 8 total, due after weeks 2 through 10. Best 6 count, total 30% (5% each).
     - expect that each assignment will cover up to the Tuesday lecture before it is due
     - will become available after the Wednesday tutorial, and will be due Monday at 11:59pm
     - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)

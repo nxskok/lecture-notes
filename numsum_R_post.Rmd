@@ -15,30 +15,28 @@ obtaining quartiles or any percentile), n (for counting observations).
 
 ## Packages for this section
 
-```{r numsum-R-post-1, eval=F}
+```{r numsum-R-1, eval=F}
 library(tidyverse)
 ```
 
-```{r numsum-R-post-2, echo=F, message=F}
-my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
+```{r numsum-R-2, echo=F, message=F}
+my_url <- url("http://ritsokiguess.site/datafiles/ais.txt")
 athletes <- read_tsv(my_url)
-athletes
+athletes <- read_delim(my_url, "\t")
 ```
+
 
 ## Summarizing one column
 - Mean height: 
 
-```{r numsum-R-post-3}
+```{r numsum-R-3}
 athletes %>% summarize(m=mean(Ht))
-athletes %>% summarise(m=mean(Ht))
 ```
-
-(these both work)
 
 or to get mean and SD of BMI:
 
-```{r numsum-R-post-4}
-athletes %>% summarize(mean_bmi=mean(BMI), sd_bmi=sd(BMI))
+```{r numsum-R-4}
+athletes %>% summarize(meam_BMI = mean(BMI), sd_BMI = sd(BMI))
 ```
 
 ## Quartiles
@@ -46,11 +44,11 @@ athletes %>% summarize(mean_bmi=mean(BMI), sd_bmi=sd(BMI))
 - `quantile` calculates percentiles ("fractiles"), so we want the 25th and 75th
 percentiles:
 
-```{r numsum-R-post-5}
-v <- c(0.25, 0.75)
-athletes %>% summarize(q=quantile(Wt, v), prob=v)
-```
 
+```{r numsum-R-5}
+athletes %>% summarize( Q1=quantile(Wt, 0.25),
+                        Q3=quantile(Wt, 0.75))
+```
 
 ## Creating new columns
 
@@ -59,22 +57,17 @@ weights in pounds.
 - Convert kg to lb by multiplying by 2.2.
 - Create new column and summarize that: 
 
-```{r numsum-R-post-6}
-v
+```{r numsum-R-6}
 athletes %>% mutate(wt_lb=Wt*2.2) %>%
-  summarize(Q_lb=quantile(wt_lb, v), prob=v)
+  summarize(Q1_lb=quantile(wt_lb, 0.25),
+            Q3_lb=quantile(wt_lb, 0.75))
 ```
 
 ## Counting how many
 for example, number of athletes in
 each sport: 
 
-```{r numsum-R-post-7, echo=FALSE}
-options(dplyr.summarise.inform=FALSE) 
-```
-
-
-```{r numsum-R-post-8}
+```{r numsum-R-7}
 athletes %>% count(Sport)
 ```
 
@@ -84,7 +77,7 @@ Another way (which will make sense
 in a moment):
 
 \small
-```{r numsum-R-post-9}
+```{r numsum-R-8}
 athletes %>% group_by(Sport) %>%
   summarize(count=n())
 ```
@@ -95,51 +88,52 @@ athletes %>% group_by(Sport) %>%
 of height for males and females. Strategy is `group_by` (to define the
 groups) and then `summarize`: 
 
-```{r numsum-R-post-10}
+```{r numsum-R-9}
 athletes %>% group_by(Sex) %>% 
   summarize(m=mean(Ht), s=sd(Ht))
 ```
 
 ## Count plus stats
 
-If you want number of observations per group plus some stats, you need to go the `n()` way:
+- If you want number of observations per group plus some stats, you need to
+go the `n()` way:
 
-```{r numsum-R-post-11}
-athletes %>% group_by(Sex) %>% 
-  summarize(n=n(), m=mean(Ht), s=sd(Ht))
+```{r}
+athletes %>% group_by(Sex) %>%
+summarize(n=n(), m=mean(Ht), s=sd(Ht))
 ```
 
 - This explains second variation on counting within group: “within each
-sport, how many athletes were there?”
-
-## quantiles by group
-
-```{r numsum-R-post-12}
-v
-athletes %>%
-  group_by(Sex) %>% 
-  summarize(Q_wt=quantile(Wt, v), prob=v)
-```
-
+sport/Sex, how many athletes were there?”
 
 ## Summarizing several columns
 
 - Standard deviation of each (numeric) column: 
 
+
 \small
-```{r numsum-R-post-13}
-athletes %>% summarize(across(where(is.numeric), ~sd(.)))
+
+```{r numsum-R-10}
+athletes %>% summarize(across(where(is.numeric), ~sd(.))) !!-> d
 ```
+
+\scriptsize
+
+```{r}
+d
+```
+
 \normalsize
 
 - Median and IQR of all columns whose name starts with H: 
 
 \small
-```{r numsum-R-post-14}
+```{r numsum-R-11}
 athletes %>% summarize(across(starts_with("H"),
                        list(med=~median(.), iqr=~IQR(.))))
 ```
 \normalsize
+
 
 ## by group
 

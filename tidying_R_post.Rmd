@@ -52,6 +52,7 @@ pigs1
 
 - This is a very common reorganization, and the magic “verb” is
 `pivot_longer`:
+
 ```{r tidying-R-3}
 pigs1 %>% pivot_longer(feed1:feed4, names_to="feed", 
                        values_to="weight") -> pigs2
@@ -76,7 +77,7 @@ pigs2
 
 ```{r tidying-R-6}
 pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) -> pigs2
-# pigs2 %>% slice_sample(n=7)
+pigs2 %>% slice_sample(n=7)
 ```
 
 
@@ -138,6 +139,7 @@ various diseases, eg. tuberculosis.
 ```{r tidying-R-10}
 my_url <- "http://ritsokiguess.site/datafiles/tb.csv"
 tb <- read_csv(my_url)
+tb
 ```
 
 
@@ -221,7 +223,7 @@ each line is incomplete, so that R knows more is to come.
 
 ```{r tidying-R-19}
 tb3 %>%
-  filter(between(year, 1991, 1998)) %>% 
+  filter(between(year, 1991, 1998)) %>%
   group_by(year) %>% summarize(total=sum(freq))
 ```
 
@@ -295,7 +297,7 @@ so first step is
 weather %>% 
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
-               values_drop_na = TRUE) -> d
+               values_drop_na = T) -> d
 ```
 
 ## So far
@@ -339,7 +341,7 @@ value to us:
 ```{r tidying-R-30}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
-               values_to="temperature", values_drop_na = TRUE) %>% 
+               values_to="temperature", values_drop_na = T) %>% 
   pivot_wider(names_from=element, values_from=temperature) %>% 
   mutate(Day = parse_number(day)) %>%
   select(-station) -> d
@@ -395,7 +397,7 @@ untidy for purposes of drawing graph only.
 - Then can do something like
 
 \footnotesize
-```{r tidying-R-35, eval=F}
+```{r tidying-R-35, eval=F, error=TRUE}
 ggplot(d, aes(x = date, y = temperature, colour = maxmin)) 
   + geom_point() + geom_line()
 ```
@@ -413,7 +415,7 @@ weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%
   ggplot(aes(x = date, y = temperature, colour = maxmin)) +
-      geom_line() -> g
+      geom_line() 
 ```
 
 ## The plot

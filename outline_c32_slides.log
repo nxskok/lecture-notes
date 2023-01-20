@@ -1,7 +1,7 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  11 JAN 2023 15:04
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  6 SEP 2022 12:31
  restricted system commands enabled.
-**outline_c33_slides.tex
-(./outline_c33_slides.tex
+**outline_c32_slides.tex
+(./outline_c32_slides.tex
 LaTeX2e <2021-11-15> patch level 1
 Lua module: luaotfload 2021-05-21 3.18 Lua based OpenType font support
 Lua module: lualibs 2021-05-20 2.74 ConTeXt Lua standard libraries.
@@ -787,16 +787,25 @@ Package microtype Info: Loading configuration file microtype.cfg.
 File: microtype.cfg 2021/12/10 v3.0b microtype main configuration file (RS)
 )) (/usr/share/texlive/texmf-dist/tex/latex/parskip/parskip.sty
 Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
+Package: xurl 2022/01/09 v 0.10 modify URL breaks
+) (/usr/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+(/usr/share/texlive/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
+File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
+\BKM@id=\count353
+))
+Package hyperref Info: Option `colorlinks' set `true' on input line 87.
+(/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
-\c@tracingmulticols=\count353
+\c@tracingmulticols=\count354
 \mult@box=\box78
 \multicol@leftmargin=\dimen291
-\c@unbalance=\count354
-\c@collectmore=\count355
-\doublecol@number=\count356
-\multicoltolerance=\count357
-\multicolpretolerance=\count358
+\c@unbalance=\count355
+\c@collectmore=\count356
+\doublecol@number=\count357
+\multicoltolerance=\count358
+\multicolpretolerance=\count359
 \full@width=\dimen292
 \page@free=\dimen293
 \premulticols=\dimen294
@@ -846,15 +855,15 @@ Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
 \@tempa=\box118
 \@tempa=\box119
 \@tempa=\box120
-\c@minrows=\count359
-\c@columnbadness=\count360
-\c@finalcolumnbadness=\count361
+\c@minrows=\count360
+\c@columnbadness=\count361
+\c@finalcolumnbadness=\count362
 \last@try=\dimen297
 \multicolovershoot=\dimen298
 \multicolundershoot=\dimen299
 \mult@nat@firstbox=\box121
 \colbreak@box=\box122
-\mc@col@check@num=\count362
+\mc@col@check@num=\count363
 ) (/usr/share/texlive/texmf-dist/tex/lualatex/selnolig/selnolig.sty
 === Package selnolig, Version 0.302, Date 2015/10/26 ===
 Package: selnolig 2015/10/26
@@ -864,23 +873,14 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 Package: luatexbase 2015/10/04 v1.3 luatexbase interface to LuaTeX 
 (/usr/share/texlive/texmf-dist/tex/luatex/ctablestack/ctablestack.sty
 Package: ctablestack 2015/10/01 v1.0 Catcode table stable support
-\@catcodetablestackcnt=\count363
+\@catcodetablestackcnt=\count364
 )
 \CatcodeTableOther=\catcodetable12
 \CatcodeTableExpl=\catcodetable13
 )
-Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (/us
-r/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
-Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
-(/usr/share/texlive/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
-File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
-\BKM@id=\count364
-)) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
-Package: xurl 2022/01/09 v 0.10 modify URL breaks
-)
-Package hyperref Info: Option `colorlinks' set `true' on input line 97.
-(./outline_c33_slides.aux)
-\openout1 = outline_c33_slides.aux
+Inserting `Suppress ligatures selectively' at position 1 in `ligaturing'.) (./o
+utline_c32_slides.aux)
+\openout1 = outline_c32_slides.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 103.
 LaTeX Font Info:    ... okay on input line 103.
@@ -1334,15 +1334,19 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-(./outline_c33_slides.nav) [1
+(./outline_c32_slides.nav) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-\openout4 = outline_c33_slides.vrb
- (./outline_c33_slides.vrb) [2
+\openout4 = outline_c32_slides.vrb
+ (./outline_c32_slides.vrb) [2
 
 ]
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line 168.
+
+Overfull \vbox (2.7135pt too high) detected at line 168
+ []
+
 [3
 
 ] [4
@@ -1353,10 +1357,7 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
 
 ] [7
 
-]
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 303.
-[8
+] [8
 
 ] [9
 
@@ -1367,48 +1368,48 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
 ] [12
 
 ]
-\openout4 = outline_c33_slides.vrb
- (./outline_c33_slides.vrb) [13
+\openout4 = outline_c32_slides.vrb
+ (./outline_c32_slides.vrb) [13
 
 ] [14
 
 ]
-\openout4 = outline_c33_slides.vrb
- (./outline_c33_slides.vrb) [15
+\openout4 = outline_c32_slides.vrb
+ (./outline_c32_slides.vrb) [15
 
 ] [16
 
 ]
 \tf@nav=\write5
 
-\openout5 = outline_c33_slides.nav
+\openout5 = outline_c32_slides.nav
 \tf@toc=\write6
 
-\openout6 = outline_c33_slides.toc
+\openout6 = outline_c32_slides.toc
 \tf@snm=\write7
 
-\openout7 = outline_c33_slides.snm
-(./outline_c33_slides.aux))
+\openout7 = outline_c32_slides.snm
+(./outline_c32_slides.aux))
 
 Here is how much of LuaTeX's memory you used:
- 32294 strings out of 477805
+ 32283 strings out of 477805
  125086,1144653 words of node,token memory allocated
- 4812 words of node memory still in use:
-   55 hlist, 11 vlist, 12 rule, 13 disc, 9 local_par, 139 glue, 35 kern, 27 pena
-lty, 4 margin_kern, 217 glyph, 127 attribute, 67 glue_spec, 127 attribute_list, 
-1 shape, 5 write, 1 user_defined, 1 pdf_start_link, 1 pdf_end_link, 1 pdf_dest, 
-1 pdf_action, 48 pdf_colorstack nodes
-   avail lists: 1:2,2:598,3:173,4:362,5:218,6:63,7:3177,8:23,9:523,10:22,11:236
- 51479 multiletter control sequences out of 65536+600000
- 50 fonts using 12347983 bytes
+ 7544 words of node memory still in use:
+   70 hlist, 11 vlist, 14 rule, 24 disc, 11 local_par, 211 glue, 52 kern, 36 pen
+alty, 8 margin_kern, 445 glyph, 161 attribute, 67 glue_spec, 161 attribute_list,
+ 1 shape, 5 write, 1 user_defined, 3 pdf_start_link, 3 pdf_end_link, 1 pdf_dest,
+ 3 pdf_action, 60 pdf_colorstack nodes
+   avail lists: 1:2,2:456,3:138,4:313,5:240,6:53,7:2971,8:18,9:449,10:18,11:171
+ 51468 multiletter control sequences out of 65536+600000
+ 49 fonts using 12216255 bytes
  128i,16n,121p,1014b,673s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf></usr/share/texmf/f
-onts/opentype/public/lm/lmmono10-italic.otf></usr/share/texmf/fonts/opentype/pub
-lic/lm/lmsans10-oblique.otf></usr/share/texmf/fonts/opentype/public/lm/lmmono10-
-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-regular.otf></us
+</usr/share/texmf/fonts/opentype/public/lm/lmmono10-italic.otf></usr/share/texmf
+/fonts/opentype/public/lm/lmsans10-oblique.otf></usr/share/texmf/fonts/opentype/
+public/lm/lmmono10-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans
+10-bold.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-regular.otf></us
 r/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf/fon
 ts/opentype/public/lm/lmsans12-regular.otf>
-Output written on outline_c33_slides.pdf (16 pages, 49771 bytes).
+Output written on outline_c32_slides.pdf (16 pages, 51409 bytes).
 
 PDF statistics: 212 PDF objects out of 1000 (max. 8388607)
  162 compressed objects within 2 object streams

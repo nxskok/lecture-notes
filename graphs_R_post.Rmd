@@ -7,11 +7,11 @@ Sport.
   - quantitative: height (cm), weight (kg), lean body mass, red and white
   blood cell counts, haematocrit and haemoglobin (blood), ferritin
   concentration, body mass index, percent body fat.
-- Values separated by *tabs* (which impacts reading in).
+- Values separated by tabs (which impacts reading in).
 
 ## Packages for this section
 
-```{r graphs-R-post-1, eval=F}
+```{r graphs-R-1, eval=F}
 library(tidyverse)
 ```
 
@@ -21,23 +21,16 @@ library(tidyverse)
 - Data in `ais.txt`:
 
 \scriptsize
-```{r graphs-R-post-2}
+```{r graphs-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
 \normalsize
 
-read_table?
-
-```{r graphs-R-post-3}
-read_table(my_url)
-```
-
-
 ## The data (some)
 
 \footnotesize
-```{r graphs-R-post-4}
+```{r graphs-R-3}
 athletes
 ```
 \normalsize
@@ -65,25 +58,21 @@ With more variables, might want *separate plots by groups*. This is called
 
 ## `ggplot`
 
-- R has a standard graphing procedure `ggplot`, that we use for all our
+- R has a standard graphing procedure ggplot, that we use for all our
 graphs.
 - Use in different ways to get precise graph we want.
 - Let’s start with bar chart of the sports played by the athletes.
 
 ## Bar chart
 
-```{r graphs-R-post-5, fig.height=3.9}
+```{r graphs-R-4, fig.height=3.9}
 ggplot(athletes, aes(x = Sport)) + geom_bar()
 ```
 
 
 ## Histogram of body mass index
 
-```{r graphs-R-post-6, fig.height=3.9}
-ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 30)
-```
-
-```{r graphs-R-post-7, fig.height=3.9}
+```{r graphs-R-5, fig.height=3.9}
 ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
 ```
 
@@ -91,14 +80,16 @@ ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
 
 Grouped bar chart:
 
-```{r graphs-R-post-8, fig.height=3.15}
-ggplot(athletes, aes(x = Sport, fill = Sex)) +
+```{r graphs-R-6, fig.height=3.15}
+ggplot(athletes, aes(x = Sport, fill = Sex)) + 
   geom_bar(position = "dodge")
+
+
 ```
 
 ## BMI by gender
 
-```{r graphs-R-post-9, fig.height=4}
+```{r graphs-R-7, fig.height=4}
 ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot()
 ```
 
@@ -106,43 +97,34 @@ ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot()
 
 Scatterplot:
 
-```{r graphs-R-post-10, fig.height=3.4}
+```{r graphs-R-8, fig.height=3.4}
 ggplot(athletes, aes(x = Ht, y = Wt)) + geom_point()
 ```
 
 ## With regression line
 
-```{r graphs-R-post-11, fig.height=3.6}
+```{r graphs-R-9, fig.height=3.6}
 ggplot(athletes, aes(x = Ht, y = Wt)) +
   geom_point() + geom_smooth(method = "lm")
 ```
 
 ## BMI by sport and gender
 
-```{r graphs-R-post-12, fig.height=3.6}
+```{r graphs-R-10, fig.height=3.6}
 ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
   geom_boxplot()
 ```
 
 ## Height and weight by gender
 
-```{r graphs-R-post-13, fig.height=3.6}
+```{r graphs-R-11, fig.height=3.6}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
-  geom_point()
+  geom_point() + geom_smooth(method = "lm")
 ```
 
+## Height by weight for each sport, with facets
 
-or
-
-```{r graphs-R-post-14}
-ggplot(athletes, aes(x = Ht, y = Wt)) +
-  geom_point() + facet_wrap(~Sex)
-```
-
-
-## Height by weight for each sport and gender, with facets
-
-```{r graphs-R-post-15, fig.height=3.6}
+```{r graphs-R-12, fig.height=3.6}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport)
 ```
@@ -153,7 +135,7 @@ Default uses same scale for each facet. To use different scales for each
 facet, this:
 
 \small
-```{r graphs-R-post-16, fig.height=3.2}
+```{r graphs-R-13, fig.height=3.2}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport, scales = "free")
 ```

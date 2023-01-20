@@ -43,7 +43,7 @@ sqrt_minus_1 <- function(x) {
 }
 ```
 
-or more simply
+or more simply ("the R way", better style)
 
 ```{r functions-4}
 sqrt_minus_1 <- function(x) {
@@ -186,7 +186,9 @@ calculations, like this:
 
 ```{r functions-19}
 my_df <- tibble(x = 1:4, y = c(10, 11, 10, 14))
+# my_df
 my_df.1 <- lm(y ~ x, data = my_df)
+# summary(my_df.1)
 tidy(my_df.1)
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "STAD29: Statistics for the Life and Social Sciences"
+title: "STAD29 / STA 1007 Statistics for the Life and Social Sciences"
 author: "Course Outline"
 header-includes:
    - \usepackage{multicol}
