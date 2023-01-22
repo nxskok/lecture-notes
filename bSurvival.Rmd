@@ -173,6 +173,7 @@ look normal.
 This looks good (with only 12 points):
 
 ```{r bSurvival-7, fig.height=3}
+#| warning = FALSE
 ggcoxdiagnostics(dance.1) + geom_smooth(se = F)
 ```
 
@@ -571,6 +572,7 @@ Down-and-up indicates incorrect relationship between age and
 survival: 
 
 ```{r bSurvival-35, fig.height=3.4, message=F}
+#| warning = FALSE
 ggcoxdiagnostics(y.1) + geom_smooth(se = F)
 ```
 
@@ -594,6 +596,7 @@ tidy(y.2) %>% select(term, estimate, p.value)
 Not great, but less problematic than before:
 
 ```{r bSurvival-37, fig.height=3.2, message=F}
+#| warning = FALSE
 ggcoxdiagnostics(y.2) + geom_smooth(se = F)
 ```
 

@@ -20,12 +20,13 @@
 
 
 ## Packages
-```{r bRegression-1, eval=F }
+```{r bRegression-1, results='hide'}
 library(MASS) # for Box-Cox, later
 library(tidyverse)
 library(broom)
 library(marginaleffects)
 library(conflicted)
+conflict_prefer("select", "dplyr")
 ```
 
    

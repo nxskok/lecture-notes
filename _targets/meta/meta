@@ -1,16 +1,40 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-bCluster|stem|73fda600267d67db|f8dc4572372efbaa|ef46db3751d8e999|-88479578|bCluster.Rmd|t19353.7802316543s|273d52c1295a7c44|22695|file|local|vector|||0.766||
-bCluster_slides|stem|2289c6af36ac831d|d408548e88fd6b6e|97390007fccc969e|1186431600|bCluster_slides.pdf*bCluster_slides.Rmd|t19353.7805118868s|e3acfb33419b8eb1|1255508|file|local|vector|||18.976||
+asphalt|stem|6fbca0019d73bfd4|063be77cda7dc456|ef46db3751d8e999|-733295341|asphalt.Rmd|t18800.6490678928s|0240d06202b56497|13628|file|local|vector|||0||
+asphalt_slides|stem|102070a93c40b8da|4ccca33a7516746a|61b8a3bf60456c2f|-998026003|asphalt_slides.pdf*asphalt_slides.Rmd|t19379.7034076982s|a934a0b3cbe8f675|196766|file|local|vector|||22.297|package cmdstanr was built under R version 4.3.0|
+bAncova|stem|5a1645a28aa932ed|d0fd867a84126eb6|ef46db3751d8e999|2112088981|bAncova.Rmd|t19139.791545477s|d8b500dde730b430|3909|file|local|vector|||0||
+bAncova_slides|stem|3abf13e79bb5d485|b44ab3e2e858e76c|ff75870b3b81767f|1072888702|bAncova_slides.pdf*bAncova_slides.Rmd|t19379.7076096293s|a77a459c34526889|93059|file|local|vector|||9.032||
+bAnova|stem|6a7be9dba819155f|f5c2d298ecafeb88|ef46db3751d8e999|-1632939918|bAnova.Rmd|t18800.6490767817s|008036e1fd55f3fd|22637|file|local|vector|||1.014||
+bAnova_slides|stem|4f0c1b6fc5e59572|fa87f7baf0da708b|04725a2d6fcdd033|1709416455|bAnova_slides.pdf*bAnova_slides.Rmd|t19379.7075049094s|a46566a11ade6e69|213867|file|local|vector|||19.866|package cmdstanr was built under R version 4.3.0. Package amsmath Warning Foreign command \over. amsmath                \frac or \genfrac should be used instead. amsmath                 on input line 1939.|
+bCluster|stem|73fda600267d67db|f8dc4572372efbaa|ef46db3751d8e999|-88479578|bCluster.Rmd|t19379.6988723567s|273d52c1295a7c44|22695|file|local|vector|||0.766||
+bCluster_slides|stem|2289c6af36ac831d|d408548e88fd6b6e|97390007fccc969e|1186431600|bCluster_slides.pdf*bCluster_slides.Rmd|t19379.6970999744s|e3acfb33419b8eb1|1255508|file|local|vector|||18.976||
 bDiscrim|stem|9d091a32ffc1ee94|37301cfdd8e3b632|ef46db3751d8e999|-1240917588|bDiscrim.Rmd|t19353.7903692383s|53e15730e9abfac4|19148|file|local|vector|||0.79||
 bDiscrim_slides|stem|970bb0c643d094a0|a3e9f9b211b2617a|06419f4c2560c707|504754789|bDiscrim_slides.pdf*bDiscrim_slides.Rmd|t19353.7907569712s|e7e182f86fe83a04|213108|file|local|vector|||14.1||
 bFactor|stem|272a55b583a39190|6bdc79038f64d204|ef46db3751d8e999|1800469349|bFactor.Rmd|t19353.8218875362s|c4db846c129b27ee|19851|file|local|vector|||0.818||
 bFactor_slides|stem|fe089d9c2003b556|dbe487ea4cc4ad03|4dc0a6ea8a44f87d|1220692697|bFactor_slides.pdf*bFactor_slides.Rmd|t19353.8232036353s|5578ebb1319d3edb|466815|file|local|vector|||78.175|Removed 36 rows containing missing values geom_point.. Removed 36 rows containing missing values geom_path.|
 bLogistic|stem|f7c85ebe74ac2aae|80a7bca8d74d72a4|ef46db3751d8e999|1369494061|bLogistic.Rmd|t19353.9224968936s|2f9f46fba1c80f0d|20199|file|local|vector|||0.819||
 bLogistic_slides|stem|5df1875cabb7edbd|f28efed9069f0cc3|deb5688670fddd07|614312738|bLogistic_slides.pdf*bLogistic_slides.Rmd|t19353.9237031979s|32de0e5f2e2fad4c|274319|file|local|vector|||21.461||
+bManova|stem|a9982e4c85289ac3|51320586d1a3da6c|ef46db3751d8e999|-1420451043|bManova.Rmd|t19353.7199876991s|4bc245882df05e3c|8209|file|local|vector|||0.969||
+bManova_slides|stem|e0fd6fd6e8e84232|2a492f816968f060|5eb280cd17cb36f9|-2110809328|bManova_slides.pdf*bManova_slides.Rmd|t19379.7149084049s|8a4ec4dc6c416117|136100|file|local|vector|||10.847||
+bMultiway|stem|ddd55d00497c8ed1|fe318f7c8a5299b5|ef46db3751d8e999|-1740502699|bMultiway.Rmd|t18800.6491186799s|7442dc48055f419e|14640|file|local|vector|||0||
+bMultiway_slides|stem|f3c5dbc46a8a52a1|8a20e766595dcacc|476ebad79e310b9c|1176347564|bMultiway_slides.pdf*bMultiway_slides.Rmd|t19379.715351136s|c083609bde4a4e84|114042|file|local|vector|||11.169||
+bootstrap|stem|e5dfcfe5d2341885|7e09807bddcb374e|ef46db3751d8e999|-1346324570|bootstrap.Rmd|t18800.6534553042s|fee4851bad86ac6b|8596|file|local|vector|||0||
+bootstrap_R|stem|bce047edb2b5d950|31f249e8f3e32910|ef46db3751d8e999|1311969910|bootstrap_R.Rmd|t18800.6534565542s|e0fd54f11cfea15f|5928|file|local|vector|||0||
+bootstrap_R_slides|stem|de8c1ce05a4caba5|a596eb0d402cb087|c64b7d956aba4096|317570555|bootstrap_R_slides.pdf*bootstrap_R_slides.Rmd|t19379.7152215065s|5548dd502a5d577d|82453|file|local|vector|||9.918||
+bootstrap_slides|stem|6d3e911587bd72ff|d83cfa9798996713|c1b89123d2c63c03|2071402768|bootstrap_slides.pdf*bootstrap_slides.Rmd*bootstrap_slides_files|t19379.7151062751s|3dd413d319aac42a|223515|file|local|vector|||17.088|package cmdstanr was built under R version 4.3.0|
 bPrincomp|stem|ed5e8e9e77eeeb72|1896bf592adb2ccf|ef46db3751d8e999|984656558|bPrincomp.Rmd|t19353.9270228944s|4929e6441378af86|13752|file|local|vector|||0||
 bPrincomp_slides|stem|3d20a136381d1b2e|a9aab2cb87ba88c9|2c6a668904a4e9c4|807965496|bPrincomp_slides.pdf*bPrincomp_slides.Rmd|t19353.9337046912s|dd10b622a6353d73|172718|file|local|vector|||12.426||
-functions|stem|0c4ef1c683622213|df01e77a88832705|ef46db3751d8e999|1242340633|functions.Rmd|t19353.757827767s|c42d4be419b89d38|11880|file|local|vector|||0.809||
-functions_slides|stem|bdd03693c0135c10|a358bcb497d662e9|db0e71308b6bbe89|-1669360982|functions_slides.pdf*functions_slides.Rmd|t19353.7579101749s|36f5863f03b4e46c|118440|file|local|vector|||7.146||
+bProfile|stem|0ea7de0a0033e21d|d818027acc7dc23c|ef46db3751d8e999|-1401843951|bProfile.Rmd|t19157.8145707944s|2602b5aa1b0a5bde|16245|file|local|vector|||0.971||
+bProfile_slides|stem|324e71bda264a322|fb35b7d0b491be6c|002e48a9befb616a|-2094492600|bProfile_slides.pdf*bProfile_slides.Rmd|t19379.7241140353s|7f4fce592de6e02c|152883|file|local|vector|||11.397||
+bRegression|stem|36b15ee2580b5aea|27013a9507446728|ef46db3751d8e999|1707664056|bRegression.Rmd|t19379.7262887239s|7315fa1bcfb675f7|21240|file|local|vector|||0.776||
+bRegression_slides|stem|6bbfa8336ccac3ae|33bf5e23e66ec731|0de437ab7cc88947|-444216599|bRegression_slides.pdf*bRegression_slides.Rmd|t19379.7265642812s|ce4dda7f5f3f5a93|434185|file|local|vector|||16.974||
+bSurvival|stem|6c2b1dca8528ed3f|e12ee621875ac091|ef46db3751d8e999|-54375285|bSurvival.Rmd|t19379.7275274817s|0dcf410f63a36be4|10672|file|local|vector|||0||
+bSurvival_slides|stem||ea200d8d2b35776d|69ce9d0221768952|1480893430||t19379.7269605388s||0|file|local|vector|||6.067|package cmdstanr was built under R version 4.3.0|object dance not found
+choosing_R|stem|ff666d4626820190|723a041acec56fff|ef46db3751d8e999|950995899|choosing_R.Rmd|t18800.6534618782s|d260a0e845b2ca7d|8047|file|local|vector|||0||
+choosing_R_slides|stem|f478e10ef64ba134|bd4d9a7cc0e8af9e|be4c715eb17b917d|1767707305|choosing_R_slides.pdf*choosing_R_slides.Rmd|t19379.7268040975s|4c6cd5539dd36538|165763|file|local|vector|||20.816|package cmdstanr was built under R version 4.3.0|
+dates_and_times|stem|f505c32638f948b5|82e12376179907fe|ef46db3751d8e999|-552915072|dates_and_times.Rmd|t19132.7219042568s|0854efad0b00c2c0|6589|file|local|vector|||0.001||
+dates_and_times_slides|stem|ec7ac5bc2b39360b|3e88a8b319a2a4af|6ea95c1512e41064|1009841895|dates_and_times_slides.pdf*dates_and_times_slides.Rmd|t19379.7269122926s|8f908f5d3ce5521b|61381|file|local|vector|||9.204||
+functions|stem|6b04cbc3031edce4|df01e77a88832705|ef46db3751d8e999|1242340633|functions.Rmd|t19377.7536309675s|17271f6182984893|11935|file|local|vector|||0.947||
+functions_slides|stem|753549b2a6c2a00d|a358bcb497d662e9|8479d19d644288c3|-1669360982|functions_slides.pdf*functions_slides.Rmd|t19379.7031497313s|bc8fdbe7b51a4f12|121311|file|local|vector|||12.815||
 numsum_R|stem|51cc4a9049ccfdbf|c07540b74fb11021|ef46db3751d8e999|1220761656|numsum_R.Rmd|t19353.9386711532s|da93582f847e2101|3272|file|local|vector|||0.845||
 numsum_R_slides|stem|0850cabe7e969e3e|6038baeebed6f1b9|7a22091e97910115|807988737|numsum_R_slides.pdf*numsum_R_slides.Rmd|t19353.938754301s|e9c1a57389a26adc|38729|file|local|vector|||5.194||
 preliminaries|stem|a1e21d9c34145d58|587ad1253cdee6ea|ef46db3751d8e999|2144827096|preliminaries.Rmd|t19353.7199907083s|2691f4548de0c6bf|1321|file|local|vector|||0||

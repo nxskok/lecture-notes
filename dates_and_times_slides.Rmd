@@ -13,6 +13,12 @@ output:
 ---
 
 
+```{r}
+#| echo = FALSE
+tar_load(dates_and_times)
+```
+
+
 
 ```{r dates-and-times-slides-1, child="preliminaries.Rmd", echo=F}
 ```

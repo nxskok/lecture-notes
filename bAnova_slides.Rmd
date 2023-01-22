@@ -12,6 +12,10 @@ output:
     colortheme: "dove"
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(bAnova)
+```
 
 
 ```{r bAnova-slides-1, child="preliminaries.Rmd", echo=F}
