@@ -12,6 +12,11 @@ output:
     colortheme: "dove"
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(rstan)
+```
+
 
 ```{r rstan-slides-1, child="preliminaries.Rmd", echo=F}
 ```

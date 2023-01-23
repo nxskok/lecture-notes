@@ -13,6 +13,10 @@ output:
 urlcolor: blue
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(tidy_extra_R)
+```
 
 
 ```{r tidy-extra-R-slides-1, child="preliminaries.Rmd", echo=F}

@@ -13,6 +13,10 @@ output:
 urlcolor: blue    
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(wider_wrong)
+```
 
 
 ```{r wider-wrong-slides-1, child="preliminaries.Rmd", echo=F}

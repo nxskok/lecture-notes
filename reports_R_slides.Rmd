@@ -13,6 +13,10 @@ output:
 urlcolor: blue
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(reports_R)
+```
 
 
 ```{r reports-R-slides-1, child="preliminaries.Rmd", echo=F}

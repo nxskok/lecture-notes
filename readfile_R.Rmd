@@ -290,7 +290,7 @@ cannot read one in from a URL.
 
 ```{r readfile-R-15, warning=F}
 library(readxl)
-mydata2 <- read_excel("test2.xlsx", sheet = "fred")
+mydata2 <- read_excel("test2.xlsx", sheet = "data")
 mydata2
 ```
 

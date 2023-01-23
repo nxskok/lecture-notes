@@ -14,6 +14,12 @@ urlcolor: blue
 ---
 
 
+```{r}
+#| echo = FALSE
+tar_load(inference_3_R)
+```
+
+
 
 ```{r inference-3-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```

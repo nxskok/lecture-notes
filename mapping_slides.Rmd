@@ -10,7 +10,14 @@ output:
     df_print: tibble
     theme: "AnnArbor"
     colortheme: "dove"
+    always_allow_html: true
 ---
+
+```{r}
+#| echo = FALSE
+tar_load(mapping)
+```
+
 
 
 
@@ -19,6 +26,5 @@ output:
 
 
 ```{r mapping, child="mapping.Rmd"}
-
 ```
 

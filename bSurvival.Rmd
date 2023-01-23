@@ -201,6 +201,9 @@ One prediction *for each time* for each combo of age and treatment in `dance.new
 
 ```{r bSurvival-9, echo=F}
 options(width = 80)
+url <- "http://ritsokiguess.site/datafiles/dancing.txt"
+dance <- read_table(url)
+dance %>% mutate(mth = Surv(Months, Quit)) -> dance
 ```
 
 
@@ -225,6 +228,17 @@ dancing (compare "profiles" for same age for treatment group
 vs.\ not)
 
 * Would be nice to see this on a graph. This is `ggsurvplot` from package `survminer`:
+
+
+```{r bSurvival-99, echo=F}
+url <- "http://ritsokiguess.site/datafiles/dancing.txt"
+dance <- read_table(url)
+dance %>% mutate(mth = Surv(Months, Quit)) -> dance
+s <- survfit(dance.1, newdata = dance.new, data = dance)
+```
+
+
+
 ```{r bSurvival-11 }
 g <- ggsurvplot(s, conf.int = F)
 ```

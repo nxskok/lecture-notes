@@ -13,6 +13,13 @@ output:
 urlcolor: blue
 ---
 
+
+```{r}
+#| echo = FALSE
+tar_load(outline_c32)
+```
+
+
 ```{r outline-c32-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
