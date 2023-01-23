@@ -15,7 +15,7 @@ obtaining quartiles or any percentile), n (for counting observations).
 
 ## Packages for this section
 
-```{r numsum-R-1, eval=F}
+```{r numsum-R-1}
 library(tidyverse)
 ```
 
@@ -89,7 +89,7 @@ groups) and then `summarize`:
 
 ```{r numsum-R-9}
 athletes %>% group_by(Sex) %>% 
-  summarize(m=mean(Ht), s=sd(Ht))
+  summarize(mean_Ht = mean(Ht), sd_Ht = sd(Ht))
 ```
 
 ## Count plus stats
@@ -99,7 +99,7 @@ go the `n()` way:
 
 ```{r}
 athletes %>% group_by(Sex) %>%
-summarize(n=n(), m=mean(Ht), s=sd(Ht))
+summarize(n = n(), mean_Ht = mean(Ht), sd_Ht = sd(Ht))
 ```
 
 - This explains second variation on counting within group: “within each
@@ -116,7 +116,7 @@ sport/Sex, how many athletes were there?”
 athletes %>% summarize(across(where(is.numeric), \(x) sd(x))) -> d
 ```
 
-\scriptsize
+\tiny
 
 ```{r}
 d
@@ -129,7 +129,12 @@ d
 \small
 ```{r numsum-R-11}
 athletes %>% summarize(across(starts_with("H"),
+<<<<<<< HEAD
                        list(med = \(h) median(h), iqr = \(h) IQR(h))))
+=======
+                       list(med = \(x) median(x), 
+                            iqr = \(x) IQR(x))))
+>>>>>>> 24d2240004c326215ee98bc188361386392684d8
 ```
 \normalsize
 
@@ -140,6 +145,11 @@ athletes %>% summarize(across(starts_with("H"),
 athletes %>% 
   group_by(Sex) %>% 
   summarize(across(starts_with("H"), 
+<<<<<<< HEAD
                    list(med = \(h) median(h), 
                         iqr = \(h) IQR(h))))
+=======
+                   list(med = \(x) median(x), 
+                        iqr = \(x) IQR(x))))
+>>>>>>> 24d2240004c326215ee98bc188361386392684d8
 ```

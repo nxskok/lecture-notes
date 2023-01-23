@@ -173,6 +173,7 @@ look normal.
 This looks good (with only 12 points):
 
 ```{r bSurvival-7, fig.height=3}
+#| warning = FALSE
 ggcoxdiagnostics(dance.1) + geom_smooth(se = F)
 ```
 
@@ -200,6 +201,9 @@ One prediction *for each time* for each combo of age and treatment in `dance.new
 
 ```{r bSurvival-9, echo=F}
 options(width = 80)
+url <- "http://ritsokiguess.site/datafiles/dancing.txt"
+dance <- read_table(url)
+dance %>% mutate(mth = Surv(Months, Quit)) -> dance
 ```
 
 
@@ -224,6 +228,10 @@ dancing (compare "profiles" for same age for treatment group
 vs.\ not)
 
 * Would be nice to see this on a graph. This is `ggsurvplot` from package `survminer`:
+
+
+
+
 ```{r bSurvival-11 }
 g <- ggsurvplot(s, conf.int = F)
 ```
@@ -481,7 +489,8 @@ lung.new
 
 ## Making the plot 
 ```{r bSurvival-29, fig.height=3.8}
-ggsurvplot(s, conf.int = F)
+s <- survfit(lung.3, newdata = lung.new, data = lung)
+g <- ggsurvplot(s, conf.int = F)
 ```
  
 ## The plot
@@ -571,6 +580,7 @@ Down-and-up indicates incorrect relationship between age and
 survival: 
 
 ```{r bSurvival-35, fig.height=3.4, message=F}
+#| warning = FALSE
 ggcoxdiagnostics(y.1) + geom_smooth(se = F)
 ```
 
@@ -594,6 +604,7 @@ tidy(y.2) %>% select(term, estimate, p.value)
 Not great, but less problematic than before:
 
 ```{r bSurvival-37, fig.height=3.2, message=F}
+#| warning = FALSE
 ggcoxdiagnostics(y.2) + geom_smooth(se = F)
 ```
 

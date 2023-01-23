@@ -12,6 +12,10 @@ output:
     colortheme: "dove"
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(bMultiway)
+```
 
 
 ```{r bMultiway-slides-1, child="preliminaries.Rmd", echo=F}

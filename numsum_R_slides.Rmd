@@ -14,7 +14,9 @@ output:
 
 
 
-```{r numsum-R-slides-1, child="preliminaries.Rmd", echo=F}
+```{r}
+#| echo = FALSE
+tar_load(numsum_R)
 ```
 
 

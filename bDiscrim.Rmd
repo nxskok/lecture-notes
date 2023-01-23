@@ -209,7 +209,8 @@ change in LD1 score for 1-unit change in variables.
 
 ```{r bDiscrim-10}
 hilo %>% select(-fertilizer) %>% 
-   summarize(across(yield:weight, ~quantile(., c(0.25, 0.75))))
+   summarize(across(yield:weight, 
+                    \(x) quantile(x, c(0.25, 0.75))))
 ```
 
 * Here, IQRs both 2.2, *identical*, so 1-unit change in each variable
@@ -425,7 +426,9 @@ First and third quartiles for three response variables:
 ```{r bDiscrim-21 }
 peanuts %>%
    select(y:w) %>%
-summarize(across(everything(), ~quantile(., c(0.25, 0.75)))) -> quartiles
+summarize(across(
+  everything(), 
+  \(x) quantile(x, c(0.25, 0.75)))) -> quartiles
 quartiles
 new <- with(quartiles, crossing(y, smk, w))
 ```

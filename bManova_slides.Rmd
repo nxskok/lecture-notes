@@ -12,6 +12,11 @@ output:
     colortheme: "dove"
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(bManova)
+```
+
 
 
 ```{r bManova, child="bManova.Rmd"}

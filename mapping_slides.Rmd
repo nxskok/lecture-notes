@@ -3,6 +3,7 @@ title: "Drawing maps with Leaflet"
 author: ""
 header-includes:
    - \usepackage{multicol}
+always_allow_html: true
 output: 
   beamer_presentation:
     latex_engine: lualatex
@@ -12,6 +13,12 @@ output:
     colortheme: "dove"
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(mapping)
+```
+
+
 
 
 ```{r mapping-slides-1, child="preliminaries.Rmd", echo=F}
@@ -19,6 +26,5 @@ output:
 
 
 ```{r mapping, child="mapping.Rmd"}
-
 ```
 

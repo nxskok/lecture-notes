@@ -32,7 +32,7 @@
 You might not have installed the first of these. See over for
 instructions. 
 
-```{r bPrincomp-1, eval=FALSE}
+```{r bPrincomp-1}
 library(ggbiplot) # see over
 library(tidyverse)
 library(ggrepel)
@@ -328,7 +328,7 @@ g
 
 ```{r bPrincomp-13}
 places0 %>% 
-  mutate(across(-id, ~log(.))) -> places
+  mutate(across(-id, \(x) log(x))) -> places
 ```
 
 ## Just the numerical columns
@@ -477,7 +477,7 @@ places %>% select(id, econ, crime, educate) %>%
 
 ```{r bPrincomp-28}
 places %>% 
-  mutate(across(-id, ~percent_rank(.))) -> places_pr
+  mutate(across(-id, \(x) percent_rank(x))) -> places_pr
 ```
 
 ## Look up cities and variables again

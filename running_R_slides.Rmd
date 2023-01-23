@@ -13,6 +13,10 @@ output:
 urlcolor: blue
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(running_R)
+```
 
 
 ```{r running-R-slides-1, child="preliminaries.Rmd", echo=F}
