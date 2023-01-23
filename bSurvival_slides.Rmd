@@ -14,7 +14,7 @@ output:
 
 ```{r}
 #| echo = FALSE
-#tar_load(bSurvival)
+# tar_load(bSurvival)
 ```
 
 

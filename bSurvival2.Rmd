@@ -1,0 +1,257 @@
+
+## Survival analysis
+
+
+* So far, have seen:
+
+
+   * response variable counted or measured (regression)
+
+   * response variable categorized (logistic regression)
+
+and have predicted response from explanatory variables.
+
+* But what if response is time until event (eg. time of
+survival after surgery)?
+
+* Additional complication: event might not have happened at end of study (eg. patient still alive). But knowing that patient has "not died yet" presumably informative. Such data called *censored*. 
+
+* Enter *survival analysis*, in particular the "Cox proportional hazards model". 
+
+* Explanatory variables in this context often called *covariates*.
+
+
+## Example: still dancing?
+
+
+* 12 women who have just started taking dancing lessons are
+followed for up to a year, to see whether they are still taking
+dancing lessons, or have quit. The "event" here is "quit".
+
+* This might depend on:
+
+
+   * a treatment (visit to a dance competition)
+
+   * woman's age (at start of study).
+
+## Data
+
+\normalsize
+```
+Months  Quit   Treatment Age
+1        1        0      16
+2        1        0      24
+2        1        0      18
+3        0        0      27
+4        1        0      25
+7        1        1      26
+8        1        1      36
+10       1        1      38
+10       0        1      45
+12       1        1      47
+```
+\normalsize
+
+## About the data
+
+
+* `months` and `quit` are kind of combined response:
+
+
+   *  `Months` is number of months a woman was actually observed dancing
+
+   * `quit` is 1 if woman quit, 0 if still dancing at end of study.
+
+
+* Treatment is 1 if woman went to dance competition, 0 otherwise.
+
+* Fit model and see whether `Age` or `Treatment`
+have effect on survival.
+
+* Want to do predictions for probabilities of still dancing as
+they depend on whatever is significant, and draw plot.
+
+## Packages (for this section) 
+
+* Install packages `survival` and `survminer` if not done. 
+
+* Load `survival`, `survminer`,
+`broom` and `tidyverse`:
+
+```{r bSurvival-1, eval=F}
+library(tidyverse)
+library(survival)
+library(survminer)
+library(broom)
+```
+
+
+## Read data 
+
+
+- Column-aligned: 
+
+\normalsize
+```{r bSurvival-2}
+url <- "http://ritsokiguess.site/datafiles/dancing.txt"
+dance <- read_table(url)
+```
+\normalsize
+
+
+## The data
+
+\small
+```{r bSurvival-3}
+dance
+```
+\normalsize
+   
+
+## Examine response and fit model
+
+
+* Response variable: 
+
+\small
+```{r bSurvival-4}
+dance %>% mutate(mth = Surv(Months, Quit)) -> dance
+dance
+```
+\normalsize
+
+
+  
+
+* Then fit model, predicting `mth` from explanatories:
+```{r bSurvival-5 }
+dance.1 <- coxph(mth ~ Treatment + Age, data = dance)
+```
+ 
+
+
+## Output looks a lot like regression
+
+\scriptsize
+```{r bSurvival-6}
+summary(dance.1)
+```
+\normalsize
+
+## Conclusions
+
+
+* Use $\alpha=0.10$ here since not much data.
+
+* Three tests at bottom like global F-test. Consensus that
+something predicts survival time (whether or not dancer quit and how
+long it took).
+
+* `Age` (definitely), `Treatment` (marginally) both
+predict survival time.
+
+
+## Model checking
+
+
+* With regression, usually plot residuals against fitted values.
+
+* Not quite same here (nonlinear model), but ``martingale
+residuals'' should have no pattern vs.\ "linear predictor".
+
+* `ggcoxdiagnostics` from package `survminer`
+makes plot, to which we add smooth. If smooth trend more or less
+straight across, model OK. 
+
+* Martingale residuals can go very negative, so won't always
+look normal.
+
+
+## Martingale residual plot for dance data
+
+This looks good (with only 12 points):
+
+```{r bSurvival-7, fig.height=3}
+#| warning = FALSE
+ggcoxdiagnostics(dance.1) + geom_smooth(se = F)
+```
+
+   
+
+## Predicted survival probs 
+- The function we use is called
+`survfit`, though actually works rather like
+`predict`. 
+- First create a data frame of values to predict from. We'll do all
+combos of ages 20 and 40, treatment and not, using
+`crossing` to get all the combos:
+
+\small
+```{r bSurvival-8}
+treatments <- c(0, 1)
+ages <- c(20, 40)
+dance.new <- crossing(Treatment = treatments, Age = ages)
+dance.new
+```
+\normalsize 
+
+## The predictions  
+One prediction *for each time* for each combo of age and treatment in `dance.new`:
+
+```{r bSurvival-9, echo=F}
+options(width = 80)
+url <- "http://ritsokiguess.site/datafiles/dancing.txt"
+dance <- read_table(url)
+dance %>% mutate(mth = Surv(Months, Quit)) -> dance
+```
+
+
+
+\footnotesize
+```{r bSurvival-10}
+s <- survfit(dance.1, newdata = dance.new, data = dance)
+summary(s)
+```
+\normalsize
+
+
+
+## Conclusions from predicted probs
+
+
+* Older women more likely to be still dancing than younger women
+(compare "profiles" for same treatment group).
+
+* Effect of treatment seems to be to increase prob of still
+dancing (compare "profiles" for same age for treatment group
+vs.\ not)
+
+* Would be nice to see this on a graph. This is `ggsurvplot` from package `survminer`:
+
+
+
+
+```{r bSurvival-11 }
+g <- ggsurvplot(s, conf.int = F)
+```
+
+## "Strata" (groups)
+
+- uses "strata" thus (`dance.new`): 
+
+\footnotesize
+
+```{r bSurvival-12, echo=F}
+dance.new
+```
+\normalsize
+
+
+
+## Plotting survival probabilities 
+```{r survival-plot, fig.height=3.8}
+g
+```
+
+   

@@ -230,13 +230,6 @@ vs.\ not)
 * Would be nice to see this on a graph. This is `ggsurvplot` from package `survminer`:
 
 
-```{r bSurvival-99, echo=F}
-url <- "http://ritsokiguess.site/datafiles/dancing.txt"
-dance <- read_table(url)
-dance %>% mutate(mth = Surv(Months, Quit)) -> dance
-s <- survfit(dance.1, newdata = dance.new, data = dance)
-```
-
 
 
 ```{r bSurvival-11 }
@@ -496,7 +489,8 @@ lung.new
 
 ## Making the plot 
 ```{r bSurvival-29, fig.height=3.8}
-ggsurvplot(s, conf.int = F)
+s <- survfit(lung.3, newdata = lung.new, data = lung)
+g <- ggsurvplot(s, conf.int = F)
 ```
  
 ## The plot
