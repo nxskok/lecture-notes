@@ -375,3 +375,13 @@ sales %>% full_join(desc)
 \normalsize
 
 - The missing `sales` for "masonry nail" says that it was in the lookup table `desc`, but we didn't sell any.
+
+
+## The same thing, but with `anti_join`
+
+Anything in first df but not in second?
+
+```{r}
+desc %>% anti_join(sales)
+```
+

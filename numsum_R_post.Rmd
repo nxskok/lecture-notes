@@ -22,7 +22,6 @@ library(tidyverse)
 ```{r numsum-R-2, echo=F, message=F}
 my_url <- url("http://ritsokiguess.site/datafiles/ais.txt")
 athletes <- read_tsv(my_url)
-athletes <- read_delim(my_url, "\t")
 ```
 
 
@@ -36,7 +35,7 @@ athletes %>% summarize(m=mean(Ht))
 or to get mean and SD of BMI:
 
 ```{r numsum-R-4}
-athletes %>% summarize(meam_BMI = mean(BMI), sd_BMI = sd(BMI))
+athletes %>% summarize(m = mean(BMI), s = sd(BMI))
 ```
 
 ## Quartiles
@@ -46,8 +45,8 @@ percentiles:
 
 
 ```{r numsum-R-5}
-athletes %>% summarize( Q1=quantile(Wt, 0.25),
-                        Q3=quantile(Wt, 0.75))
+athletes %>% summarize( Q1 = quantile(Wt, 0.25),
+                        Q3 = quantile(Wt, 0.75))
 ```
 
 ## Creating new columns
@@ -58,9 +57,9 @@ weights in pounds.
 - Create new column and summarize that: 
 
 ```{r numsum-R-6}
-athletes %>% mutate(wt_lb=Wt*2.2) %>%
-  summarize(Q1_lb=quantile(wt_lb, 0.25),
-            Q3_lb=quantile(wt_lb, 0.75))
+athletes %>% mutate(wt_lb = Wt*2.2) %>%
+  summarize(Q1_lb = quantile(wt_lb, 0.25),
+            Q3_lb = quantile(wt_lb, 0.75))
 ```
 
 ## Counting how many
@@ -79,7 +78,7 @@ in a moment):
 \small
 ```{r numsum-R-8}
 athletes %>% group_by(Sport) %>%
-  summarize(count=n())
+  summarize(count = n())
 ```
 \normalsize
 
@@ -114,7 +113,7 @@ sport/Sex, how many athletes were there?”
 \small
 
 ```{r numsum-R-10}
-athletes %>% summarize(across(where(is.numeric), ~sd(.))) !!-> d
+athletes %>% summarize(across(where(is.numeric), \(x) sd(x))) -> d
 ```
 
 \scriptsize
@@ -130,7 +129,8 @@ d
 \small
 ```{r numsum-R-11}
 athletes %>% summarize(across(starts_with("H"),
-                       list(med=~median(.), iqr=~IQR(.))))
+                       list(med = \(h) median(h), 
+                            iqr = \(h) IQR(h))))
 ```
 \normalsize
 
@@ -141,6 +141,6 @@ athletes %>% summarize(across(starts_with("H"),
 athletes %>% 
   group_by(Sex) %>% 
   summarize(across(starts_with("H"), 
-                   list(med=~median(.), 
-                        iqr=~IQR(.))))
+                   list(med = \(h) median(h), 
+                        iqr = \(h) IQR(h))))
 ```

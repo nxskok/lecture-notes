@@ -24,6 +24,9 @@ library(tidyverse)
 ```{r graphs-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
+read_delim(my_url, " ")
+read_delim(my_url)
+# read_table(my_url) # actually works, but not clear why
 ```
 \normalsize
 
@@ -73,7 +76,7 @@ ggplot(athletes, aes(x = Sport)) + geom_bar()
 ## Histogram of body mass index
 
 ```{r graphs-R-5, fig.height=3.9}
-ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
+ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 8)
 ```
 
 ## Which sports are played by males and females?
@@ -81,10 +84,8 @@ ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
 Grouped bar chart:
 
 ```{r graphs-R-6, fig.height=3.15}
-ggplot(athletes, aes(x = Sport, fill = Sex)) + 
+ggplot(athletes, aes(x = Sport, colour = Sex)) +
   geom_bar(position = "dodge")
-
-
 ```
 
 ## BMI by gender
@@ -108,25 +109,25 @@ ggplot(athletes, aes(x = Ht, y = Wt)) +
   geom_point() + geom_smooth(method = "lm")
 ```
 
-## BMI by sport and gender
+## BMI by sport and gender BMI by sport and gender
 
-```{r graphs-R-10, fig.height=3.6}
+```{r graphs-R-10, fig.height=2.6}
 ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
   geom_boxplot()
 ```
 
 ## Height and weight by gender
 
-```{r graphs-R-11, fig.height=3.6}
+```{r graphs-R-11, fig.height=2.0}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
-  geom_point() + geom_smooth(method = "lm")
+  geom_point()
 ```
 
-## Height by weight for each sport, with facets
+## Height by weight by gender for each sport, with facets
 
-```{r graphs-R-12, fig.height=3.6}
+```{r graphs-R-12, fig.height=2}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
-  geom_point() + facet_wrap(~Sport)
+  geom_point() + facet_wrap(~Sport) 
 ```
 
 ## Filling each facet
@@ -135,7 +136,7 @@ Default uses same scale for each facet. To use different scales for each
 facet, this:
 
 \small
-```{r graphs-R-13, fig.height=3.2}
+```{r graphs-R-13, fig.height=2.2}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport, scales = "free")
 ```

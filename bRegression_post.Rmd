@@ -585,6 +585,7 @@ visits
 ```{r bRegression-28}
 visits.1 <- lm(timedrs ~ phyheal + menheal + stress,
   data = visits)
+summary(visits.1)
 glance(visits.1)
 ```
 
@@ -607,6 +608,7 @@ However, look at prediction of `timedrs` from `menheal` by itself:
 \footnotesize 
 ```{r bRegression-30 }
 visits.2 <- lm(timedrs ~ menheal, data = visits)
+summary(visits.2)
 glance(visits.2)
 tidy(visits.2)
 ```
@@ -953,6 +955,7 @@ punting
 \small
 ```{r bRegression-48}
 punting.1 <- lm(punt ~ left + right + fred, data = punting)
+summary(punting.1)
 glance(punting.1)
 tidy(punting.1)
 ```
@@ -990,6 +993,7 @@ with each other (bad, at least confusing).
 \small
 ```{r bRegression-50 }
 punting.2 <- lm(punt ~ right, data = punting)
+summary(punting.2)
 anova(punting.2, punting.1)
 ```
  
