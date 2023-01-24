@@ -98,8 +98,9 @@ athletes %>% group_by(Sex) %>%
 go the `n()` way:
 
 ```{r}
-athletes %>% group_by(Sex) %>%
-summarize(n=n(), m=mean(Ht), s=sd(Ht))
+athletes %>% 
+  group_by(Sex) %>%
+  summarize(n = n(), m = mean(Ht), s = sd(Ht))
 ```
 
 - This explains second variation on counting within group: “within each
@@ -144,3 +145,15 @@ athletes %>%
                    list(med = \(h) median(h), 
                         iqr = \(h) IQR(h))))
 ```
+
+beyond our scope now, but:
+
+```{r}
+athletes %>% 
+  group_by(Sex) %>% 
+  summarize(across(starts_with("H"), 
+                   list(med = \(h) median(h), 
+                        iqr = \(h) IQR(h)))) %>% 
+  pivot_longer(-Sex, names_to = c("var", ".value"), names_sep = "_")
+```
+
