@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  19 JAN 2023 11:34
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  25 JAN 2023 10:43
  restricted system commands enabled.
 **numsum_R_slides.tex
 (./numsum_R_slides.tex
@@ -1454,63 +1454,58 @@ Package caption Info: End \AtBeginDocument code.
 ]
 \openout4 = numsum_R_slides.vrb
  (./numsum_R_slides.vrb
-Overfull \hbox (1.8402pt too wide) in paragraph at lines 53--54
- []\TU/lmss/m/n/8 %Bfat
+Overfull \hbox (4.2615pt too wide) in paragraph at lines 63--63
+ []|\TU/lmss/m/n/6 0.4579764|
  []
 
 
-Overfull \hbox (13.16576pt too wide) in paragraph at lines 63--63
- []|\TU/lmss/m/n/8 0.4579764|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 63--63
+ []|\TU/lmss/m/n/6 1.800549|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 63--63
- []|\TU/lmss/m/n/8 1.800549|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 63--63
+ []|\TU/lmss/m/n/6 3.662989|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 63--63
- []|\TU/lmss/m/n/8 3.662989|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 63--63
+ []|\TU/lmss/m/n/6 1.362451|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 63--63
- []|\TU/lmss/m/n/8 1.362451|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 63--63
+ []|\TU/lmss/m/n/6 47.50124|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 63--63
- []|\TU/lmss/m/n/8 47.50124|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 63--63
+ []|\TU/lmss/m/n/6 2.863933|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 63--63
- []|\TU/lmss/m/n/8 2.863933|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 64--64
+ []|\TU/lmss/m/n/6 32.56533|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 64--64
- []|\TU/lmss/m/n/8 32.56533|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 64--64
+ []|\TU/lmss/m/n/6 6.189826|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 64--64
- []|\TU/lmss/m/n/8 6.189826|
+Overfull \hbox (2.5079pt too wide) in paragraph at lines 64--64
+ []|\TU/lmss/m/n/6 13.0702|
  []
 
 
-Overfull \hbox (9.33064pt too wide) in paragraph at lines 64--64
- []|\TU/lmss/m/n/8 13.0702|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 64--64
+ []|\TU/lmss/m/n/6 9.734495|
  []
 
 
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 64--64
- []|\TU/lmss/m/n/8 9.734495|
- []
-
-
-Overfull \hbox (11.2482pt too wide) in paragraph at lines 64--65
- []|\TU/lmss/m/n/8 13.92557|
+Overfull \hbox (3.3847pt too wide) in paragraph at lines 64--65
+ []|\TU/lmss/m/n/6 13.92557|
  []
 
 ) [11
@@ -1538,16 +1533,16 @@ Here is how much of LuaTeX's memory you used:
    99 hlist, 14 vlist, 17 rule, 1 disc, 6 local_par, 296 glue, 24 kern, 39 penal
 ty, 220 glyph, 200 attribute, 73 glue_spec, 200 attribute_list, 1 shape, 5 write
 , 1 user_defined, 1 pdf_dest, 62 pdf_colorstack nodes
-   avail lists: 1:2,2:794,3:375,4:358,5:192,6:130,7:2726,8:12,9:1074,10:17,11:15
+   avail lists: 1:2,2:802,3:378,4:358,5:192,6:130,7:2819,8:12,9:1080,10:17,11:15
 8
  52965 multiletter control sequences out of 65536+600000
- 47 fonts using 11952535 bytes
+ 47 fonts using 11952655 bytes
  128i,16n,121p,1011b,673s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf/fonts/opentype/public/lm/lmmono8-regular.otf></usr/share/texmf
 /fonts/opentype/public/lm/lmmono10-regular.otf></usr/share/texmf/fonts/opentype/
 public/lm/lmsans10-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans
 8-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans12-regular.otf>
-Output written on numsum_R_slides.pdf (12 pages, 38389 bytes).
+Output written on numsum_R_slides.pdf (12 pages, 38387 bytes).
 
 PDF statistics: 158 PDF objects out of 1000 (max. 8388607)
  118 compressed objects within 2 object streams

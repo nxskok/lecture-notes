@@ -743,7 +743,6 @@ predictions(sev.1, newdata = new, type = "probs") %>%
 ## Plot of predicted probabilities
 
 ```{r}
-summary(sev.1)
 plot_cap(model = sev.1, condition = c("Exposure", "group"),
          type = "probs") +
   geom_point(data = prop, aes(x = Exposure, y = proportion, 

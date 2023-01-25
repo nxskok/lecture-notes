@@ -31,6 +31,8 @@ library(nnet)
 library(conflicted)
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
+conflict_prefer("rename", "dplyr")
+conflict_prefer("summarize", "dplyr")
 ```
 
    
@@ -72,7 +74,6 @@ rats
 \small
 ```{r bLogistic-4}
 rats2 <- rats %>% mutate(status = factor(status))
-rats2
 ```
 \normalsize
    
@@ -95,7 +96,6 @@ status.1 <- glm(status ~ dose, family = "binomial", data = rats2)
 \scriptsize
 ```{r bLogistic-6}
 summary(status.1)
-levels(rats2$status)
 ```
 \normalsize
 
@@ -118,8 +118,7 @@ tests of significance of individual $x$'s
 
 \small
 ```{r bLogistic-7 }
-predictions(status.1) %>% 
-  select(dose, predicted, conf.low, conf.high)
+predictions(status.1)
 ```
 \normalsize 
 
@@ -220,14 +219,13 @@ summary(rat2.1)
 ```{r bLogistic-13 }
 # p <- predict(rat2.1, type = "response")
 # cbind(rat2, p)
-predictions(rat2.1) %>% 
-  select(dose, predicted, conf.low, conf.high)
+predictions(rat2.1)
 ```
  
 
 ## On a picture
 
-```{r, fig.height=2}
+```{r, fig.height=4}
 plot_cap(rat2.1, condition = "dose")
 ```
 
@@ -276,7 +274,7 @@ sepsis <- read_delim(my_url, " ")
 
 ```{r}
 sepsis %>% 
-  mutate(across(-age, ~factor(.))) -> sepsis
+  mutate(across(-age, \(x) factor(x))) -> sepsis
 ```
 
 
@@ -663,6 +661,9 @@ miners
 ## Fitting ordered logistic model
 
 Use function `polr` from package `MASS`. Like `glm`.
+
+
+
 ```{r bLogistic-34 }
 sev.1 <- polr(Severity ~ Exposure,
   weights = Freq,
@@ -673,7 +674,19 @@ sev.1 <- polr(Severity ~ Exposure,
 
 
 ## Output: not very illuminating
+
+
 \scriptsize
+
+```{r}
+sev.1 <- polr(Severity ~ Exposure,
+  weights = Freq,
+  data = miners,
+  Hess = TRUE
+)
+```
+
+
 ```{r bLogistic-35 }
 summary(sev.1)
 ```
@@ -722,7 +735,7 @@ drop1(sev.1, test = "Chisq")
 ```{r}
 freqs %>% select(Exposure) -> new
 predictions(sev.1, newdata = new, type = "probs") %>%
-  select(group, predicted, Exposure = Exposure.x) %>% 
+  select(group, predicted, Exposure) %>% 
   pivot_wider(names_from = group, values_from = predicted)
 ```
 \normalsize
@@ -730,10 +743,8 @@ predictions(sev.1, newdata = new, type = "probs") %>%
 ## Plot of predicted probabilities
 
 ```{r}
-plot_cap(model = sev.1, condition = "Exposure", 
-         type = "probs", draw = FALSE) %>% 
-  ggplot(aes(x = Exposure.x, y = predicted, colour = group)) + 
-  geom_line() +
+plot_cap(model = sev.1, condition = c("Exposure", "group"),
+         type = "probs") +
   geom_point(data = prop, aes(x = Exposure, y = proportion, 
                               colour = Severity)) -> ggg
 ```
@@ -856,6 +867,14 @@ anova(brands.3, brands.1)
 
 * Start from model with everything and run `step`:
 
+```{r}
+#| echo = FALSE,
+#| message = FALSE,
+#| results = "hide"
+brands.1 <- with(brandpref, multinom(brand ~ age + sex))
+```
+
+
 \footnotesize
 ```{r bLogistic-52 }
 step(brands.1, trace = 0)
@@ -871,8 +890,10 @@ could be removed.
 ```{r bLogistic-54 }
 predictions(brands.1, variables = c("age", "sex"), 
             type = "probs") %>%
-  select(group, predicted, age, sex) %>% 
-  pivot_wider(names_from = group, values_from = predicted)
+  select(group, predicted, age, sex) %>%
+  group_by(group, age, sex) %>% 
+  summarize(pred = mean(predicted)) %>% 
+  pivot_wider(names_from = group, values_from = pred)
 ```
 
 ## Comments
@@ -887,13 +908,13 @@ brand 2 more.
 
 ## Making a plot
 
-- Once again, `plot_cap` doesn't quite work
+- `plot_cap` doesn't quite work
 - so don't draw, edit, *then* make graph:
 
 ```{r}
-plot_cap(brands.1, condition = c("age", "sex"), 
-         type = "probs", draw = FALSE) %>% 
-  rename(age = condition1, sex = condition2, 
+plot_cap(brands.1, condition = c("age", "brand", "sex"), 
+         type = "probs", draw = FALSE)  %>% 
+  rename(age = condition1, sex = condition3, 
          brand = group) %>% 
   ggplot(aes(x = age, y = predicted, colour = brand, 
              linetype = sex)) +
@@ -1121,9 +1142,9 @@ the two genders.
 ## Make graph again
 
 ```{r}
-plot_cap(brands.4, condition = c("age", "sex"), 
-         type = "probs", draw = FALSE) %>% 
-  rename(age = condition1, sex = condition2, 
+plot_cap(brands.4, condition = c("age", "brand", "sex"), 
+         type = "probs", draw = FALSE)  %>% 
+  rename(age = condition1, sex = condition3, 
          brand = group) %>% 
   ggplot(aes(x = age, y = predicted, colour = brand, 
              linetype = sex)) +

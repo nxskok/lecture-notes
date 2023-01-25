@@ -129,12 +129,8 @@ d
 \small
 ```{r numsum-R-11}
 athletes %>% summarize(across(starts_with("H"),
-<<<<<<< HEAD
-                       list(med = \(h) median(h), iqr = \(h) IQR(h))))
-=======
                        list(med = \(x) median(x), 
                             iqr = \(x) IQR(x))))
->>>>>>> 24d2240004c326215ee98bc188361386392684d8
 ```
 \normalsize
 
@@ -145,11 +141,6 @@ athletes %>% summarize(across(starts_with("H"),
 athletes %>% 
   group_by(Sex) %>% 
   summarize(across(starts_with("H"), 
-<<<<<<< HEAD
                    list(med = \(h) median(h), 
                         iqr = \(h) IQR(h))))
-=======
-                   list(med = \(x) median(x), 
-                        iqr = \(x) IQR(x))))
->>>>>>> 24d2240004c326215ee98bc188361386392684d8
 ```
