@@ -200,6 +200,16 @@ Output is always data frame unless you explicitly turn it into something else, e
 athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1)
 ```
 
+Extra: all the athletes whose weights are within 15 kg of the heaviest:
+
+```{r}
+athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1) -> heavy
+heavy
+athletes %>% filter(abs(Wt - heavy) <= 15) %>% 
+  select(Sex, Sport, Wt)
+```
+
+
 Or the 20 heaviest weights in descending order:
 
 ```{r choosing-R-24}
@@ -207,6 +217,14 @@ athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:20) %>%
   pluck("Wt")
+```
+
+can you do it this way? No:
+
+```{r}
+athletes %>%
+  arrange(desc(Wt)) %>%
+  pluck("Wt", 1:20)
 ```
 
 ## Another way to do the last one
@@ -291,6 +309,7 @@ desc
 
 ```{r choosing-R-30}
 sales %>% left_join(desc)
+# desc %>% left_join(sales)
 ```
 
 ## What we have

@@ -268,12 +268,14 @@ plot_cap(rat2.1, condition = "dose")
 my_url <- 
   "http://ritsokiguess.site/datafiles/sepsis.txt"
 sepsis <- read_delim(my_url, " ")
+sepsis
 ```
  
 ## Make sure categoricals really are
 
 ```{r}
 sepsis %>% 
+  # mutate(across(-age, ~factor(.))) -> sepsis
   mutate(across(-age, \(x) factor(x))) -> sepsis
 ```
 
@@ -300,6 +302,7 @@ data = sepsis
 
 ## Output part 1
 ```{r bLogistic-17, size="footnotesize"}
+summary(sepsis.1)
 tidy(sepsis.1)
 ```
  
@@ -315,6 +318,7 @@ tidy(sepsis.1)
 ## Removing `malnut`
 ```{r bLogistic-18, size="footnotesize"}
 sepsis.2 <- update(sepsis.1, . ~ . - malnut)
+summary(sepsis.2)
 tidy(sepsis.2)
 ```
  
@@ -359,7 +363,9 @@ comparisons(sepsis.2) %>% summary()
 \tiny
 ```{r bLogistic-19}
 sepsis %>% slice(c(4, 1, 2, 11, 32)) -> new
-predictions(sepsis.2, newdata = new)
+new
+predictions(sepsis.2, newdata = new) %>% 
+  select(predicted, conf.low, conf.high, shock:bowelinf)
 ```
 \normalsize
 
@@ -376,9 +382,20 @@ predictions(sepsis.2, newdata = new)
 
 of `age`:
 
+```{r}
+new <- datagrid(model = sepsis.2, age = seq(30, 70, 10))
+new
+```
+
+```{r}
+predictions(sepsis.2, newdata = new) %>% 
+  select(predicted, shock:age)
+```
+
+
 \footnotesize
 ```{r}
-predictions(sepsis.2, variables = "age")
+# predictions(sepsis.2, variables = "age") %>% select(predicted, shock:age)
 ```
 \normalsize
 
@@ -388,7 +405,10 @@ Effect of `shock`:
 
 \footnotesize
 ```{r}
-predictions(sepsis.2, variables = "shock")
+new <- datagrid(shock = c(0, 1), model = sepsis.2)
+new
+predictions(sepsis.2, newdata = new) %>% 
+  select(predicted, death:shock)
 ```
 \normalsize
 
@@ -888,12 +908,13 @@ could be removed.
 
 ## Making predictions
 ```{r bLogistic-54 }
-predictions(brands.1, variables = c("age", "sex"), 
-            type = "probs") %>%
-  select(group, predicted, age, sex) %>%
-  group_by(group, age, sex) %>% 
-  summarize(pred = mean(predicted)) %>% 
-  pivot_wider(names_from = group, values_from = pred)
+brands %>% ungroup() %>% summarize(q = quantile(age, c(0, 0.25, 0.5, 0.75, 1)))
+brands %>% ungroup() %>% count(sex)
+new <- datagrid(age = c(24, 30, 33, 35, 38), sex = c("female", "male"), model = brands.1)
+new
+predictions(brands.1, newdata = new) %>%
+  select(group, predicted, age, sex) %>% 
+  pivot_wider(names_from = group, values_from = predicted)
 ```
 
 ## Comments
