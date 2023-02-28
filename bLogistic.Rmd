@@ -118,7 +118,14 @@ tests of significance of individual $x$'s
 
 \small
 ```{r bLogistic-7 }
-predictions(status.1)
+# predictions(status.1)
+cbind(predictions(status.1)) %>% 
+  select(dose, estimate)
+# new <- tibble(dose = 0:5)
+# new
+# cbind(new, predictions(status.1, newdata = new)) 
+# %>% 
+  # select(dose, estimate)
 ```
 \normalsize 
 
@@ -225,7 +232,7 @@ cbind(predictions(rat2.1))
 
 ## On a picture
 
-```{r, fig.height=4}
+```{r, fig.height=3}
 # plot_cap(rat2.1, condition = "dose", draw = FALSE)
 cbind(predictions(rat2.1)) %>% 
   select(estimate, conf.low, conf.high, dose) %>% 
@@ -957,7 +964,10 @@ plot_cap(brands.1, condition = c("age", "brand", "sex"),
          type = "probs", draw = FALSE)  %>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
-  geom_line() -> g
+  geom_line() 
+
+
+-> g
 ```
 
 ## The graph

@@ -1,5 +1,5 @@
 ## Packages for this section
-```{r dip-post-1, eval=F}
+```{r dip-1, eval=F}
 library(tidyverse)
 library(lubridate)
 ```
@@ -10,7 +10,7 @@ We previously got fractional days (of stays in hospital):
 
 \small
 
-```{r dip-post-2, message=FALSE}
+```{r dip-2, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/hospital.csv"
 stays <- read_csv(my_url)
 stays %>% mutate(stay_days = (discharge - admit) / ddays(1))
@@ -24,7 +24,7 @@ but what if we wanted days, hours and minutes?
 
 \footnotesize
 
-```{r dip-post-3}
+```{r dip-3}+
 stays %>% mutate(stay = admit %--% discharge)
 ```
 
@@ -36,7 +36,7 @@ stays %>% mutate(stay = admit %--% discharge)
 
 To work out the exact length of an interval, in human units, turn it into a `period`:
 
-```{r dip-post-4}
+```{r dip-4}
 stays %>% mutate(stay = as.period(admit %--% discharge))
 ```
 
@@ -48,7 +48,7 @@ Take `day` of the periods:
 
 \small
 
-```{r dip-post-5}
+```{r dip-5}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
   mutate(days_of_stay = day(stay))
 ```
@@ -61,7 +61,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 \small
 
-```{r dip-post-6}
+```{r dip-6}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
   mutate(hours_of_stay = hour(stay))
 ```
@@ -76,7 +76,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 \small
 
-```{r dip-post-7}
+```{r dip-7}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
   mutate(hours_of_stay = hour(stay) + 24*day(stay))
 ```
@@ -87,7 +87,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 - What's the difference between `duration` and `period`?
 
-```{r dip-post-8}
+```{r dip-8}
 stays %>% mutate(stay = as.duration(admit %--% discharge)) 
 ```
 
@@ -104,7 +104,7 @@ stays %>% mutate(stay = as.duration(admit %--% discharge))
   
 \small
 
-```{r dip-post-9}
+```{r dip-9}
 tribble(
   ~start, ~end,
   ymd("2020-01-15"), ymd("2020-03-15"),
@@ -128,7 +128,7 @@ Sometime in December 2019 or January 2020, I downloaded some information about t
   
 \small
 
-```{r dip-post-10}
+```{r dip-10}
 my_url <- "http://ritsokiguess.site/STAD29/manu.csv"
 read_csv(my_url) %>% 
   select(name, date_of_birth, age) -> man_united
@@ -138,7 +138,7 @@ read_csv(my_url) %>%
 
 ## The data
 
-```{r dip-post-11}
+```{r dip-11}
 man_united
 ```
 
@@ -157,9 +157,8 @@ man_united
 
 Guess January 10, 2020 as download date (just to pick a date):
 
-```{r dip-post-12}
+```{r dip-12}
 guess <- ymd("2020-01-10")
-class(guess)
 man_united %>% 
   mutate(dob = dmy(date_of_birth)) %>% 
   mutate(age_period = as.period(dob %--% guess)) %>% 
@@ -170,7 +169,7 @@ man_united %>%
 
 \scriptsize
 
-```{r dip-post-13}
+```{r dip-13}
 d %>% select(name, age, age_years)
 ```
 
@@ -178,7 +177,7 @@ d %>% select(name, age, age_years)
 
 ## Which ones are different?
 
-```{r dip-post-14}
+```{r dip-14}
 d %>% filter(age != age_years) %>% 
   select(name, date_of_birth, age, age_years)
 ```
@@ -192,7 +191,7 @@ d %>% filter(age != age_years) %>%
 
 - say Dec 5:
 
-```{r dip-post-15}
+```{r dip-15}
 guess <- ymd("2019-12-05")
 man_united %>% 
   mutate(dob = dmy(date_of_birth)) %>% 
@@ -204,7 +203,7 @@ man_united %>%
 
 ## Results
 
-```{r dip-post-16}
+```{r dip-16}
 d2
 ```
 
@@ -212,26 +211,4 @@ d2
 - must have been later than Dec 8 (to get McTominay's age right)
 - so must have been between Dec 8 and Dec 15 (Lingard's birthday)
 - Actually I downloaded the data on Dec 10.
-
-to check
-
-```{r dip-post-17}
-guess <- ymd("2019-12-10")
-man_united %>% 
-  mutate(dob = dmy(date_of_birth)) %>% 
-  mutate(age_period = as.period(dob %--% guess)) %>% 
-  mutate(age_years = year(age_period)) 
-
-%>% 
-  filter(age != age_years) 
-
-%>% 
-  select(name, date_of_birth, age, age_years) 
-
-```
-
-```{r dip-post-18}
-read_csv(my_url) %>% select(age, position) %>% 
-  ggplot(aes(x= position, y = age)) + geom_boxplot()
-```
 

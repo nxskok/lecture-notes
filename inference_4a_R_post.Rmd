@@ -13,7 +13,6 @@
 ```{r inference-4a-R-1, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
-kids
 ```
 
 
@@ -27,7 +26,6 @@ Each group looks normal, or at least symmetric.
 ```{r inference-4a-R-3}
 kids %>% filter(group == "t") -> treatment
 kids %>% filter(group == "c") -> control
-control
 ```
 
 to check
@@ -229,18 +227,3 @@ On a normal quantile plot:
   \vspace{2ex}
   
 - short-tailed distribution OK for $t$ (mean still good), but others problematic (depending on sample size).  
-
-
-extra thought: a bootstrap sampling distribution of sample mean includes the sample size, so this needs to be close to normal.
-
-The last one, with the very long tails and a sample size of 300:
-
-```{r}
-tibble(sim = 1:1000) %>% 
-  rowwise() %>% 
-  mutate(my_sample = list(sample(d$x, replace = TRUE))) %>% 
-  mutate(my_mean = mean(my_sample)) %>% 
-  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
-```
-
-this still has a long tail at the upper end, so a sample size of 300 is *not large enough*!

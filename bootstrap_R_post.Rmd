@@ -22,6 +22,14 @@ jays <- read_csv("http://ritsokiguess.site/datafiles/jays15-home.csv")
 set.seed(457299)
 ```
 
+## Reminder: histogram
+
+```{r}
+ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
+```
+
+## Attendances and bootstrap sample
+
 ```{r bootstrap-R-2}
 jays$attendance
 ```
@@ -32,6 +40,17 @@ jays$attendance
 s <- sample(jays$attendance, replace = TRUE)
 s
 ```
+
+easier comparison
+
+```{r}
+sort(jays$attendance)
+```
+
+```{r}
+sort(s)
+```
+
 
 ## Getting mean of bootstrap sample
 
@@ -116,11 +135,11 @@ g
 
 \footnotesize
 ```{r bootstrap-R-11}
-tibble(sim = 1:1000) %>% 
+tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 15) -> g
 ```
 \normalsize
 
@@ -208,7 +227,7 @@ g
 \footnotesize
 ```{r bootstrap-R-19}
 kids %>% filter(group=="t") -> treats
-tibble(sim = 1:1000) %>% 
+tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
@@ -226,4 +245,20 @@ g
 
 - sampling distributions of sample means both look pretty normal
 - as we thought, no problems with our two-sample $t$ at all.
+
+## Doing both samples at once
+
+- draw a bootstrap sample from both samples for each sim
+- then look at distribution of difference between sample means (which is actually what counts)
+
+```{r}
+tibble(sim =1:1000) %>% 
+  rowwise() %>% 
+  mutate(treat_sample = list(sample(treats$score, replace = TRUE))) %>% 
+  mutate(treat_mean = mean(treat_sample)) %>% 
+  mutate(control_sample = list(sample(controls$score, replace = TRUE))) %>% 
+  mutate(control_mean = mean(control_sample)) %>% 
+  mutate(mean_diff = treat_mean - control_mean) %>% 
+  ggplot(aes(x = mean_diff)) + geom_histogram(bins = 10)
+```
 

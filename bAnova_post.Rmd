@@ -387,7 +387,7 @@ vitaminb
 
 
 ## Grouped boxplot
-```{r bAnova-10, fig.height=3.0}
+```{r bAnova-10, fig.height=2.5}
 ggplot(vitaminb, aes(
   x = ratsize, y = kidneyweight,
   fill = diet
@@ -478,6 +478,9 @@ summary(vitaminb.2)
 \normalsize
 
    
+```{r}
+TukeyHSD(vitaminb.2)
+```
 
 
 
@@ -637,6 +640,7 @@ g
 ```{r bAnova-27}
 autonoise.1 <- aov(noise ~ size * type, data = autonoise)
 summary(autonoise.1)
+TukeyHSD(autonoise.1)
 ```
 
 \normalsize

@@ -76,7 +76,7 @@ but the other two make no sense.
 
 - Back to this: 
 
-```{r dates-and-times-8}
+```{r dates-and-times-8, paged.print=F}
 ddd
 ```
 
@@ -93,7 +93,7 @@ ddd
 
 - Column `date2` was correctly converted from column `dunno`: 
 
-```{r dates-and-times-10, paged.print=T}
+```{r dates-and-times-10, paged.print=F}
 d4 %>% mutate(equal = identical(date, date2))
 ```
 
@@ -142,16 +142,16 @@ created, other columns are what to make it out of.
 ```{r dates-and-times-14, paged.print=T}
 newdates %>%
   mutate(
-    mon = month(d),
+    mon = month(d, label = TRUE),
     day = day(d),
-    weekday = wday(d, label = T)
+    weekday = wday(d, label = TRUE)
   )
 ```
 
 ## Dates and times
 - Standard format for times is to put the time after the date, hours,
 minutes, seconds:
-```{r dates-and-times-15, paged.print=T}
+```{r dates-and-times-15, paged.print=F}
 (dd <- tibble(text = c(
   "1970-01-01 07:50:01", "2007-09-04 15:30:00",
   "1940-04-15 06:45:10", "2016-02-10 12:26:40"
@@ -161,7 +161,7 @@ minutes, seconds:
 ## Converting text to date-times: 
 
 - Then get from this text using `ymd_hms`:
-```{r dates-and-times-16, paged.print=T}
+```{r dates-and-times-16, paged.print=F}
 dd %>% mutate(dt = ymd_hms(text))
 ```
 
@@ -246,6 +246,8 @@ stays %>% mutate(stay = discharge - admit)
 be better: 
 
 ```{r dates-and-times-23, paged.print=T}
+# stays %>% 
+#   mutate(stay_days = (discharge - admit) / ddays(1))
 stays %>% 
   mutate(
     stay_days = as.period(admit %--% discharge) / days(1))
@@ -255,6 +257,7 @@ stays %>%
 
 - Pull out with `day()` etc, as for a date-time
 
+error here ****
 
 ```{r dates-and-times-24, error=TRUE}
 stays %>% 
@@ -263,7 +266,7 @@ stays %>%
     stay_days = day(stay),
     stay_hours = hour(stay)
     ) %>%
-  select(starts_with("stay"))
+  select(admit, discharge,starts_with("stay"))
 ```
 
 

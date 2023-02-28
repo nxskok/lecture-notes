@@ -117,7 +117,7 @@ set.seed(457299)
 ```{r inference-2-R-6}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
-  mutate(my_sample = list(rnorm(15, 8, 4))) %>% 
+  mutate(my_sample = list(rnorm(35, 8, 4))) %>% 
   mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
   mutate(p_val = t_test$p.value) %>% 
   count(p_val <= 0.05)
@@ -207,6 +207,7 @@ ns
 - Calculate powers:
 ```{r inference-2-R-10}
 ans <- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
+ans
 ans$power
 ```
 
