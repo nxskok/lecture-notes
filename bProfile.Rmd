@@ -60,6 +60,7 @@ dogs <- read_table(my_url)
 dogs
 response <- with(dogs, cbind(lh0, lh1, lh3, lh5))
 dogs.1 <- lm(response ~ drug, data = dogs)
+response
 ```
  
 
@@ -77,7 +78,9 @@ options(width = 70)
 \small
 ```{r bProfile-5, error=TRUE}
 times <- colnames(response)
+times
 times.df <- data.frame(times=factor(times))
+times.df
 dogs.2 <- Manova(dogs.1,
   idata = times.df,
   idesign = ~times
@@ -236,6 +239,7 @@ dogs %>%
   pivot_longer(starts_with("lh"), 
                names_to = "timex", values_to = "lh") %>% 
   mutate(time = parse_number(timex)) -> dogs.long
+dogs.long
 ```
 
  
@@ -259,7 +263,7 @@ value originally came from labelled by `timex`, and then:
 ## Interaction plot
 
 \small
-```{r bProfile-10, fig.height=4}
+```{r bProfile-10, fig.height=2.5}
 ggplot(dogs.long, aes(x = time, y = lh, 
                       colour = drug, group = drug)) +
   stat_summary(fun = mean, geom = "point") +
@@ -360,12 +364,19 @@ g <- ggplot(dogs.long, aes(
   geom_point() + geom_line()
 ```
 
+```{r}
+ggplot(dogs.long, aes(
+  x = time, y = lh,
+  colour = drug, group = dog
+)) +
+  geom_point() + geom_line()
+```
    
 
 
 
 ## The spaghetti plot
-```{r hoverla,fig.height=5}
+```{r hoverla,fig.height=2.5}
 g
 ```
 

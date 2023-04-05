@@ -118,9 +118,22 @@ anova(prepost.1)
 
 ## Predictions
 
-\tiny
+Set up values to predict for:
+
 ```{r}
-predictions(prepost.1, variables = c("before", "drug"))
+summary(prepost)
+```
+
+```{r}
+new <- datagrid(before = c(9.75, 14, 21.25), drug = c("a", "b"), model = prepost.1)
+```
+
+## and then
+
+
+```{r}
+cbind(predictions(prepost.1, newdata = new)) %>% 
+  select(drug, before, estimate)
 ```
 \normalsize
 

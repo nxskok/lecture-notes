@@ -13,13 +13,17 @@ output:
 urlcolor: blue
 ---
 
+```{r}
+#| echo = FALSE
+tar_load(tidy_extra_R)
+```
 
 
-```{r tidy-extra-R-slides-post-1, child="preliminaries.Rmd", echo=F}
+```{r tidy-extra-R-slides-1, child="preliminaries.Rmd", echo=F}
 ```
 
 
 
-```{r tidy-extra-R-slides-post-2, child="tidy_extra_R.Rmd"}
+```{r tidy-extra-R-slides-2, child="tidy_extra_R.Rmd"}
 ```
 

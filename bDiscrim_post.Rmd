@@ -18,19 +18,26 @@ professions/activities data; remote-sensing data.
 
 
 ## Packages
-```{r bDiscrim-1, eval = FALSE}
+
+```{r bDiscrim-1, message=FALSE, warning=FALSE}
 library(MASS)
 library(tidyverse)
 library(ggrepel)
 library(ggbiplot)
+library(MVTests) # for Box M test
 library(conflicted)
+conflict_prefer("arrange", "dplyr")
+conflict_prefer("summarize", "dplyr")
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("mutate", "dplyr")
 ```
 
    
 
-`ggrepel` allows labelling points on a plot so they don't
+- `ggrepel` allows labelling points on a plot so they don't
 overwrite each other.
-
+- `ggbiplot` uses `plyr` rather than `dplyr`, which has functions by similar names.
 
 ## About `select`
 
@@ -64,6 +71,7 @@ g <- ggplot(hilo, aes(
   x = yield, y = weight,
   colour = fertilizer
 )) + geom_point(size = 4)
+g
 ```
 \normalsize
  
@@ -155,8 +163,15 @@ $\min(2,2-1)=1$.
 ## Getting LD scores
 Feed output from LDA into `predict`:
 
+```{r}
+hilo
+```
+
+
+
 ```{r bDiscrim-6 }
 hilo.pred <- predict(hilo.1)
+hilo.pred %>% as.data.frame()
 ```
 
  
@@ -175,7 +190,7 @@ High fertilizer have yield and weight high, negative LD1 scores.
 
 ## Plotting LD1 scores
 With one LD score, plot against (true) groups, eg. boxplot: 
-```{r bDiscrim-8, fig.height=3.4}
+```{r bDiscrim-8, fig.height=2}
 ggplot(d, aes(x = fertilizer, y = LD1)) + geom_boxplot()
 ```
 
@@ -199,11 +214,12 @@ change in LD1 score for 1-unit change in variables.
 
 * One-unit change in variables might not be comparable: 
 
-```{r}
-hilo %>% 
-  summarize(across(-fertilizer, ~IQR(.)))
-```
 
+```{r bDiscrim-10}
+hilo %>% select(-fertilizer) %>% 
+   summarize(across(yield:weight, 
+                    \(x) quantile(x, c(0.25, 0.75))))
+```
 
 * Here, IQRs both 2.2, *identical*, so 1-unit change in each variable
 means same thing.
@@ -234,6 +250,7 @@ fertilizer given `yield` and `weight`.
 
 \footnotesize
 ```{r bDiscrim-12}
+hilo.pred %>% as.data.frame()
 cbind(hilo, predicted = hilo.pred$class)
 table(obs = hilo$fertilizer, pred = hilo.pred$class)
 ```
@@ -380,6 +397,7 @@ scores side by side:
 
 \footnotesize
 ```{r bDiscrim-19}
+peanuts.1
 peanuts.1$scaling
 lds <- round(peanuts.pred$x, 2)
 mm <- with(peanuts.combo,
@@ -388,9 +406,8 @@ mm <- with(peanuts.combo,
 \normalsize
    
 
-* LD1 positive if `w` large and/or `y` small.
-
-* LD2 positive if `w` large.    
+* LD1 positive if `w` small and/or `y` large.
+* LD2 positive if `w` small.    
 
 
 
@@ -418,7 +435,9 @@ First and third quartiles for three response variables:
 ```{r bDiscrim-21 }
 peanuts %>%
    select(y:w) %>%
-summarize(across(everything(), ~quantile(., c(0.25, 0.75)))) -> quartiles
+summarize(across(
+  everything(), 
+  \(x) quantile(x, c(0.25, 0.75)))) -> quartiles
 quartiles
 new <- with(quartiles, crossing(y, smk, w))
 ```
@@ -458,11 +477,11 @@ cbind(new, pp$x) %>% arrange(LD1)
 * Same as we saw from Coefficients of Linear Discriminants.
 
 
-## Plot LD1 vs.\ LD2, labelling by combo
-```{r bDiscrim-24, fig.height=3.5}
+## Plot LD1 vs. LD2, labelling by combo
+```{r bDiscrim-24, fig.height=4.5}
 g <- ggplot(mm, aes(x = LD1, y = LD2, colour = combo, 
                     label = combo)) + geom_point() +
-  geom_text_repel() + guides(colour = F)
+  geom_text_repel() + guides(colour = "none")
 g
 ```
 
@@ -471,7 +490,9 @@ g
 
 ## "Bi-plot" from `ggbiplot`
 
-```{r bDiscrim-25, fig.height=3.3}
+```{r bDiscrim-25, fig.height=4.3}
+ggbiplot(peanuts.1,
+  groups = peanuts.combo$combo)
 ggbiplot(peanuts.1,
   groups = factor(peanuts.combo$combo)
 )
@@ -524,8 +545,7 @@ that left-out observation.
 \small
 ```{r bDiscrim-28 }
 peanuts.cv <- lda(combo ~ y + smk + w,
-  data = peanuts.combo, CV = TRUE)
-peanuts.cv
+  data = peanuts.combo, CV = T)
 table(obs = peanuts.combo$combo,
       pred = peanuts.cv$class)
 ```
@@ -616,16 +636,8 @@ my_url <- "http://ritsokiguess.site/datafiles/profile.txt"
 active <- read_delim(my_url, " ")
 active
 active.1 <- lda(job ~ reading + dance + tv + ski, data = active)
-active.1$svd
-active.1$scaling
-```
-
-```{r}
-active.1 <- lda(job ~ reading + dance + tv + ski, data = active)
 active.1
 ```
-
-
 \normalsize
    
 
@@ -641,7 +653,6 @@ on `tv`.
 ## Misclassification
 ```{r bDiscrim-31 }
 active.pred <- predict(active.1)
-active.pred
 table(obs = active$job, pred = active.pred$class)
 ```
 
@@ -653,11 +664,11 @@ Everyone correctly classified.
 ## Plotting LDs 
 
 \small
-```{r bDiscrim-32, fig.height=7}
+```{r bDiscrim-32, fig.height=5}
 mm <- data.frame(job = active$job, active.pred$x, person = 1:15)
 g <- ggplot(mm, aes(x = LD1, y = LD2, colour = job, 
                     label = job)) + 
-  geom_point() + geom_text_repel() + guides(colour = F)
+  geom_point() + geom_text_repel() + guides(colour = "none")
 g
 ```
 \normalsize
@@ -665,7 +676,7 @@ g
 
 
 ## Biplot 
-```{r bDiscrim-33, fig.height=7.3}
+```{r bDiscrim-33, fig.height=4.3}
 ggbiplot(active.1, groups = active$job)
 ```
 
@@ -784,7 +795,6 @@ ggsave("nesta.pdf", g, "pdf")
 my_url <- 
    "http://ritsokiguess.site/datafiles/remote-sensing.txt"
 crops <- read_table(my_url)
-crops
 ```
 \normalsize
    
@@ -792,7 +802,7 @@ crops
 ## Starting off: number of LDs
 ```{r bDiscrim-40 }
 crops.lda <- lda(crop ~ x1 + x2 + x3 + x4, data = crops)
-crops.lda
+crops.lda$svd
 ```
 
  
@@ -858,7 +868,7 @@ mm <- data.frame(crop = crops$crop, crops.pred$x)
 
 
 ## Plotting the LDs 
-```{r piacentini,fig.height=6.4}
+```{r piacentini,fig.height=3.4}
 ggplot(mm, aes(x = LD1, y = LD2, colour = crop)) +
   geom_point()
 ```
@@ -896,7 +906,6 @@ ggbiplot(crops.lda, groups = crops$crop)
 ```{r bDiscrim-46 }
 crops %>% filter(crop != "Clover") -> crops2
 crops2.lda <- lda(crop ~ x1 + x2 + x3 + x4, data = crops2)
-crops2.lda
 ```
 
    
@@ -982,6 +991,7 @@ of being correct was not usually too low.
 
 
 ## MANOVA
+
 Began discriminant analysis as a followup to MANOVA. Do our variables
 significantly separate the crops (excluding Clover)?
 
@@ -991,12 +1001,22 @@ crops2.manova <- manova(response ~ crop, data = crops2)
 summary(crops2.manova)
 ```
 
- 
+## Box's M test
 
-Yes, at least one of the crops differs (in means) from the others. So
+We should also run Box's M test to check for equal variance of each variable across crops:
+
+\small
+```{r}
+summary(BoxM(response, crops2$crop))
+```
+\normalsize
+
+- The P-value for the M test is smaller even than our guideline of 0.001. So we should not take the MANOVA seriously.
+
+- *Apparently* at least one of the crops differs (in means) from the others. So
 it is worth doing this analysis.
 
-We did this the wrong way around, though!
+- We did this the wrong way around, though!
 
 
 ## The right way around
@@ -1005,15 +1025,17 @@ We did this the wrong way around, though!
 * *First*, do a MANOVA to see whether any of the groups
 differ significantly on any of the variables.
 
+- Check that the MANOVA is believable by using Box's M test.
+
 * *If the MANOVA is significant*, do a discriminant
 analysis in the hopes of understanding how the groups are different.
 
 * For remote-sensing data (without Clover):
 
 
-* LD1 a fair bit more important than LD2 (definitely ignore LD3).
+  * LD1 a fair bit more important than LD2 (definitely ignore LD3).
 
-* LD1 depends mostly on `x1`, on which Cotton was high
+  * LD1 depends mostly on `x1`, on which Cotton was high
 and Corn was low. 
 
 

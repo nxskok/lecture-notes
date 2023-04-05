@@ -17,7 +17,7 @@ not (“no”). Some of the data:
 ```{r inference-5-R-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
-dst  # randomly sample 5 rows
+dst 
 ```
 
 ## ... continued
@@ -28,6 +28,13 @@ contingency table:
 tab <- with(dst, table(gender, agree))
 tab
 ```
+
+or, make a graph (grouped bar chart):
+
+```{r}
+ggplot(dst, aes(x = gender, fill = agree)) + geom_bar(position = "dodge")
+```
+
 
 - Most of the males say “yes”, but the females are about evenly split.
 - Looks like males more likely to say “yes”, ie. an association between
@@ -68,12 +75,14 @@ mostly above grand median and other below.
 ```{r inference-5-R-4, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
+kids
 ```
 
 
 - Find overall median score: 
 ```{r inference-5-R-5}
-(kids %>% summarize(med=median(score)) %>% pull(med) -> m)
+kids %>% summarize(med = median(score)) %>% pull(med) -> m
+m
 ```
 
 - Make table of above/below vs. group:
@@ -89,7 +98,7 @@ mostly below, as expected.
 ## The test
 - Do chi-squared test:
 ```{r inference-5-R-7}
-chisq.test(tab,correct=F)
+chisq.test(tab, correct=FALSE)
 ```
 
 
@@ -100,11 +109,19 @@ do 1-sided test by halving P-value to get 0.017.
 - This way too, children do better at learning to read using the new
 method.
 
+aside: Fisher's exact test, because both row and column totals are fixed (uses hypergeometric distribution)
+
+```{r}
+fisher.test(tab)
+```
+
+conclusion is the same, though P-value is (substantially) smaller. End of aside.
+
 ## Or by smmr
 - `median_test` does the whole thing:
 
 ```{r inference-5-R-8}
-median_test(kids,score,group)
+median_test(kids, score, group)
 ```
 
 - P-value again two-sided.
@@ -153,7 +170,7 @@ rats <- read_delim(my_url," ")
 
 \small
 ```{r inference-5-R-10}
-rats %>% slice_sample(n=12)
+rats 
 ```
 \normalsize
 
@@ -194,6 +211,25 @@ summary(rats.aov)
 differences”, but doesn’t tell us which groups different.
 - One possibility (not the best): compare all possible pairs of groups,
 via two-sample t.
+
+- First pick out each pair of groups:
+
+```{r}
+rats %>% filter(group != "Control") -> low_vs_high
+rats %>% filter(group != "Lowjump") -> control_vs_high
+rats %>% filter(group != "Highjump") -> control_vs_low
+```
+
+then compare the two groups in each one:
+
+```{r}
+t.test(density~group,data=low_vs_high)
+t.test(density~group,data=control_vs_high)
+t.test(density~group,data=control_vs_low)
+```
+
+
+
 - First pick out each group:
 
 ```{r inference-5-R-14}
@@ -270,7 +306,8 @@ options(width = 60)
 
 \small
 ```{r inference-5-R-19}
-# rats.aov <- aov(density~group, data = rats)
+rats.aov <- aov(density~group, data = rats)
+summary(rats.aov)
 TukeyHSD(rats.aov)
 ```
 \normalsize
@@ -403,7 +440,7 @@ both normality and equal spreads.
 - Welch ANOVA done by `oneway.test` as shown (for illustration):
 
 ```{r inference-5-R-29}
-oneway.test(density~group,data=rats)
+oneway.test(density ~ group, data = rats)
 ```
 
 - P-value very similar, as expected.
@@ -420,7 +457,7 @@ library(PMCMRplus)
 
 
 ```{r games-howell, warning=F}
-gamesHowellTest(density~factor(group),data=rats)
+gamesHowellTest(density~`factor(group)`,data=rats)
 ```
 
 ## Deciding which test to do

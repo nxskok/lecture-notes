@@ -36,9 +36,17 @@ we are back where we started.
 Or
 
 ```{r tidy-extra-R-5}
+pigs_longer
 pigs_longer %>% 
   pivot_wider(names_from=pig, values_from=weight)
 ```
+
+```{r}
+pigs_longer %>% 
+  pivot_wider(names_from=pig, values_from=weight) %>% 
+  select(`1`)
+```
+
 
 ## Disease presence and absence at two locations
 
@@ -75,9 +83,10 @@ prevalence %>%
 ## Making longer, the better way
 
 ```{r tidy-extra-R-8}
+prevalence
 prevalence %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
-               names_sep="_", values_to="frequency")  -> prevalence_longer
+               names_sep="_", values_to="frequency") -> prevalence_longer
 prevalence_longer
 ```
 
@@ -89,6 +98,7 @@ prevalence_longer %>%
 ```
 
 ```{r tidy-extra-R-10}
+prevalence_longer
 prevalence_longer %>% 
   pivot_wider(names_from=location, values_from=frequency)
 ```
@@ -148,7 +158,6 @@ pigs_longer %>%
 ```{r tidy-extra-R-16, echo=F, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
-repmes0
 repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
   select(-rep) %>% 
   select(id, everything()) -> repmes
@@ -160,8 +169,7 @@ repmes
 ```{r tidy-extra-R-17}
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", "var"),
-                        names_sep="_",
-                        values_to = "score"
+                        names_sep="_"
                          )
 ```
 
