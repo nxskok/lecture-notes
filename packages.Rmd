@@ -2,7 +2,6 @@ My packages and conflicts:
 
 ```{r packages-1, echo=F, message=F}
 library(tidyverse)
-library(marginaleffects)
 library(smmr)
 library(MASS)
 library(nnet)

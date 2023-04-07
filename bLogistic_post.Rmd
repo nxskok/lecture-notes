@@ -388,7 +388,8 @@ new
 ```
 
 ```{r}
-predictions(sepsis.2, newdata = new) %>% 
+predictions(sepsis.2, newdata = new)
+%>% 
   select(predicted, shock:age)
 ```
 
