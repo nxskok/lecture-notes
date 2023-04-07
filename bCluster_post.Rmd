@@ -17,11 +17,15 @@
 
 
 ## Packages
-```{r bCluster-1, eval=F}
+```{r bCluster-1}
+#| message = FALSE
 library(MASS) # for lda later
 library(tidyverse)
 library(spatstat) # for crossdist later
 library(ggrepel)
+library(conflicted)
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
 ```
 
    
@@ -183,7 +187,7 @@ ggplot(ddd, aes(x = x, y = y, colour = cluster)) +
 Work out (i) sum of squared distances of points from means.
 
 
-## Ward's method part 2 xxx
+## Ward's method part 2 
 
 Now imagine combining the two clusters and working out overall
 mean. Join each point to this mean:
@@ -276,8 +280,6 @@ my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 
 ## Making a distance object
 ```{r bCluster-9, size="footnotesize"}
-# d <- 
-  
 number.d %>%
   select(-la) %>%
   as.dist() -> d
@@ -289,7 +291,7 @@ class(d)
 
 
 ## Cluster analysis and dendrogram
-```{r bCluster-10, fig.height=7}
+```{r bCluster-10, fig.height=4}
 d.hc <- hclust(d, method = "single")
 plot(d.hc)
 ```
@@ -343,7 +345,7 @@ joined to `fr` and `it`).
 
 
 ## Complete linkage
-```{r bCluster-12, fig.height=7}
+```{r bCluster-12, fig.height=4}
 d.hc <- hclust(d, method = "complete")
 plot(d.hc)
 ```
@@ -352,7 +354,7 @@ plot(d.hc)
 
 
 ## Ward
-```{r wardo,fig.height=7}
+```{r wardo,fig.height=4}
 d.hc <- hclust(d, method = "ward.D")
 plot(d.hc)
 ```
@@ -380,16 +382,12 @@ cutree(d.hc, 3) %>% enframe(name="country", value="cluster")
 
 
 ## Drawing those clusters on the tree
-```{r asfsagd,fig.height=7}
-plot(d.hc)
-```
-
-```{r}
+```{r asfsagd,fig.height=4}
 plot(d.hc)
 rect.hclust(d.hc, 3)
 ```
-   
 
+   
 
 
 ## Comparing single-linkage and Ward
@@ -423,7 +421,7 @@ names were all in one column.
 lang %>% mutate(number=row_number()) %>%
     pivot_longer(-number, names_to="language", values_to="name") %>%
     mutate(first=str_sub(name,1,1)) -> lang.long
-lang.long 
+lang.long %>% print(n=12)
 ```
 \normalsize
    
@@ -568,7 +566,6 @@ languages
 * and then all *pairs* of languages:
 ```{r bCluster-28, size="scriptsize"}
 pairs <- crossing(lang = languages, lang2 = languages) 
-pairs
 ```
 
 ## Some of these
@@ -673,7 +670,7 @@ measurement scale (arbitrary).
 
 ```{r bCluster-35, size="footnotesize"}
 vital %>% 
-  mutate(across(where(is.numeric), ~scale(.))) -> vital.s
+  mutate(across(where(is.numeric), \(x) scale(x))) -> vital.s
 vital.s
 ```
 
@@ -717,7 +714,7 @@ vital.km3$centers
  
 
 
-* Cluster 1 has lower than average rates on everything; cluster 2
+* Cluster 2 has lower than average rates on everything; cluster 3
 has much higher than average.
 
 
@@ -743,7 +740,6 @@ vital.3 <- tibble(
   country = vital.s$country,
   cluster = vital.km3$cluster
 )
-vital.3
 ```
 
    
@@ -771,7 +767,7 @@ options(width=80)
 
 \scriptsize
 ```{r bCluster-45}
-get_countries(1, vital.3)
+get_countries(2, vital.3)
 ```
 \normalsize
    
@@ -942,13 +938,13 @@ get_countries(1, vital.6)
 
    
 
-## Cluster 6
+## Cluster 2
 High on everything:
 
 \normalsize
 ```{r bCluster-57, echo=2}
 options(width = 60)
-get_countries(6, vital.6)
+get_countries(2, vital.6)
 options(width = 50)
 ```
 \normalsize
@@ -973,7 +969,7 @@ get_countries(4, vital.6)
    
 
 ## Cluster 5
-Higher than average on everything, though not the highest:
+
 ```{r bCluster-60 }
 get_countries(5, vital.6)
 ```
@@ -981,7 +977,6 @@ get_countries(5, vital.6)
    
 
 ## Cluster 6
-Very high death rate, just below average on all else:
 ```{r bCluster-61 }
 get_countries(6, vital.6)
 ```
@@ -1068,7 +1063,7 @@ g <- ggplot(d, aes(
   x = LD1, y = LD2, colour = factor(cluster),
   label = country
 )) + geom_point() +
-  geom_text_repel(size = 2, max.overlaps = Inf) + guides(colour = F)
+  geom_text_repel(size = 2, max.overlaps = Inf) + guides(colour = "none")
 ```
 
    
@@ -1076,7 +1071,7 @@ g <- ggplot(d, aes(
 
 
 ## The plot
-```{r bCluster-66, fig.height=10}
+```{r bCluster-66, fig.height=5}
 g
 ```
 
@@ -1112,9 +1107,7 @@ An Ontario hockey league has teams in 21 cities. How can we arrange those teams 
 my_url <- 
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 ontario <- read_csv(my_url)
-ontario
 ontario.d <- ontario %>% select(-1) %>% as.dist()
-ontario.d
 ontario.hc <- hclust(ontario.d, method = "ward.D")
 ```
 
@@ -1122,7 +1115,7 @@ ontario.hc <- hclust(ontario.d, method = "ward.D")
 
 
 ## Plot, with 4 clusters
-```{r bCluster-68, fig.height=7}
+```{r bCluster-68, fig.height=4}
 plot(ontario.hc)
 rect.hclust(ontario.hc, 4)
 ```
@@ -1142,7 +1135,7 @@ rect.hclust(ontario.hc, 4)
 
 
 ## Seven clusters
-```{r bCluster-69, fig.height=7 }
+```{r bCluster-69, fig.height=4 }
 plot(ontario.hc)
 rect.hclust(ontario.hc, 7)
 ```

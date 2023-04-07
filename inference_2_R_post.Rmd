@@ -20,7 +20,7 @@ Tension between truth and decision about truth (imperfect).
 - Prob. of type I error denoted $\alpha$. Usually fix $\alpha$, eg. $\alpha = 0.05$.
 - Prob. of type II error denoted $\beta$. Determined by the planned
 experiment. Low $\beta$ good.
-- Prob. of not making type II error called **power** ($= 1 - \beta$). *High* power
+- Prob. of not making type II error called **power** (= $1 - \beta$). *High* power
 good.
 
 ## Power 
@@ -67,13 +67,18 @@ its mean is 10 or not.
 ## Making it go
 - Random sample of 15 normal observations with mean 8 and SD 4:
 
-```{r inference-2-R-1, echo=FALSE}
+```{r}
+library(tidyverse)
+```
+
+
+```{r inference-2-R-1, echo=F}
 set.seed(457299)
 ```
 
 
 ```{r inference-2-R-2}
-x <- rnorm(15, 8, 4)
+x  <-  rnorm(15, 8, 4)
 x
 ```
 
@@ -115,16 +120,16 @@ set.seed(457299)
 ```
 
 ```{r inference-2-R-6}
-tibble(sim = 1:10000) %>% 
+tibble(sim = 1:1000) %>% 
   rowwise() %>% 
-  mutate(my_sample = list(rnorm(40, 8, 4))) %>% 
+  mutate(my_sample = list(rnorm(35, 8, 4))) %>% 
   mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
   mutate(p_val = t_test$p.value) %>% 
   count(p_val <= 0.05)
 ```
 
-We correctly rejected 465 times out of 1000, so the estimated power is
-0.465.
+We correctly rejected 422 times out of 1000, so the estimated power is
+0.422.
 
 
 ## Calculating power
@@ -137,9 +142,7 @@ be calculated.
 
 \small
 ```{r inference-2-R-7}
-diff <- 10-8
-diff
-power.t.test(n = 15, delta = diff, sd = 4, type = "one.sample")
+power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
 ```
 \normalsize
 
@@ -181,7 +184,7 @@ true $\mu = 8$, $\sigma = 4$, but now aim for power 0.80.
 - No `n=`, replaced by a `power=`:
 
 ```{r inference-2-R-8}
-power.t.test(power=0.80, delta=2, sd=4, type="one.sample")
+power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 ```
 
 - Sample size must be a whole number, so round up to 34 (to get at
@@ -219,7 +222,6 @@ ans$power
 ## Building a plot (1/2)
 - Make a data frame out of the values to plot:
 ```{r inference-2-R-11}
-# ans$n
 d <- tibble(n=ns, power=ans$power)
 d
 ```
@@ -229,10 +231,9 @@ d
 - Plot these as points joined by lines, and add horizontal line at 1
 (maximum power): 
 ```{r inference-2-R-12}
-ggplot(d, aes(x = n, y = power)) + geom_point() + 
+ggplot(d, aes(x = n, y = power)) + geom_point() +
   geom_line() + 
-  geom_hline(yintercept = 1, linetype = "dashed") +
-  geom_hline(yintercept = 0.8, linetype = "dashed", colour = "red")
+  geom_hline(yintercept = 1, linetype = "dashed") -> g
 ```
 
 ## The power curve
@@ -249,7 +250,7 @@ tibble(n=ns) %>% rowwise() %>%
                              type = "one.sample"))) %>% 
   mutate(power = power_output$power) %>% 
   ggplot(aes(x=n, y=power)) + geom_point() + geom_line() +
-    geom_hline(yintercept=1, linetype="dashed") 
+    geom_hline(yintercept=1, linetype="dashed") -> g2
 ```
 
 ## The power curve done the other way
@@ -312,9 +313,9 @@ d
 
 ```{r inference-2-R-21}
 ggplot(d, aes(x = mean, y = power, colour = n)) +
-  geom_point() + geom_line() +
-  geom_hline(yintercept = 1, 
-             linetype = "dashed") +
+  geom_point() +
+  geom_line() +
+  geom_hline(yintercept = 1, linetype = "dashed") +
   geom_vline(xintercept = 10, linetype = "dotted")
 ```
 
@@ -372,6 +373,7 @@ kids <- read_delim(my_url," ")
 - and these group SDs:
 
 ```{r inference-2-R-26}
+kids
 kids %>% group_by(group) %>% 
   summarize(n=n(), s=sd(score))
 ```

@@ -219,14 +219,18 @@ summary(rat2.1)
 ```{r bLogistic-13 }
 # p <- predict(rat2.1, type = "response")
 # cbind(rat2, p)
-predictions(rat2.1)
+cbind(predictions(rat2.1))
 ```
  
 
 ## On a picture
 
 ```{r, fig.height=4}
-plot_cap(rat2.1, condition = "dose")
+# plot_cap(rat2.1, condition = "dose", draw = FALSE)
+cbind(predictions(rat2.1)) %>% 
+  select(estimate, conf.low, conf.high, dose) %>% 
+  ggplot(aes(x = dose, y = estimate, ymin = conf.low, ymax = conf.high)) + geom_line() +
+  geom_ribbon(alpha = 0.3)
 ```
 
 
@@ -364,8 +368,8 @@ comparisons(sepsis.2) %>% summary()
 ```{r bLogistic-19}
 sepsis %>% slice(c(4, 1, 2, 11, 32)) -> new
 new
-predictions(sepsis.2, newdata = new) %>% 
-  select(predicted, conf.low, conf.high, shock:bowelinf)
+cbind(predictions(sepsis.2, newdata = new)) %>% 
+  select(estimate, conf.low, conf.high, shock:bowelinf)
 ```
 \normalsize
 
@@ -378,7 +382,7 @@ predictions(sepsis.2, newdata = new) %>%
 
 * Usually good job of predicting survival; sometimes death predicted to survive.
 
-## Another way to assess effects 1/2
+## Another way to assess effects
 
 of `age`:
 
@@ -387,29 +391,22 @@ new <- datagrid(model = sepsis.2, age = seq(30, 70, 10))
 new
 ```
 
+
+## Assessing age effect 
+
 ```{r}
-predictions(sepsis.2, newdata = new)
-%>% 
-  select(predicted, shock:age)
+cbind(predictions(sepsis.2, newdata = new)) %>% 
+  select(estimate, shock:age)
 ```
 
-
-\footnotesize
-```{r}
-# predictions(sepsis.2, variables = "age") %>% select(predicted, shock:age)
-```
-\normalsize
-
-## Assessing effects 2/2
-
-Effect of `shock`:
+## Assessing shock effect
 
 \footnotesize
 ```{r}
 new <- datagrid(shock = c(0, 1), model = sepsis.2)
 new
-predictions(sepsis.2, newdata = new) %>% 
-  select(predicted, death:shock)
+cbind(predictions(sepsis.2, newdata = new)) %>% 
+  select(estimate, death:shock)
 ```
 \normalsize
 
@@ -755,9 +752,10 @@ drop1(sev.1, test = "Chisq")
 \small
 ```{r}
 freqs %>% select(Exposure) -> new
-predictions(sev.1, newdata = new, type = "probs") %>%
-  select(group, predicted, Exposure) %>% 
-  pivot_wider(names_from = group, values_from = predicted)
+new
+cbind(predictions(sev.1, newdata = new)) %>%
+  select(group, estimate, Exposure) %>% 
+  pivot_wider(names_from = group, values_from = estimate)
 ```
 \normalsize
 
@@ -772,7 +770,7 @@ plot_cap(model = sev.1, condition = c("Exposure", "group"),
 
 ## The graph
 
-```{r, fig.height=4}
+```{r, fig.height=2.5}
 ggg
 ```
 
@@ -820,11 +818,12 @@ brandpref
 * `sex` and `brand` not meaningful as numbers, so
 turn into factors:
 ```{r bLogistic-47 }
-brandpref <- brandpref %>%
+brandpref %>%
   mutate(sex = ifelse(sex == 1, "female", "male"), 
          sex = factor(sex),
          brand = factor(brand)
-         )
+         ) -> brandpref
+brandpref
 ```
  
 
@@ -833,6 +832,7 @@ like `polr`.
 
 ```{r bLogistic-48 }
 brands.1 <- multinom(brand ~ age + sex, data = brandpref)
+# brands.1
 ```
  
 
@@ -908,14 +908,33 @@ could be removed.
 
 
 ## Making predictions
-```{r bLogistic-54 }
-brands %>% ungroup() %>% summarize(q = quantile(age, c(0, 0.25, 0.5, 0.75, 1)))
-brands %>% ungroup() %>% count(sex)
-new <- datagrid(age = c(24, 30, 33, 35, 38), sex = c("female", "male"), model = brands.1)
+
+Find age 5-number summary, and the two sexes:
+
+\small
+
+```{r}
+brandpref
+brandpref %>% summarize(q = quantile(age, c(0, 0.25, 0.5, 0.75, 1)))
+brandpref %>% count(sex)
+```
+
+\normalsize
+
+## Combinations
+
+```{r}
+new <- datagrid(age = c(24, 30, 33, 35, 38), 
+                sex = c("female", "male"), model = brands.1)
 new
-predictions(brands.1, newdata = new) %>%
-  select(group, predicted, age, sex) %>% 
-  pivot_wider(names_from = group, values_from = predicted)
+```
+
+## The predictions
+
+```{r bLogistic-54 }
+cbind(predictions(brands.1, newdata = new)) %>%
+  select(group, estimate, age, sex) %>% 
+  pivot_wider(names_from = group, values_from = estimate)
 ```
 
 ## Comments
@@ -936,16 +955,14 @@ brand 2 more.
 ```{r}
 plot_cap(brands.1, condition = c("age", "brand", "sex"), 
          type = "probs", draw = FALSE)  %>% 
-  rename(age = condition1, sex = condition3, 
-         brand = group) %>% 
-  ggplot(aes(x = age, y = predicted, colour = brand, 
+  ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
   geom_line() -> g
 ```
 
 ## The graph
 
-```{r, fig.height=4}
+```{r, fig.height=2.5}
 g
 ```
   
@@ -973,6 +990,10 @@ gender. (See also later.)
 Summarize all people of same brand preference, same sex, same age on one line of data file with frequency on end:
 
 
+```{r}
+brandpref
+```
+
 
 ```
 1 0 24 1
@@ -993,7 +1014,7 @@ brandpref %>%
   group_by(age, sex, brand) %>%
   summarize(Freq = n()) %>%
   ungroup() -> b
-b %>% slice(1:6)
+b
 ```
 
    
@@ -1135,7 +1156,7 @@ g + geom_point(
 
 
 ## The plot
-```{r bLogistic-68, fig.height=4.5}
+```{r bLogistic-68, fig.height=2.5}
 g2
 ```
 
@@ -1166,9 +1187,7 @@ the two genders.
 ```{r}
 plot_cap(brands.4, condition = c("age", "brand", "sex"), 
          type = "probs", draw = FALSE)  %>% 
-  rename(age = condition1, sex = condition3, 
-         brand = group) %>% 
-  ggplot(aes(x = age, y = predicted, colour = brand, 
+  ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
   geom_line() -> g4
 ```

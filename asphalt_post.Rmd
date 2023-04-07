@@ -17,7 +17,7 @@ quality of pavement depend on these?
 library(MASS)
 library(tidyverse)
 library(broom)
-library(leaps)
+# library(leaps)
 ```
 
 
@@ -103,7 +103,6 @@ joined by plusses:
 ```{r asphalt-7}
 rut.1 <- lm(rut.depth ~ pct.a.surf + pct.a.base + fines +
   voids + log(viscosity) + run, data = asphalt)
-summary(rut.1)
 ```
 
 ## Regression output: `summary(rut.1)` or:
@@ -144,6 +143,7 @@ data frame:
 
 ```{r asphalt-10}
 rut.1 %>% augment(asphalt) -> rut.1a
+rut.1a
 ```
 
 
@@ -151,7 +151,6 @@ rut.1 %>% augment(asphalt) -> rut.1a
 
 ```{r asphalt-11, echo=FALSE}
 #options(width = 70)
-rut.1a
 ```
 
 
@@ -254,14 +253,13 @@ removed:
 ```{r asphalt-18}
 rut.2 <- lm(log(rut.depth) ~ pct.a.surf + pct.a.base +
   fines + voids + log(viscosity) + run, data = asphalt)
-summary(rut.2)
 ```
 
 - use `tidy` from `broom` to display just the coefficients.
 
 ## Output
 ```{r asphalt-19}
-tidy(rut.2)
+summary(rut.2)
 ```
 
 ## Taking out everything non-significant
@@ -335,7 +333,6 @@ tidy(rut.4) %>% arrange(p.value)
 
 ```{r asphalt-26}
 rut.5 <- update(rut.4, . ~ . - fines)
-summary(rut.5)
 tidy(rut.5) %>% arrange(p.value)
 ```
 
@@ -346,7 +343,6 @@ Can’t take out intercept, so `run`, with P-value 0.36, goes next.
 
 ```{r asphalt-27}
 rut.6 <- update(rut.5, . ~ . - run)
-summary(rut.6)
 tidy(rut.6) %>% arrange(p.value)
 ```
 

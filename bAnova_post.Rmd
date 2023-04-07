@@ -387,7 +387,7 @@ vitaminb
 
 
 ## Grouped boxplot
-```{r bAnova-10, fig.height=3.0}
+```{r bAnova-10, fig.height=2.5}
 ggplot(vitaminb, aes(
   x = ratsize, y = kidneyweight,
   fill = diet
@@ -478,6 +478,9 @@ summary(vitaminb.2)
 \normalsize
 
    
+```{r}
+TukeyHSD(vitaminb.2)
+```
 
 
 
@@ -637,6 +640,7 @@ g
 ```{r bAnova-27}
 autonoise.1 <- aov(noise ~ size * type, data = autonoise)
 summary(autonoise.1)
+TukeyHSD(autonoise.1)
 ```
 
 \normalsize
@@ -706,13 +710,13 @@ g
 
 \footnotesize
 
-```{r bAnova-31, fig.height=2.2}
+```{r bAnova-31, fig.height=2}
 autonoise %>%
   group_by(size, type) %>%
   summarize(mean_noise = mean(noise)) %>%
   ggplot(aes(
-    x = size, y = mean_noise, group = type,
-    colour = type
+    x = size, y = mean_noise,
+    colour = type, group = type
   )) + geom_point() + geom_line()
 ```
 
@@ -731,7 +735,7 @@ between car size and filter type combinations.
 
 * These are called **simple effects** of one variable
 (filter type)
-conditional on other variable (car type).
+conditional on other variable (engine type).
 
 * To do this, pull out just the data for small cars, compare
 noise for the two filter types. Then repeat for medium and large
@@ -817,10 +821,14 @@ autonoise %>%
 
 The "split" part:
 
+```{r}
+autonoise
+```
+
+
 ```{r bAnova-36}
 autonoise %>%
-  group_by(size) %>%
-  nest()
+  nest_by(size)
 ```
 
    
@@ -1011,8 +1019,9 @@ ci_func <- function(x) {
 
 autonoise %>% nest_by(size) %>%
   rowwise() %>% 
-  mutate(ci = list(ci_func(data))) %>%
-  unnest_wider(ci) -> cis
+  mutate(ci = list(ci_func(data))) %>% 
+    unnest(ci) -> cis
+cis
 ```
 
 \normalsize

@@ -52,24 +52,24 @@ b 9 22
 
 ## Packages
 `tidyverse` and `broom`:
-```{r bAncova-post-1, eval=FALSE }
+```{r bAncova-1}
 library(tidyverse)
 library(broom)
+library(marginaleffects)
 ```
 
 ## Read in data
 
-```{r bAncova-post-2, message=F}
+```{r bAncova-2, message=F}
 url <- "http://ritsokiguess.site/datafiles/ancova.txt"
-# url <- "ancova.txt"
 prepost <- read_delim(url, " ")
-prepost # randomly chosen rows
+prepost 
 ```
 
 
 
 ## Making a plot
-```{r ancova-plot<}
+```{r ancova-plot, fig.height=3.5}
 ggplot(prepost, aes(x = before, y = after, colour = drug)) +
   geom_point()
 ```
@@ -87,7 +87,7 @@ comparable before score.
 
 
 ## The means
-```{r bAncova-post-3 }
+```{r bAncova-3 }
 prepost %>%
   group_by(drug) %>%
   summarize(
@@ -107,98 +107,53 @@ prepost %>%
 
 
 ## Testing for interaction
-```{r bAncova-post-4 }
+```{r bAncova-4 }
 prepost.1 <- lm(after ~ before * drug, data = prepost)
+summary(prepost.1)
 anova(prepost.1)
-drop1(prepost.1, test = "F")
 ```
  
-```{r bAncova-post-5}
-summary(prepost.1)
-```
 
 
 * Interaction not significant. Will remove later.
 
+## Predictions
 
-## Predictions, with interaction included
+Set up values to predict for:
 
-Make combinations of before score and drug:
-```{r bAncova-post-6 }
-new <- crossing(
-  before = c(5, 15, 25),
-  drug = c("a", "b")
-)
+```{r}
+summary(prepost)
+```
+
+```{r}
+new <- datagrid(before = c(9.75, 14, 21.25), drug = c("a", "b"), model = prepost.1)
 new
 ```
 
-   
+## and then
 
-## Do predictions: 
 
-```{r bAncova-post-7, size="small"}
-pred <- predict(prepost.1, new)
-pred
-preds <- cbind(new, pred)
-# preds <- bind_cols(new, pred = pred)
-preds
+```{r}
+cbind(predictions(prepost.1, newdata = new)) %>% 
+  select(drug, before, estimate)
+```
+\normalsize
+
+## Predictions (with interaction included), plotted
+
+```{r, fig.height=4}
+plot_cap(model = prepost.1, condition = c("before", "drug"))
 ```
 
- 
+Lines almost parallel, but not quite.
 
 
-
-## Making a plot with lines for each `drug`
-```{r AJHSA}
-g <- ggplot(prepost,
-  aes(x = before, y = after, colour = drug)) +
-  geom_point() + geom_line(data = preds, aes(y = pred))
-```
- 
-* Here, final line:
-
-
-  *   joins points by lines \emph{for different data
-set} (`preds` rather than `prepost`),
-
-  *   *different $y$* (`pred` rather than `after`),
-
-  * but same $x$ (`x=before` inherited from first `aes`).
-
-* Last line could (more easily) be 
-
-```{r bAncova-post-8, eval=F}
-geom_smooth(method = "lm", se = F)
-```
-
-which would work here, but not for later plot.
-
-
-
-
-
-
-## The plot
-
-* Lines almost parallel, but not quite.
- 
-* Non-parallelism (interaction) not significant:
-
-```{r nachwazzo, fig.height=3.5, echo=F}
-g
-```
- 
-
- 
-
- 
 
 ## Taking out interaction
 \small
-```{r bAncova-post-9 }
+```{r bAncova-8 }
 prepost.2 <- update(prepost.1, . ~ . - before:drug)
 anova(prepost.2)
-drop1(prepost.2, test = "F")
 ```
  
 \normalsize
@@ -210,40 +165,20 @@ drop1(prepost.2, test = "F")
 
 * Do predictions again and plot them.
 
+## Predictions
 
-
-## Predicted values again (no-interaction model)
-```{r bAncova-post-10 }
-new
-pred <- predict(prepost.2, new)
-preds <- bind_cols(new, pred = pred)
-preds
+```{r}
+cbind(predictions(prepost.2, newdata = new)) %>% 
+  select(drug, before, estimate)
 ```
 
- 
-Each increase of 10 in before score results in 8.3 in predicted after
-score, *the same for both drugs*.
+## Plot of predicted values
 
-
-## Making a plot, again
-```{r bAncova-post-11 }
-g <- ggplot(
-  prepost,
-  aes(x = before, y = after, colour = drug)
-) +
-  geom_point() +
-  geom_line(data = preds, aes(y = pred))
+```{r, fig.height=4}
+plot_cap(prepost.2, condition = c("before", "drug"))
 ```
- 
-Exactly same as before, but using new predictions.
 
-
-## The no-interaction plot of predicted values
-```{r cabazzo,fig.height=3}
-g
-```
- 
-Lines now *parallel*. No-interaction model forces them
+This time the lines are *exactly* parallel. No-interaction model forces them
 to have the same slope. 
 
 
@@ -257,7 +192,7 @@ before score and of drug, but doesn't help with interpretation.
 * `summary(prepost.2)` views as regression with slopes:
 
 \scriptsize
-```{r bAncova-post-12 }
+```{r bAncova-11 }
 summary(prepost.2)
 ```
 
@@ -269,7 +204,7 @@ summary(prepost.2)
 ## Understanding those slopes
 
 \footnotesize
-```{r bAncova-post-13}
+```{r bAncova-12}
 tidy(prepost.2)
 ```
 

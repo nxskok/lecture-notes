@@ -1,6 +1,6 @@
 ## Packages for this section
 
-```{r functions-1, eval=F}
+```{r functions-1}
 library(tidyverse)
 library(broom)
 ```
@@ -18,7 +18,6 @@ bs <- sqrt(b - 1)
 bs
 ds <- sqrt(d - 1)
 ds
-
 ```
 
 
@@ -109,7 +108,6 @@ sqrt_minus_value(51, 2)
 - or give the inputs names, in which case they can be in *any order*:
 ```{r functions-11}
 sqrt_minus_value(d = 2, x = 51)
-sqrt_minus_value(51, d = 2)
 ```
 
 ## Defaults 1/2
@@ -118,8 +116,6 @@ but usually you don’t want to, for example:
 ```{r functions-12}
 x <- c(3, 4, 5, NA, 6, 7)
 x
-x[!is.na(x)]
-mean(x[!is.na(x)])
 mean(x)
 mean(x, na.rm = TRUE)
 ```
@@ -189,11 +185,17 @@ even any functions that you defined before.
 you don’t have to do this from scratch: you can use R’s regression
 calculations, like this:
 
+```{r}
+my_df
+```
+
 
 ```{r functions-19}
 my_df <- tibble(x = 1:4, y = c(10, 11, 10, 14))
 my_df
+# my_df
 my_df.1 <- lm(y ~ x, data = my_df)
+# summary(my_df.1)
 summary(my_df.1)
 tidy(my_df.1)
 ```
@@ -215,7 +217,7 @@ tidy(my_df.1) %>% pluck("estimate", 2)
 ```{r functions-21}
 slope <- function(xx, yy) {
   y.1 <- lm(yy ~ xx)
-  tidy(y.1) %>% pluck("estimate", 2)
+  tidy(y.1) %>% pluck("estimate", 2) # slope
 }
 ```
 
@@ -249,10 +251,6 @@ the list of observations to include in the regression.
 with(my_df, slope(x, y, subset = 3:4))
 ```
 
-```{r}
-with(my_df, slope(x, y, hair = "spiky"))
-```
-
 
 - Just uses the last two observations in `x` and `y`:
 
@@ -271,7 +269,6 @@ be $(14 − 10)/(4 − 3) = 4$ and is.
 in regressions, along with the `y` we had before:
 
 ```{r functions-26}
-my_df
 (d <- tibble(x1 = 1:4, x2 = c(8, 7, 6, 5), x3 = c(2, 4, 6, 9)))
 ```
 
@@ -302,7 +299,13 @@ slopes
 function-running function is `map_dbl`:
 
 ```{r functions-28}
-map_dbl(d, ~slope(., my_df$y))
+d
+my_df
+map_dbl(d, \(d) slope(d, my_df$y))
+```
+
+```{r}
+d
 ```
 
 - Same as loop, with a lot less coding.
@@ -312,7 +315,8 @@ map_dbl(d, ~slope(., my_df$y))
 - “Find the square roots of each of the numbers 1 through 10”:
 
 ```{r functions-29}
-map_dbl(1:20, ~ sqrt(.))
+x <- 1:10
+map_dbl(x, \(x) sqrt(x))
 ```
 
 ## Summarizing all columns of a data frame, two ways
@@ -320,9 +324,8 @@ map_dbl(1:20, ~ sqrt(.))
 - use my `d` from above: 
 
 ```{r functions-30}
-d
-map_dbl(d, ~ mean(.))
-d %>% summarize(across(everything(), ~ mean(.)))
+map_dbl(d, \(d) mean(d))
+d %>% summarize(across(everything(), \(x) mean(x)))
 ```
 
 The mean of each column, with the columns labelled. 
@@ -342,8 +345,7 @@ of `map_dbl`.
 ## map results
 - Try:
 ```{r functions-32}
-d
-map(d, ~ quartiles(.))
+map(d, \(d) quartiles(d))
 ```
 
 - A list. 
@@ -354,12 +356,12 @@ map(d, ~ quartiles(.))
 frame: 
 
 ```{r functions-33}
-map_dbl(d, ~ quartiles(.))
+map_df(d, \(d) quartiles(d))
 ```
 
 ## Or even
 ```{r functions-34}
-d %>% map_df(~ quartiles(.))
+d %>% map_df(\(d) quartiles(d))
 ```
 
 ## Comments
@@ -374,8 +376,7 @@ default definition (see help for `quantile`).
 Let’s do the square roots of 1 through 10 again:
 ```{r functions-35}
 d <- tibble(x = 1:10)
-d
-d %>% mutate(root = map_dbl(x, ~ sqrt(.)))
+d %>% mutate(root = map_dbl(x, \(x) sqrt(x)))
 ```
 
 ## Write a function first and then map it
@@ -425,7 +426,7 @@ hotpo(4.5)
 - Use a data frame of numbers 1 through 10 again:
 
 ```{r functions-39}
-tibble(x = 1:10) %>% mutate(y = map_int(x, ~hotpo(.)))
+tibble(x = 1:10) %>% mutate(y = map_int(x, \(x) hotpo(x)))
 ```
 
 ## Until I get to 1 (if I ever do)
@@ -460,11 +461,24 @@ hotpo_seq(6)
 
 - Start at 27:
 
+```{r}
+#| echo = FALSE
+w <- getOption("width")
+options(width = 60)
+```
+
+
 \footnotesize
 ```{r functions-42}
 hotpo_seq(27)
 ```
 \normalsize
+
+```{r}
+#| echo = FALSE
+options(width = w)
+```
+
 
 ## Which starting points have the longest sequences?
 - The `length` of the vector returned from `hotpo_seq` says how long it
@@ -475,16 +489,16 @@ sequence?
 \small
 ```{r functions-43}
 tibble(start = 1:100) %>%
-  mutate(seq_length = map_int(start, ~ length(hotpo_seq(.)))) %>%
-  arrange(desc(seq_length)) %>%
-  slice(1:5)
+  mutate(seq_length = map_int(
+    start, \(start) length(hotpo_seq(start)))) %>%
+  slice_max(seq_length, n = 5)
 ```
 \normalsize
 ## What happens if we save the entire sequence? 
 
 ```{r functions-44, results="hide"}
 tibble(start = 1:7) %>%
-  mutate(sequence = map(start, ~ hotpo_seq(.)))
+  mutate(sequence = map(start, \(start) hotpo_seq(start)))
 ```
 
 ![](Screenshot_2019-05-07_13-45-12.png){height=200px}
@@ -495,16 +509,20 @@ tibble(start = 1:7) %>%
 
 ## Using the whole sequence to find its length and its max 
 
+\small
+
 ```{r functions-45, results="hide"}
-tibble(start = 1:30) %>%
-  mutate(sequence = map(start, ~ hotpo_seq(.))) %>%
+tibble(start = 1:1000) %>%
+  mutate(sequence = map(start, \(start) hotpo_seq(start))) %>%
   mutate(
-    seq_length = map_int(sequence, ~ length(.)),
-    seq_max = map_int(sequence, ~ max(.))
+    seq_length = map_int(sequence, \(sequence) length(sequence)),
+    seq_max = map_int(sequence, \(sequence) max(sequence))
   )
 ```
 
 ![](Screenshot_2019-05-07_13-47-08.png)
+
+\normalsize
 
 ## Does it work with `rowwise`?
 
@@ -520,21 +538,6 @@ tibble(start=1:7) %>%
 
 \normalsize
 
-## Yet another way
-
-\footnotesize
-
-```{r functions-47}
-tibble(start=1:7) %>% 
-  rowwise() %>% 
-  mutate(sequence = list(hotpo_seq(start))) %>% 
-  unnest(sequence) %>% 
-  group_by(start) %>% 
-  summarize(seq_length = n(),
-            seq_max = max(sequence))
-```
-
-\normalsize
 
 ## Final thoughts on this
 - Called the **Collatz conjecture**.

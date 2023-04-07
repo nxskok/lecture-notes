@@ -8,12 +8,11 @@
   - look for points to follow a straight line, at least approx
 - `ggplot` code: `aes` `sample`; geoms `stat_qq` and `stat_qq_line` 
   
-## Kids learning to read
+## Kids learning to read (move this to the end)
 
 ```{r inference-4a-R-1, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
-kids
 ```
 
 
@@ -27,7 +26,6 @@ Each group looks normal, or at least symmetric.
 ```{r inference-4a-R-3}
 kids %>% filter(group == "t") -> treatment
 kids %>% filter(group == "c") -> control
-control
 ```
 
 to check
@@ -39,7 +37,7 @@ control %>% count(group)
 
 ## The treatment group
 
-```{r inference-4a-R-5, fig.height=4.5}
+```{r inference-4a-R-5, fig.height=1.5}
 ggplot(treatment, aes(sample = score)) + 
   stat_qq() + stat_qq_line()
 ```
@@ -47,7 +45,7 @@ only problem here is lowest value a little too low (mild outlier).
 
 ## Control group
 
-```{r inference-4a-R-6, fig.height=4}
+```{r inference-4a-R-6, fig.height=1.5}
 ggplot(control, aes(sample = score)) + 
   stat_qq() + stat_qq_line()
 ```
@@ -58,7 +56,7 @@ This time, highest value a little too high, but again, no real problem with norm
 
 Use the whole data set and facet by groups
 
-```{r inference-4a-R-7, fig.height=4.5}
+```{r inference-4a-R-7, fig.height=1.5}
 ggplot(kids, aes(sample = score)) + 
   stat_qq() + stat_qq_line() + facet_wrap(~group)
 ```
@@ -67,7 +65,9 @@ ggplot(kids, aes(sample = score)) +
 ## Blue Jays attendances, skewed to right
 
 ```{r inference-4a-R-8, echo=FALSE, message=FALSE}
-jays <- read_csv("jays15-home.csv")
+my_url <- "http://ritsokiguess.site/datafiles/jays15-home.csv"
+jays <- read_csv(my_url)
+# jays <- read_csv("jays15-home.csv")
 ```
 
 
@@ -77,7 +77,7 @@ ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
 
 ## On a normal quantile plot
 
-```{r inference-4a-R-10, fig.height=3.5}
+```{r inference-4a-R-10, fig.height=2.0}
 ggplot(jays, aes(sample = attendance)) + 
   stat_qq() + stat_qq_line()
 ```
@@ -104,14 +104,15 @@ set.seed(457299)
 ```
 
 
-```{r inference-4a-R-11, fig.height=4.5}
+```{r inference-4a-R-11, fig.height=2.5}
 d <- tibble(x=rnorm(200))
+d
 ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 ```
 
 ## The normal quantile plot
 
-```{r inference-4a-R-12, fig.height=4.5}
+```{r inference-4a-R-12, fig.height=2.0}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -124,7 +125,7 @@ set.seed(457299)
 - Not so convincingly normal, but not obviously skewed:
 
 
-```{r normal-small, fig.height=4.5}
+```{r normal-small, fig.height=2.0}
 d <- tibble(x=rnorm(20))
 ggplot(d, aes(x=x)) + geom_histogram(bins=5)
 ```
@@ -136,7 +137,7 @@ Good, apart from the highest and lowest points being slightly off. I’d call
 this good:
 
 
-```{r inference-4a-R-14, fig.height=4.5}
+```{r inference-4a-R-14, fig.height=1.5}
 ggplot(d, aes(sample=x)) + stat_qq() + stat_qq_line()
 ```
 
@@ -144,7 +145,7 @@ ggplot(d, aes(sample=x)) + stat_qq() + stat_qq_line()
 
 Somewhat skewed to right:
 
-```{r inference-4a-R-15, fig.height=4.5}
+```{r inference-4a-R-15, fig.height=1.5}
 d <- tibble(x=rchisq(100, 10))
 ggplot(d,aes(x=x)) + geom_histogram(bins=10)
 ```
@@ -155,7 +156,7 @@ ggplot(d,aes(x=x)) + geom_histogram(bins=10)
 
 Somewhat opening-up curve:
 
-```{r inference-4a-R-16, fig.height=4.5}
+```{r inference-4a-R-16, fig.height=1.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -164,7 +165,7 @@ ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 
 Definitely skewed to right:
 
-```{r chisq-small-df, fig.height=4.5}
+```{r chisq-small-df, fig.height=1.5}
 d <- tibble(x=rchisq(100, 3))
 ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 ```
@@ -175,7 +176,7 @@ ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 
 Clear upward-opening curve:
 
-```{r inference-4a-R-17, fig.height=4.5}
+```{r inference-4a-R-17, fig.height=1.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -185,7 +186,7 @@ ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 
 Long tails (or a very sharp peak):
 
-```{r t-small, fig.height=4.5}
+```{r t-small, fig.height=1.5}
 d <- tibble(x=rt(300, 3))
 ggplot(d, aes(x=x)) + geom_histogram(bins=15)
 ```
@@ -196,7 +197,7 @@ ggplot(d, aes(x=x)) + geom_histogram(bins=15)
 
 Low values too low and high values too high for normal.
 
-```{r inference-4a-R-18, fig.height=4.5}
+```{r inference-4a-R-18, fig.height=1.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
 
@@ -229,18 +230,3 @@ On a normal quantile plot:
   \vspace{2ex}
   
 - short-tailed distribution OK for $t$ (mean still good), but others problematic (depending on sample size).  
-
-
-extra thought: a bootstrap sampling distribution of sample mean includes the sample size, so this needs to be close to normal.
-
-The last one, with the very long tails and a sample size of 300:
-
-```{r}
-tibble(sim = 1:1000) %>% 
-  rowwise() %>% 
-  mutate(my_sample = list(sample(d$x, replace = TRUE))) %>% 
-  mutate(my_mean = mean(my_sample)) %>% 
-  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
-```
-
-this still has a long tail at the upper end, so a sample size of 300 is *not large enough*!

@@ -318,7 +318,7 @@ going around. Keep going while a condition is true:
 ```{r inference-3-R-24, eval=F}
 lo = 200
 hi = 220
-while (hi - lo > 0.1) {
+while (hi - lo > 1) {
   try = (hi + lo) / 2
   ptry = pval_sign(try, irs, Time)
   print(c(try, ptry))
@@ -327,10 +327,6 @@ while (hi - lo > 0.1) {
   else
     lo = try
 }
-```
-
-```{r}
-hi; lo
 ```
 
 ## The output from this loop
@@ -354,6 +350,7 @@ while (hi - lo > 1) {
 ## Using smmr
 - `smmr` has function `ci_median` that does this (by default 95% CI):
 ```{r inference-3-R-26}
+irs
 ci_median(irs,Time)
 ```
 
@@ -365,7 +362,7 @@ ci_median(irs,Time,conf.level=0.90)
 
 - 90% CI is shorter, as it should be.
 
-## Bootstrap (optional)
+## Bootstrap
 
 - but, was the sample size (30) big enough to overcome the skewness?
 - Bootstrap, again:

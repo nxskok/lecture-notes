@@ -64,7 +64,8 @@ do a 1-sample t-test on them.
 \footnotesize
 
 ```{r inference-4b-R-4}
-(pain %>% mutate(diff=druga-drugb) -> pain)
+pain %>% mutate(diff=druga-drugb) -> pain
+pain
 ```
 
 \normalsize
@@ -87,7 +88,7 @@ normally distributed.
 
 
 ```{r inference-4b-R-6, fig.height=4}
-ggplot(pain,aes(sample = diff)) + stat_qq() + stat_qq_line()
+ggplot(pain, aes(sample = diff)) + stat_qq() + stat_qq_line()
 ```
 
 - Points should follow the straight line. Bottom left one way off, so
@@ -111,31 +112,4 @@ sign_test(pain, diff, 0)
 - no evidence of any difference between drugs (P-value 0.1460)
 - in $t$-test, the low outlier difference pulled mean difference downward and made it look more negative than it should have been
 - therefore, there really isn't any difference between the drugs.
-
-## How bad is the normality? 
-
-Bootstrap sampling distribution of sample mean (of the differences):
-
-```{r}
-tibble(sim = 1:1000) %>% 
-  rowwise() %>% 
-  mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
-  mutate(my_mean = mean(my_sample)) %>% 
-  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
-```
-
-Skewed to the *left* (lowest values too low, highest not high enough). 
-
-Bootstrap sample means can be very low, depending how often the low outlier shows up in bootstrap sample:
-
-```{r}
-tibble(sim = 1:1000) %>% 
-  rowwise() %>% 
-  mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
-  mutate(my_mean = mean(my_sample)) %>% 
-  mutate(lows = sum(my_sample < (-5.5))) %>% 
-  ggplot(aes(x = factor(lows), y = my_mean)) + geom_boxplot()
-```
-
-The more times that very low value shows up in the bootstrap sample, the lower the sample mean is (on average), so the one data value has an outsized influence on the sampling distribution of the sample mean.
 
