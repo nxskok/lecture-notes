@@ -1,7 +1,7 @@
-This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  19 APR 2023 15:42
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2022.8.12)  19 APR 2023 15:26
  restricted system commands enabled.
-**bLogistic_slides.tex
-(./bLogistic_slides.tex
+**mapping_slides.tex
+(./mapping_slides.tex
 LaTeX2e <2021-11-15> patch level 1
 Lua module: luaotfload 2021-05-21 3.18 Lua based OpenType font support
 Lua module: lualibs 2021-05-20 2.74 ConTeXt Lua standard libraries.
@@ -796,99 +796,36 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \fb@frh=\dimen292
 \FrameRule=\dimen293
 \FrameSep=\dimen294
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
-\LTleft=\skip69
-\LTright=\skip70
-\LTpre=\skip71
-\LTpost=\skip72
-\LTchunksize=\count356
-\LTcapwidth=\dimen295
-\LT@head=\box79
-\LT@firsthead=\box80
-\LT@foot=\box81
-\LT@lastfoot=\box82
-\LT@gbox=\box83
-\LT@cols=\count357
-\LT@rows=\count358
-\c@LT@tables=\count359
-\c@LT@chunks=\count360
-\LT@p@ftn=\toks47
-) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen296
-\lightrulewidth=\dimen297
-\cmidrulewidth=\dimen298
-\belowrulesep=\dimen299
-\belowbottomsep=\dimen300
-\aboverulesep=\dimen301
-\abovetopsep=\dimen302
-\cmidrulesep=\dimen303
-\cmidrulekern=\dimen304
-\defaultaddspace=\dimen305
-\@cmidla=\count361
-\@cmidlb=\count362
-\@aboverulesep=\dimen306
-\@belowrulesep=\dimen307
-\@thisruleclass=\count363
-\@lastruleclass=\count364
-\@thisrulewidth=\dimen308
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
-\col@sep=\dimen309
-\ar@mcellbox=\box84
-\extrarowheight=\dimen310
-\NC@list=\toks48
-\extratabsurround=\skip73
-\backup@length=\skip74
-\ar@cellbox=\box85
-) (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2020/10/26 v3.5g Customizing captions (AR)
-(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
-\captionmargin=\dimen311
-\captionmargin@=\dimen312
-\captionwidth=\dimen313
-\caption@tempdima=\dimen314
-\caption@indent=\dimen315
-\caption@parindent=\dimen316
-\caption@hangindent=\dimen317
-Package caption Info: beamer document class detected.
-(/usr/share/texlive/texmf-dist/tex/latex/caption/caption-beamer.sto
-File: caption-beamer.sto 2020/08/22 v2.0 Adaption of the caption package to the
- beamer document classes (AR)
-))
-\c@caption@flags=\count365
-\c@continuedfloat=\count366
-Package caption Info: hyperref package is loaded.
-Package caption Info: Hyperref support is turned off
-(caption)             because hyperref has stopped early.
-Package caption Info: longtable package is loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
-Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
-)) (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
-\c@tracingmulticols=\count367
-\mult@box=\box86
-\multicol@leftmargin=\dimen318
-\c@unbalance=\count368
-\c@collectmore=\count369
-\doublecol@number=\count370
-\multicoltolerance=\count371
-\multicolpretolerance=\count372
-\full@width=\dimen319
-\page@free=\dimen320
-\premulticols=\dimen321
-\postmulticols=\dimen322
-\multicolsep=\skip75
-\multicolbaselineskip=\skip76
-\partial@page=\box87
-\last@line=\box88
-\maxbalancingoverflow=\dimen323
-\mult@rightbox=\box89
-\mult@grightbox=\box90
-\mult@firstbox=\box91
-\mult@gfirstbox=\box92
+\c@tracingmulticols=\count356
+\mult@box=\box79
+\multicol@leftmargin=\dimen295
+\c@unbalance=\count357
+\c@collectmore=\count358
+\doublecol@number=\count359
+\multicoltolerance=\count360
+\multicolpretolerance=\count361
+\full@width=\dimen296
+\page@free=\dimen297
+\premulticols=\dimen298
+\postmulticols=\dimen299
+\multicolsep=\skip69
+\multicolbaselineskip=\skip70
+\partial@page=\box80
+\last@line=\box81
+\maxbalancingoverflow=\dimen300
+\mult@rightbox=\box82
+\mult@grightbox=\box83
+\mult@firstbox=\box84
+\mult@gfirstbox=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\@tempa=\box92
 \@tempa=\box93
 \@tempa=\box94
 \@tempa=\box95
@@ -918,22 +855,15 @@ Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
 \@tempa=\box119
 \@tempa=\box120
 \@tempa=\box121
-\@tempa=\box122
-\@tempa=\box123
-\@tempa=\box124
-\@tempa=\box125
-\@tempa=\box126
-\@tempa=\box127
-\@tempa=\box128
-\c@minrows=\count373
-\c@columnbadness=\count374
-\c@finalcolumnbadness=\count375
-\last@try=\dimen324
-\multicolovershoot=\dimen325
-\multicolundershoot=\dimen326
-\mult@nat@firstbox=\box129
-\colbreak@box=\box130
-\mc@col@check@num=\count376
+\c@minrows=\count362
+\c@columnbadness=\count363
+\c@finalcolumnbadness=\count364
+\last@try=\dimen301
+\multicolovershoot=\dimen302
+\multicolundershoot=\dimen303
+\mult@nat@firstbox=\box122
+\colbreak@box=\box123
+\mc@col@check@num=\count365
 ) (/usr/share/texlive/texmf-dist/tex/lualatex/selnolig/selnolig.sty
 === Package selnolig, Version 0.302, Date 2015/10/26 ===
 Package: selnolig 2015/10/26
@@ -943,7 +873,7 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 Package: luatexbase 2015/10/04 v1.3 luatexbase interface to LuaTeX 
 (/usr/share/texlive/texmf-dist/tex/luatex/ctablestack/ctablestack.sty
 Package: ctablestack 2015/10/01 v1.0 Catcode table stable support
-\@catcodetablestackcnt=\count377
+\@catcodetablestackcnt=\count366
 )
 \CatcodeTableOther=\catcodetable12
 \CatcodeTableExpl=\catcodetable13
@@ -953,32 +883,32 @@ r/share/texlive/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
-\BKM@id=\count378
+\BKM@id=\count367
 )) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
-) (./bLogistic_slides.aux)
-\openout1 = bLogistic_slides.aux
+) (./mapping_slides.aux)
+\openout1 = mapping_slides.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
 *geometry* driver: auto-detecting
 *geometry* detected driver: luatex
 *geometry* verbose mode - [ preamble ] result:
@@ -1015,17 +945,17 @@ LaTeX Font Info:    ... okay on input line 158.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count379
-\scratchdimen=\dimen327
-\scratchbox=\box131
-\nofMPsegments=\count380
-\nofMParguments=\count381
-\everyMPshowfont=\toks49
-\MPscratchCnt=\count382
-\MPscratchDim=\dimen328
-\MPnumerator=\count383
-\makeMPintoPDFobject=\count384
-\everyMPtoPDFconversion=\toks50
+\scratchcounter=\count368
+\scratchdimen=\dimen304
+\scratchbox=\box124
+\nofMPsegments=\count369
+\nofMParguments=\count370
+\everyMPshowfont=\toks47
+\MPscratchCnt=\count371
+\MPscratchDim=\dimen305
+\MPnumerator=\count372
+\makeMPintoPDFobject=\count373
+\everyMPtoPDFconversion=\toks48
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1034,7 +964,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 158.
+Package hyperref Info: Link coloring OFF on input line 151.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -1042,11 +972,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count385
+\c@section@level=\count374
 )
-LaTeX Info: Redefining \ref on input line 158.
-LaTeX Info: Redefining \pageref on input line 158.
-LaTeX Info: Redefining \nameref on input line 158.
+LaTeX Info: Redefining \ref on input line 151.
+LaTeX Info: Redefining \pageref on input line 151.
+LaTeX Info: Redefining \nameref on input line 151.
 
 (/usr/share/texlive/texmf-dist/tex/latex/translator/translator-basic-dictionary
 -English.dict
@@ -1073,19 +1003,19 @@ ry-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 158.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 151.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 158.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 151.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 158.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 151.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 158.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 151.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 158.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 151.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 158.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 151.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 158.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 151.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1120,7 +1050,7 @@ tdimens:
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 11.28015pt on input line 158.
+(Font)              scaled to size 11.28015pt on input line 151.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1165,18 +1095,18 @@ n-math.otf]:mode=base;script=math;language=dflt;+ssty=0;"<-6.57>s*[1.0301589097
 (fontspec)             \__um_luatex_copy_fontdimens: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 11.28015pt on input line 158.
+(Font)              scaled to size 11.28015pt on input line 151.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 158.
+(Font)              `operators' in the math version `normal' on input line 151.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 158.
+ line 151.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 158.
+(Font)              `operators' in the math version `bold' on input line 151.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 158.
+t line 151.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1267,15 +1197,15 @@ e;script=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 158.
+(Font)              `symbols' in the math version `normal' on input line 151.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 158.
+t line 151.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 158.
+(Font)              `symbols' in the math version `bold' on input line 151.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 158.
+t line 151.
 
 Package fontspec Info: latinmodern-math scale = 1.03015890977869.
 
@@ -1349,53 +1279,53 @@ e;script=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 1
-58.
+51.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 158.
+t line 151.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 158
+(Font)              `largesymbols' in the math version `bold' on input line 151
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 158.
+t line 151.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.8961pt on input line 158.
+(Font)              scaled to size 7.8961pt on input line 151.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.64008pt on input line 158.
+(Font)              scaled to size 5.64008pt on input line 151.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-58.
+51.
 (/usr/share/texmf/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 11.28131pt on input line 158.
+(Font)              scaled to size 11.28131pt on input line 151.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.89691pt on input line 158.
+(Font)              scaled to size 7.89691pt on input line 151.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.64066pt on input line 158.
+(Font)              scaled to size 5.64066pt on input line 151.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.27914pt on input line 158.
+(Font)              scaled to size 11.27914pt on input line 151.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.8954pt on input line 158.
+(Font)              scaled to size 7.8954pt on input line 151.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.63957pt on input line 158.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 158
+(Font)              scaled to size 5.63957pt on input line 151.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 151
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 158
+LaTeX Font Info:    Trying to load font information for U+msb on input line 151
 .
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Info: Redefining \microtypecontext on input line 158.
-Package microtype Info: Applying patch `item' on input line 158.
-Package microtype Info: Applying patch `toc' on input line 158.
-Package microtype Info: Applying patch `eqnum' on input line 158.
+LaTeX Info: Redefining \microtypecontext on input line 151.
+Package microtype Info: Applying patch `item' on input line 151.
+Package microtype Info: Applying patch `toc' on input line 151.
+Package microtype Info: Applying patch `eqnum' on input line 151.
 
-Package microtype Warning: Unable to apply patch `footnote' on input line 158.
+Package microtype Warning: Unable to apply patch `footnote' on input line 151.
 
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
@@ -1403,7 +1333,7 @@ Package microtype Info: Using protrusion set `basicmath'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 158.
+LaTeX Info: Redefining \showhyphens on input line 151.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of spacing.
 Package microtype Info: No adjustment of kerning.
@@ -1411,804 +1341,155 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: End \AtBeginDocument code.
-(./bLogistic_slides.nav) [1
+(./mapping_slides.nav) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 9.
-) [2
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb)
+Overfull \vbox (48.49954pt too high) detected at line 196
+ []
+
+[2
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [3
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb
+Overfull \hbox (83.11205pt too wide) in paragraph at lines 30--30
+[]\TU/lmtt/m/n/10.95 ## i Use `spec()` to retrieve the full column specification
+ for this data.[] 
+ []
+
+
+Overfull \hbox (140.59953pt too wide) in paragraph at lines 30--30
+[]\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALS
+E` to quiet this message.[] 
+ []
+
+)
+Overfull \vbox (10.28381pt too high) detected at line 228
+ []
+
+[3
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [4
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb)
+Overfull \vbox (75.78725pt too high) detected at line 260
+ []
+
+[4
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [5
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb)
+Overfull \vbox (53.91995pt too high) detected at line 295
+ []
+
+[5
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [6
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb)
+Overfull \vbox (104.08221pt too high) detected at line 339
+ []
+
+[6
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [7
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb)
+Overfull \vbox (53.9747pt too high) detected at line 370
+ []
 
-] [8
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [9
+[7
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/unnamed-chunk-2-1.pdf, id=97, 712.6625pt 
-x 277.035pt>
-File: bLogistic_slides_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic file (
-type pdf)
-<use bLogistic_slides_files/figure-beamer/unnamed-chunk-2-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-2-1
-.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.2916pt x 133.05983pt.
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [8
+
+]
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [9
+
+]
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb
+<mapping_slides_files/figure-beamer/mapping-9-1.pdf, id=94, 675.52374pt x 263.9
+8625pt>
+File: mapping_slides_files/figure-beamer/mapping-9-1.pdf Graphic file (type pdf
+)
+<use mapping_slides_files/figure-beamer/mapping-9-1.pdf>
+Package luatex.def Info: mapping_slides_files/figure-beamer/mapping-9-1.pdf  us
+ed on input line 10.
+(luatex.def)             Requested size: 342.2964pt x 133.76515pt.
 ) [10
 
-<./bLogistic_slides_files/figure-beamer/unnamed-chunk-2-1.pdf>]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_sl
-ides.vrb) [11
+<./mapping_slides_files/figure-beamer/mapping-9-1.pdf>]
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) 
+[11
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (49.88014pt too wide) in paragraph at lines 20--20
-[]\TU/lmtt/m/n/9 ## -- Column specification ------------------------------------
---------------------[] 
- []
-
-
-Overfull \hbox (7.35509pt too wide) in paragraph at lines 20--20
-[]\TU/lmtt/m/n/9 ## i Use `spec()` to retrieve the full column specification for
- this data.[] 
- []
-
-
-Overfull \hbox (54.60515pt too wide) in paragraph at lines 20--20
-[]\TU/lmtt/m/n/9 ## i Specify the column types or set `show_col_types = FALSE` 
-to quiet this message.[] 
- []
-
-)
-Overfull \vbox (10.43033pt too high) detected at line 463
- []
-
-[12
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [12
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (1.57715pt too high) detected at line 523
- []
-
-[13
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [13
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [14
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [14
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (8.68112pt too high) detected at line 579
- []
-
-[15
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [15
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (94.60954pt too wide) in paragraph at lines 14--14
-[]\TU/lmtt/m/n/10.95 ## Warning: Matrix columns are not supported as predictors and are therefore[] 
- []
-
-
-Overfull \hbox (100.35829pt too wide) in paragraph at lines 14--14
-[]\TU/lmtt/m/n/10.95 ##   omitted. This may prevent computation of the quantitie
-s of interest. You[] 
- []
-
-
-Overfull \hbox (83.11205pt too wide) in paragraph at lines 14--14
-[]\TU/lmtt/m/n/10.95 ##   can construct your own prediction dataset and supply 
-it explicitly to[] 
- []
-
-
-Overfull \hbox (54.3683pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10.95 ## Warning in data.table::setDT(modeldata): Some columns ar
-e a multi-
- []
-
-
-Overfull \hbox (60.11705pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10.95 ## (such as a matrix column): [1]. setDT will retain these columns as-
- []
-
-
-Overfull \hbox (94.60954pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10.95 ## subsequent operations like grouping and joining may fail
-. Please consider[] 
- []
-
-
-Overfull \hbox (134.85078pt too wide) in paragraph at lines 27--27
-[]\TU/lmtt/m/n/10.95 ## as.data.table() instead which will create a new column 
-for each embedded column.[] 
- []
-
-)
-Overfull \vbox (95.73329pt too high) detected at line 622
- []
-
-[16
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [16
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (54.3683pt too wide) in paragraph at lines 18--18
-[]\TU/lmtt/m/n/10.95 ## Warning in data.table::setDT(modeldata): Some columns ar
-e a multi-
- []
-
-
-Overfull \hbox (60.11705pt too wide) in paragraph at lines 18--18
-[]\TU/lmtt/m/n/10.95 ## (such as a matrix column): [1]. setDT will retain these columns as-
- []
-
-
-Overfull \hbox (94.60954pt too wide) in paragraph at lines 18--18
-[]\TU/lmtt/m/n/10.95 ## subsequent operations like grouping and joining may fail
-. Please consider[] 
- []
-
-
-Overfull \hbox (134.85078pt too wide) in paragraph at lines 18--18
-[]\TU/lmtt/m/n/10.95 ## as.data.table() instead which will create a new column 
-for each embedded column.[] 
- []
-
-<bLogistic_slides_files/figure-beamer/unnamed-chunk-3-1.pdf, id=169, 712.6625pt
- x 204.765pt>
-File: bLogistic_slides_files/figure-beamer/unnamed-chunk-3-1.pdf Graphic file (
-type pdf)
-<use bLogistic_slides_files/figure-beamer/unnamed-chunk-3-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-3-1
-.pdf  used on input line 20.
-(luatex.def)             Requested size: 342.2916pt x 98.34856pt.
-)
-Overfull \vbox (47.74251pt too high) detected at line 644
- []
-
-[17
-
-<./bLogistic_slides_files/figure-beamer/unnamed-chunk-3-1.pdf>] [18
-
-] [19
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [17
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (134.85078pt too wide) in paragraph at lines 19--19
-[]\TU/lmtt/m/n/10.95 ## -- Column specification --------------------------------
-------------------------[] 
- []
-
-
-Overfull \hbox (83.11205pt too wide) in paragraph at lines 19--19
-[]\TU/lmtt/m/n/10.95 ## i Use `spec()` to retrieve the full column specification
- for this data.[] 
- []
-
-
-Overfull \hbox (140.59953pt too wide) in paragraph at lines 19--19
-[]\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALS
-E` to quiet this message.[] 
- []
-
-)
-Overfull \vbox (1432.54008pt too high) detected at line 829
- []
-
-[20
+\openout4 = mapping_slides.vrb
+ (./mapping_slides.vrb) [18
 
 ]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [21
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (1280.55298pt too high) detected at line 962
- []
-
-[22
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [23
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (42.8708pt too wide) in paragraph at lines 37--37
-[]\TU/lmtt/m/n/10.95 ## glm(formula = death ~ shock + malnut + alcohol + age + 
-bowelinf,[] 
- []
-
-
-Overfull \hbox (31.3733pt too wide) in paragraph at lines 37--37
-[]\TU/lmtt/m/n/10.95 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1
- ' ' 1[] 
- []
-
-)
-Overfull \vbox (362.34596pt too high) detected at line 1041
- []
-
-[24
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (111.85579pt too wide) in paragraph at lines 37--37
-[]\TU/lmtt/m/n/10.95 ## glm(formula = death ~ shock + alcohol + age + bowelinf, family = "binomial",[] 
- []
-
-
-Overfull \hbox (31.3733pt too wide) in paragraph at lines 37--37
-[]\TU/lmtt/m/n/10.95 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1
- ' ' 1[] 
- []
-
-)
-Overfull \vbox (328.34596pt too high) detected at line 1105
- []
-
-[25
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [26
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 43--43
- []|\TU/lmss/m/n/6 0.0074386|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 43--43
- []|\TU/lmss/m/n/6 0.0019639|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 43--44
- []|\TU/lmss/m/n/6 0.0001520|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 44--44
- []|\TU/lmss/m/n/6 0.0035895|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 44--45
- []|\TU/lmss/m/n/6 0.0112877|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 45--45
- []|\TU/lmss/m/n/6 0.3059301|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 45--45
- []|\TU/lmss/m/n/6 0.0679656|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 46--46
- []|\TU/lmss/m/n/6 0.0000068|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 46--46
- []|\TU/lmss/m/n/6 0.1727201|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 46--47
- []|\TU/lmss/m/n/6 0.4391402|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 47--47
- []|\TU/lmss/m/n/6 0.2415562|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 47--47
- []|\TU/lmss/m/n/6 0.1009568|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 48--48
- []|\TU/lmss/m/n/6 0.0167264|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 48--48
- []|\TU/lmss/m/n/6 0.0436845|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 48--49
- []|\TU/lmss/m/n/6 0.4394279|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 49--49
- []|\TU/lmss/m/n/6 0.3985100|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 49--49
- []|\TU/lmss/m/n/6 0.0962760|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 50--50
- []|\TU/lmss/m/n/6 0.0000348|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 50--50
- []|\TU/lmss/m/n/6 0.2098125|
- []
-
-
-Overfull \hbox (1.04834pt too wide) in paragraph at lines 50--51
- []|\TU/lmss/m/n/6 0.5872074|
- []
-
-) [27
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [28
-
-] [29
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [30
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [31
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [32
-
-] [33
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/virtusentella-1.pdf, id=319, 712.6625pt x
- 235.88126pt>
-File: bLogistic_slides_files/figure-beamer/virtusentella-1.pdf Graphic file (ty
-pe pdf)
-<use bLogistic_slides_files/figure-beamer/virtusentella-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/virtusentella-1.p
-df  used on input line 11.
-(luatex.def)             Requested size: 342.2916pt x 113.2937pt.
-) [34
-
-<./bLogistic_slides_files/figure-beamer/virtusentella-1.pdf>] [35
-
-] [36
-
-] [37
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [38
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [39
-
-] [40
-
-] [41
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [42
-
-] [43
-
-] [44
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [45
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (93.45464pt too wide) in paragraph at lines 23--23
-[]\TU/lmtt/m/n/10 ## -- Column specification -----------------------------------
----------------------[] 
- []
-
-) [46
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [47
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [48
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [49
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/bLogistic-28-1.pdf, id=458, 706.64pt x 24
-2.9075pt>
-File: bLogistic_slides_files/figure-beamer/bLogistic-28-1.pdf Graphic file (typ
-e pdf)
-<use bLogistic_slides_files/figure-beamer/bLogistic-28-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-28-1.pd
-f  used on input line 16.
-(luatex.def)             Requested size: 342.29947pt x 117.66544pt.
-) [50
-
-<./bLogistic_slides_files/figure-beamer/bLogistic-28-1.pdf>]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slide
-s.vrb)
-Overfull \vbox (94.20631pt too high) detected at line 1849
- []
-
-[51
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [52
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [53
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [54
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [55
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (123.43752pt too high) detected at line 2019
- []
-
-[56
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [57
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/unnamed-chunk-12-1.pdf, id=531, 706.64pt 
-x 170.6375pt>
-File: bLogistic_slides_files/figure-beamer/unnamed-chunk-12-1.pdf Graphic file 
-(type pdf)
-<use bLogistic_slides_files/figure-beamer/unnamed-chunk-12-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-12-
-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 82.65753pt.
-) [58
-
-<./bLogistic_slides_files/figure-beamer/unnamed-chunk-12-1.pdf>] [59
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (19.87581pt too wide) in paragraph at lines 29--29
-[]\TU/lmtt/m/n/10.95 ## -- Column specification --------------------------------
-----[] 
- []
-
-
-Overfull \hbox (83.11205pt too wide) in paragraph at lines 29--29
-[]\TU/lmtt/m/n/10.95 ## i Use `spec()` to retrieve the full column specification
- for this data.[] 
- []
-
-
-Overfull \hbox (140.59953pt too wide) in paragraph at lines 29--29
-[]\TU/lmtt/m/n/10.95 ## i Specify the column types or set `show_col_types = FALS
-E` to quiet this message.[] 
- []
-
-) [60
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (9835.07863pt too high) detected at line 2838
- []
-
-[61
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (10063.67249pt too high) detected at line 3629
- []
-
-[62
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (37.12206pt too wide) in paragraph at lines 21--21
-[]\TU/lmtt/m/n/10.95 ## Error in if (trace) {: argument is not interpretable as logical[] 
- []
-
-) [63
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [64
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [65
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [66
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [67
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-Overfull \hbox (30.45464pt too wide) in paragraph at lines 769--769
-[]\TU/lmtt/m/n/10 ## Warning: Returning more (or less) than 1 row per `summarise
-()` group[] 
- []
-
-)
-Overfull \vbox (8963.98672pt too high) detected at line 4593
- []
-
-[68
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (0.76324pt too high) detected at line 4622
- []
-
-[69
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (3.2051pt too high) detected at line 4651
- []
-
-[70
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [71
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [72
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/unnamed-chunk-17-1.pdf, id=664, 706.64pt 
-x 315.1775pt>
-File: bLogistic_slides_files/figure-beamer/unnamed-chunk-17-1.pdf Graphic file 
-(type pdf)
-<use bLogistic_slides_files/figure-beamer/unnamed-chunk-17-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-17-
-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 152.67334pt.
-) [73
-
-<./bLogistic_slides_files/figure-beamer/unnamed-chunk-17-1.pdf>] [74
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (9984.9196pt too high) detected at line 5483
- []
-
-[75
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (775.96275pt too high) detected at line 5569
- []
-
-[76
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [77
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [78
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb)
-Overfull \vbox (15.02611pt too high) detected at line 5664
- []
-
-[79
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [80
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [81
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [82
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf, id=753, 706.64pt x 27
-9.0425pt>
-File: bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf Graphic file (typ
-e pdf)
-<use bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-66-1.pd
-f  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 135.16939pt.
-) [83
-
-<./bLogistic_slides_files/figure-beamer/bLogistic-66-1.pdf>]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slide
-s.vrb) [84
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf, id=776, 706.64pt x 28
-3.0575pt>
-File: bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf Graphic file (typ
-e pdf)
-<use bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/bLogistic-68-1.pd
-f  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 137.11426pt.
-) [85
-
-<./bLogistic_slides_files/figure-beamer/bLogistic-68-1.pdf>]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slide
-s.vrb) [86
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb) [87
-
-]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_slides.vrb
-<bLogistic_slides_files/figure-beamer/unnamed-chunk-20-1.pdf, id=807, 706.64pt 
-x 315.1775pt>
-File: bLogistic_slides_files/figure-beamer/unnamed-chunk-20-1.pdf Graphic file 
-(type pdf)
-<use bLogistic_slides_files/figure-beamer/unnamed-chunk-20-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-20-
-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 152.67334pt.
-) [88
-
-<./bLogistic_slides_files/figure-beamer/unnamed-chunk-20-1.pdf>]
-\openout4 = bLogistic_slides.vrb
- (./bLogistic_s
-lides.vrb
-<bLogistic_slides_files/figure-beamer/unnamed-chunk-21-1.pdf, id=822, 706.64pt 
-x 315.1775pt>
-File: bLogistic_slides_files/figure-beamer/unnamed-chunk-21-1.pdf Graphic file 
-(type pdf)
-<use bLogistic_slides_files/figure-beamer/unnamed-chunk-21-1.pdf>
-Package luatex.def Info: bLogistic_slides_files/figure-beamer/unnamed-chunk-21-
-1.pdf  used on input line 9.
-(luatex.def)             Requested size: 342.29947pt x 152.67334pt.
-) [89
-
-<./bLogistic_slides_files/figure-beamer/unnamed-chunk-21-1.pdf>]
 \tf@nav=\write6
 
-\openout6 = bLogistic_slides.nav
+\openout6 = mapping_slides.nav
 \tf@toc=\write7
 
-\openout7 = bLogistic_slides.toc
+\openout7 = mapping_slides.toc
 \tf@snm=\write8
 
-\openout8 = bLogistic_slides.snm
-(./bLogistic_slides.aux))
+\openout8 = mapping_slides.snm
+(./mapping_slides.aux))
 
 Here is how much of LuaTeX's memory you used:
- 35029 strings out of 477805
- 596549,1373583 words of node,token memory allocated
- 2881 words of node memory still in use:
-   51 hlist, 13 vlist, 12 rule, 5 disc, 7 local_par, 88 glue, 17 kern, 29 penalt
-y, 39 glyph, 104 attribute, 73 glue_spec, 104 attribute_list, 1 shape, 5 write, 
-1 user_defined, 1 pdf_dest, 38 pdf_colorstack, 1 pdf_setmatrix, 1 pdf_save, 1 pd
-f_restore nodes
-   avail lists: 1:5,2:18151,3:1022,4:412,5:343,6:195,7:55306,8:20,9:11640,10:17,
-11:1435
- 53236 multiletter control sequences out of 65536+600000
- 54 fonts using 12846735 bytes
- 128i,16n,121p,1012b,675s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texmf/fonts/opentype/public/lm/lmsans10-bold.otf></usr/share/texmf/f
-onts/opentype/public/lm-math/latinmodern-math.otf></usr/share/texmf/fonts/openty
-pe/public/lm/lmmono12-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lms
-ans9-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmmono9-regular.otf>
-</usr/share/texmf/fonts/opentype/public/lm/lmmono10-italic.otf></usr/share/texmf
-/fonts/opentype/public/lm-math/latinmodern-math.otf></usr/share/texmf/fonts/open
-type/public/lm/lmmono8-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lm
-mono10-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-oblique.o
-tf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-regular.otf></usr/share/t
-exmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf/fonts/openty
-pe/public/lm/lmsans12-regular.otf>
-Output written on bLogistic_slides.pdf (89 pages, 271529 bytes).
+ 32367 strings out of 477805
+ 125086,1144653 words of node,token memory allocated
+ 2554 words of node memory still in use:
+   43 hlist, 13 vlist, 11 rule, 1 disc, 6 local_par, 81 glue, 14 kern, 28 penalt
+y, 30 glyph, 96 attribute, 68 glue_spec, 96 attribute_list, 1 shape, 5 write, 1 
+user_defined, 1 pdf_dest, 38 pdf_colorstack nodes
+   avail lists: 1:3,2:606,3:1502,4:406,5:238,6:85,7:3753,8:12,9:501,10:15,11:56
+ 51415 multiletter control sequences out of 65536+600000
+ 48 fonts using 12078687 bytes
+ 128i,16n,121p,1010b,513s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texmf/fonts/opentype/public/lm/lmmono12-regular.otf></usr/share/texm
+f/fonts/opentype/public/lm/lmmono9-regular.otf></usr/share/texmf/fonts/opentype/
+public/lm/lmmono10-italic.otf></usr/share/texmf/fonts/opentype/public/lm/lmmono1
+0-regular.otf></usr/share/texmf/fonts/opentype/public/lm/lmsans10-regular.otf></
+usr/share/texmf/fonts/opentype/public/lm/lmsans8-regular.otf></usr/share/texmf/f
+onts/opentype/public/lm/lmsans12-regular.otf>
+Output written on mapping_slides.pdf (18 pages, 60655 bytes).
 
-PDF statistics: 929 PDF objects out of 1000 (max. 8388607)
- 752 compressed objects within 8 object streams
- 267 named destinations out of 1000 (max. 131072)
- 36 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 226 PDF objects out of 1000 (max. 8388607)
+ 172 compressed objects within 2 object streams
+ 54 named destinations out of 1000 (max. 131072)
+ 26 words of extra memory for PDF output out of 10000 (max. 100000000)
 

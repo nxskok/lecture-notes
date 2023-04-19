@@ -224,9 +224,8 @@ summary(rat2.1)
 
 ## Predicted survival probs
 ```{r bLogistic-13 }
-# p <- predict(rat2.1, type = "response")
-# cbind(rat2, p)
-cbind(predictions(rat2.1))
+new <- datagrid(model = rat2.1, dose = 0:5)
+cbind(predictions(rat2.1, newdata = new))
 ```
  
 
@@ -234,7 +233,7 @@ cbind(predictions(rat2.1))
 
 ```{r, fig.height=3}
 # plot_cap(rat2.1, condition = "dose", draw = FALSE)
-cbind(predictions(rat2.1)) %>% 
+cbind(predictions(rat2.1, newdata = new)) %>% 
   select(estimate, conf.low, conf.high, dose) %>% 
   ggplot(aes(x = dose, y = estimate, ymin = conf.low, ymax = conf.high)) + geom_line() +
   geom_ribbon(alpha = 0.3)
@@ -286,7 +285,6 @@ sepsis
 
 ```{r}
 sepsis %>% 
-  # mutate(across(-age, ~factor(.))) -> sepsis
   mutate(across(-age, \(x) factor(x))) -> sepsis
 ```
 
@@ -964,15 +962,12 @@ plot_cap(brands.1, condition = c("age", "brand", "sex"),
          type = "probs", draw = FALSE)  %>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
-  geom_line() 
-
-
--> g
+  geom_line() -> g
 ```
 
 ## The graph
 
-```{r, fig.height=2.5}
+```{r, fig.height=4.5}
 g
 ```
   
@@ -1122,7 +1117,7 @@ brands %>% filter(age == 32)
 `aes` to plot data.
 
 ```{r bLogistic-65, fig.height=3.2}
-g + geom_point(data = brands, aes(y = proportion)) -> g1
+g + geom_point(data = brands, aes(x = age, y = proportion, colour = sex), inherit.aes = FALSE) -> g1
 ```
 
      
@@ -1157,7 +1152,8 @@ based on a lot of people (in `Freq`).
 ```{r bLogistic-67 }
 g + geom_point(
     data = brands,
-    aes(y = proportion, size = Freq)
+    aes(x = age, y = proportion, colour = sex, size = Freq),
+    inherit.aes = FALSE
   ) -> g2
 ```
 \normalsize
@@ -1166,7 +1162,7 @@ g + geom_point(
 
 
 ## The plot
-```{r bLogistic-68, fig.height=2.5}
+```{r bLogistic-68, fig.height=4}
 g2
 ```
 

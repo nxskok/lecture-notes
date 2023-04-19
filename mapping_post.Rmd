@@ -5,11 +5,13 @@
 - The leaflet package is the easiest way to draw maps in R.
 - Install these two packages, with two familiar ones:
 
-```{r mapping-1, eval=FALSE}
+```{r mapping-1}
 library(tmaptools)
 library(leaflet)
 library(tidyverse)
 library(conflicted)
+conflicts_prefer(dplyr::mutate)
+conflicts_prefer(dplyr::arrange)
 ```
 
 
@@ -58,9 +60,6 @@ d
 
 ```{r}
 write_rds(d, "d.rds")
-```
-
-```{r}
 d <- read_rds("d.rds")
 d
 ```
@@ -151,8 +150,6 @@ ontario3
 - and draw map
 
 ```{r mapping-14}
-divisions
-
 pal <- colorFactor("Set1", divisions$division)
 
 ontario3 %>% left_join(divisions) %>% 

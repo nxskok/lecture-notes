@@ -45,7 +45,7 @@ check_cmdstan_toolchain()
 and then:
 
 ```{r rstan-6, eval=FALSE}
-install_cmdstan(cores = 2)
+install_cmdstan(cores = 4)
 ```
 
 If you happen to know how many cores (processors) your computer has, insert the appropriate number. (My laptop has 4 and my desktop 6.)
@@ -137,6 +137,7 @@ model {
   x ~ poisson(lambda);
 }
 ```
+poisson1 <- cmdstan_model("poisson1.stan")
 
 ## Components of Stan code: data and parameters 
 
@@ -158,12 +159,14 @@ parameters {
 
 ```{r rstan-8, message=FALSE}
 poisson1 <- cmdstan_model("poisson1.stan")
+poisson1
 ```
 
 - set up data
 
 ```{r rstan-9}
 poisson1_data <- list(x = x)
+poisson1_data
 ```
 
 - sample
@@ -186,7 +189,7 @@ poisson1_fit
 
 - This summarizes the posterior distribution of $\lambda$
 - the posterior mean is 3.19
-- with a 90% posterior interval of 2.24 to 4.31.
+- with a 90% posterior interval of 2.25 to 4.33.
 - The probability that $\lambda$ is between these two values really is 90%.
 
 ## Making the code more general
@@ -223,6 +226,7 @@ poisson2
 
 ```{r rstan-13}
 poisson2_data <- list(x = x, n = length(x), a = 1.1, b = 6)
+poisson2_data
 ```
 
 - sample again
