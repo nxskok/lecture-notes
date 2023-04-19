@@ -1,8 +1,17 @@
 My packages and conflicts:
 
 ```{r packages-1, echo=F, message=F}
+<<<<<<< HEAD
+library(tidyverse)
+library(smmr)
+library(MASS)
+library(nnet)
+library(survival)
+library(survminer)
+=======
 library(bootstrap)
 library(broom)
+>>>>>>> a7775ddfbdbb78863f6eee8bc832fd2222febf05
 library(car)
 library(conflicted)
 library(ggbiplot) # install with devtools::install_github("vqv/ggbiplot")
