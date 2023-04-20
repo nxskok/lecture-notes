@@ -5,7 +5,9 @@
 - The leaflet package is the easiest way to draw maps in R.
 - Install these two packages, with two familiar ones:
 
+\small
 ```{r mapping-1}
+#| message = FALSE
 library(tmaptools)
 library(leaflet)
 library(tidyverse)
@@ -13,7 +15,7 @@ library(conflicted)
 conflicts_prefer(dplyr::mutate)
 conflicts_prefer(dplyr::arrange)
 ```
-
+\normalsize
 
 ## Hockey league map
 
@@ -21,12 +23,14 @@ The Ontario hockey divisions (the last example for cluster analysis) came with a
 
 - reload the Ontario road distances
 
+\small
 ```{r mapping-2}
 my_url <-
   "http://ritsokiguess.site/datafiles/ontario-road-distances.csv"
 # my_url <- "ontario-road-distances.csv"
 ontario <- read_csv(my_url)
 ```
+\normalsize
 
 ## Ontario road distances (some)
 
@@ -39,12 +43,14 @@ ontario
 
 - and append province ("ON") for reasons shortly to become clear:
 
+\small
 ```{r mapping-4}
 tibble(place = ontario$place) %>% 
   mutate(prov = "ON") %>% 
   unite(place1, c(place, prov), sep = " ") -> ontario2
 ontario2
 ```
+\normalsize
 
 ## Geocode 1/2
 
@@ -52,17 +58,23 @@ ontario2
 - Save the geocoded places.
 
 ```{r mapping-5}
+#| eval = FALSE
 ontario2 %>% 
   rowwise() %>% 
   mutate(ll = list(geocode_OSM(place1))) -> d
-d
 ```
 
 ```{r}
-write_rds(d, "d.rds")
+#| echo = FALSE
+# write_rds(d, "d.rds")
 d <- read_rds("d.rds")
 ```
 
+\small
+```{r}
+d
+```
+\normalsize
 
 ## Geocode 2/2
 
@@ -79,12 +91,15 @@ ontario3
 
 - finally:
 
+
 ```{r mapping-7}
 leaflet(data = ontario3) %>% 
   addTiles() %>% 
   addCircleMarkers(lng = ~x, lat = ~y) -> locs
-locs
 ```
+
+
+![](Screenshot_2023-04-20_13-32-59.png){width=60%}
 
 
 
@@ -155,16 +170,14 @@ ontario3 %>% left_join(divisions) %>%
   select(place, x, y, division) %>% 
   leaflet() %>% 
   addTiles() %>% 
-  addCircleMarkers(lng = ~x, lat = ~y, color = ~pal(division)) -> divmap
+  addCircleMarkers(lng = ~x, lat = ~y, 
+                   color = ~pal(division)) -> divmap
 ```
 
 ## The map with divisions
 
-```{r mapping-15}
-divmap
-```
 
-
+![](Screenshot_2023-04-20_13-40-05.png)
 
 ## Original seven clusters
 
@@ -176,16 +189,12 @@ ontario3 %>% left_join(divisions) %>%
   select(place, x, y, cluster) %>% 
   leaflet() %>% 
   addTiles() %>% 
-  addCircleMarkers(lng = ~x, lat = ~y, color = ~pal(cluster)) -> divmap
+  addCircleMarkers(lng = ~x, lat = ~y, 
+                   color = ~pal(cluster)) -> divmap
 ```
 
 
 ## Map with seven clusters
 
-```{r mapping-17}
-divmap
-```
 
-
-
-
+![](Screenshot_2023-04-20_13-42-46.png)

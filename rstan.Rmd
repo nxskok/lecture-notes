@@ -137,7 +137,6 @@ model {
   x ~ poisson(lambda);
 }
 ```
-poisson1 <- cmdstan_model("poisson1.stan")
 
 ## Components of Stan code: data and parameters 
 
@@ -159,8 +158,15 @@ parameters {
 
 ```{r rstan-8, message=FALSE}
 poisson1 <- cmdstan_model("poisson1.stan")
+```
+
+\scriptsize
+
+```{r}
 poisson1
 ```
+
+\normalsize
 
 - set up data
 
@@ -218,27 +224,30 @@ x ~ poisson(lambda);
 
 ```{r rstan-12, message=FALSE}
 poisson2 <- cmdstan_model("poisson2.stan")
-poisson2
 ```
 
 
 - set up the data again including the new things we need:
+
+\footnotesize
 
 ```{r rstan-13}
 poisson2_data <- list(x = x, n = length(x), a = 1.1, b = 6)
 poisson2_data
 ```
 
-- sample again
+\normalsize
 
-```{r rstan-14, results="hide"}
+
+## Sample again. Output should be the same (to within randomness)
+
+```{r rstan-15}
+#| results = "hide",
+#| message = FALSE
 poisson2_fit <- poisson2$sample(data = poisson2_data)
 ```
 
-
-## output should be the same (to within randomness)
-
-```{r rstan-15}
+```{r}
 poisson2_fit
 ```
 
@@ -278,6 +287,11 @@ poisson2_draws
 poisson2_draws %>% 
   rowwise() %>% 
   mutate(xsim = rpois(1, lambda)) -> d
+```
+
+## The simulated posterior distribution (in `xsim`)
+
+```{r}
 d
 ```
 

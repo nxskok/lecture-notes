@@ -51,12 +51,14 @@ b 9 22
 
 
 ## Packages
-`tidyverse` and `broom`:
+
 ```{r bAncova-1}
 library(tidyverse)
 library(broom)
 library(marginaleffects)
 ```
+
+the last of these for predictions.
 
 ## Read in data
 
@@ -69,7 +71,7 @@ prepost %>% sample_n(9) # randomly chosen rows
 
 
 ## Making a plot
-```{r ancova-plot, fig.height=3.5}
+```{r ancova-plot, fig.height=4.5}
 ggplot(prepost, aes(x = before, y = after, colour = drug)) +
   geom_point()
 ```
@@ -125,7 +127,8 @@ summary(prepost)
 ```
 
 ```{r}
-new <- datagrid(before = c(9.75, 14, 21.25), drug = c("a", "b"), model = prepost.1)
+new <- datagrid(before = c(9.75, 14, 21.25), 
+                drug = c("a", "b"), model = prepost.1)
 ```
 
 ## and then
@@ -165,12 +168,11 @@ anova(prepost.2)
 
 ## Predictions
 
-\tiny
 ```{r}
-predictions(prepost.2, variables = c("before", "drug"))
+cbind(predictions(prepost.2, newdata = new)) %>% 
+  select(drug, before, estimate)
 ```
 
-\normalsize
 
 ## Plot of predicted values
 

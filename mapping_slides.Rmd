@@ -13,6 +13,7 @@ output:
     colortheme: "dove"
 ---
 
+
 ```{r}
 #| echo = FALSE
 tar_load(mapping)
