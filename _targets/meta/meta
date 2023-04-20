@@ -11,8 +11,8 @@ bDiscrim|stem|9d091a32ffc1ee94|37301cfdd8e3b632|ef46db3751d8e999|-1240917588|bDi
 bDiscrim_slides|stem|970bb0c643d094a0|a3e9f9b211b2617a|06419f4c2560c707|504754789|bDiscrim_slides.pdf*bDiscrim_slides.Rmd|t19353.7907569712s|e7e182f86fe83a04|213108|file|local|vector|||14.1||
 bFactor|stem|272a55b583a39190|6bdc79038f64d204|ef46db3751d8e999|1800469349|bFactor.Rmd|t19353.8218875362s|c4db846c129b27ee|19851|file|local|vector|||0.818||
 bFactor_slides|stem|fe089d9c2003b556|dbe487ea4cc4ad03|4dc0a6ea8a44f87d|1220692697|bFactor_slides.pdf*bFactor_slides.Rmd|t19353.8232036353s|5578ebb1319d3edb|466815|file|local|vector|||78.175|Removed 36 rows containing missing values geom_point.. Removed 36 rows containing missing values geom_path.|
-bLogistic|stem|dddf9d74480e11c8|80a7bca8d74d72a4|ef46db3751d8e999|1369494061|bLogistic.Rmd|t19467.6985095856s|a38800500c4ac12d|21101|file|local|vector|||1.607||
-bLogistic_slides|stem|8a5d9a797d5dd832|f28efed9069f0cc3|8e06f475abf2a01e|614312738|bLogistic_slides.pdf*bLogistic_slides.Rmd|t19467.6985121782s|8a11f714c9acbb0c|271867|file|local|vector|||75.449|Package microtype Warning Unable to apply patch footnote on input line 158.|
+bLogistic|stem|25b579528eb23787|80a7bca8d74d72a4|ef46db3751d8e999|1369494061|bLogistic.Rmd|t19467.8589103181s|24ba2aaaa2671b32|18871|file|local|vector|||0.608||
+bLogistic_slides|stem|acbf635efa8f3c2e|f28efed9069f0cc3|97eeae88b58c742c|614312738|bLogistic_slides.pdf*bLogistic_slides.Rmd|t19467.8591390693s|ea2b4f5770eaad78|223083|file|local|vector|||16.558||
 bManova|stem|a9982e4c85289ac3|51320586d1a3da6c|ef46db3751d8e999|-1420451043|bManova.Rmd|t19353.7199876991s|4bc245882df05e3c|8209|file|local|vector|||0.969||
 bManova_slides|stem|e0fd6fd6e8e84232|2a492f816968f060|5eb280cd17cb36f9|-2110809328|bManova_slides.pdf*bManova_slides.Rmd|t19379.7149084049s|8a4ec4dc6c416117|136100|file|local|vector|||10.847||
 bMultiway|stem|ddd55d00497c8ed1|fe318f7c8a5299b5|ef46db3751d8e999|-1740502699|bMultiway.Rmd|t18800.6491186799s|7442dc48055f419e|14640|file|local|vector|||0||
