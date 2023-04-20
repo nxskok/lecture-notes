@@ -77,14 +77,13 @@ they depend on whatever is significant, and draw plot.
 * Install packages `survival` and `survminer` if not done. 
 
 * Load `survival`, `survminer`,
-`broom` and `tidyverse`, also `marginaleffects` to help with predictions:
+`broom` and `tidyverse`:
 
 ```{r bSurvival-1, eval=F}
 library(tidyverse)
 library(survival)
 library(survminer)
 library(broom)
-library(marginaleffects)
 ```
 
 
@@ -134,12 +133,6 @@ dance.1 <- coxph(mth ~ Treatment + Age, data = dance)
 
 ## Output looks a lot like regression
 
-```{r}
-#| include = FALSE
-options(width = 120)
-```
-
-
 \scriptsize
 ```{r bSurvival-6}
 summary(dance.1)
@@ -164,8 +157,8 @@ predict survival time.
 
 * With regression, usually plot residuals against fitted values.
 
-* Not quite same here (nonlinear model), but "martingale
-residuals" should have no pattern vs.\ "linear predictor".
+* Not quite same here (nonlinear model), but ``martingale
+residuals'' should have no pattern vs.\ "linear predictor".
 
 * `ggcoxdiagnostics` from package `survminer`
 makes plot, to which we add smooth. If smooth trend more or less
@@ -189,18 +182,16 @@ ggcoxdiagnostics(dance.1) + geom_smooth(se = F)
 ## Predicted survival probs 
 - The function we use is called
 `survfit`, though actually works rather like
-`predictions`. 
+`predict`. 
 - First create a data frame of values to predict from. We'll do all
 combos of ages 20 and 40, treatment and not, using
-`datagrid` to get all the combos:
+`crossing` to get all the combos:
 
 \small
 ```{r bSurvival-8}
-#| warning = FALSE
 treatments <- c(0, 1)
 ages <- c(20, 40)
-dance.new <- datagrid(Treatment = treatments, Age = ages, 
-                      model = dance.1)
+dance.new <- crossing(Treatment = treatments, Age = ages)
 dance.new
 ```
 \normalsize 
@@ -208,9 +199,13 @@ dance.new
 ## The predictions  
 One prediction *for each time* for each combo of age and treatment in `dance.new`:
 
-```{r, include=FALSE}
-options(width = 120)
+```{r bSurvival-9, echo=F}
+options(width = 80)
+url <- "http://ritsokiguess.site/datafiles/dancing.txt"
+dance <- read_table(url)
+dance %>% mutate(mth = Surv(Months, Quit)) -> dance
 ```
+
 
 
 \footnotesize
@@ -238,7 +233,7 @@ vs.\ not)
 
 
 ```{r bSurvival-11 }
-g <- ggsurvplot(s, conf.int = FALSE)
+g <- ggsurvplot(s, conf.int = F)
 ```
 
 ## "Strata" (groups)
@@ -256,7 +251,7 @@ dance.new
 
 
 ## Plotting survival probabilities 
-```{r survival-plot}
+```{r survival-plot, fig.height=3.8}
 g
 ```
 
@@ -339,7 +334,7 @@ summary(lung)
 lung %>% drop_na() -> lung.complete
 lung.complete %>%
   select(meal.cal:wt.loss) %>%
-  slice(1:8)
+  slice(1:10)
 ```
 \normalsize
 
@@ -483,10 +478,9 @@ anova(lung.3, lung.2)
 
 \footnotesize
 ```{r bSurvival-27}
-#| warning = FALSE
 sexes <- c(1, 2)
 ph.ecogs <- 0:3
-lung.new <- datagrid(sex = sexes, ph.ecog = ph.ecogs, model = lung.3)
+lung.new <- crossing(sex = sexes, ph.ecog = ph.ecogs)
 lung.new
 ```
 \normalsize
@@ -496,12 +490,12 @@ lung.new
 ## Making the plot 
 ```{r bSurvival-29, fig.height=3.8}
 s <- survfit(lung.3, newdata = lung.new, data = lung)
-g <- ggsurvplot(s, conf.int = FALSE)
+g <- ggsurvplot(s, conf.int = F)
 ```
  
 ## The plot
 
-```{r bSurvival-30}
+```{r bSurvival-30, fig.height=3.8}
 g
 ```
 
