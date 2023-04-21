@@ -23,8 +23,8 @@ bootstrap_R_slides|stem|de8c1ce05a4caba5|a596eb0d402cb087|c64b7d956aba4096|31757
 bootstrap_slides|stem|6d3e911587bd72ff|d83cfa9798996713|c1b89123d2c63c03|2071402768|bootstrap_slides.pdf*bootstrap_slides.Rmd*bootstrap_slides_files|t19379.7151062751s|3dd413d319aac42a|223515|file|local|vector|||17.088|package cmdstanr was built under R version 4.3.0|
 bPrincomp|stem|ed5e8e9e77eeeb72|1896bf592adb2ccf|ef46db3751d8e999|984656558|bPrincomp.Rmd|t19353.9270228944s|4929e6441378af86|13752|file|local|vector|||0||
 bPrincomp_slides|stem|3d20a136381d1b2e|a9aab2cb87ba88c9|2c6a668904a4e9c4|807965496|bPrincomp_slides.pdf*bPrincomp_slides.Rmd|t19353.9337046912s|dd10b622a6353d73|172718|file|local|vector|||12.426||
-bProfile|stem|b0ba19d42844a57e|d818027acc7dc23c|ef46db3751d8e999|-1401843951|bProfile.Rmd|t19454.0500997536s|583a07a5a6567962|16400|file|local|vector|||0||
-bProfile_slides|stem|e1f9a65f8b2e9fac|fb35b7d0b491be6c|a9e86fb1cec8c7b9|-2094492600|bProfile_slides.pdf*bProfile_slides.Rmd|t19467.6985123634s|af62d7731b09f161|160717|file|local|vector|||41.482|Package microtype Warning Unable to apply patch footnote on input line 158.|
+bProfile|stem|dc1ca24726eaa11c|d818027acc7dc23c|ef46db3751d8e999|-1401843951|bProfile.Rmd|t19468.0572255107s|f497cddeb2fc01e7|15413|file|local|vector|||1.944||
+bProfile_slides|stem|f51432c548f79761|fb35b7d0b491be6c|91a15b2f1a4a6224|-2094492600|bProfile_slides.pdf*bProfile_slides.Rmd|t19468.0576781523s|67af931c283fd009|148246|file|local|vector|||18.301||
 bRegression|stem|36b15ee2580b5aea|27013a9507446728|ef46db3751d8e999|1707664056|bRegression.Rmd|t19379.7262887239s|7315fa1bcfb675f7|21240|file|local|vector|||0.776||
 bRegression_slides|stem|6bbfa8336ccac3ae|33bf5e23e66ec731|0de437ab7cc88947|-444216599|bRegression_slides.pdf*bRegression_slides.Rmd|t19379.7265642812s|ce4dda7f5f3f5a93|434185|file|local|vector|||16.974||
 bSurvival|stem|fa9310afc44d0fba|f43d0e37879b9518|ef46db3751d8e999|-54375285|bSurvival2.Rmd|t19380.0725243554s|9831d6609e61e460|5090|file|local|vector|||0.76||

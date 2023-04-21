@@ -81,13 +81,18 @@ times <- colnames(response)
 times
 times.df <- data.frame(times=factor(times))
 times.df
+```
+ 
+\normalsize
+
+## Fitting the model
+
+```{r}
 dogs.2 <- Manova(dogs.1,
   idata = times.df,
   idesign = ~times
 )
 ```
- 
-\normalsize
 
 
 ## The output (some; there is a lot)
@@ -119,7 +124,7 @@ summary(dogs.2)
 - The thing that decides whether the univariate tests apply is called "sphericity".
 - This holds if the outcomes have equal variance (to each other) and have the same (positive) correlation across subjects.
 - Tested using Mauchly's test (part of output)
-- If sphericity rejected, there are adjustments to the univariate P-values due to Huynh-Feldt and Greenhouse-Geisser. Huynh-Feldt better if responses not actually normal (safer). Or use multivariate test.
+- If sphericity rejected, there are adjustments to the univariate P-values due to Huynh-Feldt and Greenhouse-Geisser. Huynh-Feldt better if responses not actually normal (safer).
 
 ## Univariate tests
 
@@ -140,24 +145,14 @@ summary(dogs.2)$univariate.tests
 - Therefore any lack of sphericity does not affect our conclusion: there is an interaction between drug and time
 - ie that the effect of time on log-histamine is different for the two drugs.
 
-## The multivariate test for interaction
-
-\tiny
-
-```{r}
-summary(dogs.2)$multivariate.tests$`drug:times`
-```
-
-\normalsize
 
 ## Comments
 
-- The (appropriately adjusted) univariate test and the multivariate test should give similar results.
-- Here, univariate with Huynh-Feldt P-value was 0.00073, multivariate was 0.0200, rather different but both significant.
+- Here, univariate test with Huynh-Feldt correction to P-value for interaction was 0.00073.
 - Significant interaction *is* the conclusion here.
 - If the interaction had not been significant:
   - cannot remove interaction with time
-  - so look at univariate (better, especially if adjusted for sphericity) or multivariate tests of main effects in *this* model
+  - so look at univariate (better, especially if adjusted for sphericity) tests of main effects in *this* model
 
 ## Next
 
@@ -263,7 +258,7 @@ value originally came from labelled by `timex`, and then:
 ## Interaction plot
 
 \small
-```{r bProfile-10, fig.height=2.5}
+```{r bProfile-10, fig.height=3.5}
 ggplot(dogs.long, aes(x = time, y = lh, 
                       colour = drug, group = drug)) +
   stat_summary(fun = mean, geom = "point") +
@@ -323,23 +318,9 @@ summary(dogs.2)$univariate.tests
 
 - sphericity: no problem (P-value 0.25)
 - univariate test for interaction no longer significant (P-value 0.082)
-- Huynh-Feldt adjusted P-value for interaction very similar, 0.094 (adjustment not really worth doing)
 - look at main effects:
   - strong significance of time, even after taking out time 0
   - actually *not* significant drug effect, despite interaction plot
-
-## Multivariate tests, all at once
-
-\small
-
-```{r bProfile-12, error=TRUE}
-dogs.2
-```
-
-\normalsize 
- 
-Same conclusions as for univariate tests, though with bigger P-values.
-
 
 
 ## Is the non-significant drug effect reasonable?
@@ -354,29 +335,18 @@ labelling observations by drug: "spaghetti plot".
 
 * and connecting measurements for each *dog* by lines.
 
-* This time, we want `group=dog` (want the measurements for each
-*dog* joined by lines), but `colour=drug`:
+* This time, we want `group = dog` (want the measurements for each
+*dog* joined by lines), but `colour = drug`:
 ```{r platanias}
-g <- ggplot(dogs.long, aes(
-  x = time, y = lh,
-  colour = drug, group = dog
-)) +
-  geom_point() + geom_line()
+ggplot(dogs.long, aes(x = time, y = lh,
+  colour = drug, group = dog)) +
+  geom_point() + geom_line() -> g
 ```
-
-```{r}
-ggplot(dogs.long, aes(
-  x = time, y = lh,
-  colour = drug, group = dog
-)) +
-  geom_point() + geom_line()
-```
-   
 
 
 
 ## The spaghetti plot
-```{r hoverla,fig.height=2.5}
+```{r hoverla,fig.height=4.5}
 g
 ```
 
@@ -387,8 +357,8 @@ g
 
 
 * For each dog over time, there is a strong increase and gradual
-decrease in log-histamine. This
-explains the significant time effect.
+decrease in log-histamine. The gradual decrease explains 
+the significant time effect after we took out time 0.
 
 * The pattern is more or less the same for each dog, regardless
 of drug. This explains the non-significant interaction.
@@ -579,21 +549,6 @@ options(width = w)
 - The three-way interaction is significant
   - the effect of diet on pulse rate over time is different for the different exercise types
 
-## Multivariate very similar
-
-\scriptsize
-```{r bProfile-23 }
-exercise.2
-```
-\normalsize
-
-
-
-* Three-way interaction significant, so cannot remove anything.
-
-* Pulse rate depends on diet and exercise type *combination*,
-and *that* is different for each time.
-
 
 
 ## Making some graphs
@@ -704,17 +659,6 @@ summary(runners.2)$univariate.tests
 - Interaction still significant
   - dependence of pulse rate on time still different for the two diets
 
-## Multivariate results (comparison)
-
-
-
-\footnotesize
-```{r bProfile-28 }
-runners.2
-```
-\normalsize
-   
-Same.
 
 ## How is the effect of diet different over time?
 
