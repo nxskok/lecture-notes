@@ -160,18 +160,24 @@ $\min(2,2-1)=1$.
 ## Getting LD scores
 Feed output from LDA into `predict`:
 
+\scriptsize
+
 ```{r bDiscrim-6 }
-hilo.pred <- predict(hilo.1)
+p <- predict(hilo.1)
+hilo.2 <- cbind(hilo, p)
+hilo.2
 ```
 
- 
+\normalsize
 
-Component `x` contains LD score(s), here in descending order:
+## LD1 scores in order
+
+Most positive LD1 score is most obviously low fertilizer, most negative is most obviously high:
 
 \footnotesize
 ```{r bDiscrim-7}
-d <- cbind(hilo, hilo.pred$x) %>% arrange(desc(LD1))
-d
+hilo.2 %>% select(fertilizer, yield, weight, LD1) %>% 
+  arrange(desc(LD1))
 ```
 \normalsize
  
@@ -181,34 +187,12 @@ High fertilizer have yield and weight high, negative LD1 scores.
 ## Plotting LD1 scores
 With one LD score, plot against (true) groups, eg. boxplot: 
 ```{r bDiscrim-8, fig.height=3.4}
-ggplot(d, aes(x = fertilizer, y = LD1)) + geom_boxplot()
+ggplot(hilo.2, aes(x = fertilizer, y = LD1)) + geom_boxplot()
 ```
 
    
 
-
-## Potentially misleading
-
-
-
-
-```{r bDiscrim-9}
-hilo.1$scaling
-```
-
-
-* These are like regression slopes: 
-change in LD1 score for 1-unit change in variables. 
-
-
-## What else is in `hilo.pred?`
-
-\small
-```{r bDiscrim-11}
-names(hilo.pred)
-```
-\normalsize
-     
+## What else is in `hilo.2`?
 
 
 
@@ -218,14 +202,14 @@ names(hilo.pred)
 * `posterior`: predicted probability of being low or high
 fertilizer given `yield` and `weight`.
  
-- `x`: scores for each linear discriminant (here is only LD1) on each observation.
+- `LD1`: scores for (each) linear discriminant (here is only LD1) on each observation.
 
 ## Predictions and predicted groups
 \ldots based on `yield` and `weight`: 
 
 \footnotesize
 ```{r bDiscrim-12}
-cbind(hilo, predicted = hilo.pred$class)
+hilo.2 %>% select(yield, weight, fertilizer, class)
 ```
 \normalsize
 
@@ -233,7 +217,7 @@ cbind(hilo, predicted = hilo.pred$class)
 ## Count up correct and incorrect classification
 
 ```{r}
-table(obs = hilo$fertilizer, pred = hilo.pred$class)
+with(hilo.2, table(obs = fertilizer, pred = class))
 ```
 
  
@@ -247,15 +231,15 @@ diagonal.
 
 ## Posterior probabilities
 
-\small
+\footnotesize
 
 
 show how clear-cut the classification decisions were:
 
 ```{r bDiscrim-13}
-pp <- round(hilo.pred$posterior, 4)
-d <- cbind(hilo, hilo.pred$x, pp)
-d
+hilo.2 %>% 
+  mutate(across(starts_with("posterior"), \(p) round(p, 4))) %>% 
+  select(-LD1)
 ```
 
 Only obs.\ 7 has any doubt: `yield` low for a high-fertilizer,
@@ -328,12 +312,11 @@ or low `w`.
 
 
 ## The predictions and misclassification
+
 ```{r bDiscrim-17 }
-peanuts.pred <- predict(peanuts.1)
-table(
-  obs = peanuts.combo$combo,
-  pred = peanuts.pred$class
-)
+p <- predict(peanuts.1)
+peanuts.2 <- cbind(peanuts.combo, p)
+with(peanuts.2, table(obs = combo, pred = class))
 ```
 
 Actually classified very well. Only one `6_2` classified as a
@@ -343,11 +326,11 @@ Actually classified very well. Only one `6_2` classified as a
 ## Posterior probabilities
 
 \scriptsize
+
 ```{r bDiscrim-18}
-pp <- round(peanuts.pred$posterior, 2)
-peanuts.combo %>%
-  select(-c(y, smk, w)) %>%
-  cbind(., pred = peanuts.pred$class, pp)
+peanuts.2 %>% 
+  mutate(across(starts_with("posterior"), \(p) round(p, 2))) %>% 
+  select(combo,  class, starts_with("posterior"))
 ```
 
 \small   
@@ -368,9 +351,6 @@ scores side by side:
 \footnotesize
 ```{r bDiscrim-19}
 peanuts.1$scaling
-lds <- round(peanuts.pred$x, 2)
-mm <- with(peanuts.combo,
-           data.frame(combo, y, smk, w, lds))
 ```
 \normalsize
    
@@ -387,17 +367,16 @@ mm <- with(peanuts.combo,
 
 \footnotesize
 ```{r bDiscrim-20}
-mm
+peanuts.2 %>% select(y, w, starts_with("x"))
 ```
-\normalsize
    
-
 
 * Obs.\ 5 and 6 have most positive `LD1`: large `y`,
 small `w`.
 
 * Obs.\ 4 has most positive `LD2`: small `w`.
 
+\normalsize
 
 
 
@@ -406,7 +385,7 @@ small `w`.
 \small
 
 ```{r bDiscrim-24, fig.height=4}
-g <- ggplot(mm, aes(x = LD1, y = LD2, colour = combo, 
+g <- ggplot(peanuts.2, aes(x = x.LD1, y = x.LD2, colour = combo, 
                     label = combo)) + geom_point() +
   geom_text_repel() + guides(colour = "none")
 g
@@ -467,10 +446,11 @@ that left-out observation.
 
 \small
 ```{r bDiscrim-28 }
-peanuts.cv <- lda(combo ~ y + smk + w,
-  data = peanuts.combo, CV = T)
-table(obs = peanuts.combo$combo,
-      pred = peanuts.cv$class)
+p <- lda(combo ~ y + smk + w,
+  data = peanuts.combo, CV = TRUE)
+peanuts.3 <- cbind(peanuts.combo, class = p$class, 
+                   posterior = p$posterior)
+with(peanuts.3, table(obs = combo, pred = class))
 ```
 \normalsize
    
@@ -480,7 +460,7 @@ table(obs = peanuts.combo$combo,
 
 
 ## Repeat of LD plot
-```{r graziani,fig.height=3.7}
+```{r graziani,fig.height=4.7}
 g
 ```
 
@@ -491,11 +471,9 @@ g
 
 \footnotesize
 ```{r bDiscrim-29}
-pp <- round(peanuts.cv$posterior, 3)
-data.frame(
-  obs = peanuts.combo$combo,
-  pred = peanuts.cv$class, pp
-)
+peanuts.3 %>% 
+  mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
+  select(combo, class, starts_with("posterior"))
 ```
 \normalsize
    
@@ -570,8 +548,9 @@ on `tv`.
 
 ## Misclassification
 ```{r bDiscrim-31 }
-active.pred <- predict(active.1)
-table(obs = active$job, pred = active.pred$class)
+p <- predict(active.1)
+active.2 <- cbind(active, p)
+with(active.2, table(obs = job, pred = class))
 ```
 
    
@@ -583,8 +562,7 @@ Everyone correctly classified.
 
 \small
 ```{r bDiscrim-32, fig.height=4}
-mm <- data.frame(job = active$job, active.pred$x, person = 1:15)
-g <- ggplot(mm, aes(x = LD1, y = LD2, colour = job, label = job)) + 
+g <- ggplot(active.2, aes(x = x.LD1, y = x.LD2, colour = job, label = job)) + 
   geom_point() + geom_text_repel() + guides(colour = "none")
 g
 ```
@@ -618,7 +596,8 @@ top right, politicians lower middle.
 Make `label` be identifier of person. Now need legend:
 
 ```{r bDiscrim-34, fig.height=3.5}
-ggplot(mm, aes(x = LD1, y = LD2,  colour = job, 
+active.2 %>% mutate(person = row_number()) %>% 
+  ggplot(aes(x = x.LD1, y = x.LD2,  colour = job, 
                label = person)) + 
   geom_point() + geom_text_repel()
 ```
@@ -630,8 +609,8 @@ ggplot(mm, aes(x = LD1, y = LD2,  colour = job,
 
 \scriptsize
 ```{r bDiscrim-35}
-pp <- round(active.pred$posterior, 3)
-data.frame(obs = active$job, pred = active.pred$class, pp)
+active.2 %>% mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
+  select(job, class, starts_with("posterior"))
 ```
 \normalsize
    
@@ -639,13 +618,12 @@ Not much doubt.
 
 
 ## Cross-validating the jobs-activities data
-Recall: no need for `predict`. Just pull out `class` and
-make a table:  
+Recall: no need for `predict`:
+
 ```{r bDiscrim-36 }
-active.cv <- lda(job ~ reading + dance + tv + ski,
-  data = active, CV = T
-)
-table(obs = active$job, pred = active.cv$class)
+p <- lda(job ~ reading + dance + tv + ski, data = active, CV = TRUE)
+active.3 <- cbind(active, class = p$class, posterior = p$posterior)
+with(active.3, table(obs = job, pred = class))
 ```
 
    
@@ -654,21 +632,23 @@ This time one of the bellydancers was classified as a politician.
 
 
 ## and look at the posterior probabilities
-picking out the ones where things are not certain:
 
-\footnotesize
+\scriptsize
 ```{r bDiscrim-37}
-pp <- round(active.cv$posterior, 3)
-data.frame(obs = active$job, pred = active.cv$class, pp) %>%
-  mutate(max = pmax(admin, bellydancer, politician)) %>%
-  filter(max < 0.9995)
+active.3 %>% 
+  mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
+  select(job, class, starts_with("post"))
 ```
+
 \normalsize
 
+
+## Comments
 
 * Bellydancer was "definitely" a politician!
 
 * One of the administrators might have been a politician too.
+
 
 
 ## Why did things get misclassified?
@@ -723,8 +703,8 @@ crops
 \tiny
 
 ```{r bDiscrim-40 }
-crops.lda <- lda(crop ~ x1 + x2 + x3 + x4, data = crops)
-crops.lda
+crops.1 <- lda(crop ~ x1 + x2 + x3 + x4, data = crops)
+crops.1
 ```
 
 \normalsize
@@ -734,14 +714,6 @@ crops.lda
 * 4 LDs (four variables, six groups).
 
 * 1st one important, maybe 2nd as well.
-
-\small
-```{r bDiscrim-41 }
-round(crops.lda$scaling, 3)
-```
-\normalsize
-   
-* Links original variables to LDs.
 
 
 * `LD1` mostly `x1` (minus)
@@ -755,25 +727,21 @@ round(crops.lda$scaling, 3)
 
 \footnotesize
 ```{r bDiscrim-43}
-crops.pred <- predict(crops.lda)
-table(obs = crops$crop, pred = crops.pred$class)
+p <- predict(crops.1)
+crops.2 <- cbind(crops, p)
+with(crops.2, table(obs = crop, pred = class))
 ```
 \normalsize
    
 
 * Not very good, eg. only 6 of 11 `Clover` classified correctly.
 
-* Set up for plot:
-```{r bDiscrim-44 }
-mm <- data.frame(crop = crops$crop, crops.pred$x)
-```
-
    
 
 
 ## Plotting the LDs 
 ```{r piacentini,fig.height=3.4}
-ggplot(mm, aes(x = LD1, y = LD2, colour = crop)) +
+ggplot(crops.2, aes(x = x.LD1, y = x.LD2, colour = crop)) +
   geom_point()
 ```
 
@@ -782,7 +750,7 @@ ggplot(mm, aes(x = LD1, y = LD2, colour = crop)) +
 
 ## Biplot
 ```{r bDiscrim-45, fig.height=3}
-ggbiplot(crops.lda, groups = crops$crop)
+ggbiplot(crops.1, groups = crops$crop)
 ```
 
    
@@ -809,7 +777,7 @@ ggbiplot(crops.lda, groups = crops$crop)
 * the `dplyr` way:
 ```{r bDiscrim-46 }
 crops %>% filter(crop != "Clover") -> crops2
-crops2.lda <- lda(crop ~ x1 + x2 + x3 + x4, data = crops2)
+crops2.1 <- lda(crop ~ x1 + x2 + x3 + x4, data = crops2)
 ```
 
    
@@ -820,8 +788,8 @@ crops2.lda <- lda(crop ~ x1 + x2 + x3 + x4, data = crops2)
 * Concentrate on plot and posterior probs.
 
 ```{r bDiscrim-47 }
-crops2.pred <- predict(crops2.lda)
-mm <- data.frame(crop = crops2$crop, crops2.pred$x)
+p <- predict(crops2.1)
+crops2.2 <- cbind(crops2, p)
 ```
 
    
@@ -831,7 +799,7 @@ mm <- data.frame(crop = crops2$crop, crops2.pred$x)
 
 \tiny
 ```{r bDiscrim-48}
-crops2.lda
+crops2.1
 ```
 \normalsize
 
@@ -840,7 +808,7 @@ crops2.lda
 
 A bit more clustered:
 ```{r nedved,fig.height=4.5}
-ggplot(mm, aes(x = LD1, y = LD2, colour = crop)) +
+ggplot(crops2.2, aes(x = x.LD1, y = x.LD2, colour = crop)) +
   geom_point()
 ```
 
@@ -850,7 +818,7 @@ ggplot(mm, aes(x = LD1, y = LD2, colour = crop)) +
 
 ## Biplot
 ```{r bDiscrim-49, fig.height=2.9}
-ggbiplot(crops2.lda, groups = crops2$crop)
+ggbiplot(crops2.1, groups = crops2$crop)
 ```
 
    
@@ -860,7 +828,7 @@ ggbiplot(crops2.lda, groups = crops2$crop)
 
 \small
 ```{r bDiscrim-50}
-table(obs = crops2$crop, pred = crops2.pred$class)
+with(crops2.2, table(obs = crop, pred = class))
 ```
 \normalsize
    
@@ -873,11 +841,11 @@ Better.
 options(width = 60)
 ```
 
-\footnotesize  
+\scriptsize  
 ```{r bDiscrim-52 }
-post <- round(crops2.pred$posterior, 3)
-data.frame(obs = crops2$crop, pred = crops2.pred$class, post) %>%
-  filter(obs != pred)
+crops2.2 %>% mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
+  filter(crop != class) %>% 
+  select(crop, class, starts_with("posterior"))
 ```
 \normalsize
 
