@@ -204,14 +204,16 @@ ns <- seq(10,100,10)
 ns
 ```
 
+
+\small
+
 - Calculate powers:
 ```{r inference-2-R-10}
 ans <- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
-ans
 ans$power
 ```
 
-
+\normalsize
 
 
 ## Building a plot (1/2)
@@ -273,9 +275,13 @@ combos <- crossing(mean=means, n=ns)
 
 ## The combos
 
+\scriptsize
+
 ```{r inference-2-R-17}
 combos
 ```
+
+\normalsize
 
 ## Calculate and plot
 
@@ -283,18 +289,12 @@ combos
 
 
 ```{r inference-2-R-18}
-ans <- with(combos, power.t.test(n=n, delta=mean-10, sd=4, 
+ans <- with(combos, power.t.test(n=n, delta=10-mean, sd=4, 
                               type="one.sample"))
-ans
+ans$power
 ```
 
  
-## More of what's in the output
-
-```{r inference-2-R-19}
-names(ans)
-ans$power
-```
 
 ##  Make a data frame to plot, pulling things from the right places:
 
@@ -333,31 +333,11 @@ produces power 0.42 and 0.80 as shown on the graph.
 is almost certain to be correctly rejected. (With $n = 15$, the
 true mean needs to be less than 6.)
 
-## Power by sample size for means 7 and 8
-Similar procedure to before:
-
-```{r inference-2-R-23}
-means <- c(7, 8)
-ns <- seq(10, 40, 5)
-combos <- crossing(mean=means, n=ns)
-ans <- with(combos, power.t.test(n=n, delta=10-mean, sd=4, 
-                              type="one.sample"))
-d <- tibble(mean=factor(combos$mean), n=combos$n, 
-         power=ans$power)
-g <- ggplot(d, aes(x=n, y=power, colour=mean)) + 
-  geom_point() + geom_line() +
-  geom_hline(yintercept=1,linetype="dashed")  
-```
-
-## The power curves
-
-```{r inference-2-R-24, fig.height=3.8}
-g
-```
 
 ## Two-sample power
 
 ```{r inference-2-R-25, echo=FALSE}
+#| message = FALSE
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
@@ -367,7 +347,6 @@ kids <- read_delim(my_url," ")
 - and these group SDs:
 
 ```{r inference-2-R-26}
-kids
 kids %>% group_by(group) %>% 
   summarize(n=n(), s=sd(score))
 ```

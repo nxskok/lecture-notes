@@ -7,7 +7,7 @@ bAnova|stem|6a7be9dba819155f|f5c2d298ecafeb88|ef46db3751d8e999|-1632939918|bAnov
 bAnova_slides|stem|4f0c1b6fc5e59572|fa87f7baf0da708b|04725a2d6fcdd033|1709416455|bAnova_slides.pdf*bAnova_slides.Rmd|t19379.7075049094s|a46566a11ade6e69|213867|file|local|vector|||19.866|package cmdstanr was built under R version 4.3.0. Package amsmath Warning Foreign command \over. amsmath                \frac or \genfrac should be used instead. amsmath                 on input line 1939.|
 bCluster|stem|73fda600267d67db|f8dc4572372efbaa|ef46db3751d8e999|-88479578|bCluster.Rmd|t19379.6988723567s|273d52c1295a7c44|22695|file|local|vector|||0.766||
 bCluster_slides|stem|2289c6af36ac831d|d408548e88fd6b6e|97390007fccc969e|1186431600|bCluster_slides.pdf*bCluster_slides.Rmd|t19379.6970999744s|e3acfb33419b8eb1|1255508|file|local|vector|||18.976||
-bDiscrim|stem|4a67391804dfea1e|37301cfdd8e3b632|ef46db3751d8e999|-1240917588|bDiscrim.Rmd|t19469.0856799292s|02c3fdfcc9091ac7|17437|file|local|vector|||0.598||
+bDiscrim|stem|4a67391804dfea1e|37301cfdd8e3b632|ef46db3751d8e999|-1240917588|bDiscrim.Rmd|t19472.6396344878s|02c3fdfcc9091ac7|17437|file|local|vector|||0.598||
 bDiscrim_slides|stem|48c30beb703c6250|a3e9f9b211b2617a|8aa0efb066e26977|504754789|bDiscrim_slides.pdf*bDiscrim_slides.Rmd|t19469.0858647914s|b7ec32865bf5e717|211069|file|local|vector|||14.238||
 bFactor|stem|272a55b583a39190|6bdc79038f64d204|ef46db3751d8e999|1800469349|bFactor.Rmd|t19353.8218875362s|c4db846c129b27ee|19851|file|local|vector|||0.818||
 bFactor_slides|stem|fe089d9c2003b556|dbe487ea4cc4ad03|4dc0a6ea8a44f87d|1220692697|bFactor_slides.pdf*bFactor_slides.Rmd|t19353.8232036353s|5578ebb1319d3edb|466815|file|local|vector|||78.175|Removed 36 rows containing missing values geom_point.. Removed 36 rows containing missing values geom_path.|
@@ -41,8 +41,8 @@ graphs_R|stem|a9612ab8f8323e91|ba2a1604eedf5507|ef46db3751d8e999|-2115159619|gra
 graphs_R_slides|stem|c9db4d02569b0fd9|9bb7e2a8f597b3d0|9530f23b1dba258e|451036043|graphs_R_slides.pdf*graphs_R_slides.Rmd|t19379.914551809s|395818be89bc4bab|178723|file|local|vector|||33.991|package cmdstanr was built under R version 4.3.0|
 inference_1_R|stem|78b7560aee8f440b|0dafe75890a6e475|ef46db3751d8e999|1286191339|inference_1_R.Rmd|t18800.6534865079s|58d5f2ca33704f7d|9930|file|local|vector|||0||
 inference_1_R_slides|stem|fb7f3f929081dd5f|89a0b59d11aff2a2|95a29fbefd6de995|-909330202|inference_1_R_slides.pdf*inference_1_R_slides.Rmd|t19379.9148177824s|0c45077ec12c13b8|381377|file|local|vector|||11.357||
-inference_2_R|stem|6314191f8a9032d9|62f2325c195486cf|ef46db3751d8e999|866742730|inference_2_R.Rmd|t19454.0500997998s|932ae13b31dffba9|10620|file|local|vector|||0||
-inference_2_R_slides|stem|288bbe27156420c1|a2155b77565dfba1|9902c7d48bfef021|-611451905|inference_2_R_slides.pdf*inference_2_R_slides.Rmd|t19467.6985154652s|f89b74a6601f960e|101054|file|local|vector|||37.316|Package microtype Warning Unable to apply patch footnote on input line 163.|
+inference_2_R|stem|b461fcc3ed0c6175|62f2325c195486cf|ef46db3751d8e999|866742730|inference_2_R.Rmd|t19472.7142032237s|5fc00338f01b6bf9|10042|file|local|vector|||1.136||
+inference_2_R_slides|stem|ba865a983312033d|a2155b77565dfba1|9a1282a83be1f2fc|-611451905|inference_2_R_slides.pdf*inference_2_R_slides.Rmd|t19472.7144247064s|8ac8ae9da4dee46b|91416|file|local|vector|||16.172||
 inference_3_R|stem|2a2463cd314ba2d9|583e2b802749e2b4|ef46db3751d8e999|-519183694|inference_3_R.Rmd|t19379.9667695562s|0035f980c1fbf4e2|10432|file|local|vector|||1.709||
 inference_3_R_slides|stem|272f0f3927870b6a|df343e9154759046|2dba33d9c4a833ac|681694972|inference_3_R_slides.pdf*inference_3_R_slides.Rmd|t19379.9671235864s|57394f7d556ef7ab|95622|file|local|vector|||18.738|package cmdstanr was built under R version 4.3.0|
 inference_4a_R|stem|faa392ea6831aa4e|6768f1001ac1501e|ef46db3751d8e999|-291506009|inference_4a_R.Rmd|t19377.7536313841s|1a46dbd3ee39e7cc|5120|file|local|vector|||0||
