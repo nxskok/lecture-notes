@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|67c0f2c2b6b1bbbe|||||||||||||||
+.Random.seed|object|ef20e16d100ed854|||||||||||||||
 asphalt|stem|6fbca0019d73bfd4|063be77cda7dc456|ef46db3751d8e999|-733295341|asphalt.Rmd|t18800.6490678928s|0240d06202b56497|13628|file|local|vector|||0||
 asphalt_slides|stem|102070a93c40b8da|4ccca33a7516746a|61b8a3bf60456c2f|-998026003|asphalt_slides.pdf*asphalt_slides.Rmd|t19379.7034076982s|a934a0b3cbe8f675|196766|file|local|vector|||22.297|package cmdstanr was built under R version 4.3.0|
 bAncova|stem|6599c93b8c7387cb|d0fd867a84126eb6|ef46db3751d8e999|2112088981|bAncova.Rmd|t19467.8006715116s|92ff492ca8a56313|4138|file|local|vector|||0.963||
@@ -32,7 +32,7 @@ bSurvival|stem|fa9310afc44d0fba|f43d0e37879b9518|ef46db3751d8e999|-54375285|bSur
 bSurvival_slides|stem|8fa30fe66a0de3d5|ea200d8d2b35776d|93f14824bedeea10|1480893430|bSurvival_slides.pdf*bSurvival_slides.Rmd|t19380.0743525588s||160745|file|local|vector|||35.869|package cmdstanr was built under R version 4.3.0. gather_ was deprecated in tidyr 1.2.0.i Please use gather instead.i The deprecated feature was likely used in the  survminer package.  Please report the issue at  8httpsgithub.comkassambarasurvminerissueshttpsgithub.comkassambarasurvminerissues8.|object dance not found
 choosing_R|stem|715e63780378229d|723a041acec56fff|ef46db3751d8e999|950995899|choosing_R.Rmd|t19393.8067005184s|78c8fc83933a11fe|8169|file|local|vector|||0.001||
 choosing_R_slides|stem|d5590a0d333a8ffc|bd4d9a7cc0e8af9e|476fb925b3f967ca|1767707305|choosing_R_slides.pdf*choosing_R_slides.Rmd|t19393.806700935s|ee493fc65069b9ec|168453|file|local|vector|||77.397|package cmdstanr was built under R version 4.3.0. Package microtype Warning Unable to apply patch footnote on input line 150.|
-dates_and_times|stem|f505c32638f948b5|82e12376179907fe|ef46db3751d8e999|-552915072|dates_and_times.Rmd|t19132.7219042568s|0854efad0b00c2c0|6589|file|local|vector|||0.001||
+dates_and_times|stem|053a8cdb27278d89|04fb57e99ca9a7de|d84d7cdd1c3c4b08|-552915072|dates_and_times_files*dates_and_times.html*dates_and_times.qmd|t19485.9058931679s|040f307e8b6aef79|73772|file|local|vector|||4.716||
 dates_and_times_slides|stem|ec7ac5bc2b39360b|3e88a8b319a2a4af|6ea95c1512e41064|1009841895|dates_and_times_slides.pdf*dates_and_times_slides.Rmd|t19379.7269122926s|8f908f5d3ce5521b|61381|file|local|vector|||9.204||
 dip|stem|0e5bfed7c4ccfd7a|7e9fa7cad2f14ab4|ef46db3751d8e999|1553108846|dip.Rmd|t18800.6534735449s|ee15b48ef474c32e|4761|file|local|vector|||0||
 dip_slides|stem|e45b151a344de6e0|028287feb08ba36b|4bd369eab708936e|377450994|dip_slides.pdf*dip_slides.Rmd|t19379.9149262551s|482edfd674df0778|64079|file|local|vector|||9.384||
@@ -51,9 +51,12 @@ inference_4a_R|stem|faa392ea6831aa4e|6768f1001ac1501e|ef46db3751d8e999|-29150600
 inference_4a_R_slides|stem|0eaba70514d749f3|93069902641c6430|5d969b1bc08fbdb8|-569311856|inference_4a_R_slides.pdf*inference_4a_R_slides.Rmd|t19379.9644760692s|f37b25d73bfbdc97|167445|file|local|vector|||14.469||
 inference_4b_R|stem|fb97707d9ab29e5d|373e2319a47fdb8e|ef46db3751d8e999|1996875819|inference_4b_R.Rmd|t18800.6535026653s|d4198efac04d41ef|2730|file|local|vector|||9.365||
 inference_4b_R_slides|stem|84f062345b35f867|681d8fadfcfb9ca1|4916a67ba9f0c79d|592644384|inference_4b_R_slides.pdf*inference_4b_R_slides.Rmd|t19379.9643071332s|c22181831dfd07b3|58850|file|local|vector|||88.087|package cmdstanr was built under R version 4.3.0|
+inference_5|stem||b5e93cadf954df8c|d84d7cdd1c3c4b08|2020472775||t19485.9083347199s||0|file|local|vector|||2.269||33m39m System command quarto failed
 inference_5_R|stem|bd7456365f950f40|c25099eac5c02304|ef46db3751d8e999|1236966356|inference_5_R.Rmd|t19377.7536313841s|b1ff94ac529c990b|11467|file|local|vector|||0.001||
 inference_5_R_slides|stem|9a6c8a642be33856|40870de14c3e2baa|815bfd1e6342f80f|1497279634|inference_5_R_slides.pdf*inference_5_R_slides.Rmd|t19379.964625005s|9c197f16ff795a13|126686|file|local|vector|||12.588||
-logistic|stem|451a14ffa3d214af|1671f5e4ceadbcc4|d84d7cdd1c3c4b08|-642085426|logistic_files*logistic.html*logistic.qmd|t19485.8138702492s|5947ff12e4e095e1|6569697|file|local|vector|||14.093||
+inference_5a|stem|5e199582a43f6da3|f88f56bac4c24ac7|d84d7cdd1c3c4b08|-2082106201|inference_5a_files*inference_5a.html*inference_5a.qmd|t19485.9712450809s|df086e94c149751f|51883|file|local|vector|||5.362||
+inference_5b|stem|c4f9f635436ba3a8|03d597bd27f099f1|d84d7cdd1c3c4b08|-1247545309|inference_5b_files*inference_5b.html*inference_5b.qmd|t19485.971330961s|e286dcbc10282a91|65640|file|local|vector|||7.394||
+logistic|stem|451a14ffa3d214af|1671f5e4ceadbcc4|d84d7cdd1c3c4b08|-642085426|logistic_files*logistic.html*logistic.qmd|t19485.8138702955s|54b152e3a6461f5c|136951|file|local|vector|||14.093||
 mapping|stem|556ee84ab93da128|523256e1319e1c84|ef46db3751d8e999|607285889|mapping.Rmd|t19467.7685291509s|c24bc88a47545544|3750|file|local|vector|||0||
 mapping_slides|stem|5e9a22f37f1de127|2b764460e0b0deac|356053bfec8b35bb|223396972|mapping_slides.pdf*mapping_slides.Rmd|t19467.7695602666s|6dcaaab2c36eca21|1387804|file|local|vector|||12.003||
 multiway|stem|66e181b335707087|c186b8ec5195f70b|d84d7cdd1c3c4b08|-473389404|multiway_files*multiway.html*multiway.qmd|t19485.807133235s|0343ec80299fa1c2|107241|file|local|vector|||45.129||
@@ -74,6 +77,7 @@ rstan|stem|82a87c4a644c954b|ea72c71aeea79fdc|ef46db3751d8e999|1677391617|rstan.R
 rstan_slides|stem|1678b3ba6df1994e|1f6c68a19f272d50|bf02041e2155e7a7|1178787472|rstan_slides.pdf*rstan_slides.Rmd|t19467.7808394849s|473a1d3596ffc77b|181378|file|local|vector|||18.821||
 running_R|stem|b7ad3a2d6cd23fb4|fafabdc392a1c457|ef46db3751d8e999|1823033080|running_R.Rmd|t19353.7199947824s|abae671ba45f936d|6269|file|local|vector|||0||
 running_R_slides|stem|b2f471da9a1054c1|9e6a9740611d51c0|6c2c968cb09b7f32|-177892044|running_R_slides.pdf*running_R_slides.Rmd|t19380.023540738s|f68c06cce266f515|683789|file|local|vector|||9.82||
+survival|stem|fa057f9cc7b8647a|e07635f5a842a8a4|d84d7cdd1c3c4b08|-276063219|survival_files*survival.html*survival.qmd|t19486.0465591704s|99fa319093c3d882|6252714|file|local|vector|||16.253||
 tidy_extra_R|stem|40b3bb2cad848afe|27ae0db1566ab416|ef46db3751d8e999|494476271|tidy_extra_R.Rmd|t19072.7853921095s|8180f285072afcc2|4383|file|local|vector|||0||
 tidy_extra_R_slides|stem|60356cce088e9e58|1873ac2e1bc89784|48b1a36c6a6b1301|681695817|tidy_extra_R_slides.pdf*tidy_extra_R_slides.Rmd|t19379.994590682s|a684e4b4621b7b7e|61834|file|local|vector|||11.032||
 tidying_R|stem|7e812dfd7161baa5|45cc31f6e5e85a71|ef46db3751d8e999|1298264764|tidying_R.Rmd|t18961.1805121518s|82f22308315f063e|10839|file|local|vector|||0||
