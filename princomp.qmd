@@ -1,0 +1,629 @@
+---
+title: "Principal components"
+format: revealjs
+execute:
+  echo: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+## Principal Components
+
+
+* Have measurements on (possibly large) number of variables on some individuals.
+
+* Question: can we describe data using fewer variables (because original variables correlated in some way)?
+
+* Look for direction (linear combination of original variables) in which values *most spread out*. This is *first principal component*.
+
+* Second principal component then direction uncorrelated with this in which values then most spread out. And so on.
+
+
+
+
+## Principal components
+
+
+* See whether small number of principal components captures most of variation in data.
+
+* Might try to interpret principal components.
+
+* If 2 components good, can make plot of data.
+
+* (Like discriminant analysis, but for individuals rather than groups.)
+
+* "What are important ways that these data vary?"
+
+
+
+##  Packages
+
+You might not have installed the first of these. See over for
+instructions. 
+
+```{r bPrincomp-1}
+library(ggbiplot) 
+library(tidyverse)
+library(ggrepel)
+```
+
+`ggbiplot` has a special installation: see over.
+
+
+##   Installing `ggbiplot`
+
+
+* `ggbiplot` not on CRAN, so usual
+`install.packages` will not work. This is same procedure you used for `smmr` in C32:
+
+* Install package `devtools` first (once):
+```{r bPrincomp-2, eval=F}
+install.packages("devtools")
+```
+
+     
+
+* Then install `ggbiplot` (once):
+```{r bPrincomp-3, eval=F}
+library(devtools)
+install_github("vqv/ggbiplot")
+```
+
+     
+
+
+
+##  Small example: 2 test scores for 8 people
+
+\small
+```{r testt,message=F}
+my_url <- "http://ritsokiguess.site/datafiles/test12.txt"
+test12 <- read_table2(my_url)
+test12
+```
+
+
+```{r ff1}
+g <- ggplot(test12, aes(x = first, y = second, label = id)) +
+  geom_point() + geom_text_repel()
+```
+
+\normalsize
+ 
+
+
+##  The plot
+
+```{r ff2,fig.height=3.8}
+g + geom_smooth(method = "lm", se = F)
+```
+
+
+##  Principal component analysis
+
+
+* Grab just the numeric columns:
+```{r bPrincomp-4}
+test12 %>% select(where(is.numeric)) -> test12_numbers
+```
+     
+
+
+* Strongly correlated, so data nearly 1-dimensional:
+
+```{r bPrincomp-5}
+cor(test12_numbers)
+```
+
+ 
+## Finding principal components
+
+* Make a score summarizing this one dimension. Like this:
+
+```{r plot12}
+test12.pc <- princomp(test12_numbers, cor = TRUE)
+summary(test12.pc)
+```
+
+ 
+
+
+
+
+
+## Comments
+
+
+* "Standard deviation" shows relative importance of components
+(as for LDs in discriminant analysis)
+
+* Here, first one explains almost all (99.4\%) of variability.
+
+* That is, look only at first component and ignore second.
+
+* `cor=TRUE` standardizes all variables first. Usually wanted,
+because variables measured on different scales. (Only omit if
+variables measured on same scale and expect similar variability.)
+
+
+##   Scree plot
+```{r bPrincomp-6, fig.height=3.5}
+ggscreeplot(test12.pc)
+```
+
+   
+
+Imagine scree plot continues at zero, so 2 components is a *big*
+elbow (take one component).
+
+
+##  Component loadings
+explain how each principal component depends on (standardized)
+original variables (test scores):
+
+\footnotesize
+```{r bPrincomp-7 }
+test12.pc$loadings
+```
+\normalsize
+   
+
+First component basically sum of (standardized) test
+scores. That is, person tends to score similarly on two tests, and a
+composite score would summarize performance.
+
+
+##  Component scores
+
+\small
+```{r bPrincomp-8 }
+d <- data.frame(test12, test12.pc$scores)
+d
+```
+\normalsize
+
+
+
+
+* Person A is a low scorer, very negative `comp.1` score.
+
+* Person D is high scorer, high positive `comp.1` score.
+
+* Person E average scorer, near-zero `comp.1` score.
+
+* `comp.2` says basically nothing.
+
+
+
+
+##  Plot of scores
+
+```{r score-plot,fig.height=3.5}
+ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
+  geom_point() + geom_text_repel()
+```
+  
+
+
+
+##  Comments
+
+
+* Vertical scale exaggerates importance of `comp.2`.
+
+* Fix up to get axes on same scale:
+```{r eqsc}
+ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
+  geom_point() + geom_text_repel() +
+  coord_fixed() -> g
+```
+
+
+
+* Shows how exam scores really spread out along one dimension:
+
+```{r eqsc2,fig.height=1 }
+g
+```
+
+
+
+
+
+##  The biplot
+
+
+* Plotting variables and individuals on one plot.
+
+* Shows how components and original variables related.
+
+* Shows how individuals score on each component, and therefore
+suggests how they score on each variable.
+
+* Add `labels` option to identify individuals:
+```{r bPrincomp-9}
+g <- ggbiplot(test12.pc, labels = test12$id)
+```
+
+     
+
+
+
+##  The biplot
+```{r ff3,fig.height=6,echo=F}
+g
+```
+  
+
+
+
+##  Comments
+
+
+* Variables point almost same direction (right). Thus very
+positive value on `comp.1` goes with high scores on both
+tests, and test scores highly correlated.
+
+* Position of individuals on plot according to scores on
+principal components, implies values on original variables. Eg.:
+
+
+* D very positive on `comp.1`, high scorer on both tests.
+
+* A and F very negative on `comp.1`, poor scorers on
+both tests.
+
+* C positive on `comp.2`, high score on first
+test relative to second.
+
+* A negative on `comp.2`, high score on second test
+relative to first.
+
+
+
+## Places rated
+
+Every year, a new edition of the Places Rated Almanac is produced. This rates a large number (in our data 329) of American cities on a number of different criteria, to help people find the ideal place for them to live (based on what are important criteria for them).
+
+The data for one year are in [http://ritsokiguess.site/datafiles/places.txt](http://ritsokiguess.site/datafiles/places.txt). The data columns are aligned but the column headings are not.
+
+## The criteria {.smaller}
+
+There are nine of them:
+
+- `climate`: a higher value means that the weather is better
+- `housing`: a higher value means that there is more good housing or a greater choice of different types of housing
+- `health`: higher means better healthcare facilities
+- `crime`: higher means more crime (bad)
+- `trans`: higher means better transportation (this being the US, probably more roads)
+- `educate`: higher means better educational facilities, schools, colleges etc.
+- `arts`: higher means better access to the arts (theatre, music etc)
+- `recreate`: higher means better access to recreational facilities
+- `econ`: higher means a better economy (more jobs, spending power etc)
+
+Each city also has a numbered `id`.
+
+## Read in the data
+
+\small
+```{r bPrincomp-10}
+my_url <- "http://ritsokiguess.site/datafiles/places.txt"
+places0 <- read_table2(my_url)
+```
+\normalsize
+
+## Look at distributions of everything
+
+```{r bPrincomp-11}
+places0 %>% 
+  pivot_longer(-id, names_to = "criterion", 
+               values_to = "rating") %>% 
+  ggplot(aes(x = rating)) + geom_histogram(bins = 10) + 
+  facet_wrap(~criterion, scales = "free") -> g
+```
+
+## The histograms
+
+```{r bPrincomp-12}
+g
+```
+
+## Transformations
+
+- Several of these variables have long right tails
+
+- Take logs of everything but id:
+
+```{r bPrincomp-13}
+places0 %>% 
+  mutate(across(-id, \(x) log(x))) -> places
+```
+
+## Just the numerical columns
+
+- get rid of the id column
+
+```{r bPrincomp-14}
+places %>% select(-id) -> places_numeric
+```
+
+## Principal components
+
+```{r bPrincomp-15, include=FALSE}
+options(width = 80)
+```
+
+\scriptsize
+```{r bPrincomp-16}
+places.1 <- princomp(places_numeric, cor = TRUE)
+summary(places.1)
+```
+\normalsize
+
+```{r bPrincomp-17, include=FALSE}
+options(width = 60)
+```
+
+## scree plot
+
+```{r bPrincomp-18}
+ggscreeplot(places.1)
+```
+
+- big elbow at 2 (1 component); smaller elbow at 6 (5) and maybe 4 (3).
+
+## What is in each component?
+
+\small
+```{r bPrincomp-19}
+places.1$loadings
+```
+\normalsize
+
+## Assessing the components
+
+Look at component loadings and make a call about "large" (in absolute value) vs "small". Large loadings are a part of the component and small ones are not. Thus, if we use 0.4 as cutoff:
+
+- component #1 depends on health and arts
+- #2 depends on economy and crime, and negatively on education. 
+- #3 depends on climate, and negatively on economy.
+- #4 depends on education and the economy, negatively on transportation and recreation opportunities.
+- #5 depends on crime and negatively on housing.
+
+## Comments
+
+- The use of 0.4 is arbitrary; you can use whatever you like. It can be difficult to decide whether a variable is "in" or "out". 
+
+- The large (far from zero) loadings indicate what distinguishes the cities as places to live, for example:
+
+  - places that are rated high for health also tend to be rated high for arts
+  - places that have a good economy tend to have a bad climate (and vice versa)
+  - places that have a lot of crime tend to have bad housing.
+
+## Making a plot 1/3
+
+How can we make a visual showing the cities? We need a "score" for each city on each component, and we need to identify the cities (we have a numerical `id` in the original dataset):
+
+```{r bPrincomp-20}
+cbind(city_id = places$id, places.1$scores) %>% 
+  as_tibble() -> places_score
+```
+
+The `as_tibble` is needed at the end because the scores are a `matrix`.
+
+## Making a plot 2/3
+
+- Plot the first two scores against each other, labelling each point by the `id` of the city it belongs to:
+
+```{r bPrincomp-21}
+ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
+                         label = city_id)) +
+  geom_text() -> g
+```
+
+## Making a plot 3/3
+
+```{r bPrincomp-22}
+g
+```
+
+
+## Comments
+
+- Cities 213 and 270 are high on component 1, and city 116 is low. City 195 is high on component 2, and city 322 is low.
+
+- This suggests that cities 213 and 270 are high on health and arts, and city 116 is low. City 195 should be high on economy and crime and low on education, and city 322 should be the other way around. 
+
+## Checking this 1/2
+
+- The obvious way of checking this is in two steps: first, work out what high or low means for each variable:
+
+```{r bPrincomp-23, include=FALSE}
+options(width = 70)
+```
+
+
+\tiny
+```{r bPrincomp-24}
+summary(places)
+```
+\normalsize
+
+```{r bPrincomp-25, include=FALSE}
+options(width = 80)
+```
+
+## Checking this 2/2
+
+- and then find the values on the variables of interest for our cities of interest, and see where they sit on here.
+
+- Cities 270, 213, and 116 were extreme on component 1, which depended mainly on health and arts:
+
+```{r bPrincomp-26}
+places %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+```
+
+City 166 is near or below Q1 on both variables. City 213 is the highest of all on both `health` and `arts`, while city 270 is well above Q3 on both.
+
+## Checking component 2
+
+- Component 2 depended positively on economy and crime and negatively on education. City 195 was high and 322 was low:
+
+```{r bPrincomp-27}
+places %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322))
+```
+
+- City 195 is the highest on economy, just above Q3 on crime, and below Q1 on education. City 322 should be the other way around: nearly the lowest on economy, below Q1 on crime, and between the median and Q3 on education. This is as we'd expect.
+
+## A better way: percentile ranks
+
+- It is a lot of work to find the value of each city on each variable in the data summary. 
+
+- A  better way is to work out the percentile ranks of each city on each variable and then look at those:
+
+```{r bPrincomp-28}
+places %>% 
+  mutate(across(-id, \(x) percent_rank(x))) -> places_pr
+```
+
+## Look up cities and variables again
+
+```{r bPrincomp-29}
+places_pr %>% select(id, health, arts) %>% 
+  filter(id %in% c(270, 213, 166))
+```
+
+This shows that city 270 was also really high on these two variables: in the 97th percentile for `health` and the 98th for `arts`. 
+
+## Component 2
+
+- What about the extreme cities on component 2?
+
+```{r bPrincomp-30}
+places_pr %>% select(id, econ, crime, educate) %>% 
+  filter(id %in% c(195, 322)) 
+```
+
+- City 322 was really low on economy and crime, but only just above average on education. City 195 was the highest on economy and really low on education, but only somewhat high on crime (76th percentile).
+
+- This, as you see, is much easier once you have set it up.
+
+## The biplot
+
+```{r bPrincomp-31, fig.height=6}
+ggbiplot(places.1, labels = places$id)
+```
+
+## Comments
+
+- This is hard to read!
+- There are a lot of cities that overshadow the red arrows for the variables.
+- reduce the size of the city labels
+
+## Biplot, attempt 2
+
+```{r bPrincomp-32, fig.height=6}
+ggbiplot(places.1, labels = places$id,
+         labels.size = 0.8)
+```
+
+## Comments on attempt #2
+
+- Now at least can see the variables
+- All of them point somewhat right (all belong partly to component 1)
+- Some of them (economy, crime, education) point up/down, belong to component 2 as well.
+- In this case, cannot really see both observations (cities) and variables (criteria) together, which defeats the purpose of the biplot. 
+- Have to try it and see.
+
+
+##  Principal components from correlation matrix
+Create data file like this:
+
+```
+ 1        0.9705 -0.9600
+ 0.9705   1      -0.9980
+-0.9600  -0.9980  1
+```
+
+and read in like this:
+```{r bPrincomp-33, message=F}
+my_url <- "http://ritsokiguess.site/datafiles/cov.txt"
+mat <- read_table(my_url, col_names = F)
+mat
+```
+
+   
+
+
+##  Pre-processing
+A little pre-processing required:
+
+
+* Turn into matrix (from data frame)
+
+* Feed into `princomp` as `covmat=`
+
+```{r pc-cov,fig.height=4,}
+mat.pc <- mat %>%
+  as.matrix() %>%
+  princomp(covmat = .)
+```
+
+   
+
+
+##  Scree plot: one component fine
+
+```{r palermo,fig.height=3.5}
+ggscreeplot(mat.pc)
+```
+  
+
+
+
+##  Component loadings
+Compare correlation matrix:
+
+\scriptsize
+```{r bPrincomp-34}
+mat
+```
+\normalsize
+  
+
+with component loadings
+
+\scriptsize
+```{r bPrincomp-35}
+mat.pc$loadings
+```
+\normalsize
+
+## Comments
+
+* When X1 large, X2 also large, X3 small.
+
+  * Then `comp.1` *positive*.
+
+* When X1 small, X2 small, X3 large.
+
+  * Then `comp.1` *negative*.
+
+
+##  No scores
+
+
+* With correlation matrix rather than data, no component scores
+
+  * So no principal component plot
+
+  * and no biplot. 
+
+
+
+
+
