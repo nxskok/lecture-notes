@@ -86,6 +86,5 @@ tar_target(tidying_R, "tidying_R.Rmd", format = "file"),
 tar_render(tidying_R_slides, "tidying_R_slides.Rmd"),
 tar_quarto(wider_wrong, "wider_wrong.qmd"),
 tar_quarto(windmill, "windmill.qmd"),
-tar_target(with_categ_R, "with_categ_R.Rmd", format = "file"),
-tar_render(with_categ_R_slides, "with_categ_R_slides.Rmd")
+tar_quarto(with_categ, "with_categ.qmd"),
 )

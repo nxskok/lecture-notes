@@ -1,0 +1,160 @@
+---
+title: "Regression with categorical variables"
+format: revealjs
+execute:
+  echo: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+## Packages for this section
+
+```{r with-categ-R-1}
+library(tidyverse)
+library(broom)
+```
+
+
+## The pigs revisited
+
+```{r with-categ-R-2, echo=FALSE}
+options(dplyr.summarise.inform = FALSE)
+```
+
+- Recall pig feed data, after we tidied it: 
+
+```{r with-categ-R-3, message=F}
+my_url <- "http://ritsokiguess.site/datafiles/pigs2.txt"
+pigs <- read_delim(my_url, " ")
+pigs 
+```
+
+## Summaries
+
+```{r with-categ-R-4}
+pigs %>%
+  group_by(feed) %>%
+  summarize(n = n(), mean_wt = mean(weight), 
+            sd_wt = sd(weight))
+```
+
+## Running through `aov` and `lm`
+- What happens if we run this through `lm` rather than `aov`? 
+- Recall `aov` first: 
+
+```{r with-categ-R-5}
+pigs.1 <- aov(weight ~ feed, data = pigs)
+summary(pigs.1)
+```
+
+## and now `lm`
+
+\footnotesize
+```{r with-categ-R-6}
+pigs.2 <- lm(weight ~ feed, data = pigs)
+tidy(pigs.2)
+glance(pigs.2)
+```
+\normalsize
+
+## Understanding those slopes {.scrollable}
+- Get one slope for each category of categorical variable feed, except
+for first.
+- feed1 treated as “baseline”, others measured relative to that.
+- Thus prediction for feed 1 is intercept, 60.62 (mean weight for feed 1).
+- Prediction for feed 2 is 60.62 + 8.68 = 69.30 (mean weight for feed 2).
+- Or, mean weight for feed 2 is 8.68 bigger than for feed 1.
+- Mean weight for feed 3 is 33.48 bigger than for feed 1.
+- Slopes can be negative, if mean for a feed had been smaller than for
+feed 1.
+
+## Reproducing the ANOVA
+- Pass the fitted model object into `anova`:
+
+\footnotesize
+```{r with-categ-R-7}
+anova(pigs.2)
+```
+\normalsize
+
+- Same as before.
+- But no Tukey this way:
+
+\footnotesize
+```{r with-categ-R-8, error=TRUE}
+TukeyHSD(pigs.2)
+```
+\normalsize
+
+## The crickets
+- Male crickets rub their wings together to produce a chirping sound.
+- Rate of chirping, called “pulse rate”, depends on species and possibly
+on temperature.
+- Sample of crickets of two species’ pulse rates measured; temperature
+also recorded.
+- Does pulse rate differ for species, especially when temperature
+accounted for?
+
+## The crickets data
+Read the data:
+
+```{r with-categ-R-9, message=F}
+my_url <- "http://ritsokiguess.site/datafiles/crickets2.csv"
+crickets <- read_csv(my_url)
+crickets %>% sample_n(10)
+```
+
+## Fit model with `lm` 
+
+```{r with-categ-R-10}
+crickets.1 <- lm(pulse_rate ~ temperature + species, 
+                 data = crickets)
+```
+
+Can I remove anything? No:
+
+```{r with-categ-R-11}
+drop1(crickets.1, test = "F") 
+```
+
+`drop1` is right thing to use in a regression with categorical (explanatory) variables in it: "can I remove this categorical variable *as a whole*?"
+
+## The summary 
+
+```{r with-categ-R-12}
+summary(crickets.1)
+```
+
+## Conclusions
+
+ - Slope for temperature says that increasing temperature by 1 degree
+increases pulse rate by 3.6 (same for both species)
+- Slope for `speciesniveus` says that pulse rate for `niveus` about 10
+lower than that for `exclamationis` at same temperature (latter species
+is baseline).
+- R-squared of almost 0.99 is very high, so that the prediction of pulse
+rate from species and temperature is very good.
+
+## To end with a graph
+
+- Two quantitative variables and one categorical: scatterplot with categories distinguished by colour.
+- This graph seems to need a title, which I define first. 
+
+
+```{r with-categ-R-13}
+t1 <- "Pulse rate against temperature for two species of crickets"
+t2 <- "Temperature in degrees Celsius"
+ggplot(crickets, aes(x = temperature, y = pulse_rate,
+  colour = species)) +
+  geom_point() + geom_smooth(method = "lm", se = FALSE) +
+  ggtitle(t1, t2) -> g
+```
+
+## The graph
+
+```{r}
+g
+```
+
