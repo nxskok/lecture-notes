@@ -2,11 +2,13 @@
 Let’s go back to our Australian athletes: 
 
 ```{r read-athletes, echo=F}
+#| message = FALSE
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
+# athletes %>% slice_sample(n = 300) -> athletes
 ```
 
-\footnotesize
+\scriptsize
 
 ```{r choosing-R-1}
 athletes
@@ -65,7 +67,7 @@ athletes %>% select(ends_with("c"))
 This works with any of the select-helpers:
 
 ```{r choosing-R-8}
-athletes %>% select(ends_with("C", ignore.case=F))
+athletes %>% select(ends_with("C", ignore.case=FALSE))
 ```
 
 
@@ -98,29 +100,36 @@ athletes %>% select(where(is.character))
 
 ## Choosing rows by number 
 
+\tiny
 ```{r choosing-R-12}
 athletes %>% slice(16:25)
 ```
-
+\normalsize
 
 
 
 ## Non-consecutive rows 
 
+\tiny
+
 ```{r choosing-R-13}
 athletes %>% 
-  slice(10,13,17,42)
+  slice(10, 13, 17, 42)
 ```
+
+\normalsize
 
 ## A random sample of rows
 
+\tiny
 ```{r choosing-R-14}
 athletes %>% slice_sample(n=8)
 ```
+\normalsize
 
 ## Rows for which something is true
 
-\footnotesize
+\tiny
 ```{r choosing-R-15}
 athletes %>% filter(Sport == "Tennis")
 ```
