@@ -726,9 +726,6 @@
 <pre><code>[1] 4</code></pre>
 </div>
 </div>
-</section>
-<section id="why-does-this-work" class="slide level2">
-<h2>Why does this work?</h2>
 <ul>
 <li>Just uses the last two observations in <code>x</code> and <code>y</code>:</li>
 </ul>
@@ -956,12 +953,12 @@ $x3
 <li>If the “for each” part is simple, go ahead and use <code>map_</code>-whatever.</li>
 <li>If not, write a function to do the complicated thing first.</li>
 <li>Example: “half or triple plus one”: if the input is an even number, halve it; if it is an odd number, multiply it by three and add one.</li>
+<li>This is hard to do as a one-liner: first we have to figure out whether the input is odd or even, and then we have to do the right thing with it.</li>
 </ul>
 </section>
-<section id="setting-up" class="slide level2">
-<h2>Setting up</h2>
+<section id="odd-or-even" class="slide level2">
+<h2>Odd or even?</h2>
 <ul>
-<li>This is hard to do as a one-liner: first we have to figure out whether the input is odd or even, and then we have to do the right thing with it.</li>
 <li>Odd or even? Work out the remainder when dividing by 2:</li>
 </ul>
 <div class="cell">
@@ -981,17 +978,17 @@ $x3
 <section id="write-the-function" class="slide level2">
 <h2>Write the function</h2>
 <ul>
-<li>First test for odd or even, and then do the appropriate calculation:</li>
+<li>First test for integerness, then test for odd or even, and then do the appropriate calculation:</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>hotpo <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb82-2"><a href="#cb82-2"></a>  <span class="fu">stopifnot</span>(<span class="fu">round</span>(x) <span class="sc">==</span> x) <span class="co"># check whether integer</span></span>
+<span id="cb82-2"><a href="#cb82-2"></a>  <span class="fu">stopifnot</span>(<span class="fu">round</span>(x) <span class="sc">==</span> x) <span class="co"># passes if input an integer</span></span>
 <span id="cb82-3"><a href="#cb82-3"></a>  remainder <span class="ot">&lt;-</span> x <span class="sc">%%</span> <span class="dv">2</span></span>
 <span id="cb82-4"><a href="#cb82-4"></a>  <span class="cf">if</span> (remainder <span class="sc">==</span> <span class="dv">1</span>) {</span>
 <span id="cb82-5"><a href="#cb82-5"></a>    ans <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span></span>
 <span id="cb82-6"><a href="#cb82-6"></a>  }</span>
 <span id="cb82-7"><a href="#cb82-7"></a>  <span class="cf">else</span> {</span>
-<span id="cb82-8"><a href="#cb82-8"></a>    ans <span class="ot">&lt;-</span> x <span class="sc">%/%</span> <span class="dv">2</span> <span class="co"># integer division (throw away fraction)</span></span>
+<span id="cb82-8"><a href="#cb82-8"></a>    ans <span class="ot">&lt;-</span> x <span class="sc">%/%</span> <span class="dv">2</span> <span class="co"># integer division</span></span>
 <span id="cb82-9"><a href="#cb82-9"></a>  }</span>
 <span id="cb82-10"><a href="#cb82-10"></a>  ans</span>
 <span id="cb82-11"><a href="#cb82-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1103,11 +1100,11 @@ $x3
 <h2>Which starting points have the longest sequences?</h2>
 <ul>
 <li>The <code>length</code> of the vector returned from <code>hotpo_seq</code> says how long it took to get to 1.</li>
-<li>Out of the starting points 1 to 100, which one has the longest sequence? Answer on next page:</li>
+<li>Out of the starting points 1 to 100, which one has the longest sequence?</li>
 </ul>
 </section>
-<section id="the-longest-10-sequences" class="slide level2">
-<h2>The longest 10 sequences</h2>
+<section id="top-10-longest-sequences" class="slide level2">
+<h2>Top 10 longest sequences</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb96-2"><a href="#cb96-2"></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">map_int</span>(</span>
@@ -1129,6 +1126,9 @@ $x3
 10    63        108</code></pre>
 </div>
 </div>
+<ul>
+<li>27 is an unusually low starting point to have such a long sequence.</li>
+</ul>
 </section>
 <section id="what-happens-if-we-save-the-entire-sequence" class="slide level2">
 <h2>What happens if we save the entire sequence?</h2>
@@ -1197,6 +1197,7 @@ $x3
 7     7 &lt;dbl [17]&gt;         17      52</code></pre>
 </div>
 </div>
+<p>It does.</p>
 </section>
 <section id="final-thoughts-on-this" class="slide level2">
 <h2>Final thoughts on this</h2>

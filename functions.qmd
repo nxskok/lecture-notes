@@ -254,8 +254,6 @@ with(my_df, slope(x, y, subset = 3:4))
 ```
 
 
-## Why does this work?
-
 - Just uses the last two observations in `x` and `y`:
 
 ```{r functions-25}
@@ -382,12 +380,13 @@ d %>% mutate(root = map_dbl(x, \(x) sqrt(x)))
 - If not, write a function to do the complicated thing first.
 - Example: “half or triple plus one”: if the input is an even number,
 halve it; if it is an odd number, multiply it by three and add one.
-
-## Setting up
-
 - This is hard to do as a one-liner: first we have to figure out whether
 the input is odd or even, and then we have to do the right thing with
 it.
+
+## Odd or even?
+
+
 - Odd or even? Work out the remainder when dividing by 2:
 
 ```{r functions-36}
@@ -398,17 +397,17 @@ it.
 - 5 has remainder 1 so it is odd.
 
 ## Write the function
-- First test for odd or even, and then do the appropriate calculation:
+- First test for integerness, then test for odd or even, and then do the appropriate calculation:
 
 ```{r functions-37, error=TRUE}
 hotpo <- function(x) {
-  stopifnot(round(x) == x) # check whether integer
+  stopifnot(round(x) == x) # passes if input an integer
   remainder <- x %% 2
   if (remainder == 1) {
     ans <- 3 * x + 1
   }
   else {
-    ans <- x %/% 2 # integer division (throw away fraction)
+    ans <- x %/% 2 # integer division
   }
   ans
 }
@@ -485,9 +484,10 @@ options(width = w)
 - The `length` of the vector returned from `hotpo_seq` says how long it
 took to get to 1.
 - Out of the starting points 1 to 100, which one has the longest
-sequence? Answer on next page:
+sequence?
 
-## The longest 10 sequences
+## Top 10 longest sequences
+
 
 ```{r functions-43}
 tibble(start = 1:100) %>%
@@ -495,6 +495,8 @@ tibble(start = 1:100) %>%
     start, \(start) length(hotpo_seq(start)))) %>%
   slice_max(seq_length, n = 10)
 ```
+
+- 27 is an unusually low starting point to have such a long sequence.
 
 ## What happens if we save the entire sequence? 
 
@@ -509,7 +511,6 @@ tibble(start = 1:7) %>%
 
 ## Using the whole sequence to find its length and its max 
 
-\small
 
 ```{r functions-45}
 tibble(start = 1:7) %>%
@@ -521,11 +522,9 @@ tibble(start = 1:7) %>%
 ```
 
 
-\normalsize
 
 ## Does it work with `rowwise`?
 
-\scriptsize
 
 ```{r functions-46}
 tibble(start=1:7) %>% 
@@ -535,12 +534,10 @@ tibble(start=1:7) %>%
   mutate(seq_max = max(sequence))
 ```
 
-\normalsize
-
+It does.
 
 ## Final thoughts on this
 - Called the **Collatz conjecture**.
 - Nobody knows whether the sequence always gets to 1.
 - Nobody has found an $n$ for which it doesn’t.
 - A [tree](https://www.jasondavies.com/collatz-graph/).
-
