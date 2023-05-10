@@ -5,9 +5,10 @@
 <script src="tidying_files/libs/quarto-html/popper.min.js"></script>
 <script src="tidying_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="tidying_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="tidying_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="tidying_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="tidying_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.335">
+  <meta name="generator" content="quarto-1.3.340">
 
   <title>Tidying data</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,9 +25,10 @@
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
       width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -135,44 +137,44 @@
     font-weight: 400;
   }
 
-  .callout.callout-captioned.callout-style-simple .callout-body {
+  .callout.callout-titled.callout-style-simple .callout-body {
     margin-top: 0.2em;
   }
 
-  .callout:not(.callout-captioned) .callout-body {
+  .callout:not(.callout-titled) .callout-body {
       display: flex;
   }
 
-  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
     padding-left: 1.6em;
   }
 
-  .callout.callout-captioned .callout-header {
+  .callout.callout-titled .callout-header {
     padding-top: 0.2em;
     margin-bottom: -0.2em;
   }
 
-  .callout.callout-captioned .callout-caption  p {
+  .callout.callout-titled .callout-title  p {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
   }
     
-  .callout.callout-captioned.callout-style-simple .callout-content  p {
+  .callout.callout-titled.callout-style-simple .callout-content  p {
     margin-top: 0;
   }
 
-  .callout.callout-captioned.callout-style-default .callout-content  p {
+  .callout.callout-titled.callout-style-default .callout-content  p {
     margin-top: 0.7em;
   }
 
-  .callout.callout-style-simple div.callout-caption {
+  .callout.callout-style-simple div.callout-title {
     border-bottom: none;
     font-size: .9rem;
     font-weight: 600;
     opacity: 75%;
   }
 
-  .callout.callout-style-default  div.callout-caption {
+  .callout.callout-style-default  div.callout-title {
     border-bottom: none;
     font-weight: 600;
     opacity: 85%;
@@ -204,7 +206,7 @@
     background-size: 0.9rem 0.9rem;
   }
 
-  .callout-caption {
+  .callout-title {
     display: flex
   }
     
@@ -217,16 +219,16 @@
     display: none !important;
   }
 
-  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
     margin-bottom: 0.5rem;
   }
 
-  .callout.callout-captioned .callout-icon::before {
+  .callout.callout-titled .callout-icon::before {
     margin-top: .5rem;
     padding-right: .5rem;
   }
 
-  .callout:not(.callout-captioned) .callout-icon::before {
+  .callout:not(.callout-titled) .callout-icon::before {
     margin-top: 1rem;
     padding-right: .5rem;
   }
@@ -241,7 +243,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
   }
 
-  div.callout-note.callout-style-default .callout-caption {
+  div.callout-note.callout-style-default .callout-title {
     background-color: #dae6fb
   }
 
@@ -253,7 +255,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
   }
 
-  div.callout-important.callout-style-default .callout-caption {
+  div.callout-important.callout-style-default .callout-title {
     background-color: #f7dddc
   }
 
@@ -265,7 +267,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-warning.callout-style-default .callout-caption {
+  div.callout-warning.callout-style-default .callout-title {
     background-color: #fcefdc
   }
 
@@ -277,7 +279,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-tip.callout-style-default .callout-caption {
+  div.callout-tip.callout-style-default .callout-title {
     background-color: #ccf1e3
   }
 
@@ -289,7 +291,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
   }
 
-  div.callout-caution.callout-style-default .callout-caption {
+  div.callout-caution.callout-style-default .callout-title {
     background-color: #ffe5d0
   }
 
@@ -516,13 +518,13 @@
 <pre><code># A tibble: 7 × 4
     pig feed  weight pig_id 
   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;  
-1     2 feed4   84.2 feed4_2
-2     1 feed1   60.8 feed1_1
-3     5 feed1   61.7 feed1_5
-4     3 feed1   65   feed1_3
-5     4 feed3   96.5 feed3_4
+1     3 feed2   74   feed2_3
+2     1 feed2   68.7 feed2_1
+3     3 feed4   83.1 feed4_3
+4     4 feed4   85.7 feed4_4
+5     1 feed3   92.6 feed3_1
 6     2 feed3   92.1 feed3_2
-7     3 feed3   90.2 feed3_3</code></pre>
+7     5 feed3   99.1 feed3_5</code></pre>
 </div>
 </div>
 </section>
@@ -615,27 +617,34 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <span id="cb16-2"><a href="#cb16-2"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="the-data-messed-up" class="slide level2">
-<h2>The data (messed up)</h2>
+<section id="the-data-randomly-chosen-rows" class="slide level2">
+<h2>The data (randomly chosen rows)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>tb <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5,769 × 22
-   iso2   year   m04  m514  m014 m1524 m2534 m3544 m4554 m5564   m65    mu   f04
-   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 AD     1989    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
- 2 AD     1990    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
- 3 AD     1991    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
- 4 AD     1992    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
- 5 AD     1993    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
- 6 AD     1994    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
- 7 AD     1996    NA    NA     0     0     0     4     1     0     0    NA    NA
- 8 AD     1997    NA    NA     0     0     1     2     2     1     6    NA    NA
- 9 AD     1998    NA    NA     0     0     0     1     0     0     0    NA    NA
-10 AD     1999    NA    NA     0     0     0     1     1     0     0    NA    NA
-# ℹ 5,759 more rows
-# ℹ 9 more variables: f514 &lt;dbl&gt;, f014 &lt;dbl&gt;, f1524 &lt;dbl&gt;, f2534 &lt;dbl&gt;,
-#   f3544 &lt;dbl&gt;, f4554 &lt;dbl&gt;, f5564 &lt;dbl&gt;, f65 &lt;dbl&gt;, fu &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 10 × 22
+   iso2   year   m04  m514  m014 m1524 m2534 m3544 m4554 m5564   m65
+   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 IQ     2003    NA    NA    30   659   876   355   293   168   143
+ 2 TR     2002    NA    NA    NA    NA    NA    NA    NA    NA    NA
+ 3 ML     2000    NA    NA    23   206   430   396   297   235   144
+ 4 TH     2000    NA    NA    27   859  2570  2380  2117  1908  2213
+ 5 MY     2003    NA    NA   216  1211  2010  2073  1798  1438  1601
+ 6 CR     1989    NA    NA    NA    NA    NA    NA    NA    NA    NA
+ 7 BA     1986    NA    NA    NA    NA    NA    NA    NA    NA    NA
+ 8 LT     1983    NA    NA    NA    NA    NA    NA    NA    NA    NA
+ 9 TO     1989    NA    NA    NA    NA    NA    NA    NA    NA    NA
+10 SR     1995    NA    NA    NA    NA    NA    NA    NA    NA    NA
+# ℹ 11 more variables: mu &lt;dbl&gt;, f04 &lt;dbl&gt;, f514 &lt;dbl&gt;, f014 &lt;dbl&gt;,
+#   f1524 &lt;dbl&gt;, f2534 &lt;dbl&gt;, f3544 &lt;dbl&gt;, f4554 &lt;dbl&gt;, f5564 &lt;dbl&gt;,
+#   f65 &lt;dbl&gt;, fu &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Many rows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">nrow</span>(tb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5769</code></pre>
 </div>
 </div>
 </section>
@@ -647,21 +656,24 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <li>Abbreviations <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">here</a>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>tb <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">pivot_longer</span>(m04<span class="sc">:</span>fu, <span class="at">names_to =</span> <span class="st">"genage"</span>, </span>
-<span id="cb19-3"><a href="#cb19-3"></a>               <span class="at">values_to =</span> <span class="st">"freq"</span>, <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>) <span class="ot">-&gt;</span> tb2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>tb <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">pivot_longer</span>(m04<span class="sc">:</span>fu, <span class="at">names_to =</span> <span class="st">"genage"</span>, </span>
+<span id="cb21-3"><a href="#cb21-3"></a>               <span class="at">values_to =</span> <span class="st">"freq"</span>, <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>) <span class="ot">-&gt;</span> tb2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
+<li>Code for <code>pivot_longer</code>:
+<ul>
 <li>columns to make longer</li>
-<li>column to contain the names</li>
-<li>column to contain the values</li>
-<li>(optional) drop missings in the values</li>
+<li>column to contain the names (categorical)</li>
+<li>column to contain the values (quantitative)</li>
+<li>drop missings in the values</li>
+</ul></li>
 </ul>
 </section>
 <section id="results-some" class="slide level2">
 <h2>Results (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>tb2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>tb2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 35,750 × 4
    iso2   year genage  freq
@@ -693,13 +705,13 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <li>For “how to split”, here “after first character”:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>tb2 <span class="sc">%&gt;%</span> <span class="fu">separate</span>(genage, <span class="fu">c</span>(<span class="st">"gender"</span>, <span class="st">"age"</span>), <span class="dv">1</span>) <span class="ot">-&gt;</span> tb3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>tb2 <span class="sc">%&gt;%</span> <span class="fu">separate</span>(genage, <span class="fu">c</span>(<span class="st">"gender"</span>, <span class="st">"age"</span>), <span class="dv">1</span>) <span class="ot">-&gt;</span> tb3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tidied-tuberculosis-data-some" class="slide level2">
 <h2>Tidied tuberculosis data (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>tb3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>tb3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 35,750 × 5
    iso2   year gender age    freq
@@ -717,20 +729,17 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 # ℹ 35,740 more rows</code></pre>
 </div>
 </div>
-<div class="cell">
-
-</div>
 </section>
-<section id="in-practice" class="slide level2">
+<section id="in-practice" class="slide level2 smaller">
 <h2>In practice…</h2>
 <ul>
 <li>instead of doing the pipe one step at a time, you <em>debug</em> it one step at a time, and when you have each step working, you use that step’s output as input to the next step, thus:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>tb <span class="sc">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">pivot_longer</span>(m04<span class="sc">:</span>fu, <span class="at">names_to =</span> <span class="st">"genage"</span>, </span>
-<span id="cb25-3"><a href="#cb25-3"></a>               <span class="at">values_to =</span> <span class="st">"freq"</span>, <span class="at">values_drop_na =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-4"><a href="#cb25-4"></a>  <span class="fu">separate</span>(genage, <span class="fu">c</span>(<span class="st">"gender"</span>, <span class="st">"age"</span>), <span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>tb <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">pivot_longer</span>(m04<span class="sc">:</span>fu, <span class="at">names_to =</span> <span class="st">"genage"</span>, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>               <span class="at">values_to =</span> <span class="st">"freq"</span>, <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">separate</span>(genage, <span class="fu">c</span>(<span class="st">"gender"</span>, <span class="st">"age"</span>), <span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 35,750 × 5
    iso2   year gender age    freq
@@ -756,9 +765,9 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <section id="total-tuberculosis-cases-by-year-some-of-the-years" class="slide level2">
 <h2>Total tuberculosis cases by year (some of the years)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>tb3 <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(year, <span class="dv">1991</span>, <span class="dv">1998</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(freq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>tb3 <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(year, <span class="dv">1991</span>, <span class="dv">1998</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(freq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
    year  total
@@ -783,9 +792,9 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <li>try counting up total cases by country:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>tb3 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(iso2) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(freq)) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>tb3 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(iso2) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(freq)) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 213 × 2
    iso2    total
@@ -805,12 +814,12 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 </div>
 </section>
 <section id="what-years-do-i-have-for-china" class="slide level2">
-<h2>what years do I have for China?</h2>
+<h2>What years do I have for China?</h2>
 <p>China started recording in 1995, which is at least part of the problem:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>tb3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(iso2<span class="sc">==</span><span class="st">"CN"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(freq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>tb3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(iso2<span class="sc">==</span><span class="st">"CN"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(freq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 2
     year  total
@@ -832,18 +841,15 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 </div>
 </div>
 </section>
-<section id="first-year-of-recording-for-each-country" class="slide level2">
-<h2>first year of recording for each country?</h2>
+<section id="first-year-of-recording-by-country" class="slide level2">
+<h2>First year of recording by country?</h2>
 <ul>
 <li>A lot of countries started recording in about 1995, in fact:</li>
 </ul>
 <div class="cell">
-
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>tb3 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(iso2) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">summarize</span>(<span class="at">first_year=</span><span class="fu">min</span>(year)) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">count</span>(first_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>tb3 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(iso2) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">summarize</span>(<span class="at">first_year=</span><span class="fu">min</span>(year)) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">count</span>(first_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 2
    first_year     n
@@ -864,38 +870,37 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 14       2007     1</code></pre>
 </div>
 </div>
+<ul>
+<li>So the reason for the big jump in cases is that so many countries started recording then, not that there really were more cases.</li>
+</ul>
 </section>
 <section id="some-toronto-weather-data" class="slide level2">
 <h2>Some Toronto weather data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>my_url <span class="ot">&lt;-</span> </span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="st">"http://ritsokiguess.site/STAC32/toronto_weather.csv"</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>weather <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-data-some-messed-up" class="slide level2">
-<h2>The data (some, messed up)</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>my_url <span class="ot">&lt;-</span> </span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="st">"http://ritsokiguess.site/STAC32/toronto_weather.csv"</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>weather <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
+<span id="cb37-4"><a href="#cb37-4"></a>weather</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24 × 35
-   station    Year Month element   d01   d02   d03   d04   d05   d06   d07   d08
-   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 TORONTO …  2018 01    tmax     -7.9  -7.1  -5.3  -7.7 -14.7 -15.4  -1     3  
- 2 TORONTO …  2018 01    tmin    -18.6 -12.5 -11.2 -19.7 -20.6 -22.3 -17.5  -1.7
- 3 TORONTO …  2018 02    tmax      5.6  -8.6   0.4   1.8  -6.6  -3.2  -4.1  -5.2
- 4 TORONTO …  2018 02    tmin     -8.9 -15    -9.7  -8.8 -12    -8.2  -8.7  -9.7
- 5 TORONTO …  2018 03    tmax     NA    NA    NA    NA    NA    NA     3.1   0.5
- 6 TORONTO …  2018 03    tmin     NA    -0.5  NA    -3.1  NA    -1.4   0.4  -2.5
- 7 TORONTO …  2018 04    tmax      4.5   6.5   5     5.7   2.9   5.4   2     2.7
- 8 TORONTO …  2018 04    tmin     -2.6  -1.2   2.4  -3.2  -3.9  -2.6  -4.4  -3.6
- 9 TORONTO …  2018 05    tmax     23.5  26.3  23    24    24.1  17.4  15.9  18.2
-10 TORONTO …  2018 05    tmin      8.5  14.4  11.4   9.2   8.5  13.3  10.6   8.5
+   station  Year Month element   d01   d02   d03   d04   d05   d06   d07
+   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 TORONT…  2018 01    tmax     -7.9  -7.1  -5.3  -7.7 -14.7 -15.4  -1  
+ 2 TORONT…  2018 01    tmin    -18.6 -12.5 -11.2 -19.7 -20.6 -22.3 -17.5
+ 3 TORONT…  2018 02    tmax      5.6  -8.6   0.4   1.8  -6.6  -3.2  -4.1
+ 4 TORONT…  2018 02    tmin     -8.9 -15    -9.7  -8.8 -12    -8.2  -8.7
+ 5 TORONT…  2018 03    tmax     NA    NA    NA    NA    NA    NA     3.1
+ 6 TORONT…  2018 03    tmin     NA    -0.5  NA    -3.1  NA    -1.4   0.4
+ 7 TORONT…  2018 04    tmax      4.5   6.5   5     5.7   2.9   5.4   2  
+ 8 TORONT…  2018 04    tmin     -2.6  -1.2   2.4  -3.2  -3.9  -2.6  -4.4
+ 9 TORONT…  2018 05    tmax     23.5  26.3  23    24    24.1  17.4  15.9
+10 TORONT…  2018 05    tmin      8.5  14.4  11.4   9.2   8.5  13.3  10.6
 # ℹ 14 more rows
-# ℹ 23 more variables: d09 &lt;dbl&gt;, d10 &lt;dbl&gt;, d11 &lt;dbl&gt;, d12 &lt;dbl&gt;, d13 &lt;dbl&gt;,
-#   d14 &lt;dbl&gt;, d15 &lt;dbl&gt;, d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;dbl&gt;, d19 &lt;dbl&gt;,
-#   d20 &lt;dbl&gt;, d21 &lt;dbl&gt;, d22 &lt;dbl&gt;, d23 &lt;dbl&gt;, d24 &lt;dbl&gt;, d25 &lt;dbl&gt;,
-#   d26 &lt;dbl&gt;, d27 &lt;dbl&gt;, d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
+# ℹ 24 more variables: d08 &lt;dbl&gt;, d09 &lt;dbl&gt;, d10 &lt;dbl&gt;, d11 &lt;dbl&gt;,
+#   d12 &lt;dbl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;, d16 &lt;dbl&gt;, d17 &lt;dbl&gt;,
+#   d18 &lt;dbl&gt;, d19 &lt;dbl&gt;, d20 &lt;dbl&gt;, d21 &lt;dbl&gt;, d22 &lt;dbl&gt;, d23 &lt;dbl&gt;,
+#   d24 &lt;dbl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;, d28 &lt;dbl&gt;, d29 &lt;dbl&gt;,
+#   d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -904,24 +909,21 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <ul>
 <li><p>Daily weather records for “Toronto City” weather station in 2018:</p>
 <ul>
-<li><em>station</em>: identifier for this weather station (always same here)</li>
-<li><em>Year</em>, <em>Month</em></li>
-<li><em>element</em>: whether temperature given was daily max or daily min</li>
-<li><em>d01, d02</em>,… <em>d31</em>: day of the month from 1st to 31st.</li>
+<li><code>station</code>: identifier for this weather station (always same here)</li>
+<li><code>Year</code>, <code>Month</code></li>
+<li><code>element</code>: whether temperature given was daily max or daily min</li>
+<li><code>d01</code>, <code>d02</code>,… <code>d31</code>: day of the month from 1st to 31st.</li>
 </ul></li>
-<li><p>Numbers in data frame all temperatures (for different days of the month), so first step is</p></li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>weather <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">pivot_longer</span>(d01<span class="sc">:</span>d31, <span class="at">names_to=</span><span class="st">"day"</span>, </span>
-<span id="cb38-3"><a href="#cb38-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>, </span>
-<span id="cb38-4"><a href="#cb38-4"></a>               <span class="at">values_drop_na =</span> T) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="so-far" class="slide level2">
-<h2>So far</h2>
+<section id="off-we-go" class="slide level2">
+<h2>Off we go</h2>
+<p>Numbers in data frame all temperatures (for different days of the month), so first step is</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>weather <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">pivot_longer</span>(d01<span class="sc">:</span>d31, <span class="at">names_to=</span><span class="st">"day"</span>, </span>
+<span id="cb39-3"><a href="#cb39-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>, </span>
+<span id="cb39-4"><a href="#cb39-4"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 703 × 6
    station       Year Month element day   temperature
@@ -940,26 +942,23 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 </div>
 </div>
 </section>
-<section id="the-days" class="slide level2">
-<h2>The days</h2>
+<section id="element" class="slide level2">
+<h2><code>Element</code></h2>
 <ul>
 <li>Column <code>element</code> contains names of two different variables, that should each be in separate column.</li>
 <li>Distinct from eg. <code>m1524</code> in tuberculosis data, that contained levels of two different factors, handled by separate.</li>
-<li>Untangling names of variables handled by <code>pivot_wider</code>:</li>
+<li>Untangling names of variables handled by <code>pivot_wider</code>.</li>
 </ul>
+</section>
+<section id="handling-element" class="slide level2">
+<h2>Handling <code>element</code></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>weather <span class="sc">%&gt;%</span></span>
 <span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">pivot_longer</span>(d01<span class="sc">:</span>d31, <span class="at">names_to=</span><span class="st">"day"</span>, </span>
 <span id="cb41-3"><a href="#cb41-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>, </span>
-<span id="cb41-4"><a href="#cb41-4"></a>               <span class="at">values_drop_na =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href="#cb41-4"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>element, </span>
-<span id="cb41-6"><a href="#cb41-6"></a>                <span class="at">values_from=</span>temperature) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="so-far-1" class="slide level2">
-<h2>So far</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-6"><a href="#cb41-6"></a>                <span class="at">values_from=</span>temperature) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 355 × 6
    station       Year Month day    tmax  tmin
@@ -978,27 +977,24 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 </div>
 </div>
 </section>
-<section id="further-improvements" class="slide level2">
-<h2>Further improvements</h2>
+<section id="further-improvements-12" class="slide level2">
+<h2>Further improvements 1/2</h2>
 <ul>
 <li>We have tidy data now, but can improve things further.</li>
 <li><code>mutate</code> creates new columns from old (or assign back to change a variable).</li>
 <li>Would like numerical dates. <code>separate</code> works, or pull out number as below.</li>
-<li><code>select</code> keeps columns (or drops, with minus). Station name has no value to us:</li>
+<li><code>select</code> keeps columns (or drops, with minus). Station name has no value to us.</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>weather <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">pivot_longer</span>(d01<span class="sc">:</span>d31, <span class="at">names_to=</span><span class="st">"day"</span>, </span>
-<span id="cb44-3"><a href="#cb44-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>, <span class="at">values_drop_na =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>element, <span class="at">values_from=</span>temperature) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">mutate</span>(<span class="at">Day =</span> <span class="fu">parse_number</span>(day)) <span class="sc">%&gt;%</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">select</span>(<span class="sc">-</span>station) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="so-far-2" class="slide level2">
-<h2>So far</h2>
+<section id="further-improvements-22" class="slide level2">
+<h2>Further improvements 2/2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>weather <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">pivot_longer</span>(d01<span class="sc">:</span>d31, <span class="at">names_to=</span><span class="st">"day"</span>, </span>
+<span id="cb43-3"><a href="#cb43-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>, <span class="at">values_drop_na =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>element, <span class="at">values_from=</span>temperature) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">mutate</span>(<span class="at">Day =</span> <span class="fu">parse_number</span>(day)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a>  <span class="fu">select</span>(<span class="sc">-</span>station)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 355 × 6
     Year Month day    tmax  tmin   Day
@@ -1024,21 +1020,21 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <li>Keep only date, tmax, tmin: </li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>weather <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">pivot_longer</span>(d01<span class="sc">:</span>d31, <span class="at">names_to=</span><span class="st">"day"</span>, </span>
-<span id="cb47-3"><a href="#cb47-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>, <span class="at">values_drop_na =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb47-4"><a href="#cb47-4"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>element, <span class="at">values_from=</span>temperature) <span class="sc">%&gt;%</span> </span>
-<span id="cb47-5"><a href="#cb47-5"></a>  <span class="fu">mutate</span>(<span class="at">Day =</span> <span class="fu">parse_number</span>(day)) <span class="sc">%&gt;%</span></span>
-<span id="cb47-6"><a href="#cb47-6"></a>  <span class="fu">select</span>(<span class="sc">-</span>station) <span class="sc">%&gt;%</span> </span>
-<span id="cb47-7"><a href="#cb47-7"></a>  <span class="fu">unite</span>(datestr, <span class="fu">c</span>(Year, Month, Day), <span class="at">sep =</span> <span class="st">"-"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb47-8"><a href="#cb47-8"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(datestr)) <span class="sc">%&gt;%</span></span>
-<span id="cb47-9"><a href="#cb47-9"></a>  <span class="fu">select</span>(<span class="fu">c</span>(date, tmax, tmin)) <span class="ot">-&gt;</span> weather_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>weather <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">pivot_longer</span>(d01<span class="sc">:</span>d31, <span class="at">names_to=</span><span class="st">"day"</span>, </span>
+<span id="cb45-3"><a href="#cb45-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>, <span class="at">values_drop_na =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>element, <span class="at">values_from=</span>temperature) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">mutate</span>(<span class="at">Day =</span> <span class="fu">parse_number</span>(day)) <span class="sc">%&gt;%</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a>  <span class="fu">select</span>(<span class="sc">-</span>station) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-7"><a href="#cb45-7"></a>  <span class="fu">unite</span>(datestr, <span class="fu">c</span>(Year, Month, Day), <span class="at">sep =</span> <span class="st">"-"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(datestr)) <span class="sc">%&gt;%</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>  <span class="fu">select</span>(<span class="fu">c</span>(date, tmax, tmin)) <span class="ot">-&gt;</span> weather_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="our-tidy-data-frame" class="slide level2">
 <h2>Our tidy data frame</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>weather_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>weather_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 355 × 3
    date        tmax  tmin
@@ -1063,8 +1059,8 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <li>Plot temperature against date joined by lines, but with separate lines for max and min. <code>ggplot</code> requires something like</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">ggplot</span>(..., <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temperature)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">ggplot</span>(..., <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temperature)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>only we have two temperatures, one a max and one a min, that we want to keep separate.</p>
 <ul>
@@ -1072,8 +1068,8 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <li>Then can do something like</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temperature, <span class="at">colour =</span> maxmin)) </span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temperature, <span class="at">colour =</span> maxmin)) </span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>to distinguish max and min on graph.</p>
 </section>
@@ -1085,22 +1081,52 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 <li>To make those “one column”s: <code>pivot_longer</code>. I save the graph to show overleaf:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>weather_tidy <span class="sc">%&gt;%</span></span>
-<span id="cb52-2"><a href="#cb52-2"></a>  <span class="fu">pivot_longer</span>(tmax<span class="sc">:</span>tmin, <span class="at">names_to=</span><span class="st">"maxmin"</span>, </span>
-<span id="cb52-3"><a href="#cb52-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb52-4"><a href="#cb52-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temperature, <span class="at">colour =</span> maxmin)) <span class="sc">+</span></span>
-<span id="cb52-5"><a href="#cb52-5"></a>      <span class="fu">geom_line</span>() <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>weather_tidy <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">pivot_longer</span>(tmax<span class="sc">:</span>tmin, <span class="at">names_to=</span><span class="st">"maxmin"</span>, </span>
+<span id="cb50-3"><a href="#cb50-3"></a>               <span class="at">values_to=</span><span class="st">"temperature"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-4"><a href="#cb50-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> temperature, <span class="at">colour =</span> maxmin)) <span class="sc">+</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a>      <span class="fu">geom_line</span>() <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-plot" class="slide level2">
 <h2>The plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="tidying_files/figure-revealjs/temp-plot-1.png" width="960" class="r-stretch"></section>
 <section id="summary-of-tidying-verbs" class="slide level2">
 <h2>Summary of tidying “verbs”</h2>
+<table>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 84%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Verb</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pivot_longer</code></td>
+<td style="text-align: left;">Combine columns that measure same thing into one</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>pivot_wider</code></td>
+<td style="text-align: left;">Take column that measures one thing under different conditions and put into multiple columns</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>separate</code></td>
+<td style="text-align: left;">Turn a column that encodes several variables into several columns</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>unite</code></td>
+<td style="text-align: left;">Combine several (related) variables into one “combination” variable</td>
+</tr>
+</tbody>
+</table>
 <p><code>pivot_longer</code> and <code>pivot_wider</code> are opposites; <code>separate</code> and <code>unite</code> are opposites.</p>
 <div class="footer footer-default">
 
@@ -1137,7 +1163,7 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1379,9 +1405,23 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
       tabsets.forEach(function(tabset) {
         const tabby = new Tabby('#' + tabset.id);
       });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
       const clipboard = new window.ClipboardJS('.code-copy-button', {
-        target: function(trigger) {
-          return trigger.previousElementSibling;
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
         }
       });
       clipboard.on('success', function(e) {
@@ -1429,7 +1469,7 @@ feed4-feed3 -7.86 -13.538962 -2.181038 0.0055599</code></pre>
           },
           interactive: true,
           interactiveBorder: 10,
-          theme: 'quarto-reveal',
+          theme: 'light-border',
           placement: 'bottom-start'
         };
           config['offset'] = [0,0];
