@@ -1,0 +1,165 @@
+---
+title: "Repeated measures analysis"
+format: revealjs
+execute:
+  echo: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## This course
+
+-   STAC33, Introduction to Applied Statistics
+
+-   In person:
+
+  -   2 hours of lectures / week, Tuesday and Thursday
+  -   1 hour of tutorial / week, Monday
+  -   office hours after lectures
+  -   all exams (midterm and final) in person
+  -   This course will help you develop the skills to use software to analyze data, and to communicate the results.
+  -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
+  -   I will help you to work towards this.
+
+##  Instructor:
+
+  -   Ken Butler, `ken.butler@utoronto.ca`, office IC 471
+  -   I like sharing what I know about applied statistics and the use of R
+
+## Prerequisites
+
+- You *need* a second Statistics course that covers statistical inference from a mathematical viewpoint,
+one of these:
+  - STAB57
+  - STA 248
+  - STA 261
+- I check prerequisites.
+- You need STAB57 for the Statistics Minor/Major/Specialist programs.
+
+## Getting help
+
+-   Option 1: come to tutorial and ask the TA.
+
+-   Option 2: Quercus discussion board:
+
+    -   If it's a question about course procedures, look in this course outline and the [course policies](https://ritsokiguess.site/STAC33/policies.pdf) first.
+    -   Then: look at the Quercus discussion forum. Your question might have an answer there.
+    -   If you see a question there that you can answer, go ahead and answer it.
+    -   If you don't see an answer to your question, post your question on the discussion forum.
+    -   For an issue that is more personal, email me (below).
+
+-   Option 3: office hours.
+
+## E-mail (if you must)
+
+-   Use a U of T email (so that I know who you are)
+-   Use a suitable subject, eg "STAC33" 
+-   Begin with "Dear Dr Butler"
+-   State *clearly* how I can help you. (The quicker I can figure this out, the better your chances of a quick reply.)
+-   Include your name (as U of T knows it) *and* student number
+-   I aim to reply within one working day.
+
+## Course objectives
+
+-   You will learn how to use software to analyze data, and to communicate what you found.
+
+-   This will be assessed through assignments (approximately weekly).
+
+    -   Some questions will ask for your software output, and some for explanation in your own words.
+
+-   Along the way you will learn how to use R Notebooks and how to turn these into reports.
+
+- The exams will be done on paper and will ask you for code needed to solve a problem or for an explanation of or conclusions from an analysis that you are given.
+
+- The point of the exams is for you to demonstrate what *you* have learned from the course.
+
+## Course materials
+
+The blue thing on each line is a link:
+
+-   [Quercus](https://q.utoronto.ca/): lecture videos, hand in assignments/projects, receive grades.
+
+-   [Course website](http://ritsokiguess.site/STAC33/): course news, reminders, lecture notes and code, assignment solutions, other stuff I want to share with you
+
+-   [Problems and Solutions in Applied Statistics](http://ritsokiguess.site/pasias/): what it says; PASIAS for short.
+
+-   To run R, can use [Datatools](r.datatools.utoronto.ca) (needs only web browser) or install R and R Studio on your computer. Instructions in lecture notes.
+
+-   [Reference: R for Data Science](https://r4ds.hadley.nz/)
+
+## Assignments
+
+-   Assignments: approx weekly
+    - week 2 tutorial contains a practice assignment, to get you used to the process.
+    - worst two assignments are dropped, but there are no other makeups. Late assignments are subject to a penalty; see below.
+    - available on Tuesdays, due on Sundays at 11:59pm
+    - based on the previous week's lectures
+    - *do not expect much help from me on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems in PASIAS.
+    - you are responsible for making sure that you have handed in the correct file in the correct format. If the grader cannot read it, it is zero.
+
+## Grading
+
+-   Graders will also give feedback on how you can improve for the next assignment.
+
+-   Grades are the grader's best assessment of the quality of the work, and are unlikely to change on appeal.
+
+-   My (detailed) solutions will be available after each assignment is handed in.
+
+
+## Exams and course grades
+
+- there will be in-person midterm and final exams.
+- you *must get at least 40%*  on the final exam to pass the course. The final exam is your opportunity to show that you have learned something from the course. If you do not score high enough on the final exam but would have otherwise passed the course, your grade is 45.
+- course grade computed as 30% assignments, 30% midterm, 40% final.
+
+## Policies {.smaller}
+
+- Assignments may be handed in up to two days late, with a penalty of *1% per hour*. It will not be possible to hand in work later than this (and in any case does you no good, because you will need to be preparing for the next assignment).
+-   You have two "free" assignments; you may miss these without explanation. If circumstances make it impossible to hand in work beyond that, consider whether it is worth your while remaining in the course, because you will have missed a substantial proportion of the material that will be on the exams.
+-   There are no make-up assessments.
+-   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
+- [Detailed course policies](https://ritsokiguess.site/STAC33/policies.pdf)
+
+## Course material {.smaller}
+
+-   Installation / connection for R
+-   Reading data files (of different sorts)
+-   Making graphs
+-   Numerical summaries
+-   Statistical inference
+-   Reports
+-   Tidying and organizing data
+-   Case studies
+-   Functions
+-   Dates and times
+-   Miscellaneous tasks
+-   Vector and matrix algebra in R
+-   The bootstrap
+-   Bayesian statistics with Stan
+
+
+
+## Accessibility statement
+
+Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confidential. The UTSC AccessAbility Services staff are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability.utsc@utoronto.ca`.
+
+Extensions on assignments, if part of your accommodation, are limited to two days: I will be sharing my solutions with the class after that; you need to be preparing for the next assignment. A longer extension is setting you up for failure.
+
+## Expectations 1/3
+
+-   I expect that you will do your own work in this course, and not seek help from outside this course. Expect consequences if you do not do your own work, which may include doing badly on the exams. 
+-   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
+
+## Expectations 2/3
+
+-   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me.
+-   Anything from outside the course, for example, material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there. If you learned it in another course, say which course, but be aware that things may be done differently in other courses (see next page).
+
+## Expectations 3/3
+
+-   I expect you to learn how to do things *as they are done in this course*. 
+-   If you want credit for any ideas that come from outside the course materials, you *must* say where they came from.
+-   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view.
+-   [This (video)](https://twitter.com/i/status/1293543531496308736).
+-   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.
