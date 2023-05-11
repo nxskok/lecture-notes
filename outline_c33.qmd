@@ -1,5 +1,5 @@
 ---
-title: "Repeated measures analysis"
+title: "STAC33 Course Outline"
 format: revealjs
 execute:
   echo: true
