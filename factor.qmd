@@ -1,26 +1,36 @@
-##  Principal components and factor analysis
+---
+title: "Factor analysis"
+format: revealjs
+execute:
+  echo: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+##  Vs. principal components 
 
 
 * Principal components: 
 
 
-* Purely mathematical.
+  * Purely mathematical.
 
-* Find eigenvalues, eigenvectors of correlation matrix.
+  * Find eigenvalues, eigenvectors of correlation matrix.
 
-* No testing whether observed components reproducible, or even probability model behind it.
+  * No testing whether observed components reproducible, or even probability model behind it.
 
 
 * Factor analysis: 
 
 
-* some way towards fixing this (get test of appropriateness)
+  * some way towards fixing this (get test of appropriateness)
 
-* In factor analysis, each variable modelled as: "common factor" (eg. verbal ability) and "specific factor" (left over).
+  * In factor analysis, each variable modelled as: "common factor" (eg. verbal ability) and "specific factor" (left over).
 
-* Choose the common factors to "best" reproduce pattern seen in correlation matrix.
+  * Choose the common factors to "best" reproduce pattern seen in correlation matrix.
 
-* Iterative procedure, different answer from principal components.
+  * Iterative procedure, different answer from principal components.
 
 
 
@@ -229,7 +239,7 @@ kids.1$PVAL
 
 - Read data, transform, rerun principal components, get biplot: 
 
-```{r bFactor-10, message=FALSE}
+```{r bFactor-10, message=FALSE, fig.height=6}
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
 places0 <- read_table2(my_url)
 places0 %>% 
@@ -252,10 +262,10 @@ g
 
 - Most of the criteria are part of components 1 *and* 2. 
 - If we can rotate the arrows counterclockwise:
-- economy and crime would point straight up
-  - part of component 2 only
-- health and education would point to the right
-  - part of component 1 only
+  - economy and crime would point straight up
+    - part of component 2 only
+  - health and education would point to the right
+    - part of component 1 only
 - would be easier to see which variables belong to which component.
 - Factor analysis includes a rotation to help with interpretation.
 
@@ -405,7 +415,7 @@ places.5$loadings
 ```
 \normalsize
 
-## Comments
+## Comments 1/2
 
 - On (new) 5 factors:
 - Factor 1 is health, education, arts: same as factor 1 before.
@@ -413,6 +423,8 @@ places.5$loadings
 - Factor 3 is economy.
 - Factor 4 is crime.
 - Factor 5 is climate and housing: like factor 3 before.
+
+## Comments 2/2
 
 - The two added factors include the two "missing" variables.
 - Is this now enough?
@@ -1085,13 +1097,13 @@ Not-compassionate, athletic, sensitive: A mixed bag. ("Cares about self"?)
 \scriptsize
 ```{r bFactor-63}
 enframe(bem.15$uniquenesses, name="quality", value="uniq") %>%
-arrange(desc(uniq)) %>%
-slice(1:10)
+  slice_max(uniq, n = 10)
 ```
 \normalsize
  
 
 Uses foul language especially, also loves children and analytical. So
 could use even more factors.
+
 
 

@@ -1,0 +1,260 @@
+---
+title: "Analysis of Covariance"
+format: revealjs
+execute:
+  echo: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+
+## Analysis of covariance
+
+
+* ANOVA: explanatory variables categorical (divide data into groups)
+
+* traditionally, analysis of covariance has categorical $x$'s plus one numerical $x$ ("covariate") to be adjusted for.
+
+* `lm` handles this too.
+
+* Simple example: two treatments (drugs) (`a` and `b`), with before and after scores. 
+
+
+* Does knowing before score and/or treatment help to predict after score?
+
+* Is after score different by treatment/before score?
+
+
+
+
+
+## Data
+
+Treatment, before, after: 
+
+
+\scriptsize
+```
+a 5 20
+a 10 23
+a 12 30
+a 9 25
+a 23 34
+a 21 40
+a 14 27
+a 18 38
+a 6 24
+a 13 31
+b 7 19
+b 12 26
+b 27 33
+b 24 35
+b 18 30
+b 22 31
+b 26 34
+b 21 28
+b 14 23
+b 9 22
+```
+\normalsize
+
+
+## Packages
+
+```{r bAncova-1}
+library(tidyverse)
+library(broom)
+library(marginaleffects)
+```
+
+the last of these for predictions.
+
+## Read in data
+
+```{r bAncova-2, message=F}
+url <- "http://ritsokiguess.site/datafiles/ancova.txt"
+prepost <- read_delim(url, " ")
+prepost
+```
+
+
+
+## Making a plot
+```{r ancova-plot, fig.height=4.5}
+ggplot(prepost, aes(x = before, y = after, colour = drug)) +
+  geom_point()
+```
+
+
+
+## Comments 
+
+* As before score goes up, after score goes up.
+
+* Red points (drug A) generally above blue points (drug B), for
+comparable before score.
+
+* Suggests before score effect *and* drug effect.
+
+
+## The means
+```{r bAncova-3 }
+prepost %>%
+  group_by(drug) %>%
+  summarize(
+    before_mean = mean(before),
+    after_mean = mean(after)
+  )
+```
+ 
+
+
+* Mean "after" score slightly higher for treatment A.
+
+* Mean "before" score much higher for treatment B.
+
+* Greater *improvement* on treatment A. 
+
+
+
+## Testing for interaction
+```{r bAncova-4 }
+prepost.1 <- lm(after ~ before * drug, data = prepost)
+anova(prepost.1)
+```
+ 
+
+
+* Interaction not significant. Will remove later.
+
+## Predictions
+
+Set up values to predict for:
+
+```{r}
+summary(prepost)
+```
+
+```{r}
+new <- datagrid(before = c(9.75, 14, 21.25), 
+                drug = c("a", "b"), model = prepost.1)
+```
+
+## and then
+
+
+```{r}
+cbind(predictions(prepost.1, newdata = new)) %>% 
+  select(drug, before, estimate)
+```
+\normalsize
+
+## Predictions (with interaction included), plotted
+
+```{r, fig.height=4}
+plot_cap(model = prepost.1, condition = c("before", "drug"))
+```
+
+Lines almost parallel, but not quite.
+
+
+
+## Taking out interaction
+\small
+```{r bAncova-8 }
+prepost.2 <- update(prepost.1, . ~ . - before:drug)
+anova(prepost.2)
+```
+ 
+\normalsize
+
+
+* Take out non-significant interaction.
+
+* `before` and `drug` strongly significant.
+
+* Do predictions again and plot them.
+
+## Predictions
+
+```{r}
+cbind(predictions(prepost.2, newdata = new)) %>% 
+  select(drug, before, estimate)
+```
+
+
+## Plot of predicted values
+
+```{r, fig.height=4}
+plot_cap(prepost.2, condition = c("before", "drug"))
+```
+
+This time the lines are *exactly* parallel. No-interaction model forces them
+to have the same slope. 
+
+
+
+## Different look at model output
+
+
+* `anova(prepost.2)` tests for significant effect of
+before score and of drug, but doesn't help with interpretation.
+
+* `summary(prepost.2)` views as regression with slopes:
+
+\scriptsize
+```{r bAncova-11 }
+summary(prepost.2)
+```
+
+\normalsize       
+
+
+
+
+## Understanding those slopes
+
+\footnotesize
+```{r bAncova-12}
+tidy(prepost.2)
+```
+
+\normalsize
+
+
+
+* `before` ordinary numerical variable; `drug`
+categorical. 
+
+* `lm` uses first category `druga` as baseline.
+
+* Intercept is prediction of after score for before score 0 and
+*drug A*.
+
+* `before` slope is predicted change in after score when
+before score increases by 1 (usual slope)
+
+* Slope for `drugb` is *change* in predicted after
+score for being on drug B rather than drug A. Same for *any*
+before score (no interaction).
+
+
+
+## Summary
+
+
+* ANCOVA model: fits different regression line for each group,
+predicting response from covariate.
+
+* ANCOVA model with interaction between factor and covariate
+allows different slopes for each line.
+
+* Sometimes those lines can cross over!
+
+* If interaction not significant, take out. Lines then parallel.
+
+* With parallel lines, groups have consistent effect regardless
+of value of covariate.
+
