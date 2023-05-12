@@ -792,52 +792,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p>Understanding that dependence beyond our scope right now.</p></li>
 </ul>
 </section>
-<section id="normal-quantile-plots" class="slide level2">
-<h2>Normal quantile plots</h2>
-<p>Setup for normal quantile plots</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>peanuts <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">pivot_longer</span>(y<span class="sc">:</span>w, <span class="at">names_to =</span> <span class="st">"xname"</span>, </span>
-<span id="cb26-3"><a href="#cb26-3"></a>               <span class="at">values_to =</span> <span class="st">"xvals"</span>) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Make the plots (save to show on next pages)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">sample =</span> xvals)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">facet_grid</span>(xname <span class="sc">~</span> location, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g1</span>
-<span id="cb27-4"><a href="#cb27-4"></a></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">sample =</span> xvals)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
-<span id="cb27-6"><a href="#cb27-6"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a>  <span class="fu">facet_grid</span>(xname <span class="sc">~</span> variety, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-plot-for-location" class="slide level2">
-<h2>The plot for location</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>g1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="manova_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
-<section id="the-plot-for-variety" class="slide level2">
-<h2>The plot for variety</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="manova_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
-<section id="alternative-show-both-these-plots-at-once" class="slide level2">
-<h2>Alternative: show both these plots at once:</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">sample =</span> xvals)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">facet_grid</span>(xname <span class="sc">~</span> location <span class="sc">+</span> variety, </span>
-<span id="cb30-4"><a href="#cb30-4"></a>             <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="the-combined-plot" class="slide level2">
-<h2>The combined plot</h2>
-
-<img data-src="manova_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
 <section id="comments-3" class="slide level2">
 <h2>Comments</h2>
 <ul>
@@ -852,13 +806,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>One for location, one for variety:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>location))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>location))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Box's M Test 
 
 Chi-Squared Value = 12.47797 , df = 6  and p-value: 0.0521 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>variety))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>variety))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Box's M Test 
 
