@@ -1,6 +1,8 @@
 ---
 title: "Analysis of Covariance"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

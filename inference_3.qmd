@@ -1,6 +1,8 @@
 ---
 title: "The sign test"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

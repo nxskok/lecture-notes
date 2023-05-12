@@ -1,6 +1,8 @@
 ---
 title: "STAC32 Course Outline"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

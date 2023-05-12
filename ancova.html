@@ -383,6 +383,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="ancova_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="ancova_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -445,38 +448,21 @@ b 9 22</code></pre>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/ancova.txt"</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>prepost <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url, <span class="st">" "</span>)</span>
 <span id="cb3-3"><a href="#cb3-3"></a>prepost</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 3
-   drug  before after
-   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
- 1 a          5    20
- 2 a         10    23
- 3 a         12    30
- 4 a          9    25
- 5 a         23    34
- 6 a         21    40
- 7 a         14    27
- 8 a         18    38
- 9 a          6    24
-10 a         13    31
-11 b          7    19
-12 b         12    26
-13 b         27    33
-14 b         24    35
-15 b         18    30
-16 b         22    31
-17 b         26    34
-18 b         21    28
-19 b         14    23
-20 b          9    22</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["drug"],"name":[1],"type":["chr"],"align":["left"]},{"label":["before"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["after"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"a","2":"5","3":"20"},{"1":"a","2":"10","3":"23"},{"1":"a","2":"12","3":"30"},{"1":"a","2":"9","3":"25"},{"1":"a","2":"23","3":"34"},{"1":"a","2":"21","3":"40"},{"1":"a","2":"14","3":"27"},{"1":"a","2":"18","3":"38"},{"1":"a","2":"6","3":"24"},{"1":"a","2":"13","3":"31"},{"1":"b","2":"7","3":"19"},{"1":"b","2":"12","3":"26"},{"1":"b","2":"27","3":"33"},{"1":"b","2":"24","3":"35"},{"1":"b","2":"18","3":"30"},{"1":"b","2":"22","3":"31"},{"1":"b","2":"26","3":"34"},{"1":"b","2":"21","3":"28"},{"1":"b","2":"14","3":"23"},{"1":"b","2":"9","3":"22"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="making-a-plot" class="slide level2">
 <h2>Making a plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">ggplot</span>(prepost, <span class="fu">aes</span>(<span class="at">x =</span> before, <span class="at">y =</span> after, <span class="at">colour =</span> drug)) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ggplot</span>(prepost, <span class="fu">aes</span>(<span class="at">x =</span> before, <span class="at">y =</span> after, <span class="at">colour =</span> drug)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="ancova_files/figure-revealjs/ancova-plot-1.png" width="960" class="r-stretch"></section>
@@ -491,18 +477,19 @@ b 9 22</code></pre>
 <section id="the-means" class="slide level2">
 <h2>The means</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>prepost <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">group_by</span>(drug) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb6-4"><a href="#cb6-4"></a>    <span class="at">before_mean =</span> <span class="fu">mean</span>(before),</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="at">after_mean =</span> <span class="fu">mean</span>(after)</span>
-<span id="cb6-6"><a href="#cb6-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-  drug  before_mean after_mean
-  &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;
-1 a            13.1       29.2
-2 b            18         28.1</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>prepost <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">group_by</span>(drug) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="at">before_mean =</span> <span class="fu">mean</span>(before),</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="at">after_mean =</span> <span class="fu">mean</span>(after)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["drug"],"name":[1],"type":["chr"],"align":["left"]},{"label":["before_mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["after_mean"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"a","2":"13.1","3":"29.2"},{"1":"b","2":"18.0","3":"28.1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -514,19 +501,15 @@ b 9 22</code></pre>
 <section id="testing-for-interaction" class="slide level2">
 <h2>Testing for interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>prepost<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(after <span class="sc">~</span> before <span class="sc">*</span> drug, <span class="at">data =</span> prepost)</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">anova</span>(prepost<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>prepost<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(after <span class="sc">~</span> before <span class="sc">*</span> drug, <span class="at">data =</span> prepost)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">anova</span>(prepost<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Response: after
-            Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-before       1 430.92  430.92 62.6894  6.34e-07 ***
-drug         1 115.31  115.31 16.7743 0.0008442 ***
-before:drug  1  12.34   12.34  1.7948 0.1990662    
-Residuals   16 109.98    6.87                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"430.92384","3":"430.923838","4":"62.68945","5":"6.340327e-07","_rn_":"before"},{"1":"1","2":"115.30596","3":"115.305957","4":"16.77435","5":"8.442224e-04","_rn_":"drug"},{"1":"1","2":"12.33708","3":"12.337080","4":"1.79476","5":"1.990662e-01","_rn_":"before:drug"},{"1":"16","2":"109.98313","3":"6.873945","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -537,7 +520,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>Predictions</h2>
 <p>Set up values to predict for:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">summary</span>(prepost)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">summary</span>(prepost)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     drug               before          after      
  Length:20          Min.   : 5.00   Min.   :19.00  
@@ -549,30 +532,29 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>new <span class="ot">&lt;-</span> <span class="fu">datagrid</span>(<span class="at">before =</span> <span class="fu">c</span>(<span class="fl">9.75</span>, <span class="dv">14</span>, <span class="fl">21.25</span>), </span>
-<span id="cb12-2"><a href="#cb12-2"></a>                <span class="at">drug =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="at">model =</span> prepost<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>new <span class="ot">&lt;-</span> <span class="fu">datagrid</span>(<span class="at">before =</span> <span class="fu">c</span>(<span class="fl">9.75</span>, <span class="dv">14</span>, <span class="fl">21.25</span>), </span>
+<span id="cb9-2"><a href="#cb9-2"></a>                <span class="at">drug =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="at">model =</span> prepost<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="and-then" class="slide level2">
 <h2>and then</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">cbind</span>(<span class="fu">predictions</span>(prepost<span class="fl">.1</span>, <span class="at">newdata =</span> new)) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">select</span>(drug, before, estimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  drug before estimate
-1    a   9.75 25.93250
-2    b   9.75 22.14565
-3    a  14.00 30.07784
-4    b  14.00 25.21304
-5    a  21.25 37.14929
-6    b  21.25 30.44565</code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">cbind</span>(<span class="fu">predictions</span>(prepost<span class="fl">.1</span>, <span class="at">newdata =</span> new)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">select</span>(drug, before, estimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["drug"],"name":[1],"type":["chr"],"align":["left"]},{"label":["before"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["estimate"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"a","2":"9.75","3":"25.93250"},{"1":"b","2":"9.75","3":"22.14565"},{"1":"a","2":"14.00","3":"30.07784"},{"1":"b","2":"14.00","3":"25.21304"},{"1":"a","2":"21.25","3":"37.14929"},{"1":"b","2":"21.25","3":"30.44565"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="predictions-with-interaction-included-plotted" class="slide level2">
 <h2>Predictions (with interaction included), plotted</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">plot_cap</span>(<span class="at">model =</span> prepost<span class="fl">.1</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"before"</span>, <span class="st">"drug"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">plot_cap</span>(<span class="at">model =</span> prepost<span class="fl">.1</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"before"</span>, <span class="st">"drug"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="ancova_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p>Lines almost parallel, but not quite.</p>
@@ -580,18 +562,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="taking-out-interaction" class="slide level2">
 <h2>Taking out interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>prepost<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(prepost<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> before<span class="sc">:</span>drug)</span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">anova</span>(prepost<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>prepost<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(prepost<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> before<span class="sc">:</span>drug)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">anova</span>(prepost<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Response: after
-          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-before     1 430.92  430.92  59.890 5.718e-07 ***
-drug       1 115.31  115.31  16.025 0.0009209 ***
-Residuals 17 122.32    7.20                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"430.9238","3":"430.923838","4":"59.88958","5":"5.718045e-07","_rn_":"before"},{"1":"1","2":"115.3060","3":"115.305957","4":"16.02516","5":"9.209111e-04","_rn_":"drug"},{"1":"17","2":"122.3202","3":"7.195306","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -603,23 +582,22 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="predictions-1" class="slide level2">
 <h2>Predictions</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">cbind</span>(<span class="fu">predictions</span>(prepost<span class="fl">.2</span>, <span class="at">newdata =</span> new)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">select</span>(drug, before, estimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  drug before estimate
-1    a   9.75 26.42794
-2    b   9.75 21.27328
-3    a  14.00 29.94473
-4    b  14.00 24.79007
-5    a  21.25 35.94397
-6    b  21.25 30.78931</code></pre>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">cbind</span>(<span class="fu">predictions</span>(prepost<span class="fl">.2</span>, <span class="at">newdata =</span> new)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">select</span>(drug, before, estimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["drug"],"name":[1],"type":["chr"],"align":["left"]},{"label":["before"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["estimate"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"a","2":"9.75","3":"26.42794"},{"1":"b","2":"9.75","3":"21.27328"},{"1":"a","2":"14.00","3":"29.94473"},{"1":"b","2":"14.00","3":"24.79007"},{"1":"a","2":"21.25","3":"35.94397"},{"1":"b","2":"21.25","3":"30.78931"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="plot-of-predicted-values" class="slide level2">
 <h2>Plot of predicted values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">plot_cap</span>(prepost<span class="fl">.2</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"before"</span>, <span class="st">"drug"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">plot_cap</span>(prepost<span class="fl">.2</span>, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">"before"</span>, <span class="st">"drug"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="ancova_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"><p>This time the lines are <em>exactly</em> parallel. No-interaction model forces them to have the same slope.</p>
@@ -631,7 +609,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p><code>summary(prepost.2)</code> views as regression with slopes:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">summary</span>(prepost<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">summary</span>(prepost<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -658,14 +636,14 @@ F-statistic: 37.96 on 2 and 17 DF,  p-value: 5.372e-07</code></pre>
 <section id="understanding-those-slopes" class="slide level2">
 <h2>Understanding those slopes</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">tidy</span>(prepost<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-  term        estimate std.error statistic  p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)   18.4      1.51       12.1  8.35e-10
-2 before         0.827    0.0955      8.66 1.21e- 7
-3 drugb         -5.15     1.29       -4.00 9.21e- 4</code></pre>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">tidy</span>(prepost<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"18.3599949","3":"1.51153263","4":"12.146608","5":"8.354496e-10"},{"1":"before","2":"0.8274813","3":"0.09550226","4":"8.664520","5":"1.211339e-07"},{"1":"drugb","2":"-5.1546584","3":"1.28765245","4":"-4.003144","5":"9.209111e-04"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>

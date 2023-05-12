@@ -1,6 +1,8 @@
 ---
 title: "Regression with categorical variables"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

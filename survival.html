@@ -383,6 +383,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="survival_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="survival_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -474,22 +477,13 @@
 <h2>The data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>dance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 4
-   Months  Quit Treatment   Age
-    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
- 1      1     1         0    16
- 2      2     1         0    24
- 3      2     1         0    18
- 4      3     0         0    27
- 5      4     1         0    25
- 6      5     1         0    21
- 7     11     1         0    55
- 8      7     1         1    26
- 9      8     1         1    36
-10     10     1         1    38
-11     10     0         1    45
-12     12     1         1    47</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Months"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Quit"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Treatment"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Age"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"0","4":"16"},{"1":"2","2":"1","3":"0","4":"24"},{"1":"2","2":"1","3":"0","4":"18"},{"1":"3","2":"0","3":"0","4":"27"},{"1":"4","2":"1","3":"0","4":"25"},{"1":"5","2":"1","3":"0","4":"21"},{"1":"11","2":"1","3":"0","4":"55"},{"1":"7","2":"1","3":"1","4":"26"},{"1":"8","2":"1","3":"1","4":"36"},{"1":"10","2":"1","3":"1","4":"38"},{"1":"10","2":"0","3":"1","4":"45"},{"1":"12","2":"1","3":"1","4":"47"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -499,37 +493,28 @@
 <li>Response variable:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dance <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mth =</span> <span class="fu">Surv</span>(Months, Quit)) <span class="ot">-&gt;</span> dance</span>
-<span id="cb6-2"><a href="#cb6-2"></a>dance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 5
-   Months  Quit Treatment   Age    mth
-    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;Surv&gt;
- 1      1     1         0    16     1 
- 2      2     1         0    24     2 
- 3      2     1         0    18     2 
- 4      3     0         0    27     3+
- 5      4     1         0    25     4 
- 6      5     1         0    21     5 
- 7     11     1         0    55    11 
- 8      7     1         1    26     7 
- 9      8     1         1    36     8 
-10     10     1         1    38    10 
-11     10     0         1    45    10+
-12     12     1         1    47    12 </code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>dance <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">mth =</span> <span class="fu">Surv</span>(Months, Quit)) <span class="ot">-&gt;</span> dance</span>
+<span id="cb5-2"><a href="#cb5-2"></a>dance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Months"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Quit"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Treatment"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Age"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["mth"],"name":[5],"type":["Surv[,2]"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"0","4":"16","5":"1"},{"1":"2","2":"1","3":"0","4":"24","5":"2"},{"1":"2","2":"1","3":"0","4":"18","5":"2"},{"1":"3","2":"0","3":"0","4":"27","5":"3+"},{"1":"4","2":"1","3":"0","4":"25","5":"4"},{"1":"5","2":"1","3":"0","4":"21","5":"5"},{"1":"11","2":"1","3":"0","4":"55","5":"11"},{"1":"7","2":"1","3":"1","4":"26","5":"7"},{"1":"8","2":"1","3":"1","4":"36","5":"8"},{"1":"10","2":"1","3":"1","4":"38","5":"10"},{"1":"10","2":"0","3":"1","4":"45","5":"10+"},{"1":"12","2":"1","3":"1","4":"47","5":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
 <li>Then fit model, predicting <code>mth</code> from explanatories:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dance<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(mth <span class="sc">~</span> Treatment <span class="sc">+</span> Age, <span class="at">data =</span> dance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dance<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(mth <span class="sc">~</span> Treatment <span class="sc">+</span> Age, <span class="at">data =</span> dance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="output-looks-a-lot-like-regression" class="slide level2">
 <h2>Output looks a lot like regression</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">summary</span>(dance<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">summary</span>(dance<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = mth ~ Treatment + Age, data = dance)
@@ -574,7 +559,7 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <h2>Martingale residual plot for dance data</h2>
 <p>This looks good (with only 12 points):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">ggcoxdiagnostics</span>(dance<span class="fl">.1</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ggcoxdiagnostics</span>(dance<span class="fl">.1</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="survival_files/figure-revealjs/bSurvival-7-1.png" width="960" class="r-stretch"></section>
@@ -585,18 +570,17 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <li>First create a data frame of values to predict from. We’ll do all combos of ages 20 and 40, treatment and not, using <code>crossing</code> to get all the combos:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>treatments <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb12-2"><a href="#cb12-2"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">40</span>)</span>
-<span id="cb12-3"><a href="#cb12-3"></a>dance.new <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">Treatment =</span> treatments, <span class="at">Age =</span> ages)</span>
-<span id="cb12-4"><a href="#cb12-4"></a>dance.new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  Treatment   Age
-      &lt;dbl&gt; &lt;dbl&gt;
-1         0    20
-2         0    40
-3         1    20
-4         1    40</code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>treatments <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>ages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">40</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>dance.new <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">Treatment =</span> treatments, <span class="at">Age =</span> ages)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>dance.new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Treatment"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"20"},{"1":"0","2":"40"},{"1":"1","2":"20"},{"1":"1","2":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -604,8 +588,8 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <h2>The predictions</h2>
 <p>One prediction <em>for each time</em> for each combo of age and treatment in <code>dance.new</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>s <span class="ot">&lt;-</span> <span class="fu">survfit</span>(dance<span class="fl">.1</span>, <span class="at">newdata =</span> dance.new, <span class="at">data =</span> dance)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">summary</span>(s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>s <span class="ot">&lt;-</span> <span class="fu">survfit</span>(dance<span class="fl">.1</span>, <span class="at">newdata =</span> dance.new, <span class="at">data =</span> dance)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">summary</span>(s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: survfit(formula = dance.1, newdata = dance.new, data = dance)
 
@@ -630,7 +614,7 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <li><p>Would be nice to see this on a graph. This is <code>ggsurvplot</code> from package <code>survminer</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggsurvplot</span>(s, <span class="at">conf.int =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggsurvplot</span>(s, <span class="at">conf.int =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="strata-groups" class="slide level2">
@@ -639,21 +623,20 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <li>uses “strata” thus (<code>dance.new</code>):</li>
 </ul>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  Treatment   Age
-      &lt;dbl&gt; &lt;dbl&gt;
-1         0    20
-2         0    40
-3         1    20
-4         1    40</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Treatment"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Age"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"20"},{"1":"0","2":"40"},{"1":"1","2":"20"},{"1":"1","2":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="plotting-survival-probabilities" class="slide level2">
 <h2>Plotting survival probabilities</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="survival_files/figure-revealjs/survival-plot-1.png" width="960" class="r-stretch"></section>
@@ -687,32 +670,21 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <section id="uh-oh-missing-values" class="slide level2">
 <h2>Uh oh, missing values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>lung <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   inst time status age sex ph.ecog ph.karno pat.karno meal.cal wt.loss
-1     3  306      2  74   1       1       90       100     1175      NA
-2     3  455      2  68   1       0       90        90     1225      15
-3     3 1010      1  56   1       0       90        90       NA      15
-4     5  210      2  57   1       1       90        60     1150      11
-5     1  883      2  60   1       0      100        90       NA       0
-6    12 1022      1  74   1       1       50        80      513       0
-7     7  310      2  68   2       2       70        60      384      10
-8    11  361      2  71   2       2       60        80      538       1
-9     1  218      2  53   1       1       70        80      825      16
-10    7  166      2  61   1       2       70        70      271      34
-11    6  170      2  57   1       1       80        80     1025      27
-12   16  654      2  68   2       2       70        70       NA      23
-13   11  728      2  68   2       1       90        90       NA       5
-14   21   71      2  60   1      NA       60        70     1225      32
-15   12  567      2  57   1       1       80        70     2600      60
-16    1  144      2  67   1       1       80        90       NA      15</code></pre>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>lung <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["inst"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["time"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["status"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["age"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["ph.ecog"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ph.karno"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["pat.karno"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["meal.cal"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["wt.loss"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"306","3":"2","4":"74","5":"1","6":"1","7":"90","8":"100","9":"1175","10":"NA","_rn_":"1"},{"1":"3","2":"455","3":"2","4":"68","5":"1","6":"0","7":"90","8":"90","9":"1225","10":"15","_rn_":"2"},{"1":"3","2":"1010","3":"1","4":"56","5":"1","6":"0","7":"90","8":"90","9":"NA","10":"15","_rn_":"3"},{"1":"5","2":"210","3":"2","4":"57","5":"1","6":"1","7":"90","8":"60","9":"1150","10":"11","_rn_":"4"},{"1":"1","2":"883","3":"2","4":"60","5":"1","6":"0","7":"100","8":"90","9":"NA","10":"0","_rn_":"5"},{"1":"12","2":"1022","3":"1","4":"74","5":"1","6":"1","7":"50","8":"80","9":"513","10":"0","_rn_":"6"},{"1":"7","2":"310","3":"2","4":"68","5":"2","6":"2","7":"70","8":"60","9":"384","10":"10","_rn_":"7"},{"1":"11","2":"361","3":"2","4":"71","5":"2","6":"2","7":"60","8":"80","9":"538","10":"1","_rn_":"8"},{"1":"1","2":"218","3":"2","4":"53","5":"1","6":"1","7":"70","8":"80","9":"825","10":"16","_rn_":"9"},{"1":"7","2":"166","3":"2","4":"61","5":"1","6":"2","7":"70","8":"70","9":"271","10":"34","_rn_":"10"},{"1":"6","2":"170","3":"2","4":"57","5":"1","6":"1","7":"80","8":"80","9":"1025","10":"27","_rn_":"11"},{"1":"16","2":"654","3":"2","4":"68","5":"2","6":"2","7":"70","8":"70","9":"NA","10":"23","_rn_":"12"},{"1":"11","2":"728","3":"2","4":"68","5":"2","6":"1","7":"90","8":"90","9":"NA","10":"5","_rn_":"13"},{"1":"21","2":"71","3":"2","4":"60","5":"1","6":"NA","7":"60","8":"70","9":"1225","10":"32","_rn_":"14"},{"1":"12","2":"567","3":"2","4":"57","5":"1","6":"1","7":"80","8":"70","9":"2600","10":"60","_rn_":"15"},{"1":"1","2":"144","3":"2","4":"67","5":"1","6":"1","7":"80","8":"90","9":"NA","10":"15","_rn_":"16"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="a-closer-look" class="slide level2">
 <h2>A closer look</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">summary</span>(lung)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">summary</span>(lung)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      inst            time            status           age       
  Min.   : 1.00   Min.   :   5.0   Min.   :1.000   Min.   :39.00  
@@ -744,22 +716,17 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <section id="remove-obs-with-any-missing-values" class="slide level2">
 <h2>Remove obs with <em>any</em> missing values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>lung <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>() <span class="ot">-&gt;</span> lung.complete</span>
-<span id="cb23-2"><a href="#cb23-2"></a>lung.complete <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">select</span>(meal.cal<span class="sc">:</span>wt.loss) <span class="sc">%&gt;%</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   meal.cal wt.loss
-2      1225      15
-4      1150      11
-6       513       0
-7       384      10
-8       538       1
-9       825      16
-10      271      34
-11     1025      27
-15     2600      60
-17     1150      -5</code></pre>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>lung <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>() <span class="ot">-&gt;</span> lung.complete</span>
+<span id="cb18-2"><a href="#cb18-2"></a>lung.complete <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">select</span>(meal.cal<span class="sc">:</span>wt.loss) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["meal.cal"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["wt.loss"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1225","2":"15","_rn_":"2"},{"1":"1150","2":"11","_rn_":"4"},{"1":"513","2":"0","_rn_":"6"},{"1":"384","2":"10","_rn_":"7"},{"1":"538","2":"1","_rn_":"8"},{"1":"825","2":"16","_rn_":"9"},{"1":"271","2":"34","_rn_":"10"},{"1":"1025","2":"27","_rn_":"11"},{"1":"2600","2":"60","_rn_":"15"},{"1":"1150","2":"-5","_rn_":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Missing values seem to be gone.</p>
@@ -767,7 +734,7 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <section id="check" class="slide level2">
 <h2>Check!</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">summary</span>(lung.complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">summary</span>(lung.complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      inst            time            status           age       
  Min.   : 1.00   Min.   :   5.0   Min.   :1.000   Min.   :39.00  
@@ -797,7 +764,7 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <section id="model-1-use-everything-except-inst" class="slide level2">
 <h2>Model 1: use everything except <code>inst</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">names</span>(lung.complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">names</span>(lung.complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "inst"      "time"      "status"    "age"       "sex"      
  [6] "ph.ecog"   "ph.karno"  "pat.karno" "meal.cal"  "wt.loss"  </code></pre>
@@ -807,19 +774,19 @@ Score (logrank) test = 14.75  on 2 df,   p=6e-04</code></pre>
 <li>Event was death, goes with <code>status</code> of 2:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>lung.complete <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2"></a>   <span class="fu">mutate</span>(<span class="at">resp =</span> <span class="fu">Surv</span>(time, status <span class="sc">==</span> <span class="dv">2</span>)) <span class="ot">-&gt;</span></span>
-<span id="cb29-3"><a href="#cb29-3"></a>   lung.complete</span>
-<span id="cb29-4"><a href="#cb29-4"></a>lung<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(resp <span class="sc">~</span> . <span class="sc">-</span> inst <span class="sc">-</span> time <span class="sc">-</span> status,</span>
-<span id="cb29-5"><a href="#cb29-5"></a>  <span class="at">data =</span> lung.complete</span>
-<span id="cb29-6"><a href="#cb29-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>lung.complete <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2"></a>   <span class="fu">mutate</span>(<span class="at">resp =</span> <span class="fu">Surv</span>(time, status <span class="sc">==</span> <span class="dv">2</span>)) <span class="ot">-&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>   lung.complete</span>
+<span id="cb23-4"><a href="#cb23-4"></a>lung<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(resp <span class="sc">~</span> . <span class="sc">-</span> inst <span class="sc">-</span> time <span class="sc">-</span> status,</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="at">data =</span> lung.complete</span>
+<span id="cb23-6"><a href="#cb23-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>“Dot” means “all the other variables”.</p>
 </section>
 <section id="summary-of-model-1" class="slide level2">
 <h2><code>summary</code> of model 1</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">summary</span>(lung<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">summary</span>(lung<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = resp ~ . - inst - time - status, data = lung.complete)
@@ -857,12 +824,14 @@ Score (logrank) test = 28.31  on 7 df,   p=2e-04</code></pre>
 <h2>Overall significance</h2>
 <p>The three tests of overall significance: </p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">glance</span>(lung<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"p.value"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 4
-  p.value.log p.value.sc p.value.wald p.value.robust
-        &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;          &lt;dbl&gt;
-1    0.000205   0.000193     0.000271             NA</code></pre>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">glance</span>(lung<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"p.value"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["p.value.log"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["p.value.sc"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value.wald"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["p.value.robust"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.0002052811","2":"0.0001929209","3":"0.0002711044","4":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>All strongly significant. <em>Something</em> predicts survival.</p>
@@ -870,18 +839,14 @@ Score (logrank) test = 28.31  on 7 df,   p=2e-04</code></pre>
 <section id="coefficients-for-model-1" class="slide level2">
 <h2>Coefficients for model 1</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">tidy</span>(lung<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, p.value) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 2
-  term      p.value
-  &lt;chr&gt;       &lt;dbl&gt;
-1 ph.ecog   0.00101
-2 sex       0.00603
-3 ph.karno  0.0457 
-4 wt.loss   0.0675 
-5 pat.karno 0.137  
-6 age       0.352  
-7 meal.cal  0.913  </code></pre>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">tidy</span>(lung<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, p.value) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["p.value"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"ph.ecog","2":"0.001012598"},{"1":"sex","2":"0.006026834"},{"1":"ph.karno","2":"0.045747870"},{"1":"wt.loss","2":"0.067482902"},{"1":"pat.karno","2":"0.136851382"},{"1":"age","2":"0.351681000"},{"1":"meal.cal","2":"0.912976585"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -893,31 +858,29 @@ Score (logrank) test = 28.31  on 7 df,   p=2e-04</code></pre>
 <section id="model-2" class="slide level2">
 <h2>Model 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>lung<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(lung<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> age <span class="sc">-</span> pat.karno <span class="sc">-</span> meal.cal)</span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="fu">tidy</span>(lung<span class="fl">.2</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  term      p.value
-  &lt;chr&gt;       &lt;dbl&gt;
-1 sex      0.00409 
-2 ph.ecog  0.000112
-3 ph.karno 0.101   
-4 wt.loss  0.108   </code></pre>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>lung<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(lung<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> age <span class="sc">-</span> pat.karno <span class="sc">-</span> meal.cal)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">tidy</span>(lung<span class="fl">.2</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["p.value"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"sex","2":"0.004091480"},{"1":"ph.ecog","2":"0.000111924"},{"1":"ph.karno","2":"0.100583796"},{"1":"wt.loss","2":"0.107974751"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="compare-with-first-model" class="slide level2">
 <h2>Compare with first model:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">anova</span>(lung<span class="fl">.2</span>, lung<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Deviance Table
- Cox model: response is  resp
- Model 1: ~ sex + ph.ecog + ph.karno + wt.loss
- Model 2: ~ (inst + time + status + age + sex + ph.ecog + ph.karno + pat.karno + meal.cal + wt.loss) - inst - time - status
-   loglik Chisq Df Pr(&gt;|Chi|)
-1 -495.67                    
-2 -494.03 3.269  3      0.352</code></pre>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">anova</span>(lung<span class="fl">.2</span>, lung<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["loglik"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["int"],"align":["right"]},{"label":["Pr(>|Chi|)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"-495.6689","2":"NA","3":"NA","4":"NA","_rn_":"1"},{"1":"-494.0344","2":"3.268999","3":"3","4":"0.3519808","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -928,33 +891,31 @@ Score (logrank) test = 28.31  on 7 df,   p=2e-04</code></pre>
 <h2>Model 3</h2>
 <p>Take out <code>ph.karno</code> and <code>wt.loss</code> as well.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>lung<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(lung<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> ph.karno <span class="sc">-</span> wt.loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>lung<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(lung<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> ph.karno <span class="sc">-</span> wt.loss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">tidy</span>(lung<span class="fl">.3</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-  term    estimate  p.value
-  &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-1 sex       -0.510 0.00958 
-2 ph.ecog    0.483 0.000266</code></pre>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">tidy</span>(lung<span class="fl">.3</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"sex","2":"-0.5100991","3":"0.0095794186"},{"1":"ph.ecog","2":"0.4825185","3":"0.0002656157"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="check-whether-that-was-ok" class="slide level2">
 <h2>Check whether that was OK</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">anova</span>(lung<span class="fl">.3</span>, lung<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Deviance Table
- Cox model: response is  resp
- Model 1: ~ sex + ph.ecog
- Model 2: ~ sex + ph.ecog + ph.karno + wt.loss
-   loglik  Chisq Df Pr(&gt;|Chi|)  
-1 -498.38                       
-2 -495.67 5.4135  2    0.06675 .
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">anova</span>(lung<span class="fl">.3</span>, lung<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["loglik"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["int"],"align":["right"]},{"label":["Pr(>|Chi|)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"-498.3757","2":"NA","3":"NA","4":"NA","_rn_":"1"},{"1":"-495.6689","2":"5.413508","3":"2","4":"0.06675314","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p><em>Just</em> OK.</p>
@@ -974,34 +935,31 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Create new data frame of values to predict for, then predict:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>sexes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb45-2"><a href="#cb45-2"></a>ph.ecogs <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a>lung.new <span class="ot">&lt;-</span> <span class="fu">datagrid</span>(<span class="at">sex =</span> sexes, <span class="at">ph.ecog =</span> ph.ecogs, <span class="at">model =</span> lung<span class="fl">.3</span>)</span>
-<span id="cb45-4"><a href="#cb45-4"></a>lung.new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  sex ph.ecog
-1   1       0
-2   1       1
-3   1       2
-4   1       3
-5   2       0
-6   2       1
-7   2       2
-8   2       3</code></pre>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>sexes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb33-2"><a href="#cb33-2"></a>ph.ecogs <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>lung.new <span class="ot">&lt;-</span> <span class="fu">datagrid</span>(<span class="at">sex =</span> sexes, <span class="at">ph.ecog =</span> ph.ecogs, <span class="at">model =</span> lung<span class="fl">.3</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a>lung.new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sex"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["ph.ecog"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"0"},{"1":"1","2":"1"},{"1":"1","2":"2"},{"1":"1","2":"3"},{"1":"2","2":"0"},{"1":"2","2":"1"},{"1":"2","2":"2"},{"1":"2","2":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="making-the-plot" class="slide level2">
 <h2>Making the plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>s <span class="ot">&lt;-</span> <span class="fu">survfit</span>(lung<span class="fl">.3</span>, <span class="at">newdata =</span> lung.new, <span class="at">data =</span> lung)</span>
-<span id="cb47-2"><a href="#cb47-2"></a>g <span class="ot">&lt;-</span> <span class="fu">ggsurvplot</span>(s, <span class="at">conf.int =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>s <span class="ot">&lt;-</span> <span class="fu">survfit</span>(lung<span class="fl">.3</span>, <span class="at">newdata =</span> lung.new, <span class="at">data =</span> lung)</span>
+<span id="cb34-2"><a href="#cb34-2"></a>g <span class="ot">&lt;-</span> <span class="fu">ggsurvplot</span>(s, <span class="at">conf.int =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-plot" class="slide level2">
 <h2>The plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="survival_files/figure-revealjs/bSurvival-30-1.png" width="960" class="r-stretch"></section>
@@ -1018,13 +976,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="the-coefficients-in-model-3" class="slide level2">
 <h2>The coefficients in model 3</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">tidy</span>(lung<span class="fl">.3</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-  term    estimate  p.value
-  &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-1 sex       -0.510 0.00958 
-2 ph.ecog    0.483 0.000266</code></pre>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">tidy</span>(lung<span class="fl">.3</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"sex","2":"-0.5100991","3":"0.0095794186"},{"1":"ph.ecog","2":"0.4825185","3":"0.0002656157"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -1037,7 +996,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>Martingale residuals for this model</h2>
 <p>No problems here:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">ggcoxdiagnostics</span>(lung<span class="fl">.3</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">ggcoxdiagnostics</span>(lung<span class="fl">.3</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="survival_files/figure-revealjs/bSurvival-32-1.png" width="960" class="r-stretch"></section>
@@ -1047,11 +1006,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Invent some data where survival is best at middling age, and worse at high <em>and</em> low age:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>age <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">60</span>, <span class="dv">5</span>)</span>
-<span id="cb52-2"><a href="#cb52-2"></a>survtime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">11</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">11</span>)</span>
-<span id="cb52-3"><a href="#cb52-3"></a>stat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb52-4"><a href="#cb52-4"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(age, survtime, stat)</span>
-<span id="cb52-5"><a href="#cb52-5"></a>d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">Surv</span>(survtime, stat)) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>age <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">20</span>, <span class="dv">60</span>, <span class="dv">5</span>)</span>
+<span id="cb38-2"><a href="#cb38-2"></a>survtime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">11</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">11</span>)</span>
+<span id="cb38-3"><a href="#cb38-3"></a>stat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb38-4"><a href="#cb38-4"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(age, survtime, stat)</span>
+<span id="cb38-5"><a href="#cb38-5"></a>d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">Surv</span>(survtime, stat)) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Small survival time 15 in middle was actually censored, so would have been longer if observed.</li>
@@ -1060,8 +1019,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="fit-cox-model" class="slide level2">
 <h2>Fit Cox model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>y<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(y <span class="sc">~</span> age, <span class="at">data =</span> d)</span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">summary</span>(y<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>y<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(y <span class="sc">~</span> age, <span class="at">data =</span> d)</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">summary</span>(y<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = y ~ age, data = d)
@@ -1085,7 +1044,7 @@ Score (logrank) test = 0.33  on 1 df,   p=0.6</code></pre>
 <h2>Martingale residuals</h2>
 <p>Down-and-up indicates incorrect relationship between age and survival:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">ggcoxdiagnostics</span>(y<span class="fl">.1</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">ggcoxdiagnostics</span>(y<span class="fl">.1</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="survival_files/figure-revealjs/bSurvival-35-1.png" width="960" class="r-stretch"></section>
@@ -1093,14 +1052,15 @@ Score (logrank) test = 0.33  on 1 df,   p=0.6</code></pre>
 <h2>Attempt 2</h2>
 <p>Add squared term in age:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>y<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(y <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> d)</span>
-<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">tidy</span>(y<span class="fl">.2</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-  term     estimate p.value
-  &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1 age      -0.380    0.116 
-2 I(age^2)  0.00483  0.0977</code></pre>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>y<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">coxph</span>(y <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> d)</span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">tidy</span>(y<span class="fl">.2</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(term, estimate, p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"age","2":"-0.380183793","3":"0.11560310"},{"1":"I(age^2)","2":"0.004832368","3":"0.09769035"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -1111,7 +1071,7 @@ Score (logrank) test = 0.33  on 1 df,   p=0.6</code></pre>
 <h2>Martingale residuals this time</h2>
 <p>Not great, but less problematic than before:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">ggcoxdiagnostics</span>(y<span class="fl">.2</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">ggcoxdiagnostics</span>(y<span class="fl">.2</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="survival_files/figure-revealjs/bSurvival-37-1.png" width="960" class="r-stretch"><div class="footer footer-default">

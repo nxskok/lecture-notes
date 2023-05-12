@@ -383,6 +383,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="multiway_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="multiway_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -423,32 +426,30 @@ male   42       37      85</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/eyewear.txt"</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>(eyewear <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-  gender contacts glasses  none
-  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-1 female      121      32   129
-2 male         42      37    85</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["gender"],"name":[1],"type":["chr"],"align":["left"]},{"label":["contacts"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["glasses"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["none"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"female","2":"121","3":"32","4":"129"},{"1":"male","2":"42","3":"37","4":"85"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="tidying-the-data" class="slide level2">
 <h2>Tidying the data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>eyewear <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">pivot_longer</span>(contacts<span class="sc">:</span>none, <span class="at">names_to=</span><span class="st">"eyewear"</span>, </span>
-<span id="cb5-3"><a href="#cb5-3"></a>               <span class="at">values_to=</span><span class="st">"frequency"</span>) <span class="ot">-&gt;</span> eyes</span>
-<span id="cb5-4"><a href="#cb5-4"></a>eyes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  gender eyewear  frequency
-  &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt;
-1 female contacts       121
-2 female glasses         32
-3 female none           129
-4 male   contacts        42
-5 male   glasses         37
-6 male   none            85</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>eyewear <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">pivot_longer</span>(contacts<span class="sc">:</span>none, <span class="at">names_to=</span><span class="st">"eyewear"</span>, </span>
+<span id="cb4-3"><a href="#cb4-3"></a>               <span class="at">values_to=</span><span class="st">"frequency"</span>) <span class="ot">-&gt;</span> eyes</span>
+<span id="cb4-4"><a href="#cb4-4"></a>eyes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["gender"],"name":[1],"type":["chr"],"align":["left"]},{"label":["eyewear"],"name":[2],"type":["chr"],"align":["left"]},{"label":["frequency"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"female","2":"contacts","3":"121"},{"1":"female","2":"glasses","3":"32"},{"1":"female","2":"none","3":"129"},{"1":"male","2":"contacts","3":"42"},{"1":"male","2":"glasses","3":"37"},{"1":"male","2":"none","3":"85"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -459,8 +460,8 @@ male   42       37      85</code></pre>
 <li>or this (we use it again later):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(frequency <span class="sc">~</span> gender <span class="sc">+</span> eyewear, <span class="at">data =</span> eyes)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(frequency <span class="sc">~</span> gender <span class="sc">+</span> eyewear, <span class="at">data =</span> eyes)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        eyewear
 gender   contacts glasses none
@@ -476,10 +477,10 @@ gender   contacts glasses none
 <li><code>glm</code> with <code>poisson</code> family.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>eyes<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="at">data =</span> eyes,</span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>eyes<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">data =</span> eyes,</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Called <strong>log-linear model</strong>.</li>
@@ -488,17 +489,14 @@ gender   contacts glasses none
 <section id="what-can-we-get-rid-of" class="slide level2">
 <h2>What can we get rid of?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">drop1</span>(eyes<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">drop1</span>(eyes<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-frequency ~ gender * eyewear
-               Df Deviance    AIC    LRT  Pr(&gt;Chi)    
-&lt;none&gt;               0.000 47.958                     
-gender:eyewear  2   17.829 61.787 17.829 0.0001345 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"1.953993e-14","3":"47.95815","4":"NA","5":"NA","_rn_":"<none>"},{"1":"2","2":"1.782863e+01","3":"61.78678","4":"17.82863","5":"0.0001344505","_rn_":"gender:eyewear"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>nothing!</p>
@@ -517,7 +515,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2><code>prop.table</code></h2>
 <p>Original table:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        eyewear
 gender   contacts glasses none
@@ -527,7 +525,7 @@ gender   contacts glasses none
 </div>
 <p>Calculate eg. row proportions like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        eyewear
 gender    contacts   glasses      none
@@ -549,20 +547,20 @@ gender    contacts   glasses      none
 <li>Suppose table had been as shown below:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/eyewear2.txt"</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>eyewear2 <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
-<span id="cb16-3"><a href="#cb16-3"></a>eyewear2 <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4"></a>   <span class="fu">pivot_longer</span>(contacts<span class="sc">:</span>none, <span class="at">names_to =</span> <span class="st">"eyewear"</span>, </span>
-<span id="cb16-5"><a href="#cb16-5"></a>                <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="ot">-&gt;</span> eyes2</span>
-<span id="cb16-6"><a href="#cb16-6"></a>xt2 <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(frequency <span class="sc">~</span> gender <span class="sc">+</span> eyewear, <span class="at">data =</span> eyes2)</span>
-<span id="cb16-7"><a href="#cb16-7"></a>xt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/eyewear2.txt"</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>eyewear2 <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>eyewear2 <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4"></a>   <span class="fu">pivot_longer</span>(contacts<span class="sc">:</span>none, <span class="at">names_to =</span> <span class="st">"eyewear"</span>, </span>
+<span id="cb13-5"><a href="#cb13-5"></a>                <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="ot">-&gt;</span> eyes2</span>
+<span id="cb13-6"><a href="#cb13-6"></a>xt2 <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(frequency <span class="sc">~</span> gender <span class="sc">+</span> eyewear, <span class="at">data =</span> eyes2)</span>
+<span id="cb13-7"><a href="#cb13-7"></a>xt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        eyewear
 gender   contacts glasses none
   female      150      30  120
   male         75      16   62</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">prop.table</span>(xt2, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">prop.table</span>(xt2, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        eyewear
 gender    contacts   glasses      none
@@ -584,19 +582,18 @@ gender    contacts   glasses      none
 <section id="analysis-for-revised-data" class="slide level2">
 <h2>Analysis for revised data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>eyes<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="at">data =</span> eyes2,</span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a>)</span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="fu">drop1</span>(eyes<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>eyes<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">data =</span> eyes2,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="fu">drop1</span>(eyes<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-frequency ~ gender * eyewear
-               Df Deviance    AIC      LRT Pr(&gt;Chi)
-&lt;none&gt;            0.000000 47.467                  
-gender:eyewear  2 0.047323 43.515 0.047323   0.9766</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"1.509903e-14","3":"47.46718","4":"NA","5":"NA","_rn_":"<none>"},{"1":"2","2":"4.732267e-02","3":"43.51450","4":"0.04732267","5":"0.9766164","_rn_":"gender:eyewear"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>No longer any association. Take out interaction.</p>
@@ -604,19 +601,15 @@ gender:eyewear  2 0.047323 43.515 0.047323   0.9766</code></pre>
 <section id="no-interaction" class="slide level2">
 <h2>No interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>eyes<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(eyes<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> gender<span class="sc">:</span>eyewear)</span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">drop1</span>(eyes<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>eyes<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(eyes<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> gender<span class="sc">:</span>eyewear)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">drop1</span>(eyes<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-frequency ~ gender + eyewear
-        Df Deviance     AIC     LRT  Pr(&gt;Chi)    
-&lt;none&gt;        0.047  43.515                      
-gender   1   48.624  90.091  48.577 3.176e-12 ***
-eyewear  2  138.130 177.598 138.083 &lt; 2.2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"0.04732267","3":"43.51450","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"48.62389131","3":"90.09107","4":"48.57657","5":"3.176418e-12","_rn_":"gender"},{"1":"2","2":"138.13041408","3":"177.59759","4":"138.08309","5":"1.036663e-30","_rn_":"eyewear"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -651,21 +644,20 @@ normal normalweight no 30
 <section id="first-step" class="slide level2">
 <h2>First step</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/ecg.txt"</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>chest <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
-<span id="cb25-3"><a href="#cb25-3"></a>chest<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> ecg <span class="sc">*</span> bmi <span class="sc">*</span> smoke,</span>
-<span id="cb25-4"><a href="#cb25-4"></a>  <span class="at">data =</span> chest,</span>
-<span id="cb25-5"><a href="#cb25-5"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb25-6"><a href="#cb25-6"></a>)</span>
-<span id="cb25-7"><a href="#cb25-7"></a><span class="fu">drop1</span>(chest<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/ecg.txt"</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>chest <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
+<span id="cb20-3"><a href="#cb20-3"></a>chest<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> ecg <span class="sc">*</span> bmi <span class="sc">*</span> smoke,</span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">data =</span> chest,</span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>)</span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="fu">drop1</span>(chest<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-count ~ ecg * bmi * smoke
-              Df Deviance    AIC    LRT Pr(&gt;Chi)
-&lt;none&gt;             0.0000 53.707                
-ecg:bmi:smoke  1   1.3885 53.096 1.3885   0.2387</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"9.992007e-15","3":"53.70730","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"1.388544e+00","3":"53.09584","4":"1.388544","5":"0.2386511","_rn_":"ecg:bmi:smoke"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>That 3-way interaction comes out.</p>
@@ -673,20 +665,15 @@ ecg:bmi:smoke  1   1.3885 53.096 1.3885   0.2387</code></pre>
 <section id="removing-the-3-way-interaction" class="slide level2">
 <h2>Removing the 3-way interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>chest<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> ecg<span class="sc">:</span>bmi<span class="sc">:</span>smoke)</span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">drop1</span>(chest<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>chest<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> ecg<span class="sc">:</span>bmi<span class="sc">:</span>smoke)</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">drop1</span>(chest<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-count ~ ecg + bmi + smoke + ecg:bmi + ecg:smoke + bmi:smoke
-          Df Deviance    AIC     LRT  Pr(&gt;Chi)    
-&lt;none&gt;         1.3885 53.096                      
-ecg:bmi    1  29.0195 78.727 27.6310 1.468e-07 ***
-ecg:smoke  1   4.8935 54.601  3.5050   0.06119 .  
-bmi:smoke  1   4.4689 54.176  3.0803   0.07924 .  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"1.388544","3":"53.09584","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"29.019513","3":"78.72681","4":"27.630969","5":"1.468094e-07","_rn_":"ecg:bmi"},{"1":"1","2":"4.893513","3":"54.60081","4":"3.504968","5":"6.118501e-02","_rn_":"ecg:smoke"},{"1":"1","2":"4.468863","3":"54.17616","4":"3.080319","5":"7.924499e-02","_rn_":"bmi:smoke"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>At <span class="math inline">\(\alpha=0.05\)</span>, <code>bmi:smoke</code> comes out.</p>
@@ -694,19 +681,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="removing-bmismoke" class="slide level2">
 <h2>Removing <code>bmi:smoke</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>chest<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> bmi<span class="sc">:</span>smoke)</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">drop1</span>(chest<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>chest<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> bmi<span class="sc">:</span>smoke)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">drop1</span>(chest<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-count ~ ecg + bmi + smoke + ecg:bmi + ecg:smoke
-          Df Deviance    AIC    LRT  Pr(&gt;Chi)    
-&lt;none&gt;          4.469 54.176                     
-ecg:bmi    1   36.562 84.270 32.094 1.469e-08 ***
-ecg:smoke  1   12.436 60.144  7.968  0.004762 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"4.468863","3":"54.17616","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"36.562474","3":"84.26977","4":"32.09361","5":"1.469197e-08","_rn_":"ecg:bmi"},{"1":"1","2":"12.436473","3":"60.14377","4":"7.96761","5":"4.762177e-03","_rn_":"ecg:smoke"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p><code>ecg:smoke</code> has become significant. So we have to stop.</p>
@@ -719,7 +702,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p><code>ecg:bmi</code> table:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">xtabs</span>(count <span class="sc">~</span> ecg <span class="sc">+</span> bmi, <span class="at">data =</span> chest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">xtabs</span>(count <span class="sc">~</span> ecg <span class="sc">+</span> bmi, <span class="at">data =</span> chest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          bmi
 ecg        normalweight overweight
@@ -737,7 +720,7 @@ ecg        normalweight overweight
 <li><code>ecg:smoke</code> table:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">xtabs</span>(count <span class="sc">~</span> ecg <span class="sc">+</span> smoke, <span class="at">data =</span> chest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">xtabs</span>(count <span class="sc">~</span> ecg <span class="sc">+</span> smoke, <span class="at">data =</span> chest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          smoke
 ecg        no yes
@@ -785,8 +768,8 @@ Seattle     1841         305       201         61
 <li>Read in:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/airlines.txt"</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>airlines <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/airlines.txt"</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>airlines <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tidying" class="slide level2">
@@ -795,40 +778,23 @@ Seattle     1841         305       201         61
 <li>Some tidying gets us the right layout, with frequencies all in one column and the airline and delayed/on time status separated out. This uses one of the fancy versions of <code>pivot_longer</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>airlines <span class="sc">%&gt;%</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>   <span class="fu">pivot_longer</span>(<span class="sc">-</span>airport, </span>
-<span id="cb38-3"><a href="#cb38-3"></a>                <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"airline"</span>, <span class="st">"status"</span>), </span>
-<span id="cb38-4"><a href="#cb38-4"></a>                <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
-<span id="cb38-5"><a href="#cb38-5"></a>                <span class="at">values_to =</span> <span class="st">"freq"</span> ) <span class="ot">-&gt;</span> punctual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>airlines <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>   <span class="fu">pivot_longer</span>(<span class="sc">-</span>airport, </span>
+<span id="cb30-3"><a href="#cb30-3"></a>                <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"airline"</span>, <span class="st">"status"</span>), </span>
+<span id="cb30-4"><a href="#cb30-4"></a>                <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
+<span id="cb30-5"><a href="#cb30-5"></a>                <span class="at">values_to =</span> <span class="st">"freq"</span> ) <span class="ot">-&gt;</span> punctual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-data-frame-punctual" class="slide level2">
 <h2>The data frame <code>punctual</code></h2>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 4
-   airport      airline status   freq
-   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
- 1 LosAngeles   aa      ontime    497
- 2 LosAngeles   aa      delayed    62
- 3 LosAngeles   aw      ontime    694
- 4 LosAngeles   aw      delayed   117
- 5 Phoenix      aa      ontime    221
- 6 Phoenix      aa      delayed    12
- 7 Phoenix      aw      ontime   4840
- 8 Phoenix      aw      delayed   415
- 9 SanDiego     aa      ontime    212
-10 SanDiego     aa      delayed    20
-11 SanDiego     aw      ontime    383
-12 SanDiego     aw      delayed    65
-13 SanFrancisco aa      ontime    503
-14 SanFrancisco aa      delayed   102
-15 SanFrancisco aw      ontime    320
-16 SanFrancisco aw      delayed   129
-17 Seattle      aa      ontime   1841
-18 Seattle      aa      delayed   305
-19 Seattle      aw      ontime    201
-20 Seattle      aw      delayed    61</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["airport"],"name":[1],"type":["chr"],"align":["left"]},{"label":["airline"],"name":[2],"type":["chr"],"align":["left"]},{"label":["status"],"name":[3],"type":["chr"],"align":["left"]},{"label":["freq"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"LosAngeles","2":"aa","3":"ontime","4":"497"},{"1":"LosAngeles","2":"aa","3":"delayed","4":"62"},{"1":"LosAngeles","2":"aw","3":"ontime","4":"694"},{"1":"LosAngeles","2":"aw","3":"delayed","4":"117"},{"1":"Phoenix","2":"aa","3":"ontime","4":"221"},{"1":"Phoenix","2":"aa","3":"delayed","4":"12"},{"1":"Phoenix","2":"aw","3":"ontime","4":"4840"},{"1":"Phoenix","2":"aw","3":"delayed","4":"415"},{"1":"SanDiego","2":"aa","3":"ontime","4":"212"},{"1":"SanDiego","2":"aa","3":"delayed","4":"20"},{"1":"SanDiego","2":"aw","3":"ontime","4":"383"},{"1":"SanDiego","2":"aw","3":"delayed","4":"65"},{"1":"SanFrancisco","2":"aa","3":"ontime","4":"503"},{"1":"SanFrancisco","2":"aa","3":"delayed","4":"102"},{"1":"SanFrancisco","2":"aw","3":"ontime","4":"320"},{"1":"SanFrancisco","2":"aw","3":"delayed","4":"129"},{"1":"Seattle","2":"aa","3":"ontime","4":"1841"},{"1":"Seattle","2":"aa","3":"delayed","4":"305"},{"1":"Seattle","2":"aw","3":"ontime","4":"201"},{"1":"Seattle","2":"aw","3":"delayed","4":"61"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -838,8 +804,8 @@ Seattle     1841         305       201         61
 <li>Two-step process: get appropriate subtable:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
-<span id="cb40-2"><a href="#cb40-2"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       status
 airline delayed ontime
@@ -851,7 +817,7 @@ airline delayed ontime
 <li>and then calculate appropriate proportions:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       status
 airline   delayed    ontime
@@ -866,12 +832,12 @@ airline   delayed    ontime
 <section id="proportion-delayed-by-airport-for-each-airline" class="slide level2">
 <h2>Proportion delayed by airport, for each airline</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status <span class="sc">+</span> airport, <span class="at">data =</span> punctual)</span>
-<span id="cb44-2"><a href="#cb44-2"></a>xp <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb44-3"><a href="#cb44-3"></a><span class="fu">ftable</span>(xp,</span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="at">row.vars =</span> <span class="fu">c</span>(<span class="st">"airport"</span>, <span class="st">"airline"</span>),</span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="at">col.vars =</span> <span class="st">"status"</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status <span class="sc">+</span> airport, <span class="at">data =</span> punctual)</span>
+<span id="cb35-2"><a href="#cb35-2"></a>xp <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="fu">ftable</span>(xp,</span>
+<span id="cb35-4"><a href="#cb35-4"></a>  <span class="at">row.vars =</span> <span class="fu">c</span>(<span class="st">"airport"</span>, <span class="st">"airline"</span>),</span>
+<span id="cb35-5"><a href="#cb35-5"></a>  <span class="at">col.vars =</span> <span class="st">"status"</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     status    delayed     ontime
 airport      airline                             
@@ -900,39 +866,32 @@ Seattle      aa             0.14212488 0.85787512
 <section id="model-1-and-output" class="slide level2">
 <h2>Model 1 and output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>punctual<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> airport <span class="sc">*</span> airline <span class="sc">*</span> status,</span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="at">data =</span> punctual, <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb46-3"><a href="#cb46-3"></a>)</span>
-<span id="cb46-4"><a href="#cb46-4"></a><span class="fu">drop1</span>(punctual<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>punctual<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> airport <span class="sc">*</span> airline <span class="sc">*</span> status,</span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="at">data =</span> punctual, <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>)</span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="fu">drop1</span>(punctual<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ airport * airline * status
-                       Df Deviance    AIC    LRT Pr(&gt;Chi)
-&lt;none&gt;                      0.0000 183.44                
-airport:airline:status  4   3.2166 178.65 3.2166   0.5223</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"5.218048e-13","3":"183.4348","4":"NA","5":"NA","_rn_":"<none>"},{"1":"4","2":"3.216569e+00","3":"178.6513","4":"3.216569","5":"0.5222589","_rn_":"airport:airline:status"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="remove-3-way-interaction" class="slide level2">
 <h2>Remove 3-way interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>punctual<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(punctual<span class="fl">.1</span>, <span class="sc">~</span> . <span class="sc">-</span> airport<span class="sc">:</span>airline<span class="sc">:</span>status)</span>
-<span id="cb48-2"><a href="#cb48-2"></a><span class="fu">drop1</span>(punctual<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>punctual<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(punctual<span class="fl">.1</span>, <span class="sc">~</span> . <span class="sc">-</span> airport<span class="sc">:</span>airline<span class="sc">:</span>status)</span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="fu">drop1</span>(punctual<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ airport + airline + status + airport:airline + airport:status + 
-    airline:status
-                Df Deviance    AIC    LRT  Pr(&gt;Chi)    
-&lt;none&gt;                  3.2  178.7                     
-airport:airline  4   6432.5 6599.9 6429.2 &lt; 2.2e-16 ***
-airport:status   4    240.1  407.5  236.9 &lt; 2.2e-16 ***
-airline:status   1     45.5  218.9   42.2 8.038e-11 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"3.216569","3":"178.6513","4":"NA","5":"NA","_rn_":"<none>"},{"1":"4","2":"6432.454138","3":"6599.8889","4":"6429.23757","5":"0.000000e+00","_rn_":"airport:airline"},{"1":"4","2":"240.107798","3":"407.5426","4":"236.89123","5":"4.334046e-50","_rn_":"airport:status"},{"1":"1","2":"45.465141","3":"218.8999","4":"42.24857","5":"8.037869e-11","_rn_":"airline:status"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Stop here.</p>
@@ -943,8 +902,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><code>airline:status</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       status
 airline   delayed    ontime
@@ -963,8 +922,8 @@ airline   delayed    ontime
 <li><code>airport:status</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airport <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
-<span id="cb52-2"><a href="#cb52-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airport <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              status
 airport           delayed     ontime
@@ -986,8 +945,8 @@ airport           delayed     ontime
 <li><code>airport:airline</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airport <span class="sc">+</span> airline, <span class="at">data =</span> punctual)</span>
-<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airport <span class="sc">+</span> airline, <span class="at">data =</span> punctual)</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              airline
 airport                aa         aw
@@ -1058,19 +1017,16 @@ advanced limited yes yes 5
 <section id="reading-in-data" class="slide level2">
 <h2>Reading in data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/cancer.txt"</span></span>
-<span id="cb57-2"><a href="#cb57-2"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
-<span id="cb57-3"><a href="#cb57-3"></a>cancer <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 5
-  stage operation xray  survival  freq
-  &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
-1 early radical   no    no          10
-2 early radical   no    yes         41
-3 early radical   yes   no          17
-4 early radical   yes   yes         64
-5 early limited   no    no           1
-6 early limited   no    yes         13</code></pre>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/cancer.txt"</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
+<span id="cb46-3"><a href="#cb46-3"></a>cancer <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["stage"],"name":[1],"type":["chr"],"align":["left"]},{"label":["operation"],"name":[2],"type":["chr"],"align":["left"]},{"label":["xray"],"name":[3],"type":["chr"],"align":["left"]},{"label":["survival"],"name":[4],"type":["chr"],"align":["left"]},{"label":["freq"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"early","2":"radical","3":"no","4":"no","5":"10"},{"1":"early","2":"radical","3":"no","4":"yes","5":"41"},{"1":"early","2":"radical","3":"yes","4":"no","5":"17"},{"1":"early","2":"radical","3":"yes","4":"yes","5":"64"},{"1":"early","2":"limited","3":"no","4":"no","5":"1"},{"1":"early","2":"limited","3":"no","4":"yes","5":"13"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -1078,24 +1034,23 @@ advanced limited yes yes 5
 <h2>Model 1</h2>
 <p>hopefully looking familiar by now:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>cancer<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> stage <span class="sc">*</span> operation <span class="sc">*</span> xray <span class="sc">*</span> survival,</span>
-<span id="cb59-2"><a href="#cb59-2"></a>  <span class="at">data =</span> cancer, <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb59-3"><a href="#cb59-3"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>cancer<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> stage <span class="sc">*</span> operation <span class="sc">*</span> xray <span class="sc">*</span> survival,</span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="at">data =</span> cancer, <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="output-1" class="slide level2">
 <h2>Output 1</h2>
 <p>See what we can remove:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">drop1</span>(cancer<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">drop1</span>(cancer<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ stage * operation * xray * survival
-                              Df Deviance    AIC     LRT Pr(&gt;Chi)
-&lt;none&gt;                            0.00000 98.130                 
-stage:operation:xray:survival  1  0.60266 96.732 0.60266   0.4376</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"1.554312e-14","3":"98.12961","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"6.026558e-01","3":"96.73227","4":"0.6026558","5":"0.4375665","_rn_":"stage:operation:xray:survival"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Non-significant interaction can come out.</p>
@@ -1103,22 +1058,15 @@ stage:operation:xray:survival  1  0.60266 96.732 0.60266   0.4376</code></pre>
 <section id="model-2" class="slide level2">
 <h2>Model 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>cancer<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
-<span id="cb62-2"><a href="#cb62-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>cancer<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ stage + operation + xray + survival + stage:operation + 
-    stage:xray + operation:xray + stage:survival + operation:survival + 
-    xray:survival + stage:operation:xray + stage:operation:survival + 
-    stage:xray:survival + operation:xray:survival
-                         Df Deviance    AIC     LRT Pr(&gt;Chi)
-&lt;none&gt;                       0.60266 96.732                 
-stage:operation:xray      1  2.35759 96.487 1.75493   0.1853
-stage:operation:survival  1  1.17730 95.307 0.57465   0.4484
-stage:xray:survival       1  0.95577 95.085 0.35311   0.5524
-operation:xray:survival   1  1.23378 95.363 0.63113   0.4269</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"0.6026558","3":"96.73227","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"2.3575888","3":"96.48720","4":"1.7549331","5":"0.1852578","_rn_":"stage:operation:xray"},{"1":"1","2":"1.1773024","3":"95.30692","4":"0.5746466","5":"0.4484184","_rn_":"stage:operation:survival"},{"1":"1","2":"0.9557671","3":"95.08538","4":"0.3531113","5":"0.5523571","_rn_":"stage:xray:survival"},{"1":"1","2":"1.2337838","3":"95.36340","4":"0.6311281","5":"0.4269418","_rn_":"operation:xray:survival"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Least significant term is <code>stage:xray:survival</code>: remove.</p>
@@ -1126,21 +1074,15 @@ operation:xray:survival   1  1.23378 95.363 0.63113   0.4269</code></pre>
 <section id="take-out-stagexraysurvival" class="slide level2">
 <h2>Take out <code>stage:xray:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>cancer<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
-<span id="cb64-2"><a href="#cb64-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>cancer<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ stage + operation + xray + survival + stage:operation + 
-    stage:xray + operation:xray + stage:survival + operation:survival + 
-    xray:survival + stage:operation:xray + stage:operation:survival + 
-    operation:xray:survival
-                         Df Deviance    AIC     LRT Pr(&gt;Chi)
-&lt;none&gt;                       0.95577 95.085                 
-stage:operation:xray      1  3.08666 95.216 2.13089   0.1444
-stage:operation:survival  1  1.56605 93.696 0.61029   0.4347
-operation:xray:survival   1  1.55124 93.681 0.59547   0.4403</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"0.9557671","3":"95.08538","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"3.0866591","3":"95.21627","4":"2.1308920","5":"0.1443567","_rn_":"stage:operation:xray"},{"1":"1","2":"1.5660529","3":"93.69567","4":"0.6102858","5":"0.4346802","_rn_":"stage:operation:survival"},{"1":"1","2":"1.5512410","3":"93.68085","4":"0.5954739","5":"0.4403102","_rn_":"operation:xray:survival"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p><code>operation:xray:survival</code> comes out next.</p>
@@ -1148,22 +1090,15 @@ operation:xray:survival   1  1.55124 93.681 0.59547   0.4403</code></pre>
 <section id="remove-operationxraysurvival" class="slide level2">
 <h2>Remove <code>operation:xray:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>cancer<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.3</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
-<span id="cb66-2"><a href="#cb66-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.4</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>cancer<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.3</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.4</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ stage + operation + xray + survival + stage:operation + 
-    stage:xray + operation:xray + stage:survival + operation:survival + 
-    xray:survival + stage:operation:xray + stage:operation:survival
-                         Df Deviance    AIC    LRT Pr(&gt;Chi)  
-&lt;none&gt;                        1.5512 93.681                  
-xray:survival             1   1.6977 91.827 0.1464  0.70196  
-stage:operation:xray      1   6.8420 96.972 5.2907  0.02144 *
-stage:operation:survival  1   1.9311 92.061 0.3799  0.53768  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"1.551241","3":"93.68085","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"1.697682","3":"91.82729","4":"0.1464406","5":"0.70196030","_rn_":"xray:survival"},{"1":"1","2":"6.841961","3":"96.97157","4":"5.2907197","5":"0.02143936","_rn_":"stage:operation:xray"},{"1":"1","2":"1.931103","3":"92.06072","4":"0.3798619","5":"0.53767715","_rn_":"stage:operation:survival"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -1178,43 +1113,30 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="remove-xraysurvival" class="slide level2">
 <h2>Remove <code>xray:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>cancer<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.4</span>, . <span class="sc">~</span> . <span class="sc">-</span> xray<span class="sc">:</span>survival)</span>
-<span id="cb68-2"><a href="#cb68-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.5</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>cancer<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.4</span>, . <span class="sc">~</span> . <span class="sc">-</span> xray<span class="sc">:</span>survival)</span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.5</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ stage + operation + xray + survival + stage:operation + 
-    stage:xray + operation:xray + stage:survival + operation:survival + 
-    stage:operation:xray + stage:operation:survival
-                         Df Deviance    AIC    LRT Pr(&gt;Chi)  
-&lt;none&gt;                        1.6977 91.827                  
-stage:operation:xray      1   6.9277 95.057 5.2300   0.0222 *
-stage:operation:survival  1   2.0242 90.154 0.3265   0.5677  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"1.697682","3":"91.82729","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"6.927690","3":"95.05730","4":"5.2300086","5":"0.02220042","_rn_":"stage:operation:xray"},{"1":"1","2":"2.024220","3":"90.15383","4":"0.3265384","5":"0.56770454","_rn_":"stage:operation:survival"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="remove-stageoperationsurvival" class="slide level2">
 <h2>Remove <code>stage:operation:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>cancer<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.5</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>survival)</span>
-<span id="cb70-2"><a href="#cb70-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.6</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>cancer<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.5</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>survival)</span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.6</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ stage + operation + xray + survival + stage:operation + 
-    stage:xray + operation:xray + stage:survival + operation:survival + 
-    stage:operation:xray
-                     Df Deviance     AIC     LRT Pr(&gt;Chi)    
-&lt;none&gt;                     2.024  90.154                     
-stage:survival        1  135.198 221.327 133.173   &lt;2e-16 ***
-operation:survival    1    4.116  90.245   2.092   0.1481    
-stage:operation:xray  1    7.254  93.384   5.230   0.0222 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"2.024220","3":"90.15383","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"135.197636","3":"221.32725","4":"133.173416","5":"8.284940e-31","_rn_":"stage:survival"},{"1":"1","2":"4.115730","3":"90.24534","4":"2.091510","5":"1.481196e-01","_rn_":"operation:survival"},{"1":"1","2":"7.254229","3":"93.38384","4":"5.230009","5":"2.220042e-02","_rn_":"stage:operation:xray"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -1222,20 +1144,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>Last step?</h2>
 <p>Remove <code>operation:survival</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>cancer<span class="fl">.7</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.6</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>survival)</span>
-<span id="cb72-2"><a href="#cb72-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.7</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Single term deletions
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>cancer<span class="fl">.7</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.6</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>survival)</span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.7</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-Model:
-freq ~ stage + operation + xray + survival + stage:operation + 
-    stage:xray + operation:xray + stage:survival + stage:operation:xray
-                     Df Deviance     AIC    LRT Pr(&gt;Chi)    
-&lt;none&gt;                     4.116  90.245                    
-stage:survival        1  136.729 220.859 132.61   &lt;2e-16 ***
-stage:operation:xray  1    9.346  93.475   5.23   0.0222 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Deviance"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chi)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"4.115730","3":"90.24534","4":"NA","5":"NA","_rn_":"<none>"},{"1":"1","2":"136.729112","3":"220.85872","4":"132.613382","5":"1.098503e-30","_rn_":"stage:survival"},{"1":"1","2":"9.345738","3":"93.47535","4":"5.230009","5":"2.220042e-02","_rn_":"stage:operation:xray"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Finally done!</p>
@@ -1247,8 +1164,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p>Only significant such term is <code>stage:survival</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> stage <span class="sc">+</span> survival, <span class="at">data =</span> cancer)</span>
-<span id="cb74-2"><a href="#cb74-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> stage <span class="sc">+</span> survival, <span class="at">data =</span> cancer)</span>
+<span id="cb55-2"><a href="#cb55-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          survival
 stage             no       yes
@@ -1264,8 +1181,8 @@ stage             no       yes
 <section id="what-about-that-other-interaction" class="slide level2">
 <h2>What about that other interaction?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> operation <span class="sc">+</span> xray <span class="sc">+</span> stage, <span class="at">data =</span> cancer)</span>
-<span id="cb76-2"><a href="#cb76-2"></a><span class="fu">ftable</span>(<span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> operation <span class="sc">+</span> xray <span class="sc">+</span> stage, <span class="at">data =</span> cancer)</span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="fu">ftable</span>(<span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               stage   advanced      early
 operation xray                            

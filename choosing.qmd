@@ -1,6 +1,8 @@
 ---
 title: "Choosing things in dataframes"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

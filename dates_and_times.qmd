@@ -1,6 +1,8 @@
 ---
 title: "Dates and Times"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

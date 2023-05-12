@@ -27,9 +27,8 @@ options(clustermq.scheduler = "multicore")
 # Replace the target list below with your own:
 list(
   tar_quarto(ancova, "ancova.qmd"),
+  tar_quarto(anova, "anova.qmd"),
   tar_quarto(asphalt, "asphalt.qmd"),
-  tar_target(bAnova, "bAnova.Rmd", format = "file"),
-  tar_render(bAnova_slides, "bAnova_slides.Rmd"),
   tar_target(bCluster, "bCluster.Rmd", format = "file"),
   tar_render(bCluster_slides, "bCluster_slides.Rmd"),
   tar_target(bManova, "bManova.Rmd", format = "file"),

@@ -1,6 +1,8 @@
 ---
 title: "Mood's Median Test"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

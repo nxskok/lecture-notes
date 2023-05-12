@@ -1,6 +1,8 @@
 ---
 title: "Statistical Inference: Power"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

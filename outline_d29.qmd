@@ -1,6 +1,8 @@
 ---
 title: "STAD29 / STA 1007 course outline"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 

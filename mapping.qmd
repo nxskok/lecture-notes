@@ -1,6 +1,8 @@
 ---
 title: "Drawing maps with R"
-format: revealjs
+format: 
+  revealjs:
+     df-print: paged
 execute:
   echo: true
 editor: 
