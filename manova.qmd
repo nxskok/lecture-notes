@@ -334,56 +334,6 @@ on location and on variety
 
 * Understanding that dependence beyond our scope right now.
 
-## Normal quantile plots
-
-Setup for normal quantile plots
-
-```{r}
-peanuts %>% 
-  pivot_longer(y:w, names_to = "xname", 
-               values_to = "xvals") -> d
-```
-
-Make the plots (save to show on next pages)
-
-```{r}
-ggplot(d, aes(sample = xvals)) + stat_qq() + 
-  stat_qq_line() +
-  facet_grid(xname ~ location, scales = "free") -> g1
-
-ggplot(d, aes(sample = xvals)) + stat_qq() + 
-  stat_qq_line() +
-  facet_grid(xname ~ variety, scales = "free") -> g2
-```
-
-## The plot for location
-
-```{r, fig.height=4}
-g1
-```
-
-## The plot for variety
-
-```{r, fig.height=4}
-g2
-```
-
-## Alternative: show both these plots at once:
-
-```{r}
-ggplot(d, aes(sample = xvals)) + stat_qq() + 
-  stat_qq_line() +
-  facet_grid(xname ~ location + variety, 
-             scales = "free") -> g3
-```
-
-## The combined plot
-
-```{r, echo = FALSE, fig.height=5.5}
-g3
-```
-
-
 ## Comments
 
 - this time there are only six observations per location  and four per variety, so normality is still difficult to be confident about
