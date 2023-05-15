@@ -3,6 +3,7 @@ title: "Running R"
 format: 
   revealjs:
      df-print: paged
+     auto-stretch: false
 execute:
   echo: true
 editor: 
@@ -60,7 +61,7 @@ brings up an example document as over.
 
 ## The template document
   
-![](Screenshot_2023-05-14_18-25-17.png)
+![](Screenshot_2023-05-14_18-25-17.png){width=150%}
 
 ## About this document
 
@@ -73,7 +74,7 @@ right of the first cell. This one does some very exciting arithmetic.
 
 ## After running the code chunk
   
-![](Screenshot_2023-05-14_18-30-04.png)  
+![](Screenshot_2023-05-14_18-30-04.png){width=150%}
   
 ## Making our own document 1/2
 
@@ -93,7 +94,7 @@ code: `z <- rnorm(100)` and then `z`.
 
 ## My document
 
-![](Screenshot_2023-05-14_18-49-36.png)
+![](Screenshot_2023-05-14_18-49-36.png){width=150%}
   
 ## Run the chunks
 
@@ -107,9 +108,9 @@ what you see.
 - If you want to edit anything, go back to the Quarto document, change it,
 save it, and run Render again. For example, you can try putting some of the text in *italics* or **bold**. (See Format.)
 
-## The end of my (rendered) report
+## The end of my (rendered) report 
 
-![](Screenshot_2023-05-14_18-56-55.png)
+![](Screenshot_2023-05-14_18-56-55.png){width=150%}
 
 ## Installing R on your own computer
 
@@ -132,20 +133,20 @@ save it, and run Render again. For example, you can try putting some of the text
 one, “0-Cloud”, picks one for you. Or you can choose one close to
 you (might be faster), eg. U of T:
 
-![](Screenshot_2018-08-17_11-09-02.png)
+![](Screenshot_2018-08-17_11-09-02.png){width=150%}
 
 
 ## Click your mirror
 
 - Click 0-Cloud or U of T (or other mirror), get:
 
-![](r32.png)
+![](r32.png){width=150%}
 
 - Click on your operating system, eg. Windows.
 
 ## Click on Base
 
-![](r33.png)
+![](r33.png){width=150%}
 
 - Click on “base” here.
 
@@ -156,9 +157,8 @@ you (might be faster), eg. U of T:
 - For Windows, click something like the top link below:
 
 
-![](Screenshot_2023-05-14_21-38-35.png)
+![](Screenshot_2023-05-14_21-38-35.png){width=200%}
 
-xxx
 
 - Then install usual way.
 - For Mac, install `R-4.3.0-arm64.pkg` (Big Sur and newer), `R-4.3.0-x86_64.pkg` (older), or a newer version if available.
@@ -207,7 +207,7 @@ The last thing we need is Quarto, so that we can render documents (and thus hand
 
 ## How R Studio looks when you run it
 
-![](rstudio-startup.png){height=200px}
+![](rstudio-startup.png){width=60%}
 
 - that is, just the same as the online one.
 
