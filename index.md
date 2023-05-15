@@ -1,0 +1,7 @@
+# Lecture notes
+
+Here are my lecture notes, all of them:
+
+| Section             | Slides                                                        | Code                                                                               |
+|:--------------------|:--------------------------------------------------------------|:-----------------------------------------------------------------------------------|
+| Logistic regression | [Slides](http://ritokiguess.site/lecture-notes/logistic.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/logistic.qmd) |
