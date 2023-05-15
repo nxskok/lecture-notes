@@ -3,6 +3,7 @@ title: "Tidying data: extras"
 format: 
   revealjs:
      df-print: paged
+     auto-stretch: false
 execute:
   echo: true
 editor: 
@@ -106,7 +107,7 @@ prevalence_longer %>%
   pivot_wider(names_from=location, values_from=frequency)
 ```
 
-## Interlude
+## Interlude {.smaller}
 
 ```{r tidy-extra-R-11}
 pigs_longer
