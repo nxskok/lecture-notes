@@ -3,6 +3,7 @@ title: "Writing reports"
 format: 
   revealjs:
      df-print: paged
+     auto-stretch: false
 execute:
   echo: true
 editor: 
@@ -70,36 +71,36 @@ everything you need to refer to it.
 Journal articles typically begin with Abstract that summarizes question
 and gives highlights of results and conclusion, and tells you whether paper is worth your while to read. 
 
-![](Screenshot_2023-05-12_15-56-35.png)
+![](Screenshot_2023-05-12_15-56-35.png){width=150%}
 
 
 ## Introduction
 
 
-![](Screenshot_2023-05-12_15-58-02.png)
+![](Screenshot_2023-05-12_15-58-02.png){width=150%}
 
 Introduction begins with plain-English first sentence. The numbers in
 brackets are references to what other people have said.
 
 ## Materials and methods
 
-![](Screenshot_2023-05-12_15-59-43.png)
+![](Screenshot_2023-05-12_15-59-43.png){width=150%}
 
 The subjects. Experiments on humans require “ethical approval”. 
 
 ## Taking measurements
 
-![](Screenshot_2023-05-12_16-04-14.png)
+![](Screenshot_2023-05-12_16-04-14.png){width=150%}
 
 ...and
 
-![](Screenshot_2023-05-12_16-06-38.png)
+![](Screenshot_2023-05-12_16-06-38.png){width=150%}
 
 
 
 ## Results (a)
 
-![](Screenshot_2023-05-12_16-11-26.png)
+![](Screenshot_2023-05-12_16-11-26.png){width=150%}
 
 ...noting that the two groups were not significantly different before the
 study, but changed in important respects over time.
@@ -110,7 +111,7 @@ Results also shown in table.
  \includegraphics[width=0.7\textwidth]{resultsb}  
  
  
-![](Screenshot_2023-05-12_16-12-51.png)
+![](Screenshot_2023-05-12_16-12-51.png){width=150%}
 
 Graph showing that bone mass density has changed greatly as a result of
 the jumping. (Graphs are always good.)
