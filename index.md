@@ -1,6 +1,7 @@
 # Lecture notes
 
-Here are my lecture notes, all of them, in chronological order:
+Here are my lecture notes, all of them, in chronological order, with the
+slideshows and the Quarto documents with the code that made the slides:
 
 | Section                               | Slides                                                               | Code                                                                                      |
 |:--------------------------------------|:---------------------------------------------------------------------|:------------------------------------------------------------------------------------------|
@@ -12,7 +13,7 @@ Here are my lecture notes, all of them, in chronological order:
 | Drawing graphs                        | [Slides](http://ritokiguess.site/lecture-notes/graphs.html)          | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/graphs.qmd)          |
 | Numerical summaries                   | [Slides](http://ritokiguess.site/lecture-notes/numsum.html)          | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/numsum.qmd)          |
 | Choosing things from dataframes       | [Slides](http://ritokiguess.site/lecture-notes/choosing.html)        | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/choosing.qmd)        |
-| Inference: one and two-sample $t$     | [Slides](http://ritokiguess.site/lecture-notes/inference_1.html)     | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_1.qmd)     |
+| Inference: one and two-sample t       | [Slides](http://ritokiguess.site/lecture-notes/inference_1.html)     | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_1.qmd)     |
 | Bootstrap for sample mean             | [Slides](http://ritokiguess.site/lecture-notes/bootstrap_R.html)     | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap_R.qmd)     |
 | Inference: power                      | [Slides](http://ritokiguess.site/lecture-notes/inference_2.html)     | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_2.qmd)     |
 | Inference: sign test                  | [Slides](http://ritokiguess.site/lecture-notes/inference_3.html)     | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_3.qmd)     |
