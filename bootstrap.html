@@ -404,19 +404,21 @@
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(bootstrap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><a href="https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests">My source for this</a></p>
+<p>Source: <a href="https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests">Hesterberg et al</a></p>
 </section>
 <section id="is-my-sampling-distribution-normal-enough" class="slide level2">
 <h2>Is my sampling distribution normal enough?</h2>
 <ul>
-<li>Recall the IRS data that we used as a motivation for the sign test:</li>
+<li>Recall IRS data (used as a motivation for the sign test) :</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">ggplot</span>(irs, <span class="fu">aes</span>(<span class="at">x=</span>Time))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell-output-display">
+<p><img data-src="bootstrap_files/figure-revealjs/bootstrap-3-1.png" width="960"></p>
 </div>
-<img data-src="bootstrap_files/figure-revealjs/bootstrap-3-1.png" width="960" class="r-stretch"><ul>
-<li>We said that a <span class="math inline">\(t\)</span> procedure for the mean would not be a good idea because the distribution is skewed.</li>
+</div>
+<ul>
+<li><span class="math inline">\(t\)</span> procedure for the mean would not be a good idea because the distribution is skewed.</li>
 </ul>
 </section>
 <section id="what-actually-matters" class="slide level2">
@@ -462,7 +464,7 @@
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace=</span>T)</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="fu">mean</span>(boot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 212.1</code></pre>
+<pre><code>[1] 189.1</code></pre>
 </div>
 </div>
 <ul>
@@ -510,9 +512,11 @@
 <h2>Sampling distribution of sample mean</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(samples, <span class="fu">aes</span>(<span class="at">x=</span>my_mean)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell-output-display">
+<p><img data-src="bootstrap_files/figure-revealjs/bootstrap-8-1.png" width="960"></p>
 </div>
-<img data-src="bootstrap_files/figure-revealjs/bootstrap-8-1.png" width="960" class="r-stretch"><ul>
+</div>
+<ul>
 <li>Is that a slightly long right tail?</li>
 </ul>
 </section>
@@ -522,9 +526,11 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(samples, <span class="fu">aes</span>(<span class="at">sample =</span> my_mean)) <span class="sc">+</span> </span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">stat_qq</span>()<span class="sc">+</span><span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell-output-display">
+<p><img data-src="bootstrap_files/figure-revealjs/bootstrap-9-1.png" width="960"></p>
 </div>
-<img data-src="bootstrap_files/figure-revealjs/bootstrap-9-1.png" width="960" class="r-stretch"><ul>
+</div>
+<ul>
 <li>a very very slight right-skewness, but very close to normal.</li>
 </ul>
 </section>
@@ -668,9 +674,11 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(soap, <span class="fu">aes</span>(<span class="at">x=</span>speed, <span class="at">y=</span>scrap, <span class="at">colour=</span>line))<span class="sc">+</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell-output-display">
+<p><img data-src="bootstrap_files/figure-revealjs/bootstrap-18-1.png" width="960"></p>
 </div>
-<img data-src="bootstrap_files/figure-revealjs/bootstrap-18-1.png" width="960" class="r-stretch"></section>
+</div>
+</section>
 <section id="comments" class="slide level2">
 <h2>Comments</h2>
 <ul>
@@ -730,9 +738,11 @@ sample estimates:
 <h2>A picture of this</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(cors, <span class="fu">aes</span>(<span class="at">x=</span>my_cor))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell-output-display">
+<p><img data-src="bootstrap_files/figure-revealjs/bootstrap-23-1.png" width="960"></p>
 </div>
-<img data-src="bootstrap_files/figure-revealjs/bootstrap-23-1.png" width="960" class="r-stretch"></section>
+</div>
+</section>
 <section id="comments-and-next-steps" class="slide level2">
 <h2>Comments and next steps</h2>
 <ul>
@@ -824,9 +834,11 @@ sample estimates:
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>cors <span class="sc">%&gt;%</span> </span>
 <span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">mutate</span>(<span class="at">z =</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">log</span>((<span class="dv">1</span><span class="sc">+</span>my_cor)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>my_cor))) <span class="sc">%&gt;%</span> </span>
 <span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample=</span>z)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
+<div class="cell-output-display">
+<p><img data-src="bootstrap_files/figure-revealjs/bootstrap-28-1.png" width="960"></p>
 </div>
-<img data-src="bootstrap_files/figure-revealjs/bootstrap-28-1.png" width="960" class="r-stretch"><div class="footer footer-default">
+</div>
+<div class="footer footer-default">
 
 </div>
 </section>

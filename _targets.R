@@ -30,6 +30,7 @@ list(
   tar_quarto(ancova, "ancova.qmd"),
   tar_quarto(anova, "anova.qmd"),
   tar_quarto(asphalt, "asphalt.qmd"),
+  tar_quarto(bootstrap, "bootstrap.qmd"),
   tar_quarto(bootstrap_R, "bootstrap_R.qmd"),
   tar_quarto(choosing, "choosing.qmd"),
   tar_quarto(cluster, "cluster.qmd"),
@@ -64,6 +65,7 @@ list(
   tar_quarto(survival, "survival.qmd"),
   tar_quarto(tidying, "tidying.qmd"),
   tar_quarto(tidy_extra, "tidy_extra.qmd"),
+  tar_quarto(vector_matrix, "vector_matrix.qmd"),
   tar_quarto(wider_wrong, "wider_wrong.qmd"),
   tar_quarto(windmill, "windmill.qmd"),
   tar_quarto(with_categ, "with_categ.qmd")

@@ -3,6 +3,7 @@ title: "The bootstrap revisited"
 format: 
   revealjs:
      df-print: paged
+     auto-stretch: false
 execute:
   echo: true
 editor: 
@@ -18,12 +19,12 @@ library(tidyverse)
 library(bootstrap)
 ```
 
-[My source for this](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
+Source: [Hesterberg et al](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
 
 
 ## Is my sampling distribution normal enough?
 
-- Recall the IRS data that we used as a motivation for the sign test:
+- Recall IRS data (used as a motivation for the sign test) :
 
 ```{r bootstrap-2, include=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
@@ -31,11 +32,11 @@ irs <- read_csv(my_url)
 ```
 
 
-```{r bootstrap-3}
+```{r bootstrap-3, fig.height=5}
 ggplot(irs, aes(x=Time))+geom_histogram(bins=10)
 ```
 
-- We said that a $t$ procedure for the mean would not be a good idea because the distribution is skewed.
+- $t$ procedure for the mean would not be a good idea because the distribution is skewed.
 
 ## What *actually* matters
 
