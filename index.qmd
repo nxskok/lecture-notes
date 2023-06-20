@@ -7,48 +7,48 @@ Here are my lecture notes, all of them, in chronological order, with the slidesh
 
 | Section | Slides | Code
 |:--------|:--------|:--------------|
-|STAC32 course outline | [Slides](http://ritokiguess.site/lecture-notes/outline_c32.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_c32.qmd) |
-|STAC33 course outline | [Slides](http://ritokiguess.site/lecture-notes/outline_c33.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_c33.qmd) |
-|STAD29 course outline | [Slides](http://ritokiguess.site/lecture-notes/outline_d29.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_d29.qmd) |
-|Running R | [Slides](http://ritokiguess.site/lecture-notes/running.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/running.qmd) |
-|Reading data files | [Slides](http://ritokiguess.site/lecture-notes/readfile.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/readfile.qmd) |
-|Drawing graphs | [Slides](http://ritokiguess.site/lecture-notes/graphs.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/graphs.qmd) |
-|Numerical summaries | [Slides](http://ritokiguess.site/lecture-notes/numsum.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/numsum.qmd) |
-|Choosing things from dataframes| [Slides](http://ritokiguess.site/lecture-notes/choosing.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/choosing.qmd) |
-|Inference: one and two-sample t | [Slides](http://ritokiguess.site/lecture-notes/inference_1.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_1.qmd) |
-|Bootstrap for sample mean | [Slides](http://ritokiguess.site/lecture-notes/bootstrap_R.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap_R.qmd) |
-|Inference: power | [Slides](http://ritokiguess.site/lecture-notes/inference_2.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_2.qmd) |
-|Inference: sign test | [Slides](http://ritokiguess.site/lecture-notes/inference_3.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_3.qmd) |
-|Inference: normal quantile plot | [Slides](http://ritokiguess.site/lecture-notes/inference_4a.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_4a.qmd) |
+|STAC32 course outline | [Slides](http://ritsokiguess.site/lecture-notes/outline_c32.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_c32.qmd) |
+|STAC33 course outline | [Slides](http://ritsokiguess.site/lecture-notes/outline_c33.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_c33.qmd) |
+|STAD29 course outline | [Slides](http://ritsokiguess.site/lecture-notes/outline_d29.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_d29.qmd) |
+|Running R | [Slides](http://ritsokiguess.site/lecture-notes/running.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/running.qmd) |
+|Reading data files | [Slides](http://ritsokiguess.site/lecture-notes/readfile.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/readfile.qmd) |
+|Drawing graphs | [Slides](http://ritsokiguess.site/lecture-notes/graphs.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/graphs.qmd) |
+|Numerical summaries | [Slides](http://ritsokiguess.site/lecture-notes/numsum.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/numsum.qmd) |
+|Choosing things from dataframes| [Slides](http://ritsokiguess.site/lecture-notes/choosing.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/choosing.qmd) |
+|Inference: one and two-sample t | [Slides](http://ritsokiguess.site/lecture-notes/inference_1.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_1.qmd) |
+|Bootstrap for sample mean | [Slides](http://ritsokiguess.site/lecture-notes/bootstrap_R.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap_R.qmd) |
+|Inference: power | [Slides](http://ritsokiguess.site/lecture-notes/inference_2.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_2.qmd) |
+|Inference: sign test | [Slides](http://ritsokiguess.site/lecture-notes/inference_3.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_3.qmd) |
+|Inference: normal quantile plot | [Slides](http://ritsokiguess.site/lecture-notes/inference_4a.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_4a.qmd) |
 |Inference: matched pairs | [Slides](http://ritsokiguess.site/lecture-notes/inference_4b.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_4b.qmd) |
-|Inference: Mood's median test | [Slides](http://ritokiguess.site/lecture-notes/inference_5a.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_5a.qmd) |
-|Inference: analysis of variance | [Slides](http://ritokiguess.site/lecture-notes/inference_5b.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_5b.qmd) |
-|Writing reports | [Slides](http://ritokiguess.site/lecture-notes/reports.html) |[Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/reports.qmd) |
-|Tidying data | [Slides](http://ritokiguess.site/lecture-notes/tidying.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/tidying.qmd) |
-|Tidying data: extras | [Slides](http://ritokiguess.site/lecture-notes/tidy_extra.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/tidy_extra.qmd) |
+|Inference: Mood's median test | [Slides](http://ritsokiguess.site/lecture-notes/inference_5a.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_5a.qmd) |
+|Inference: analysis of variance | [Slides](http://ritsokiguess.site/lecture-notes/inference_5b.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/inference_5b.qmd) |
+|Writing reports | [Slides](http://ritsokiguess.site/lecture-notes/reports.html) |[Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/reports.qmd) |
+|Tidying data | [Slides](http://ritsokiguess.site/lecture-notes/tidying.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/tidying.qmd) |
+|Tidying data: extras | [Slides](http://ritsokiguess.site/lecture-notes/tidy_extra.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/tidy_extra.qmd) |
 |When `pivot_wider` goes wrong | [Slides](http://ritsokiguess.site/lecture-notes/wider_wrong.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/wider_wrong.qmd) |
-|Case study: windmill | [Slides](http://ritokiguess.site/lecture-notes/windmill.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/windmill.qmd) |
-|Case study: asphalt | [Slides](http://ritokiguess.site/lecture-notes/asphalt.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/asphalt.qmd) |
+|Case study: windmill | [Slides](http://ritsokiguess.site/lecture-notes/windmill.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/windmill.qmd) |
+|Case study: asphalt | [Slides](http://ritsokiguess.site/lecture-notes/asphalt.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/asphalt.qmd) |
 |Regression with categorical variables | [Slides](http://ritsokiguess.site/lecture-notes/with_categ.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/with_categ.qmd) |
 |Functions | [Slides](http://ritsokiguess.site/lecture-notes/functions.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/functions.qmd) |
 |Vector and matrix algebra | [Slides](http://ritsokiguess.site/lecture-notes/vector_matrix.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/vector_matrix.qmd) |
-|Bootstrap revisited | [Slides](http://ritokiguess.site/lecture-notes/bootstrap.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap.qmd) |
-|Bayesian statistics with Stan | [Slides](http://ritokiguess.site/lecture-notes/rstan.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/rstan.qmd) |
-|Regression revisited | [Slides](http://ritokiguess.site/lecture-notes/regression.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/regression.qmd) |
+|Bootstrap revisited | [Slides](http://ritsokiguess.site/lecture-notes/bootstrap.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap.qmd) |
+|Bayesian statistics with Stan | [Slides](http://ritsokiguess.site/lecture-notes/rstan.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/rstan.qmd) |
+|Regression revisited | [Slides](http://ritsokiguess.site/lecture-notes/regression.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/regression.qmd) |
 |Logistic regression | [Slides](http://ritsokiguess.site/lecture-notes/logistic.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/logistic.qmd) |
-|Dates and Times | [Slides](http://ritokiguess.site/lecture-notes/dates_and_times.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dates_and_times.qmd) |
-|Durations, intervals and periods | [Slides](http://ritokiguess.site/lecture-notes/dip.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dip.qmd) |
-|Survival analysis| [Slides](http://ritokiguess.site/lecture-notes/survival.html) |[Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/survival.qmd) |
-|ANOVA revisited | [Slides](http://ritokiguess.site/lecture-notes/anova.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/anova.qmd) |
-|Analysis of Covariance | [Slides](http://ritokiguess.site/lecture-notes/ancova.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/ancova.qmd) |
-|Multivariate ANOVA | [Slides](http://ritokiguess.site/lecture-notes/manova.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/manova.qmd) |
+|Dates and Times | [Slides](http://ritsokiguess.site/lecture-notes/dates_and_times.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dates_and_times.qmd) |
+|Durations, intervals and periods | [Slides](http://ritsokiguess.site/lecture-notes/dip.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dip.qmd) |
+|Survival analysis| [Slides](http://ritsokiguess.site/lecture-notes/survival.html) |[Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/survival.qmd) |
+|ANOVA revisited | [Slides](http://ritsokiguess.site/lecture-notes/anova.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/anova.qmd) |
+|Analysis of Covariance | [Slides](http://ritsokiguess.site/lecture-notes/ancova.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/ancova.qmd) |
+|Multivariate ANOVA | [Slides](http://ritsokiguess.site/lecture-notes/manova.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/manova.qmd) |
 |Repeated measures | [Slides](http://ritsokiguess.site/lecture-notes/profile.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/profile.qmd) |
-|Discriminant analysis | [Slides](http://ritokiguess.site/lecture-notes/discrim.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/discrim.qmd) |
-|Cluster analysis | [Slides](http://ritokiguess.site/lecture-notes/cluster.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/cluster.qmd) |
-|Drawing maps | [Slides](http://ritokiguess.site/lecture-notes/mapping.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/mapping.qmd) |
-|Principal components | [Slides](http://ritokiguess.site/lecture-notes/princomp.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/princomp.qmd) |
-|Factor analysis| [Slides](http://ritokiguess.site/lecture-notes/factor.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/factor.qmd) |
-|Multiway frequency tables| [Slides](http://ritokiguess.site/lecture-notes/multiway.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/multiway.qmd) |
+|Discriminant analysis | [Slides](http://ritsokiguess.site/lecture-notes/discrim.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/discrim.qmd) |
+|Cluster analysis | [Slides](http://ritsokiguess.site/lecture-notes/cluster.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/cluster.qmd) |
+|Drawing maps | [Slides](http://ritsokiguess.site/lecture-notes/mapping.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/mapping.qmd) |
+|Principal components | [Slides](http://ritsokiguess.site/lecture-notes/princomp.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/princomp.qmd) |
+|Factor analysis| [Slides](http://ritsokiguess.site/lecture-notes/factor.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/factor.qmd) |
+|Multiway frequency tables| [Slides](http://ritsokiguess.site/lecture-notes/multiway.html) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/multiway.qmd) |
 
 
 

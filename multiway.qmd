@@ -10,65 +10,57 @@ editor:
     wrap: 72
 ---
 
-
 ## Packages
 
 ```{r}
 library(tidyverse )
 ```
 
-
-
 ## Multi-way frequency analysis
 
+-   A study of gender and eyewear-wearing finds the following
+    frequencies:
 
-* A study of gender and eyewear-wearing finds the following frequencies:
-\begin{tabular}{lrrr}
-\hline
-Gender & Contacts & Glasses & None \\
-\hline
-Female & 121 & 32 & 129 \\
-Male & 42 & 37 & 85\\
-\hline
-\end{tabular}
+    ```{=tex}
+    \begin{tabular}{lrrr}
+    \hline
+    Gender & Contacts & Glasses & None \\
+    \hline
+    Female & 121 & 32 & 129 \\
+    Male & 42 & 37 & 85\\
+    \hline
+    \end{tabular}
+    ```
 
-* Is there association between eyewear and gender?
+-   Is there association between eyewear and gender?
 
-* Normally answer this with chisquare test (based on observed and expected frequencies from null hypothesis of no association).
+-   Normally answer this with chisquare test (based on observed and
+    expected frequencies from null hypothesis of no association).
 
-* Two categorical variables and a frequency.
+-   Two categorical variables and a frequency.
 
-* We assess in way that generalizes to more categorical variables.
+-   We assess in way that generalizes to more categorical variables.
 
+## The data file
 
-
-
-##  The data file
-
-\footnotesize
-```
+```         
 gender contacts glasses none
 female 121      32      129
 male   42       37      85
 ```
-\normalsize
 
+-   This is *not tidy!*
 
-* This is *not tidy!*
+-   Two variables are gender and *eyewear*, and those numbers all
+    frequencies.
 
-* Two variables are gender and *eyewear*, and those numbers
-all frequencies.
-
-\footnotesize
 ```{r bMultiway-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/eyewear.txt"
 (eyewear <- read_delim(my_url, " "))
 ```
-\normalsize
-   
 
+## Tidying the data
 
-##  Tidying the data
 ```{r bMultiway-2, size="footnotesize"}
 eyewear %>%
   pivot_longer(contacts:none, names_to="eyewear", 
@@ -78,22 +70,18 @@ eyes
 
 ## Making tidy data back into a table
 
-- use `pivot_wider`
-- or this (we use it again later):
+-   use `pivot_wider`
+-   or this (we use it again later):
 
 ```{r bMultiway-3}
 xt <- xtabs(frequency ~ gender + eyewear, data = eyes)
 xt
 ```
 
-   
+## Modelling
 
-##  Modelling
-
-
-* Predict frequency from other factors and combos. 
-- `glm`
-with `poisson` family.
+-   Predict frequency from other factors and combos.
+-   `glm` with `poisson` family.
 
 ```{r bMultiway-4 }
 eyes.1 <- glm(frequency ~ gender * eyewear,
@@ -102,71 +90,66 @@ eyes.1 <- glm(frequency ~ gender * eyewear,
 )
 ```
 
+-   Called **log-linear model**.
 
+## What can we get rid of?
 
-* Called **log-linear model**.
+\small
 
-
-
-##  What can we get rid of?
-
-\small    
 ```{r bMultiway-5 }
 drop1(eyes.1, test = "Chisq")
 ```
- 
+
 nothing!
 
+## Conclusions
 
-##  Conclusions
+-   `drop1` says what we can remove at this step. Significant = must
+    stay.
 
+-   Cannot remove anything.
 
-* `drop1` says what we can remove at this
-step. Significant = must stay.
+-   Frequency depends on `gender-wear` *combination*, cannot be
+    simplified further.
 
-* Cannot remove anything.
+-   Gender and eyewear are *associated*.
 
-* Frequency depends on `gender-wear`
-*combination*, cannot be simplified further.
+-   Stop here.
 
-* Gender and eyewear are *associated*.
+## `prop.table`
 
-* Stop here.
-
-
-##  `prop.table`
 Original table:
 
 \footnotesize
+
 ```{r bMultiway-6 }
 xt
 ```
+
 \normalsize
- 
 
 Calculate eg. row proportions like this:
 
 \small
+
 ```{r bMultiway-7 }
 prop.table(xt, margin = 1)
 ```
+
 \normalsize
 
 ## Comments
 
-* `margin` says what to make add to 1.
+-   `margin` says what to make add to 1.
 
-* More females wear contacts and more males wear glasses.
+-   More females wear contacts and more males wear glasses.
 
+## No association
 
-
-
-##  No association
-
-
-* Suppose table had been as shown below:
+-   Suppose table had been as shown below:
 
 \scriptsize
+
 ```{r bMultiway-8, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/eyewear2.txt"
 eyewear2 <- read_table(my_url)
@@ -177,18 +160,17 @@ xt2 <- xtabs(frequency ~ gender + eyewear, data = eyes2)
 xt2
 prop.table(xt2, margin = 1)
 ```
+
 \normalsize
-   
+
 ## Comments
 
-* Females and males wear contacts and glasses *in same proportions*
-   - though more females and more contact-wearers. 
-- No
-*association* between gender and eyewear.
+-   Females and males wear contacts and glasses *in same proportions*
+    -   though more females and more contact-wearers.
+-   No *association* between gender and eyewear.
 
+## Analysis for revised data
 
-
-##  Analysis for revised data
 ```{r bMultiway-9}
 eyes.2 <- glm(frequency ~ gender * eyewear,
   data = eyes2,
@@ -197,49 +179,41 @@ eyes.2 <- glm(frequency ~ gender * eyewear,
 drop1(eyes.2, test = "Chisq")
 ```
 
-   
-
 No longer any association. Take out interaction.
 
+## No interaction
 
-##  No interaction
 \small
+
 ```{r bMultiway-10 }
 eyes.3 <- update(eyes.2, . ~ . - gender:eyewear)
 drop1(eyes.3, test = "Chisq")
 ```
+
 \normalsize
-   
 
+-   More females (gender effect)
 
-* More females (gender effect)
+-   more contact-wearers (eyewear effect)
 
-* more contact-wearers (eyewear
-effect)
+-   no association (no interaction).
 
-* no association (no interaction). 
+## Chest pain, being overweight and being a smoker
 
+-   In a hospital emergency department, 176 subjects who attended for
+    acute chest pain took part in a study.
 
+-   Each subject had a normal or abnormal electrocardiogram reading
+    (ECG), were overweight (as judged by BMI) or not, and were a smoker
+    or not.
 
-##  Chest pain, being overweight and being a smoker
-
-
-* In a hospital emergency department, 176 subjects who attended
-for acute chest pain took part in a study.
-
-* Each subject had a
-normal or abnormal electrocardiogram reading (ECG), were
-overweight (as judged by BMI) or not, and were a smoker or
-not.
-
-* How are these three variables related, or not?
-
-
+-   How are these three variables related, or not?
 
 ## The data
+
 In modelling-friendly format:
 
-```
+```         
 
 ecg bmi smoke count
 abnormal overweight yes 47
@@ -250,13 +224,12 @@ normal overweight yes 25
 normal overweight no 15 
 normal normalweight yes 35
 normal normalweight no 30
-
 ```
 
+## First step
 
-
-##  First step
 \small
+
 ```{r bMultiway-11, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/ecg.txt"
 chest <- read_delim(my_url, " ")
@@ -266,81 +239,74 @@ chest.1 <- glm(count ~ ecg * bmi * smoke,
 )
 drop1(chest.1, test = "Chisq")
 ```
+
 \normalsize
-   
 
 That 3-way interaction comes out.
 
+## Removing the 3-way interaction
 
-##  Removing the 3-way interaction
 \small
+
 ```{r bMultiway-12}
 chest.2 <- update(chest.1, . ~ . - ecg:bmi:smoke)
 drop1(chest.2, test = "Chisq")
 ```
+
 \normalsize
-   
 
 At $\alpha=0.05$, `bmi:smoke` comes out.
 
+## Removing `bmi:smoke`
 
-##  Removing `bmi:smoke`
 \small
+
 ```{r bMultiway-13}
 chest.3 <- update(chest.2, . ~ . - bmi:smoke)
 drop1(chest.3, test = "Chisq")
 ```
+
 \normalsize
-   
 
 `ecg:smoke` has become significant. So we have to stop.
 
-
 ## Understanding the final model
 
+-   Thinking of `ecg` as "response" that might depend on anything else.
 
-* Thinking of `ecg` as "response" that might depend on
-anything else.
+-   What is associated with `ecg`? Both `bmi` on its own and `smoke` on
+    its own, but *not* the combination of both.
 
-* What is associated with `ecg`? Both `bmi` on its
-own and `smoke` on its own, but *not* the combination
-of both.
+-   `ecg:bmi` table:
 
-* `ecg:bmi` table:
 ```{r bMultiway-14 }
 xtabs(count ~ ecg + bmi, data = chest)
 ```
 
-     
+:::{.r-fit-text}
 
+-   Most normal weight people have a normal ECG, but a majority of
+    overweight people have an *abnormal* ECG. That is, knowing about BMI
+    says something about likely ECG.
 
-* Most normal weight people have a normal ECG, but a
-majority of overweight people have an *abnormal* ECG. That is,
-knowing about BMI says something about likely ECG.
-
-
+:::
 
 ## `ecg:smoke`
 
+-   `ecg:smoke` table:
 
-* `ecg:smoke` table:
 ```{r bMultiway-15 }
 xtabs(count ~ ecg + smoke, data = chest)
 ```
 
-   
+-   Most nonsmokers have a normal ECG, but smokers are about 50--50
+    normal and abnormal ECG.
 
-
-* Most nonsmokers have a normal ECG, but smokers are about 50--50
-normal and abnormal ECG.
-
-* Don't look at `smoke:bmi` table since not significant. 
-
+-   Don't look at `smoke:bmi` table since not significant.
 
 ## Simpson's paradox: the airlines example
 
-
-```
+```         
                Alaska Airlines       America West
 Airport       On time    Delayed   On time    Delayed
 Los Angeles      497        62        694       117
@@ -354,23 +320,18 @@ Total           3274       501       6438       787
 
 Use `status` as variable name for "on time/delayed".
 
+-   Alaska: 13.3% flights delayed ($501/(3274+501)$).
 
-* Alaska: 13.3\% flights delayed ($501/(3274+501)$).
+-   America West: 10.9% ($787/(6438+787)$).
 
-* America West: 10.9\% ($787/(6438+787)$).
+-   America West more punctual, right?
 
-* America West more punctual, right?
+## Arranging the data
 
+-   Can only have single thing in columns, so we have to construct
+    column names like this: \small
 
-
-##  Arranging the data
-
-
-* Can only have single thing in columns, so we have to construct
-column names like this:
-\small
-
-```
+```         
 
 airport    aa_ontime aa_delayed aw_ontime aw_delayed
 LosAngeles   497          62       694        117
@@ -378,22 +339,22 @@ Phoenix      221          12      4840        415
 SanDiego     212          20       383         65
 SanFrancisco 503         102       320        129
 Seattle     1841         305       201         61
-
 ```
 
 \normalsize
 
-- Read in:
+-   Read in:
 
 ```{r bMultiway-16, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/airlines.txt"
 airlines <- read_table(my_url)
 ```
 
-## Tidying 
+## Tidying
 
-* Some tidying gets us the right layout, with frequencies all in
-one column and the airline and delayed/on time status separated out. This uses one of the fancy versions of `pivot_longer`:
+-   Some tidying gets us the right layout, with frequencies all in one
+    column and the airline and delayed/on time status separated out.
+    This uses one of the fancy versions of `pivot_longer`:
 
 ```{r bMultiway-17, message=F, size="small"}
 airlines %>%
@@ -403,47 +364,41 @@ airlines %>%
                 values_to = "freq" ) -> punctual
 ```
 
-
-
-##  The data frame `punctual`
-
+## The data frame `punctual`
 
 ```{r bMultiway-18, echo=F}
 punctual
 ```
 
-   
+## Proportions delayed by airline
 
-
-##  Proportions delayed by airline
-
-
-* Two-step process: get appropriate subtable:
+-   Two-step process: get appropriate subtable:
 
 \small
+
 ```{r bMultiway-19 }
 xt <- xtabs(freq ~ airline + status, data = punctual)
 xt
 ```
+
 \normalsize
-     
 
-
-* and then calculate appropriate proportions:
+-   and then calculate appropriate proportions:
 
 \small
+
 ```{r bMultiway-20 }
 prop.table(xt, margin = 1)
 ```
+
 \normalsize
 
-* More of Alaska Airlines' flights delayed (13.3\% vs.\ 10.9\%).
+-   More of Alaska Airlines' flights delayed (13.3% vs. 10.9%).
 
-
-
-##  Proportion delayed by airport, for each airline
+## Proportion delayed by airport, for each airline
 
 \footnotesize
+
 ```{r bMultiway-21}
 xt <- xtabs(freq ~ airline + status + airport, data = punctual)
 xp <- prop.table(xt, margin = c(1, 3))
@@ -452,11 +407,12 @@ ftable(xp,
   col.vars = "status"
 )
 ```
+
 \normalsize
-   
 
-##  Simpson's Paradox
+## Simpson's Paradox
 
+```{=tex}
 \begin{tabular}{|l|rr|}
 \hline
 Airport & Alaska & America West\\
@@ -470,148 +426,126 @@ Seattle & 14.2 & 23.2 \\
 Total & 13.3 & 10.9 \\
 \hline
 \end{tabular}
+```
+-   America West more punctual overall,
 
+-   but worse at *every single* airport!
 
-* America West more punctual overall,
+-   How is that possible?
 
-* but worse at *every single* airport!
-
-* How is that possible?
-
-* Log-linear analysis sheds some light.
-
-
+-   Log-linear analysis sheds some light.
 
 ## Model 1 and output
+
 ```{r bMultiway-22}
 punctual.1 <- glm(freq ~ airport * airline * status,
   data = punctual, family = "poisson"
 )
 drop1(punctual.1, test = "Chisq")
 ```
- 
 
-
-##  Remove 3-way interaction
+## Remove 3-way interaction
 
 \footnotesize
+
 ```{r bMultiway-23}
 punctual.2 <- update(punctual.1, ~ . - airport:airline:status)
 drop1(punctual.2, test = "Chisq")
 ```
+
 \normalsize
 
 Stop here.
 
-
 ## Understanding the significance
 
-
-* `airline:status`:
+-   `airline:status`:
 
 ```{r bMultiway-24 }
 xt <- xtabs(freq ~ airline + status, data = punctual)
 prop.table(xt, margin = 1)
 ```
 
-     
+-   More of Alaska Airlines' flights delayed overall.
 
-
-* More of Alaska Airlines' flights delayed overall.
-
-* Saw this before.
-
-
+-   Saw this before.
 
 ## Understanding the significance (2)
 
+-   `airport:status`:
 
-* `airport:status`:
 ```{r bMultiway-25 }
 xt <- xtabs(freq ~ airport + status, data = punctual)
 prop.table(xt, margin = 1)
 ```
 
+-   Flights into San Francisco (and maybe Seattle) are often late, and
+    flights into Phoenix are usually on time.
 
-
-* Flights into San Francisco (and maybe Seattle) are often late, and
-flights into Phoenix are usually on time.
-
-* Considerable variation among airports.
-
-
+-   Considerable variation among airports.
 
 ## Understanding the significance (3)
 
+-   `airport:airline`:
 
-* `airport:airline`:
 ```{r bMultiway-26 }
 xt <- xtabs(freq ~ airport + airline, data = punctual)
 prop.table(xt, margin = 2)
 ```
 
+-   What fraction of each airline's flights are to each airport.
 
+-   Most of Alaska Airlines' flights to Seattle and San Francisco.
 
-* What fraction of each airline's flights are to each airport.
+-   Most of America West's flights to Phoenix.
 
-* Most of Alaska Airlines' flights to Seattle and San Francisco.
+## The resolution
 
-* Most of America West's flights to Phoenix.
+-   Most of America West's flights to Phoenix, where it is easy to be on
+    time.
 
+-   Most of Alaska Airlines' flights to San Francisco and Seattle, where
+    it is difficult to be on time.
 
+-   Overall comparison looks bad for Alaska because of this.
 
-##  The resolution
+-   But, *comparing like with like*, if you compare each airline's
+    performance *to the same airport*, Alaska does better.
 
+-   Aggregating over the very different airports was a (big) mistake:
+    that was the cause of the Simpson's paradox.
 
-* Most of America West's flights to Phoenix, where it is easy to
-be on time.
+-   Alaska Airlines is *more* punctual when you do the proper
+    comparison.
 
-* Most of Alaska Airlines' flights to San Francisco and Seattle,
-where it is difficult to be on time.
+## Ovarian cancer: a four-way table
 
-* Overall comparison looks bad for Alaska because of this.
+-   Retrospective study of ovarian cancer done in 1973.
 
-* But, *comparing like with like*, if you compare each
-airline's performance *to the same airport*, Alaska does better.
+-   Information about 299 women operated on for ovarian cancer 10 years
+    previously.
 
-* Aggregating over the very different airports was a (big)
-mistake: that was the cause of the Simpson's paradox.
+-   Recorded:
 
-* Alaska Airlines is *more* punctual when you do the proper comparison.
+    -   stage of cancer (early or advanced)
 
+    -   type of operation (radical or limited)
 
-##  Ovarian cancer: a four-way table
+    -   X-ray treatment received (yes or no)
 
+    -   10-year survival (yes or no)
 
-* Retrospective study of ovarian cancer done in 1973.
+-   Survival looks like response (suggests logistic regression).
 
-* Information about 299 women operated on for ovarian cancer 10 years previously.
+-   Log-linear model finds any associations at all.
 
-* Recorded:
-
-
-   * stage of cancer (early or advanced)
-
-   * type of operation (radical or limited)
-
-   * X-ray treatment received (yes or no)
-
-   * 10-year survival (yes or no)
-
-
-* Survival looks like response (suggests logistic
-regression).
-
-* Log-linear model finds any associations at all.
-
-
-##  The data
+## The data
 
 after tidying:
 
 \scriptsize
 
-```
+```         
 
 stage operation xray survival freq
 early radical no no 10
@@ -631,7 +565,6 @@ advanced limited no yes 1
 advanced limited yes no 13
 advanced limited yes yes 5
 
-
 ```
 
 \normalsize
@@ -639,190 +572,175 @@ advanced limited yes yes 5
 ## Reading in data
 
 \small
+
 ```{r bMultiway-27, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/cancer.txt"
 cancer <- read_delim(my_url, " ")
 cancer %>% slice(1:6)
 ```
+
 \normalsize
 
-
-##  Model 1
+## Model 1
 
 hopefully looking familiar by now:
+
 ```{r bMultiway-28}
 cancer.1 <- glm(freq ~ stage * operation * xray * survival,
   data = cancer, family = "poisson"
 )
 ```
- 
 
-
-##  Output 1
+## Output 1
 
 See what we can remove:
 
 \scriptsize
+
 ```{r bMultiway-29}
 drop1(cancer.1, test = "Chisq")
 ```
+
 \normalsize
 
 Non-significant interaction can come out.
 
-##  Model 2
+## Model 2
 
 \scriptsize
+
 ```{r bMultiway-30}
 cancer.2 <- update(cancer.1, . ~ . - stage:operation:xray:survival)
 drop1(cancer.2, test = "Chisq")
 ```
+
 \normalsize
 
 Least significant term is `stage:xray:survival`: remove.
 
-##  Take out `stage:xray:survival`
+## Take out `stage:xray:survival`
 
 \scriptsize
+
 ```{r bMultiway-31}
 cancer.3 <- update(cancer.2, . ~ . - stage:xray:survival)
 drop1(cancer.3, test = "Chisq")
 ```
+
 \normalsize
-   
 
 `operation:xray:survival` comes out next.
 
-
-##  Remove `operation:xray:survival`
+## Remove `operation:xray:survival`
 
 \scriptsize
+
 ```{r bMultiway-32}
 cancer.4 <- update(cancer.3, . ~ . - operation:xray:survival)
 drop1(cancer.4, test = "Chisq")
 ```
+
 \normalsize
-   
 
+## Comments
 
-##  Comments
+-   `stage:operation:xray` has now become significant, so won't remove
+    that.
 
+-   Shows value of removing terms one at a time.
 
-* `stage:operation:xray` has now become significant, so
-won't remove that.
+-   There are no higher-order interactions containing both `xray` and
+    `survival`, so now we get to test (and remove) `xray:survival`.
 
-* Shows value of removing terms one at a time.
-
-* There are no higher-order interactions containing both
-`xray` and `survival`, so now we get to test (and
-remove) `xray:survival`.
-
-
-
-##  Remove `xray:survival`
+## Remove `xray:survival`
 
 \scriptsize
+
 ```{r bMultiway-33}
 cancer.5 <- update(cancer.4, . ~ . - xray:survival)
 drop1(cancer.5, test = "Chisq")
 ```
+
 \normalsize
-   
 
-
-##  Remove `stage:operation:survival`
+## Remove `stage:operation:survival`
 
 \scriptsize
+
 ```{r bMultiway-34}
 cancer.6 <- update(cancer.5, . ~ . - stage:operation:survival)
 drop1(cancer.6, test = "Chisq")
 ```
+
 \normalsize
-   
 
+## Last step?
 
-##  Last step?
-Remove `operation:survival`.  
+Remove `operation:survival`.
 
 \footnotesize
+
 ```{r bMultiway-35, size="footnotesize"}
 cancer.7 <- update(cancer.6, . ~ . - operation:survival)
 drop1(cancer.7, test = "Chisq")
 ```
+
 \normalsize
-   
+
 Finally done!
 
+## Conclusions
 
-## Conclusions 
+-   What matters is things associated with `survival` (`survival` is
+    "response").
 
+-   Only significant such term is `stage:survival`:
 
-* What matters is things associated with `survival` (`survival` is
-"response").
-
-* Only significant such term is `stage:survival`:
 ```{r bMultiway-36 }
 xt <- xtabs(freq ~ stage + survival, data = cancer)
 prop.table(xt, margin = 1)
 ```
 
-     
+-   Most people in early stage of cancer survived, and most people in
+    advanced stage did not survive.
 
-* Most people in early stage of cancer survived, and most people
-in advanced stage did not survive.
+-   This true *regardless* of type of operation or whether or not X-ray
+    treatment was received. These things have no impact on survival.
 
-* This true *regardless* of type of operation or whether or
-not X-ray treatment was received. These things have no impact on
-survival. 
-
-
-
-##  What about that other interaction?
+## What about that other interaction?
 
 \footnotesize
+
 ```{r bMultiway-37 }
 xt <- xtabs(freq ~ operation + xray + stage, data = cancer)
 ftable(prop.table(xt, margin = 3))
 ```
+
 \normalsize
-   
 
+-   Out of the people at each stage of cancer (since `margin=3` and
+    `stage` was listed 3rd).
 
+-   The association is between `stage` and `xray` *only for those who
+    had the limited operation*.
 
-* Out of the people at each stage of cancer (since
-`margin=3` and `stage` was listed 3rd).
+-   For those who had the radical operation, there was no association
+    between `stage` and `xray`.
 
-* The association is between `stage` and `xray`
-*only for those who had the limited operation*.
+-   This is of less interest than associations with `survival`.
 
-* For those who
-had the radical operation, there was no association between
-`stage` and `xray`.
+## General procedure
 
-* This is of less interest than associations with
-`survival`. 
+-   Start with "complete model" including all possible interactions.
 
+-   `drop1` gives highest-order interaction(s) remaining, remove least
+    non-significant.
 
+-   Repeat as necessary until everything significant.
 
-##  General procedure
+-   Look at subtables of significant interactions.
 
+-   Main effects not usually very interesting.
 
-
-* Start with "complete model" including all possible interactions.
-
-* `drop1` gives highest-order interaction(s) remaining, remove least non-significant.
-
-* Repeat as necessary until everything significant.
-
-* Look at subtables of significant interactions.
-
-* Main effects not usually very interesting.
-
-* Interactions with "response" usually of most interest: show association with response.
-
-
-   
-
-
-
-
+-   Interactions with "response" usually of most interest: show
+    association with response.
