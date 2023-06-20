@@ -16,21 +16,16 @@ editor:
 library(tidyverse )
 ```
 
-## Multi-way frequency analysis
+## Multi-way frequency analysis {.scrollable}
 
 -   A study of gender and eyewear-wearing finds the following
     frequencies:
-
-    ```{=tex}
-    \begin{tabular}{lrrr}
-    \hline
-    Gender & Contacts & Glasses & None \\
-    \hline
-    Female & 121 & 32 & 129 \\
-    Male & 42 & 37 & 85\\
-    \hline
-    \end{tabular}
-    ```
+      
+```         
+gender contacts glasses none
+female 121      32      129
+male   42       37      85
+```
 
 -   Is there association between eyewear and gender?
 
@@ -270,7 +265,7 @@ drop1(chest.3, test = "Chisq")
 
 `ecg:smoke` has become significant. So we have to stop.
 
-## Understanding the final model
+## Understanding the final model {.scrollable}
 
 -   Thinking of `ecg` as "response" that might depend on anything else.
 
@@ -283,13 +278,10 @@ drop1(chest.3, test = "Chisq")
 xtabs(count ~ ecg + bmi, data = chest)
 ```
 
-:::{.r-fit-text}
-
 -   Most normal weight people have a normal ECG, but a majority of
     overweight people have an *abnormal* ECG. That is, knowing about BMI
     says something about likely ECG.
 
-:::
 
 ## `ecg:smoke`
 
