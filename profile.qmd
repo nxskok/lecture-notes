@@ -1,13 +1,5 @@
 ---
 title: "Repeated measures analysis"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

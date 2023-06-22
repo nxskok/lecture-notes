@@ -1,13 +1,5 @@
 ---
 title: "Tidying data"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Tidying data {.scrollable}

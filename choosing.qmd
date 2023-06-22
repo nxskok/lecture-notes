@@ -1,13 +1,5 @@
 ---
 title: "Choosing things in dataframes"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Packages

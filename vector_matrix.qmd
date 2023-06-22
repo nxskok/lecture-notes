@@ -1,14 +1,5 @@
 ---
 title: "Vector and matrix algebra"
-format: 
-  revealjs:
-     df-print: paged
-     auto-stretch: false
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Packages for this section
@@ -246,6 +237,12 @@ $$ A v = \lambda v $$
 ```{r vector-matrix-23}
 A
 e <- eigen(A)
+```
+
+
+## Eigenvalues and eigenvectors
+
+```{r}
 e
 ```
 

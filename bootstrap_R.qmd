@@ -1,13 +1,5 @@
 ---
 title: "Bootstrap for sampling distribution of sample mean"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

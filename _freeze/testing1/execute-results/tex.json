@@ -1,0 +1,16 @@
+{
+  "hash": "a851fc7d106dae29816f65979c39a3a6",
+  "result": {
+    "markdown": "---\ntitle: \"Untitled\"\nformat: revealjs\n---\n\n\n\n## Quarto\n\nQuarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.\n\n## Bullets\n\nWhen you click the **Render** button a document will be generated that includes:\n\n-   Content authored with markdown\n-   Output from executable code\n\n## Code\n\n\n\nknitr::knit_hooks$restore() \n\n\n\n\nWhen you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n\n\n1 + 1[1] 2\n\n",
+    "supporting": [
+      "testing1_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

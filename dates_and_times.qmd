@@ -1,13 +1,5 @@
 ---
 title: "Dates and Times"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

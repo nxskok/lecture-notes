@@ -1,0 +1,17 @@
+project:
+  title: "lecture-notes"
+
+format: 
+  revealjs:
+     df-print: paged
+     scrollable: true
+  beamer:
+    incremental: false
+execute:
+  echo: true
+  freeze: auto
+editor: 
+  markdown: 
+    wrap: 72
+
+

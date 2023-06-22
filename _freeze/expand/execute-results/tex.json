@@ -1,0 +1,16 @@
+{
+  "hash": "c91f875f39e347aeb303066c70c2f307",
+  "result": {
+    "markdown": "---\ntitle: \"R Notebook\"\noutput: html_notebook\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n```\n:::\n\n\n\n\ntesting `expand`\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrm(x)\nrm(y)\nxg=tibble(g=c(\"a\",\"b\"),x=c(4,5),y=c(6,7))\nxg\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n# A tibble: 2 x 3\n  g         x     y\n  <chr> <dbl> <dbl>\n1 a         4     6\n2 b         5     7\n```\n:::\n:::\n\n\n\nand then\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nxg %>% expand(x,y)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n# A tibble: 4 x 2\n      x     y\n  <dbl> <dbl>\n1     4     6\n2     4     7\n3     5     6\n4     5     7\n```\n:::\n:::\n",
+    "supporting": [
+      "expand_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

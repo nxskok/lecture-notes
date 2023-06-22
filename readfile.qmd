@@ -1,13 +1,5 @@
 ---
 title: "Reading data files"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

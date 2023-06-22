@@ -1,13 +1,5 @@
 ---
 title: "Functions"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Packages for this section

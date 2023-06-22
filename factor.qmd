@@ -1,13 +1,5 @@
 ---
 title: "Factor analysis"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ##  Vs. principal components 

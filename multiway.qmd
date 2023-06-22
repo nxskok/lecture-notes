@@ -1,13 +1,5 @@
 ---
 title: "Multiway Frequency Tables"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Packages
@@ -16,7 +8,7 @@ editor:
 library(tidyverse )
 ```
 
-## Multi-way frequency analysis {.scrollable}
+## Multi-way frequency analysis
 
 -   A study of gender and eyewear-wearing finds the following
     frequencies:
@@ -265,7 +257,7 @@ drop1(chest.3, test = "Chisq")
 
 `ecg:smoke` has become significant. So we have to stop.
 
-## Understanding the final model {.scrollable}
+## Understanding the final model
 
 -   Thinking of `ecg` as "response" that might depend on anything else.
 

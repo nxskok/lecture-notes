@@ -1,13 +1,5 @@
 ---
 title: "Bayesian Statistics with Stan"
-format: 
-  revealjs:
-     df-print: paged
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

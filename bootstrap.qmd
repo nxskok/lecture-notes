@@ -1,14 +1,5 @@
 ---
 title: "The bootstrap revisited"
-format: 
-  revealjs:
-     df-print: paged
-     auto-stretch: false
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 
