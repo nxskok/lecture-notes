@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="profile_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="profile_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="profile_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="profile_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -137,23 +134,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/dogs.txt"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dogs <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  dog = col_character(),
+  drug = col_character(),
+  x = col_character(),
+  lh0 = col_double(),
+  lh1 = col_double(),
+  lh3 = col_double(),
+  lh5 = col_double()
+)</code></pre>
+</div>
 </div>
 </section>
 <section id="setting-things-up" class="level2">
 <h2 class="anchored" data-anchor-id="setting-things-up">Setting things up</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dogs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["dog"],"name":[1],"type":["chr"],"align":["left"]},{"label":["drug"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["chr"],"align":["left"]},{"label":["lh0"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["lh1"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["lh3"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["lh5"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"Morphine","3":"N","4":"-3.22","5":"-1.61","6":"-2.30","7":"-2.53"},{"1":"B","2":"Morphine","3":"N","4":"-3.91","5":"-2.81","6":"-3.91","7":"-3.91"},{"1":"C","2":"Morphine","3":"N","4":"-2.66","5":"0.34","6":"-0.73","7":"-1.43"},{"1":"D","2":"Morphine","3":"N","4":"-1.77","5":"-0.56","6":"-1.05","7":"-1.43"},{"1":"E","2":"Trimethaphan","3":"N","4":"-3.51","5":"-0.48","6":"-1.17","7":"-1.51"},{"1":"F","2":"Trimethaphan","3":"N","4":"-3.51","5":"0.05","6":"-0.31","7":"-0.51"},{"1":"G","2":"Trimethaphan","3":"N","4":"-2.66","5":"-0.19","6":"0.07","7":"-0.22"},{"1":"H","2":"Trimethaphan","3":"N","4":"-2.41","5":"1.14","6":"0.72","7":"0.21"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dogs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 7
+  dog   drug         x       lh0   lh1   lh3   lh5
+  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 A     Morphine     N     -3.22 -1.61 -2.3  -2.53
+2 B     Morphine     N     -3.91 -2.81 -3.91 -3.91
+3 C     Morphine     N     -2.66  0.34 -0.73 -1.43
+4 D     Morphine     N     -1.77 -0.56 -1.05 -1.43
+5 E     Trimethaphan N     -3.51 -0.48 -1.17 -1.51
+6 F     Trimethaphan N     -3.51  0.05 -0.31 -0.51
+7 G     Trimethaphan N     -2.66 -0.19  0.07 -0.22
+8 H     Trimethaphan N     -2.41  1.14  0.72  0.21</code></pre>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(dogs, <span class="fu">cbind</span>(lh0, lh1, lh3, lh5))</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> drug, <span class="at">data =</span> dogs)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(dogs, <span class="fu">cbind</span>(lh0, lh1, lh3, lh5))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> drug, <span class="at">data =</span> dogs)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       lh0   lh1   lh3   lh5
 [1,] -3.22 -1.61 -2.30 -2.53
@@ -171,36 +186,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="the-repeated-measures-manova">The repeated measures MANOVA</h2>
 <p>Get list of response variable names; we call them <code>times</code>. Save in data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>times</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>times</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "lh0" "lh1" "lh3" "lh5"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>times.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["times"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"lh0"},{"1":"lh1"},{"1":"lh3"},{"1":"lh5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>times.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  times
+1   lh0
+2   lh1
+3   lh3
+4   lh5</code></pre>
 </div>
 </div>
 </section>
 <section id="fitting-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="fitting-the-model">Fitting the model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(dogs<span class="fl">.1</span>,</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">idata =</span> times.df,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">idesign =</span> <span class="sc">~</span>times</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(dogs<span class="fl">.1</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">idata =</span> times.df,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">idesign =</span> <span class="sc">~</span>times</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-output-some-there-is-a-lot" class="level2">
 <h2 class="anchored" data-anchor-id="the-output-some-there-is-a-lot">The output (some; there is a lot)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Type II Repeated Measures MANOVA Tests:
@@ -366,13 +380,13 @@ drug:times 0.6822614 7.307096e-04</code></pre>
 <section id="univariate-tests" class="level2">
 <h2 class="anchored" data-anchor-id="univariate-tests">Univariate tests</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Test statistic  p-value
 times             0.12334 0.084567
 drug:times        0.12334 0.084567</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>pval.adjustments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>pval.adjustments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              GG eps   Pr(&gt;F[GG])    HF eps   Pr(&gt;F[HF])
 times      0.5261798 3.744618e-06 0.6822614 1.843418e-07
@@ -383,7 +397,7 @@ attr(,"na.action")
 attr(,"class")
 [1] "omit"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Sum Sq num Df Error SS den Df F value    Pr(&gt;F)    
 (Intercept) 71.342      1  22.1026      6 19.3664  0.004565 ** 
@@ -429,14 +443,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>But data frame has several observations per line (“wide format”):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["dog"],"name":[1],"type":["chr"],"align":["left"]},{"label":["drug"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["chr"],"align":["left"]},{"label":["lh0"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["lh1"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["lh3"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["lh5"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"Morphine","3":"N","4":"-3.22","5":"-1.61","6":"-2.30","7":"-2.53"},{"1":"B","2":"Morphine","3":"N","4":"-3.91","5":"-2.81","6":"-3.91","7":"-3.91"},{"1":"C","2":"Morphine","3":"N","4":"-2.66","5":"0.34","6":"-0.73","7":"-1.43"},{"1":"D","2":"Morphine","3":"N","4":"-1.77","5":"-0.56","6":"-1.05","7":"-1.43"},{"1":"E","2":"Trimethaphan","3":"N","4":"-3.51","5":"-0.48","6":"-1.17","7":"-1.51"},{"1":"F","2":"Trimethaphan","3":"N","4":"-3.51","5":"0.05","6":"-0.31","7":"-0.51"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  dog   drug         x       lh0   lh1   lh3   lh5
+  &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 A     Morphine     N     -3.22 -1.61 -2.3  -2.53
+2 B     Morphine     N     -3.91 -2.81 -3.91 -3.91
+3 C     Morphine     N     -2.66  0.34 -0.73 -1.43
+4 D     Morphine     N     -1.77 -0.56 -1.05 -1.43
+5 E     Trimethaphan N     -3.51 -0.48 -1.17 -1.51
+6 F     Trimethaphan N     -3.51  0.05 -0.31 -0.51</code></pre>
 </div>
 </div>
 <ul>
@@ -447,15 +464,23 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="running-pivot_longer-try-1" class="level2">
 <h2 class="anchored" data-anchor-id="running-pivot_longer-try-1">Running <code>pivot_longer</code>, try 1</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"lh"</span>), </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">"time"</span>, <span class="at">values_to =</span> <span class="st">"lh"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["dog"],"name":[1],"type":["chr"],"align":["left"]},{"label":["drug"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["chr"],"align":["left"]},{"label":["time"],"name":[4],"type":["chr"],"align":["left"]},{"label":["lh"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"Morphine","3":"N","4":"lh0","5":"-3.22"},{"1":"A","2":"Morphine","3":"N","4":"lh1","5":"-1.61"},{"1":"A","2":"Morphine","3":"N","4":"lh3","5":"-2.30"},{"1":"A","2":"Morphine","3":"N","4":"lh5","5":"-2.53"},{"1":"B","2":"Morphine","3":"N","4":"lh0","5":"-3.91"},{"1":"B","2":"Morphine","3":"N","4":"lh1","5":"-2.81"},{"1":"B","2":"Morphine","3":"N","4":"lh3","5":"-3.91"},{"1":"B","2":"Morphine","3":"N","4":"lh5","5":"-3.91"},{"1":"C","2":"Morphine","3":"N","4":"lh0","5":"-2.66"},{"1":"C","2":"Morphine","3":"N","4":"lh1","5":"0.34"},{"1":"C","2":"Morphine","3":"N","4":"lh3","5":"-0.73"},{"1":"C","2":"Morphine","3":"N","4":"lh5","5":"-1.43"},{"1":"D","2":"Morphine","3":"N","4":"lh0","5":"-1.77"},{"1":"D","2":"Morphine","3":"N","4":"lh1","5":"-0.56"},{"1":"D","2":"Morphine","3":"N","4":"lh3","5":"-1.05"},{"1":"D","2":"Morphine","3":"N","4":"lh5","5":"-1.43"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh0","5":"-3.51"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh1","5":"-0.48"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh3","5":"-1.17"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh5","5":"-1.51"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh0","5":"-3.51"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh1","5":"0.05"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh3","5":"-0.31"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh5","5":"-0.51"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh0","5":"-2.66"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh1","5":"-0.19"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh3","5":"0.07"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh5","5":"-0.22"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh0","5":"-2.41"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh1","5":"1.14"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh3","5":"0.72"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh5","5":"0.21"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"lh"</span>), </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">"time"</span>, <span class="at">values_to =</span> <span class="st">"lh"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 5
+   dog   drug     x     time     lh
+   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1 A     Morphine N     lh0   -3.22
+ 2 A     Morphine N     lh1   -1.61
+ 3 A     Morphine N     lh3   -2.3 
+ 4 A     Morphine N     lh5   -2.53
+ 5 B     Morphine N     lh0   -3.91
+ 6 B     Morphine N     lh1   -2.81
+ 7 B     Morphine N     lh3   -3.91
+ 8 B     Morphine N     lh5   -3.91
+ 9 C     Morphine N     lh0   -2.66
+10 C     Morphine N     lh1    0.34
+# ℹ 22 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -463,17 +488,25 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="getting-the-times">Getting the times</h2>
 <p>Not quite right: for the times, we want just the numbers, not the letters <code>lh</code> every time. Want new variable containing just number in <code>time</code>: <code>parse_number</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"lh"</span>), </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"timex"</span>, <span class="at">values_to =</span> <span class="st">"lh"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">parse_number</span>(timex)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["dog"],"name":[1],"type":["chr"],"align":["left"]},{"label":["drug"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["chr"],"align":["left"]},{"label":["timex"],"name":[4],"type":["chr"],"align":["left"]},{"label":["lh"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["time"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"Morphine","3":"N","4":"lh0","5":"-3.22","6":"0"},{"1":"A","2":"Morphine","3":"N","4":"lh1","5":"-1.61","6":"1"},{"1":"A","2":"Morphine","3":"N","4":"lh3","5":"-2.30","6":"3"},{"1":"A","2":"Morphine","3":"N","4":"lh5","5":"-2.53","6":"5"},{"1":"B","2":"Morphine","3":"N","4":"lh0","5":"-3.91","6":"0"},{"1":"B","2":"Morphine","3":"N","4":"lh1","5":"-2.81","6":"1"},{"1":"B","2":"Morphine","3":"N","4":"lh3","5":"-3.91","6":"3"},{"1":"B","2":"Morphine","3":"N","4":"lh5","5":"-3.91","6":"5"},{"1":"C","2":"Morphine","3":"N","4":"lh0","5":"-2.66","6":"0"},{"1":"C","2":"Morphine","3":"N","4":"lh1","5":"0.34","6":"1"},{"1":"C","2":"Morphine","3":"N","4":"lh3","5":"-0.73","6":"3"},{"1":"C","2":"Morphine","3":"N","4":"lh5","5":"-1.43","6":"5"},{"1":"D","2":"Morphine","3":"N","4":"lh0","5":"-1.77","6":"0"},{"1":"D","2":"Morphine","3":"N","4":"lh1","5":"-0.56","6":"1"},{"1":"D","2":"Morphine","3":"N","4":"lh3","5":"-1.05","6":"3"},{"1":"D","2":"Morphine","3":"N","4":"lh5","5":"-1.43","6":"5"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh0","5":"-3.51","6":"0"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh1","5":"-0.48","6":"1"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh3","5":"-1.17","6":"3"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh5","5":"-1.51","6":"5"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh0","5":"-3.51","6":"0"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh1","5":"0.05","6":"1"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh3","5":"-0.31","6":"3"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh5","5":"-0.51","6":"5"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh0","5":"-2.66","6":"0"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh1","5":"-0.19","6":"1"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh3","5":"0.07","6":"3"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh5","5":"-0.22","6":"5"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh0","5":"-2.41","6":"0"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh1","5":"1.14","6":"1"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh3","5":"0.72","6":"3"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh5","5":"0.21","6":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"lh"</span>), </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"timex"</span>, <span class="at">values_to =</span> <span class="st">"lh"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">parse_number</span>(timex)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 6
+   dog   drug     x     timex    lh  time
+   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 A     Morphine N     lh0   -3.22     0
+ 2 A     Morphine N     lh1   -1.61     1
+ 3 A     Morphine N     lh3   -2.3      3
+ 4 A     Morphine N     lh5   -2.53     5
+ 5 B     Morphine N     lh0   -3.91     0
+ 6 B     Morphine N     lh1   -2.81     1
+ 7 B     Morphine N     lh3   -3.91     3
+ 8 B     Morphine N     lh5   -3.91     5
+ 9 C     Morphine N     lh0   -2.66     0
+10 C     Morphine N     lh1    0.34     1
+# ℹ 22 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -488,18 +521,26 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="saving-the-pipelined-results" class="level2">
 <h2 class="anchored" data-anchor-id="saving-the-pipelined-results">Saving the pipelined results</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"lh"</span>), </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"timex"</span>, <span class="at">values_to =</span> <span class="st">"lh"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">parse_number</span>(timex)) <span class="ot">-&gt;</span> dogs.long</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>dogs.long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["dog"],"name":[1],"type":["chr"],"align":["left"]},{"label":["drug"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["chr"],"align":["left"]},{"label":["timex"],"name":[4],"type":["chr"],"align":["left"]},{"label":["lh"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["time"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"Morphine","3":"N","4":"lh0","5":"-3.22","6":"0"},{"1":"A","2":"Morphine","3":"N","4":"lh1","5":"-1.61","6":"1"},{"1":"A","2":"Morphine","3":"N","4":"lh3","5":"-2.30","6":"3"},{"1":"A","2":"Morphine","3":"N","4":"lh5","5":"-2.53","6":"5"},{"1":"B","2":"Morphine","3":"N","4":"lh0","5":"-3.91","6":"0"},{"1":"B","2":"Morphine","3":"N","4":"lh1","5":"-2.81","6":"1"},{"1":"B","2":"Morphine","3":"N","4":"lh3","5":"-3.91","6":"3"},{"1":"B","2":"Morphine","3":"N","4":"lh5","5":"-3.91","6":"5"},{"1":"C","2":"Morphine","3":"N","4":"lh0","5":"-2.66","6":"0"},{"1":"C","2":"Morphine","3":"N","4":"lh1","5":"0.34","6":"1"},{"1":"C","2":"Morphine","3":"N","4":"lh3","5":"-0.73","6":"3"},{"1":"C","2":"Morphine","3":"N","4":"lh5","5":"-1.43","6":"5"},{"1":"D","2":"Morphine","3":"N","4":"lh0","5":"-1.77","6":"0"},{"1":"D","2":"Morphine","3":"N","4":"lh1","5":"-0.56","6":"1"},{"1":"D","2":"Morphine","3":"N","4":"lh3","5":"-1.05","6":"3"},{"1":"D","2":"Morphine","3":"N","4":"lh5","5":"-1.43","6":"5"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh0","5":"-3.51","6":"0"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh1","5":"-0.48","6":"1"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh3","5":"-1.17","6":"3"},{"1":"E","2":"Trimethaphan","3":"N","4":"lh5","5":"-1.51","6":"5"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh0","5":"-3.51","6":"0"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh1","5":"0.05","6":"1"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh3","5":"-0.31","6":"3"},{"1":"F","2":"Trimethaphan","3":"N","4":"lh5","5":"-0.51","6":"5"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh0","5":"-2.66","6":"0"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh1","5":"-0.19","6":"1"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh3","5":"0.07","6":"3"},{"1":"G","2":"Trimethaphan","3":"N","4":"lh5","5":"-0.22","6":"5"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh0","5":"-2.41","6":"0"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh1","5":"1.14","6":"1"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh3","5":"0.72","6":"3"},{"1":"H","2":"Trimethaphan","3":"N","4":"lh5","5":"0.21","6":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dogs <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"lh"</span>), </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"timex"</span>, <span class="at">values_to =</span> <span class="st">"lh"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">parse_number</span>(timex)) <span class="ot">-&gt;</span> dogs.long</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>dogs.long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 6
+   dog   drug     x     timex    lh  time
+   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 A     Morphine N     lh0   -3.22     0
+ 2 A     Morphine N     lh1   -1.61     1
+ 3 A     Morphine N     lh3   -2.3      3
+ 4 A     Morphine N     lh5   -2.53     5
+ 5 B     Morphine N     lh0   -3.91     0
+ 6 B     Morphine N     lh1   -2.81     1
+ 7 B     Morphine N     lh3   -3.91     3
+ 8 B     Morphine N     lh5   -3.91     5
+ 9 C     Morphine N     lh0   -2.66     0
+10 C     Morphine N     lh1    0.34     1
+# ℹ 22 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -516,12 +557,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="interaction-plot" class="level2">
 <h2 class="anchored" data-anchor-id="interaction-plot">Interaction plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dogs.long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> lh, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">colour =</span> drug, <span class="at">group =</span> drug)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dogs.long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> lh, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">colour =</span> drug, <span class="at">group =</span> drug)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="profile_files/figure-revealjs/bProfile-10-1.png" class="img-fluid" width="960"></p>
+<p><img src="profile_files/figure-html/bProfile-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -541,26 +582,26 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p>Go back to original “wide” <code>dogs</code> data frame.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(dogs, <span class="fu">cbind</span>(lh1, lh3, lh5)) <span class="co"># excl time 0</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> drug, <span class="at">data =</span> dogs)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(dogs<span class="fl">.1</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">idata =</span> times.df,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">idesign =</span> <span class="sc">~</span>times</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(dogs, <span class="fu">cbind</span>(lh1, lh3, lh5)) <span class="co"># excl time 0</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> drug, <span class="at">data =</span> dogs)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(dogs<span class="fl">.1</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">idata =</span> times.df,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">idesign =</span> <span class="sc">~</span>times</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="results-univariate" class="level2">
 <h2 class="anchored" data-anchor-id="results-univariate">Results (univariate)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Test statistic p-value
 times             0.57597 0.25176
 drug:times        0.57597 0.25176</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>pval.adjustments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>pval.adjustments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              GG eps   Pr(&gt;F[GG])    HF eps   Pr(&gt;F[HF])
 times      0.7022305 0.0003752847 0.8520467 0.0001117394
@@ -571,7 +612,7 @@ attr(,"na.action")
 attr(,"class")
 [1] "omit"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dogs<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Sum Sq num Df Error SS den Df F value    Pr(&gt;F)    
 (Intercept) 24.2607      1  20.1874      6  7.2106   0.03628 *  
@@ -605,17 +646,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p>This time, we want <code>group = dog</code> (want the measurements for each <em>dog</em> joined by lines), but <code>colour = drug</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dogs.long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> lh,</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> drug, <span class="at">group =</span> dog)) <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dogs.long, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> lh,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> drug, <span class="at">group =</span> dog)) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-spaghetti-plot" class="level2">
 <h2 class="anchored" data-anchor-id="the-spaghetti-plot">The spaghetti plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="profile_files/figure-revealjs/hoverla-1.png" class="img-fluid" width="960"></p>
+<p><img src="profile_files/figure-html/hoverla-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -641,8 +682,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="fitting-the-model-uses-lme4" class="level2">
 <h2 class="anchored" data-anchor-id="fitting-the-model-uses-lme4">Fitting the model (uses <code>lme4</code>)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dogs.long including time zero</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(lh<span class="sc">~</span>drug<span class="sc">*</span>time<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>dog), <span class="at">data=</span>dogs.long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dogs.long including time zero</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(lh<span class="sc">~</span>drug<span class="sc">*</span>time<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>dog), <span class="at">data=</span>dogs.long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>note specification of random effect: each dog has “random intercept” that moves log-histamine up or down for that dog over all times</li>
@@ -654,14 +695,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>using <code>drop1</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(dogs<span class="fl">.3</span>,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(dogs<span class="fl">.3</span>,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["npar"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(Chi)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"113.2597","3":"NA","4":"NA","_rn_":"<none>"},{"1":"1","2":"114.2130","3":"2.953368","4":"0.08569878","_rn_":"drug:time"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+Model:
+lh ~ drug * time + (1 | dog)
+          npar    AIC    LRT Pr(Chi)  
+&lt;none&gt;         113.26                 
+drug:time    1 114.21 2.9534  0.0857 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <ul>
@@ -671,15 +715,19 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="re-fit-without-interaction" class="level2">
 <h2 class="anchored" data-anchor-id="re-fit-without-interaction">Re-fit without interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(dogs<span class="fl">.3</span>,.<span class="sc">~</span>.<span class="sc">-</span>drug<span class="sc">:</span>time)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(dogs<span class="fl">.4</span>,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dogs<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(dogs<span class="fl">.3</span>,.<span class="sc">~</span>.<span class="sc">-</span>drug<span class="sc">:</span>time)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(dogs<span class="fl">.4</span>,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["npar"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["LRT"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Pr(Chi)"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"114.2130","3":"NA","4":"NA","_rn_":"<none>"},{"1":"1","2":"115.5691","3":"3.356021","4":"0.06695967","_rn_":"drug"},{"1":"1","2":"114.9631","3":"2.750099","4":"0.09724838","_rn_":"time"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+Model:
+lh ~ drug + time + (1 | dog)
+       npar    AIC    LRT Pr(Chi)  
+&lt;none&gt;      114.21                 
+drug      1 115.57 3.3560 0.06696 .
+time      1 114.96 2.7501 0.09725 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <ul>
@@ -701,16 +749,34 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="reading-the-data">Reading the data</h2>
 <p>Separated by <em>tabs</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/exercise2.txt"</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>exercise.long <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>exercise.long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/exercise2.txt"</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>exercise.long <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 90 Columns: 5
+── Column specification ──────────────────────────────────────────────
+Delimiter: "\t"
+chr (3): diet, exertype, time
+dbl (2): id, pulse
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["diet"],"name":[2],"type":["chr"],"align":["left"]},{"label":["exertype"],"name":[3],"type":["chr"],"align":["left"]},{"label":["pulse"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["time"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"nonlowfat","3":"atrest","4":"85","5":"min01"},{"1":"1","2":"nonlowfat","3":"atrest","4":"85","5":"min15"},{"1":"1","2":"nonlowfat","3":"atrest","4":"88","5":"min30"},{"1":"2","2":"nonlowfat","3":"atrest","4":"90","5":"min01"},{"1":"2","2":"nonlowfat","3":"atrest","4":"92","5":"min15"},{"1":"2","2":"nonlowfat","3":"atrest","4":"93","5":"min30"},{"1":"3","2":"nonlowfat","3":"atrest","4":"97","5":"min01"},{"1":"3","2":"nonlowfat","3":"atrest","4":"97","5":"min15"},{"1":"3","2":"nonlowfat","3":"atrest","4":"94","5":"min30"},{"1":"4","2":"nonlowfat","3":"atrest","4":"80","5":"min01"},{"1":"4","2":"nonlowfat","3":"atrest","4":"82","5":"min15"},{"1":"4","2":"nonlowfat","3":"atrest","4":"83","5":"min30"},{"1":"5","2":"nonlowfat","3":"atrest","4":"91","5":"min01"},{"1":"5","2":"nonlowfat","3":"atrest","4":"92","5":"min15"},{"1":"5","2":"nonlowfat","3":"atrest","4":"91","5":"min30"},{"1":"6","2":"lowfat","3":"atrest","4":"83","5":"min01"},{"1":"6","2":"lowfat","3":"atrest","4":"83","5":"min15"},{"1":"6","2":"lowfat","3":"atrest","4":"84","5":"min30"},{"1":"7","2":"lowfat","3":"atrest","4":"87","5":"min01"},{"1":"7","2":"lowfat","3":"atrest","4":"88","5":"min15"},{"1":"7","2":"lowfat","3":"atrest","4":"90","5":"min30"},{"1":"8","2":"lowfat","3":"atrest","4":"92","5":"min01"},{"1":"8","2":"lowfat","3":"atrest","4":"94","5":"min15"},{"1":"8","2":"lowfat","3":"atrest","4":"95","5":"min30"},{"1":"9","2":"lowfat","3":"atrest","4":"97","5":"min01"},{"1":"9","2":"lowfat","3":"atrest","4":"99","5":"min15"},{"1":"9","2":"lowfat","3":"atrest","4":"96","5":"min30"},{"1":"10","2":"lowfat","3":"atrest","4":"100","5":"min01"},{"1":"10","2":"lowfat","3":"atrest","4":"97","5":"min15"},{"1":"10","2":"lowfat","3":"atrest","4":"100","5":"min30"},{"1":"11","2":"nonlowfat","3":"walking","4":"86","5":"min01"},{"1":"11","2":"nonlowfat","3":"walking","4":"86","5":"min15"},{"1":"11","2":"nonlowfat","3":"walking","4":"84","5":"min30"},{"1":"12","2":"nonlowfat","3":"walking","4":"93","5":"min01"},{"1":"12","2":"nonlowfat","3":"walking","4":"103","5":"min15"},{"1":"12","2":"nonlowfat","3":"walking","4":"104","5":"min30"},{"1":"13","2":"nonlowfat","3":"walking","4":"90","5":"min01"},{"1":"13","2":"nonlowfat","3":"walking","4":"92","5":"min15"},{"1":"13","2":"nonlowfat","3":"walking","4":"93","5":"min30"},{"1":"14","2":"nonlowfat","3":"walking","4":"95","5":"min01"},{"1":"14","2":"nonlowfat","3":"walking","4":"96","5":"min15"},{"1":"14","2":"nonlowfat","3":"walking","4":"100","5":"min30"},{"1":"15","2":"nonlowfat","3":"walking","4":"89","5":"min01"},{"1":"15","2":"nonlowfat","3":"walking","4":"96","5":"min15"},{"1":"15","2":"nonlowfat","3":"walking","4":"95","5":"min30"},{"1":"16","2":"lowfat","3":"walking","4":"84","5":"min01"},{"1":"16","2":"lowfat","3":"walking","4":"86","5":"min15"},{"1":"16","2":"lowfat","3":"walking","4":"89","5":"min30"},{"1":"17","2":"lowfat","3":"walking","4":"103","5":"min01"},{"1":"17","2":"lowfat","3":"walking","4":"109","5":"min15"},{"1":"17","2":"lowfat","3":"walking","4":"90","5":"min30"},{"1":"18","2":"lowfat","3":"walking","4":"92","5":"min01"},{"1":"18","2":"lowfat","3":"walking","4":"96","5":"min15"},{"1":"18","2":"lowfat","3":"walking","4":"101","5":"min30"},{"1":"19","2":"lowfat","3":"walking","4":"97","5":"min01"},{"1":"19","2":"lowfat","3":"walking","4":"98","5":"min15"},{"1":"19","2":"lowfat","3":"walking","4":"100","5":"min30"},{"1":"20","2":"lowfat","3":"walking","4":"102","5":"min01"},{"1":"20","2":"lowfat","3":"walking","4":"104","5":"min15"},{"1":"20","2":"lowfat","3":"walking","4":"103","5":"min30"},{"1":"21","2":"nonlowfat","3":"running","4":"93","5":"min01"},{"1":"21","2":"nonlowfat","3":"running","4":"98","5":"min15"},{"1":"21","2":"nonlowfat","3":"running","4":"110","5":"min30"},{"1":"22","2":"nonlowfat","3":"running","4":"98","5":"min01"},{"1":"22","2":"nonlowfat","3":"running","4":"104","5":"min15"},{"1":"22","2":"nonlowfat","3":"running","4":"112","5":"min30"},{"1":"23","2":"nonlowfat","3":"running","4":"98","5":"min01"},{"1":"23","2":"nonlowfat","3":"running","4":"105","5":"min15"},{"1":"23","2":"nonlowfat","3":"running","4":"99","5":"min30"},{"1":"24","2":"nonlowfat","3":"running","4":"87","5":"min01"},{"1":"24","2":"nonlowfat","3":"running","4":"132","5":"min15"},{"1":"24","2":"nonlowfat","3":"running","4":"120","5":"min30"},{"1":"25","2":"nonlowfat","3":"running","4":"94","5":"min01"},{"1":"25","2":"nonlowfat","3":"running","4":"110","5":"min15"},{"1":"25","2":"nonlowfat","3":"running","4":"116","5":"min30"},{"1":"26","2":"lowfat","3":"running","4":"95","5":"min01"},{"1":"26","2":"lowfat","3":"running","4":"126","5":"min15"},{"1":"26","2":"lowfat","3":"running","4":"143","5":"min30"},{"1":"27","2":"lowfat","3":"running","4":"100","5":"min01"},{"1":"27","2":"lowfat","3":"running","4":"126","5":"min15"},{"1":"27","2":"lowfat","3":"running","4":"140","5":"min30"},{"1":"28","2":"lowfat","3":"running","4":"103","5":"min01"},{"1":"28","2":"lowfat","3":"running","4":"124","5":"min15"},{"1":"28","2":"lowfat","3":"running","4":"140","5":"min30"},{"1":"29","2":"lowfat","3":"running","4":"94","5":"min01"},{"1":"29","2":"lowfat","3":"running","4":"135","5":"min15"},{"1":"29","2":"lowfat","3":"running","4":"130","5":"min30"},{"1":"30","2":"lowfat","3":"running","4":"99","5":"min01"},{"1":"30","2":"lowfat","3":"running","4":"111","5":"min15"},{"1":"30","2":"lowfat","3":"running","4":"150","5":"min30"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>exercise.long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 90 × 5
+      id diet      exertype pulse time 
+   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;
+ 1     1 nonlowfat atrest      85 min01
+ 2     1 nonlowfat atrest      85 min15
+ 3     1 nonlowfat atrest      88 min30
+ 4     2 nonlowfat atrest      90 min01
+ 5     2 nonlowfat atrest      92 min15
+ 6     2 nonlowfat atrest      93 min30
+ 7     3 nonlowfat atrest      97 min01
+ 8     3 nonlowfat atrest      97 min15
+ 9     3 nonlowfat atrest      94 min30
+10     4 nonlowfat atrest      80 min01
+# ℹ 80 more rows</code></pre>
 </div>
 </div>
 <ul>
@@ -725,16 +791,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><code>pivot_wider</code> needs: a column that is going to be split, and the column to make the values out of:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>exercise.long <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>time, </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">values_from=</span>pulse) <span class="ot">-&gt;</span> exercise.wide</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>exercise.wide <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["diet"],"name":[2],"type":["chr"],"align":["left"]},{"label":["exertype"],"name":[3],"type":["chr"],"align":["left"]},{"label":["min01"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["min15"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["min30"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"19","2":"lowfat","3":"walking","4":"97","5":"98","6":"100"},{"1":"5","2":"nonlowfat","3":"atrest","4":"91","5":"92","6":"91"},{"1":"20","2":"lowfat","3":"walking","4":"102","5":"104","6":"103"},{"1":"9","2":"lowfat","3":"atrest","4":"97","5":"99","6":"96"},{"1":"8","2":"lowfat","3":"atrest","4":"92","5":"94","6":"95"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>exercise.long <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>time, </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">values_from=</span>pulse) <span class="ot">-&gt;</span> exercise.wide</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>exercise.wide <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+     id diet      exertype min01 min15 min30
+  &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     4 nonlowfat atrest      80    82    83
+2    10 lowfat    atrest     100    97   100
+3    19 lowfat    walking     97    98   100
+4     9 lowfat    atrest      97    99    96
+5    18 lowfat    walking     92    96   101</code></pre>
 </div>
 </div>
 <ul>
@@ -747,31 +815,34 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Make a response variable consisting of <code>min01, min15, min30</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(exercise.wide, <span class="fu">cbind</span>(min01, min15, min30))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(exercise.wide, <span class="fu">cbind</span>(min01, min15, min30))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Predict that from <code>diet</code> and <code>exertype</code> and interaction using <code>lm</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>exercise<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> diet <span class="sc">*</span> exertype,</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exercise.wide</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>exercise<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> diet <span class="sc">*</span> exertype,</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exercise.wide</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Run this through <code>Manova</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>exercise<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(exercise<span class="fl">.1</span>, </span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">idata =</span> times.df, </span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">idesign =</span> <span class="sc">~</span>times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>exercise<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(exercise<span class="fl">.1</span>, </span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">idata =</span> times.df, </span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">idesign =</span> <span class="sc">~</span>times)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sphericity-tests" class="level2">
 <h2 class="anchored" data-anchor-id="sphericity-tests">Sphericity tests</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exercise<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exercise<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in summary.Anova.mlm(exercise.2): HF eps &gt; 1 treated as 1</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    Test statistic p-value
 times                      0.92416 0.40372
@@ -785,7 +856,10 @@ diet:exertype:times        0.92416 0.40372</code></pre>
 <section id="univariate-tests-1" class="level2">
 <h2 class="anchored" data-anchor-id="univariate-tests-1">Univariate tests</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exercise<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exercise<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in summary.Anova.mlm(exercise.2): HF eps &gt; 1 treated as 1</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    Sum Sq num Df Error SS den Df    F value    Pr(&gt;F)    
 (Intercept)         894608      1   2085.2     24 10296.6595 &lt; 2.2e-16 ***
@@ -815,11 +889,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p><code>ggplot</code> again. Using <em>long</em> data frame:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(exercise.long, <span class="fu">aes</span>(</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> time, <span class="at">y =</span> pulse,</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> id</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(diet <span class="sc">~</span> exertype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(exercise.long, <span class="fu">aes</span>(</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> time, <span class="at">y =</span> pulse,</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> id</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(diet <span class="sc">~</span> exertype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><code>facet_grid(diet~exertype)</code>: do a separate plot for each combination of diet and exercise type, with diets going down the page and exercise types going across. (Graphs are usually landscape, so have the factor <code>exertype</code> with more levels going across.)</li>
@@ -828,9 +902,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="the-graphs" class="level2">
 <h2 class="anchored" data-anchor-id="the-graphs">The graph(s)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="profile_files/figure-revealjs/bProfile-25-1.png" class="img-fluid" width="960"></p>
+<p><img src="profile_files/figure-html/bProfile-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -852,27 +926,30 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p>Pull out only the runners from the wide data:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>exercise.wide <span class="sc">%&gt;%</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(exertype <span class="sc">==</span> <span class="st">"running"</span>) <span class="ot">-&gt;</span> runners.wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>exercise.wide <span class="sc">%&gt;%</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(exertype <span class="sc">==</span> <span class="st">"running"</span>) <span class="ot">-&gt;</span> runners.wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Create response variable and do MANOVA. Some of this looks like before, but I have different data now:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(runners.wide, <span class="fu">cbind</span>(min01, min15, min30))</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>runners<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> diet, <span class="at">data =</span> runners.wide)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>runners<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(runners<span class="fl">.1</span>,</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">idata =</span> times.df,</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">idesign =</span> <span class="sc">~</span>times</span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(runners.wide, <span class="fu">cbind</span>(min01, min15, min30))</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>runners<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> diet, <span class="at">data =</span> runners.wide)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">colnames</span>(response)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>times.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times=</span><span class="fu">factor</span>(times))</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>runners<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(runners<span class="fl">.1</span>,</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">idata =</span> times.df,</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">idesign =</span> <span class="sc">~</span>times</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sphericity-tests-1" class="level2">
 <h2 class="anchored" data-anchor-id="sphericity-tests-1">Sphericity tests</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(runners<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(runners<span class="fl">.2</span>)<span class="sc">$</span>sphericity.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in summary.Anova.mlm(runners.2): HF eps &gt; 1 treated as 1</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Test statistic p-value
 times             0.81647  0.4918
@@ -886,7 +963,10 @@ diet:times        0.81647  0.4918</code></pre>
 <section id="univariate-tests-2" class="level2">
 <h2 class="anchored" data-anchor-id="univariate-tests-2">Univariate tests</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(runners<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(runners<span class="fl">.2</span>)<span class="sc">$</span>univariate.tests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in summary.Anova.mlm(runners.2): HF eps &gt; 1 treated as 1</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Sum Sq num Df Error SS den Df   F value    Pr(&gt;F)    
 (Intercept) 383522      1    339.2      8 9045.3333 1.668e-13 ***
@@ -910,14 +990,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Table of means. Only I need long data for this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>runners.wide <span class="sc">%&gt;%</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"min"</span>), </span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"time"</span>, <span class="at">values_to =</span> <span class="st">"pulse"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time, diet) <span class="sc">%&gt;%</span></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(pulse),</span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(pulse)</span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> summ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>runners.wide <span class="sc">%&gt;%</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"min"</span>), </span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"time"</span>, <span class="at">values_to =</span> <span class="st">"pulse"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(time, diet) <span class="sc">%&gt;%</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(pulse),</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(pulse)</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> summ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'time'. You can override using
+the `.groups` argument.</code></pre>
+</div>
 </div>
 <ul>
 <li>Result of <code>summarize</code> is data frame, so can save it (and do more with it if needed).</li>
@@ -929,14 +1013,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>The summary:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>summ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["time"],"name":[1],"type":["chr"],"align":["left"]},{"label":["diet"],"name":[2],"type":["chr"],"align":["left"]},{"label":["mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"min01","2":"lowfat","3":"98.2","4":"3.701351"},{"1":"min01","2":"nonlowfat","3":"94.0","4":"4.527693"},{"1":"min15","2":"lowfat","3":"124.4","4":"8.619745"},{"1":"min15","2":"nonlowfat","3":"109.8","4":"13.122500"},{"1":"min30","2":"lowfat","3":"140.6","4":"7.197222"},{"1":"min30","2":"nonlowfat","3":"111.4","4":"7.924645"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>summ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+# Groups:   time [3]
+  time  diet       mean    sd
+  &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 min01 lowfat     98.2  3.70
+2 min01 nonlowfat  94    4.53
+3 min15 lowfat    124.   8.62
+4 min15 nonlowfat 110.  13.1 
+5 min30 lowfat    141.   7.20
+6 min30 nonlowfat 111.   7.92</code></pre>
 </div>
 </div>
 <ul>
@@ -951,10 +1039,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>We went to trouble of finding means by group, so making interaction plot is now mainly easy:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summ, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean, <span class="at">colour =</span> diet,</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> diet)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(summ, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean, <span class="at">colour =</span> diet,</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">group =</span> diet)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="profile_files/figure-revealjs/bProfile-31-1.png" class="img-fluid" width="960"></p>
+<p><img src="profile_files/figure-html/bProfile-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -968,44 +1056,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

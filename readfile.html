@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="readfile_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="readfile_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="readfile_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="readfile_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
 
 </head>
 
@@ -114,6 +111,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="packages-for-this-section">Packages for this section</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   0.5.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
 </div>
 </section>
 <section id="a-spreadsheet" class="level2">
@@ -153,7 +162,7 @@ p6,17,31,lower</code></pre>
 <li>Make a code chunk and in it put this. Run it.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="reading-in-the-file" class="level2">
@@ -162,15 +171,28 @@ p6,17,31,lower</code></pre>
 <li>Use <code>read_csv</code> with the name of the file, in quotes. Save the read-in file in something, here called <code>mydata</code>. Make a new code chunk for this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"test1.csv"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mydata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"test1.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 6 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (2): id, group
+dbl (2): x, y
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["x"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"p1","2":"10","3":"21","4":"upper"},{"1":"p2","2":"11","3":"20","4":"lower"},{"1":"p3","2":"13","3":"25","4":"upper"},{"1":"p4","2":"15","3":"27","4":"lower"},{"1":"p5","2":"16","3":"30","4":"upper"},{"1":"p6","2":"17","3":"31","4":"lower"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mydata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  id        x     y group
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1 p1       10    21 upper
+2 p2       11    20 lower
+3 p3       13    25 upper
+4 p4       15    27 lower
+5 p5       16    30 upper
+6 p6       17    31 lower</code></pre>
 </div>
 </div>
 </section>
@@ -191,12 +213,12 @@ p6,17,31,lower</code></pre>
 <li>Or, use</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">file.choose</span>()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">file.choose</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>which brings up a file selector (as if you were going to find a file to load or save it). Find your <code>.csv</code> file, the address of which will be saved in <code>f</code>, and then:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>When you have selected the file, comment out the <code>file.choose</code> line by putting a # on the front of it. That will save you having to find the file again by mistake. (Keyboard shortcut: go to the line, type control-shift-C or Mac equivalent with Cmd.)</li>
@@ -208,14 +230,17 @@ p6,17,31,lower</code></pre>
 <li>Again, type the name of the thing to display it:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mydata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["x"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"p1","2":"10","3":"21","4":"upper"},{"1":"p2","2":"11","3":"20","4":"lower"},{"1":"p3","2":"13","3":"25","4":"upper"},{"1":"p4","2":"15","3":"27","4":"lower"},{"1":"p5","2":"16","3":"30","4":"upper"},{"1":"p6","2":"17","3":"31","4":"lower"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mydata</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  id        x     y group
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1 p1       10    21 upper
+2 p2       11    20 lower
+3 p3       13    25 upper
+4 p4       15    27 lower
+5 p5       16    30 upper
+6 p6       17    31 lower</code></pre>
 </div>
 </div>
 <ul>
@@ -230,7 +255,7 @@ p6,17,31,lower</code></pre>
 <li>Another way to examine your data frame is to View it, like this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>…or find your data frame in the Global Environment top right and click it. - This pops up a “data frame viewer” top left:</p>
 <p><img src="viewview.png" height="500"></p>
@@ -256,7 +281,7 @@ p6,17,31,lower</code></pre>
 <li>Five-number summary:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mydata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      id                  x               y            group          
  Length:6           Min.   :10.00   Min.   :20.00   Length:6          
@@ -281,21 +306,38 @@ p6,17,31,lower</code></pre>
 <li>I like to save the URL in a variable first (because URLs tend to be long), and then put that variable in the <code>read_</code> function:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">"http://ritsokiguess.site/datafiles/global.csv"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>global <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">"http://ritsokiguess.site/datafiles/global.csv"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>global <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 10 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): warehouse
+dbl (2): size, cost
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 </section>
 <section id="the-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-data">The data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>global</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["warehouse"],"name":[1],"type":["chr"],"align":["left"]},{"label":["size"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["cost"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"225","3":"11.95"},{"1":"B","2":"350","3":"14.13"},{"1":"A","2":"150","3":"8.93"},{"1":"A","2":"200","3":"10.98"},{"1":"A","2":"175","3":"10.03"},{"1":"A","2":"180","3":"10.13"},{"1":"B","2":"325","3":"13.75"},{"1":"B","2":"290","3":"13.30"},{"1":"B","2":"400","3":"15.00"},{"1":"A","2":"125","3":"7.97"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>global</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   warehouse  size  cost
+   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 A           225 12.0 
+ 2 B           350 14.1 
+ 3 A           150  8.93
+ 4 A           200 11.0 
+ 5 A           175 10.0 
+ 6 A           180 10.1 
+ 7 B           325 13.8 
+ 8 B           290 13.3 
+ 9 B           400 15   
+10 A           125  7.97</code></pre>
 </div>
 </div>
 </section>
@@ -334,15 +376,33 @@ CUPPS 10   </code></pre>
 <li>This time, <code>read_delim</code>, and we also have to say what the thing is separating the values:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>coffee <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"coffee.txt"</span>, <span class="st">" "</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>coffee <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"coffee.txt"</span>, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 32 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: " "
+chr (1): cup
+dbl (1): tempdiff
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["cup"],"name":[1],"type":["chr"],"align":["left"]},{"label":["tempdiff"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Starbucks","2":"13.0"},{"1":"Starbucks","2":"7.0"},{"1":"Starbucks","2":"7.0"},{"1":"Starbucks","2":"17.5"},{"1":"Starbucks","2":"10.0"},{"1":"Starbucks","2":"15.5"},{"1":"Starbucks","2":"6.0"},{"1":"Starbucks","2":"6.0"},{"1":"SIGG","2":"12.0"},{"1":"SIGG","2":"16.0"},{"1":"SIGG","2":"9.0"},{"1":"SIGG","2":"23.0"},{"1":"SIGG","2":"11.0"},{"1":"SIGG","2":"20.5"},{"1":"SIGG","2":"12.5"},{"1":"SIGG","2":"20.5"},{"1":"SIGG","2":"24.5"},{"1":"CUPPS","2":"6.0"},{"1":"CUPPS","2":"6.0"},{"1":"CUPPS","2":"18.5"},{"1":"CUPPS","2":"10.0"},{"1":"CUPPS","2":"17.5"},{"1":"CUPPS","2":"11.0"},{"1":"CUPPS","2":"6.5"},{"1":"Nissan","2":"2.0"},{"1":"Nissan","2":"1.5"},{"1":"Nissan","2":"2.0"},{"1":"Nissan","2":"3.0"},{"1":"Nissan","2":"0.0"},{"1":"Nissan","2":"7.0"},{"1":"Nissan","2":"0.5"},{"1":"Nissan","2":"6.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 2
+   cup       tempdiff
+   &lt;chr&gt;        &lt;dbl&gt;
+ 1 Starbucks     13  
+ 2 Starbucks      7  
+ 3 Starbucks      7  
+ 4 Starbucks     17.5
+ 5 Starbucks     10  
+ 6 Starbucks     15.5
+ 7 Starbucks      6  
+ 8 Starbucks      6  
+ 9 SIGG          12  
+10 SIGG          16  
+# ℹ 22 more rows</code></pre>
 </div>
 </div>
 <ul>
@@ -352,14 +412,22 @@ CUPPS 10   </code></pre>
 <section id="looking-at-the-values-some" class="level2">
 <h2 class="anchored" data-anchor-id="looking-at-the-values-some">Looking at the values (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["cup"],"name":[1],"type":["chr"],"align":["left"]},{"label":["tempdiff"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Starbucks","2":"13.0"},{"1":"Starbucks","2":"7.0"},{"1":"Starbucks","2":"7.0"},{"1":"Starbucks","2":"17.5"},{"1":"Starbucks","2":"10.0"},{"1":"Starbucks","2":"15.5"},{"1":"Starbucks","2":"6.0"},{"1":"Starbucks","2":"6.0"},{"1":"SIGG","2":"12.0"},{"1":"SIGG","2":"16.0"},{"1":"SIGG","2":"9.0"},{"1":"SIGG","2":"23.0"},{"1":"SIGG","2":"11.0"},{"1":"SIGG","2":"20.5"},{"1":"SIGG","2":"12.5"},{"1":"SIGG","2":"20.5"},{"1":"SIGG","2":"24.5"},{"1":"CUPPS","2":"6.0"},{"1":"CUPPS","2":"6.0"},{"1":"CUPPS","2":"18.5"},{"1":"CUPPS","2":"10.0"},{"1":"CUPPS","2":"17.5"},{"1":"CUPPS","2":"11.0"},{"1":"CUPPS","2":"6.5"},{"1":"Nissan","2":"2.0"},{"1":"Nissan","2":"1.5"},{"1":"Nissan","2":"2.0"},{"1":"Nissan","2":"3.0"},{"1":"Nissan","2":"0.0"},{"1":"Nissan","2":"7.0"},{"1":"Nissan","2":"0.5"},{"1":"Nissan","2":"6.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 2
+   cup       tempdiff
+   &lt;chr&gt;        &lt;dbl&gt;
+ 1 Starbucks     13  
+ 2 Starbucks      7  
+ 3 Starbucks      7  
+ 4 Starbucks     17.5
+ 5 Starbucks     10  
+ 6 Starbucks     15.5
+ 7 Starbucks      6  
+ 8 Starbucks      6  
+ 9 SIGG          12  
+10 SIGG          16  
+# ℹ 22 more rows</code></pre>
 </div>
 </div>
 <p>These were four brands of travel mug (in cup), and for each, how much the temperature of the coffee in the mug decreased over 30 minutes.</p>
@@ -371,21 +439,39 @@ CUPPS 10   </code></pre>
 <li>Save the URL in a variable first:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">"http://ritsokiguess.site/datafiles/soap.txt"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>soap <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">"http://ritsokiguess.site/datafiles/soap.txt"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>soap <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 27 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: " "
+chr (1): line
+dbl (3): case, scrap, speed
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 </section>
 <section id="the-soap-data-some" class="level2">
 <h2 class="anchored" data-anchor-id="the-soap-data-some">The soap data (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>soap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["case"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["scrap"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["speed"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["line"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"218","3":"100","4":"a"},{"1":"2","2":"248","3":"125","4":"a"},{"1":"3","2":"360","3":"220","4":"a"},{"1":"4","2":"351","3":"205","4":"a"},{"1":"5","2":"470","3":"300","4":"a"},{"1":"6","2":"394","3":"255","4":"a"},{"1":"7","2":"332","3":"225","4":"a"},{"1":"8","2":"321","3":"175","4":"a"},{"1":"9","2":"410","3":"270","4":"a"},{"1":"10","2":"260","3":"170","4":"a"},{"1":"11","2":"241","3":"155","4":"a"},{"1":"12","2":"331","3":"190","4":"a"},{"1":"13","2":"275","3":"140","4":"a"},{"1":"14","2":"425","3":"290","4":"a"},{"1":"15","2":"367","3":"265","4":"a"},{"1":"16","2":"140","3":"105","4":"b"},{"1":"17","2":"277","3":"215","4":"b"},{"1":"18","2":"384","3":"270","4":"b"},{"1":"19","2":"341","3":"255","4":"b"},{"1":"20","2":"215","3":"175","4":"b"},{"1":"21","2":"180","3":"135","4":"b"},{"1":"22","2":"260","3":"200","4":"b"},{"1":"23","2":"361","3":"275","4":"b"},{"1":"24","2":"252","3":"155","4":"b"},{"1":"25","2":"422","3":"320","4":"b"},{"1":"26","2":"273","3":"190","4":"b"},{"1":"27","2":"410","3":"295","4":"b"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>soap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 4
+    case scrap speed line 
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+ 1     1   218   100 a    
+ 2     2   248   125 a    
+ 3     3   360   220 a    
+ 4     4   351   205 a    
+ 5     5   470   300 a    
+ 6     6   394   255 a    
+ 7     7   332   225 a    
+ 8     8   321   175 a    
+ 9     9   410   270 a    
+10    10   260   170 a    
+# ℹ 17 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -404,15 +490,30 @@ CUPPS 10   </code></pre>
 <section id="reading-in-column-aligned-data" class="level2">
 <h2 class="anchored" data-anchor-id="reading-in-column-aligned-data">Reading in column-aligned data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>drugs <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">"migraine.txt"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>drugs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["DrugA"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["DrugB"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["DrugC"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"6","3":"6"},{"1":"5","2":"8","3":"7"},{"1":"4","2":"4","3":"6"},{"1":"3","2":"5","3":"6"},{"1":"2","2":"4","3":"7"},{"1":"4","2":"6","3":"5"},{"1":"3","2":"5","3":"6"},{"1":"4","2":"10","3":"5"},{"1":"4","2":"6","3":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>drugs <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">"migraine.txt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  DrugA = col_double(),
+  DrugB = col_double(),
+  DrugC = col_double()
+)</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>drugs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 3
+  DrugA DrugB DrugC
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     4     6     6
+2     5     8     7
+3     4     4     6
+4     3     5     6
+5     2     4     7
+6     4     6     5
+7     3     5     6
+8     4    10     5
+9     4     6     5</code></pre>
 </div>
 </div>
 </section>
@@ -434,60 +535,25 @@ CUPPS 10   </code></pre>
 <li>Excel spreadsheets must be “local”: cannot read one in from a URL.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"test2.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"data"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>mydata2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["x"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"p1","2":"10","3":"21","4":"upper"},{"1":"p2","2":"11","3":"20","4":"lower"},{"1":"p3","2":"13","3":"25","4":"upper"},{"1":"p4","2":"15","3":"27","4":"lower"},{"1":"p5","2":"16","3":"30","4":"upper"},{"1":"p6","2":"17","3":"31","4":"lower"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"test2.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"data"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>mydata2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  id        x     y group
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1 p1       10    21 upper
+2 p2       11    20 lower
+3 p3       13    25 upper
+4 p4       15    27 lower
+5 p5       16    30 upper
+6 p6       17    31 lower</code></pre>
 </div>
 </div>
 </section>
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

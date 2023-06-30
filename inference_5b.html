@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="inference_5b_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="inference_5b_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="inference_5b_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="inference_5b_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -103,9 +100,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="packages" class="level2">
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(smmr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PMCMRplus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   0.5.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(smmr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PMCMRplus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="jumping-rats" class="level2">
@@ -136,40 +145,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="reading-the-data">Reading the data</h2>
 <p>Values separated by spaces:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/jumping.txt"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rats <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url,<span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/jumping.txt"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rats <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url,<span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 30 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: " "
+chr (1): group
+dbl (1): density
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 </section>
 <section id="the-data-some-random-rows" class="level2">
 <h2 class="anchored" data-anchor-id="the-data-some-random-rows">The data (some random rows)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["density"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Highjump","2":"622"},{"1":"Highjump","2":"643"},{"1":"Lowjump","2":"632"},{"1":"Lowjump","2":"631"},{"1":"Highjump","2":"650"},{"1":"Lowjump","2":"594"},{"1":"Control","2":"554"},{"1":"Lowjump","2":"605"},{"1":"Control","2":"653"},{"1":"Control","2":"593"},{"1":"Lowjump","2":"607"},{"1":"Control","2":"614"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   group    density
+   &lt;chr&gt;      &lt;dbl&gt;
+ 1 Highjump     626
+ 2 Control      569
+ 3 Control      614
+ 4 Lowjump      605
+ 5 Highjump     650
+ 6 Lowjump      596
+ 7 Control      653
+ 8 Lowjump      631
+ 9 Lowjump      632
+10 Lowjump      635
+11 Highjump     674
+12 Highjump     626</code></pre>
 </div>
 </div>
 </section>
 <section id="boxplots" class="level2">
 <h2 class="anchored" data-anchor-id="boxplots">Boxplots</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">y=</span>density, <span class="at">x=</span>group)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">y=</span>density, <span class="at">x=</span>group)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="inference_5b_files/figure-revealjs/inference-5-R-11-1.png" class="img-fluid" width="960"></p>
+<p><img src="inference_5b_files/figure-html/inference-5-R-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="or-arranging-groups-in-data-logical-order" class="level2">
 <h2 class="anchored" data-anchor-id="or-arranging-groups-in-data-logical-order">Or, arranging groups in data (logical) order</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">y=</span>density, <span class="at">x=</span><span class="fu">fct_inorder</span>(group))) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">y=</span>density, <span class="at">x=</span><span class="fu">fct_inorder</span>(group))) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="inference_5b_files/figure-revealjs/inference-5-R-12-1.png" class="img-fluid" width="960"></p>
+<p><img src="inference_5b_files/figure-html/inference-5-R-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -185,8 +213,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="testing-anova-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="testing-anova-in-r">Testing: ANOVA in R</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rats.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(density<span class="sc">~</span>group,<span class="at">data=</span>rats)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rats.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rats.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(density<span class="sc">~</span>group,<span class="at">data=</span>rats)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(rats.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)   
 group        2   7434    3717   7.978 0.0019 **
@@ -209,15 +237,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>First pick out each group:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group<span class="sc">==</span><span class="st">"Control"</span>) <span class="ot">-&gt;</span> controls</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group<span class="sc">==</span><span class="st">"Lowjump"</span>) <span class="ot">-&gt;</span> lows</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group<span class="sc">==</span><span class="st">"Highjump"</span>) <span class="ot">-&gt;</span> highs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group<span class="sc">==</span><span class="st">"Control"</span>) <span class="ot">-&gt;</span> controls</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group<span class="sc">==</span><span class="st">"Lowjump"</span>) <span class="ot">-&gt;</span> lows</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>rats <span class="sc">%&gt;%</span> <span class="fu">filter</span>(group<span class="sc">==</span><span class="st">"Highjump"</span>) <span class="ot">-&gt;</span> highs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="control-vs.-low" class="level2">
 <h2 class="anchored" data-anchor-id="control-vs.-low">Control vs.&nbsp;low</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(controls<span class="sc">$</span>density, lows<span class="sc">$</span>density)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(controls<span class="sc">$</span>density, lows<span class="sc">$</span>density)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -237,7 +265,7 @@ mean of x mean of y
 <section id="control-vs.-high" class="level2">
 <h2 class="anchored" data-anchor-id="control-vs.-high">Control vs.&nbsp;high</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(controls<span class="sc">$</span>density, highs<span class="sc">$</span>density)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(controls<span class="sc">$</span>density, highs<span class="sc">$</span>density)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -257,7 +285,7 @@ mean of x mean of y
 <section id="low-vs.-high" class="level2">
 <h2 class="anchored" data-anchor-id="low-vs.-high">Low vs.&nbsp;high</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(lows<span class="sc">$</span>density, highs<span class="sc">$</span>density)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(lows<span class="sc">$</span>density, highs<span class="sc">$</span>density)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -311,8 +339,8 @@ mean of x mean of y
 <section id="tukey-on-rat-data" class="level2">
 <h2 class="anchored" data-anchor-id="tukey-on-rat-data">Tukey on rat data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rats.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(density<span class="sc">~</span>group, <span class="at">data =</span> rats)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(rats.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rats.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(density<span class="sc">~</span>group, <span class="at">data =</span> rats)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(rats.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -346,10 +374,10 @@ Lowjump-Highjump 0.0298     0.0045</code></pre>
 <section id="checking-assumptions" class="level2">
 <h2 class="anchored" data-anchor-id="checking-assumptions">Checking assumptions</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats,<span class="fu">aes</span>(<span class="at">y =</span> density, <span class="at">x =</span> <span class="fu">fct_inorder</span>(group)))<span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats,<span class="fu">aes</span>(<span class="at">y =</span> density, <span class="at">x =</span> <span class="fu">fct_inorder</span>(group)))<span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="inference_5b_files/figure-revealjs/inference-5-R-21-1.png" class="img-fluid" width="960"></p>
+<p><img src="inference_5b_files/figure-html/inference-5-R-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Assumptions:</p>
@@ -361,10 +389,10 @@ Lowjump-Highjump 0.0298     0.0045</code></pre>
 <section id="normal-quantile-plots-by-group" class="level2">
 <h2 class="anchored" data-anchor-id="normal-quantile-plots-by-group">Normal quantile plots by group</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">sample =</span> density)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>( <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">sample =</span> density)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>( <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="inference_5b_files/figure-revealjs/inference-5-R-22-1.png" class="img-fluid" width="960"></p>
+<p><img src="inference_5b_files/figure-html/inference-5-R-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -395,7 +423,7 @@ Lowjump-Highjump 0.0298     0.0045</code></pre>
 <li><p>Actually do this using <code>median_test</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median_test</span>(rats, density, group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median_test</span>(rats, density, group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$table
           above
@@ -420,14 +448,14 @@ $test
 <li>To determine which groups differ from which, can compare all possible pairs of groups via (2-sample) Mood’s median tests, then adjust P-values by multiplying by number of 2-sample Mood tests done (Bonferroni):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise_median_test</span>(rats, density, group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["g1"],"name":[1],"type":["chr"],"align":["left"]},{"label":["g2"],"name":[2],"type":["chr"],"align":["left"]},{"label":["p_value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["adj_p_value"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Control","2":"Highjump","3":"0.0001478023","4":"0.0004434069"},{"1":"Control","2":"Lowjump","3":"0.3710933695","4":"1.0000000000"},{"1":"Highjump","2":"Lowjump","3":"0.3710933695","4":"1.0000000000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise_median_test</span>(rats, density, group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  g1       g2        p_value adj_p_value
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+1 Control  Highjump 0.000148    0.000443
+2 Control  Lowjump  0.371       1       
+3 Highjump Lowjump  0.371       1       </code></pre>
 </div>
 </div>
 <ul>
@@ -442,7 +470,7 @@ $test
 <li>Welch ANOVA done by <code>oneway.test</code> as shown (for illustration):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(density<span class="sc">~</span>group, <span class="at">data=</span>rats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(density<span class="sc">~</span>group, <span class="at">data=</span>rats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One-way analysis of means (not assuming equal variances)
@@ -462,11 +490,25 @@ F = 8.8164, num df = 2.000, denom df = 17.405, p-value = 0.002268</code></pre>
 <li>Lives in package <code>PMCMRplus</code>. Install first.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gamesHowellTest</span>(density<span class="sc">~</span><span class="fu">factor</span>(group),<span class="at">data=</span>rats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gamesHowellTest</span>(density<span class="sc">~</span><span class="fu">factor</span>(group),<span class="at">data=</span>rats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+    Pairwise comparisons using Games-Howell test</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>data: density by factor(group)</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Control Highjump
 Highjump 0.0056  -       
 Lowjump  0.5417  0.0120  </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+P value adjustment method: none</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>alternative hypothesis: two.sided</code></pre>
 </div>
 </div>
 </section>
@@ -478,44 +520,6 @@ Lowjump  0.5417  0.0120  </code></pre>
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

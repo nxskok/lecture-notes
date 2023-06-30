@@ -9,7 +9,7 @@ format:
     incremental: false
 execute:
   echo: true
-  freeze: auto
+#  freeze: auto
 editor: 
   markdown: 
     wrap: 72

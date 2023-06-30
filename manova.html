@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="manova_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="manova_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="manova_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="manova_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -126,6 +123,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/manova1.txt"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>hilo <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 8 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: " "
+chr (1): fertilizer
+dbl (2): yield, weight
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 <ul>
 <li>2 responses, yield and seed weight.</li>
@@ -134,23 +141,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-data">The data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>hilo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["fertilizer"],"name":[1],"type":["chr"],"align":["left"]},{"label":["yield"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"low","2":"34","3":"10"},{"1":"low","2":"29","3":"14"},{"1":"low","2":"35","3":"11"},{"1":"low","2":"32","3":"13"},{"1":"high","2":"33","3":"14"},{"1":"high","2":"38","3":"12"},{"1":"high","2":"34","3":"13"},{"1":"high","2":"35","3":"14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hilo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  fertilizer yield weight
+  &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1 low           34     10
+2 low           29     14
+3 low           35     11
+4 low           32     13
+5 high          33     14
+6 high          38     12
+7 high          34     13
+8 high          35     14</code></pre>
 </div>
 </div>
 </section>
 <section id="boxplot-for-yield-for-each-fertilizer-group" class="level2">
 <h2 class="anchored" data-anchor-id="boxplot-for-yield-for-each-fertilizer-group">Boxplot for yield for each fertilizer group</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hilo, <span class="fu">aes</span>(<span class="at">x =</span> fertilizer, <span class="at">y =</span> yield)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hilo, <span class="fu">aes</span>(<span class="at">x =</span> fertilizer, <span class="at">y =</span> yield)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="manova_files/figure-revealjs/ferto-1.png" class="img-fluid" width="960"></p>
+<p><img src="manova_files/figure-html/ferto-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Yields overlap for fertilizer groups.</p>
@@ -158,9 +170,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="boxplot-for-weight-for-each-fertilizer-group" class="level2">
 <h2 class="anchored" data-anchor-id="boxplot-for-weight-for-each-fertilizer-group">Boxplot for weight for each fertilizer group</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hilo, <span class="fu">aes</span>(<span class="at">x =</span> fertilizer, <span class="at">y =</span> weight)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hilo, <span class="fu">aes</span>(<span class="at">x =</span> fertilizer, <span class="at">y =</span> weight)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="manova_files/figure-revealjs/casteldisangro-1.png" class="img-fluid" width="960"></p>
+<p><img src="manova_files/figure-html/casteldisangro-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Weights overlap for fertilizer groups.</p>
@@ -168,15 +180,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="anovas-for-yield-and-weight" class="level2">
 <h2 class="anchored" data-anchor-id="anovas-for-yield-and-weight">ANOVAs for yield and weight</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>hilo.y <span class="ot">&lt;-</span> <span class="fu">aov</span>(yield <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hilo.y <span class="ot">&lt;-</span> <span class="fu">aov</span>(yield <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
 fertilizer   1   12.5  12.500   2.143  0.194
 Residuals    6   35.0   5.833               </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hilo.w <span class="ot">&lt;-</span> <span class="fu">aov</span>(weight <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo.w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hilo.w <span class="ot">&lt;-</span> <span class="fu">aov</span>(weight <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo.w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
 fertilizer   1  3.125   3.125   1.471  0.271
@@ -194,27 +206,27 @@ Residuals    6 12.750   2.125               </code></pre>
 <li>First, create data frame with points <span class="math inline">\((31,14)\)</span> and <span class="math inline">\((38,10)\)</span> (why? Later):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>line_x, <span class="sc">~</span>line_y,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">31</span>, <span class="dv">14</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">38</span>, <span class="dv">10</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>line_x, <span class="sc">~</span>line_y,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">31</span>, <span class="dv">14</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">38</span>, <span class="dv">10</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Then plot data as points, and add line through points in <code>d</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hilo, <span class="fu">aes</span>(<span class="at">x =</span> yield, <span class="at">y =</span> weight,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">colour =</span> fertilizer)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> d,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> line_x, <span class="at">y =</span> line_y, <span class="at">colour =</span> <span class="cn">NULL</span>)) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hilo, <span class="fu">aes</span>(<span class="at">x =</span> yield, <span class="at">y =</span> weight,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">colour =</span> fertilizer)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> d,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> line_x, <span class="at">y =</span> line_y, <span class="at">colour =</span> <span class="cn">NULL</span>)) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-plot" class="level2">
 <h2 class="anchored" data-anchor-id="the-plot">The plot</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="manova_files/figure-revealjs/charlecombe-1.png" class="img-fluid" width="960"></p>
+<p><img src="manova_files/figure-html/charlecombe-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -241,9 +253,9 @@ Residuals    6 12.750   2.125               </code></pre>
 <li>Is difference found by diagonal line significant? MANOVA finds out.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(hilo, <span class="fu">cbind</span>(yield, weight))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>hilo<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">manova</span>(response <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(hilo, <span class="fu">cbind</span>(yield, weight))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>hilo<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">manova</span>(response <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Df  Pillai approx F num Df den Df  Pr(&gt;F)  
 fertilizer  1 0.80154   10.097      2      5 0.01755 *
@@ -271,9 +283,9 @@ Signif. codes:
 <h2 class="anchored" data-anchor-id="another-way-to-do-manova">Another way to do MANOVA</h2>
 <p>using <code>Manova</code> from package <code>car</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>hilo.<span class="fl">2.</span>lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>hilo<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(hilo.<span class="fl">2.</span>lm)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hilo.<span class="fl">2.</span>lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> fertilizer, <span class="at">data =</span> hilo)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>hilo<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(hilo.<span class="fl">2.</span>lm)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hilo<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Type II MANOVA Tests:
@@ -333,21 +345,21 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="assumptions-for-yield-weight-data">Assumptions for yield-weight data</h2>
 <p>For normal quantile plots, need “extra-long” with all the data values in one column:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hilo <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>fertilizer, <span class="at">names_to =</span> <span class="st">"xname"</span>, </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"xvalue"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> xvalue)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(xname <span class="sc">~</span> fertilizer, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>hilo <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>fertilizer, <span class="at">names_to =</span> <span class="st">"xname"</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"xvalue"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> xvalue)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(xname <span class="sc">~</span> fertilizer, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There are only four observations per response variable - treatment group combination, so graphs are not very informative (over):</p>
 </section>
 <section id="the-plots" class="level2">
 <h2 class="anchored" data-anchor-id="the-plots">The plots</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="manova_files/figure-revealjs/unnamed-chunk-4-1.png" class="img-fluid" width="960"></p>
+<p><img src="manova_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -362,8 +374,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>hilo <span class="sc">%&gt;%</span> <span class="fu">select</span>(yield, weight) <span class="ot">-&gt;</span> numeric_values</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(numeric_values, hilo<span class="sc">$</span>fertilizer))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>hilo <span class="sc">%&gt;%</span> <span class="fu">select</span>(yield, weight) <span class="ot">-&gt;</span> numeric_values</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(numeric_values, hilo<span class="sc">$</span>fertilizer))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Box's M Test 
 
@@ -381,34 +393,52 @@ Chi-Squared Value = 1.002964 , df = 3  and p-value: 0.801 </code></pre>
 <li><p>Three response variables: <code>y</code>, <code>smk</code> and <code>w</code>.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/peanuts.txt"</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>peanuts.orig <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(u, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>u <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/peanuts.txt"</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>peanuts.orig <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(u, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 12 Columns: 6
+── Column specification ────────────────────────────────────
+Delimiter: " "
+dbl (6): obs, location, variety, y, smk, w
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 </section>
 <section id="the-data-1" class="level2">
 <h2 class="anchored" data-anchor-id="the-data-1">The data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>peanuts.orig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["obs"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["location"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["variety"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["smk"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["w"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"5","4":"195.3","5":"153.1","6":"51.4"},{"1":"2","2":"1","3":"5","4":"194.3","5":"167.7","6":"53.7"},{"1":"3","2":"2","3":"5","4":"189.7","5":"139.5","6":"55.5"},{"1":"4","2":"2","3":"5","4":"180.4","5":"121.1","6":"44.4"},{"1":"5","2":"1","3":"6","4":"203.0","5":"156.8","6":"49.8"},{"1":"6","2":"1","3":"6","4":"195.9","5":"166.0","6":"45.8"},{"1":"7","2":"2","3":"6","4":"202.7","5":"166.1","6":"60.4"},{"1":"8","2":"2","3":"6","4":"197.6","5":"161.8","6":"54.1"},{"1":"9","2":"1","3":"8","4":"193.5","5":"164.5","6":"57.8"},{"1":"10","2":"1","3":"8","4":"187.0","5":"165.1","6":"58.6"},{"1":"11","2":"2","3":"8","4":"201.5","5":"166.8","6":"65.0"},{"1":"12","2":"2","3":"8","4":"200.0","5":"173.8","6":"67.2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>peanuts.orig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 6
+     obs location variety     y   smk     w
+   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1     1        1       5  195.  153.  51.4
+ 2     2        1       5  194.  168.  53.7
+ 3     3        2       5  190.  140.  55.5
+ 4     4        2       5  180.  121.  44.4
+ 5     5        1       6  203   157.  49.8
+ 6     6        1       6  196.  166   45.8
+ 7     7        2       6  203.  166.  60.4
+ 8     8        2       6  198.  162.  54.1
+ 9     9        1       8  194.  164.  57.8
+10    10        1       8  187   165.  58.6
+11    11        2       8  202.  167.  65  
+12    12        2       8  200   174.  67.2</code></pre>
 </div>
 </div>
 </section>
 <section id="setup-for-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="setup-for-analysis">Setup for analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>peanuts.orig <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">factor</span>(location),</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">variety =</span> <span class="fu">factor</span>(variety)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> peanuts</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(peanuts, <span class="fu">cbind</span>(y, smk, w))</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>peanuts.orig <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">location =</span> <span class="fu">factor</span>(location),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">variety =</span> <span class="fu">factor</span>(variety)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span> peanuts</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(peanuts, <span class="fu">cbind</span>(y, smk, w))</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         y   smk    w
 [1,] 195.3 153.1 51.4
@@ -423,9 +453,9 @@ Chi-Squared Value = 1.002964 , df = 3  and p-value: 0.801 </code></pre>
 <section id="analysis-using-manova" class="level2">
 <h2 class="anchored" data-anchor-id="analysis-using-manova">Analysis (using <code>Manova</code>)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>peanuts<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> location <span class="sc">*</span> variety, <span class="at">data =</span> peanuts)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>peanuts<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(peanuts<span class="fl">.1</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(peanuts<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>peanuts<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(response <span class="sc">~</span> location <span class="sc">*</span> variety, <span class="at">data =</span> peanuts)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>peanuts<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">Manova</span>(peanuts<span class="fl">.1</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(peanuts<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Type II MANOVA Tests:
@@ -518,13 +548,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>One for location, one for variety:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>location))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>location))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Box's M Test 
 
 Chi-Squared Value = 12.47797 , df = 6  and p-value: 0.0521 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>variety))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, peanuts<span class="sc">$</span>variety))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Box's M Test 
 
@@ -538,44 +568,6 @@ Chi-Squared Value = 10.56304 , df = 12  and p-value: 0.567 </code></pre>
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

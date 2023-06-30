@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="windmill_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="windmill_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="windmill_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="windmill_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -117,24 +114,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="packages-for-this-section" class="level2">
 <h2 class="anchored" data-anchor-id="packages-for-this-section">Packages for this section</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   0.5.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="reading-in-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="reading-in-the-data">Reading in the data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"http://ritsokiguess.site/datafiles/windmill.csv"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>windmill <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>windmill</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"http://ritsokiguess.site/datafiles/windmill.csv"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>windmill <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 25 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (2): wind_velocity, DC_output
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["wind_velocity"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["DC_output"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"5.00","2":"1.582"},{"1":"6.00","2":"1.822"},{"1":"3.40","2":"1.057"},{"1":"2.70","2":"0.500"},{"1":"10.00","2":"2.236"},{"1":"9.70","2":"2.386"},{"1":"9.55","2":"2.294"},{"1":"3.05","2":"0.558"},{"1":"8.15","2":"2.166"},{"1":"6.20","2":"1.866"},{"1":"2.90","2":"0.653"},{"1":"6.35","2":"1.930"},{"1":"4.60","2":"1.562"},{"1":"5.80","2":"1.737"},{"1":"7.40","2":"2.088"},{"1":"3.60","2":"1.137"},{"1":"7.85","2":"2.179"},{"1":"8.80","2":"2.112"},{"1":"7.00","2":"1.800"},{"1":"5.45","2":"1.501"},{"1":"9.10","2":"2.303"},{"1":"10.20","2":"2.310"},{"1":"4.10","2":"1.194"},{"1":"3.95","2":"1.144"},{"1":"2.45","2":"0.123"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>windmill</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 2
+   wind_velocity DC_output
+           &lt;dbl&gt;     &lt;dbl&gt;
+ 1          5        1.58 
+ 2          6        1.82 
+ 3          3.4      1.06 
+ 4          2.7      0.5  
+ 5         10        2.24 
+ 6          9.7      2.39 
+ 7          9.55     2.29 
+ 8          3.05     0.558
+ 9          8.15     2.17 
+10          6.2      1.87 
+# ℹ 15 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -153,15 +179,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Add trend, but don’t want to assume linear:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_velocity)) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_velocity)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="scatterplot" class="level2">
 <h2 class="anchored" data-anchor-id="scatterplot">Scatterplot</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-5-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -176,8 +202,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fit-a-straight-line-and-see-what-happens" class="level2">
 <h2 class="anchored" data-anchor-id="fit-a-straight-line-and-see-what-happens">Fit a straight line (and see what happens)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>DC<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(DC_output <span class="sc">~</span> wind_velocity, <span class="at">data =</span> windmill)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(DC<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>DC<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(DC_output <span class="sc">~</span> wind_velocity, <span class="at">data =</span> windmill)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(DC<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -206,26 +232,24 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>The standard output tends to go off the bottom of the page rather easily. Package <code>broom</code> has these:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(DC<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["r.squared"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["adj.r.squared"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sigma"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["df.residual"],"name":[11],"type":["int"],"align":["right"]},{"label":["nobs"],"name":[12],"type":["int"],"align":["right"]}],"data":[{"1":"0.8744932","2":"0.8690364","3":"0.2360521","4":"160.2571","5":"7.545525e-12","6":"1","7":"1.66138","8":"2.67724","9":"6.333867","10":"1.281573","11":"23","12":"25"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(DC<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.874         0.869 0.236      160. 7.55e-12     1   1.66  2.68  6.33
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
 </div>
 </div>
 <p>showing that the R-squared is 87%, and</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"0.1308751","3":"0.1259894","4":"1.038779","5":"3.097053e-01"},{"1":"wind_velocity","2":"0.2411489","3":"0.0190492","4":"12.659268","5":"7.545525e-12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term          estimate std.error statistic  p.value
+  &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)      0.131    0.126       1.04 3.10e- 1
+2 wind_velocity    0.241    0.0190     12.7  7.55e-12</code></pre>
 </div>
 </div>
 <p>showing the intercept and slope and their significance.</p>
@@ -243,19 +267,19 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <section id="scatterplot-but-with-line" class="level2">
 <h2 class="anchored" data-anchor-id="scatterplot-but-with-line">Scatterplot, but with line</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_velocity)) <span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_velocity)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-11-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="plot-of-residuals-against-fitted-values" class="level2">
 <h2 class="anchored" data-anchor-id="plot-of-residuals-against-fitted-values">Plot of residuals against fitted values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DC<span class="fl">.1</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DC<span class="fl">.1</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-13-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -282,9 +306,9 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>Fit one using <code>lm</code> by adding <span class="math inline">\(x^2\)</span> to right side of model formula with +:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>DC<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(DC_output <span class="sc">~</span> wind_velocity <span class="sc">+</span> <span class="fu">I</span>(wind_velocity<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> windmill</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>DC<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(DC_output <span class="sc">~</span> wind_velocity <span class="sc">+</span> <span class="fu">I</span>(wind_velocity<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> windmill</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>The <code>I()</code> necessary because <code>^</code> in model formula otherwise means something different (to do with interactions in ANOVA).</li>
@@ -294,25 +318,24 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <section id="parabola-model-output" class="level2">
 <h2 class="anchored" data-anchor-id="parabola-model-output">Parabola model output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-1.15589824","3":"0.174650028","4":"-6.618368","5":"1.178792e-06"},{"1":"wind_velocity","2":"0.72293590","3":"0.061425355","4":"11.769340","5":"5.766062e-11"},{"1":"I(wind_velocity^2)","2":"-0.03812088","3":"0.004796679","4":"-7.947349","5":"6.586005e-08"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term               estimate std.error statistic  p.value
+  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)         -1.16     0.175       -6.62 1.18e- 6
+2 wind_velocity        0.723    0.0614      11.8  5.77e-11
+3 I(wind_velocity^2)  -0.0381   0.00480     -7.95 6.59e- 8</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(DC<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["r.squared"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["adj.r.squared"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sigma"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["df.residual"],"name":[11],"type":["int"],"align":["right"]},{"label":["nobs"],"name":[12],"type":["int"],"align":["right"]}],"data":[{"1":"0.9675771","2":"0.9646295","3":"0.1226741","4":"328.266","5":"4.162707e-17","6":"2","7":"18.58005","8":"-29.1601","9":"-24.2846","10":"0.3310767","11":"22","12":"25"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(DC<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.968         0.965 0.123      328. 4.16e-17     2   18.6 -29.2 -24.3
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -329,10 +352,10 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <section id="residual-plot-from-parabola-model" class="level2">
 <h2 class="anchored" data-anchor-id="residual-plot-from-parabola-model">Residual plot from parabola model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DC<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DC<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-18-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -343,9 +366,9 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>Scatterplot with fitted line and curve like this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_velocity)) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> DC<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">y =</span> .fitted))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_velocity)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> DC<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">y =</span> .fitted))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comments-2" class="level2">
@@ -363,8 +386,11 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <section id="scatterplot-with-fitted-line-and-curve" class="level2">
 <h2 class="anchored" data-anchor-id="scatterplot-with-fitted-line-and-curve">Scatterplot with fitted line and curve</h2>
 <div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-19-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Curve clearly fits better than line.</p>
@@ -398,48 +424,52 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>Make a scatterplot first to check for straightness (next page).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>windmill <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">wind_pace =</span> <span class="dv">1</span> <span class="sc">/</span> wind_velocity) <span class="ot">-&gt;</span> windmill</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_pace)) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>windmill <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">wind_pace =</span> <span class="dv">1</span> <span class="sc">/</span> wind_velocity) <span class="ot">-&gt;</span> windmill</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(windmill, <span class="fu">aes</span>(<span class="at">y =</span> DC_output, <span class="at">x =</span> wind_pace)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
 </div>
 <ul>
 <li>and run regression like this (output page after):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>DC<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(DC_output <span class="sc">~</span> wind_pace, <span class="at">data =</span> windmill)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>DC<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(DC_output <span class="sc">~</span> wind_pace, <span class="at">data =</span> windmill)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="scatterplot-for-wind_pace" class="level2">
 <h2 class="anchored" data-anchor-id="scatterplot-for-wind_pace">Scatterplot for wind_pace</h2>
 <p>Pretty straight. Blue actually smooth curve not line:</p>
 <div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-20-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="regression-output" class="level2">
 <h2 class="anchored" data-anchor-id="regression-output">Regression output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["r.squared"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["adj.r.squared"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sigma"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["df.residual"],"name":[11],"type":["int"],"align":["right"]},{"label":["nobs"],"name":[12],"type":["int"],"align":["right"]}],"data":[{"1":"0.9800249","2":"0.9791564","3":"0.09417136","4":"1128.433","5":"4.742548e-21","6":"1","7":"24.63479","8":"-43.26957","9":"-39.61294","10":"0.2039696","11":"23","12":"25"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared  sigma statistic  p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.980         0.979 0.0942     1128. 4.74e-21     1   24.6 -43.3 -39.6
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"2.978860","3":"0.04490227","4":"66.34096","5":"8.917745e-28"},{"1":"wind_pace","2":"-6.934547","3":"0.20643355","4":"-33.59215","5":"4.742548e-21"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)     2.98    0.0449      66.3 8.92e-28
+2 wind_pace      -6.93    0.206      -33.6 4.74e-21</code></pre>
 </div>
 </div>
 </section>
@@ -455,9 +485,9 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <section id="residual-plot-for-asymptote-model" class="level2">
 <h2 class="anchored" data-anchor-id="residual-plot-for-asymptote-model">Residual plot for asymptote model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DC<span class="fl">.3</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(DC<span class="fl">.3</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/resida-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/resida-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -469,26 +499,34 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>First make data frame containing what we need, taken from the right places:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>w2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">wind_velocity =</span> windmill<span class="sc">$</span>wind_velocity,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">DC_output =</span> windmill<span class="sc">$</span>DC_output,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">linear =</span> <span class="fu">fitted</span>(DC<span class="fl">.1</span>),</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">parabola =</span> <span class="fu">fitted</span>(DC<span class="fl">.2</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">asymptote =</span> <span class="fu">fitted</span>(DC<span class="fl">.3</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>w2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">wind_velocity =</span> windmill<span class="sc">$</span>wind_velocity,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">DC_output =</span> windmill<span class="sc">$</span>DC_output,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">linear =</span> <span class="fu">fitted</span>(DC<span class="fl">.1</span>),</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">parabola =</span> <span class="fu">fitted</span>(DC<span class="fl">.2</span>),</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">asymptote =</span> <span class="fu">fitted</span>(DC<span class="fl">.3</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="whats-in-w2" class="level2">
 <h2 class="anchored" data-anchor-id="whats-in-w2">What’s in <code>w2</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>w2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["wind_velocity"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["DC_output"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["linear"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["parabola"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["asymptote"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"5.00","2":"1.582","3":"1.3366195","4":"1.5057592","5":"1.5919507"},{"1":"6.00","2":"1.822","3":"1.5777683","4":"1.8093653","5":"1.8231023"},{"1":"3.40","2":"1.057","3":"0.9507813","4":"0.8614064","5":"0.9392874"},{"1":"2.70","2":"0.500","3":"0.7819771","4":"0.5181275","5":"0.4105093"},{"1":"10.00","2":"2.236","3":"2.5423638","4":"2.2613723","5":"2.2854054"},{"1":"9.70","2":"2.386","3":"2.4700192","4":"2.2697860","5":"2.2639584"},{"1":"9.55","2":"2.294","3":"2.4338468","4":"2.2714197","5":"2.2527296"},{"1":"3.05","2":"0.558","3":"0.8663792","4":"0.6944367","5":"0.7052381"},{"1":"8.15","2":"2.166","3":"2.0962384","4":"2.2039449","5":"2.1279955"},{"1":"6.20","2":"1.866","3":"1.6259981","4":"1.8609376","5":"1.8603848"},{"1":"2.90","2":"0.653","3":"0.8302069","4":"0.6200192","5":"0.5876369"},{"1":"6.35","2":"1.930","3":"1.6621705","4":"1.8976154","5":"1.8868055"},{"1":"4.60","2":"1.562","3":"1.2401599","4":"1.3629690","5":"1.4713499"},{"1":"5.80","2":"1.737","3":"1.5295386","4":"1.7547434","5":"1.7832486"},{"1":"7.40","2":"2.088","3":"1.9153768","4":"2.1063278","5":"2.0417592"},{"1":"3.60","2":"1.137","3":"0.9990111","4":"0.9526244","5":"1.0525970"},{"1":"7.85","2":"2.179","3":"2.0238938","4":"2.1700444","5":"2.0954783"},{"1":"8.80","2":"2.112","3":"2.2529852","4":"2.2538564","5":"2.1908434"},{"1":"7.00","2":"1.800","3":"1.8189172","4":"2.0367297","5":"1.9882106"},{"1":"5.45","2":"1.501","3":"1.4451365","4":"1.6518169","5":"1.7064662"},{"1":"9.10","2":"2.303","3":"2.3253298","4":"2.2660280","5":"2.2168220"},{"1":"10.20","2":"2.310","3":"2.5905936","4":"2.2519512","5":"2.2990026"},{"1":"4.10","2":"1.194","3":"1.1195855","4":"1.1673269","5":"1.2875072"},{"1":"3.95","2":"1.144","3":"1.0834132","4":"1.1049175","5":"1.2232786"},{"1":"2.45","2":"0.123","3":"0.7216899","4":"0.3864741","5":"0.1484327"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>w2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 5
+   wind_velocity DC_output linear parabola asymptote
+           &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1          5        1.58   1.34     1.51      1.59 
+ 2          6        1.82   1.58     1.81      1.82 
+ 3          3.4      1.06   0.951    0.861     0.939
+ 4          2.7      0.5    0.782    0.518     0.411
+ 5         10        2.24   2.54     2.26      2.29 
+ 6          9.7      2.39   2.47     2.27      2.26 
+ 7          9.55     2.29   2.43     2.27      2.25 
+ 8          3.05     0.558  0.866    0.694     0.705
+ 9          8.15     2.17   2.10     2.20      2.13 
+10          6.2      1.87   1.63     1.86      1.86 
+# ℹ 15 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -500,19 +538,19 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li><code>pivot_longer</code>, then plot:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>w2 <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(linear<span class="sc">:</span>asymptote, <span class="at">names_to=</span><span class="st">"model"</span>, </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">"fit"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wind_velocity, <span class="at">y =</span> DC_output)) <span class="sc">+</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fit, <span class="at">colour =</span> model)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>w2 <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(linear<span class="sc">:</span>asymptote, <span class="at">names_to=</span><span class="st">"model"</span>, </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">"fit"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wind_velocity, <span class="at">y =</span> DC_output)) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fit, <span class="at">colour =</span> model)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="scatterplot-with-fitted-curves" class="level2">
 <h2 class="anchored" data-anchor-id="scatterplot-with-fitted-curves">Scatterplot with fitted curves</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-25-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -527,14 +565,13 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <section id="asymptote-model-summary" class="level2">
 <h2 class="anchored" data-anchor-id="asymptote-model-summary">Asymptote model summary</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"2.978860","3":"0.04490227","4":"66.34096","5":"8.917745e-28"},{"1":"wind_pace","2":"-6.934547","3":"0.20643355","4":"-33.59215","5":"4.742548e-21"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)     2.98    0.0449      66.3 8.92e-28
+2 wind_pace      -6.93    0.206      -33.6 4.74e-21</code></pre>
 </div>
 </div>
 </section>
@@ -578,8 +615,8 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>Extend range of wind.velocity to 1 to 16 (steps of 0.5), and predict DC.output according to the two models:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>wv <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">16</span>, <span class="fl">0.5</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>wv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>wv <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">16</span>, <span class="fl">0.5</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>wv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  1.0  1.5  2.0  2.5  3.0  3.5  4.0  4.5  5.0  5.5  6.0  6.5  7.0
 [14]  7.5  8.0  8.5  9.0  9.5 10.0 10.5 11.0 11.5 12.0 12.5 13.0 13.5
@@ -599,20 +636,28 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>So create data frame called <code>wv_new</code> with those in:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>wv_new <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wind_velocity =</span> wv, <span class="at">wind_pace =</span> <span class="dv">1</span> <span class="sc">/</span> wv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>wv_new <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wind_velocity =</span> wv, <span class="at">wind_pace =</span> <span class="dv">1</span> <span class="sc">/</span> wv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wv_new" class="level2">
 <h2 class="anchored" data-anchor-id="wv_new"><code>wv_new</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>wv_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["wind_velocity"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["wind_pace"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.0","2":"1.00000000"},{"1":"1.5","2":"0.66666667"},{"1":"2.0","2":"0.50000000"},{"1":"2.5","2":"0.40000000"},{"1":"3.0","2":"0.33333333"},{"1":"3.5","2":"0.28571429"},{"1":"4.0","2":"0.25000000"},{"1":"4.5","2":"0.22222222"},{"1":"5.0","2":"0.20000000"},{"1":"5.5","2":"0.18181818"},{"1":"6.0","2":"0.16666667"},{"1":"6.5","2":"0.15384615"},{"1":"7.0","2":"0.14285714"},{"1":"7.5","2":"0.13333333"},{"1":"8.0","2":"0.12500000"},{"1":"8.5","2":"0.11764706"},{"1":"9.0","2":"0.11111111"},{"1":"9.5","2":"0.10526316"},{"1":"10.0","2":"0.10000000"},{"1":"10.5","2":"0.09523810"},{"1":"11.0","2":"0.09090909"},{"1":"11.5","2":"0.08695652"},{"1":"12.0","2":"0.08333333"},{"1":"12.5","2":"0.08000000"},{"1":"13.0","2":"0.07692308"},{"1":"13.5","2":"0.07407407"},{"1":"14.0","2":"0.07142857"},{"1":"14.5","2":"0.06896552"},{"1":"15.0","2":"0.06666667"},{"1":"15.5","2":"0.06451613"},{"1":"16.0","2":"0.06250000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>wv_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 2
+   wind_velocity wind_pace
+           &lt;dbl&gt;     &lt;dbl&gt;
+ 1           1       1    
+ 2           1.5     0.667
+ 3           2       0.5  
+ 4           2.5     0.4  
+ 5           3       0.333
+ 6           3.5     0.286
+ 7           4       0.25 
+ 8           4.5     0.222
+ 9           5       0.2  
+10           5.5     0.182
+# ℹ 21 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -622,31 +667,39 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>Use same names as before:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>linear <span class="ot">&lt;-</span> <span class="fu">predict</span>(DC<span class="fl">.1</span>, wv_new)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>parabola <span class="ot">&lt;-</span> <span class="fu">predict</span>(DC<span class="fl">.2</span>, wv_new)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>asymptote <span class="ot">&lt;-</span> <span class="fu">predict</span>(DC<span class="fl">.3</span>, wv_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>linear <span class="ot">&lt;-</span> <span class="fu">predict</span>(DC<span class="fl">.1</span>, wv_new)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>parabola <span class="ot">&lt;-</span> <span class="fu">predict</span>(DC<span class="fl">.2</span>, wv_new)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>asymptote <span class="ot">&lt;-</span> <span class="fu">predict</span>(DC<span class="fl">.3</span>, wv_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Put it all into a data frame for plotting, along with original data:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>my_fits <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">wind_velocity =</span> wv_new<span class="sc">$</span>wind_velocity,</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  linear, parabola, asymptote</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>my_fits <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">wind_velocity =</span> wv_new<span class="sc">$</span>wind_velocity,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  linear, parabola, asymptote</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="my_fits" class="level2">
 <h2 class="anchored" data-anchor-id="my_fits"><code>my_fits</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>my_fits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["wind_velocity"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["linear"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["parabola"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["asymptote"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.0","2":"0.3720240","3":"-0.4710832","4":"-3.9556872"},{"1":"1.5","2":"0.4925984","3":"-0.1572664","4":"-1.6441714"},{"1":"2.0","2":"0.6131729","3":"0.1374900","4":"-0.4884135"},{"1":"2.5","2":"0.7337473","3":"0.4131860","4":"0.2050412"},{"1":"3.0","2":"0.8543217","3":"0.6698215","4":"0.6673444"},{"1":"3.5","2":"0.9748962","3":"0.9073966","4":"0.9975609"},{"1":"4.0","2":"1.0954706","3":"1.1259112","4":"1.2452233"},{"1":"4.5","2":"1.2160450","3":"1.3253654","4":"1.4378497"},{"1":"5.0","2":"1.3366195","3":"1.5057592","4":"1.5919507"},{"1":"5.5","2":"1.4571939","3":"1.6670925","4":"1.7180334"},{"1":"6.0","2":"1.5777683","3":"1.8093653","4":"1.8231023"},{"1":"6.5","2":"1.6983428","3":"1.9325778","4":"1.9120067"},{"1":"7.0","2":"1.8189172","3":"2.0367297","4":"1.9882106"},{"1":"7.5","2":"1.9394917","3":"2.1218213","4":"2.0542539"},{"1":"8.0","2":"2.0600661","3":"2.1878524","4":"2.1120418"},{"1":"8.5","2":"2.1806405","3":"2.2348230","4":"2.1630311"},{"1":"9.0","2":"2.3012150","3":"2.2627333","4":"2.2083549"},{"1":"9.5","2":"2.4217894","3":"2.2715830","4":"2.2489078"},{"1":"10.0","2":"2.5423638","3":"2.2613723","4":"2.2854054"},{"1":"10.5","2":"2.6629383","3":"2.2321012","4":"2.3184271"},{"1":"11.0","2":"2.7835127","3":"2.1837697","4":"2.3484468"},{"1":"11.5","2":"2.9040871","3":"2.1163777","4":"2.3758561"},{"1":"12.0","2":"3.0246616","3":"2.0299252","4":"2.4009812"},{"1":"12.5","2":"3.1452360","3":"1.9244124","4":"2.4240964"},{"1":"13.0","2":"3.2658104","3":"1.7998390","4":"2.4454335"},{"1":"13.5","2":"3.3863849","3":"1.6562053","4":"2.4651900"},{"1":"14.0","2":"3.5069593","3":"1.4935111","4":"2.4835354"},{"1":"14.5","2":"3.6275337","3":"1.3117564","4":"2.5006155"},{"1":"15.0","2":"3.7481082","3":"1.1109413","4":"2.5165570"},{"1":"15.5","2":"3.8686826","3":"0.8910658","4":"2.5314700"},{"1":"16.0","2":"3.9892570","3":"0.6521298","4":"2.5454510"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>my_fits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 4
+   wind_velocity linear parabola asymptote
+           &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+ 1           1    0.372   -0.471    -3.96 
+ 2           1.5  0.493   -0.157    -1.64 
+ 3           2    0.613    0.137    -0.488
+ 4           2.5  0.734    0.413     0.205
+ 5           3    0.854    0.670     0.667
+ 6           3.5  0.975    0.907     0.998
+ 7           4    1.10     1.13      1.25 
+ 8           4.5  1.22     1.33      1.44 
+ 9           5    1.34     1.51      1.59 
+10           5.5  1.46     1.67      1.72 
+# ℹ 21 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -656,16 +709,16 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>To make a plot, we use the same trick as last time to get all three predictions on a plot with a legend (saving result to add to later):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>my_fits <span class="sc">%&gt;%</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    linear<span class="sc">:</span>asymptote,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"model"</span>, </span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to=</span><span class="st">"fit"</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> fit, <span class="at">x =</span> wind_velocity,</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> model</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>my_fits <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    linear<span class="sc">:</span>asymptote,</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"model"</span>, </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to=</span><span class="st">"fit"</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> fit, <span class="at">x =</span> wind_velocity,</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> model</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="making-a-plot-22" class="level2">
@@ -674,7 +727,7 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>The observed wind velocities were in this range:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(vels <span class="ot">&lt;-</span> <span class="fu">range</span>(windmill<span class="sc">$</span>wind_velocity))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>(vels <span class="ot">&lt;-</span> <span class="fu">range</span>(windmill<span class="sc">$</span>wind_velocity))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  2.45 10.20</code></pre>
 </div>
@@ -683,17 +736,17 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li><code>DC.output</code> between 0 and 3 from asymptote model. Add rectangle to graph around where the data were:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">geom_rect</span>(</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">xmin =</span> vels[<span class="dv">1</span>], <span class="at">xmax =</span> vels[<span class="dv">2</span>], <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">3</span>,</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha=</span><span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"black"</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">geom_rect</span>(</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">xmin =</span> vels[<span class="dv">1</span>], <span class="at">xmax =</span> vels[<span class="dv">2</span>], <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">3</span>,</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha=</span><span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"black"</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-plot" class="level2">
 <h2 class="anchored" data-anchor-id="the-plot">The plot</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="windmill_files/figure-revealjs/windmill-35-1.png" class="img-fluid" width="960"></p>
+<p><img src="windmill_files/figure-html/windmill-35-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -712,14 +765,14 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <li>For parabola model:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-1.15589824","3":"0.174650028","4":"-6.618368","5":"1.178792e-06"},{"1":"wind_velocity","2":"0.72293590","3":"0.061425355","4":"11.769340","5":"5.766062e-11"},{"1":"I(wind_velocity^2)","2":"-0.03812088","3":"0.004796679","4":"-7.947349","5":"6.586005e-08"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term               estimate std.error statistic  p.value
+  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)         -1.16     0.175       -6.62 1.18e- 6
+2 wind_velocity        0.723    0.0614      11.8  5.77e-11
+3 I(wind_velocity^2)  -0.0381   0.00480     -7.95 6.59e- 8</code></pre>
 </div>
 </div>
 <ul>
@@ -729,14 +782,13 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 <section id="comments-3-asymptote-model" class="level2">
 <h2 class="anchored" data-anchor-id="comments-3-asymptote-model">Comments (3): asymptote model</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"2.978860","3":"0.04490227","4":"66.34096","5":"8.917745e-28"},{"1":"wind_pace","2":"-6.934547","3":"0.20643355","4":"-33.59215","5":"4.742548e-21"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(DC<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)     2.98    0.0449      66.3 8.92e-28
+2 wind_pace      -6.93    0.206      -33.6 4.74e-21</code></pre>
 </div>
 </div>
 <ul>
@@ -758,44 +810,6 @@ F-statistic: 160.3 on 1 and 23 DF,  p-value: 7.546e-12</code></pre>
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

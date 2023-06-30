@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="tidy_extra_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="tidy_extra_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="tidy_extra_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="tidy_extra_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
 
 </head>
 
@@ -102,37 +99,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   0.5.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
 </div>
 </section>
 <section id="the-pig-feed-data-again" class="level2">
 <h2 class="anchored" data-anchor-id="the-pig-feed-data-again">The pig feed data again</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/STAC32/pigs1.txt"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pigs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["pig"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["feed1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["feed2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["feed3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["feed4"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"60.8","3":"68.7","4":"92.6","5":"87.9"},{"1":"2","2":"57.0","3":"67.7","4":"92.1","5":"84.2"},{"1":"3","2":"65.0","3":"74.0","4":"90.2","5":"83.1"},{"1":"4","2":"58.6","3":"66.3","4":"96.5","5":"85.7"},{"1":"5","2":"61.7","3":"69.8","4":"99.1","5":"90.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/STAC32/pigs1.txt"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pigs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+    pig feed1 feed2 feed3 feed4
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     1  60.8  68.7  92.6  87.9
+2     2  57    67.7  92.1  84.2
+3     3  65    74    90.2  83.1
+4     4  58.6  66.3  96.5  85.7
+5     5  61.7  69.8  99.1  90.3</code></pre>
 </div>
 </div>
 </section>
 <section id="make-longer-as-before" class="level2">
 <h2 class="anchored" data-anchor-id="make-longer-as-before">Make longer (as before)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">-</span>pig, <span class="at">names_to=</span><span class="st">"feed"</span>, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values_to=</span><span class="st">"weight"</span>) <span class="ot">-&gt;</span> pigs_longer</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pigs_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["pig"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["feed"],"name":[2],"type":["chr"],"align":["left"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"feed1","3":"60.8"},{"1":"1","2":"feed2","3":"68.7"},{"1":"1","2":"feed3","3":"92.6"},{"1":"1","2":"feed4","3":"87.9"},{"1":"2","2":"feed1","3":"57.0"},{"1":"2","2":"feed2","3":"67.7"},{"1":"2","2":"feed3","3":"92.1"},{"1":"2","2":"feed4","3":"84.2"},{"1":"3","2":"feed1","3":"65.0"},{"1":"3","2":"feed2","3":"74.0"},{"1":"3","2":"feed3","3":"90.2"},{"1":"3","2":"feed4","3":"83.1"},{"1":"4","2":"feed1","3":"58.6"},{"1":"4","2":"feed2","3":"66.3"},{"1":"4","2":"feed3","3":"96.5"},{"1":"4","2":"feed4","3":"85.7"},{"1":"5","2":"feed1","3":"61.7"},{"1":"5","2":"feed2","3":"69.8"},{"1":"5","2":"feed3","3":"99.1"},{"1":"5","2":"feed4","3":"90.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">-</span>pig, <span class="at">names_to=</span><span class="st">"feed"</span>, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">values_to=</span><span class="st">"weight"</span>) <span class="ot">-&gt;</span> pigs_longer</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pigs_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+     pig feed  weight
+   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+ 1     1 feed1   60.8
+ 2     1 feed2   68.7
+ 3     1 feed3   92.6
+ 4     1 feed4   87.9
+ 5     2 feed1   57  
+ 6     2 feed2   67.7
+ 7     2 feed3   92.1
+ 8     2 feed4   84.2
+ 9     3 feed1   65  
+10     3 feed2   74  
+11     3 feed3   90.2
+12     3 feed4   83.1
+13     4 feed1   58.6
+14     4 feed2   66.3
+15     4 feed3   96.5
+16     4 feed4   85.7
+17     5 feed1   61.7
+18     5 feed2   69.8
+19     5 feed3   99.1
+20     5 feed4   90.3</code></pre>
 </div>
 </div>
 </section>
@@ -140,15 +168,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="make-wider-two-ways-12">Make wider two ways 1/2</h2>
 <p><code>pivot_wider</code> is inverse of <code>pivot_longer</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>feed, <span class="at">values_from=</span>weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["pig"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["feed1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["feed2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["feed3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["feed4"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"60.8","3":"68.7","4":"92.6","5":"87.9"},{"1":"2","2":"57.0","3":"67.7","4":"92.1","5":"84.2"},{"1":"3","2":"65.0","3":"74.0","4":"90.2","5":"83.1"},{"1":"4","2":"58.6","3":"66.3","4":"96.5","5":"85.7"},{"1":"5","2":"61.7","3":"69.8","4":"99.1","5":"90.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>feed, <span class="at">values_from=</span>weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+    pig feed1 feed2 feed3 feed4
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     1  60.8  68.7  92.6  87.9
+2     2  57    67.7  92.1  84.2
+3     3  65    74    90.2  83.1
+4     4  58.6  66.3  96.5  85.7
+5     5  61.7  69.8  99.1  90.3</code></pre>
 </div>
 </div>
 <p>we are back where we started.</p>
@@ -157,15 +187,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="make-wider-22">Make wider 2/2</h2>
 <p>Or</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>pig, <span class="at">values_from=</span>weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["feed"],"name":[1],"type":["chr"],"align":["left"]},{"label":["1"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["4"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["5"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"feed1","2":"60.8","3":"57.0","4":"65.0","5":"58.6","6":"61.7"},{"1":"feed2","2":"68.7","3":"67.7","4":"74.0","5":"66.3","6":"69.8"},{"1":"feed3","2":"92.6","3":"92.1","4":"90.2","5":"96.5","6":"99.1"},{"1":"feed4","2":"87.9","3":"84.2","4":"83.1","5":"85.7","6":"90.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>pig, <span class="at">values_from=</span>weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  feed    `1`   `2`   `3`   `4`   `5`
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 feed1  60.8  57    65    58.6  61.7
+2 feed2  68.7  67.7  74    66.3  69.8
+3 feed3  92.6  92.1  90.2  96.5  99.1
+4 feed4  87.9  84.2  83.1  85.7  90.3</code></pre>
 </div>
 </div>
 </section>
@@ -182,100 +213,127 @@ A            44         12          38        10
 B            28         22          20        18</code></pre>
 <p>Read into data frame called <code>prevalence</code>.</p>
 <div class="cell">
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["present_x"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["present_y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["absent_x"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["absent_y"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"44","3":"12","4":"38","5":"10"},{"1":"B","2":"28","3":"22","4":"20","5":"18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  Species present_x present_y absent_x absent_y
+  &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 A              44        12       38       10
+2 B              28        22       20       18</code></pre>
 </div>
 </div>
 </section>
 <section id="lengthen-and-separate" class="level2">
 <h2 class="anchored" data-anchor-id="lengthen-and-separate">Lengthen and separate</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prevalence <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">"column"</span>, </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"freq"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(column, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"disease"</span>, <span class="st">"location"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["disease"],"name":[2],"type":["chr"],"align":["left"]},{"label":["location"],"name":[3],"type":["chr"],"align":["left"]},{"label":["freq"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"present","3":"x","4":"44"},{"1":"A","2":"present","3":"y","4":"12"},{"1":"A","2":"absent","3":"x","4":"38"},{"1":"A","2":"absent","3":"y","4":"10"},{"1":"B","2":"present","3":"x","4":"28"},{"1":"B","2":"present","3":"y","4":"22"},{"1":"B","2":"absent","3":"x","4":"20"},{"1":"B","2":"absent","3":"y","4":"18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>prevalence <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">"column"</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"freq"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(column, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"disease"</span>, <span class="st">"location"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  Species disease location  freq
+  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;
+1 A       present x           44
+2 A       present y           12
+3 A       absent  x           38
+4 A       absent  y           10
+5 B       present x           28
+6 B       present y           22
+7 B       absent  x           20
+8 B       absent  y           18</code></pre>
 </div>
 </div>
 </section>
 <section id="making-longer-the-better-way" class="level2">
 <h2 class="anchored" data-anchor-id="making-longer-the-better-way">Making longer, the better way</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>prevalence <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Species, <span class="at">names_to=</span><span class="fu">c</span>(<span class="st">"disease"</span>, <span class="st">"location"</span>),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep=</span><span class="st">"_"</span>, <span class="at">values_to=</span><span class="st">"frequency"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Species, location, disease) <span class="ot">-&gt;</span> prevalence_longer</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>prevalence_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["disease"],"name":[2],"type":["chr"],"align":["left"]},{"label":["location"],"name":[3],"type":["chr"],"align":["left"]},{"label":["frequency"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"absent","3":"x","4":"38"},{"1":"A","2":"present","3":"x","4":"44"},{"1":"A","2":"absent","3":"y","4":"10"},{"1":"A","2":"present","3":"y","4":"12"},{"1":"B","2":"absent","3":"x","4":"20"},{"1":"B","2":"present","3":"x","4":"28"},{"1":"B","2":"absent","3":"y","4":"18"},{"1":"B","2":"present","3":"y","4":"22"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>prevalence <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Species, <span class="at">names_to=</span><span class="fu">c</span>(<span class="st">"disease"</span>, <span class="st">"location"</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep=</span><span class="st">"_"</span>, <span class="at">values_to=</span><span class="st">"frequency"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Species, location, disease) <span class="ot">-&gt;</span> prevalence_longer</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>prevalence_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  Species disease location frequency
+  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;
+1 A       absent  x               38
+2 A       present x               44
+3 A       absent  y               10
+4 A       present y               12
+5 B       absent  x               20
+6 B       present x               28
+7 B       absent  y               18
+8 B       present y               22</code></pre>
 </div>
 </div>
 </section>
 <section id="making-wider-different-ways" class="level2">
 <h2 class="anchored" data-anchor-id="making-wider-different-ways">Making wider, different ways</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prevalence_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="fu">c</span>(Species, location), <span class="at">values_from=</span>frequency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["disease"],"name":[1],"type":["chr"],"align":["left"]},{"label":["A_x"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["A_y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["B_x"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["B_y"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"absent","2":"38","3":"10","4":"20","5":"18"},{"1":"present","2":"44","3":"12","4":"28","5":"22"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prevalence_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="fu">c</span>(Species, location), <span class="at">values_from=</span>frequency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  disease   A_x   A_y   B_x   B_y
+  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 absent     38    10    20    18
+2 present    44    12    28    22</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>prevalence_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>location, <span class="at">values_from=</span>frequency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["disease"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"absent","3":"38","4":"10"},{"1":"A","2":"present","3":"44","4":"12"},{"1":"B","2":"absent","3":"20","4":"18"},{"1":"B","2":"present","3":"28","4":"22"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>prevalence_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>location, <span class="at">values_from=</span>frequency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  Species disease     x     y
+  &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 A       absent     38    10
+2 A       present    44    12
+3 B       absent     20    18
+4 B       present    28    22</code></pre>
 </div>
 </div>
 </section>
 <section id="interlude" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="interlude">Interlude</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pigs_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["pig"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["feed"],"name":[2],"type":["chr"],"align":["left"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"feed1","3":"60.8"},{"1":"1","2":"feed2","3":"68.7"},{"1":"1","2":"feed3","3":"92.6"},{"1":"1","2":"feed4","3":"87.9"},{"1":"2","2":"feed1","3":"57.0"},{"1":"2","2":"feed2","3":"67.7"},{"1":"2","2":"feed3","3":"92.1"},{"1":"2","2":"feed4","3":"84.2"},{"1":"3","2":"feed1","3":"65.0"},{"1":"3","2":"feed2","3":"74.0"},{"1":"3","2":"feed3","3":"90.2"},{"1":"3","2":"feed4","3":"83.1"},{"1":"4","2":"feed1","3":"58.6"},{"1":"4","2":"feed2","3":"66.3"},{"1":"4","2":"feed3","3":"96.5"},{"1":"4","2":"feed4","3":"85.7"},{"1":"5","2":"feed1","3":"61.7"},{"1":"5","2":"feed2","3":"69.8"},{"1":"5","2":"feed3","3":"99.1"},{"1":"5","2":"feed4","3":"90.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pigs_longer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+     pig feed  weight
+   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;
+ 1     1 feed1   60.8
+ 2     1 feed2   68.7
+ 3     1 feed3   92.6
+ 4     1 feed4   87.9
+ 5     2 feed1   57  
+ 6     2 feed2   67.7
+ 7     2 feed3   92.1
+ 8     2 feed4   84.2
+ 9     3 feed1   65  
+10     3 feed2   74  
+11     3 feed3   90.2
+12     3 feed4   83.1
+13     4 feed1   58.6
+14     4 feed2   66.3
+15     4 feed3   96.5
+16     4 feed4   85.7
+17     5 feed1   61.7
+18     5 feed2   69.8
+19     5 feed3   99.1
+20     5 feed4   90.3</code></pre>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">weight_mean=</span><span class="fu">mean</span>(weight))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["feed"],"name":[1],"type":["chr"],"align":["left"]},{"label":["weight_mean"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"feed1","2":"60.62"},{"1":"feed2","2":"69.30"},{"1":"feed3","2":"94.10"},{"1":"feed4","2":"86.24"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">weight_mean=</span><span class="fu">mean</span>(weight))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  feed  weight_mean
+  &lt;chr&gt;       &lt;dbl&gt;
+1 feed1        60.6
+2 feed2        69.3
+3 feed3        94.1
+4 feed4        86.2</code></pre>
 </div>
 </div>
 </section>
@@ -283,52 +341,73 @@ B            28         22          20        18</code></pre>
 <h2 class="anchored" data-anchor-id="what-if-summary-is-more-than-one-number">What if summary is more than one number?</h2>
 <p>eg. quartiles:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r=</span><span class="fu">quantile</span>(weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["feed"],"name":[1],"type":["chr"],"align":["left"]},{"label":["r"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"feed1","2":"58.6"},{"1":"feed1","2":"61.7"},{"1":"feed2","2":"67.7"},{"1":"feed2","2":"69.8"},{"1":"feed3","2":"92.1"},{"1":"feed3","2":"96.5"},{"1":"feed4","2":"84.2"},{"1":"feed4","2":"87.9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r=</span><span class="fu">quantile</span>(weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'feed'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+# Groups:   feed [4]
+  feed      r
+  &lt;chr&gt; &lt;dbl&gt;
+1 feed1  58.6
+2 feed1  61.7
+3 feed2  67.7
+4 feed2  69.8
+5 feed3  92.1
+6 feed3  96.5
+7 feed4  84.2
+8 feed4  87.9</code></pre>
 </div>
 </div>
 </section>
 <section id="this-also-works" class="level2">
 <h2 class="anchored" data-anchor-id="this-also-works">this also works</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r=</span><span class="fu">list</span>(<span class="fu">quantile</span>(weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["feed"],"name":[1],"type":["chr"],"align":["left"]},{"label":["r"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"feed1","2":"58.6"},{"1":"feed1","2":"61.7"},{"1":"feed2","2":"67.7"},{"1":"feed2","2":"69.8"},{"1":"feed3","2":"92.1"},{"1":"feed3","2":"96.5"},{"1":"feed4","2":"84.2"},{"1":"feed4","2":"87.9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r=</span><span class="fu">list</span>(<span class="fu">quantile</span>(weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  feed      r
+  &lt;chr&gt; &lt;dbl&gt;
+1 feed1  58.6
+2 feed1  61.7
+3 feed2  67.7
+4 feed2  69.8
+5 feed3  92.1
+6 feed3  96.5
+7 feed4  84.2
+8 feed4  87.9</code></pre>
 </div>
 </div>
 </section>
 <section id="or-even-better-use-enframe" class="level2">
 <h2 class="anchored" data-anchor-id="or-even-better-use-enframe">or, even better, use <code>enframe</code>:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(pigs_longer<span class="sc">$</span>weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(pigs_longer<span class="sc">$</span>weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   25%    75% 
 65.975 90.225 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enframe</span>(<span class="fu">quantile</span>(pigs_longer<span class="sc">$</span>weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["value"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"25%","2":"65.975"},{"1":"75%","2":"90.225"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">enframe</span>(<span class="fu">quantile</span>(pigs_longer<span class="sc">$</span>weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  name  value
+  &lt;chr&gt; &lt;dbl&gt;
+1 25%    66.0
+2 75%    90.2</code></pre>
 </div>
 </div>
 </section>
@@ -336,18 +415,19 @@ B            28         22          20        18</code></pre>
 <h2 class="anchored" data-anchor-id="a-nice-look">A nice look</h2>
 <p>Run this one line at a time to see how it works:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r=</span><span class="fu">list</span>(<span class="fu">enframe</span>(<span class="fu">quantile</span>(weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))))) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(r) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>name, <span class="at">values_from=</span>value) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["feed"],"name":[1],"type":["chr"],"align":["left"]},{"label":["25%"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["75%"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"feed1","2":"58.6","3":"61.7"},{"1":"feed2","2":"67.7","3":"69.8"},{"1":"feed3","2":"92.1","3":"96.5"},{"1":"feed4","2":"84.2","3":"87.9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pigs_longer <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(feed) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">r=</span><span class="fu">list</span>(<span class="fu">enframe</span>(<span class="fu">quantile</span>(weight, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))))) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(r) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>name, <span class="at">values_from=</span>value) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  feed  `25%` `75%`
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 feed1  58.6  61.7
+2 feed2  67.7  69.8
+3 feed3  92.1  96.5
+4 feed4  84.2  87.9</code></pre>
 </div>
 </div>
 </section>
@@ -355,30 +435,53 @@ B            28         22          20        18</code></pre>
 <h2 class="anchored" data-anchor-id="a-hairy-one">A hairy one</h2>
 <p>18 people receive one of three treatments. At 3 different times (pre, post, followup) two variables <code>y</code> and <code>z</code> are measured on each person:</p>
 <div class="cell">
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["treatment"],"name":[2],"type":["chr"],"align":["left"]},{"label":["pre_y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["post_y"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["fu_y"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["pre_z"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["post_z"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["fu_z"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"A.1","2":"A","3":"3","4":"13","5":"9","6":"0","7":"0","8":"9"},{"1":"A.2","2":"A","3":"0","4":"14","5":"10","6":"6","7":"6","8":"3"},{"1":"A.3","2":"A","3":"4","4":"6","5":"17","6":"8","7":"2","8":"6"},{"1":"A.4","2":"A","3":"7","4":"7","5":"13","6":"7","7":"6","8":"4"},{"1":"A.5","2":"A","3":"3","4":"12","5":"11","6":"6","7":"12","8":"6"},{"1":"A.6","2":"A","3":"10","4":"14","5":"8","6":"13","7":"3","8":"8"},{"1":"B.1","2":"B","3":"9","4":"11","5":"17","6":"8","7":"11","8":"27"},{"1":"B.2","2":"B","3":"4","4":"16","5":"13","6":"9","7":"3","8":"26"},{"1":"B.3","2":"B","3":"8","4":"10","5":"9","6":"12","7":"0","8":"18"},{"1":"B.4","2":"B","3":"5","4":"9","5":"13","6":"3","7":"0","8":"14"},{"1":"B.5","2":"B","3":"0","4":"15","5":"11","6":"3","7":"0","8":"25"},{"1":"B.6","2":"B","3":"4","4":"11","5":"14","6":"4","7":"2","8":"9"},{"1":"Control.1","2":"Control","3":"10","4":"12","5":"15","6":"4","7":"3","8":"7"},{"1":"Control.2","2":"Control","3":"2","4":"8","5":"12","6":"8","7":"7","8":"20"},{"1":"Control.3","2":"Control","3":"4","4":"9","5":"10","6":"2","7":"0","8":"10"},{"1":"Control.4","2":"Control","3":"10","4":"8","5":"8","6":"5","7":"8","8":"14"},{"1":"Control.5","2":"Control","3":"11","4":"11","5":"11","6":"1","7":"0","8":"11"},{"1":"Control.6","2":"Control","3":"1","4":"5","5":"15","6":"8","7":"9","8":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 8
+   id        treatment pre_y post_y  fu_y pre_z post_z  fu_z
+   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+ 1 A.1       A             3     13     9     0      0     9
+ 2 A.2       A             0     14    10     6      6     3
+ 3 A.3       A             4      6    17     8      2     6
+ 4 A.4       A             7      7    13     7      6     4
+ 5 A.5       A             3     12    11     6     12     6
+ 6 A.6       A            10     14     8    13      3     8
+ 7 B.1       B             9     11    17     8     11    27
+ 8 B.2       B             4     16    13     9      3    26
+ 9 B.3       B             8     10     9    12      0    18
+10 B.4       B             5      9    13     3      0    14
+11 B.5       B             0     15    11     3      0    25
+12 B.6       B             4     11    14     4      2     9
+13 Control.1 Control      10     12    15     4      3     7
+14 Control.2 Control       2      8    12     8      7    20
+15 Control.3 Control       4      9    10     2      0    10
+16 Control.4 Control      10      8     8     5      8    14
+17 Control.5 Control      11     11    11     1      0    11
+18 Control.6 Control       1      5    15     8      9    10</code></pre>
 </div>
 </div>
 </section>
 <section id="attempt-1" class="level2">
 <h2 class="anchored" data-anchor-id="attempt-1">Attempt 1</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>repmes <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"_"</span>),</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to=</span><span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"var"</span>),</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_sep=</span><span class="st">"_"</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                         )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["treatment"],"name":[2],"type":["chr"],"align":["left"]},{"label":["time"],"name":[3],"type":["chr"],"align":["left"]},{"label":["var"],"name":[4],"type":["chr"],"align":["left"]},{"label":["value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"A.1","2":"A","3":"pre","4":"y","5":"3"},{"1":"A.1","2":"A","3":"post","4":"y","5":"13"},{"1":"A.1","2":"A","3":"fu","4":"y","5":"9"},{"1":"A.1","2":"A","3":"pre","4":"z","5":"0"},{"1":"A.1","2":"A","3":"post","4":"z","5":"0"},{"1":"A.1","2":"A","3":"fu","4":"z","5":"9"},{"1":"A.2","2":"A","3":"pre","4":"y","5":"0"},{"1":"A.2","2":"A","3":"post","4":"y","5":"14"},{"1":"A.2","2":"A","3":"fu","4":"y","5":"10"},{"1":"A.2","2":"A","3":"pre","4":"z","5":"6"},{"1":"A.2","2":"A","3":"post","4":"z","5":"6"},{"1":"A.2","2":"A","3":"fu","4":"z","5":"3"},{"1":"A.3","2":"A","3":"pre","4":"y","5":"4"},{"1":"A.3","2":"A","3":"post","4":"y","5":"6"},{"1":"A.3","2":"A","3":"fu","4":"y","5":"17"},{"1":"A.3","2":"A","3":"pre","4":"z","5":"8"},{"1":"A.3","2":"A","3":"post","4":"z","5":"2"},{"1":"A.3","2":"A","3":"fu","4":"z","5":"6"},{"1":"A.4","2":"A","3":"pre","4":"y","5":"7"},{"1":"A.4","2":"A","3":"post","4":"y","5":"7"},{"1":"A.4","2":"A","3":"fu","4":"y","5":"13"},{"1":"A.4","2":"A","3":"pre","4":"z","5":"7"},{"1":"A.4","2":"A","3":"post","4":"z","5":"6"},{"1":"A.4","2":"A","3":"fu","4":"z","5":"4"},{"1":"A.5","2":"A","3":"pre","4":"y","5":"3"},{"1":"A.5","2":"A","3":"post","4":"y","5":"12"},{"1":"A.5","2":"A","3":"fu","4":"y","5":"11"},{"1":"A.5","2":"A","3":"pre","4":"z","5":"6"},{"1":"A.5","2":"A","3":"post","4":"z","5":"12"},{"1":"A.5","2":"A","3":"fu","4":"z","5":"6"},{"1":"A.6","2":"A","3":"pre","4":"y","5":"10"},{"1":"A.6","2":"A","3":"post","4":"y","5":"14"},{"1":"A.6","2":"A","3":"fu","4":"y","5":"8"},{"1":"A.6","2":"A","3":"pre","4":"z","5":"13"},{"1":"A.6","2":"A","3":"post","4":"z","5":"3"},{"1":"A.6","2":"A","3":"fu","4":"z","5":"8"},{"1":"B.1","2":"B","3":"pre","4":"y","5":"9"},{"1":"B.1","2":"B","3":"post","4":"y","5":"11"},{"1":"B.1","2":"B","3":"fu","4":"y","5":"17"},{"1":"B.1","2":"B","3":"pre","4":"z","5":"8"},{"1":"B.1","2":"B","3":"post","4":"z","5":"11"},{"1":"B.1","2":"B","3":"fu","4":"z","5":"27"},{"1":"B.2","2":"B","3":"pre","4":"y","5":"4"},{"1":"B.2","2":"B","3":"post","4":"y","5":"16"},{"1":"B.2","2":"B","3":"fu","4":"y","5":"13"},{"1":"B.2","2":"B","3":"pre","4":"z","5":"9"},{"1":"B.2","2":"B","3":"post","4":"z","5":"3"},{"1":"B.2","2":"B","3":"fu","4":"z","5":"26"},{"1":"B.3","2":"B","3":"pre","4":"y","5":"8"},{"1":"B.3","2":"B","3":"post","4":"y","5":"10"},{"1":"B.3","2":"B","3":"fu","4":"y","5":"9"},{"1":"B.3","2":"B","3":"pre","4":"z","5":"12"},{"1":"B.3","2":"B","3":"post","4":"z","5":"0"},{"1":"B.3","2":"B","3":"fu","4":"z","5":"18"},{"1":"B.4","2":"B","3":"pre","4":"y","5":"5"},{"1":"B.4","2":"B","3":"post","4":"y","5":"9"},{"1":"B.4","2":"B","3":"fu","4":"y","5":"13"},{"1":"B.4","2":"B","3":"pre","4":"z","5":"3"},{"1":"B.4","2":"B","3":"post","4":"z","5":"0"},{"1":"B.4","2":"B","3":"fu","4":"z","5":"14"},{"1":"B.5","2":"B","3":"pre","4":"y","5":"0"},{"1":"B.5","2":"B","3":"post","4":"y","5":"15"},{"1":"B.5","2":"B","3":"fu","4":"y","5":"11"},{"1":"B.5","2":"B","3":"pre","4":"z","5":"3"},{"1":"B.5","2":"B","3":"post","4":"z","5":"0"},{"1":"B.5","2":"B","3":"fu","4":"z","5":"25"},{"1":"B.6","2":"B","3":"pre","4":"y","5":"4"},{"1":"B.6","2":"B","3":"post","4":"y","5":"11"},{"1":"B.6","2":"B","3":"fu","4":"y","5":"14"},{"1":"B.6","2":"B","3":"pre","4":"z","5":"4"},{"1":"B.6","2":"B","3":"post","4":"z","5":"2"},{"1":"B.6","2":"B","3":"fu","4":"z","5":"9"},{"1":"Control.1","2":"Control","3":"pre","4":"y","5":"10"},{"1":"Control.1","2":"Control","3":"post","4":"y","5":"12"},{"1":"Control.1","2":"Control","3":"fu","4":"y","5":"15"},{"1":"Control.1","2":"Control","3":"pre","4":"z","5":"4"},{"1":"Control.1","2":"Control","3":"post","4":"z","5":"3"},{"1":"Control.1","2":"Control","3":"fu","4":"z","5":"7"},{"1":"Control.2","2":"Control","3":"pre","4":"y","5":"2"},{"1":"Control.2","2":"Control","3":"post","4":"y","5":"8"},{"1":"Control.2","2":"Control","3":"fu","4":"y","5":"12"},{"1":"Control.2","2":"Control","3":"pre","4":"z","5":"8"},{"1":"Control.2","2":"Control","3":"post","4":"z","5":"7"},{"1":"Control.2","2":"Control","3":"fu","4":"z","5":"20"},{"1":"Control.3","2":"Control","3":"pre","4":"y","5":"4"},{"1":"Control.3","2":"Control","3":"post","4":"y","5":"9"},{"1":"Control.3","2":"Control","3":"fu","4":"y","5":"10"},{"1":"Control.3","2":"Control","3":"pre","4":"z","5":"2"},{"1":"Control.3","2":"Control","3":"post","4":"z","5":"0"},{"1":"Control.3","2":"Control","3":"fu","4":"z","5":"10"},{"1":"Control.4","2":"Control","3":"pre","4":"y","5":"10"},{"1":"Control.4","2":"Control","3":"post","4":"y","5":"8"},{"1":"Control.4","2":"Control","3":"fu","4":"y","5":"8"},{"1":"Control.4","2":"Control","3":"pre","4":"z","5":"5"},{"1":"Control.4","2":"Control","3":"post","4":"z","5":"8"},{"1":"Control.4","2":"Control","3":"fu","4":"z","5":"14"},{"1":"Control.5","2":"Control","3":"pre","4":"y","5":"11"},{"1":"Control.5","2":"Control","3":"post","4":"y","5":"11"},{"1":"Control.5","2":"Control","3":"fu","4":"y","5":"11"},{"1":"Control.5","2":"Control","3":"pre","4":"z","5":"1"},{"1":"Control.5","2":"Control","3":"post","4":"z","5":"0"},{"1":"Control.5","2":"Control","3":"fu","4":"z","5":"11"},{"1":"Control.6","2":"Control","3":"pre","4":"y","5":"1"},{"1":"Control.6","2":"Control","3":"post","4":"y","5":"5"},{"1":"Control.6","2":"Control","3":"fu","4":"y","5":"15"},{"1":"Control.6","2":"Control","3":"pre","4":"z","5":"8"},{"1":"Control.6","2":"Control","3":"post","4":"z","5":"9"},{"1":"Control.6","2":"Control","3":"fu","4":"z","5":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>repmes <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"_"</span>),</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to=</span><span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"var"</span>),</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_sep=</span><span class="st">"_"</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                         )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 108 × 5
+   id    treatment time  var   value
+   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1 A.1   A         pre   y         3
+ 2 A.1   A         post  y        13
+ 3 A.1   A         fu    y         9
+ 4 A.1   A         pre   z         0
+ 5 A.1   A         post  z         0
+ 6 A.1   A         fu    z         9
+ 7 A.2   A         pre   y         0
+ 8 A.2   A         post  y        14
+ 9 A.2   A         fu    y        10
+10 A.2   A         pre   z         6
+# ℹ 98 more rows</code></pre>
 </div>
 </div>
 <p>This is <em>too</em> long! We wanted a column called <code>y</code> and a column called <code>z</code>, but they have been pivoted-longer too.</p>
@@ -386,18 +489,26 @@ B            28         22          20        18</code></pre>
 <section id="attempt-2" class="level2">
 <h2 class="anchored" data-anchor-id="attempt-2">Attempt 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>repmes <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"_"</span>),</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to=</span><span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">".value"</span>),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_sep=</span><span class="st">"_"</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                        ) <span class="ot">-&gt;</span> repmes3</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>repmes3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["treatment"],"name":[2],"type":["chr"],"align":["left"]},{"label":["time"],"name":[3],"type":["chr"],"align":["left"]},{"label":["y"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["z"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"A.1","2":"A","3":"pre","4":"3","5":"0"},{"1":"A.1","2":"A","3":"post","4":"13","5":"0"},{"1":"A.1","2":"A","3":"fu","4":"9","5":"9"},{"1":"A.2","2":"A","3":"pre","4":"0","5":"6"},{"1":"A.2","2":"A","3":"post","4":"14","5":"6"},{"1":"A.2","2":"A","3":"fu","4":"10","5":"3"},{"1":"A.3","2":"A","3":"pre","4":"4","5":"8"},{"1":"A.3","2":"A","3":"post","4":"6","5":"2"},{"1":"A.3","2":"A","3":"fu","4":"17","5":"6"},{"1":"A.4","2":"A","3":"pre","4":"7","5":"7"},{"1":"A.4","2":"A","3":"post","4":"7","5":"6"},{"1":"A.4","2":"A","3":"fu","4":"13","5":"4"},{"1":"A.5","2":"A","3":"pre","4":"3","5":"6"},{"1":"A.5","2":"A","3":"post","4":"12","5":"12"},{"1":"A.5","2":"A","3":"fu","4":"11","5":"6"},{"1":"A.6","2":"A","3":"pre","4":"10","5":"13"},{"1":"A.6","2":"A","3":"post","4":"14","5":"3"},{"1":"A.6","2":"A","3":"fu","4":"8","5":"8"},{"1":"B.1","2":"B","3":"pre","4":"9","5":"8"},{"1":"B.1","2":"B","3":"post","4":"11","5":"11"},{"1":"B.1","2":"B","3":"fu","4":"17","5":"27"},{"1":"B.2","2":"B","3":"pre","4":"4","5":"9"},{"1":"B.2","2":"B","3":"post","4":"16","5":"3"},{"1":"B.2","2":"B","3":"fu","4":"13","5":"26"},{"1":"B.3","2":"B","3":"pre","4":"8","5":"12"},{"1":"B.3","2":"B","3":"post","4":"10","5":"0"},{"1":"B.3","2":"B","3":"fu","4":"9","5":"18"},{"1":"B.4","2":"B","3":"pre","4":"5","5":"3"},{"1":"B.4","2":"B","3":"post","4":"9","5":"0"},{"1":"B.4","2":"B","3":"fu","4":"13","5":"14"},{"1":"B.5","2":"B","3":"pre","4":"0","5":"3"},{"1":"B.5","2":"B","3":"post","4":"15","5":"0"},{"1":"B.5","2":"B","3":"fu","4":"11","5":"25"},{"1":"B.6","2":"B","3":"pre","4":"4","5":"4"},{"1":"B.6","2":"B","3":"post","4":"11","5":"2"},{"1":"B.6","2":"B","3":"fu","4":"14","5":"9"},{"1":"Control.1","2":"Control","3":"pre","4":"10","5":"4"},{"1":"Control.1","2":"Control","3":"post","4":"12","5":"3"},{"1":"Control.1","2":"Control","3":"fu","4":"15","5":"7"},{"1":"Control.2","2":"Control","3":"pre","4":"2","5":"8"},{"1":"Control.2","2":"Control","3":"post","4":"8","5":"7"},{"1":"Control.2","2":"Control","3":"fu","4":"12","5":"20"},{"1":"Control.3","2":"Control","3":"pre","4":"4","5":"2"},{"1":"Control.3","2":"Control","3":"post","4":"9","5":"0"},{"1":"Control.3","2":"Control","3":"fu","4":"10","5":"10"},{"1":"Control.4","2":"Control","3":"pre","4":"10","5":"5"},{"1":"Control.4","2":"Control","3":"post","4":"8","5":"8"},{"1":"Control.4","2":"Control","3":"fu","4":"8","5":"14"},{"1":"Control.5","2":"Control","3":"pre","4":"11","5":"1"},{"1":"Control.5","2":"Control","3":"post","4":"11","5":"0"},{"1":"Control.5","2":"Control","3":"fu","4":"11","5":"11"},{"1":"Control.6","2":"Control","3":"pre","4":"1","5":"8"},{"1":"Control.6","2":"Control","3":"post","4":"5","5":"9"},{"1":"Control.6","2":"Control","3":"fu","4":"15","5":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>repmes <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="fu">contains</span>(<span class="st">"_"</span>),</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_to=</span><span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">".value"</span>),</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">names_sep=</span><span class="st">"_"</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                        ) <span class="ot">-&gt;</span> repmes3</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>repmes3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 54 × 5
+   id    treatment time      y     z
+   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 A.1   A         pre       3     0
+ 2 A.1   A         post     13     0
+ 3 A.1   A         fu        9     9
+ 4 A.2   A         pre       0     6
+ 5 A.2   A         post     14     6
+ 6 A.2   A         fu       10     3
+ 7 A.3   A         pre       4     8
+ 8 A.3   A         post      6     2
+ 9 A.3   A         fu       17     6
+10 A.4   A         pre       7     7
+# ℹ 44 more rows</code></pre>
 </div>
 </div>
 <p>This has done what we wanted.</p>
@@ -405,11 +516,11 @@ B            28         22          20        18</code></pre>
 <section id="make-a-graph" class="level2">
 <h2 class="anchored" data-anchor-id="make-a-graph">make a graph</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(repmes3, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">fct_inorder</span>(time), <span class="at">y=</span>y, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colour=</span>treatment, <span class="at">group=</span>id)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(repmes3, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">fct_inorder</span>(time), <span class="at">y=</span>y, </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colour=</span>treatment, <span class="at">group=</span>id)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="tidy_extra_files/figure-revealjs/tidy-extra-R-19-1.png" class="img-fluid" width="960"></p>
+<p><img src="tidy_extra_files/figure-html/tidy-extra-R-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>A so-called spaghetti plot. The three measurements for each person are joined by lines, and the lines are coloured by treatment.</p>
@@ -417,13 +528,17 @@ B            28         22          20        18</code></pre>
 <section id="or-do-the-plot-with-means" class="level2">
 <h2 class="anchored" data-anchor-id="or-do-the-plot-with-means">or do the plot with means</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>repmes3 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(treatment, <span class="at">ftime=</span><span class="fu">fct_inorder</span>(time)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_y=</span><span class="fu">mean</span>(y)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>ftime, <span class="at">y=</span>mean_y, <span class="at">colour=</span>treatment, </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">group=</span>treatment)) <span class="sc">+</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>repmes3 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(treatment, <span class="at">ftime=</span><span class="fu">fct_inorder</span>(time)) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_y=</span><span class="fu">mean</span>(y)) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>ftime, <span class="at">y=</span>mean_y, <span class="at">colour=</span>treatment, </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">group=</span>treatment)) <span class="sc">+</span> </span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'treatment'. You can override using the
+`.groups` argument.</code></pre>
+</div>
 <div class="cell-output-display">
-<p><img src="tidy_extra_files/figure-revealjs/tidy-extra-R-20-1.png" class="img-fluid" width="960"></p>
+<p><img src="tidy_extra_files/figure-html/tidy-extra-R-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>On average, the two real treatments go up and level off, but the control group is very different.</p>
@@ -431,44 +546,6 @@ B            28         22          20        18</code></pre>
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

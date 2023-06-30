@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="asphalt_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="asphalt_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="asphalt_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="asphalt_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -121,17 +118,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="packages-for-this-section">Packages for this section</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   0.5.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+✖ dplyr::select() masks MASS::select()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Make sure to load <code>MASS</code> before <code>tidyverse</code> (for annoying technical reasons).</p>
 </section>
 <section id="getting-set-up" class="level2">
 <h2 class="anchored" data-anchor-id="getting-set-up">Getting set up</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/asphalt.txt"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>asphalt <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/asphalt.txt"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>asphalt <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 31 Columns: 7
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: " "
+dbl (7): pct.a.surf, pct.a.base, fines, voids, rut.depth, viscosity, run
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 <ul>
 <li>Quantitative variables with one response: multiple regression.</li>
@@ -141,14 +160,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-data-some" class="level2">
 <h2 class="anchored" data-anchor-id="the-data-some">The data (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>asphalt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["pct.a.surf"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["pct.a.base"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["fines"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["voids"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["rut.depth"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["viscosity"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["run"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"4.68","2":"4.87","3":"8.4","4":"4.916","5":"6.75","6":"2.80","7":"1"},{"1":"5.19","2":"4.50","3":"6.5","4":"4.563","5":"13.00","6":"1.40","7":"1"},{"1":"4.82","2":"4.73","3":"7.9","4":"5.321","5":"14.75","6":"1.40","7":"1"},{"1":"4.85","2":"4.76","3":"8.3","4":"4.865","5":"12.60","6":"3.30","7":"1"},{"1":"4.86","2":"4.95","3":"8.4","4":"3.776","5":"8.25","6":"1.70","7":"1"},{"1":"5.16","2":"4.45","3":"7.4","4":"4.397","5":"10.67","6":"2.90","7":"1"},{"1":"4.82","2":"5.05","3":"6.8","4":"4.867","5":"7.28","6":"3.70","7":"1"},{"1":"4.86","2":"4.70","3":"8.6","4":"4.828","5":"12.67","6":"1.70","7":"1"},{"1":"4.78","2":"4.84","3":"6.7","4":"4.865","5":"12.58","6":"0.92","7":"1"},{"1":"5.16","2":"4.76","3":"7.7","4":"4.034","5":"20.60","6":"0.68","7":"1"},{"1":"4.57","2":"4.82","3":"7.4","4":"5.450","5":"3.58","6":"6.00","7":"1"},{"1":"4.61","2":"4.65","3":"6.7","4":"4.853","5":"7.00","6":"4.30","7":"1"},{"1":"5.07","2":"5.10","3":"7.5","4":"4.257","5":"26.20","6":"0.60","7":"1"},{"1":"4.66","2":"5.09","3":"8.2","4":"5.144","5":"11.67","6":"1.80","7":"1"},{"1":"5.42","2":"4.41","3":"5.8","4":"3.718","5":"7.67","6":"6.00","7":"1"},{"1":"5.01","2":"4.74","3":"7.1","4":"4.715","5":"12.25","6":"4.40","7":"1"},{"1":"4.97","2":"4.66","3":"6.5","4":"4.625","5":"0.76","6":"88.00","7":"0"},{"1":"4.01","2":"4.72","3":"8.0","4":"4.977","5":"1.35","6":"62.00","7":"0"},{"1":"4.96","2":"4.90","3":"6.8","4":"4.322","5":"1.44","6":"50.00","7":"0"},{"1":"5.20","2":"4.70","3":"8.2","4":"5.087","5":"1.60","6":"58.00","7":"0"},{"1":"4.80","2":"4.60","3":"6.6","4":"5.971","5":"1.10","6":"90.00","7":"0"},{"1":"4.98","2":"4.69","3":"6.4","4":"4.647","5":"0.85","6":"66.00","7":"0"},{"1":"5.35","2":"4.76","3":"7.3","4":"5.115","5":"1.20","6":"140.00","7":"0"},{"1":"5.04","2":"4.80","3":"7.8","4":"5.939","5":"0.56","6":"240.00","7":"0"},{"1":"4.80","2":"4.80","3":"7.4","4":"5.916","5":"0.72","6":"420.00","7":"0"},{"1":"4.83","2":"4.60","3":"6.7","4":"5.471","5":"0.47","6":"500.00","7":"0"},{"1":"4.66","2":"4.72","3":"7.2","4":"4.602","5":"0.33","6":"180.00","7":"0"},{"1":"4.67","2":"4.50","3":"6.3","4":"5.043","5":"0.26","6":"270.00","7":"0"},{"1":"4.72","2":"4.70","3":"6.8","4":"5.075","5":"0.76","6":"170.00","7":"0"},{"1":"5.00","2":"5.07","3":"7.2","4":"4.334","5":"0.80","6":"98.00","7":"0"},{"1":"4.70","2":"4.80","3":"7.7","4":"5.705","5":"2.00","6":"35.00","7":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>asphalt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 31 × 7
+   pct.a.surf pct.a.base fines voids rut.depth viscosity   run
+        &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1       4.68       4.87   8.4  4.92      6.75      2.8      1
+ 2       5.19       4.5    6.5  4.56     13         1.4      1
+ 3       4.82       4.73   7.9  5.32     14.8       1.4      1
+ 4       4.85       4.76   8.3  4.86     12.6       3.3      1
+ 5       4.86       4.95   8.4  3.78      8.25      1.7      1
+ 6       5.16       4.45   7.4  4.40     10.7       2.9      1
+ 7       4.82       5.05   6.8  4.87      7.28      3.7      1
+ 8       4.86       4.7    8.6  4.83     12.7       1.7      1
+ 9       4.78       4.84   6.7  4.86     12.6       0.92     1
+10       5.16       4.76   7.7  4.03     20.6       0.68     1
+# ℹ 21 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -156,13 +183,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="plotting-response-rut-depth-against-everything-else">Plotting response “rut depth” against everything else</h2>
 <p>Same idea as for plotting separate predictions on one plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>asphalt <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>rut.depth,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> rut.depth)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>asphalt <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span>rut.depth,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> rut.depth)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>“collect all the x-variables together into one column called x, with another column xname saying which x they were, then plot these x’s against rut.depth, a separate facet for each x-variable.”</p>
 <p>I saved this graph to plot later (on the next page).</p>
@@ -170,9 +197,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-plot" class="level2">
 <h2 class="anchored" data-anchor-id="the-plot">The plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-5-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -194,8 +221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Take this back to asphalt engineer: suggests log of <code>viscosity</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(asphalt, <span class="fu">aes</span>(<span class="at">y =</span> rut.depth, <span class="at">x =</span> <span class="fu">log</span>(viscosity))) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(asphalt, <span class="fu">aes</span>(<span class="at">y =</span> rut.depth, <span class="at">x =</span> <span class="fu">log</span>(viscosity))) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>(plot overleaf)</p>
 </section>
@@ -203,7 +230,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="rut-depth-against-log-viscosity">Rut depth against log-viscosity</h2>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-6-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -215,30 +242,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Model formula has response on left, squiggle, explanatories on right joined by plusses:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(rut.depth <span class="sc">~</span> pct.a.surf <span class="sc">+</span> pct.a.base <span class="sc">+</span> fines <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  voids <span class="sc">+</span> <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(rut.depth <span class="sc">~</span> pct.a.surf <span class="sc">+</span> pct.a.base <span class="sc">+</span> fines <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  voids <span class="sc">+</span> <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="regression-output-summaryrut.1-or" class="level2">
 <h2 class="anchored" data-anchor-id="regression-output-summaryrut.1-or">Regression output: <code>summary(rut.1)</code> or:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(rut<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["r.squared"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["adj.r.squared"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sigma"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["deviance"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["df.residual"],"name":[11],"type":["int"],"align":["right"]},{"label":["nobs"],"name":[12],"type":["int"],"align":["right"]}],"data":[{"1":"0.8060035","2":"0.7575043","3":"3.323526","4":"16.61893","5":"1.743011e-07","6":"6","7":"-77.25194","8":"170.5039","9":"181.9758","10":"265.0998","11":"24","12":"31"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(rut<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic     p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.806         0.758  3.32      16.6 0.000000174     6  -77.3  171.  182.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
 </div>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-12.9936763","3":"26.2187822","4":"-0.4955866","5":"0.624693721"},{"1":"pct.a.surf","2":"3.9705671","3":"2.4966454","4":"1.5903608","5":"0.124841156"},{"1":"pct.a.base","2":"1.2631409","3":"3.9702906","4":"0.3181482","5":"0.753124397"},{"1":"fines","2":"0.1164434","3":"1.0123885","4":"0.1150185","5":"0.909387340"},{"1":"voids","2":"0.5892602","3":"1.3243933","4":"0.4449284","5":"0.660358431"},{"1":"log(viscosity)","2":"-3.1515128","3":"0.9194468","4":"-3.4276183","5":"0.002202725"},{"1":"run","2":"-1.9654795","3":"3.6472048","4":"-0.5389002","5":"0.594919790"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+  term           estimate std.error statistic p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)     -13.0      26.2      -0.496 0.625  
+2 pct.a.surf        3.97      2.50      1.59  0.125  
+3 pct.a.base        1.26      3.97      0.318 0.753  
+4 fines             0.116     1.01      0.115 0.909  
+5 voids             0.589     1.32      0.445 0.660  
+6 log(viscosity)   -3.15      0.919    -3.43  0.00220
+7 run              -1.97      3.65     -0.539 0.595  </code></pre>
 </div>
 </div>
 </section>
@@ -268,9 +298,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="plot-fitted-values-against-residuals" class="level2">
 <h2 class="anchored" data-anchor-id="plot-fitted-values-against-residuals">Plot fitted values against residuals</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rut<span class="fl">.1</span>, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rut<span class="fl">.1</span>, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-9-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -281,13 +311,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Package broom contains a function <code>augment</code> that combines these two together so that they can later be plotted: start with a model first, and then augment with a data frame:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.1</span> <span class="sc">%&gt;%</span> <span class="fu">augment</span>(asphalt) <span class="ot">-&gt;</span> rut<span class="fl">.1</span>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.1</span> <span class="sc">%&gt;%</span> <span class="fu">augment</span>(asphalt) <span class="ot">-&gt;</span> rut<span class="fl">.1</span>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="what-does-rut.1a-contain" class="level2">
 <h2 class="anchored" data-anchor-id="what-does-rut.1a-contain">What does rut.1a contain?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rut<span class="fl">.1</span>a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(rut<span class="fl">.1</span>a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "pct.a.surf" "pct.a.base" "fines"      "voids"      "rut.depth" 
  [6] "viscosity"  "run"        ".fitted"    ".resid"     ".hat"      
@@ -302,22 +332,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="plotting-residuals-against-x-variables-1" class="level2">
 <h2 class="anchored" data-anchor-id="plotting-residuals-against-x-variables-1">Plotting residuals against <span class="math inline">\(x\)</span>-variables</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.1</span>a <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_vis=</span><span class="fu">log</span>(viscosity)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(pct.a.surf<span class="sc">:</span>voids, run, log_vis),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.1</span>a <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_vis=</span><span class="fu">log</span>(viscosity)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(pct.a.surf<span class="sc">:</span>voids, run, log_vis),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-plot-1" class="level2">
 <h2 class="anchored" data-anchor-id="the-plot-1">The plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-14-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -344,10 +374,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="running-box-cox">Running Box-Cox</h2>
 <p>From package <code>MASS</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox</span>(rut.depth <span class="sc">~</span> pct.a.surf <span class="sc">+</span> pct.a.base <span class="sc">+</span> fines <span class="sc">+</span> voids <span class="sc">+</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox</span>(rut.depth <span class="sc">~</span> pct.a.surf <span class="sc">+</span> pct.a.base <span class="sc">+</span> fines <span class="sc">+</span> voids <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-15-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -372,22 +402,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>As before: plot response (now <code>log(rut.depth)</code>) against other explanatory variables, all in one shot:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>asphalt <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_vis=</span><span class="fu">log</span>(viscosity)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(pct.a.surf<span class="sc">:</span>voids, run, log_vis),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">log</span>(rut.depth), <span class="at">x =</span> x)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>asphalt <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_vis=</span><span class="fu">log</span>(viscosity)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(pct.a.surf<span class="sc">:</span>voids, run, log_vis),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">log</span>(rut.depth), <span class="at">x =</span> x)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-new-plots" class="level2">
 <h2 class="anchored" data-anchor-id="the-new-plots">The new plots</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>g3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>g3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-17-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -401,8 +431,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Model <code>log.rut.depth</code> in terms of everything else, see what can be removed:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> pct.a.base <span class="sc">+</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  fines <span class="sc">+</span> voids <span class="sc">+</span> <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> pct.a.base <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  fines <span class="sc">+</span> voids <span class="sc">+</span> <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>use <code>tidy</code> from <code>broom</code> to display just the coefficients.</li>
@@ -411,14 +441,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-1.57298922","3":"2.43617401","4":"-0.6456802","5":"5.246124e-01"},{"1":"pct.a.surf","2":"0.58357559","3":"0.23198113","4":"2.5156167","5":"1.898184e-02"},{"1":"pct.a.base","2":"-0.10336733","3":"0.36890801","4":"-0.2801981","5":"7.817265e-01"},{"1":"fines","2":"0.09775203","3":"0.09406823","4":"1.0391609","5":"3.090864e-01"},{"1":"voids","2":"0.19885377","3":"0.12305882","4":"1.6159245","5":"1.191815e-01"},{"1":"log(viscosity)","2":"-0.55768728","3":"0.08543236","4":"-6.5278223","5":"9.445184e-07"},{"1":"run","2":"0.34004833","3":"0.33888780","4":"1.0034245","5":"3.256663e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+  term           estimate std.error statistic     p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 (Intercept)     -1.57      2.44      -0.646 0.525      
+2 pct.a.surf       0.584     0.232      2.52  0.0190     
+3 pct.a.base      -0.103     0.369     -0.280 0.782      
+4 fines            0.0978    0.0941     1.04  0.309      
+5 voids            0.199     0.123      1.62  0.119      
+6 log(viscosity)  -0.558     0.0854    -6.53  0.000000945
+7 run              0.340     0.339      1.00  0.326      </code></pre>
 </div>
 </div>
 </section>
@@ -428,20 +462,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Try: remove everything but pct.a.surf and log.viscosity:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> <span class="fu">log</span>(viscosity), <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> <span class="fu">log</span>(viscosity), <span class="at">data =</span> asphalt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Check that removing all those variables wasn’t too much:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(rut<span class="fl">.3</span>, rut<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(rut<span class="fl">.3</span>, rut<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Res.Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["RSS"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Sum of Sq"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"28","2":"2.880919","3":"NA","4":"NA","5":"NA","6":"NA","_rn_":"1"},{"1":"24","2":"2.288764","3":"4","4":"0.5921551","5":"1.552336","6":"0.2191461","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+Model 1: log(rut.depth) ~ pct.a.surf + log(viscosity)
+Model 2: log(rut.depth) ~ pct.a.surf + pct.a.base + fines + voids + log(viscosity) + 
+    run
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     28 2.8809                           
+2     24 2.2888  4   0.59216 1.5523 0.2191</code></pre>
 </div>
 </div>
 <ul>
@@ -452,14 +488,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="find-the-largest-p-value-by-eye" class="level2">
 <h2 class="anchored" data-anchor-id="find-the-largest-p-value-by-eye">Find the largest P-value by eye:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-1.57298922","3":"2.43617401","4":"-0.6456802","5":"5.246124e-01"},{"1":"pct.a.surf","2":"0.58357559","3":"0.23198113","4":"2.5156167","5":"1.898184e-02"},{"1":"pct.a.base","2":"-0.10336733","3":"0.36890801","4":"-0.2801981","5":"7.817265e-01"},{"1":"fines","2":"0.09775203","3":"0.09406823","4":"1.0391609","5":"3.090864e-01"},{"1":"voids","2":"0.19885377","3":"0.12305882","4":"1.6159245","5":"1.191815e-01"},{"1":"log(viscosity)","2":"-0.55768728","3":"0.08543236","4":"-6.5278223","5":"9.445184e-07"},{"1":"run","2":"0.34004833","3":"0.33888780","4":"1.0034245","5":"3.256663e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+  term           estimate std.error statistic     p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 (Intercept)     -1.57      2.44      -0.646 0.525      
+2 pct.a.surf       0.584     0.232      2.52  0.0190     
+3 pct.a.base      -0.103     0.369     -0.280 0.782      
+4 fines            0.0978    0.0941     1.04  0.309      
+5 voids            0.199     0.123      1.62  0.119      
+6 log(viscosity)  -0.558     0.0854    -6.53  0.000000945
+7 run              0.340     0.339      1.00  0.326      </code></pre>
 </div>
 </div>
 <ul>
@@ -474,14 +514,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Output from <code>tidy</code> is itself a data frame, thus:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.2</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"log(viscosity)","2":"-0.55768728","3":"0.08543236","4":"-6.5278223","5":"9.445184e-07"},{"1":"pct.a.surf","2":"0.58357559","3":"0.23198113","4":"2.5156167","5":"1.898184e-02"},{"1":"voids","2":"0.19885377","3":"0.12305882","4":"1.6159245","5":"1.191815e-01"},{"1":"fines","2":"0.09775203","3":"0.09406823","4":"1.0391609","5":"3.090864e-01"},{"1":"run","2":"0.34004833","3":"0.33888780","4":"1.0034245","5":"3.256663e-01"},{"1":"(Intercept)","2":"-1.57298922","3":"2.43617401","4":"-0.6456802","5":"5.246124e-01"},{"1":"pct.a.base","2":"-0.10336733","3":"0.36890801","4":"-0.2801981","5":"7.817265e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.2</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 5
+  term           estimate std.error statistic     p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 log(viscosity)  -0.558     0.0854    -6.53  0.000000945
+2 pct.a.surf       0.584     0.232      2.52  0.0190     
+3 voids            0.199     0.123      1.62  0.119      
+4 fines            0.0978    0.0941     1.04  0.309      
+5 run              0.340     0.339      1.00  0.326      
+6 (Intercept)     -1.57      2.44      -0.646 0.525      
+7 pct.a.base      -0.103     0.369     -0.280 0.782      </code></pre>
 </div>
 </div>
 <ul>
@@ -494,16 +538,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Copy and paste the <code>lm</code> code and remove what you’re removing:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> fines <span class="sc">+</span> voids <span class="sc">+</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.4</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"log(viscosity)","2":"-0.55249041","3":"0.08184342","4":"-6.750578","5":"4.483621e-07"},{"1":"pct.a.surf","2":"0.59299473","3":"0.22526263","4":"2.632459","5":"1.432182e-02"},{"1":"voids","2":"0.20046739","3":"0.12063727","4":"1.661737","5":"1.090561e-01"},{"1":"(Intercept)","2":"-2.07849871","3":"1.60665073","4":"-1.293684","5":"2.075999e-01"},{"1":"run","2":"0.35977353","3":"0.32532859","4":"1.105877","5":"2.793085e-01"},{"1":"fines","2":"0.08894579","3":"0.08701332","4":"1.022209","5":"3.164725e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> fines <span class="sc">+</span> voids <span class="sc">+</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, <span class="at">data =</span> asphalt)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.4</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term           estimate std.error statistic     p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 log(viscosity)  -0.552     0.0818     -6.75 0.000000448
+2 pct.a.surf       0.593     0.225       2.63 0.0143     
+3 voids            0.200     0.121       1.66 0.109      
+4 (Intercept)     -2.08      1.61       -1.29 0.208      
+5 run              0.360     0.325       1.11 0.279      
+6 fines            0.0889    0.0870      1.02 0.316      </code></pre>
 </div>
 </div>
 <ul>
@@ -514,15 +561,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="update">“Update”</h2>
 <p>Another way to do the same thing:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(rut<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> pct.a.base)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.4</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"log(viscosity)","2":"-0.55249041","3":"0.08184342","4":"-6.750578","5":"4.483621e-07"},{"1":"pct.a.surf","2":"0.59299473","3":"0.22526263","4":"2.632459","5":"1.432182e-02"},{"1":"voids","2":"0.20046739","3":"0.12063727","4":"1.661737","5":"1.090561e-01"},{"1":"(Intercept)","2":"-2.07849871","3":"1.60665073","4":"-1.293684","5":"2.075999e-01"},{"1":"run","2":"0.35977353","3":"0.32532859","4":"1.105877","5":"2.793085e-01"},{"1":"fines","2":"0.08894579","3":"0.08701332","4":"1.022209","5":"3.164725e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(rut<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> pct.a.base)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.4</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  term           estimate std.error statistic     p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 log(viscosity)  -0.552     0.0818     -6.75 0.000000448
+2 pct.a.surf       0.593     0.225       2.63 0.0143     
+3 voids            0.200     0.121       1.66 0.109      
+4 (Intercept)     -2.08      1.61       -1.29 0.208      
+5 run              0.360     0.325       1.11 0.279      
+6 fines            0.0889    0.0870      1.02 0.316      </code></pre>
 </div>
 </div>
 <ul>
@@ -532,15 +582,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="take-out-fines" class="level2">
 <h2 class="anchored" data-anchor-id="take-out-fines">Take out fines:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(rut<span class="fl">.4</span>, . <span class="sc">~</span> . <span class="sc">-</span> fines)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.5</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"log(viscosity)","2":"-0.5803887","3":"0.07722544","4":"-7.5155118","5":"5.591602e-08"},{"1":"pct.a.surf","2":"0.5483723","3":"0.22118326","4":"2.4792668","5":"1.997130e-02"},{"1":"voids","2":"0.2318797","3":"0.11675845","4":"1.9859780","5":"5.767397e-02"},{"1":"run","2":"0.2946793","3":"0.31931076","4":"0.9228604","5":"3.645654e-01"},{"1":"(Intercept)","2":"-1.2553309","3":"1.39146826","4":"-0.9021628","5":"3.752525e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(rut<span class="fl">.4</span>, . <span class="sc">~</span> . <span class="sc">-</span> fines)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.5</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  term           estimate std.error statistic      p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 log(viscosity)   -0.580    0.0772    -7.52  0.0000000559
+2 pct.a.surf        0.548    0.221      2.48  0.0200      
+3 voids             0.232    0.117      1.99  0.0577      
+4 run               0.295    0.319      0.923 0.365       
+5 (Intercept)      -1.26     1.39      -0.902 0.375       </code></pre>
 </div>
 </div>
 <p>Can’t take out intercept, so <code>run</code>, with P-value 0.36, goes next.</p>
@@ -548,15 +600,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="take-out-run" class="level2">
 <h2 class="anchored" data-anchor-id="take-out-run">Take out run:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(rut<span class="fl">.5</span>, . <span class="sc">~</span> . <span class="sc">-</span> run)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.6</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"log(viscosity)","2":"-0.6464911","3":"0.02878643","4":"-22.4581853","5":"5.288267e-19"},{"1":"pct.a.surf","2":"0.5554686","3":"0.22044153","4":"2.5198000","5":"1.796333e-02"},{"1":"voids","2":"0.2447934","3":"0.11559805","4":"2.1176259","5":"4.356036e-02"},{"1":"(Intercept)","2":"-1.0207945","3":"1.36430001","4":"-0.7482185","5":"4.607966e-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>rut<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(rut<span class="fl">.5</span>, . <span class="sc">~</span> . <span class="sc">-</span> run)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.6</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term           estimate std.error statistic  p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 log(viscosity)   -0.646    0.0288   -22.5   5.29e-19
+2 pct.a.surf        0.555    0.220      2.52  1.80e- 2
+3 voids             0.245    0.116      2.12  4.36e- 2
+4 (Intercept)      -1.02     1.36      -0.748 4.61e- 1</code></pre>
 </div>
 </div>
 <p>Again, can’t take out intercept, so largest P-value is for <code>voids</code>, 0.044. But this is significant, so we shouldn’t remove <code>voids</code>.</p>
@@ -568,12 +621,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Different final result from taking things out one at a time (top), than by taking out 4 at once (bottom):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(rut<span class="fl">.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(rut<span class="fl">.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept)     pct.a.surf          voids log(viscosity) 
     -1.0207945      0.5554686      0.2447934     -0.6464911 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(rut<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(rut<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept)     pct.a.surf log(viscosity) 
      0.9001389      0.3911481     -0.6185628 </code></pre>
@@ -592,7 +645,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>R has function <code>step</code> that does backward selection, like this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(rut<span class="fl">.2</span>, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">test =</span> <span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(rut<span class="fl">.2</span>, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">test =</span> <span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Gets same answer as we did (by removing least significant x).</p>
 <ul>
@@ -604,25 +657,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="all-possible-regressions-output-over">All possible regressions (output over)</h2>
 <p>Uses package <code>leaps</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>leaps <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> </span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                      pct.a.base <span class="sc">+</span> fines <span class="sc">+</span> voids <span class="sc">+</span> </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> asphalt, <span class="at">nbest =</span> <span class="dv">2</span>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">summary</span>(leaps)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(s, <span class="fu">data.frame</span>(rsq, outmat)) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>leaps <span class="ot">&lt;-</span> <span class="fu">regsubsets</span>(<span class="fu">log</span>(rut.depth) <span class="sc">~</span> pct.a.surf <span class="sc">+</span> </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>                      pct.a.base <span class="sc">+</span> fines <span class="sc">+</span> voids <span class="sc">+</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">log</span>(viscosity) <span class="sc">+</span> run, </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> asphalt, <span class="at">nbest =</span> <span class="dv">2</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">summary</span>(leaps)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(s, <span class="fu">data.frame</span>(rsq, outmat)) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-output" class="level2">
 <h2 class="anchored" data-anchor-id="the-output">The output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>(<span class="st">"model"</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(rsq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["rsq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["pct.a.surf"],"name":[3],"type":["chr"],"align":["left"]},{"label":["pct.a.base"],"name":[4],"type":["chr"],"align":["left"]},{"label":["fines"],"name":[5],"type":["chr"],"align":["left"]},{"label":["voids"],"name":[6],"type":["chr"],"align":["left"]},{"label":["log.viscosity."],"name":[7],"type":["chr"],"align":["left"]},{"label":["run"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"6  ( 1 )","2":"0.9609642","3":"*","4":"*","5":"*","6":"*","7":"*","8":"*"},{"1":"5  ( 1 )","2":"0.9608365","3":"*","4":"","5":"*","6":"*","7":"*","8":"*"},{"1":"5  ( 2 )","2":"0.9593265","3":"*","4":"*","5":"*","6":"*","7":"*","8":""},{"1":"4  ( 1 )","2":"0.9591996","3":"*","4":"","5":"","6":"*","7":"*","8":"*"},{"1":"4  ( 2 )","2":"0.9589206","3":"*","4":"","5":"*","6":"*","7":"*","8":""},{"1":"3  ( 1 )","2":"0.9578631","3":"*","4":"","5":"","6":"*","7":"*","8":""},{"1":"3  ( 2 )","2":"0.9534561","3":"*","4":"","5":"*","6":"","7":"*","8":""},{"1":"2  ( 1 )","2":"0.9508647","3":"*","4":"","5":"","6":"","7":"*","8":""},{"1":"2  ( 2 )","2":"0.9479541","3":"","4":"","5":"","6":"*","7":"*","8":""},{"1":"1  ( 1 )","2":"0.9452562","3":"","4":"","5":"","6":"","7":"*","8":""},{"1":"1  ( 2 )","2":"0.8624107","3":"","4":"","5":"","6":"","7":"","8":"*"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>(<span class="st">"model"</span>) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(rsq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      model       rsq pct.a.surf pct.a.base fines voids log.viscosity. run
+1  6  ( 1 ) 0.9609642          *          *     *     *              *   *
+2  5  ( 1 ) 0.9608365          *                *     *              *   *
+3  5  ( 2 ) 0.9593265          *          *     *     *              *    
+4  4  ( 1 ) 0.9591996          *                      *              *   *
+5  4  ( 2 ) 0.9589206          *                *     *              *    
+6  3  ( 1 ) 0.9578631          *                      *              *    
+7  3  ( 2 ) 0.9534561          *                *                    *    
+8  2  ( 1 ) 0.9508647          *                                     *    
+9  2  ( 2 ) 0.9479541                                 *              *    
+10 1  ( 1 ) 0.9452562                                                *    
+11 1  ( 2 ) 0.8624107                                                    *</code></pre>
 </div>
 </div>
 </section>
@@ -637,16 +696,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="all-possible-regressions-adjusted-r-squared" class="level2">
 <h2 class="anchored" data-anchor-id="all-possible-regressions-adjusted-r-squared">All possible regressions, adjusted R-squared</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(s, <span class="fu">data.frame</span>(adjr2, outmat)) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"model"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(adjr2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["model"],"name":[1],"type":["chr"],"align":["left"]},{"label":["adjr2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["pct.a.surf"],"name":[3],"type":["chr"],"align":["left"]},{"label":["pct.a.base"],"name":[4],"type":["chr"],"align":["left"]},{"label":["fines"],"name":[5],"type":["chr"],"align":["left"]},{"label":["voids"],"name":[6],"type":["chr"],"align":["left"]},{"label":["log.viscosity."],"name":[7],"type":["chr"],"align":["left"]},{"label":["run"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"3  ( 1 )","2":"0.9531812","3":"*","4":"","5":"","6":"*","7":"*","8":""},{"1":"5  ( 1 )","2":"0.9530038","3":"*","4":"","5":"*","6":"*","7":"*","8":"*"},{"1":"4  ( 1 )","2":"0.9529226","3":"*","4":"","5":"","6":"*","7":"*","8":"*"},{"1":"4  ( 2 )","2":"0.9526007","3":"*","4":"","5":"*","6":"*","7":"*","8":""},{"1":"6  ( 1 )","2":"0.9512052","3":"*","4":"*","5":"*","6":"*","7":"*","8":"*"},{"1":"5  ( 2 )","2":"0.9511918","3":"*","4":"*","5":"*","6":"*","7":"*","8":""},{"1":"3  ( 2 )","2":"0.9482845","3":"*","4":"","5":"*","6":"","7":"*","8":""},{"1":"2  ( 1 )","2":"0.9473550","3":"*","4":"","5":"","6":"","7":"*","8":""},{"1":"2  ( 2 )","2":"0.9442365","3":"","4":"","5":"","6":"*","7":"*","8":""},{"1":"1  ( 1 )","2":"0.9433685","3":"","4":"","5":"","6":"","7":"*","8":""},{"1":"1  ( 2 )","2":"0.8576662","3":"","4":"","5":"","6":"","7":"","8":"*"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(s, <span class="fu">data.frame</span>(adjr2, outmat)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"model"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(adjr2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      model     adjr2 pct.a.surf pct.a.base fines voids log.viscosity. run
+1  3  ( 1 ) 0.9531812          *                      *              *    
+2  5  ( 1 ) 0.9530038          *                *     *              *   *
+3  4  ( 1 ) 0.9529226          *                      *              *   *
+4  4  ( 2 ) 0.9526007          *                *     *              *    
+5  6  ( 1 ) 0.9512052          *          *     *     *              *   *
+6  5  ( 2 ) 0.9511918          *          *     *     *              *    
+7  3  ( 2 ) 0.9482845          *                *                    *    
+8  2  ( 1 ) 0.9473550          *                                     *    
+9  2  ( 2 ) 0.9442365                                 *              *    
+10 1  ( 1 ) 0.9433685                                                *    
+11 1  ( 2 ) 0.8576662                                                    *</code></pre>
 </div>
 </div>
 </section>
@@ -656,14 +721,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Best model was our rut.6:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"-1.0207945","3":"1.36430001","4":"-0.7482185","5":"4.607966e-01"},{"1":"pct.a.surf","2":"0.5554686","3":"0.22044153","4":"2.5198000","5":"1.796333e-02"},{"1":"voids","2":"0.2447934","3":"0.11559805","4":"2.1176259","5":"4.356036e-02"},{"1":"log(viscosity)","2":"-0.6464911","3":"0.02878643","4":"-22.4581853","5":"5.288267e-19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(rut<span class="fl">.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term           estimate std.error statistic  p.value
+  &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)      -1.02     1.36      -0.748 4.61e- 1
+2 pct.a.surf        0.555    0.220      2.52  1.80e- 2
+3 voids             0.245    0.116      2.12  4.36e- 2
+4 log(viscosity)   -0.646    0.0288   -22.5   5.29e-19</code></pre>
 </div>
 </div>
 </section>
@@ -674,16 +740,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>We should check residual plots again, though previous scatterplots say it’s unlikely that there will be a problem:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rut<span class="fl">.6</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span> </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rut<span class="fl">.6</span>, <span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> .fitted)) <span class="sc">+</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="residuals-against-fitted-values" class="level2">
 <h2 class="anchored" data-anchor-id="residuals-against-fitted-values">Residuals against fitted values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-39-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-39-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -693,22 +759,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Do our trick again to put them all on one plot:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(rut<span class="fl">.6</span>, asphalt) <span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_vis=</span><span class="fu">log</span>(viscosity)) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(pct.a.surf<span class="sc">:</span>voids, run, log_vis),</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span>,</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> x)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(rut<span class="fl">.6</span>, asphalt) <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_vis=</span><span class="fu">log</span>(viscosity)) <span class="sc">%&gt;%</span> </span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(pct.a.surf<span class="sc">:</span>voids, run, log_vis),</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to=</span><span class="st">"xname"</span>, <span class="at">values_to=</span><span class="st">"x"</span>,</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> .resid, <span class="at">x =</span> x)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>xname, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="ot">-&gt;</span> g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="residuals-against-the-xs" class="level2">
 <h2 class="anchored" data-anchor-id="residuals-against-the-xs">Residuals against the x’s</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="asphalt_files/figure-revealjs/asphalt-41-1.png" class="img-fluid" width="960"></p>
+<p><img src="asphalt_files/figure-html/asphalt-41-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -738,44 +804,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

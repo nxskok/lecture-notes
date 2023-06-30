@@ -68,9 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="inference_1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="inference_1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<link href="inference_1_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
-<script src="inference_1_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
-
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -132,22 +129,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="packages-for-this-section">Packages for this section</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   0.5.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
 </div>
 </section>
 <section id="reading-the-attendances" class="level2">
 <h2 class="anchored" data-anchor-id="reading-the-attendances">Reading the attendances</h2>
 <p>…as a <code>.csv</code> file:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/jays15-home.csv"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>jays <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url) </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>jays</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/jays15-home.csv"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>jays <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 25 Columns: 21
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (12): date, box, team, opp, result, wl, gb, winner, loser, save, Daynig...
+dbl   (7): row, game, runs, Oppruns, innings, position, attendance
+lgl   (1): venue
+time  (1): game time
 
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["row"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["game"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["date"],"name":[3],"type":["chr"],"align":["left"]},{"label":["box"],"name":[4],"type":["chr"],"align":["left"]},{"label":["team"],"name":[5],"type":["chr"],"align":["left"]},{"label":["venue"],"name":[6],"type":["lgl"],"align":["right"]},{"label":["opp"],"name":[7],"type":["chr"],"align":["left"]},{"label":["result"],"name":[8],"type":["chr"],"align":["left"]},{"label":["runs"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Oppruns"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["innings"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["wl"],"name":[12],"type":["chr"],"align":["left"]},{"label":["position"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["gb"],"name":[14],"type":["chr"],"align":["left"]},{"label":["winner"],"name":[15],"type":["chr"],"align":["left"]},{"label":["loser"],"name":[16],"type":["chr"],"align":["left"]},{"label":["save"],"name":[17],"type":["chr"],"align":["left"]},{"label":["game time"],"name":[18],"type":["time"],"align":["right"]},{"label":["Daynight"],"name":[19],"type":["chr"],"align":["left"]},{"label":["attendance"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["streak"],"name":[21],"type":["chr"],"align":["left"]}],"data":[{"1":"82","2":"7","3":"Monday, Apr 13","4":"boxscore","5":"TOR","6":"NA","7":"TBR","8":"L","9":"1","10":"2","11":"NA","12":"4-3","13":"2","14":"1","15":"Odorizzi","16":"Dickey","17":"Boxberger","18":"02:30:00","19":"N","20":"48414","21":"-"},{"1":"83","2":"8","3":"Tuesday, Apr 14","4":"boxscore","5":"TOR","6":"NA","7":"TBR","8":"L","9":"2","10":"3","11":"NA","12":"4-4","13":"3","14":"2","15":"Geltz","16":"Castro","17":"Jepsen","18":"03:06:00","19":"N","20":"17264","21":"--"},{"1":"84","2":"9","3":"Wednesday, Apr 15","4":"boxscore","5":"TOR","6":"NA","7":"TBR","8":"W","9":"12","10":"7","11":"NA","12":"5-4","13":"2","14":"1","15":"Buehrle","16":"Ramirez","17":"NA","18":"03:02:00","19":"N","20":"15086","21":"+"},{"1":"85","2":"10","3":"Thursday, Apr 16","4":"boxscore","5":"TOR","6":"NA","7":"TBR","8":"L","9":"2","10":"4","11":"NA","12":"5-5","13":"4","14":"1.5","15":"Archer","16":"Sanchez","17":"Boxberger","18":"03:00:00","19":"N","20":"14433","21":"-"},{"1":"86","2":"11","3":"Friday, Apr 17","4":"boxscore","5":"TOR","6":"NA","7":"ATL","8":"L","9":"7","10":"8","11":"NA","12":"5-6","13":"4","14":"2.5","15":"Martin","16":"Cecil","17":"Grilli","18":"03:09:00","19":"N","20":"21397","21":"--"},{"1":"87","2":"12","3":"Saturday, Apr 18","4":"boxscore","5":"TOR","6":"NA","7":"ATL","8":"W-wo","9":"6","10":"5","11":"10","12":"6-6","13":"3","14":"1.5","15":"Cecil","16":"Marimon","17":"NA","18":"02:41:00","19":"D","20":"34743","21":"+"},{"1":"88","2":"13","3":"Sunday, Apr 19","4":"boxscore","5":"TOR","6":"NA","7":"ATL","8":"L","9":"2","10":"5","11":"NA","12":"6-7","13":"4","14":"1.5","15":"Miller","16":"Norris","17":"Grilli","18":"02:41:00","19":"D","20":"44794","21":"-"},{"1":"89","2":"14","3":"Tuesday, Apr 21","4":"boxscore","5":"TOR","6":"NA","7":"BAL","8":"W","9":"13","10":"6","11":"NA","12":"7-7","13":"2","14":"2","15":"Buehrle","16":"Norris","17":"NA","18":"02:53:00","19":"N","20":"14184","21":"+"},{"1":"90","2":"15","3":"Wednesday, Apr 22","4":"boxscore","5":"TOR","6":"NA","7":"BAL","8":"W","9":"4","10":"2","11":"NA","12":"8-7","13":"2","14":"1","15":"Sanchez","16":"Jimenez","17":"Castro","18":"02:36:00","19":"N","20":"15606","21":"++"},{"1":"91","2":"16","3":"Thursday, Apr 23","4":"boxscore","5":"TOR","6":"NA","7":"BAL","8":"W","9":"7","10":"6","11":"NA","12":"9-7","13":"1","14":"Tied","15":"Hutchison","16":"Tillman","17":"Castro","18":"02:36:00","19":"N","20":"18581","21":"+++"},{"1":"92","2":"27","3":"Monday, May 4","4":"boxscore","5":"TOR","6":"NA","7":"NYY","8":"W","9":"3","10":"1","11":"NA","12":"13-14","13":"4","14":"3.5","15":"Dickey","16":"Martin","17":"Cecil","18":"02:18:00","19":"N","20":"19217","21":"+"},{"1":"93","2":"28","3":"Tuesday, May 5","4":"boxscore","5":"TOR","6":"NA","7":"NYY","8":"L","9":"3","10":"6","11":"NA","12":"13-15","13":"5","14":"4.5","15":"Pineda","16":"Estrada","17":"Miller","18":"02:54:00","19":"N","20":"21519","21":"-"},{"1":"94","2":"29","3":"Wednesday, May 6","4":"boxscore","5":"TOR","6":"NA","7":"NYY","8":"W","9":"5","10":"1","11":"NA","12":"14-15","13":"3","14":"3.5","15":"Buehrle","16":"Sabathia","17":"NA","18":"02:30:00","19":"N","20":"21312","21":"+"},{"1":"95","2":"30","3":"Friday, May 8","4":"boxscore","5":"TOR","6":"NA","7":"BOS","8":"W","9":"7","10":"0","11":"NA","12":"15-15","13":"3","14":"4","15":"Sanchez","16":"Miley","17":"NA","18":"02:41:00","19":"N","20":"30430","21":"++"},{"1":"96","2":"31","3":"Saturday, May 9","4":"boxscore","5":"TOR","6":"NA","7":"BOS","8":"W","9":"7","10":"1","11":"NA","12":"16-15","13":"3","14":"3","15":"Hutchison","16":"Kelly","17":"NA","18":"03:12:00","19":"D","20":"42917","21":"+++"},{"1":"97","2":"32","3":"Sunday, May 10","4":"boxscore","5":"TOR","6":"NA","7":"BOS","8":"L","9":"3","10":"6","11":"NA","12":"16-16","13":"3","14":"4","15":"Buchholz","16":"Dickey","17":"Uehara","18":"02:38:00","19":"D","20":"42419","21":"-"},{"1":"98","2":"40","3":"Monday, May 18","4":"boxscore","5":"TOR","6":"NA","7":"LAA","8":"W","9":"10","10":"6","11":"NA","12":"18-22","13":"5","14":"4.5","15":"Osuna","16":"Morin","17":"NA","18":"03:28:00","19":"D","20":"29306","21":"+"},{"1":"99","2":"41","3":"Tuesday, May 19","4":"boxscore","5":"TOR","6":"NA","7":"LAA","8":"L","9":"2","10":"3","11":"NA","12":"18-23","13":"5","14":"4.5","15":"Santiago","16":"Sanchez","17":"Street","18":"02:32:00","19":"N","20":"15062","21":"-"},{"1":"100","2":"42","3":"Wednesday, May 20","4":"boxscore","5":"TOR","6":"NA","7":"LAA","8":"L","9":"3","10":"4","11":"NA","12":"18-24","13":"5","14":"4.5","15":"Weaver","16":"Hutchison","17":"Street","18":"02:36:00","19":"N","20":"16402","21":"--"},{"1":"101","2":"43","3":"Thursday, May 21","4":"boxscore","5":"TOR","6":"NA","7":"LAA","8":"W","9":"8","10":"4","11":"NA","12":"19-24","13":"5","14":"4.5","15":"Dickey","16":"Shoemaker","17":"NA","18":"02:22:00","19":"N","20":"19014","21":"+"},{"1":"102","2":"44","3":"Friday, May 22","4":"boxscore","5":"TOR","6":"NA","7":"SEA","8":"L","9":"3","10":"4","11":"NA","12":"19-25","13":"5","14":"5.5","15":"Hernandez","16":"Estrada","17":"Rodney","18":"02:30:00","19":"N","20":"21195","21":"-"},{"1":"103","2":"45","3":"Saturday, May 23","4":"boxscore","5":"TOR","6":"NA","7":"SEA","8":"L","9":"2","10":"3","11":"NA","12":"19-26","13":"5","14":"5.5","15":"Paxton","16":"Buehrle","17":"Rodney","18":"02:25:00","19":"D","20":"33086","21":"--"},{"1":"104","2":"46","3":"Sunday, May 24","4":"boxscore","5":"TOR","6":"NA","7":"SEA","8":"W","9":"8","10":"2","11":"NA","12":"20-26","13":"5","14":"4.5","15":"Sanchez","16":"Walker","17":"NA","18":"02:50:00","19":"D","20":"37929","21":"+"},{"1":"105","2":"47","3":"Monday, May 25","4":"boxscore","5":"TOR","6":"NA","7":"CHW","8":"W","9":"6","10":"0","11":"NA","12":"21-26","13":"5","14":"3.5","15":"Hutchison","16":"Noesi","17":"NA","18":"02:10:00","19":"N","20":"15168","21":"++"},{"1":"106","2":"48","3":"Tuesday, May 26","4":"boxscore","5":"TOR","6":"NA","7":"CHW","8":"W-wo","9":"10","10":"9","11":"NA","12":"22-26","13":"4","14":"3","15":"Delabar","16":"Robertson","17":"NA","18":"03:12:00","19":"N","20":"17276","21":"+++"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>jays</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 25 × 21
+     row  game date   box   team  venue opp   result  runs Oppruns innings wl   
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;
+ 1    82     7 Monda… boxs… TOR   NA    TBR   L          1       2      NA 4-3  
+ 2    83     8 Tuesd… boxs… TOR   NA    TBR   L          2       3      NA 4-4  
+ 3    84     9 Wedne… boxs… TOR   NA    TBR   W         12       7      NA 5-4  
+ 4    85    10 Thurs… boxs… TOR   NA    TBR   L          2       4      NA 5-5  
+ 5    86    11 Frida… boxs… TOR   NA    ATL   L          7       8      NA 5-6  
+ 6    87    12 Satur… boxs… TOR   NA    ATL   W-wo       6       5      10 6-6  
+ 7    88    13 Sunda… boxs… TOR   NA    ATL   L          2       5      NA 6-7  
+ 8    89    14 Tuesd… boxs… TOR   NA    BAL   W         13       6      NA 7-7  
+ 9    90    15 Wedne… boxs… TOR   NA    BAL   W          4       2      NA 8-7  
+10    91    16 Thurs… boxs… TOR   NA    BAL   W          7       6      NA 9-7  
+# ℹ 15 more rows
+# ℹ 9 more variables: position &lt;dbl&gt;, gb &lt;chr&gt;, winner &lt;chr&gt;, loser &lt;chr&gt;,
+#   save &lt;chr&gt;, `game time` &lt;time&gt;, Daynight &lt;chr&gt;, attendance &lt;dbl&gt;,
+#   streak &lt;chr&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -158,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>To see the first few values in all the variables, can also use <code>glimpse</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(jays)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(jays)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 25
 Columns: 21
@@ -189,9 +221,9 @@ $ streak      &lt;chr&gt; "-", "--", "+", "-", "--", "+", "-", "+", "++", "+…<
 <section id="attendance-histogram" class="level2">
 <h2 class="anchored" data-anchor-id="attendance-histogram">Attendance histogram</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(jays, <span class="fu">aes</span>(<span class="at">x =</span> attendance)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(jays, <span class="fu">aes</span>(<span class="at">x =</span> attendance)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="inference_1_files/figure-revealjs/inference-1-R-6-1.png" class="img-fluid" width="960"></p>
+<p><img src="inference_1_files/figure-html/inference-1-R-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -214,7 +246,7 @@ $ streak      &lt;chr&gt; "-", "--", "+", "-", "--", "+", "-", "+", "++", "+…<
 <li><code>t.test</code> function does CI and test. Look at CI first:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jays<span class="sc">$</span>attendance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jays<span class="sc">$</span>attendance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -239,7 +271,7 @@ mean of x
 <li>by including a value for conf.level:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jays<span class="sc">$</span>attendance, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jays<span class="sc">$</span>attendance, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -276,7 +308,7 @@ mean of x
 <section id="another-way-to-access-data-frame-columns" class="level2">
 <h2 class="anchored" data-anchor-id="another-way-to-access-data-frame-columns">Another way to access data frame columns</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(jays, <span class="fu">t.test</span>(attendance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(jays, <span class="fu">t.test</span>(attendance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -370,7 +402,7 @@ mean of x
 <section id="using-t.test" class="level2">
 <h2 class="anchored" data-anchor-id="using-t.test">Using <code>t.test</code>:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jays<span class="sc">$</span>attendance, <span class="at">mu=</span><span class="dv">29327</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jays<span class="sc">$</span>attendance, <span class="at">mu=</span><span class="dv">29327</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -405,9 +437,9 @@ mean of x
 <li>You might say that this is not normal enough for a sample size of <span class="math inline">\(n = 25\)</span>, in which case you don’t trust the <span class="math inline">\(t\)</span>-test result:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(jays, <span class="fu">aes</span>(<span class="at">x =</span> attendance)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(jays, <span class="fu">aes</span>(<span class="at">x =</span> attendance)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="inference_1_files/figure-revealjs/inference-1-R-11-1.png" class="img-fluid" width="960"></p>
+<p><img src="inference_1_files/figure-html/inference-1-R-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -432,21 +464,39 @@ mean of x
 <li>Read in thus:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/drp.txt"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>kids <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url,<span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/drp.txt"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>kids <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url,<span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 44 Columns: 2
+── Column specification ────────────────────────────────────────────────
+Delimiter: " "
+chr (1): group
+dbl (1): score
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 </div>
 </section>
 <section id="the-data" class="level2">
 <h2 class="anchored" data-anchor-id="the-data">The data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["score"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"t","2":"24"},{"1":"t","2":"61"},{"1":"t","2":"59"},{"1":"t","2":"46"},{"1":"t","2":"43"},{"1":"t","2":"44"},{"1":"t","2":"52"},{"1":"t","2":"43"},{"1":"t","2":"58"},{"1":"t","2":"67"},{"1":"t","2":"62"},{"1":"t","2":"57"},{"1":"t","2":"71"},{"1":"t","2":"49"},{"1":"t","2":"54"},{"1":"t","2":"43"},{"1":"t","2":"53"},{"1":"t","2":"57"},{"1":"t","2":"49"},{"1":"t","2":"56"},{"1":"t","2":"33"},{"1":"c","2":"42"},{"1":"c","2":"33"},{"1":"c","2":"46"},{"1":"c","2":"37"},{"1":"c","2":"43"},{"1":"c","2":"41"},{"1":"c","2":"10"},{"1":"c","2":"42"},{"1":"c","2":"55"},{"1":"c","2":"19"},{"1":"c","2":"17"},{"1":"c","2":"55"},{"1":"c","2":"26"},{"1":"c","2":"54"},{"1":"c","2":"60"},{"1":"c","2":"28"},{"1":"c","2":"62"},{"1":"c","2":"20"},{"1":"c","2":"53"},{"1":"c","2":"48"},{"1":"c","2":"37"},{"1":"c","2":"85"},{"1":"c","2":"42"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>kids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 44 × 2
+   group score
+   &lt;chr&gt; &lt;dbl&gt;
+ 1 t        24
+ 2 t        61
+ 3 t        59
+ 4 t        46
+ 5 t        43
+ 6 t        44
+ 7 t        52
+ 8 t        43
+ 9 t        58
+10 t        67
+# ℹ 34 more rows</code></pre>
 </div>
 </div>
 <p>In <code>group</code>, <code>t</code> is “treatment” (the new reading method) and <code>c</code> is “control” (the old one).</p>
@@ -454,9 +504,9 @@ mean of x
 <section id="boxplots" class="level2">
 <h2 class="anchored" data-anchor-id="boxplots">Boxplots</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(kids, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(kids, <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="inference_1_files/figure-revealjs/inference-1-R-14-1.png" class="img-fluid" width="960"></p>
+<p><img src="inference_1_files/figure-html/inference-1-R-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -485,7 +535,7 @@ mean of x
 <section id="welch-satterthwaite" class="level2">
 <h2 class="anchored" data-anchor-id="welch-satterthwaite">Welch-Satterthwaite</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> kids, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> kids, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -504,8 +554,8 @@ mean in group c mean in group t
 <section id="the-pooled-t-test" class="level2">
 <h2 class="anchored" data-anchor-id="the-pooled-t-test">The pooled t-test</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> kids, </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> kids, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -527,7 +577,7 @@ mean in group c mean in group t
 <li>To do 2-sided test, leave out <code>alternative</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> kids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> kids)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -581,44 +631,6 @@ mean in group c mean in group t
 
 </main>
 <!-- /main column -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
