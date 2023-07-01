@@ -1,6 +1,5 @@
 project:
   title: "lecture-notes"
-
 format: 
   revealjs:
      df-print: paged

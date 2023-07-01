@@ -1,0 +1,35 @@
+\frametitle{The data}
+\protect\hypertarget{the-data}{}
+In \texttt{hairpain.txt}:
+
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\begin{verbatim}
+hair pain
+lightblond 62
+lightblond 60
+lightblond 71
+lightblond 55
+lightblond 48
+darkblond 63
+darkblond 57
+darkblond 52
+darkblond 41
+darkblond 43
+\end{verbatim}
+\end{column}
+
+\begin{column}{5 0%\textwidth}
+\begin{verbatim}
+lightbrown 42
+lightbrown 50
+lightbrown 41
+lightbrown 37
+darkbrown 32
+darkbrown 39
+darkbrown 51
+darkbrown 30
+darkbrown 35
+\end{verbatim}
+\end{column}
+\end{columns}
