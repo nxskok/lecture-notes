@@ -463,16 +463,17 @@ male   42       37      85</code></pre>
 <h2>Making tidy data back into a table</h2>
 <ul>
 <li>use <code>pivot_wider</code></li>
-<li>or this (we use it again later):</li>
+<li>which you can also use to reformat:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(frequency <span class="sc">~</span> gender <span class="sc">+</span> eyewear, <span class="at">data =</span> eyes)</span>
-<span id="cb6-2"><a href="#cb6-2"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        eyewear
-gender   contacts glasses none
-  female      121      32  129
-  male         42      37   85</code></pre>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>eyes <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> gender, <span class="at">values_from =</span> frequency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["eyewear"],"name":[1],"type":["chr"],"align":["left"]},{"label":["female"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["male"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"contacts","2":"121","3":"42"},{"1":"glasses","2":"32","3":"37"},{"1":"none","2":"129","3":"85"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -483,10 +484,10 @@ gender   contacts glasses none
 <li><code>glm</code> with <code>poisson</code> family.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>eyes<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="at">data =</span> eyes,</span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>eyes<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">data =</span> eyes,</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Called <strong>log-linear model</strong>.</li>
@@ -495,7 +496,7 @@ gender   contacts glasses none
 <section id="what-can-we-get-rid-of" class="slide level2">
 <h2>What can we get rid of?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">drop1</span>(eyes<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">drop1</span>(eyes<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -512,39 +513,52 @@ gender   contacts glasses none
 <ul>
 <li><p><code>drop1</code> says what we can remove at this step. Significant = must stay.</p></li>
 <li><p>Cannot remove anything.</p></li>
-<li><p>Frequency depends on <code>gender-wear</code> <em>combination</em>, cannot be simplified further.</p></li>
+<li><p>Frequency depends on <code>gender-eye wear</code> <em>combination</em>, cannot be simplified further.</p></li>
 <li><p>Gender and eyewear are <em>associated</em>.</p></li>
-<li><p>Stop here.</p></li>
+<li><p>For modelling, stop here.</p></li>
 </ul>
 </section>
-<section id="prop.table" class="slide level2">
-<h2><code>prop.table</code></h2>
-<p>Original table:</p>
+<section id="making-a-graph" class="slide level2">
+<h2>Making a graph</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        eyewear
-gender   contacts glasses none
-  female      121      32  129
-  male         42      37   85</code></pre>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ggplot</span>(eyes, <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> frequency, <span class="at">fill =</span> eyewear)) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
-<p>Calculate eg. row proportions like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        eyewear
-gender    contacts   glasses      none
-  female 0.4290780 0.1134752 0.4574468
-  male   0.2560976 0.2256098 0.5182927</code></pre>
-</div>
-</div>
-</section>
-<section id="comments" class="slide level2">
-<h2>Comments</h2>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
+<section id="conclusions-1" class="slide level2">
+<h2>Conclusions</h2>
 <ul>
-<li><p><code>margin</code> says what to make add to 1.</p></li>
-<li><p>More females wear contacts and more males wear glasses.</p></li>
+<li>Females are more likely to wear contacts than males are.</li>
+<li>Females are <em>less</em> likely to wear glasses than males are.</li>
+<li>The previous two comments are the reasons for the significant association.</li>
+</ul>
+</section>
+<section id="code-comments-12" class="slide level2">
+<h2>Code comments 1/2</h2>
+<ul>
+<li>The code again:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(eyes, <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> frequency, <span class="at">fill =</span> eyewear)) <span class="sc">+</span> </span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Variation on two-variable bar chart that we saw in C32.</li>
+<li>Comparing (most easily) <em>proportions</em>, so <code>fill</code> clearer than <code>dodge</code>.</li>
+<li>Each row of dataframe represents many people (the number in <code>frequency</code>), so use <code>geom_col</code> rather than <code>geom_bar</code>.</li>
+<li><code>geom_col</code> takes a <code>y</code> that should be the frequency.</li>
+</ul>
+</section>
+<section id="code-comments-22" class="slide level2">
+<h2>Code comments 2/2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">ggplot</span>(eyes, <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> frequency, <span class="at">fill =</span> eyewear)) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Often in this work, one variable in association is explanatory rather than response. Have that as <code>x</code> (here <code>gender</code>); <code>eyewear</code> is response and goes in <code>fill</code>.</li>
+<li>Interpretation: out of each category of explanatory (“out of females”), what proportion in each response category and where do they differ?</li>
 </ul>
 </section>
 <section id="no-association" class="slide level2">
@@ -553,29 +567,23 @@ gender    contacts   glasses      none
 <li>Suppose table had been as shown below:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/eyewear2.txt"</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>eyewear2 <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
-<span id="cb14-3"><a href="#cb14-3"></a>eyewear2 <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="#cb14-4"></a>   <span class="fu">pivot_longer</span>(contacts<span class="sc">:</span>none, <span class="at">names_to =</span> <span class="st">"eyewear"</span>, </span>
-<span id="cb14-5"><a href="#cb14-5"></a>                <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="ot">-&gt;</span> eyes2</span>
-<span id="cb14-6"><a href="#cb14-6"></a>xt2 <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(frequency <span class="sc">~</span> gender <span class="sc">+</span> eyewear, <span class="at">data =</span> eyes2)</span>
-<span id="cb14-7"><a href="#cb14-7"></a>xt2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        eyewear
-gender   contacts glasses none
-  female      150      30  120
-  male         75      16   62</code></pre>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/eyewear2.txt"</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>eyewear2 <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
+<span id="cb12-3"><a href="#cb12-3"></a>eyewear2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["gender"],"name":[1],"type":["chr"],"align":["left"]},{"label":["contacts"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["glasses"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["none"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"female","2":"150","3":"30","4":"120"},{"1":"male","2":"75","3":"16","4":"62"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">prop.table</span>(xt2, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        eyewear
-gender    contacts   glasses      none
-  female 0.5000000 0.1000000 0.4000000
-  male   0.4901961 0.1045752 0.4052288</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>eyewear2 <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a>   <span class="fu">pivot_longer</span>(contacts<span class="sc">:</span>none, <span class="at">names_to =</span> <span class="st">"eyewear"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3"></a>                <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="ot">-&gt;</span> eyes2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="comments-1" class="slide level2">
+<section id="comments" class="slide level2">
 <h2>Comments</h2>
 <ul>
 <li>Females and males wear contacts and glasses <em>in same proportions</em>
@@ -588,11 +596,11 @@ gender    contacts   glasses      none
 <section id="analysis-for-revised-data" class="slide level2">
 <h2>Analysis for revised data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>eyes<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="at">data =</span> eyes2,</span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a>)</span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="fu">drop1</span>(eyes<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>eyes<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(frequency <span class="sc">~</span> gender <span class="sc">*</span> eyewear,</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="at">data =</span> eyes2,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="fu">drop1</span>(eyes<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -607,8 +615,8 @@ gender    contacts   glasses      none
 <section id="no-interaction" class="slide level2">
 <h2>No interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>eyes<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(eyes<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> gender<span class="sc">:</span>eyewear)</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">drop1</span>(eyes<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>eyes<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(eyes<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> gender<span class="sc">:</span>eyewear)</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">drop1</span>(eyes<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -619,11 +627,19 @@ gender    contacts   glasses      none
 </div>
 </div>
 <ul>
-<li><p>More females (gender effect)</p></li>
-<li><p>more contact-wearers (eyewear effect)</p></li>
+<li><p>More females (gender effect) over all eyewear</p></li>
+<li><p>fewer glasses-wearers (eyewear effect) over both genders</p></li>
 <li><p>no association (no interaction).</p></li>
 </ul>
 </section>
+<section id="graph-shows-no-association" class="slide level2">
+<h2>Graph shows no association</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">ggplot</span>(eyes2, <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> frequency, <span class="at">fill =</span> eyewear)) <span class="sc">+</span> </span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
 <section id="chest-pain-being-overweight-and-being-a-smoker" class="slide level2">
 <h2>Chest pain, being overweight and being a smoker</h2>
 <ul>
@@ -649,13 +665,13 @@ normal normalweight no 30</code></pre>
 <section id="first-step" class="slide level2">
 <h2>First step</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/ecg.txt"</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>chest <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
-<span id="cb21-3"><a href="#cb21-3"></a>chest<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> ecg <span class="sc">*</span> bmi <span class="sc">*</span> smoke,</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="at">data =</span> chest,</span>
-<span id="cb21-5"><a href="#cb21-5"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a>)</span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="fu">drop1</span>(chest<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/ecg.txt"</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>chest <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>chest<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> ecg <span class="sc">*</span> bmi <span class="sc">*</span> smoke,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="at">data =</span> chest,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>)</span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="fu">drop1</span>(chest<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -670,8 +686,8 @@ normal normalweight no 30</code></pre>
 <section id="removing-the-3-way-interaction" class="slide level2">
 <h2>Removing the 3-way interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>chest<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> ecg<span class="sc">:</span>bmi<span class="sc">:</span>smoke)</span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">drop1</span>(chest<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>chest<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> ecg<span class="sc">:</span>bmi<span class="sc">:</span>smoke)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">drop1</span>(chest<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -686,8 +702,8 @@ normal normalweight no 30</code></pre>
 <section id="removing-bmismoke" class="slide level2">
 <h2>Removing <code>bmi:smoke</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>chest<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> bmi<span class="sc">:</span>smoke)</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">drop1</span>(chest<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>chest<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(chest<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> bmi<span class="sc">:</span>smoke)</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">drop1</span>(chest<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -697,45 +713,46 @@ normal normalweight no 30</code></pre>
 </div>
 </div>
 </div>
-<p><code>ecg:smoke</code> has become significant. So we have to stop.</p>
+<ul>
+<li><p><code>ecg:smoke</code> has become significant. So we have to stop.</p></li>
+<li><p><code>ecg</code> is associated with both <code>bmi</code> and <code>smoke</code>, but separately (it doesn’t depend on the combination of <code>bmi</code> and <code>smoke</code>).</p></li>
+</ul>
 </section>
 <section id="understanding-the-final-model" class="slide level2">
 <h2>Understanding the final model</h2>
 <ul>
-<li><p>Thinking of <code>ecg</code> as “response” that might depend on anything else.</p></li>
-<li><p>What is associated with <code>ecg</code>? Both <code>bmi</code> on its own and <code>smoke</code> on its own, but <em>not</em> the combination of both.</p></li>
-<li><p><code>ecg:bmi</code> table:</p></li>
+<li>For each of the significant associations, make a bar chart (here, two-variable because two-way interactions)</li>
+<li>Here, <code>ecg</code> is response (patients came into the study being smokers or overweight) so use as <code>fill</code> in both graphs.</li>
+<li><code>y</code> is the frequency column.</li>
 </ul>
+</section>
+<section id="ecgbmi" class="slide level2">
+<h2><code>ecg:bmi</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">xtabs</span>(count <span class="sc">~</span> ecg <span class="sc">+</span> bmi, <span class="at">data =</span> chest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          bmi
-ecg        normalweight overweight
-  abnormal           14         57
-  normal             65         40</code></pre>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(chest, <span class="fu">aes</span>(<span class="at">x =</span> bmi, <span class="at">y =</span> count, <span class="at">fill =</span> ecg)) <span class="sc">+</span> </span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="comment" class="slide level2">
+<h2>Comment</h2>
 <ul>
-<li>Most normal weight people have a normal ECG, but a majority of overweight people have an <em>abnormal</em> ECG. That is, knowing about BMI says something about likely ECG.</li>
+<li>Most of the normal weight people had a normal ECG as well, but for the overweight people, a small majority had an abnormal ECG.</li>
 </ul>
 </section>
 <section id="ecgsmoke" class="slide level2">
 <h2><code>ecg:smoke</code></h2>
-<ul>
-<li><code>ecg:smoke</code> table:</li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">xtabs</span>(count <span class="sc">~</span> ecg <span class="sc">+</span> smoke, <span class="at">data =</span> chest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          smoke
-ecg        no yes
-  abnormal 16  55
-  normal   45  60</code></pre>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(chest, <span class="fu">aes</span>(<span class="at">x =</span> smoke, <span class="at">y =</span> count, <span class="at">fill =</span> ecg)) <span class="sc">+</span> </span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="comments-1" class="slide level2">
+<h2>Comments</h2>
 <ul>
 <li><p>Most nonsmokers have a normal ECG, but smokers are about 50–50 normal and abnormal ECG.</p></li>
-<li><p>Don’t look at <code>smoke:bmi</code> table since not significant.</p></li>
+<li><p>Don’t look at <code>smoke:bmi</code> since not significant.</p></li>
 </ul>
 </section>
 <section id="simpsons-paradox-the-airlines-example" class="slide level2">
@@ -772,8 +789,8 @@ Seattle     1841         305       201         61</code></pre>
 <li>Read in:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/airlines.txt"</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>airlines <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/airlines.txt"</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>airlines <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="tidying" class="slide level2">
@@ -782,11 +799,11 @@ Seattle     1841         305       201         61</code></pre>
 <li>Some tidying gets us the right layout, with frequencies all in one column and the airline and delayed/on time status separated out. This uses one of the fancy versions of <code>pivot_longer</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>airlines <span class="sc">%&gt;%</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>   <span class="fu">pivot_longer</span>(<span class="sc">-</span>airport, </span>
-<span id="cb31-3"><a href="#cb31-3"></a>                <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"airline"</span>, <span class="st">"status"</span>), </span>
-<span id="cb31-4"><a href="#cb31-4"></a>                <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
-<span id="cb31-5"><a href="#cb31-5"></a>                <span class="at">values_to =</span> <span class="st">"freq"</span> ) <span class="ot">-&gt;</span> punctual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>airlines <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>   <span class="fu">pivot_longer</span>(<span class="sc">-</span>airport, </span>
+<span id="cb26-3"><a href="#cb26-3"></a>                <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"airline"</span>, <span class="st">"status"</span>), </span>
+<span id="cb26-4"><a href="#cb26-4"></a>                <span class="at">names_sep =</span> <span class="st">"_"</span>, </span>
+<span id="cb26-5"><a href="#cb26-5"></a>                <span class="at">values_to =</span> <span class="st">"freq"</span> ) <span class="ot">-&gt;</span> punctual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-data-frame-punctual" class="slide level2">
@@ -804,60 +821,30 @@ Seattle     1841         305       201         61</code></pre>
 </section>
 <section id="proportions-delayed-by-airline" class="slide level2">
 <h2>Proportions delayed by airline</h2>
-<ul>
-<li>Two-step process: get appropriate subtable:</li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
-<span id="cb32-2"><a href="#cb32-2"></a>xt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       status
-airline delayed ontime
-     aa     501   3274
-     aw     787   6438</code></pre>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(punctual, <span class="fu">aes</span>(<span class="at">x =</span> airline, <span class="at">y =</span> freq, <span class="at">fill =</span> status)) <span class="sc">+</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="comment-1" class="slide level2">
+<h2>Comment</h2>
 <ul>
-<li>and then calculate appropriate proportions:</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       status
-airline   delayed    ontime
-     aa 0.1327152 0.8672848
-     aw 0.1089273 0.8910727</code></pre>
-</div>
-</div>
-<ul>
-<li>More of Alaska Airlines’ flights delayed (13.3% vs.&nbsp;10.9%).</li>
+<li>Most flights are on time, but Alaska Airlines is late a little more often.</li>
 </ul>
 </section>
 <section id="proportion-delayed-by-airport-for-each-airline" class="slide level2">
 <h2>Proportion delayed by airport, for each airline</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status <span class="sc">+</span> airport, <span class="at">data =</span> punctual)</span>
-<span id="cb36-2"><a href="#cb36-2"></a>xp <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb36-3"><a href="#cb36-3"></a><span class="fu">ftable</span>(xp,</span>
-<span id="cb36-4"><a href="#cb36-4"></a>  <span class="at">row.vars =</span> <span class="fu">c</span>(<span class="st">"airport"</span>, <span class="st">"airline"</span>),</span>
-<span id="cb36-5"><a href="#cb36-5"></a>  <span class="at">col.vars =</span> <span class="st">"status"</span></span>
-<span id="cb36-6"><a href="#cb36-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                     status    delayed     ontime
-airport      airline                             
-LosAngeles   aa             0.11091234 0.88908766
-             aw             0.14426634 0.85573366
-Phoenix      aa             0.05150215 0.94849785
-             aw             0.07897241 0.92102759
-SanDiego     aa             0.08620690 0.91379310
-             aw             0.14508929 0.85491071
-SanFrancisco aa             0.16859504 0.83140496
-             aw             0.28730512 0.71269488
-Seattle      aa             0.14212488 0.85787512
-             aw             0.23282443 0.76717557</code></pre>
-</div>
-</div>
+<p>We now have <em>three</em> categorical variables, so use one of the explanatories (for me, airport) as facets:</p>
 </section>
+<section id="the-graphs" class="slide level2">
+<h2>The graph(s)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">ggplot</span>(punctual, <span class="fu">aes</span>(<span class="at">x =</span> airline, <span class="at">y =</span> freq, <span class="at">fill =</span> status)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> airport)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
 <section id="simpsons-paradox" class="slide level2">
 <h2>Simpson’s Paradox</h2>
 <ul>
@@ -870,10 +857,10 @@ Seattle      aa             0.14212488 0.85787512
 <section id="model-1-and-output" class="slide level2">
 <h2>Model 1 and output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>punctual<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> airport <span class="sc">*</span> airline <span class="sc">*</span> status,</span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="at">data =</span> punctual, <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a>)</span>
-<span id="cb38-4"><a href="#cb38-4"></a><span class="fu">drop1</span>(punctual<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>punctual<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> airport <span class="sc">*</span> airline <span class="sc">*</span> status,</span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="at">data =</span> punctual, <span class="at">family =</span> <span class="st">"poisson"</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>)</span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="fu">drop1</span>(punctual<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -887,8 +874,8 @@ Seattle      aa             0.14212488 0.85787512
 <section id="remove-3-way-interaction" class="slide level2">
 <h2>Remove 3-way interaction</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>punctual<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(punctual<span class="fl">.1</span>, <span class="sc">~</span> . <span class="sc">-</span> airport<span class="sc">:</span>airline<span class="sc">:</span>status)</span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">drop1</span>(punctual<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>punctual<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(punctual<span class="fl">.1</span>, <span class="sc">~</span> . <span class="sc">-</span> airport<span class="sc">:</span>airline<span class="sc">:</span>status)</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">drop1</span>(punctual<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -898,69 +885,48 @@ Seattle      aa             0.14212488 0.85787512
 </div>
 </div>
 </div>
-<p>Stop here.</p>
+<p>Stop here, and draw graphs to understand significant results.</p>
 </section>
-<section id="understanding-the-significance" class="slide level2">
-<h2>Understanding the significance</h2>
-<ul>
-<li><code>airline:status</code>:</li>
-</ul>
+<section id="airlinestatus" class="slide level2">
+<h2><code>airline:status</code>:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airline <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       status
-airline   delayed    ontime
-     aa 0.1327152 0.8672848
-     aw 0.1089273 0.8910727</code></pre>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">ggplot</span>(punctual, <span class="fu">aes</span>(<span class="at">x =</span> airline, <span class="at">y =</span> freq, <span class="at">fill =</span> status)) <span class="sc">+</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="comments-2" class="slide level2">
+<h2>Comments</h2>
 <ul>
-<li><p>More of Alaska Airlines’ flights delayed overall.</p></li>
-<li><p>Saw this before.</p></li>
+<li><p>We did this one before.</p></li>
+<li><p>Slightly more of Alaska Airlines’ flights delayed overall.</p></li>
 </ul>
 </section>
-<section id="understanding-the-significance-2" class="slide level2">
-<h2>Understanding the significance (2)</h2>
-<ul>
-<li><code>airport:status</code>:</li>
-</ul>
+<section id="airportstatus" class="slide level2">
+<h2><code>airport:status</code>:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airport <span class="sc">+</span> status, <span class="at">data =</span> punctual)</span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              status
-airport           delayed     ontime
-  LosAngeles   0.13065693 0.86934307
-  Phoenix      0.07780612 0.92219388
-  SanDiego     0.12500000 0.87500000
-  SanFrancisco 0.21916509 0.78083491
-  Seattle      0.15199336 0.84800664</code></pre>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">ggplot</span>(punctual, <span class="fu">aes</span>(<span class="at">x =</span> airport, <span class="at">y =</span> freq, <span class="at">fill =</span> status)) <span class="sc">+</span> </span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="comments-3" class="slide level2">
+<h2>Comments</h2>
 <ul>
 <li><p>Flights into San Francisco (and maybe Seattle) are often late, and flights into Phoenix are usually on time.</p></li>
 <li><p>Considerable variation among airports.</p></li>
 </ul>
 </section>
-<section id="understanding-the-significance-3" class="slide level2">
-<h2>Understanding the significance (3)</h2>
-<ul>
-<li><code>airport:airline</code>:</li>
-</ul>
+<section id="airportairline" class="slide level2">
+<h2><code>airport:airline</code>:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> airport <span class="sc">+</span> airline, <span class="at">data =</span> punctual)</span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              airline
-airport                aa         aw
-  LosAngeles   0.14807947 0.11224913
-  Phoenix      0.06172185 0.72733564
-  SanDiego     0.06145695 0.06200692
-  SanFrancisco 0.16026490 0.06214533
-  Seattle      0.56847682 0.03626298</code></pre>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">ggplot</span>(punctual, <span class="fu">aes</span>(<span class="at">x =</span> airport, <span class="at">y =</span> freq, <span class="at">fill =</span> airline)) <span class="sc">+</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<section id="comments-4" class="slide level2">
+<h2>Comments</h2>
 <ul>
 <li><p>What fraction of each airline’s flights are to each airport.</p></li>
 <li><p>Most of Alaska Airlines’ flights to Seattle and San Francisco.</p></li>
@@ -1020,9 +986,9 @@ advanced limited yes yes 5
 <section id="reading-in-data" class="slide level2">
 <h2>Reading in data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/cancer.txt"</span></span>
-<span id="cb47-2"><a href="#cb47-2"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
-<span id="cb47-3"><a href="#cb47-3"></a>cancer <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/cancer.txt"</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a>cancer <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1037,16 +1003,15 @@ advanced limited yes yes 5
 <h2>Model 1</h2>
 <p>hopefully looking familiar by now:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>cancer<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> stage <span class="sc">*</span> operation <span class="sc">*</span> xray <span class="sc">*</span> survival,</span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="at">data =</span> cancer, <span class="at">family =</span> <span class="st">"poisson"</span></span>
-<span id="cb48-3"><a href="#cb48-3"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>cancer<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">glm</span>(freq <span class="sc">~</span> stage <span class="sc">*</span> operation <span class="sc">*</span> xray <span class="sc">*</span> survival,</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="at">data =</span> cancer, <span class="at">family =</span> <span class="st">"poisson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="output-1" class="slide level2">
 <h2>Output 1</h2>
 <p>See what we can remove:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">drop1</span>(cancer<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">drop1</span>(cancer<span class="fl">.1</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1061,8 +1026,8 @@ advanced limited yes yes 5
 <section id="model-2" class="slide level2">
 <h2>Model 2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>cancer<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>cancer<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.1</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.2</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1077,8 +1042,8 @@ advanced limited yes yes 5
 <section id="take-out-stagexraysurvival" class="slide level2">
 <h2>Take out <code>stage:xray:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>cancer<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
-<span id="cb51-2"><a href="#cb51-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>cancer<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.2</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.3</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1093,8 +1058,8 @@ advanced limited yes yes 5
 <section id="remove-operationxraysurvival" class="slide level2">
 <h2>Remove <code>operation:xray:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>cancer<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.3</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
-<span id="cb52-2"><a href="#cb52-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.4</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>cancer<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.3</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>xray<span class="sc">:</span>survival)</span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.4</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1105,7 +1070,7 @@ advanced limited yes yes 5
 </div>
 </div>
 </section>
-<section id="comments-2" class="slide level2">
+<section id="comments-5" class="slide level2">
 <h2>Comments</h2>
 <ul>
 <li><p><code>stage:operation:xray</code> has now become significant, so won’t remove that.</p></li>
@@ -1116,8 +1081,8 @@ advanced limited yes yes 5
 <section id="remove-xraysurvival" class="slide level2">
 <h2>Remove <code>xray:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>cancer<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.4</span>, . <span class="sc">~</span> . <span class="sc">-</span> xray<span class="sc">:</span>survival)</span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.5</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>cancer<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.4</span>, . <span class="sc">~</span> . <span class="sc">-</span> xray<span class="sc">:</span>survival)</span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.5</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1131,8 +1096,8 @@ advanced limited yes yes 5
 <section id="remove-stageoperationsurvival" class="slide level2">
 <h2>Remove <code>stage:operation:survival</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>cancer<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.5</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>survival)</span>
-<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.6</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>cancer<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.5</span>, . <span class="sc">~</span> . <span class="sc">-</span> stage<span class="sc">:</span>operation<span class="sc">:</span>survival)</span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.6</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1147,8 +1112,8 @@ advanced limited yes yes 5
 <h2>Last step?</h2>
 <p>Remove <code>operation:survival</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>cancer<span class="fl">.7</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.6</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>survival)</span>
-<span id="cb55-2"><a href="#cb55-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.7</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>cancer<span class="fl">.7</span> <span class="ot">&lt;-</span> <span class="fu">update</span>(cancer<span class="fl">.6</span>, . <span class="sc">~</span> . <span class="sc">-</span> operation<span class="sc">:</span>survival)</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">drop1</span>(cancer<span class="fl">.7</span>, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1160,22 +1125,23 @@ advanced limited yes yes 5
 </div>
 <p>Finally done!</p>
 </section>
-<section id="conclusions-1" class="slide level2">
+<section id="conclusions-2" class="slide level2">
 <h2>Conclusions</h2>
 <ul>
 <li><p>What matters is things associated with <code>survival</code> (<code>survival</code> is “response”).</p></li>
-<li><p>Only significant such term is <code>stage:survival</code>:</p></li>
+<li><p>Only significant such term is <code>stage:survival</code>.</p></li>
 </ul>
+</section>
+<section id="the-graph" class="slide level2">
+<h2>The graph</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> stage <span class="sc">+</span> survival, <span class="at">data =</span> cancer)</span>
-<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>          survival
-stage             no       yes
-  advanced 0.8368794 0.1631206
-  early    0.1962025 0.8037975</code></pre>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> stage, <span class="at">y =</span> freq, <span class="at">fill =</span> survival)) <span class="sc">+</span> </span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
+<section id="comments-6" class="slide level2">
+<h2>Comments</h2>
 <ul>
 <li><p>Most people in early stage of cancer survived, and most people in advanced stage did not survive.</p></li>
 <li><p>This true <em>regardless</em> of type of operation or whether or not X-ray treatment was received. These things have no impact on survival.</p></li>
@@ -1184,19 +1150,14 @@ stage             no       yes
 <section id="what-about-that-other-interaction" class="slide level2">
 <h2>What about that other interaction?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(freq <span class="sc">~</span> operation <span class="sc">+</span> xray <span class="sc">+</span> stage, <span class="at">data =</span> cancer)</span>
-<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">ftable</span>(<span class="fu">prop.table</span>(xt, <span class="at">margin =</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>               stage   advanced      early
-operation xray                            
-limited   no         0.02836879 0.08860759
-          yes        0.12765957 0.07594937
-radical   no         0.31205674 0.32278481
-          yes        0.53191489 0.51265823</code></pre>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> stage, <span class="at">y =</span> freq, <span class="at">fill =</span> xray)) <span class="sc">+</span> </span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> operation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="multiway_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"></section>
+<section id="comments-7" class="slide level2">
+<h2>Comments</h2>
 <ul>
-<li><p>Out of the people at each stage of cancer (since <code>margin=3</code> and <code>stage</code> was listed 3rd).</p></li>
 <li><p>The association is between <code>stage</code> and <code>xray</code> <em>only for those who had the limited operation</em>.</p></li>
 <li><p>For those who had the radical operation, there was no association between <code>stage</code> and <code>xray</code>.</p></li>
 <li><p>This is of less interest than associations with <code>survival</code>.</p></li>
@@ -1208,7 +1169,7 @@ radical   no         0.31205674 0.32278481
 <li><p>Start with “complete model” including all possible interactions.</p></li>
 <li><p><code>drop1</code> gives highest-order interaction(s) remaining, remove least non-significant.</p></li>
 <li><p>Repeat as necessary until everything significant.</p></li>
-<li><p>Look at subtables of significant interactions.</p></li>
+<li><p>Look at graphs of significant interactions.</p></li>
 <li><p>Main effects not usually very interesting.</p></li>
 <li><p>Interactions with “response” usually of most interest: show association with response.</p></li>
 </ul>
