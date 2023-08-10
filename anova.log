@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.6.30)  30 JUN 2023 22:58
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.8.10)  10 AUG 2023 11:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **anova.tex
 (./anova.tex
 LaTeX2e <2023-06-01> patch level 1
-L3 programming layer <2023-06-16>
+L3 programming layer <2023-08-03>
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/beamer/beamer.cls
 Document Class: beamer 2023/05/15 v3.70 A class for typesetting presentations
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/beamer/beamerbasemodes.sty (/home/ken/.TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
@@ -273,7 +273,7 @@ Package: xxcolor 2003/10/24 ver 0.1
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2023-06-25 v7.01a Hypertext links for LaTeX
+Package: hyperref 2023-07-08 v7.01b Hypertext links for LaTeX
 (/home/ken/.TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 ) (/home/ken/.TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
@@ -297,7 +297,7 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2023-06-18 v2.52 Cross-referencing by name of section
+Package: nameref 2023-08-07 v2.53 Cross-referencing by name of section
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/home/ken/.TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
@@ -311,13 +311,13 @@ Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 \Hy@linkcounter=\count296
 \Hy@pagecounter=\count297
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2023-06-25 v7.01a Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2023-07-08 v7.01b Hyperref: PDFDocEncoding definition (HO)
 ) (/home/ken/.TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count298
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2023-06-25 v7.01a Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2023-07-08 v7.01b Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Option `unicode' set `true' on input line 4050.
 Package hyperref Info: Option `bookmarks' set `true' on input line 4050.
@@ -359,7 +359,7 @@ Package hyperref Message: Stopped early.
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2023-06-25 v7.01a Hyperref driver for XeTeX
+File: hxetex.def 2023-07-08 v7.01b Hyperref driver for XeTeX
 (/home/ken/.TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
@@ -555,7 +555,7 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \pgfphysicalwidth=\dimen297
 \pgfpages@shipoutbox=\box77
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/home/ken/.TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2023-06-16 L3 programming layer (loader) 
+Package: expl3 2023-08-03 L3 programming layer (loader) 
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2023-04-19 L3 backend support: XeTeX
 \g__graphics_track_int=\count342
@@ -723,9 +723,9 @@ Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
 \backup@length=\skip74
 \ar@cellbox=\box87
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2023/03/12 v3.6j Customizing captions (AR)
+Package: caption 2023/07/31 v3.6n Customizing captions (AR)
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2023/03/12 v2.4 caption3 kernel (AR)
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
 \caption@tempdima=\dimen322
 \captionmargin=\dimen323
 \caption@leftmargin=\dimen324
@@ -757,10 +757,10 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@codelisting=\toks52
 \c@codelisting=\count377
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/caption/subcaption.sty
-Package: subcaption 2023/02/19 v1.6 Sub-captions (AR)
-Package caption Info: New subtype `subfigure' on input line 239.
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+Package caption Info: New subtype `subfigure' on input line 238.
 \c@subfigure=\count378
-Package caption Info: New subtype `subtable' on input line 239.
+Package caption Info: New subtype `subtable' on input line 238.
 \c@subtable=\count379
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
 Package: tcolorbox 2023/06/19 version 6.0.4 text color boxes
@@ -839,11 +839,11 @@ File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/home/ken/.TinyTeX/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))) (/home/ken/.TinyTeX/texmf-dist/tex/latex/tikzfill/tikzfill.image.sty
-Package: tikzfill.image 2022/07/20 v1.0.0 Image filling library for TikZ
+Package: tikzfill.image 2023/08/08 v1.0.1 Image filling library for TikZ
 (/home/ken/.TinyTeX/texmf-dist/tex/latex/tikzfill/tikzfill-common.sty
-Package: tikzfill-common 2022/07/20 v1.0.0 Auxiliary code for tikzfill
+Package: tikzfill-common 2023/08/08 v1.0.1 Auxiliary code for tikzfill
 ) (/home/ken/.TinyTeX/texmf-dist/tex/latex/tikzfill/tikzlibraryfill.image.code.tex
-File: tikzlibraryfill.image.code.tex 2022/07/20 v1.0.0 Image filling library
+File: tikzlibraryfill.image.code.tex 2023/08/08 v1.0.1 Image filling library
 \l__tikzfill_img_box=\box103
 )) (/home/ken/.TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
 Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.0.4'
@@ -1258,21 +1258,30 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
 ]
 \openout4 = `anova.vrb'.
 
-(./anova.vrb)
-Runaway argument?
-{5 0\begin {verbatim} lightbrown 42 lightbrown 50 lightbrown 41 light\ETC.
-! File ended while scanning use of \beamer@readarg.
-<inserted text> 
-                \par 
-l.323 \end{frame}
-                  
-Here is how much of TeX's memory you used:
- 37886 strings out of 478375
- 791981 string characters out of 5840749
- 1851400 words of memory out of 5000000
- 57673 multiletter control sequences out of 15000+600000
- 519824 words of font info for 84 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 101i,11n,120p,1002b,594s stack positions out of 10000i,1000n,20000p,200000b,200000s
+(./anova.vrb
+File: Screenshot_2023-08-10_11-37-10.png Graphic file (type bmp)
+<Screenshot_2023-08-10_11-37-10.png>
+)
+Overfull \vbox (21.79147pt too high) detected at line 293
+ []
 
-Output written on anova.pdf (5 pages).
+[6
+
+]
+\openout4 = `anova.vrb'.
+
+(./anova.vrb) [7
+
+]
+\openout4 = `anova.vrb'.
+
+(./anova.vrb
+File: anova_files/figure-beamer/tartuffo-1.pdf Graphic file (type pdf)
+<use anova_files/figure-beamer/tartuffo-1.pdf>
+) [8
+
+]
+\openout4 = `anova.vrb'.
+
+(./anova.vrb
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in siz

@@ -73,7 +73,8 @@ prevalence
 prevalence %>% 
   pivot_longer(-Species, names_to = "column", 
                values_to = "freq") %>% 
-  separate(column, into = c("disease", "location"))
+  separate_wider_delim(column, "_", 
+                       names = c("disease", "location"))
 ```
 
 ## Making longer, the better way

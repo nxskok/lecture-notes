@@ -467,7 +467,7 @@ options(width=65)
    
 \scriptsize
 ```{r bCluster-20}
-english %>% left_join(norwegian, by = "number")
+english %>% left_join(norwegian, join_by(number))
 ```
 \normalsize
    
@@ -481,8 +481,7 @@ letter of Norwegian word.
 
 \footnotesize
 ```{r bCluster-21 }
-english %>%
-  left_join(norwegian, by = "number") %>%
+english %>% left_join(norwegian, join_by(number)) %>% 
   count(different=(first.x != first.y)) 
 ```
 \normalsize
@@ -491,8 +490,7 @@ or
 
 \footnotesize
 ```{r bCluster-22 }
-english %>%
-  left_join(norwegian, by = "number") %>%
+english %>% left_join(norwegian, join_by(number)) %>% 
   count(different=(first.x != first.y)) %>% 
   filter(different) %>% pull(n) -> ans
 ans
@@ -506,8 +504,7 @@ Words for 1 and 8 start with different letter; rest are same.
 The answer should be zero:
 
 ```{r bCluster-23}
-english %>%
-  left_join(english, by = "number") %>%
+english %>% left_join(english, join_by(number)) %>% 
   count(different=(first.x != first.y)) %>% 
   filter(different) %>% pull(n) -> ans
 ans
@@ -524,7 +521,7 @@ countdiff <- function(lang.1, lang.2, d) {
   d %>% filter(language == lang.1) -> lang1d
   d %>% filter(language == lang.2) -> lang2d
   lang1d %>%
-    left_join(lang2d, by = "number") %>%
+    left_join(lang2d, join_by(number)) %>%
     count(different = (first.x != first.y)) %>%
     filter(different) %>% pull(n) -> ans
   # if ans has length zero, set answer to (integer) zero.

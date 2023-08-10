@@ -62,45 +62,11 @@ threshold score: higher score is higher pain tolerance.
 
 
 ## The data 
-In `hairpain.txt`:
+In `hairpain.txt` (some):
 
-:::: {.columns}
-
-::: {.column width="50%"}
-```
-hair pain
-lightblond 62
-lightblond 60
-lightblond 71
-lightblond 55
-lightblond 48
-darkblond 63
-darkblond 57
-darkblond 52
-darkblond 41
-darkblond 43
-```
-
-:::
-
-::: {.column width="5 0%"}
-
-```
-lightbrown 42
-lightbrown 50
-lightbrown 41
-lightbrown 37
-darkbrown 32
-darkbrown 39
-darkbrown 51
-darkbrown 30
-darkbrown 35
-```
+![](Screenshot_2023-08-10_11-37-10.png)
 
 
-:::
-
-::::
 
 
 ## Summarizing the groups 
