@@ -210,6 +210,8 @@ o_c=with(line_b, cor.test(speed, scrap))$conf.int
 - Sample from data with replacement, but have to keep the `speed`-`scrap` *pairs* together
 - Sample *rows* at random, then take the variable values that belong to those rows:
 
+*** REDO THIS ***
+
 ```{r bootstrap-again-20}
 rerun(1000, sample(1:nrow(line_b), replace=T)) %>%
   map(~slice(line_b, .)) %>% 
