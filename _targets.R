@@ -26,6 +26,7 @@ options(clustermq.scheduler = "multicore")
 
 # Replace the target list below with your own:
 list(
+<<<<<<< HEAD
   tar_quarto(asphalt, "asphalt.qmd"),
   tar_target(bAnova, "bAnova.Rmd", format = "file"),
   tar_render(bAnova_slides, "bAnova_slides.Rmd"),
@@ -47,13 +48,22 @@ list(
   tar_render(bRegression_slides, "bRegression_slides.Rmd"),
   tar_target(choosing_R, "choosing_R.Rmd", format = "file"),
   tar_render(choosing_R_slides, "choosing_R_slides.Rmd"),
+=======
+  tar_quarto(index, "index.qmd"),
+  tar_quarto(ancova, "ancova.qmd"),
+  tar_quarto(anova, "anova.qmd"),
+  tar_quarto(asphalt, "asphalt.qmd"),
+  tar_quarto(bootstrap, "bootstrap.qmd"),
+  tar_quarto(bootstrap_R, "bootstrap_R.qmd"),
+  tar_quarto(choosing, "choosing.qmd"),
+  tar_quarto(cluster, "cluster.qmd"),
+>>>>>>> fafbb972e4413e50bc54c9a9deccc68e6a941519
   tar_quarto(dates_and_times, "dates_and_times.qmd"),
   tar_quarto(dip, "dip.qmd"),
   tar_quarto(discrim, "discrim.qmd"),
   tar_quarto(functions, "functions.qmd"),
   tar_quarto(graphs, "graphs.qmd"),
-  tar_target(inference_1_R, "inference_1_R.Rmd", format = "file"),
-  tar_render(inference_1_R_slides, "inference_1_R_slides.Rmd"),
+  tar_quarto(inference_1, "inference_1.qmd"),
   tar_quarto(inference_2, "inference_2.qmd"),
   tar_quarto(inference_3, "inference_3.qmd"),
   tar_quarto(inference_4a, "inference_4a.qmd"),
@@ -61,6 +71,7 @@ list(
   tar_quarto(inference_5a, "inference_5a.qmd"),
   tar_quarto(inference_5b, "inference_5b.qmd"),
   tar_quarto(logistic, "logistic.qmd"),
+<<<<<<< HEAD
   tar_target(mapping, "mapping.Rmd", format = "file"),
   tar_render(mapping_slides, "mapping_slides.Rmd"),
   tar_quarto(multiway, "multiway.qmd"),
@@ -87,4 +98,27 @@ tar_render(tidying_R_slides, "tidying_R_slides.Rmd"),
 tar_quarto(wider_wrong, "wider_wrong.qmd"),
 tar_quarto(windmill, "windmill.qmd"),
 tar_quarto(with_categ, "with_categ.qmd"),
+=======
+  tar_quarto(manova, "manova.qmd"),
+  tar_quarto(mapping, "mapping.qmd"),
+  tar_quarto(multiway, "multiway.qmd"),
+  tar_quarto(numsum, "numsum.qmd"),
+  tar_quarto(outline_c32, "outline_c32.qmd"),
+  tar_quarto(outline_c33, "outline_c33.qmd"),
+  tar_quarto(outline_d29, "outline_d29.qmd"),
+  tar_quarto(princomp, "princomp.qmd"),
+  tar_quarto(profile, "profile.qmd"),
+  tar_quarto(readfile, "readfile.qmd"),
+  tar_quarto(regression, "regression.qmd"),
+  tar_quarto(reports, "reports.qmd"),
+  tar_quarto(rstan, "rstan.qmd"),
+  tar_quarto(running, "running.qmd"),
+  tar_quarto(survival, "survival.qmd"),
+  tar_quarto(tidying, "tidying.qmd"),
+  tar_quarto(tidy_extra, "tidy_extra.qmd"),
+  tar_quarto(vector_matrix, "vector_matrix.qmd"),
+  tar_quarto(wider_wrong, "wider_wrong.qmd"),
+  tar_quarto(windmill, "windmill.qmd"),
+  tar_quarto(with_categ, "with_categ.qmd")
+>>>>>>> fafbb972e4413e50bc54c9a9deccc68e6a941519
 )

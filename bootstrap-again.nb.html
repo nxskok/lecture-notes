@@ -1756,1249 +1756,666 @@ display: none;
 <h2>packages</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGJvb3RzdHJhcClcbmxpYnJhcnkocnNhbXBsZSlcbmxpYnJhcnkoY29uZmxpY3RlZClcbmNvbmZsaWN0X3ByZWZlcihcXGZpbHRlclxcLCBcXGRwbHlyXFwpIFxuYGBgXG5gYGAifQ== -->
-<pre class="r"><code>```r
-library(tidyverse)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGJvb3RzdHJhcClcbmxpYnJhcnkocnNhbXBsZSlcbmxpYnJhcnkoY29uZmxpY3RlZClcbmNvbmZsaWN0X3ByZWZlcihcImZpbHRlclwiLCBcImRwbHlyXCIpIFxuYGBgIn0= -->
+<pre class="r"><code>library(tidyverse)
 library(bootstrap)
 library(rsample)
 library(conflicted)
-conflict_prefer(\filter\, \dplyr\) </code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Is my sampling distribution normal enough?
-
-- Recall the IRS data that we used as a motivation for the sign test:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KGlycywgYWVzKHg9VGltZSkpK2dlb21faGlzdG9ncmFtKGJpbnM9MTApXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-ggplot(irs, aes(x=Time))+geom_histogram(bins=10)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- We said that a $t$ procedure for the mean would not be a good idea because the distribution is skewed.
-
-## What *actually* matters
-
-- It&#39;s not the distribution of the *data* that has to be approx normal (for a $t$ procedure).
-- What matters is the *sampling distribution of the sample mean*.
-- If the sample size is large enough, the sampling distribution will be normal enough even if the data distribution is not.
-  - This is why we had to consider the sample size as well as the shape.
-- But how do we know whether this is the case or not? We only have *one* sample.
-
-## The (nonparametric) bootstrap
-
-- Typically, our sample will be reasonably representative of the population.
-- Idea: pretend the sample *is* the population, and sample from it *with replacement*.
-- Calculate test statistic, and repeat many times.
-- This gives an idea of how our statistic might vary in repeated samples: that is, its sampling distribution.
-- Called the **bootstrap distribution** of the test statistic.
-- If the bootstrap distribution is approx normal, infer that the true sampling distribution also approx normal, therefore inference about the mean such as $t$ is good enough.
-- If not, we should be more careful.
-
-## Why it works
-
-- We typically estimate population parameters by using the corresponding sample thing: eg. estimate population mean using sample mean.
-- This called **plug-in principle**.
-- The fraction of sample values less than a value $x$ called the **empirical distribution function** (as a function of $x$).
-- By plug-in principle, the empirical distribution function is an estimate of the population CDF.
-- In this sense, the sample *is* an estimate of the population, and so sampling from it is an estimate of sampling from the population.
-
-## Bootstrapping the IRS data
-
-- Sampling with replacement is done like this (the default sample size is as long as the original data):
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYm9vdD1zYW1wbGUoaXJzJFRpbWUsIHJlcGxhY2U9VClcbm1lYW4oYm9vdClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-boot=sample(irs$Time, replace=T)
+conflict_prefer(&quot;filter&quot;, &quot;dplyr&quot;) </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="is-my-sampling-distribution-normal-enough" class="section level2">
+<h2>Is my sampling distribution normal enough?</h2>
+<ul>
+<li>Recall the IRS data that we used as a motivation for the sign
+test:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGlycywgYWVzKHg9VGltZSkpK2dlb21faGlzdG9ncmFtKGJpbnM9MTApXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(irs, aes(x=Time))+geom_histogram(bins=10)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>We said that a <span class="math inline">\(t\)</span> procedure for
+the mean would not be a good idea because the distribution is
+skewed.</li>
+</ul>
+</div>
+<div id="what-actually-matters" class="section level2">
+<h2>What <em>actually</em> matters</h2>
+<ul>
+<li>It’s not the distribution of the <em>data</em> that has to be approx
+normal (for a <span class="math inline">\(t\)</span> procedure).</li>
+<li>What matters is the <em>sampling distribution of the sample
+mean</em>.</li>
+<li>If the sample size is large enough, the sampling distribution will
+be normal enough even if the data distribution is not.
+<ul>
+<li>This is why we had to consider the sample size as well as the
+shape.</li>
+</ul></li>
+<li>But how do we know whether this is the case or not? We only have
+<em>one</em> sample.</li>
+</ul>
+</div>
+<div id="the-nonparametric-bootstrap" class="section level2">
+<h2>The (nonparametric) bootstrap</h2>
+<ul>
+<li>Typically, our sample will be reasonably representative of the
+population.</li>
+<li>Idea: pretend the sample <em>is</em> the population, and sample from
+it <em>with replacement</em>.</li>
+<li>Calculate test statistic, and repeat many times.</li>
+<li>This gives an idea of how our statistic might vary in repeated
+samples: that is, its sampling distribution.</li>
+<li>Called the <strong>bootstrap distribution</strong> of the test
+statistic.</li>
+<li>If the bootstrap distribution is approx normal, infer that the true
+sampling distribution also approx normal, therefore inference about the
+mean such as <span class="math inline">\(t\)</span> is good enough.</li>
+<li>If not, we should be more careful.</li>
+</ul>
+</div>
+<div id="why-it-works" class="section level2">
+<h2>Why it works</h2>
+<ul>
+<li>We typically estimate population parameters by using the
+corresponding sample thing: eg. estimate population mean using sample
+mean.</li>
+<li>This called <strong>plug-in principle</strong>.</li>
+<li>The fraction of sample values less than a value <span class="math inline">\(x\)</span> called the <strong>empirical
+distribution function</strong> (as a function of <span class="math inline">\(x\)</span>).</li>
+<li>By plug-in principle, the empirical distribution function is an
+estimate of the population CDF.</li>
+<li>In this sense, the sample <em>is</em> an estimate of the population,
+and so sampling from it is an estimate of sampling from the
+population.</li>
+</ul>
+</div>
+<div id="bootstrapping-the-irs-data" class="section level2">
+<h2>Bootstrapping the IRS data</h2>
+<ul>
+<li>Sampling with replacement is done like this (the default sample size
+is as long as the original data):</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYm9vdD1zYW1wbGUoaXJzJFRpbWUsIHJlcGxhY2U9VClcbm1lYW4oYm9vdClcbmBgYCJ9 -->
+<pre class="r"><code>boot=sample(irs$Time, replace=T)
 mean(boot)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- That&#39;s one bootstrapped mean. We need a whole bunch.
-- Use the same idea as for simulating power:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucmVydW4oMTAwMCwgc2FtcGxlKGlycyRUaW1lLCByZXBsYWNlPVQpKSAlPiUgXG4gIG1hcF9kYmwofm1lYW4oLikpIC0+IG1lYW5zXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-rerun(1000, sample(irs$Time, replace=T)) %&gt;% 
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>That’s one bootstrapped mean. We need a whole bunch.</li>
+<li>Use the same idea as for simulating power:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVydW4oMTAwMCwgc2FtcGxlKGlycyRUaW1lLCByZXBsYWNlPVQpKSAlPiUgXG4gIG1hcF9kYmwofm1lYW4oLikpIC0+IG1lYW5zXG5gYGAifQ== -->
+<pre class="r"><code>rerun(1000, sample(irs$Time, replace=T)) %&gt;% 
   map_dbl(~mean(.)) -&gt; means</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Sampling distribution of sample mean
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyh4PW1lYW5zKSkrZ2VvbV9oaXN0b2dyYW0oYmlucz0yMClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-ggplot(tibble(means), aes(x=means))+geom_histogram(bins=20)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Comments
-
-This is not so bad: a long right tail, maybe:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyhzYW1wbGU9bWVhbnMpKStcbiAgc3RhdF9xcSgpK3N0YXRfcXFfbGluZSgpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-ggplot(tibble(means), aes(sample=means))+
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="sampling-distribution-of-sample-mean" class="section level2">
+<h2>Sampling distribution of sample mean</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyh4PW1lYW5zKSkrZ2VvbV9oaXN0b2dyYW0oYmlucz0yMClcbmBgYCJ9 -->
+<pre class="r"><code>ggplot(tibble(means), aes(x=means))+geom_histogram(bins=20)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="comments" class="section level2">
+<h2>Comments</h2>
+<p>This is not so bad: a long right tail, maybe:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyhzYW1wbGU9bWVhbnMpKStcbiAgc3RhdF9xcSgpK3N0YXRfcXFfbGluZSgpXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(tibble(means), aes(sample=means))+
   stat_qq()+stat_qq_line()</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-or not so much.
-
-## Confidence interval from the bootstrap distribution
-
-There are two ways (at least):
-
-- percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to get the middle 95%). This is easy, but not always the best:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuKGJfcD1xdWFudGlsZShtZWFucywgYygwLjAyNSwgMC45NzUpKSlcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-(b_p=quantile(means, c(0.025, 0.975)))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- bootstrap $t$: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a $t$ interval:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubj1sZW5ndGgoaXJzJFRpbWUpXG50X3N0YXI9cXQoMC45NzUsIG4tMSlcbihiX3Q9bWVhbihtZWFucykrYygtMSwgMSkqdF9zdGFyKnNkKG1lYW5zKSlcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-n=length(irs$Time)
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>or not so much.</p>
+</div>
+<div id="confidence-interval-from-the-bootstrap-distribution" class="section level2">
+<h2>Confidence interval from the bootstrap distribution</h2>
+<p>There are two ways (at least):</p>
+<ul>
+<li>percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to
+get the middle 95%). This is easy, but not always the best:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuKGJfcD1xdWFudGlsZShtZWFucywgYygwLjAyNSwgMC45NzUpKSlcbmBgYCJ9 -->
+<pre class="r"><code>(b_p=quantile(means, c(0.025, 0.975)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>bootstrap <span class="math inline">\(t\)</span>: use the SD of the
+bootstrapped sampling distribution as the SE of the estimator of the
+mean and make a <span class="math inline">\(t\)</span> interval:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubj1sZW5ndGgoaXJzJFRpbWUpXG50X3N0YXI9cXQoMC45NzUsIG4tMSlcbihiX3Q9bWVhbihtZWFucykrYygtMSwgMSkqdF9zdGFyKnNkKG1lYW5zKSlcbmBgYCJ9 -->
+<pre class="r"><code>n=length(irs$Time)
 t_star=qt(0.975, n-1)
 (b_t=mean(means)+c(-1, 1)*t_star*sd(means))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Comparing
-
-- get ordinary $t$ interval:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubXlfbmFtZXM9YyhcXExDTFxcLCBcXFVDTFxcKVxub190PXQudGVzdChpcnMkVGltZSkkY29uZi5pbnRcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-my_names=c(\LCL\, \UCL\)
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="comparing" class="section level2">
+<h2>Comparing</h2>
+<ul>
+<li>get ordinary <span class="math inline">\(t\)</span> interval:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfbmFtZXM9YyhcIkxDTFwiLCBcIlVDTFwiKVxub190PXQudGVzdChpcnMkVGltZSkkY29uZi5pbnRcbmBgYCJ9 -->
+<pre class="r"><code>my_names=c(&quot;LCL&quot;, &quot;UCL&quot;)
 o_t=t.test(irs$Time)$conf.int</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-- Compare the 2 bootstrap intervals with the ordinary $t$-interval: 
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudGliYmxlKGxpbWl0PW15X25hbWVzLCBvX3QsIGJfdCwgYl9wKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-tibble(limit=my_names, o_t, b_t, b_p)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- The bootstrap $t$ and the ordinary $t$ are very close
-- The percentile bootstrap interval is noticeably shorter (common) and higher (skewness).
-  
-## Which to prefer?
-
-- If the intervals agree, then they are all good.
-- If they disagree, they are all bad! 
-- In that case, use BCA interval (over).
-
-  
-## Bias correction and acceleration
-
-- this from 
-&quot;An introduction to the bootstrap&quot;, by
-Brad Efron and Robert J. Tibshirani.
-- there is way of correcting the CI for skewness in the bootstrap distribution, called the BCa method
-- complicated (see the Efron and Tibshirani book), but implemented in `bootstrap` package.
-
-## Run this on the IRS data:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYmNhPWJjYW5vbihpcnMkVGltZSwgMTAwMCwgbWVhbilcbmJjYSRjb25mcG9pbnRzXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-bca=bcanon(irs$Time, 1000, mean)
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Compare the 2 bootstrap intervals with the ordinary <span class="math inline">\(t\)</span>-interval:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGliYmxlKGxpbWl0PW15X25hbWVzLCBvX3QsIGJfdCwgYl9wKVxuYGBgIn0= -->
+<pre class="r"><code>tibble(limit=my_names, o_t, b_t, b_p)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>The bootstrap <span class="math inline">\(t\)</span> and the
+ordinary <span class="math inline">\(t\)</span> are very close</li>
+<li>The percentile bootstrap interval is noticeably shorter (common) and
+higher (skewness).</li>
+</ul>
+</div>
+<div id="which-to-prefer" class="section level2">
+<h2>Which to prefer?</h2>
+<ul>
+<li>If the intervals agree, then they are all good.</li>
+<li>If they disagree, they are all bad!</li>
+<li>In that case, use BCA interval (over).</li>
+</ul>
+</div>
+<div id="bias-correction-and-acceleration" class="section level2">
+<h2>Bias correction and acceleration</h2>
+<ul>
+<li>this from “An introduction to the bootstrap”, by Brad Efron and
+Robert J. Tibshirani.</li>
+<li>there is way of correcting the CI for skewness in the bootstrap
+distribution, called the BCa method</li>
+<li>complicated (see the Efron and Tibshirani book), but implemented in
+<code>bootstrap</code> package.</li>
+</ul>
+</div>
+<div id="run-this-on-the-irs-data" class="section level2">
+<h2>Run this on the IRS data:</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmNhPWJjYW5vbihpcnMkVGltZSwgMTAwMCwgbWVhbilcbmJjYSRjb25mcG9pbnRzXG5gYGAifQ== -->
+<pre class="r"><code>bca=bcanon(irs$Time, 1000, mean)
 bca$confpoints</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## use 2.5% and 97.5% points for CI
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYmNhJGNvbmZwb2ludHMgJT4lIGFzX3RpYmJsZSgpICU+JSBcbiAgZmlsdGVyKGFscGhhICVpbiUgYygwLjAyNSwgMC45NzUpKSAlPiUgXG4gIHB1bGwoYGJjYSBwb2ludGApIC0+IGJfYmNhXG5iX2JjYVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-bca$confpoints %&gt;% as_tibble() %&gt;% 
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="use-2.5-and-97.5-points-for-ci" class="section level2">
+<h2>use 2.5% and 97.5% points for CI</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYmNhJGNvbmZwb2ludHMgJT4lIGFzX3RpYmJsZSgpICU+JSBcbiAgZmlsdGVyKGFscGhhICVpbiUgYygwLjAyNSwgMC45NzUpKSAlPiUgXG4gIHB1bGwoYGJjYSBwb2ludGApIC0+IGJfYmNhXG5iX2JjYVxuYGBgIn0= -->
+<pre class="r"><code>bca$confpoints %&gt;% as_tibble() %&gt;% 
   filter(alpha %in% c(0.025, 0.975)) %&gt;% 
   pull(`bca point`) -&gt; b_bca
 b_bca</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Comparing
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudGliYmxlKGxpbWl0PW15X25hbWVzLCBvX3QsIGJfdCwgYl9wLCBiX2JjYSlcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-tibble(limit=my_names, o_t, b_t, b_p, b_bca)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- The BCA interval says that the mean should be estimated even higher than the bootstrap percentile interval does. 
-- The BCA interval is the one to trust.
-
-
-## Bootstrapping the correlation
-
-Recall the soap data:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudXJsPVxcaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy9zb2FwLnR4dFxcXG5zb2FwPXJlYWRfZGVsaW0odXJsLFxcIFxcKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-url=\http://ritsokiguess.site/datafiles/soap.txt\
-soap=read_delim(url,\ \)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## The data
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4PXNwZWVkLCB5PXNjcmFwLCBjb2xvdXI9bGluZSkpK1xuICBnZW9tX3BvaW50KCkrZ2VvbV9zbW9vdGgobWV0aG9kPVxcbG1cXCwgc2U9RilcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-ggplot(soap, aes(x=speed, y=scrap, colour=line))+
-  geom_point()+geom_smooth(method=\lm\, se=F)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Comments
-
-- Line B produces less scrap for any given speed.
-- For line B, estimate the correlation between speed and scrap (with a confidence interval.)
-
-## Extract the line B data; standard correlation test 
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuc29hcCAlPiUgZmlsdGVyKGxpbmU9PVxcYlxcKSAtPiBsaW5lX2JcbndpdGgobGluZV9iLCBjb3IudGVzdChzcGVlZCwgc2NyYXApKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-soap %&gt;% filter(line==\b\) -&gt; line_b
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="comparing-1" class="section level2">
+<h2>Comparing</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGliYmxlKGxpbWl0PW15X25hbWVzLCBvX3QsIGJfdCwgYl9wLCBiX2JjYSlcbmBgYCJ9 -->
+<pre class="r"><code>tibble(limit=my_names, o_t, b_t, b_p, b_bca)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>The BCA interval says that the mean should be estimated even higher
+than the bootstrap percentile interval does.</li>
+<li>The BCA interval is the one to trust.</li>
+</ul>
+</div>
+<div id="bootstrapping-the-correlation" class="section level2">
+<h2>Bootstrapping the correlation</h2>
+<p>Recall the soap data:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudXJsPVwiaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy9zb2FwLnR4dFwiXG5zb2FwPXJlYWRfZGVsaW0odXJsLFwiIFwiKVxuYGBgIn0= -->
+<pre class="r"><code>url=&quot;http://ritsokiguess.site/datafiles/soap.txt&quot;
+soap=read_delim(url,&quot; &quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="the-data" class="section level2">
+<h2>The data</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHNvYXAsIGFlcyh4PXNwZWVkLCB5PXNjcmFwLCBjb2xvdXI9bGluZSkpK1xuICBnZW9tX3BvaW50KCkrZ2VvbV9zbW9vdGgobWV0aG9kPVwibG1cIiwgc2U9RilcbmBgYCJ9 -->
+<pre class="r"><code>ggplot(soap, aes(x=speed, y=scrap, colour=line))+
+  geom_point()+geom_smooth(method=&quot;lm&quot;, se=F)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="comments-1" class="section level2">
+<h2>Comments</h2>
+<ul>
+<li>Line B produces less scrap for any given speed.</li>
+<li>For line B, estimate the correlation between speed and scrap (with a
+confidence interval.)</li>
+</ul>
+</div>
+<div id="extract-the-line-b-data-standard-correlation-test" class="section level2">
+<h2>Extract the line B data; standard correlation test</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc29hcCAlPiUgZmlsdGVyKGxpbmU9PVwiYlwiKSAtPiBsaW5lX2JcbndpdGgobGluZV9iLCBjb3IudGVzdChzcGVlZCwgc2NyYXApKVxuYGBgIn0= -->
+<pre class="r"><code>soap %&gt;% filter(line==&quot;b&quot;) -&gt; line_b
 with(line_b, cor.test(speed, scrap))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-## Bootstrapping a correlation
-
-- Sample from data with replacement, but have to keep the `speed`-`scrap` *pairs* together
-- Sample *rows* at random, then take the variable values that belong to those rows:
-
-*** REDO THIS ***
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucmVydW4oMTAwMCwgc2FtcGxlKDE6bnJvdyhsaW5lX2IpLCByZXBsYWNlPVQpKSAlPiVcbiAgbWFwKH5zbGljZShsaW5lX2IsIC4pKSAlPiUgXG4gIG1hcF9kYmwofndpdGgoLixjb3Ioc3BlZWQsIHNjcmFwKSkpIC0+IGNvcnNcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-rerun(1000, sample(1:nrow(line_b), replace=T)) %&gt;%
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="bootstrapping-a-correlation" class="section level2">
+<h2>Bootstrapping a correlation</h2>
+<ul>
+<li>Sample from data with replacement, but have to keep the
+<code>speed</code>-<code>scrap</code> <em>pairs</em> together</li>
+<li>Sample <em>rows</em> at random, then take the variable values that
+belong to those rows:</li>
+</ul>
+<p>*** REDO THIS ***</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVydW4oMTAwMCwgc2FtcGxlKDE6bnJvdyhsaW5lX2IpLCByZXBsYWNlPVQpKSAlPiVcbiAgbWFwKH5zbGljZShsaW5lX2IsIC4pKSAlPiUgXG4gIG1hcF9kYmwofndpdGgoLixjb3Ioc3BlZWQsIHNjcmFwKSkpIC0+IGNvcnNcbmBgYCJ9 -->
+<pre class="r"><code>rerun(1000, sample(1:nrow(line_b), replace=T)) %&gt;%
   map(~slice(line_b, .)) %&gt;% 
   map_dbl(~with(.,cor(speed, scrap))) -&gt; cors</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## A picture of this 
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHRpYmJsZShjb3JzKSwgYWVzKHg9Y29ycykpK2dlb21faGlzdG9ncmFtKGJpbnM9MTUpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-ggplot(tibble(cors), aes(x=cors))+geom_histogram(bins=15)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Comments and next steps
-
-- This is very left-skewed.
-- Bootstrap percentile interval is:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuKGJfcD1xdWFudGlsZShjb3JzLCBjKDAuMDI1LCAwLjk3NSkpKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-(b_p=quantile(cors, c(0.025, 0.975)))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- We probably need the BCA interval instead.
-
-## Getting the BCA interval 1/2
-
-- To use `bcanon`, write a function that takes a vector of row numbers and returns the correlation between `speed` and `scrap` for those rows:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudGhldGE9ZnVuY3Rpb24ocm93cywgZCkge1xuICBkICU+JSBzbGljZShyb3dzKSAlPiUgd2l0aCguLCBjb3Ioc3BlZWQsIHNjcmFwKSlcbn1cbnRoZXRhKDE6MywgbGluZV9iKVxubGluZV9iICU+JSBzbGljZSgxOjMpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-theta=function(rows, d) {
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="a-picture-of-this" class="section level2">
+<h2>A picture of this</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpYmJsZShjb3JzKSwgYWVzKHg9Y29ycykpK2dlb21faGlzdG9ncmFtKGJpbnM9MTUpXG5gYGAifQ== -->
+<pre class="r"><code>ggplot(tibble(cors), aes(x=cors))+geom_histogram(bins=15)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="comments-and-next-steps" class="section level2">
+<h2>Comments and next steps</h2>
+<ul>
+<li>This is very left-skewed.</li>
+<li>Bootstrap percentile interval is:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuKGJfcD1xdWFudGlsZShjb3JzLCBjKDAuMDI1LCAwLjk3NSkpKVxuYGBgIn0= -->
+<pre class="r"><code>(b_p=quantile(cors, c(0.025, 0.975)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>We probably need the BCA interval instead.</li>
+</ul>
+</div>
+<div id="getting-the-bca-interval-12" class="section level2">
+<h2>Getting the BCA interval 1/2</h2>
+<ul>
+<li>To use <code>bcanon</code>, write a function that takes a vector of
+row numbers and returns the correlation between <code>speed</code> and
+<code>scrap</code> for those rows:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGhldGE9ZnVuY3Rpb24ocm93cywgZCkge1xuICBkICU+JSBzbGljZShyb3dzKSAlPiUgd2l0aCguLCBjb3Ioc3BlZWQsIHNjcmFwKSlcbn1cbnRoZXRhKDE6MywgbGluZV9iKVxubGluZV9iICU+JSBzbGljZSgxOjMpXG5gYGAifQ== -->
+<pre class="r"><code>theta=function(rows, d) {
   d %&gt;% slice(rows) %&gt;% with(., cor(speed, scrap))
 }
 theta(1:3, line_b)
 line_b %&gt;% slice(1:3)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- That looks about right.
-
-## Getting the BCA interval 2/2
-
-- Inputs to `bcanon` are now:
-  - row numbers (1 through 12 in our case: 12 rows in `line_b`)
-  - number of bootstrap samples
-  - the function we just wrote
-  - the data frame:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucG9pbnRzPWJjYW5vbigxOjEyLCAxMDAwLCB0aGV0YSwgbGluZV9iKSRjb25mcG9pbnRzXG5wb2ludHMgJT4lIGFzX3RpYmJsZSgpICU+JSBcbiAgZmlsdGVyKGFscGhhICVpbiUgYygwLjAyNSwgMC45NzUpKSAlPiUgXG4gIHB1bGwoYGJjYSBwb2ludGApIC0+IGJfYmNhXG5iX2JjYVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-points=bcanon(1:12, 1000, theta, line_b)$confpoints
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>That looks about right.</li>
+</ul>
+</div>
+<div id="getting-the-bca-interval-22" class="section level2">
+<h2>Getting the BCA interval 2/2</h2>
+<ul>
+<li>Inputs to <code>bcanon</code> are now:
+<ul>
+<li>row numbers (1 through 12 in our case: 12 rows in
+<code>line_b</code>)</li>
+<li>number of bootstrap samples</li>
+<li>the function we just wrote</li>
+<li>the data frame:</li>
+</ul></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9pbnRzPWJjYW5vbigxOjEyLCAxMDAwLCB0aGV0YSwgbGluZV9iKSRjb25mcG9pbnRzXG5wb2ludHMgJT4lIGFzX3RpYmJsZSgpICU+JSBcbiAgZmlsdGVyKGFscGhhICVpbiUgYygwLjAyNSwgMC45NzUpKSAlPiUgXG4gIHB1bGwoYGJjYSBwb2ludGApIC0+IGJfYmNhXG5iX2JjYVxuYGBgIn0= -->
+<pre class="r"><code>points=bcanon(1:12, 1000, theta, line_b)$confpoints
 points %&gt;% as_tibble() %&gt;% 
   filter(alpha %in% c(0.025, 0.975)) %&gt;% 
   pull(`bca point`) -&gt; b_bca
 b_bca</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-## Comparing the results
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudGliYmxlKGxpbWl0PW15X25hbWVzLCBvX2MsIGJfcCwgYl9iY2EpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-tibble(limit=my_names, o_c, b_p, b_bca)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-- The bootstrap percentile interval doesn&#39;t go down far enough. 
-- The BCA interval seems to do a better job than the ordinary `cor.test` interval in capturing the skewness of the distribution.
-
-## A problem
-
-Consider this example: samples of UK and Ontario (Canada) children, and their journey times to school, in minutes:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubXlfdXJsPVxcaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy90by1zY2hvb2wuY3N2XFxcbnRvX3NjaG9vbD1yZWFkX2NzdihteV91cmwpXG50b19zY2hvb2xcbnRvX3NjaG9vbCAlPiUgY291bnQobG9jYXRpb24pXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-my_url=\http://ritsokiguess.site/datafiles/to-school.csv\
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="comparing-the-results" class="section level2">
+<h2>Comparing the results</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGliYmxlKGxpbWl0PW15X25hbWVzLCBvX2MsIGJfcCwgYl9iY2EpXG5gYGAifQ== -->
+<pre class="r"><code>tibble(limit=my_names, o_c, b_p, b_bca)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>The bootstrap percentile interval doesn’t go down far enough.</li>
+<li>The BCA interval seems to do a better job than the ordinary
+<code>cor.test</code> interval in capturing the skewness of the
+distribution.</li>
+</ul>
+</div>
+<div id="a-problem" class="section level2">
+<h2>A problem</h2>
+<p>Consider this example: samples of UK and Ontario (Canada) children,
+and their journey times to school, in minutes:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlfdXJsPVwiaHR0cDovL3JpdHNva2lndWVzcy5zaXRlL2RhdGFmaWxlcy90by1zY2hvb2wuY3N2XCJcbnRvX3NjaG9vbD1yZWFkX2NzdihteV91cmwpXG50b19zY2hvb2xcbnRvX3NjaG9vbCAlPiUgY291bnQobG9jYXRpb24pXG5gYGAifQ== -->
+<pre class="r"><code>my_url=&quot;http://ritsokiguess.site/datafiles/to-school.csv&quot;
 to_school=read_csv(my_url)
 to_school
 to_school %&gt;% count(location)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-We want to compare the mean journey times in the two different places. This is a two-sample sitation, and if we are not careful with the bootstrap, things will go wrong:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuc2FtcGxlKDE6bnJvdyh0b19zY2hvb2wpLCByZXBsYWNlPVQpICU+JSBzbGljZSh0b19zY2hvb2wsIC4pICU+JSBjb3VudChsb2NhdGlvbilcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-sample(1:nrow(to_school), replace=T) %&gt;% slice(to_school, .) %&gt;% count(location)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-Our original samples were 40 from each location, but by randomly resampling rows, we probably *don&#39;t* get 40 from each. We need to draw &quot;stratified resamples&quot; to ensure that we get 40 from each place. This is hard to organize with the build-it-yourself bootstrap. To make things easier, we use the `rsample` package, but then we have to worry about handling the results.
-
-## Automating the bootstrap
-
-Let&#39;s go back to our IRS data for a moment:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuaXJzXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-irs</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-What happens if we use `rsample`  to resample from these? Let&#39;s just do a few to start. `rsample` has a function `bootstraps` that does this:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZCA8LSBib290c3RyYXBzKGlycywgdGltZXM9MTAwMCkgXG5kXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-d &lt;- bootstraps(irs, times=1000) 
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>We want to compare the mean journey times in the two different
+places. This is a two-sample sitation, and if we are not careful with
+the bootstrap, things will go wrong:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FtcGxlKDE6bnJvdyh0b19zY2hvb2wpLCByZXBsYWNlPVQpICU+JSBzbGljZSh0b19zY2hvb2wsIC4pICU+JSBjb3VudChsb2NhdGlvbilcbmBgYCJ9 -->
+<pre class="r"><code>sample(1:nrow(to_school), replace=T) %&gt;% slice(to_school, .) %&gt;% count(location)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Our original samples were 40 from each location, but by randomly
+resampling rows, we probably <em>don’t</em> get 40 from each. We need to
+draw “stratified resamples” to ensure that we get 40 from each place.
+This is hard to organize with the build-it-yourself bootstrap. To make
+things easier, we use the <code>rsample</code> package, but then we have
+to worry about handling the results.</p>
+</div>
+<div id="automating-the-bootstrap" class="section level2">
+<h2>Automating the bootstrap</h2>
+<p>Let’s go back to our IRS data for a moment:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaXJzXG5gYGAifQ== -->
+<pre class="r"><code>irs</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>What happens if we use <code>rsample</code> to resample from these?
+Let’s just do a few to start. <code>rsample</code> has a function
+<code>bootstraps</code> that does this:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZCA8LSBib290c3RyYXBzKGlycywgdGltZXM9MTAwMCkgXG5kXG5gYGAifQ== -->
+<pre class="r"><code>d &lt;- bootstraps(irs, times=1000) 
 d</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-Each of those things in `splits` is one bootstrap resample. To get at the things in them, we use `analysis`:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZCAlPiUgbXV0YXRlKHNhbXBsZT1tYXAoc3BsaXRzLCB+YW5hbHlzaXMoLikpKSAtPiBkZFxuZGRcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-d %&gt;% mutate(sample=map(splits, ~analysis(.))) -&gt; dd
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Each of those things in <code>splits</code> is one bootstrap
+resample. To get at the things in them, we use
+<code>analysis</code>:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZCAlPiUgbXV0YXRlKHNhbXBsZT1tYXAoc3BsaXRzLCB+YW5hbHlzaXMoLikpKSAtPiBkZFxuZGRcbmBgYCJ9 -->
+<pre class="r"><code>d %&gt;% mutate(sample=map(splits, ~analysis(.))) -&gt; dd
 dd</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-and then `unnest` the actual samples to see them:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZGQgJT4lIHVubmVzdChzYW1wbGUpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-dd %&gt;% unnest(sample)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-The values in `Time` are the resampled-with-replacement times to fill in the form.
-
-What we cared about here was the bootstrap distribution of the sample mean, so that for each of the samples in `dd` we need to find the mean `Time` in it:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZGQgJT4lIG11dGF0ZSh0aGVfbWVhbj1tYXBfZGJsKHNhbXBsZSwgfm1lYW4oLiRUaW1lKSkpIC0+IGRkZFxuZGRkXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-dd %&gt;% mutate(the_mean=map_dbl(sample, ~mean(.$Time))) -&gt; ddd
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>and then <code>unnest</code> the actual samples to see them:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGQgJT4lIHVubmVzdChzYW1wbGUpXG5gYGAifQ== -->
+<pre class="r"><code>dd %&gt;% unnest(sample)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The values in <code>Time</code> are the resampled-with-replacement
+times to fill in the form.</p>
+<p>What we cared about here was the bootstrap distribution of the sample
+mean, so that for each of the samples in <code>dd</code> we need to find
+the mean <code>Time</code> in it:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGQgJT4lIG11dGF0ZSh0aGVfbWVhbj1tYXBfZGJsKHNhbXBsZSwgfm1lYW4oLiRUaW1lKSkpIC0+IGRkZFxuZGRkXG5gYGAifQ== -->
+<pre class="r"><code>dd %&gt;% mutate(the_mean=map_dbl(sample, ~mean(.$Time))) -&gt; ddd
 ddd</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-and for example make a histogram of them, to see how normal this is:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KGRkZCwgYWVzKHg9dGhlX21lYW4pKStnZW9tX2hpc3RvZ3JhbShiaW5zPTEwKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-ggplot(ddd, aes(x=the_mean))+geom_histogram(bins=10)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-This actually looks pretty normal:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KGRkZCwgYWVzKHNhbXBsZT10aGVfbWVhbikpK3N0YXRfcXEoKStzdGF0X3FxX2xpbmUoKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-ggplot(ddd, aes(sample=the_mean))+stat_qq()+stat_qq_line()</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-all of which suggests that the $t$-interval for the mean:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxud2l0aChpcnMsIHQudGVzdChUaW1lKSlcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-with(irs, t.test(Time))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-and some kind of bootstrap interval for the mean, say the percentile-based one:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucXVhbnRpbGUoZGRkJHRoZV9tZWFuLCBjKDAuMDI1LCAwLjk3NSkpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-quantile(ddd$the_mean, c(0.025, 0.975))</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-won&#39;t be all that far apart.
-
-How do I get the BCa interval from this output? First write a function that gets the mean Time from given rows of a data frame:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudGhldGEgPC0gZnVuY3Rpb24ocm93cywgZCkge1xuICBkICU+JSBzbGljZShyb3dzKSAlPiUgXG4gICAgd2l0aCguLCBtZWFuKFRpbWUpKVxufVxuaXJzICU+JSBzbGljZSgxOjMpXG50aGV0YSgxOjMsIGlycylcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-theta &lt;- function(rows, d) {
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>and for example make a histogram of them, to see how normal this
+is:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGRkZCwgYWVzKHg9dGhlX21lYW4pKStnZW9tX2hpc3RvZ3JhbShiaW5zPTEwKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(ddd, aes(x=the_mean))+geom_histogram(bins=10)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>This actually looks pretty normal:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGRkZCwgYWVzKHNhbXBsZT10aGVfbWVhbikpK3N0YXRfcXEoKStzdGF0X3FxX2xpbmUoKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(ddd, aes(sample=the_mean))+stat_qq()+stat_qq_line()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>all of which suggests that the <span class="math inline">\(t\)</span>-interval for the mean:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud2l0aChpcnMsIHQudGVzdChUaW1lKSlcbmBgYCJ9 -->
+<pre class="r"><code>with(irs, t.test(Time))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>and some kind of bootstrap interval for the mean, say the
+percentile-based one:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucXVhbnRpbGUoZGRkJHRoZV9tZWFuLCBjKDAuMDI1LCAwLjk3NSkpXG5gYGAifQ== -->
+<pre class="r"><code>quantile(ddd$the_mean, c(0.025, 0.975))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>won’t be all that far apart.</p>
+<p>How do I get the BCa interval from this output? First write a
+function that gets the mean Time from given rows of a data frame:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGhldGEgPC0gZnVuY3Rpb24ocm93cywgZCkge1xuICBkICU+JSBzbGljZShyb3dzKSAlPiUgXG4gICAgd2l0aCguLCBtZWFuKFRpbWUpKVxufVxuaXJzICU+JSBzbGljZSgxOjMpXG50aGV0YSgxOjMsIGlycylcbmBgYCJ9 -->
+<pre class="r"><code>theta &lt;- function(rows, d) {
   d %&gt;% slice(rows) %&gt;% 
     with(., mean(Time))
 }
 irs %&gt;% slice(1:3)
 theta(1:3, irs)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-check. And then feed into `bcanon` these things:
-
-- row numbers of data frame that we want to use (all of them)
-- number of ... oh, but this uses the original data, or rows thereof
-
-can I do &quot;stratified resampling&quot;? [Yes](https://gist.github.com/ramhiser/8b5ffd0ffbfbf1f49e71bbbd330bf72d)
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudG9fc2Nob29sICU+JSBcbiAgZ3JvdXBfYnkobG9jYXRpb24pICU+JSBcbiAgc2FtcGxlX2ZyYWMocmVwbGFjZT1UKSAlPiUgXG4gIGNvdW50KGxvY2F0aW9uKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-to_school %&gt;% 
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>check. And then feed into <code>bcanon</code> these things:</p>
+<ul>
+<li>row numbers of data frame that we want to use (all of them)</li>
+<li>number of … oh, but this uses the original data, or rows
+thereof</li>
+</ul>
+<p>can I do “stratified resampling”? <a href="https://gist.github.com/ramhiser/8b5ffd0ffbfbf1f49e71bbbd330bf72d">Yes</a></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudG9fc2Nob29sICU+JSBcbiAgZ3JvdXBfYnkobG9jYXRpb24pICU+JSBcbiAgc2FtcGxlX2ZyYWMocmVwbGFjZT1UKSAlPiUgXG4gIGNvdW50KGxvY2F0aW9uKVxuYGBgIn0= -->
+<pre class="r"><code>to_school %&gt;% 
   group_by(location) %&gt;% 
   sample_frac(replace=T) %&gt;% 
   count(location)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-that seems to work, but I want to try it on groups of different sizes
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ3JvdXBzIDwtIHRyaWJibGUoXG4gIH5ncm91cCwgfnksXG4gIFxcQVxcLCAxLFxuICBcXEFcXCwgMixcbiAgXFxCXFwsIDMsXG4gIFxcQlxcLCA0LFxuICBcXEJcXCwgNVxuKVxuZ3JvdXBzXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-groups &lt;- tribble(
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>that seems to work, but I want to try it on groups of different
+sizes</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3JvdXBzIDwtIHRyaWJibGUoXG4gIH5ncm91cCwgfnksXG4gIFwiQVwiLCAxLFxuICBcIkFcIiwgMixcbiAgXCJCXCIsIDMsXG4gIFwiQlwiLCA0LFxuICBcIkJcIiwgNVxuKVxuZ3JvdXBzXG5gYGAifQ== -->
+<pre class="r"><code>groups &lt;- tribble(
   ~group, ~y,
-  \A\, 1,
-  \A\, 2,
-  \B\, 3,
-  \B\, 4,
-  \B\, 5
+  &quot;A&quot;, 1,
+  &quot;A&quot;, 2,
+  &quot;B&quot;, 3,
+  &quot;B&quot;, 4,
+  &quot;B&quot;, 5
 )
 groups</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ3JvdXBzICU+JSBcbiAgZ3JvdXBfYnkoZ3JvdXApICU+JSBcbiAgc2FtcGxlX2ZyYWMocmVwbGFjZT1UKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-groups %&gt;% 
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3JvdXBzICU+JSBcbiAgZ3JvdXBfYnkoZ3JvdXApICU+JSBcbiAgc2FtcGxlX2ZyYWMocmVwbGFjZT1UKVxuYGBgIn0= -->
+<pre class="r"><code>groups %&gt;% 
   group_by(group) %&gt;% 
   sample_frac(replace=T)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucmVzYW1wbGVfYnlfZ3JvdXAgPC0gZnVuY3Rpb24oZCwgdmFyLCBncCkge1xuICAgIGQgJT4lIGdyb3VwX2J5KHt7IGdwIH19KSAlPiUgXG4gICAgc2FtcGxlX2ZyYWMocmVwbGFjZT1UKVxufVxuZ3JvdXBzICU+JSByZXNhbXBsZV9ieV9ncm91cCh2YXI9eSwgZ3A9Z3JvdXApXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-resample_by_group &lt;- function(d, var, gp) {
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVzYW1wbGVfYnlfZ3JvdXAgPC0gZnVuY3Rpb24oZCwgdmFyLCBncCkge1xuICAgIGQgJT4lIGdyb3VwX2J5KHt7IGdwIH19KSAlPiUgXG4gICAgc2FtcGxlX2ZyYWMocmVwbGFjZT1UKVxufVxuZ3JvdXBzICU+JSByZXNhbXBsZV9ieV9ncm91cCh2YXI9eSwgZ3A9Z3JvdXApXG5gYGAifQ== -->
+<pre class="r"><code>resample_by_group &lt;- function(d, var, gp) {
     d %&gt;% group_by({{ gp }}) %&gt;% 
     sample_frac(replace=T)
 }
 groups %&gt;% resample_by_group(var=y, gp=group)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-second step: difference in means between (evidently two) grooups
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubWVhbl9kaWZmPWZ1bmN0aW9uKGQsIHZhciwgZ3ApIHtcbiAgZCAlPiUgZ3JvdXBfYnkoe3sgZ3AgfX0pICU+JSBcbiAgICBzdW1tYXJpemUobT1tZWFuKHt7IHZhciB9fSkpICU+JSBwdWxsKG0pIC0+IHZcbiAgdlsxXS12WzJdXG59XG5tZWFuX2RpZmYoZ3JvdXBzLCB5LCBncm91cClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-mean_diff=function(d, var, gp) {
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>second step: difference in means between (evidently two) grooups</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbl9kaWZmPWZ1bmN0aW9uKGQsIHZhciwgZ3ApIHtcbiAgZCAlPiUgZ3JvdXBfYnkoe3sgZ3AgfX0pICU+JSBcbiAgICBzdW1tYXJpemUobT1tZWFuKHt7IHZhciB9fSkpICU+JSBwdWxsKG0pIC0+IHZcbiAgdlsxXS12WzJdXG59XG5tZWFuX2RpZmYoZ3JvdXBzLCB5LCBncm91cClcbmBgYCJ9 -->
+<pre class="r"><code>mean_diff=function(d, var, gp) {
   d %&gt;% group_by({{ gp }}) %&gt;% 
     summarize(m=mean({{ var }})) %&gt;% pull(m) -&gt; v
   v[1]-v[2]
 }
 mean_diff(groups, y, group)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-bootstrap it
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucmVydW4oMTAwMCwgcmVzYW1wbGVfYnlfZ3JvdXAoZ3JvdXBzLCB5LCBncm91cCkpICU+JSBcbiAgbWFwX2RibCh+bWVhbl9kaWZmKC4sIHksIGdyb3VwKSkgLT4gbWVhbnNcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-rerun(1000, resample_by_group(groups, y, group)) %&gt;% 
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>bootstrap it</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVydW4oMTAwMCwgcmVzYW1wbGVfYnlfZ3JvdXAoZ3JvdXBzLCB5LCBncm91cCkpICU+JSBcbiAgbWFwX2RibCh+bWVhbl9kaWZmKC4sIHksIGdyb3VwKSkgLT4gbWVhbnNcbmBgYCJ9 -->
+<pre class="r"><code>rerun(1000, resample_by_group(groups, y, group)) %&gt;% 
   map_dbl(~mean_diff(., y, group)) -&gt; means</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-vis
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyh4PW1lYW5zKSkrZ2VvbV9oaXN0b2dyYW0oKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-ggplot(tibble(means), aes(x=means))+geom_histogram()</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-or even
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxudGliYmxlKG1lYW5zKSAlPiUgY291bnQobWVhbnMpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-tibble(means) %&gt;% count(means)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-this distribution is discrete but more or less normal:
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyhzYW1wbGU9bWVhbnMpKStzdGF0X3FxKCkrc3RhdF9xcV9saW5lKClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-ggplot(tibble(means), aes(sample=means))+stat_qq()+stat_qq_line()</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-
-now do it on travel times: this is wrong, because I have to sample the rows properly
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucmVydW4oMTAwMCwgcmVzYW1wbGVfYnlfZ3JvdXAodG9fc2Nob29sLCB0cmF2ZWx0aW1lLCBsb2NhdGlvbikpICU+JSBcbiAgbWFwX2RibCh+bWVhbl9kaWZmKC4sIHRyYXZlbHRpbWUsIGxvY2F0aW9uKSkgLT4gbWVhbnNcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-rerun(1000, resample_by_group(to_school, traveltime, location)) %&gt;% 
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>vis</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyh4PW1lYW5zKSkrZ2VvbV9oaXN0b2dyYW0oKVxuYGBgIn0= -->
+<pre class="r"><code>ggplot(tibble(means), aes(x=means))+geom_histogram()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>or even</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGliYmxlKG1lYW5zKSAlPiUgY291bnQobWVhbnMpXG5gYGAifQ== -->
+<pre class="r"><code>tibble(means) %&gt;% count(means)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>this distribution is discrete but more or less normal:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyhzYW1wbGU9bWVhbnMpKStzdGF0X3FxKCkrc3RhdF9xcV9saW5lKClcbmBgYCJ9 -->
+<pre class="r"><code>ggplot(tibble(means), aes(sample=means))+stat_qq()+stat_qq_line()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>now do it on travel times: this is wrong, because I have to sample
+the rows properly</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVydW4oMTAwMCwgcmVzYW1wbGVfYnlfZ3JvdXAodG9fc2Nob29sLCB0cmF2ZWx0aW1lLCBsb2NhdGlvbikpICU+JSBcbiAgbWFwX2RibCh+bWVhbl9kaWZmKC4sIHRyYXZlbHRpbWUsIGxvY2F0aW9uKSkgLT4gbWVhbnNcbmBgYCJ9 -->
+<pre class="r"><code>rerun(1000, resample_by_group(to_school, traveltime, location)) %&gt;% 
   map_dbl(~mean_diff(., traveltime, location)) -&gt; means</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyh4PW1lYW5zKSkrZ2VvbV9oaXN0b2dyYW0oYmlucz0yMClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-ggplot(tibble(means), aes(x=means))+geom_histogram(bins=20)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-normal quantile plot
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyhzYW1wbGU9bWVhbnMpKStzdGF0X3FxKCkrc3RhdF9xcV9saW5lKClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-ggplot(tibble(means), aes(sample=means))+stat_qq()+stat_qq_line()</code></pre>
-<p>```</p>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyh4PW1lYW5zKSkrZ2VvbV9oaXN0b2dyYW0oYmlucz0yMClcbmBgYCJ9 -->
+<pre class="r"><code>ggplot(tibble(means), aes(x=means))+geom_histogram(bins=20)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>normal quantile plot</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KHRpYmJsZShtZWFucyksIGFlcyhzYW1wbGU9bWVhbnMpKStzdGF0X3FxKCkrc3RhdF9xcV9saW5lKClcbmBgYCJ9 -->
+<pre class="r"><code>ggplot(tibble(means), aes(sample=means))+stat_qq()+stat_qq_line()</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
