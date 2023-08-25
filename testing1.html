@@ -242,6 +242,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -318,6 +319,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="testing1_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="testing1_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -344,8 +348,9 @@
 </section>
 <section id="code" class="slide level2">
 <h2>Code</h2>
+<p>knitr::knit_hooks$restore()</p>
 <p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
-<p>[1] 2</p>
+<p>1 + 1[1] 2</p>
 <div class="footer footer-default">
 
 </div>

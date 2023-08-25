@@ -1,0 +1,20 @@
+---
+title: "pre-dash"
+format: html
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+for all rmd files, prepend a _
+
+```{r}
+rmds <- list.files(pattern = "*.Rmd")
+rmds %>% enframe() %>% 
+  filter(!str_detect(value, "^_")) %>% 
+  mutate(new_name = str_c("_", value)) -> renames
+with(renames, file.rename(value, new_name))
+```
+

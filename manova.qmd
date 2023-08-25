@@ -1,0 +1,350 @@
+---
+title: "Multivariate Analysis of Variance"
+---
+
+
+## Multivariate analysis of variance
+
+
+* Standard ANOVA has just one response variable.
+
+* What if you have more than one response?
+
+* Try an ANOVA on each response separately.
+
+* But might miss some kinds of interesting dependence between the responses that distinguish the groups.
+
+
+
+## Packages
+```{r bManova-1, results='hide', message=FALSE}
+library(car) # may need to install first
+library(tidyverse)
+library(MVTests) # also may need to install
+```
+
+   
+
+
+## Small example
+
+
+* Measure yield and seed weight of plants grown under 2 conditions: low and high amounts of fertilizer.
+
+* Data (fertilizer, yield, seed weight):
+```{r bManova-2 }
+url <- "http://ritsokiguess.site/datafiles/manova1.txt"
+hilo <- read_delim(url, " ")
+```
+ 
+
+* 2 responses, yield and seed weight.
+
+
+
+## The data
+```{r bManova-3 }
+hilo
+```
+
+   
+
+
+## Boxplot for yield for each fertilizer group
+```{r ferto,size="small",fig.height=3}
+ggplot(hilo, aes(x = fertilizer, y = yield)) + geom_boxplot()
+```
+ 
+Yields overlap for fertilizer groups.
+
+
+## Boxplot for weight for each fertilizer group
+```{r casteldisangro,size="small",fig.height=3}
+ggplot(hilo, aes(x = fertilizer, y = weight)) + geom_boxplot()
+```
+ 
+
+Weights overlap for fertilizer groups.
+
+
+## ANOVAs for yield and weight
+
+\small
+```{r bManova-4 }
+hilo.y <- aov(yield ~ fertilizer, data = hilo)
+summary(hilo.y)
+hilo.w <- aov(weight ~ fertilizer, data = hilo)
+summary(hilo.w)
+```
+ 
+\normalsize
+
+Neither response depends significantly on fertilizer. But...
+
+
+## Plotting both responses at once
+
+- Have two response variables (not more), so can plot the
+response variables against *each other*, labelling points by
+which fertilizer group they're from.
+
+\footnotesize
+
+- First, create data frame with points $(31,14)$ and $(38,10)$ (why? Later):
+
+```{r bManova-5, size="footnotesize"}
+d <- tribble(
+  ~line_x, ~line_y,
+  31, 14,
+  38, 10
+)
+```
+
+- Then plot data as points, and add line through points in `d`:
+
+```{r bManova-6 }
+ggplot(hilo, aes(x = yield, y = weight,
+                      colour = fertilizer)) + geom_point() +
+  geom_line(data = d,
+            aes(x = line_x, y = line_y, colour = NULL)) -> g
+```
+
+\normalsize
+
+## The plot
+```{r charlecombe, echo=F, fig.height=4}
+g
+```
+
+## Comments
+
+- Graph construction:
+  - Joining points in `d` by line.
+  - `geom_line` 
+inherits `colour` from `aes` in `ggplot`.
+  - Data frame `d` has
+no `fertilizer` (previous `colour`), so have to unset.
+
+- Results:
+  * High-fertilizer plants have both yield and weight high.
+
+  * True even though no sig difference in yield or weight individually.
+
+  * Drew line separating highs from lows on plot.
+
+
+
+## MANOVA finds multivariate differences
+
+
+* Is difference found by diagonal line significant? MANOVA finds out.
+
+\footnotesize
+
+```{r bManova-7, echo=FALSE}
+options(width = 60)
+```
+
+
+```{r bManova-8}
+response <- with(hilo, cbind(yield, weight))
+hilo.1 <- manova(response ~ fertilizer, data = hilo)
+summary(hilo.1)
+```
+
+\normalsize 
+
+* Yes! Difference between groups is *diagonally*, not just up/down
+(weight) or left-right (yield). The *yield-weight combination* matters.
+
+
+
+
+## Strategy
+
+
+
+* Create new response variable by gluing together columns of
+responses, using `cbind`.
+
+* Use `manova` with new response, looks like `lm` otherwise.
+
+* With more than 2 responses, cannot draw graph. What then?
+
+* If MANOVA test significant, cannot use Tukey. What then?
+
+* Use *discriminant analysis* (of which more later).
+
+
+
+
+## Another way to do MANOVA
+
+using `Manova` from package `car`:
+
+```{r, include=FALSE}
+w <- getOption("width")
+options(width = 132)
+```
+
+
+\tiny
+```{r bManova-10}
+hilo.2.lm <- lm(response ~ fertilizer, data = hilo)
+hilo.2 <- Manova(hilo.2.lm)
+summary(hilo.2)
+```
+\normalsize
+
+```{r, include=FALSE}
+options(width = w)
+```
+
+
+## Comments
+
+* Same result as small-m `manova`.
+
+* `Manova` will also do *repeated measures*, coming up
+later.
+
+## Assumptions
+
+- normality of each response variable within each treatment group
+  - this is actually *multivariate* normality, with correlations
+
+- equal spreads: each response variable has same variances and correlations (with other response variables) within each treatment group. Here:
+  - yield has same spread for low and high fertilizer
+  - weight has same spread for low and high fertilizer
+  - correlation between yield and weight is same for low and high fertilizer
+- test equal spread using Box's $M$ test
+  - a certain amount of unequalness is OK, so only a concern if P-value from $M$-test is very small (eg. less than 0.001).
+  
+## Assumptions for yield-weight data
+
+For normal quantile plots, need "extra-long" with all the data values in one column:
+
+```{r}
+hilo %>% 
+  pivot_longer(-fertilizer, names_to = "xname", 
+               values_to = "xvalue") %>% 
+  ggplot(aes(sample = xvalue)) + stat_qq() + 
+    stat_qq_line() +
+    facet_grid(xname ~ fertilizer, scales = "free") -> g
+```
+
+There are only four observations per response variable - treatment group combination, so graphs are not very informative (over):
+
+## The plots
+
+```{r, fig.height=4}
+g
+```
+
+## Box M test
+
+- Make sure package `MVTests` loaded first. 
+- inputs:
+  - the response matrix (or, equivalently, the response-variable columns from your dataframe)
+  - the column with the grouping variable in it (most easily gotten with `$`).
+
+```{r}
+hilo %>% select(yield, weight) -> numeric_values
+summary(BoxM(numeric_values, hilo$fertilizer))
+```
+
+- No problem at all with unequal spreads.
+
+## Another example: peanuts
+
+
+*  Three different varieties
+of peanuts (mysteriously, 5, 6 and 8) planted in two different
+locations.
+
+* Three response variables: `y`, `smk` and
+`w`.
+
+```{r bManova-11, size="footnotesize"}
+u <- "http://ritsokiguess.site/datafiles/peanuts.txt"
+peanuts.orig <- read_delim(u, " ")
+```
+ 
+## The data
+
+\small
+```{r bManova-12}
+peanuts.orig
+```
+
+\normalsize
+
+## Setup for analysis
+
+```{r bManova-13 }
+peanuts.orig %>%
+  mutate(
+    location = factor(location),
+    variety = factor(variety)
+  ) -> peanuts
+response <- with(peanuts, cbind(y, smk, w))
+head(response)
+```
+
+
+
+## Analysis (using `Manova`)
+
+```{r, include=FALSE}
+w <- getOption("width")
+options(width = 100)
+```
+
+
+\tiny
+```{r bManova-14}
+peanuts.1 <- lm(response ~ location * variety, data = peanuts)
+peanuts.2 <- Manova(peanuts.1)
+summary(peanuts.2)
+```
+\normalsize 
+ 
+```{r, include=FALSE}
+options(width = w)
+```
+ 
+ 
+## Comments
+
+
+* Interaction not quite significant, but main effects are.
+
+* Combined response variable `(y,smk,w)` definitely depends
+on location and on variety
+
+* Weak dependence of `(y,smk,w)` on the location-variety *combination.*
+
+* Understanding that dependence beyond our scope right now.
+
+## Comments
+
+- this time there are only six observations per location  and four per variety, so normality is still difficult to be confident about
+
+- `y` at location 1 seems to be the worst for normality (long tails / outliers), and maybe `y` at location 2 is skewed left, but the others are not bad
+
+- there is some evidence of unequal spread (slopes of lines), but is it bad enough to worry about? (Box M-test, over).
+
+
+## Box's M tests
+
+- One for location, one for variety:
+
+```{r}
+summary(BoxM(response, peanuts$location))
+summary(BoxM(response, peanuts$variety))
+```
+
+- Neither of these P-values is low enough to worry about. (Remember, the P-value here has to be *really* small to indicate a problem.)
+
+
+

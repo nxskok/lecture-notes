@@ -1,11 +1,5 @@
 ---
 title: "Case study: windmill"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

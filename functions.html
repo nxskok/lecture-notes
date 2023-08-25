@@ -5,9 +5,10 @@
 <script src="functions_files/libs/quarto-html/popper.min.js"></script>
 <script src="functions_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="functions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="functions_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="functions_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="functions_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.335">
+  <meta name="generator" content="quarto-1.3.340">
 
   <title>Functions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -24,9 +25,10 @@
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
       width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -135,44 +137,44 @@
     font-weight: 400;
   }
 
-  .callout.callout-captioned.callout-style-simple .callout-body {
+  .callout.callout-titled.callout-style-simple .callout-body {
     margin-top: 0.2em;
   }
 
-  .callout:not(.callout-captioned) .callout-body {
+  .callout:not(.callout-titled) .callout-body {
       display: flex;
   }
 
-  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
     padding-left: 1.6em;
   }
 
-  .callout.callout-captioned .callout-header {
+  .callout.callout-titled .callout-header {
     padding-top: 0.2em;
     margin-bottom: -0.2em;
   }
 
-  .callout.callout-captioned .callout-caption  p {
+  .callout.callout-titled .callout-title  p {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
   }
     
-  .callout.callout-captioned.callout-style-simple .callout-content  p {
+  .callout.callout-titled.callout-style-simple .callout-content  p {
     margin-top: 0;
   }
 
-  .callout.callout-captioned.callout-style-default .callout-content  p {
+  .callout.callout-titled.callout-style-default .callout-content  p {
     margin-top: 0.7em;
   }
 
-  .callout.callout-style-simple div.callout-caption {
+  .callout.callout-style-simple div.callout-title {
     border-bottom: none;
     font-size: .9rem;
     font-weight: 600;
     opacity: 75%;
   }
 
-  .callout.callout-style-default  div.callout-caption {
+  .callout.callout-style-default  div.callout-title {
     border-bottom: none;
     font-weight: 600;
     opacity: 85%;
@@ -204,7 +206,7 @@
     background-size: 0.9rem 0.9rem;
   }
 
-  .callout-caption {
+  .callout-title {
     display: flex
   }
     
@@ -217,16 +219,16 @@
     display: none !important;
   }
 
-  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
     margin-bottom: 0.5rem;
   }
 
-  .callout.callout-captioned .callout-icon::before {
+  .callout.callout-titled .callout-icon::before {
     margin-top: .5rem;
     padding-right: .5rem;
   }
 
-  .callout:not(.callout-captioned) .callout-icon::before {
+  .callout:not(.callout-titled) .callout-icon::before {
     margin-top: 1rem;
     padding-right: .5rem;
   }
@@ -241,7 +243,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
   }
 
-  div.callout-note.callout-style-default .callout-caption {
+  div.callout-note.callout-style-default .callout-title {
     background-color: #dae6fb
   }
 
@@ -253,7 +255,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
   }
 
-  div.callout-important.callout-style-default .callout-caption {
+  div.callout-important.callout-style-default .callout-title {
     background-color: #f7dddc
   }
 
@@ -265,7 +267,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-warning.callout-style-default .callout-caption {
+  div.callout-warning.callout-style-default .callout-title {
     background-color: #fcefdc
   }
 
@@ -277,7 +279,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-tip.callout-style-default .callout-caption {
+  div.callout-tip.callout-style-default .callout-title {
     background-color: #ccf1e3
   }
 
@@ -289,7 +291,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
   }
 
-  div.callout-caution.callout-style-default .callout-caption {
+  div.callout-caution.callout-style-default .callout-title {
     background-color: #ffe5d0
   }
 
@@ -305,6 +307,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -381,6 +384,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="functions_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="functions_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -513,10 +519,13 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">y =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="fu">sqrt_minus_1</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  x        y
-1 0 1.414214
-2 1 1.732051</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"1.414214"},{"1":"1","2":"1.732051"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -526,15 +535,15 @@
 <li>Allow the value to be subtracted, before taking square root, to be input to function as well, thus:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>sqrt_minus_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x, d) {</span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">sqrt</span>(x <span class="sc">-</span> d)</span>
-<span id="cb22-3"><a href="#cb22-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>sqrt_minus_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x, d) {</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">sqrt</span>(x <span class="sc">-</span> d)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Call the function with the x and d inputs in the right order:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">51</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">51</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7</code></pre>
 </div>
@@ -543,7 +552,7 @@
 <li>or give the inputs names, in which case they can be in <em>any order</em>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">sqrt_minus_value</span>(<span class="at">d =</span> <span class="dv">2</span>, <span class="at">x =</span> <span class="dv">51</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">sqrt_minus_value</span>(<span class="at">d =</span> <span class="dv">2</span>, <span class="at">x =</span> <span class="dv">51</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7</code></pre>
 </div>
@@ -555,12 +564,12 @@
 <li>Many R functions have values that you can change if you want to, but usually you don’t want to, for example:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="cn">NA</span>, <span class="dv">6</span>, <span class="dv">7</span>)</span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="cn">NA</span>, <span class="dv">6</span>, <span class="dv">7</span>)</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -576,19 +585,19 @@
 <li>In our function, set a default value for d like this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>sqrt_minus_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">1</span>) {</span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">sqrt</span>(x <span class="sc">-</span> d)</span>
-<span id="cb31-3"><a href="#cb31-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>sqrt_minus_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">1</span>) {</span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">sqrt</span>(x <span class="sc">-</span> d)</span>
+<span id="cb30-3"><a href="#cb30-3"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>If you specify a value for d, it will be used. If you don’t, 1 will be used instead:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">51</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">51</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">51</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">51</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.071068</code></pre>
 </div>
@@ -600,7 +609,7 @@
 <li>What happened here?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in sqrt(x - d): NaNs produced</code></pre>
 </div>
@@ -614,10 +623,10 @@
 <li>Check that the square root will be OK first. Here’s how:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>sqrt_minus_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">1</span>) {</span>
-<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">stopifnot</span>(x <span class="sc">-</span> d <span class="sc">&gt;=</span> <span class="dv">0</span>)</span>
-<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">sqrt</span>(x <span class="sc">-</span> d)</span>
-<span id="cb39-4"><a href="#cb39-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>sqrt_minus_value <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">d =</span> <span class="dv">1</span>) {</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">stopifnot</span>(x <span class="sc">-</span> d <span class="sc">&gt;=</span> <span class="dv">0</span>)</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">sqrt</span>(x <span class="sc">-</span> d)</span>
+<span id="cb38-4"><a href="#cb38-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="what-happens-with-stopifnot" class="slide level2">
@@ -626,7 +635,7 @@
 <li>This should be good, and is:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">8</span>, <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.414214</code></pre>
 </div>
@@ -635,7 +644,7 @@
 <li>This should fail, and see how it does:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">sqrt_minus_value</span>(<span class="dv">6</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in sqrt_minus_value(6, 8): x - d &gt;= 0 is not TRUE</code></pre>
 </div>
@@ -652,17 +661,18 @@
 <li>For example, if you will be calculating a lot of regression-line slopes, you don’t have to do this from scratch: you can use R’s regression calculations, like this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>my_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">14</span>))</span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="co"># my_df</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>my_df<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> my_df)</span>
-<span id="cb44-4"><a href="#cb44-4"></a><span class="co"># summary(my_df.1)</span></span>
-<span id="cb44-5"><a href="#cb44-5"></a><span class="fu">tidy</span>(my_df<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 5
-  term        estimate std.error statistic p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 (Intercept)      8.5     1.88       4.53  0.0455
-2 x                1.1     0.686      1.60  0.250 </code></pre>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>my_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">14</span>))</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="co"># my_df</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a>my_df<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> my_df)</span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="co"># summary(my_df.1)</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a><span class="fu">tidy</span>(my_df<span class="fl">.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]},{"label":["estimate"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["std.error"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["statistic"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"(Intercept)","2":"8.5","3":"1.8774983","4":"4.527301","5":"0.04548594"},{"1":"x","2":"1.1","3":"0.6855655","4":"1.604515","5":"0.24980623"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -670,7 +680,7 @@
 <h2>Pulling out just the slope</h2>
 <p>Use <code>pluck</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">tidy</span>(my_df<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">"estimate"</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">tidy</span>(my_df<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">"estimate"</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.1</code></pre>
 </div>
@@ -684,16 +694,16 @@
 <li>Output: just the slope, a number. Thus:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>slope <span class="ot">&lt;-</span> <span class="cf">function</span>(xx, yy) {</span>
-<span id="cb48-2"><a href="#cb48-2"></a>  y<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(yy <span class="sc">~</span> xx)</span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">tidy</span>(y<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">"estimate"</span>, <span class="dv">2</span>)</span>
-<span id="cb48-4"><a href="#cb48-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>slope <span class="ot">&lt;-</span> <span class="cf">function</span>(xx, yy) {</span>
+<span id="cb46-2"><a href="#cb46-2"></a>  y<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(yy <span class="sc">~</span> xx)</span>
+<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">tidy</span>(y<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">"estimate"</span>, <span class="dv">2</span>)</span>
+<span id="cb46-4"><a href="#cb46-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Check using our data from before: correct:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">with</span>(my_df, <span class="fu">slope</span>(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">with</span>(my_df, <span class="fu">slope</span>(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.1</code></pre>
 </div>
@@ -705,10 +715,10 @@
 <li><code>lm</code> has a lot of options, with defaults, that we might want to change. Instead of intercepting all the possibilities and passing them on, we can do this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>slope <span class="ot">&lt;-</span> <span class="cf">function</span>(xx, yy, ...) {</span>
-<span id="cb51-2"><a href="#cb51-2"></a>  y<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(yy <span class="sc">~</span> xx, ...)</span>
-<span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">tidy</span>(y<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">"estimate"</span>, <span class="dv">2</span>)</span>
-<span id="cb51-4"><a href="#cb51-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>slope <span class="ot">&lt;-</span> <span class="cf">function</span>(xx, yy, ...) {</span>
+<span id="cb49-2"><a href="#cb49-2"></a>  y<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(yy <span class="sc">~</span> xx, ...)</span>
+<span id="cb49-3"><a href="#cb49-3"></a>  <span class="fu">tidy</span>(y<span class="fl">.1</span>) <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">"estimate"</span>, <span class="dv">2</span>)</span>
+<span id="cb49-4"><a href="#cb49-4"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>The <code>...</code> in the header line means “accept any other input”, and the <code>...</code> in the <code>lm</code> line means “pass anything other than <code>x</code> and <code>y</code> straight on to <code>lm</code>”.</li>
@@ -721,7 +731,7 @@
 <li>So we should be able to do this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">with</span>(my_df, <span class="fu">slope</span>(x, y, <span class="at">subset =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">with</span>(my_df, <span class="fu">slope</span>(x, y, <span class="at">subset =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
@@ -730,13 +740,14 @@
 <li>Just uses the last two observations in <code>x</code> and <code>y</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>my_df <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-      x     y
-  &lt;int&gt; &lt;dbl&gt;
-1     3    10
-2     4    14</code></pre>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>my_df <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["int"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"10"},{"1":"4","2":"14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -749,15 +760,14 @@
 <li>Suppose we have a data frame containing several different <code>x</code>’s to use in regressions, along with the <code>y</code> we had before:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x1 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>), <span class="at">x3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
-     x1    x2    x3
-  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
-1     1     8     2
-2     2     7     4
-3     3     6     6
-4     4     5     9</code></pre>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x1 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>), <span class="at">x3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x1"],"name":[1],"type":["int"],"align":["right"]},{"label":["x2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["x3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"8","3":"2"},{"1":"2","2":"7","3":"4"},{"1":"3","2":"6","3":"6"},{"1":"4","2":"5","3":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -774,12 +784,12 @@
 <li>Looping variable <code>i</code> goes from 1 to 3 (3 columns, thus 3 slopes):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>slopes <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">3</span>)</span>
-<span id="cb58-2"><a href="#cb58-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb58-3"><a href="#cb58-3"></a>  d <span class="sc">%&gt;%</span> <span class="fu">pull</span>(i) <span class="ot">-&gt;</span> xx</span>
-<span id="cb58-4"><a href="#cb58-4"></a>  slopes[i] <span class="ot">&lt;-</span> <span class="fu">slope</span>(xx, my_df<span class="sc">$</span>y)</span>
-<span id="cb58-5"><a href="#cb58-5"></a>}</span>
-<span id="cb58-6"><a href="#cb58-6"></a>slopes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>slopes <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">3</span>)</span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb54-3"><a href="#cb54-3"></a>  d <span class="sc">%&gt;%</span> <span class="fu">pull</span>(i) <span class="ot">-&gt;</span> xx</span>
+<span id="cb54-4"><a href="#cb54-4"></a>  slopes[i] <span class="ot">&lt;-</span> <span class="fu">slope</span>(xx, my_df<span class="sc">$</span>y)</span>
+<span id="cb54-5"><a href="#cb54-5"></a>}</span>
+<span id="cb54-6"><a href="#cb54-6"></a>slopes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1.1000000 -1.1000000  0.5140187</code></pre>
 </div>
@@ -795,7 +805,7 @@
 <li>Since slope returns a decimal number (a <code>dbl</code>), appropriate function-running function is <code>map_dbl</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">map_dbl</span>(d, \(d) <span class="fu">slope</span>(d, my_df<span class="sc">$</span>y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">map_dbl</span>(d, \(d) <span class="fu">slope</span>(d, my_df<span class="sc">$</span>y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        x1         x2         x3 
  1.1000000 -1.1000000  0.5140187 </code></pre>
@@ -811,8 +821,8 @@
 <li>“Find the square roots of each of the numbers 1 through 10”:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb62-2"><a href="#cb62-2"></a><span class="fu">map_dbl</span>(x, \(x) <span class="fu">sqrt</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">map_dbl</span>(x, \(x) <span class="fu">sqrt</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490 2.645751 2.828427
  [9] 3.000000 3.162278</code></pre>
@@ -825,17 +835,19 @@
 <li>use my <code>d</code> from above:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">map_dbl</span>(d, \(d) <span class="fu">mean</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">map_dbl</span>(d, \(d) <span class="fu">mean</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  x1   x2   x3 
 2.50 6.50 5.25 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">mean</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-     x1    x2    x3
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1   2.5   6.5  5.25</code></pre>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), \(x) <span class="fu">mean</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["x2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["x3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2.5","2":"6.5","3":"5.25"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>The mean of each column, with the columns labelled.</p>
@@ -846,10 +858,10 @@
 <li>For example, finding quartiles:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>quartiles <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">quantile</span>(x, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
-<span id="cb68-3"><a href="#cb68-3"></a>}</span>
-<span id="cb68-4"><a href="#cb68-4"></a><span class="fu">quartiles</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>quartiles <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">quantile</span>(x, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>))</span>
+<span id="cb63-3"><a href="#cb63-3"></a>}</span>
+<span id="cb63-4"><a href="#cb63-4"></a><span class="fu">quartiles</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>25% 75% 
   2   4 </code></pre>
@@ -865,7 +877,7 @@
 <li>Try:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">map</span>(d, \(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">map</span>(d, \(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$x1
  25%  75% 
@@ -890,28 +902,28 @@ $x3
 <li>Better: pretend output from quartiles is one-column data frame:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">map_df</span>(d, \(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  `25%` `75%`
-  &lt;dbl&gt; &lt;dbl&gt;
-1  1.75  3.25
-2  5.75  7.25
-3  3.5   6.75</code></pre>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="fu">map_df</span>(d, \(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["25%"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["75%"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.75","2":"3.25"},{"1":"5.75","2":"7.25"},{"1":"3.50","2":"6.75"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="or-even" class="slide level2">
 <h2>Or even</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">map_df</span>(\(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  `25%` `75%`
-  &lt;dbl&gt; &lt;dbl&gt;
-1  1.75  3.25
-2  5.75  7.25
-3  3.5   6.75</code></pre>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">map_df</span>(\(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["25%"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["75%"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1.75","2":"3.25"},{"1":"5.75","2":"7.25"},{"1":"3.50","2":"6.75"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -928,22 +940,15 @@ $x3
 <li><code>map</code> can also be used within data frames to calculate new columns. Let’s do the square roots of 1 through 10 again:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb76-2"><a href="#cb76-2"></a>d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">root =</span> <span class="fu">map_dbl</span>(x, \(x) <span class="fu">sqrt</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-       x  root
-   &lt;int&gt; &lt;dbl&gt;
- 1     1  1   
- 2     2  1.41
- 3     3  1.73
- 4     4  2   
- 5     5  2.24
- 6     6  2.45
- 7     7  2.65
- 8     8  2.83
- 9     9  3   
-10    10  3.16</code></pre>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb69-2"><a href="#cb69-2"></a>d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">root =</span> <span class="fu">map_dbl</span>(x, \(x) <span class="fu">sqrt</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["int"],"align":["right"]},{"label":["root"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1.000000"},{"1":"2","2":"1.414214"},{"1":"3","2":"1.732051"},{"1":"4","2":"2.000000"},{"1":"5","2":"2.236068"},{"1":"6","2":"2.449490"},{"1":"7","2":"2.645751"},{"1":"8","2":"2.828427"},{"1":"9","2":"3.000000"},{"1":"10","2":"3.162278"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -962,11 +967,11 @@ $x3
 <li>Odd or even? Work out the remainder when dividing by 2:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="dv">6</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="dv">6</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="dv">5</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="dv">5</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
@@ -981,31 +986,31 @@ $x3
 <li>First test for integerness, then test for odd or even, and then do the appropriate calculation:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>hotpo <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb82-2"><a href="#cb82-2"></a>  <span class="fu">stopifnot</span>(<span class="fu">round</span>(x) <span class="sc">==</span> x) <span class="co"># passes if input an integer</span></span>
-<span id="cb82-3"><a href="#cb82-3"></a>  remainder <span class="ot">&lt;-</span> x <span class="sc">%%</span> <span class="dv">2</span></span>
-<span id="cb82-4"><a href="#cb82-4"></a>  <span class="cf">if</span> (remainder <span class="sc">==</span> <span class="dv">1</span>) {</span>
-<span id="cb82-5"><a href="#cb82-5"></a>    ans <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb82-6"><a href="#cb82-6"></a>  }</span>
-<span id="cb82-7"><a href="#cb82-7"></a>  <span class="cf">else</span> {</span>
-<span id="cb82-8"><a href="#cb82-8"></a>    ans <span class="ot">&lt;-</span> x <span class="sc">%/%</span> <span class="dv">2</span> <span class="co"># integer division</span></span>
-<span id="cb82-9"><a href="#cb82-9"></a>  }</span>
-<span id="cb82-10"><a href="#cb82-10"></a>  ans</span>
-<span id="cb82-11"><a href="#cb82-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>hotpo <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">stopifnot</span>(<span class="fu">round</span>(x) <span class="sc">==</span> x) <span class="co"># passes if input an integer</span></span>
+<span id="cb74-3"><a href="#cb74-3"></a>  remainder <span class="ot">&lt;-</span> x <span class="sc">%%</span> <span class="dv">2</span></span>
+<span id="cb74-4"><a href="#cb74-4"></a>  <span class="cf">if</span> (remainder <span class="sc">==</span> <span class="dv">1</span>) {</span>
+<span id="cb74-5"><a href="#cb74-5"></a>    ans <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb74-6"><a href="#cb74-6"></a>  }</span>
+<span id="cb74-7"><a href="#cb74-7"></a>  <span class="cf">else</span> {</span>
+<span id="cb74-8"><a href="#cb74-8"></a>    ans <span class="ot">&lt;-</span> x <span class="sc">%/%</span> <span class="dv">2</span> <span class="co"># integer division</span></span>
+<span id="cb74-9"><a href="#cb74-9"></a>  }</span>
+<span id="cb74-10"><a href="#cb74-10"></a>  ans</span>
+<span id="cb74-11"><a href="#cb74-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="test-it" class="slide level2">
 <h2>Test it</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="fu">hotpo</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="fu">hotpo</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="fu">hotpo</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="fu">hotpo</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="fu">hotpo</span>(<span class="fl">4.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="fu">hotpo</span>(<span class="fl">4.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in hotpo(4.5): round(x) == x is not TRUE</code></pre>
 </div>
@@ -1017,21 +1022,14 @@ $x3
 <li>Use a data frame of numbers 1 through 10 again:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">map_int</span>(x, \(x) <span class="fu">hotpo</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-       x     y
-   &lt;int&gt; &lt;int&gt;
- 1     1     4
- 2     2     1
- 3     3    10
- 4     4     2
- 5     5    16
- 6     6     3
- 7     7    22
- 8     8     4
- 9     9    28
-10    10     5</code></pre>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">map_int</span>(x, \(x) <span class="fu">hotpo</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["int"],"align":["right"]},{"label":["y"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"4"},{"1":"2","2":"1"},{"1":"3","2":"10"},{"1":"4","2":"2"},{"1":"5","2":"16"},{"1":"6","2":"3"},{"1":"7","2":"22"},{"1":"8","2":"4"},{"1":"9","2":"28"},{"1":"10","2":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -1042,14 +1040,14 @@ $x3
 <li>If I get to 4, 2, 1, 4, 2, 1 I’ll repeat for ever, so let’s stop when we get to 1:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>hotpo_seq <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb91-2"><a href="#cb91-2"></a>  ans <span class="ot">&lt;-</span> x</span>
-<span id="cb91-3"><a href="#cb91-3"></a>  <span class="cf">while</span> (x <span class="sc">!=</span> <span class="dv">1</span>) {</span>
-<span id="cb91-4"><a href="#cb91-4"></a>    x <span class="ot">&lt;-</span> <span class="fu">hotpo</span>(x)</span>
-<span id="cb91-5"><a href="#cb91-5"></a>    ans <span class="ot">&lt;-</span> <span class="fu">c</span>(ans, x)</span>
-<span id="cb91-6"><a href="#cb91-6"></a>  }</span>
-<span id="cb91-7"><a href="#cb91-7"></a>  ans</span>
-<span id="cb91-8"><a href="#cb91-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a>hotpo_seq <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb82-2"><a href="#cb82-2"></a>  ans <span class="ot">&lt;-</span> x</span>
+<span id="cb82-3"><a href="#cb82-3"></a>  <span class="cf">while</span> (x <span class="sc">!=</span> <span class="dv">1</span>) {</span>
+<span id="cb82-4"><a href="#cb82-4"></a>    x <span class="ot">&lt;-</span> <span class="fu">hotpo</span>(x)</span>
+<span id="cb82-5"><a href="#cb82-5"></a>    ans <span class="ot">&lt;-</span> <span class="fu">c</span>(ans, x)</span>
+<span id="cb82-6"><a href="#cb82-6"></a>  }</span>
+<span id="cb82-7"><a href="#cb82-7"></a>  ans</span>
+<span id="cb82-8"><a href="#cb82-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Strategy: keep looping “while <code>x</code> is not 1”.</li>
@@ -1062,7 +1060,7 @@ $x3
 <li>Start at 6:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a><span class="fu">hotpo_seq</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="fu">hotpo_seq</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  6  3 10  5 16  8  4  2  1</code></pre>
 </div>
@@ -1074,10 +1072,7 @@ $x3
 <li>Start at 27:</li>
 </ul>
 <div class="cell">
-
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a><span class="fu">hotpo_seq</span>(<span class="dv">27</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="fu">hotpo_seq</span>(<span class="dv">27</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]   27   82   41  124   62   31   94   47  142   71  214
  [12]  107  322  161  484  242  121  364  182   91  274  137
@@ -1092,9 +1087,6 @@ $x3
 [111]    2    1</code></pre>
 </div>
 </div>
-<div class="cell">
-
-</div>
 </section>
 <section id="which-starting-points-have-the-longest-sequences" class="slide level2">
 <h2>Which starting points have the longest sequences?</h2>
@@ -1106,24 +1098,17 @@ $x3
 <section id="top-10-longest-sequences" class="slide level2">
 <h2>Top 10 longest sequences</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb96-2"><a href="#cb96-2"></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">map_int</span>(</span>
-<span id="cb96-3"><a href="#cb96-3"></a>    start, \(start) <span class="fu">length</span>(<span class="fu">hotpo_seq</span>(start)))) <span class="sc">%&gt;%</span></span>
-<span id="cb96-4"><a href="#cb96-4"></a>  <span class="fu">slice_max</span>(seq_length, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-   start seq_length
-   &lt;int&gt;      &lt;int&gt;
- 1    97        119
- 2    73        116
- 3    54        113
- 4    55        113
- 5    27        112
- 6    82        111
- 7    83        111
- 8    41        110
- 9    62        108
-10    63        108</code></pre>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb87-2"><a href="#cb87-2"></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">map_int</span>(</span>
+<span id="cb87-3"><a href="#cb87-3"></a>    start, \(start) <span class="fu">length</span>(<span class="fu">hotpo_seq</span>(start)))) <span class="sc">%&gt;%</span></span>
+<span id="cb87-4"><a href="#cb87-4"></a>  <span class="fu">slice_max</span>(seq_length, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["start"],"name":[1],"type":["int"],"align":["right"]},{"label":["seq_length"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"97","2":"119"},{"1":"73","2":"116"},{"1":"54","2":"113"},{"1":"55","2":"113"},{"1":"27","2":"112"},{"1":"82","2":"111"},{"1":"83","2":"111"},{"1":"41","2":"110"},{"1":"62","2":"108"},{"1":"63","2":"108"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -1133,19 +1118,15 @@ $x3
 <section id="what-happens-if-we-save-the-entire-sequence" class="slide level2">
 <h2>What happens if we save the entire sequence?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb98-2"><a href="#cb98-2"></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 2
-  start sequence  
-  &lt;int&gt; &lt;list&gt;    
-1     1 &lt;int [1]&gt; 
-2     2 &lt;dbl [2]&gt; 
-3     3 &lt;dbl [8]&gt; 
-4     4 &lt;dbl [3]&gt; 
-5     5 &lt;dbl [6]&gt; 
-6     6 &lt;dbl [9]&gt; 
-7     7 &lt;dbl [17]&gt;</code></pre>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb88-2"><a href="#cb88-2"></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["start"],"name":[1],"type":["int"],"align":["right"]},{"label":["sequence"],"name":[2],"type":["list"],"align":["right"]}],"data":[{"1":"1","2":"<int [1]>"},{"1":"2","2":"<dbl [2]>"},{"1":"3","2":"<dbl [8]>"},{"1":"4","2":"<dbl [3]>"},{"1":"5","2":"<dbl [6]>"},{"1":"6","2":"<dbl [9]>"},{"1":"7","2":"<dbl [17]>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -1155,46 +1136,37 @@ $x3
 <section id="using-the-whole-sequence-to-find-its-length-and-its-max" class="slide level2">
 <h2>Using the whole sequence to find its length and its max</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb100-2"><a href="#cb100-2"></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start))) <span class="sc">%&gt;%</span></span>
-<span id="cb100-3"><a href="#cb100-3"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb100-4"><a href="#cb100-4"></a>    <span class="at">seq_length =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">length</span>(sequence)),</span>
-<span id="cb100-5"><a href="#cb100-5"></a>    <span class="at">seq_max =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">max</span>(sequence))</span>
-<span id="cb100-6"><a href="#cb100-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 4
-  start sequence   seq_length seq_max
-  &lt;int&gt; &lt;list&gt;          &lt;int&gt;   &lt;int&gt;
-1     1 &lt;int [1]&gt;           1       1
-2     2 &lt;dbl [2]&gt;           2       2
-3     3 &lt;dbl [8]&gt;           8      16
-4     4 &lt;dbl [3]&gt;           3       4
-5     5 &lt;dbl [6]&gt;           6      16
-6     6 &lt;dbl [9]&gt;           9      16
-7     7 &lt;dbl [17]&gt;         17      52</code></pre>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb89-2"><a href="#cb89-2"></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start))) <span class="sc">%&gt;%</span></span>
+<span id="cb89-3"><a href="#cb89-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb89-4"><a href="#cb89-4"></a>    <span class="at">seq_length =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">length</span>(sequence)),</span>
+<span id="cb89-5"><a href="#cb89-5"></a>    <span class="at">seq_max =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">max</span>(sequence))</span>
+<span id="cb89-6"><a href="#cb89-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["start"],"name":[1],"type":["int"],"align":["right"]},{"label":["sequence"],"name":[2],"type":["list"],"align":["right"]},{"label":["seq_length"],"name":[3],"type":["int"],"align":["right"]},{"label":["seq_max"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"1","2":"<int [1]>","3":"1","4":"1"},{"1":"2","2":"<dbl [2]>","3":"2","4":"2"},{"1":"3","2":"<dbl [8]>","3":"8","4":"16"},{"1":"4","2":"<dbl [3]>","3":"3","4":"4"},{"1":"5","2":"<dbl [6]>","3":"6","4":"16"},{"1":"6","2":"<dbl [9]>","3":"9","4":"16"},{"1":"7","2":"<dbl [17]>","3":"17","4":"52"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="does-it-work-with-rowwise" class="slide level2">
 <h2>Does it work with <code>rowwise</code>?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">tibble</span>(<span class="at">start=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb102-2"><a href="#cb102-2"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb102-3"><a href="#cb102-3"></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">list</span>(<span class="fu">hotpo_seq</span>(start))) <span class="sc">%&gt;%</span> </span>
-<span id="cb102-4"><a href="#cb102-4"></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">length</span>(sequence)) <span class="sc">%&gt;%</span> </span>
-<span id="cb102-5"><a href="#cb102-5"></a>  <span class="fu">mutate</span>(<span class="at">seq_max =</span> <span class="fu">max</span>(sequence))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 4
-# Rowwise: 
-  start sequence   seq_length seq_max
-  &lt;int&gt; &lt;list&gt;          &lt;int&gt;   &lt;dbl&gt;
-1     1 &lt;int [1]&gt;           1       1
-2     2 &lt;dbl [2]&gt;           2       2
-3     3 &lt;dbl [8]&gt;           8      16
-4     4 &lt;dbl [3]&gt;           3       4
-5     5 &lt;dbl [6]&gt;           6      16
-6     6 &lt;dbl [9]&gt;           9      16
-7     7 &lt;dbl [17]&gt;         17      52</code></pre>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="fu">tibble</span>(<span class="at">start=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">list</span>(<span class="fu">hotpo_seq</span>(start))) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-4"><a href="#cb90-4"></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">length</span>(sequence)) <span class="sc">%&gt;%</span> </span>
+<span id="cb90-5"><a href="#cb90-5"></a>  <span class="fu">mutate</span>(<span class="at">seq_max =</span> <span class="fu">max</span>(sequence))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["start"],"name":[1],"type":["int"],"align":["right"]},{"label":["sequence"],"name":[2],"type":["list"],"align":["right"]},{"label":["seq_length"],"name":[3],"type":["int"],"align":["right"]},{"label":["seq_max"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"<int [1]>","3":"1","4":"1"},{"1":"2","2":"<dbl [2]>","3":"2","4":"2"},{"1":"3","2":"<dbl [8]>","3":"8","4":"16"},{"1":"4","2":"<dbl [3]>","3":"3","4":"4"},{"1":"5","2":"<dbl [6]>","3":"6","4":"16"},{"1":"6","2":"<dbl [9]>","3":"9","4":"16"},{"1":"7","2":"<dbl [17]>","3":"17","4":"52"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>It does.</p>
@@ -1242,7 +1214,7 @@ $x3
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -1484,9 +1456,23 @@ $x3
       tabsets.forEach(function(tabset) {
         const tabby = new Tabby('#' + tabset.id);
       });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
       const clipboard = new window.ClipboardJS('.code-copy-button', {
-        target: function(trigger) {
-          return trigger.previousElementSibling;
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
         }
       });
       clipboard.on('success', function(e) {
@@ -1534,7 +1520,7 @@ $x3
           },
           interactive: true,
           interactiveBorder: 10,
-          theme: 'quarto-reveal',
+          theme: 'light-border',
           placement: 'bottom-start'
         };
           config['offset'] = [0,0];

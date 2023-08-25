@@ -1,11 +1,5 @@
 ---
 title: "STAC32 Course Outline"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## This course
@@ -40,19 +34,6 @@ editor:
 
 -   I check prerequisites.
 
-## STAC53 (not relevant for most of you)
-
--   Check your Degree Explorer.
-
--   This might have STAC50 as a requirement (for which you don't now have the prereq)
-
--   If you have not already taken C50, you need to take *STAC53*.
-
--   To get this reflected in your Degree Explorer: email (instructions below)
-
-    -   with your name and student number
-    -   and explaining that you would like me to make this change.
-
 ## Getting help
 
 -   Option 1: Quercus discussion boards:
@@ -82,7 +63,7 @@ editor:
 -   This course will help you develop the skills to use software to analyze data, and to communicate the results.
     -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
 -   I want you to demonstrate your understanding and insight about the data you're working with
--   This will be assessed through assignments (approximately weekly) and a final xxx project.
+-   This will be assessed through assignments (approximately weekly).
 
     -   Expect to be asked for software output, explanation, or both.
     -   The grading will reward evidence of clear understanding and insight.
@@ -93,22 +74,21 @@ editor:
 
 The blue things are all links:
 
--   [Quercus](https://q.utoronto.ca/): lecture videos, hand in assignments/xxx projects, receive grades.
+-   [Quercus](https://q.utoronto.ca/): lecture videos, hand in assignments, receive grades.
 
 -   [Course website](http://ritsokiguess.site/STAC32/): course news, reminders, lecture notes and code, assignment solutions, other stuff I want to share with you
 
--   [PASIAS](http://ritsokiguess.site/pasias/) practice problems for you to work through, with my solutions.
+-   [PASIAS](http://ritsokiguess.site/pasias2/) practice problems for you to work through, with my solutions.
 
 -   [Reference: R for Data Science](https://r4ds.had.co.nz/)
 
 ## Assessment
 
--   Assignments: 8 total, due after weeks 2 through 10. Best 6 count, total 30% (5% each).
+-   Assignments: 9 total, due after weeks 2 through 11. Best 7 count, total 30% (about 4% each).
     - expect that each assignment will cover up to the Tuesday lecture before it is due
     - will become available after the Wednesday tutorial, and will be due Monday at 11:59pm
     - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
--   xxx Project: done in groups (chosen by you) of 1--5 people. Due the last day of classes. Worth 10%.
--   Midterm (25%), final (35%) exams  (in person). You *must pass* the final exam (get at least 50% on that exam) to guarantee passing the course.
+-   Midterm (30%), final (40%) exams  (in person). You *must get at least 40%* on the final exam to pass the course.
 
 ## Grading
 
@@ -121,24 +101,26 @@ The blue things are all links:
 ## Policies 1/2
 
 -   There is a penalty for late work (1% per *hour*), and no work is accepted more than two days late. I will want to post my solutions for everyone to learn from. 
--   You have two "free" assignments (since only the best 6 count); you may miss these without explanation. If you have to miss more assignments than this, consider whether you will be able to catch up the missed work in time to write good exams.
+-   You have two "free" assignments (since the worst two scores are dropped); you may miss these without explanation. If you have to miss more assignments than this, consider whether you will be able to catch up the missed work in time to write good exams.
 -   There are no make-up assessments. If you miss the midterm exam, the weight automatically goes onto the final exam.
 
 ## Policies 2/2
 
 -   Accommodations (through Accessability only) consist of a maximum extension of two days, that you must request individually before the due date. With weekly assignments, longer extensions do you no favours because you are taking away time to prepare for the next one.
 -   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
+- [Detailed course policies](https://ritsokiguess.site/STAC32/policies.pdf) (link).
 
-## Course material {.smaller}
+## Course material 1/2
 
-With R:
-
--   Installation / connection
+-   R installation / connection
 -   Reading data files (of different sorts)
 -   Making graphs
 -   Numerical summaries
 -   Statistical inference
 -   Reports
+
+## Course material 2/2
+
 -   Tidying and organizing data
 -   Case studies
 -   Functions
@@ -152,13 +134,13 @@ Students with diverse learning styles and needs are welcome in this course. In p
 
 ## Expectations 1/3
 
--   I expect that you will do your own work in this course, and not seek help from outside this course. (In the case of the xxx project, that you will not seek help from anyone outside of your group, except possibly the TAs and me.)
+-   I expect that you will do your own work in this course, and not seek help from outside this course. 
 -   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
 
 ## Expectations 2/3 {.smaller}
 
 -   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me. Everything in the course, unless otherwise stated, can be completed using this material.
--   Anything else, for example, material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there.
+-   Anything else, for example material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there.
 -   If you want credit for any ideas that come from outside the course materials, you must say where they came from.
 -   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view, and claiming that an idea from outside the course is yours when it is not is *plagiarism*.
 
@@ -166,7 +148,6 @@ Students with diverse learning styles and needs are welcome in this course. In p
 
 -   I expect you to learn how to do things *as they are done in this course*. You will also make STAD29 much easier if you do that.
 -   Detailed [course policies](https://ritsokiguess.site/STAC32/policies.pdf). If you have a question about administrative policies in the course, look here first.
--   If you tell me you're having trouble, I will not judge you or think less of you. (From [here](https://econf20.classes.andrewheiss.com/syllabus/).)
 -   [This (video)](https://twitter.com/i/status/1293543531496308736).
 -   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.
 

@@ -1,11 +1,5 @@
 ---
 title: "Analysis of Covariance"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

@@ -1,11 +1,5 @@
 ---
 title: "Choosing things in dataframes"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Packages
@@ -366,7 +360,7 @@ sales1
 
 ```{r choosing-R-33}
 sales1 %>% 
-  left_join(desc, by = "product_code")
+  left_join(desc, join_by(product_code))
 ```
 
 - Get `qty.x` (from `sales1`) and `qty.y` (from `desc`).
@@ -390,7 +384,7 @@ sales2
 
 ```{r choosing-R-35}
 sales2 %>% 
-  left_join(desc, by = c("code"="product_code"))
+  left_join(desc, join_by(code == product_code))
 ```
 
 ## Other types of join

@@ -307,6 +307,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -383,6 +384,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="inference_2_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="inference_2_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -548,13 +552,13 @@ mean of x
 <span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">mutate</span>(<span class="at">t_test =</span> <span class="fu">list</span>(<span class="fu">t.test</span>(my_sample, <span class="at">mu =</span> <span class="dv">10</span>))) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">mutate</span>(<span class="at">p_val =</span> t_test<span class="sc">$</span>p.value) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-6"><a href="#cb8-6"></a>  <span class="fu">count</span>(p_val <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-# Rowwise: 
-  `p_val &lt;= 0.05`     n
-  &lt;lgl&gt;           &lt;int&gt;
-1 FALSE             578
-2 TRUE              422</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["p_val <= 0.05"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"FALSE","2":"578"},{"1":"TRUE","2":"422"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>We correctly rejected 422 times out of 1000, so the estimated power is 0.422.</p>
@@ -567,7 +571,7 @@ mean of x
 <li><code>power.t.test</code>. Input <code>delta</code> is difference between null and true mean:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">15</span>, <span class="at">delta =</span> <span class="dv">10-8</span>, <span class="at">sd =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">"one.sample"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">15</span>, <span class="at">delta =</span> <span class="dv">10-8</span>, <span class="at">sd =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">"one.sample"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      One-sample t test power calculation 
@@ -604,7 +608,7 @@ mean of x
 <li>No <code>n=</code>, replaced by a <code>power=</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">power.t.test</span>(<span class="at">power=</span><span class="fl">0.80</span>, <span class="at">delta=</span><span class="dv">10-8</span>, <span class="at">sd=</span><span class="dv">4</span>, <span class="at">type=</span><span class="st">"one.sample"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">power.t.test</span>(<span class="at">power=</span><span class="fl">0.80</span>, <span class="at">delta=</span><span class="dv">10-8</span>, <span class="at">sd=</span><span class="dv">4</span>, <span class="at">type=</span><span class="st">"one.sample"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      One-sample t test power calculation 
@@ -637,8 +641,8 @@ mean of x
 <li>Do power for variety of sample sizes, from 10 to 100 in steps of 10:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>ns <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">10</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a>ns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>ns <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">10</span>)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>ns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  10  20  30  40  50  60  70  80  90 100</code></pre>
 </div>
@@ -647,8 +651,8 @@ mean of x
 <li>Calculate powers:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">power.t.test</span>(<span class="at">n=</span>ns, <span class="at">delta=</span><span class="dv">10-8</span>, <span class="at">sd=</span><span class="dv">4</span>, <span class="at">type=</span><span class="st">"one.sample"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2"></a>ans<span class="sc">$</span>power</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">power.t.test</span>(<span class="at">n=</span>ns, <span class="at">delta=</span><span class="dv">10-8</span>, <span class="at">sd=</span><span class="dv">4</span>, <span class="at">type=</span><span class="st">"one.sample"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>ans<span class="sc">$</span>power</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.2928286 0.5644829 0.7539627 0.8693979 0.9338976 0.9677886 0.9847848
  [8] 0.9929987 0.9968496 0.9986097</code></pre>
@@ -661,22 +665,15 @@ mean of x
 <li>Make a data frame out of the values to plot:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">n=</span>ns, <span class="at">power=</span>ans<span class="sc">$</span>power)</span>
-<span id="cb18-2"><a href="#cb18-2"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-       n power
-   &lt;dbl&gt; &lt;dbl&gt;
- 1    10 0.293
- 2    20 0.564
- 3    30 0.754
- 4    40 0.869
- 5    50 0.934
- 6    60 0.968
- 7    70 0.985
- 8    80 0.993
- 9    90 0.997
-10   100 0.999</code></pre>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">n=</span>ns, <span class="at">power=</span>ans<span class="sc">$</span>power)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["power"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"10","2":"0.2928286"},{"1":"20","2":"0.5644829"},{"1":"30","2":"0.7539627"},{"1":"40","2":"0.8693979"},{"1":"50","2":"0.9338976"},{"1":"60","2":"0.9677886"},{"1":"70","2":"0.9847848"},{"1":"80","2":"0.9929987"},{"1":"90","2":"0.9968496"},{"1":"100","2":"0.9986097"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -686,34 +683,34 @@ mean of x
 <li>Plot these as points joined by lines, and add horizontal line at 1 (maximum power):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>g  <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> power)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>g  <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> power)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-power-curve" class="slide level2">
 <h2>The power curve</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="inference_2_files/figure-revealjs/inference-2-R-13-1.png" width="960" class="r-stretch"></section>
 <section id="another-way-to-do-it" class="slide level2">
 <h2>Another way to do it:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">tibble</span>(<span class="at">n=</span>ns) <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">mutate</span>(<span class="at">power_output =</span> </span>
-<span id="cb22-3"><a href="#cb22-3"></a>           <span class="fu">list</span>(<span class="fu">power.t.test</span>(<span class="at">n =</span> n, <span class="at">delta =</span> <span class="dv">10-8</span>, <span class="at">sd =</span> <span class="dv">4</span>, </span>
-<span id="cb22-4"><a href="#cb22-4"></a>                             <span class="at">type =</span> <span class="st">"one.sample"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">mutate</span>(<span class="at">power =</span> power_output<span class="sc">$</span>power) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>n, <span class="at">y=</span>power)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">1</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="ot">-&gt;</span> g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">tibble</span>(<span class="at">n=</span>ns) <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">mutate</span>(<span class="at">power_output =</span> </span>
+<span id="cb20-3"><a href="#cb20-3"></a>           <span class="fu">list</span>(<span class="fu">power.t.test</span>(<span class="at">n =</span> n, <span class="at">delta =</span> <span class="dv">10-8</span>, <span class="at">sd =</span> <span class="dv">4</span>, </span>
+<span id="cb20-4"><a href="#cb20-4"></a>                             <span class="at">type =</span> <span class="st">"one.sample"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">mutate</span>(<span class="at">power =</span> power_output<span class="sc">$</span>power) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-6"><a href="#cb20-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>n, <span class="at">y=</span>power)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">1</span>, <span class="at">linetype=</span><span class="st">"dashed"</span>) <span class="ot">-&gt;</span> g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-power-curve-done-the-other-way" class="slide level2">
 <h2>The power curve done the other way</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>g2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="inference_2_files/figure-revealjs/inference-2-R-15-1.png" width="960" class="r-stretch"></section>
@@ -725,45 +722,30 @@ mean of x
 <li>First make all combos of mean and sample size:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>means <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">6</span>,<span class="dv">10</span>,<span class="fl">0.5</span>)</span>
-<span id="cb24-2"><a href="#cb24-2"></a>means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>means <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">6</span>,<span class="dv">10</span>,<span class="fl">0.5</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  6.0  6.5  7.0  7.5  8.0  8.5  9.0  9.5 10.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>ns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>,<span class="dv">30</span>)</span>
-<span id="cb26-2"><a href="#cb26-2"></a>ns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>ns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>,<span class="dv">30</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>ns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 15 30</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>combos <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">mean=</span>means, <span class="at">n=</span>ns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>combos <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">mean=</span>means, <span class="at">n=</span>ns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-combos" class="slide level2">
 <h2>The combos</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>combos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 18 × 2
-    mean     n
-   &lt;dbl&gt; &lt;dbl&gt;
- 1   6      15
- 2   6      30
- 3   6.5    15
- 4   6.5    30
- 5   7      15
- 6   7      30
- 7   7.5    15
- 8   7.5    30
- 9   8      15
-10   8      30
-11   8.5    15
-12   8.5    30
-13   9      15
-14   9      30
-15   9.5    15
-16   9.5    30
-17  10      15
-18  10      30</code></pre>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>combos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"6.0","2":"15"},{"1":"6.0","2":"30"},{"1":"6.5","2":"15"},{"1":"6.5","2":"30"},{"1":"7.0","2":"15"},{"1":"7.0","2":"30"},{"1":"7.5","2":"15"},{"1":"7.5","2":"30"},{"1":"8.0","2":"15"},{"1":"8.0","2":"30"},{"1":"8.5","2":"15"},{"1":"8.5","2":"30"},{"1":"9.0","2":"15"},{"1":"9.0","2":"30"},{"1":"9.5","2":"15"},{"1":"9.5","2":"30"},{"1":"10.0","2":"15"},{"1":"10.0","2":"30"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -773,9 +755,9 @@ mean of x
 <li>Calculate the powers, carefully:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">with</span>(combos, <span class="fu">power.t.test</span>(<span class="at">n=</span>n, <span class="at">delta=</span><span class="dv">10</span><span class="sc">-</span>mean, <span class="at">sd=</span><span class="dv">4</span>, </span>
-<span id="cb31-2"><a href="#cb31-2"></a>                              <span class="at">type=</span><span class="st">"one.sample"</span>))</span>
-<span id="cb31-3"><a href="#cb31-3"></a>ans<span class="sc">$</span>power</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>ans <span class="ot">&lt;-</span> <span class="fu">with</span>(combos, <span class="fu">power.t.test</span>(<span class="at">n=</span>n, <span class="at">delta=</span><span class="dv">10</span><span class="sc">-</span>mean, <span class="at">sd=</span><span class="dv">4</span>, </span>
+<span id="cb28-2"><a href="#cb28-2"></a>                              <span class="at">type=</span><span class="st">"one.sample"</span>))</span>
+<span id="cb28-3"><a href="#cb28-3"></a>ans<span class="sc">$</span>power</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.94908647 0.99956360 0.88277128 0.99619287 0.77070660 0.97770385
  [7] 0.61513033 0.91115700 0.43784659 0.75396272 0.27216777 0.51028173
@@ -786,47 +768,32 @@ mean of x
 <section id="make-a-data-frame-to-plot-pulling-things-from-the-right-places" class="slide level2">
 <h2>Make a data frame to plot, pulling things from the right places:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">n=</span><span class="fu">factor</span>(combos<span class="sc">$</span>n), <span class="at">mean=</span>combos<span class="sc">$</span>mean, </span>
-<span id="cb33-2"><a href="#cb33-2"></a>         <span class="at">power=</span>ans<span class="sc">$</span>power)</span>
-<span id="cb33-3"><a href="#cb33-3"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 18 × 3
-   n      mean  power
-   &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt;
- 1 15      6   0.949 
- 2 30      6   1.00  
- 3 15      6.5 0.883 
- 4 30      6.5 0.996 
- 5 15      7   0.771 
- 6 30      7   0.978 
- 7 15      7.5 0.615 
- 8 30      7.5 0.911 
- 9 15      8   0.438 
-10 30      8   0.754 
-11 15      8.5 0.272 
-12 30      8.5 0.510 
-13 15      9   0.145 
-14 30      9   0.262 
-15 15      9.5 0.0658
-16 30      9.5 0.0972
-17 15     10   0.025 
-18 30     10   0.025 </code></pre>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">n=</span><span class="fu">factor</span>(combos<span class="sc">$</span>n), <span class="at">mean=</span>combos<span class="sc">$</span>mean, </span>
+<span id="cb30-2"><a href="#cb30-2"></a>         <span class="at">power=</span>ans<span class="sc">$</span>power)</span>
+<span id="cb30-3"><a href="#cb30-3"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["power"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"15","2":"6.0","3":"0.94908647"},{"1":"30","2":"6.0","3":"0.99956360"},{"1":"15","2":"6.5","3":"0.88277128"},{"1":"30","2":"6.5","3":"0.99619287"},{"1":"15","2":"7.0","3":"0.77070660"},{"1":"30","2":"7.0","3":"0.97770385"},{"1":"15","2":"7.5","3":"0.61513033"},{"1":"30","2":"7.5","3":"0.91115700"},{"1":"15","2":"8.0","3":"0.43784659"},{"1":"30","2":"8.0","3":"0.75396272"},{"1":"15","2":"8.5","3":"0.27216777"},{"1":"30","2":"8.5","3":"0.51028173"},{"1":"15","2":"9.0","3":"0.14530058"},{"1":"30","2":"9.0","3":"0.26245348"},{"1":"15","2":"9.5","3":"0.06577280"},{"1":"30","2":"9.5","3":"0.09719303"},{"1":"15","2":"10.0","3":"0.02500000"},{"1":"30","2":"10.0","3":"0.02500000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="then-make-the-plot" class="slide level2">
 <h2>then make the plot:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>g  <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> mean, <span class="at">y =</span> power, <span class="at">colour =</span> n)) <span class="sc">+</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb35-4"><a href="#cb35-4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">10</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>g  <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> mean, <span class="at">y =</span> power, <span class="at">colour =</span> n)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">10</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-power-curves" class="slide level2">
 <h2>The power curves</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="inference_2_files/figure-revealjs/inference-2-R-22-1.png" width="960" class="r-stretch"></section>
@@ -847,14 +814,15 @@ mean of x
 <li>and these group SDs:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>kids <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">s=</span><span class="fu">sd</span>(score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 3
-  group     n     s
-  &lt;chr&gt; &lt;int&gt; &lt;dbl&gt;
-1 c        23  17.1
-2 t        21  11.0</code></pre>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>kids <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">n</span>(), <span class="at">s=</span><span class="fu">sd</span>(score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["group"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["s"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"c","2":"23","3":"17.14873"},{"1":"t","2":"21","3":"11.00736"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -870,8 +838,8 @@ mean of x
 <section id="calculating-power-for-sample-size-22-per-group" class="slide level2">
 <h2>Calculating power for sample size 22 (per group)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">22</span>, <span class="at">delta=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">14</span>, <span class="at">type=</span><span class="st">"two.sample"</span>, </span>
-<span id="cb39-2"><a href="#cb39-2"></a>             <span class="at">alternative=</span><span class="st">"one.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">22</span>, <span class="at">delta=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">14</span>, <span class="at">type=</span><span class="st">"two.sample"</span>, </span>
+<span id="cb34-2"><a href="#cb34-2"></a>             <span class="at">alternative=</span><span class="st">"one.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 
@@ -890,8 +858,8 @@ NOTE: n is number in *each* group</code></pre>
 <section id="sample-size-for-power-0.8" class="slide level2">
 <h2>sample size for power 0.8</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">power.t.test</span>(<span class="at">power=</span><span class="fl">0.80</span>, <span class="at">delta=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">14</span>, <span class="at">type=</span><span class="st">"two.sample"</span>, </span>
-<span id="cb41-2"><a href="#cb41-2"></a>             <span class="at">alternative=</span><span class="st">"one.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">power.t.test</span>(<span class="at">power=</span><span class="fl">0.80</span>, <span class="at">delta=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">14</span>, <span class="at">type=</span><span class="st">"two.sample"</span>, </span>
+<span id="cb36-2"><a href="#cb36-2"></a>             <span class="at">alternative=</span><span class="st">"one.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 

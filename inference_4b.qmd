@@ -1,11 +1,5 @@
 ---
 title: "Matched pairs"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 
@@ -13,7 +7,7 @@ editor:
 
 Some data: 
 
-![](Screenshot_2019-04-26_13-41-29)
+![](Screenshot_2019-04-26_13-41-29.png)
 
 
 ## Matched pairs 1/2

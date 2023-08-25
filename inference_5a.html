@@ -307,6 +307,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -383,6 +384,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="inference_5a_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="inference_5a_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -418,20 +422,13 @@
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/dst.txt"</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>dst <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url,<span class="st">" "</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>dst <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-   gender agree
-   &lt;chr&gt;  &lt;chr&gt;
- 1 male   yes  
- 2 female yes  
- 3 female no   
- 4 female no   
- 5 female no   
- 6 male   no   
- 7 male   yes  
- 8 male   yes  
- 9 female no   
-10 male   yes  </code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["gender"],"name":[1],"type":["chr"],"align":["left"]},{"label":["agree"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"female","2":"no"},{"1":"female","2":"no"},{"1":"female","2":"yes"},{"1":"female","2":"yes"},{"1":"female","2":"no"},{"1":"male","2":"no"},{"1":"female","2":"no"},{"1":"female","2":"yes"},{"1":"female","2":"no"},{"1":"male","2":"yes"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -439,8 +436,8 @@
 <h2>… continued</h2>
 <p>Count up individuals in each category combination, and arrange in contingency table:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">with</span>(dst, <span class="fu">table</span>(gender, agree))</span>
-<span id="cb4-2"><a href="#cb4-2"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">with</span>(dst, <span class="fu">table</span>(gender, agree))</span>
+<span id="cb3-2"><a href="#cb3-2"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        agree
 gender   no yes
@@ -458,7 +455,7 @@ gender   no yes
 <section id="and-finally" class="slide level2">
 <h2>…And finally</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">chisq.test</span>(tab, <span class="at">correct=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">chisq.test</span>(tab, <span class="at">correct=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -494,8 +491,8 @@ X-squared = 7.033, df = 1, p-value = 0.008002</code></pre>
 <li>Find overall median score:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>kids <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">med=</span><span class="fu">median</span>(score)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(med) <span class="ot">-&gt;</span> m</span>
-<span id="cb8-2"><a href="#cb8-2"></a>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>kids <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">med=</span><span class="fu">median</span>(score)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(med) <span class="ot">-&gt;</span> m</span>
+<span id="cb7-2"><a href="#cb7-2"></a>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 47</code></pre>
 </div>
@@ -504,8 +501,8 @@ X-squared = 7.033, df = 1, p-value = 0.008002</code></pre>
 <li>Make table of above/below vs.&nbsp;group:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">with</span>(kids, <span class="fu">table</span>(group, score <span class="sc">&gt;</span> m))</span>
-<span id="cb10-2"><a href="#cb10-2"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">with</span>(kids, <span class="fu">table</span>(group, score <span class="sc">&gt;</span> m))</span>
+<span id="cb9-2"><a href="#cb9-2"></a>tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     
 group FALSE TRUE
@@ -523,7 +520,7 @@ group FALSE TRUE
 <li>Do chi-squared test:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">chisq.test</span>(tab,<span class="at">correct=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">chisq.test</span>(tab,<span class="at">correct=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -545,9 +542,12 @@ X-squared = 4.4638, df = 1, p-value = 0.03462</code></pre>
 <li><code>median_test</code> does the whole thing:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">median_test</span>(kids,score,group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">median_test</span>(kids,score,group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>$table
+<pre><code>$grand_median
+[1] 47
+
+$table
      above
 group above below
     c     8    15

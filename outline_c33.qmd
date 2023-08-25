@@ -1,11 +1,5 @@
 ---
 title: "STAC33 Course Outline"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## This course

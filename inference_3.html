@@ -307,6 +307,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -383,6 +384,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="inference_3_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="inference_3_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -418,25 +422,13 @@
 <h2>The data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>twogroups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 2
-       y group
-   &lt;dbl&gt; &lt;dbl&gt;
- 1    10     1
- 2    11     1
- 3    11     1
- 4    13     1
- 5    13     1
- 6    14     1
- 7    14     1
- 8    15     1
- 9    16     1
-10    13     2
-11    13     2
-12    14     2
-13    17     2
-14    18     2
-15    19     2</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["y"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["group"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"10","2":"1"},{"1":"11","2":"1"},{"1":"11","2":"1"},{"1":"13","2":"1"},{"1":"13","2":"1"},{"1":"14","2":"1"},{"1":"14","2":"1"},{"1":"15","2":"1"},{"1":"16","2":"1"},{"1":"13","2":"2"},{"1":"13","2":"2"},{"1":"14","2":"2"},{"1":"17","2":"2"},{"1":"18","2":"2"},{"1":"19","2":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -444,7 +436,7 @@
 <h2>95% CI (default)</h2>
 <p>for difference in means, group 1 minus group 2:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">t.test</span>(y <span class="sc">~</span> group, <span class="at">data =</span> twogroups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">t.test</span>(y <span class="sc">~</span> group, <span class="at">data =</span> twogroups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -463,7 +455,7 @@ mean in group 1 mean in group 2
 <section id="ci" class="slide level2">
 <h2>90% CI</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">t.test</span>(y <span class="sc">~</span> group, <span class="at">data =</span> twogroups, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">t.test</span>(y <span class="sc">~</span> group, <span class="at">data =</span> twogroups, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -483,7 +475,7 @@ mean in group 1 mean in group 2
 <h2>Hypothesis test</h2>
 <p>Null is that difference in means is zero:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">t.test</span>(y <span class="sc">~</span> group, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">data =</span> twogroups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">t.test</span>(y <span class="sc">~</span> group, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">data =</span> twogroups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -566,32 +558,24 @@ mean in group 1 mean in group 2
 <section id="read-in-data" class="slide level2">
 <h2>Read in data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/irs.txt"</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>irs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
-<span id="cb11-3"><a href="#cb11-3"></a>irs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 30 × 1
-    Time
-   &lt;dbl&gt;
- 1    91
- 2    64
- 3   243
- 4   167
- 5   123
- 6    65
- 7    71
- 8   204
- 9   110
-10   178
-# ℹ 20 more rows</code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/irs.txt"</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>irs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>irs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Time"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"91"},{"1":"64"},{"1":"243"},{"1":"167"},{"1":"123"},{"1":"65"},{"1":"71"},{"1":"204"},{"1":"110"},{"1":"178"},{"1":"264"},{"1":"119"},{"1":"112"},{"1":"142"},{"1":"451"},{"1":"474"},{"1":"209"},{"1":"104"},{"1":"84"},{"1":"302"},{"1":"527"},{"1":"303"},{"1":"228"},{"1":"391"},{"1":"215"},{"1":"188"},{"1":"150"},{"1":"102"},{"1":"162"},{"1":"194"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="test-whether-mean-is-160-or-greater" class="slide level2">
 <h2>Test whether mean is 160 or greater</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">with</span>(irs, <span class="fu">t.test</span>(Time, <span class="at">mu =</span> <span class="dv">160</span>, </span>
-<span id="cb13-2"><a href="#cb13-2"></a>                 <span class="at">alternative =</span> <span class="st">"greater"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">with</span>(irs, <span class="fu">t.test</span>(Time, <span class="at">mu =</span> <span class="dv">160</span>, </span>
+<span id="cb11-2"><a href="#cb11-2"></a>                 <span class="at">alternative =</span> <span class="st">"greater"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -611,7 +595,7 @@ mean of x
 <section id="but-look-at-a-graph" class="slide level2">
 <h2>But, look at a graph</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">ggplot</span>(irs, <span class="fu">aes</span>(<span class="at">x =</span> Time)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">ggplot</span>(irs, <span class="fu">aes</span>(<span class="at">x =</span> Time)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="inference_3_files/figure-revealjs/inference-3-R-8-1.png" width="960" class="r-stretch"></section>
@@ -644,13 +628,14 @@ mean of x
 <li>Count values above/below 160:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>irs <span class="sc">%&gt;%</span> <span class="fu">count</span>(Time <span class="sc">&gt;</span> <span class="dv">160</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  `Time &gt; 160`     n
-  &lt;lgl&gt;        &lt;int&gt;
-1 FALSE           13
-2 TRUE            17</code></pre>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>irs <span class="sc">%&gt;%</span> <span class="fu">count</span>(Time <span class="sc">&gt;</span> <span class="dv">160</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Time > 160"],"name":[1],"type":["lgl"],"align":["right"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"FALSE","2":"13"},{"1":"TRUE","2":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -663,7 +648,7 @@ mean of x
 <li>R function <code>dbinom</code> gives the probability of eg. exactly 17 successes in a binomial with <span class="math inline">\(n = 30\)</span> and <span class="math inline">\(p = 0.5\)</span>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">dbinom</span>(<span class="dv">17</span>, <span class="dv">30</span>, <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">dbinom</span>(<span class="dv">17</span>, <span class="dv">30</span>, <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1115351</code></pre>
 </div>
@@ -672,14 +657,16 @@ mean of x
 <li>but we want probability of 17 <em>or more</em>, so get all of those, find probability of each, and add them up:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">tibble</span>(<span class="at">x=</span><span class="dv">17</span><span class="sc">:</span><span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">mutate</span>(<span class="at">prob=</span><span class="fu">dbinom</span>(x, <span class="dv">30</span>, <span class="fl">0.5</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(prob))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  total
-  &lt;dbl&gt;
-1 0.292</code></pre>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">tibble</span>(<span class="at">x=</span><span class="dv">17</span><span class="sc">:</span><span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">mutate</span>(<span class="at">prob=</span><span class="fu">dbinom</span>(x, <span class="dv">30</span>, <span class="fl">0.5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">summarize</span>(<span class="at">total=</span><span class="fu">sum</span>(prob))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["total"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.2923324"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -692,20 +679,20 @@ mean of x
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>then install <code>smmr</code> using <code>devtools</code> (once):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">install_github</span>(<span class="st">"nxskok/smmr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">install_github</span>(<span class="st">"nxskok/smmr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Then load it:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(smmr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(smmr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="smmr-for-sign-test" class="slide level2">
@@ -714,7 +701,7 @@ mean of x
 <li><code>smmr</code>’s function <code>sign_test</code> needs three inputs: a data frame, a column and a null median:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">sign_test</span>(irs, Time, <span class="dv">160</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">sign_test</span>(irs, Time, <span class="dv">160</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$above_below
 below above 
@@ -763,13 +750,15 @@ $p_values
 <li>Why is that? Obtain mean and median:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>irs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean_time =</span> <span class="fu">mean</span>(Time), </span>
-<span id="cb27-2"><a href="#cb27-2"></a>                  <span class="at">median_time =</span> <span class="fu">median</span>(Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-  mean_time median_time
-      &lt;dbl&gt;       &lt;dbl&gt;
-1      201.        172.</code></pre>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>irs <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean_time =</span> <span class="fu">mean</span>(Time), </span>
+<span id="cb23-2"><a href="#cb23-2"></a>                  <span class="at">median_time =</span> <span class="fu">median</span>(Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["mean_time"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["median_time"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"201.2333","2":"172.5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -797,7 +786,7 @@ $p_values
 <li>smmr has pval_sign that gets just the 2-sided P-value:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">pval_sign</span>(<span class="dv">160</span>, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">pval_sign</span>(<span class="dv">160</span>, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5846647</code></pre>
 </div>
@@ -806,11 +795,11 @@ $p_values
 <li>Try a couple of null medians:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">pval_sign</span>(<span class="dv">200</span>, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">pval_sign</span>(<span class="dv">200</span>, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3615946</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">pval_sign</span>(<span class="dv">300</span>, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">pval_sign</span>(<span class="dv">300</span>, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.001430906</code></pre>
 </div>
@@ -825,22 +814,14 @@ $p_values
 <li>Choose our null medians first:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">null_median=</span><span class="fu">seq</span>(<span class="dv">100</span>,<span class="dv">300</span>,<span class="dv">20</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 11 × 1
-   null_median
-         &lt;dbl&gt;
- 1         100
- 2         120
- 3         140
- 4         160
- 5         180
- 6         200
- 7         220
- 8         240
- 9         260
-10         280
-11         300</code></pre>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>(d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">null_median=</span><span class="fu">seq</span>(<span class="dv">100</span>,<span class="dv">300</span>,<span class="dv">20</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["null_median"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"100"},{"1":"120"},{"1":"140"},{"1":"160"},{"1":"180"},{"1":"200"},{"1":"220"},{"1":"240"},{"1":"260"},{"1":"280"},{"1":"300"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -848,49 +829,31 @@ $p_values
 <h2>… and then</h2>
 <p>“for each null median, run the function <code>pval_sign</code> for that null median and get the P-value”:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">mutate</span>(<span class="at">p_value =</span> <span class="fu">pval_sign</span>(null_median, irs, Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 11 × 2
-# Rowwise: 
-   null_median  p_value
-         &lt;dbl&gt;    &lt;dbl&gt;
- 1         100 0.000325
- 2         120 0.0987  
- 3         140 0.200   
- 4         160 0.585   
- 5         180 0.856   
- 6         200 0.362   
- 7         220 0.0428  
- 8         240 0.0161  
- 9         260 0.00522 
-10         280 0.00143 
-11         300 0.00143 </code></pre>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">mutate</span>(<span class="at">p_value =</span> <span class="fu">pval_sign</span>(null_median, irs, Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["null_median"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["p_value"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"100","2":"0.0003249142"},{"1":"120","2":"0.0987371467"},{"1":"140","2":"0.2004884221"},{"1":"160","2":"0.5846647117"},{"1":"180","2":"0.8555355519"},{"1":"200","2":"0.3615946081"},{"1":"220","2":"0.0427739453"},{"1":"240","2":"0.0161248017"},{"1":"260","2":"0.0052228794"},{"1":"280","2":"0.0014309064"},{"1":"300","2":"0.0014309064"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="make-it-easier-for-ourselves" class="slide level2">
 <h2>Make it easier for ourselves</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">mutate</span>(<span class="at">p_value =</span> <span class="fu">pval_sign</span>(null_median, irs, Time)) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">mutate</span>(<span class="at">in_out =</span> <span class="fu">ifelse</span>(p_value <span class="sc">&gt;</span> <span class="fl">0.05</span>, <span class="st">"inside"</span>, <span class="st">"outside"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 11 × 3
-# Rowwise: 
-   null_median  p_value in_out 
-         &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  
- 1         100 0.000325 outside
- 2         120 0.0987   inside 
- 3         140 0.200    inside 
- 4         160 0.585    inside 
- 5         180 0.856    inside 
- 6         200 0.362    inside 
- 7         220 0.0428   outside
- 8         240 0.0161   outside
- 9         260 0.00522  outside
-10         280 0.00143  outside
-11         300 0.00143  outside</code></pre>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">mutate</span>(<span class="at">p_value =</span> <span class="fu">pval_sign</span>(null_median, irs, Time)) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">mutate</span>(<span class="at">in_out =</span> <span class="fu">ifelse</span>(p_value <span class="sc">&gt;</span> <span class="fl">0.05</span>, <span class="st">"inside"</span>, <span class="st">"outside"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["null_median"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["p_value"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["in_out"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"100","2":"0.0003249142","3":"outside"},{"1":"120","2":"0.0987371467","3":"inside"},{"1":"140","2":"0.2004884221","3":"inside"},{"1":"160","2":"0.5846647117","3":"inside"},{"1":"180","2":"0.8555355519","3":"inside"},{"1":"200","2":"0.3615946081","3":"inside"},{"1":"220","2":"0.0427739453","3":"outside"},{"1":"240","2":"0.0161248017","3":"outside"},{"1":"260","2":"0.0052228794","3":"outside"},{"1":"280","2":"0.0014309064","3":"outside"},{"1":"300","2":"0.0014309064","3":"outside"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -907,19 +870,19 @@ $p_values
 <li>Know that top end of CI between 200 and 220:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>lo <span class="ot">&lt;-</span> <span class="dv">200</span> </span>
-<span id="cb41-2"><a href="#cb41-2"></a>hi <span class="ot">&lt;-</span> <span class="dv">220</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>lo <span class="ot">&lt;-</span> <span class="dv">200</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>hi <span class="ot">&lt;-</span> <span class="dv">220</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Try the value halfway between: is it inside or outside?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>try <span class="ot">&lt;-</span> (lo <span class="sc">+</span> hi) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>try </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>try <span class="ot">&lt;-</span> (lo <span class="sc">+</span> hi) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>try </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 210</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">pval_sign</span>(try,irs,Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">pval_sign</span>(try,irs,Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.09873715</code></pre>
 </div>
@@ -931,12 +894,12 @@ $p_values
 <section id="bisection-continued" class="slide level2">
 <h2>… bisection continued</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>lo <span class="ot">=</span> try</span>
-<span id="cb46-2"><a href="#cb46-2"></a>(<span class="at">try =</span> (lo <span class="sc">+</span> hi) <span class="sc">/</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>lo <span class="ot">=</span> try</span>
+<span id="cb38-2"><a href="#cb38-2"></a>(<span class="at">try =</span> (lo <span class="sc">+</span> hi) <span class="sc">/</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 215</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">pval_sign</span>(try, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">pval_sign</span>(try, irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06142835</code></pre>
 </div>
@@ -952,17 +915,17 @@ $p_values
 <li>A loop, but not a <code>for</code> since we don’t know how many times we’re going around. Keep going <code>while</code> a condition is true:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>lo <span class="ot">=</span> <span class="dv">200</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a>hi <span class="ot">=</span> <span class="dv">220</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a><span class="cf">while</span> (hi <span class="sc">-</span> lo <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb50-4"><a href="#cb50-4"></a>  try <span class="ot">=</span> (hi <span class="sc">+</span> lo) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb50-5"><a href="#cb50-5"></a>  ptry <span class="ot">=</span> <span class="fu">pval_sign</span>(try, irs, Time)</span>
-<span id="cb50-6"><a href="#cb50-6"></a>  <span class="fu">print</span>(<span class="fu">c</span>(try, ptry))</span>
-<span id="cb50-7"><a href="#cb50-7"></a>  <span class="cf">if</span> (ptry <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb50-8"><a href="#cb50-8"></a>    hi <span class="ot">=</span> try</span>
-<span id="cb50-9"><a href="#cb50-9"></a>  <span class="cf">else</span></span>
-<span id="cb50-10"><a href="#cb50-10"></a>    lo <span class="ot">=</span> try</span>
-<span id="cb50-11"><a href="#cb50-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>lo <span class="ot">=</span> <span class="dv">200</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>hi <span class="ot">=</span> <span class="dv">220</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="cf">while</span> (hi <span class="sc">-</span> lo <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb42-4"><a href="#cb42-4"></a>  try <span class="ot">=</span> (hi <span class="sc">+</span> lo) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a>  ptry <span class="ot">=</span> <span class="fu">pval_sign</span>(try, irs, Time)</span>
+<span id="cb42-6"><a href="#cb42-6"></a>  <span class="fu">print</span>(<span class="fu">c</span>(try, ptry))</span>
+<span id="cb42-7"><a href="#cb42-7"></a>  <span class="cf">if</span> (ptry <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb42-8"><a href="#cb42-8"></a>    hi <span class="ot">=</span> try</span>
+<span id="cb42-9"><a href="#cb42-9"></a>  <span class="cf">else</span></span>
+<span id="cb42-10"><a href="#cb42-10"></a>    lo <span class="ot">=</span> try</span>
+<span id="cb42-11"><a href="#cb42-11"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-output-from-this-loop" class="slide level2">
@@ -986,7 +949,7 @@ $p_values
 <li><code>smmr</code> has function <code>ci_median</code> that does this (by default 95% CI):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">ci_median</span>(irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">ci_median</span>(irs, Time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 119.0065 214.9955</code></pre>
 </div>
@@ -996,7 +959,7 @@ $p_values
 <li>Or get, say, 90% CI for median:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">ci_median</span>(irs, Time, <span class="at">conf.level=</span><span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">ci_median</span>(irs, Time, <span class="at">conf.level=</span><span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 123.0031 208.9960</code></pre>
 </div>
@@ -1012,17 +975,17 @@ $p_values
 <li>Bootstrap, again:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">tibble</span>(<span class="at">sim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb56-2"><a href="#cb56-2"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb56-3"><a href="#cb56-3"></a>  <span class="fu">mutate</span>(<span class="at">my_sample =</span> <span class="fu">list</span>(<span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb56-4"><a href="#cb56-4"></a>  <span class="fu">mutate</span>(<span class="at">my_mean =</span> <span class="fu">mean</span>(my_sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb56-5"><a href="#cb56-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>my_mean)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">tibble</span>(<span class="at">sim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">mutate</span>(<span class="at">my_sample =</span> <span class="fu">list</span>(<span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">mutate</span>(<span class="at">my_mean =</span> <span class="fu">mean</span>(my_sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>my_mean)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-sampling-distribution" class="slide level2">
 <h2>The sampling distribution</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="inference_3_files/figure-revealjs/inference-3-R-30-1.png" width="960" class="r-stretch"></section>

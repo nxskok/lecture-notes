@@ -1,11 +1,5 @@
 ---
 title: "Case study: asphalt"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## The asphalt data

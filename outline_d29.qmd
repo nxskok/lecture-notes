@@ -1,11 +1,5 @@
 ---
 title: "STAD29 / STA 1007 course outline"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## This course

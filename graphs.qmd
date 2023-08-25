@@ -1,11 +1,5 @@
 ---
 title: "Drawing graphs"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Our data

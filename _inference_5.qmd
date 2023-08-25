@@ -1,0 +1,321 @@
+---
+title: "Analysis of variance"
+---
+
+
+## Packages
+
+```{r}
+library(tidyverse)
+library(smmr)
+library(PMCMRplus)
+```
+
+
+## Jumping rats
+- Link between exercise and healthy bones (many studies).
+- Exercise stresses bones and causes them to get stronger.
+- Study (Purdue): effect of jumping on bone density of growing rats.
+- 30 rats, randomly assigned to 1 of 3 treatments:
+  - No jumping (control)
+  - Low-jump treatment (30 cm)
+  - High-jump treatment (60 cm)
+- 8 weeks, 10 jumps/day, 5 days/week.
+- Bone density of rats (mg/cm$^3$) measured at end.
+- See whether larger amount of exercise (jumping) went with higher
+bone density.
+- Random assignment: rats in each group similar in all important ways.
+- So entitled to draw conclusions about cause and effect.
+
+## Reading the data
+Values separated by spaces:
+
+\small
+
+```{r inference-5-R-9}
+my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
+rats <- read_delim(my_url," ")
+```
+
+\normalsize
+
+## The data (some random rows)
+
+\small
+```{r inference-5-R-10}
+rats %>% slice_sample(n=12)
+```
+\normalsize
+
+## Boxplots
+
+```{r inference-5-R-11, fig.height=3.7}
+ggplot(rats, aes(y=density, x=group)) + geom_boxplot()
+```
+
+## Or, arranging groups in data (logical) order
+
+```{r inference-5-R-12, fig.height=3.5}
+ggplot(rats, aes(y=density, x=fct_inorder(group))) +
+  geom_boxplot()
+```
+
+## Analysis of Variance
+- Comparing > 2 groups of independent observations (each rat only
+does one amount of jumping).
+- Standard procedure: analysis of variance (ANOVA).
+- Null hypothesis: all groups have same mean.
+- Alternative: “not all means the same”, at least one is different from
+others.
+
+## Testing: ANOVA in R
+
+```{r inference-5-R-13}
+rats.aov <- aov(density~group,data=rats)
+summary(rats.aov)
+```
+
+- Usual ANOVA table, small P-value: significant result.
+- Conclude that the mean bone densities are not all equal.
+- Reject null, but not very useful finding.
+
+## Which groups are different from which?
+- ANOVA really only answers half our questions: it says “there are
+differences”, but doesn’t tell us which groups different.
+- One possibility (not the best): compare all possible pairs of groups,
+via two-sample t.
+- First pick out each group:
+
+```{r inference-5-R-14}
+rats %>% filter(group=="Control") -> controls
+rats %>% filter(group=="Lowjump") -> lows
+rats %>% filter(group=="Highjump") -> highs
+```
+
+## Control vs. low
+
+```{r inference-5-R-15}
+t.test(controls$density, lows$density)
+```
+
+No sig. difference here.
+
+## Control vs. high
+
+```{r inference-5-R-16}
+t.test(controls$density, highs$density)
+```
+
+These are different.
+
+## Low vs. high
+
+```{r inference-5-R-17}
+t.test(lows$density, highs$density)
+```
+
+These are different too.
+
+## But...
+- We just did 3 tests instead of 1.
+- So we have given ourselves 3 chances to reject $H_0:$ all means equal,
+instead of 1.
+- Thus $\alpha$ for this combined test is not 0.05.
+
+## John W. Tukey 
+
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=\textwidth]{John_Tukey}
+    \end{column}
+    \begin{column}{0.6\textwidth}
+      \begin{itemize}
+      \item American statistician, 1915--2000
+      \item Big fan of exploratory data analysis
+      \item Invented boxplot
+      \item Invented "honestly significant differences"
+      \item Invented jackknife estimation
+      \item Coined computing term "bit"
+      \item Co-inventor of Fast Fourier Transform
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  
+
+## Honestly Significant Differences
+- Compare several groups with one test, telling you which groups differ
+from which.
+- Idea: if all population means equal, find distribution of highest sample
+mean minus lowest sample mean.
+- Any means unusually different compared to that declared significantly
+different.
+
+## Tukey on rat data
+
+```{r inference-5-R-18, echo=F}
+width <- getOption("width")
+options(width = 60)
+```
+
+
+\small
+```{r inference-5-R-19}
+rats.aov <- aov(density~group, data = rats)
+TukeyHSD(rats.aov)
+```
+\normalsize
+
+```{r inference-5-R-20, echo=F}
+options(width=width)
+```
+
+- Again conclude that bone density for highjump group significantly higher
+than for other two groups.
+
+## Why Tukey’s procedure better than all t-tests 
+Look at P-values for the two tests:
+
+```
+Comparison        Tukey    t-tests
+----------------------------------
+Highjump-Control 0.0016     0.0021
+Lowjump-Control  0.4744     0.2977
+Lowjump-Highjump 0.0298     0.0045
+```
+
+  
+- Tukey P-values (mostly) higher.
+- Proper adjustment for doing three t-tests at once, not just one in
+isolation.
+
+## Checking assumptions
+
+```{r inference-5-R-21, fig.height=3.5}
+ggplot(rats,aes(y = density, x = fct_inorder(group)))+
+  geom_boxplot()
+```
+
+Assumptions:
+
+- Normally distributed data within each group
+- with equal group SDs.
+
+## Normal quantile plots by group
+
+```{r inference-5-R-22, fig.height=3.5}
+ggplot(rats, aes(sample = density)) + stat_qq() + 
+  stat_qq_line() + facet_wrap( ~ group)
+```
+
+## The assumptions
+- Normally-distributed data within each group
+- Equal group SDs.
+- These are shaky here because:
+  - control group has outliers
+  - highjump group appears to have less spread than others.
+- Possible remedies (in general):
+  - Transformation of response (usually works best when SD increases
+with mean)
+  - If normality OK but equal spreads not, can use Welch ANOVA.
+(Regular ANOVA like pooled t-test; Welch ANOVA like
+Welch-Satterthwaite t-test.)
+  - Can also use Mood’s Median Test (see over). This works for any
+number of groups.
+
+## Mood’s median test 1/4
+- Find median of all bone densities, regardless of group:
+
+\small
+```{r inference-5-R-23}
+(rats %>% summarize(med = median(density)) %>% pull(med) -> m)
+```
+\normalsize
+
+- Count up how many observations in each group above or below
+overall median:
+
+```{r inference-5-R-24}
+tab <- with(rats, table(group, density > m))
+tab
+```
+
+
+## Mood’s median test 2/4 
+
+```{r inference-5-R-25}
+tab
+```
+
+
+- All Highjump obs above overall median.
+- Most Control obs below overall
+median.
+- Suggests medians differ by group.
+
+## Mood’s median test 3/4 
+- Test whether association between group and being above/below
+overall median significant using chi-squared test for association:
+
+```{r inference-5-R-26}
+chisq.test(tab,correct=F)
+```
+
+- Very small P-value says that being above/below overall median
+depends on group.
+- That is, groups do not all have same median.
+
+## Mood’s median test 4/4 
+Or with `median_test` from `smmr`, same as before. 
+
+```{r inference-5-R-27}
+median_test(rats,density,group)
+```
+
+
+
+## Comments
+- No doubt that medians differ between groups (not all same). 
+- This test is equivalent of $F$-test, not of Tukey. 
+- To determine which groups differ from which, can compare all possible
+pairs of groups via (2-sample) Mood’s median tests, then adjust
+P-values by multiplying by number of 2-sample Mood tests done (Bonferroni):
+
+```{r inference-5-R-28}
+pairwise_median_test(rats,density,group)
+```
+
+- Now, lowjump-highjump difference no longer significant. 
+
+## Welch ANOVA
+- For these data, Mood’s median test probably best because we doubt
+both normality and equal spreads.
+- When normality OK but spreads differ, Welch ANOVA way to go.
+- Welch ANOVA done by `oneway.test` as shown (for illustration):
+
+```{r inference-5-R-29}
+oneway.test(density~group,data=rats)
+```
+
+- P-value very similar, as expected.
+- Appropriate Tukey-equivalent here called Games-Howell.
+
+## Games-Howell
+
+- Lives in package `PMCMRplus`. Install
+first.
+
+```{r inference-5-R-30, eval=F}
+library(PMCMRplus)
+```
+
+
+```{r games-howell, warning=F}
+gamesHowellTest(density~factor(group),data=rats)
+```
+
+## Deciding which test to do
+
+For two or more samples:
+
+![Test flow chart](testflow.png)
+

@@ -307,6 +307,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -383,6 +384,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="dates_and_times_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="dates_and_times_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -415,13 +419,13 @@
 <span id="cb2-4"><a href="#cb2-4"></a>    <span class="at">d =</span> <span class="fu">as.Date</span>(text),</span>
 <span id="cb2-5"><a href="#cb2-5"></a>    <span class="at">numbers =</span> <span class="fu">as.numeric</span>(d)</span>
 <span id="cb2-6"><a href="#cb2-6"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  text       d          numbers
-  &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt;
-1 1970-01-01 1970-01-01       0
-2 2007-09-04 2007-09-04   13760
-3 1931-08-05 1931-08-05  -14029</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["d"],"name":[2],"type":["date"],"align":["right"]},{"label":["numbers"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1970-01-01","2":"1970-01-01","3":"0"},{"1":"2007-09-04","2":"2007-09-04","3":"13760"},{"1":"1931-08-05","2":"1931-08-05","3":"-14029"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -431,14 +435,14 @@
 <li>Dates are “actually” numbers, so can add and subtract (difference is 2007 date in <code>d</code> minus others):</li>
 </ul>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>somedates <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">plus30 =</span> d <span class="sc">+</span> <span class="dv">30</span>, <span class="at">diffs =</span> d[<span class="dv">2</span>] <span class="sc">-</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-  text       d          numbers plus30     diffs     
-  &lt;chr&gt;      &lt;date&gt;       &lt;dbl&gt; &lt;date&gt;     &lt;drtn&gt;    
-1 1970-01-01 1970-01-01       0 1970-01-31 13760 days
-2 2007-09-04 2007-09-04   13760 2007-10-04     0 days
-3 1931-08-05 1931-08-05  -14029 1931-09-04 27789 days</code></pre>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>somedates <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">plus30 =</span> d <span class="sc">+</span> <span class="dv">30</span>, <span class="at">diffs =</span> d[<span class="dv">2</span>] <span class="sc">-</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["d"],"name":[2],"type":["date"],"align":["right"]},{"label":["numbers"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["plus30"],"name":[4],"type":["date"],"align":["right"]},{"label":["diffs"],"name":[5],"type":["drtn"],"align":["right"]}],"data":[{"1":"1970-01-01","2":"1970-01-01","3":"0","4":"1970-01-31","5":"13760 days"},{"1":"2007-09-04","2":"2007-09-04","3":"13760","4":"2007-10-04","5":"0 days"},{"1":"1931-08-05","2":"1931-08-05","3":"-14029","4":"1931-09-04","5":"27789 days"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -455,8 +459,8 @@
 <li>Then read them in:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/mydates.csv"</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>ddd <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/mydates.csv"</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>ddd <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>read_csv guessed that the 1st column is dates, but not 3rd.</li>
@@ -465,14 +469,14 @@
 <section id="the-data-as-read-in" class="slide level2">
 <h2>The data as read in</h2>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>ddd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  date       status     dunno           
-  &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;           
-1 2011-08-03 hello      August 3 2011   
-2 2011-11-15 still here November 15 2011
-3 2012-02-01 goodbye    February 1 2012 </code></pre>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>ddd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["date"],"name":[1],"type":["date"],"align":["right"]},{"label":["status"],"name":[2],"type":["chr"],"align":["left"]},{"label":["dunno"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"2011-08-03","2":"hello","3":"August 3 2011"},{"1":"2011-11-15","2":"still here","3":"November 15 2011"},{"1":"2012-02-01","2":"goodbye","3":"February 1 2012"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -483,30 +487,30 @@
 <li>To deal with dates in other formats, use package <code>lubridate</code> and convert. For example, dates in US format with month first:</li>
 </ul>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">tibble</span>(<span class="at">usdates =</span> <span class="fu">c</span>(<span class="st">"05/27/2012"</span>, <span class="st">"01/03/2016"</span>, <span class="st">"12/31/2015"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">mutate</span>(<span class="at">iso =</span> <span class="fu">mdy</span>(usdates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  usdates    iso       
-  &lt;chr&gt;      &lt;date&gt;    
-1 05/27/2012 2012-05-27
-2 01/03/2016 2016-01-03
-3 12/31/2015 2015-12-31</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">tibble</span>(<span class="at">usdates =</span> <span class="fu">c</span>(<span class="st">"05/27/2012"</span>, <span class="st">"01/03/2016"</span>, <span class="st">"12/31/2015"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">mutate</span>(<span class="at">iso =</span> <span class="fu">mdy</span>(usdates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["usdates"],"name":[1],"type":["chr"],"align":["left"]},{"label":["iso"],"name":[2],"type":["date"],"align":["right"]}],"data":[{"1":"05/27/2012","2":"2012-05-27"},{"1":"01/03/2016","2":"2016-01-03"},{"1":"12/31/2015","2":"2015-12-31"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="trying-to-read-these-as-uk-dates" class="slide level2">
 <h2>Trying to read these as UK dates</h2>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">tibble</span>(<span class="at">usdates =</span> <span class="fu">c</span>(<span class="st">"05/27/2012"</span>, <span class="st">"01/03/2016"</span>, <span class="st">"12/31/2015"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">mutate</span>(<span class="at">uk =</span> <span class="fu">dmy</span>(usdates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  usdates    uk        
-  &lt;chr&gt;      &lt;date&gt;    
-1 05/27/2012 NA        
-2 01/03/2016 2016-03-01
-3 12/31/2015 NA        </code></pre>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">tibble</span>(<span class="at">usdates =</span> <span class="fu">c</span>(<span class="st">"05/27/2012"</span>, <span class="st">"01/03/2016"</span>, <span class="st">"12/31/2015"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">mutate</span>(<span class="at">uk =</span> <span class="fu">dmy</span>(usdates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["usdates"],"name":[1],"type":["chr"],"align":["left"]},{"label":["uk"],"name":[2],"type":["date"],"align":["right"]}],"data":[{"1":"05/27/2012","2":"<NA>"},{"1":"01/03/2016","2":"2016-03-01"},{"1":"12/31/2015","2":"<NA>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -519,7 +523,7 @@
 <li>Back to this:</li>
 </ul>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>ddd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>ddd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   date       status     dunno           
@@ -536,14 +540,14 @@
 <section id="so-interpret-as-such" class="slide level2">
 <h2>so interpret as such</h2>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>(ddd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">date2 =</span> <span class="fu">mdy</span>(dunno)) <span class="ot">-&gt;</span> d4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  date       status     dunno            date2     
-  &lt;date&gt;     &lt;chr&gt;      &lt;chr&gt;            &lt;date&gt;    
-1 2011-08-03 hello      August 3 2011    2011-08-03
-2 2011-11-15 still here November 15 2011 2011-11-15
-3 2012-02-01 goodbye    February 1 2012  2012-02-01</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>(ddd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">date2 =</span> <span class="fu">mdy</span>(dunno)) <span class="ot">-&gt;</span> d4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["date"],"name":[1],"type":["date"],"align":["right"]},{"label":["status"],"name":[2],"type":["chr"],"align":["left"]},{"label":["dunno"],"name":[3],"type":["chr"],"align":["left"]},{"label":["date2"],"name":[4],"type":["date"],"align":["right"]}],"data":[{"1":"2011-08-03","2":"hello","3":"August 3 2011","4":"2011-08-03"},{"1":"2011-11-15","2":"still here","3":"November 15 2011","4":"2011-11-15"},{"1":"2012-02-01","2":"goodbye","3":"February 1 2012","4":"2012-02-01"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -553,7 +557,7 @@
 <li>Column <code>date2</code> was correctly converted from column <code>dunno</code>:</li>
 </ul>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>d4 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">equal =</span> <span class="fu">identical</span>(date, date2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>d4 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">equal =</span> <span class="fu">identical</span>(date, date2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   date       status     dunno            date2      equal
@@ -575,38 +579,38 @@
 2007 9 4
 1940 4 15</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/pieces.txt"</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>dates0 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/pieces.txt"</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>dates0 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="making-some-dates" class="slide level2">
 <h2>Making some dates</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>dates0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-   year month   day
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1  1970     1     1
-2  2007     9     4
-3  1940     4    15</code></pre>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>dates0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["month"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["day"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1970","2":"1","3":"1"},{"1":"2007","2":"9","3":"4"},{"1":"1940","2":"4","3":"15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>dates0 <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">unite</span>(dates, day, month, year) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dmy</span>(dates)) <span class="ot">-&gt;</span> newdates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>dates0 <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">unite</span>(dates, day, month, year) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dmy</span>(dates)) <span class="ot">-&gt;</span> newdates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-results" class="slide level2">
 <h2>The results</h2>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>newdates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  dates     d         
-  &lt;chr&gt;     &lt;date&gt;    
-1 1_1_1970  1970-01-01
-2 4_9_2007  2007-09-04
-3 15_4_1940 1940-04-15</code></pre>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>newdates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["dates"],"name":[1],"type":["chr"],"align":["left"]},{"label":["d"],"name":[2],"type":["date"],"align":["right"]}],"data":[{"1":"1_1_1970","2":"1970-01-01"},{"1":"4_9_2007","2":"2007-09-04"},{"1":"15_4_1940","2":"1940-04-15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -618,19 +622,19 @@
 <section id="extracting-information-from-dates" class="slide level2">
 <h2>Extracting information from dates</h2>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>newdates <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb27-3"><a href="#cb27-3"></a>    <span class="at">mon =</span> <span class="fu">month</span>(d),</span>
-<span id="cb27-4"><a href="#cb27-4"></a>    <span class="at">day =</span> <span class="fu">day</span>(d),</span>
-<span id="cb27-5"><a href="#cb27-5"></a>    <span class="at">weekday =</span> <span class="fu">wday</span>(d, <span class="at">label =</span> T)</span>
-<span id="cb27-6"><a href="#cb27-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-  dates     d            mon   day weekday
-  &lt;chr&gt;     &lt;date&gt;     &lt;dbl&gt; &lt;int&gt; &lt;ord&gt;  
-1 1_1_1970  1970-01-01     1     1 Thu    
-2 4_9_2007  2007-09-04     9     4 Tue    
-3 15_4_1940 1940-04-15     4    15 Mon    </code></pre>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>newdates <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb19-3"><a href="#cb19-3"></a>    <span class="at">mon =</span> <span class="fu">month</span>(d),</span>
+<span id="cb19-4"><a href="#cb19-4"></a>    <span class="at">day =</span> <span class="fu">day</span>(d),</span>
+<span id="cb19-5"><a href="#cb19-5"></a>    <span class="at">weekday =</span> <span class="fu">wday</span>(d, <span class="at">label =</span> T)</span>
+<span id="cb19-6"><a href="#cb19-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["dates"],"name":[1],"type":["chr"],"align":["left"]},{"label":["d"],"name":[2],"type":["date"],"align":["right"]},{"label":["mon"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["day"],"name":[4],"type":["int"],"align":["right"]},{"label":["weekday"],"name":[5],"type":["ord"],"align":["right"]}],"data":[{"1":"1_1_1970","2":"1970-01-01","3":"1","4":"1","5":"Thu"},{"1":"4_9_2007","2":"2007-09-04","3":"9","4":"4","5":"Tue"},{"1":"15_4_1940","2":"1940-04-15","3":"4","4":"15","5":"Mon"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -640,10 +644,10 @@
 <li>Standard format for times is to put the time after the date, hours, minutes, seconds:</li>
 </ul>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>(dd <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> <span class="fu">c</span>(</span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="st">"1970-01-01 07:50:01"</span>, <span class="st">"2007-09-04 15:30:00"</span>,</span>
-<span id="cb29-3"><a href="#cb29-3"></a>  <span class="st">"1940-04-15 06:45:10"</span>, <span class="st">"2016-02-10 12:26:40"</span></span>
-<span id="cb29-4"><a href="#cb29-4"></a>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>(dd <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> <span class="fu">c</span>(</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="st">"1970-01-01 07:50:01"</span>, <span class="st">"2007-09-04 15:30:00"</span>,</span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="st">"1940-04-15 06:45:10"</span>, <span class="st">"2016-02-10 12:26:40"</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 1
   text               
@@ -661,7 +665,7 @@
 <li>Then get from this text using <code>ymd_hms</code>:</li>
 </ul>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   text                dt                 
@@ -679,17 +683,16 @@
 <li>Default timezone is “Universal Coordinated Time”. Change it via <code>tz=</code> and the name of a timezone:</li>
 </ul>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text, <span class="at">tz =</span> <span class="st">"America/Toronto"</span>)) <span class="ot">-&gt;</span> dd</span>
-<span id="cb33-3"><a href="#cb33-3"></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">zone =</span> <span class="fu">tz</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
-  text                dt                  zone           
-  &lt;chr&gt;               &lt;dttm&gt;              &lt;chr&gt;          
-1 1970-01-01 07:50:01 1970-01-01 07:50:01 America/Toronto
-2 2007-09-04 15:30:00 2007-09-04 15:30:00 America/Toronto
-3 1940-04-15 06:45:10 1940-04-15 06:45:10 America/Toronto
-4 2016-02-10 12:26:40 2016-02-10 12:26:40 America/Toronto</code></pre>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text, <span class="at">tz =</span> <span class="st">"America/Toronto"</span>)) <span class="ot">-&gt;</span> dd</span>
+<span id="cb24-3"><a href="#cb24-3"></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">zone =</span> <span class="fu">tz</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["dt"],"name":[2],"type":["dttm"],"align":["right"]},{"label":["zone"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1970-01-01 07:50:01","2":"1970-01-01 07:50:01","3":"America/Toronto"},{"1":"2007-09-04 15:30:00","2":"2007-09-04 15:30:00","3":"America/Toronto"},{"1":"1940-04-15 06:45:10","2":"1940-04-15 06:45:10","3":"America/Toronto"},{"1":"2016-02-10 12:26:40","2":"2016-02-10 12:26:40","3":"America/Toronto"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -699,14 +702,14 @@
 <li>As you would expect:</li>
 </ul>
 <div class="cell" data-paged.print="false">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>dd <span class="sc">%&gt;%</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>text) <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb35-4"><a href="#cb35-4"></a>    <span class="at">h =</span> <span class="fu">hour</span>(dt),</span>
-<span id="cb35-5"><a href="#cb35-5"></a>    <span class="at">sec =</span> <span class="fu">second</span>(dt),</span>
-<span id="cb35-6"><a href="#cb35-6"></a>    <span class="at">min =</span> <span class="fu">minute</span>(dt),</span>
-<span id="cb35-7"><a href="#cb35-7"></a>    <span class="at">zone =</span> <span class="fu">tz</span>(dt)</span>
-<span id="cb35-8"><a href="#cb35-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>dd <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>text) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">h =</span> <span class="fu">hour</span>(dt),</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="at">sec =</span> <span class="fu">second</span>(dt),</span>
+<span id="cb25-6"><a href="#cb25-6"></a>    <span class="at">min =</span> <span class="fu">minute</span>(dt),</span>
+<span id="cb25-7"><a href="#cb25-7"></a>    <span class="at">zone =</span> <span class="fu">tz</span>(dt)</span>
+<span id="cb25-8"><a href="#cb25-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   dt                      h   sec   min zone           
@@ -721,24 +724,23 @@
 <section id="same-times-but-different-time-zone" class="slide level2">
 <h2>Same times, but different time zone:</h2>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>dd <span class="sc">%&gt;%</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">select</span>(dt) <span class="sc">%&gt;%</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">"Australia/Sydney"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  dt                  oz                 
-  &lt;dttm&gt;              &lt;dttm&gt;             
-1 1970-01-01 07:50:01 1970-01-01 22:50:01
-2 2007-09-04 15:30:00 2007-09-05 05:30:00
-3 1940-04-15 06:45:10 1940-04-15 21:45:10
-4 2016-02-10 12:26:40 2016-02-11 04:26:40</code></pre>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>dd <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">select</span>(dt) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">"Australia/Sydney"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["dt"],"name":[1],"type":["dttm"],"align":["right"]},{"label":["oz"],"name":[2],"type":["dttm"],"align":["right"]}],"data":[{"1":"1970-01-01 07:50:01","2":"1970-01-01 22:50:01"},{"1":"2007-09-04 15:30:00","2":"2007-09-05 05:30:00"},{"1":"1940-04-15 06:45:10","2":"1940-04-15 21:45:10"},{"1":"2016-02-10 12:26:40","2":"2016-02-11 04:26:40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>In more detail:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>dd <span class="sc">%&gt;%</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">"Australia/Sydney"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">pull</span>(oz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>dd <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">"Australia/Sydney"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">pull</span>(oz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1970-01-01 22:50:01 AEST" "2007-09-05 05:30:00 AEST"
 [3] "1940-04-15 21:45:10 AEST" "2016-02-11 04:26:40 AEDT"</code></pre>
@@ -761,16 +763,16 @@
 <li>These ought to get read in and converted to date-times:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/hospital.csv"</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>stays <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
-<span id="cb42-3"><a href="#cb42-3"></a>stays</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  admit               discharge          
-  &lt;dttm&gt;              &lt;dttm&gt;             
-1 1981-12-10 22:00:00 1982-01-03 14:00:00
-2 2014-03-07 14:00:00 2014-03-08 09:30:00
-3 2016-08-31 21:00:00 2016-09-02 17:00:00</code></pre>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/hospital.csv"</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>stays <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
+<span id="cb31-3"><a href="#cb31-3"></a>stays</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["admit"],"name":[1],"type":["dttm"],"align":["right"]},{"label":["discharge"],"name":[2],"type":["dttm"],"align":["right"]}],"data":[{"1":"1981-12-10 22:00:00","2":"1982-01-03 14:00:00"},{"1":"2014-03-07 14:00:00","2":"2014-03-08 09:30:00"},{"1":"2016-08-31 21:00:00","2":"2016-09-02 17:00:00"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -783,14 +785,14 @@
 <li>In the obvious way, this gets us an answer:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>stays <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">stay =</span> discharge <span class="sc">-</span> admit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  admit               discharge           stay       
-  &lt;dttm&gt;              &lt;dttm&gt;              &lt;drtn&gt;     
-1 1981-12-10 22:00:00 1982-01-03 14:00:00 568.0 hours
-2 2014-03-07 14:00:00 2014-03-08 09:30:00  19.5 hours
-3 2016-08-31 21:00:00 2016-09-02 17:00:00  44.0 hours</code></pre>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>stays <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">stay =</span> discharge <span class="sc">-</span> admit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["admit"],"name":[1],"type":["dttm"],"align":["right"]},{"label":["discharge"],"name":[2],"type":["dttm"],"align":["right"]},{"label":["stay"],"name":[3],"type":["drtn"],"align":["right"]}],"data":[{"1":"1981-12-10 22:00:00","2":"1982-01-03 14:00:00","3":"568.0 hours"},{"1":"2014-03-07 14:00:00","2":"2014-03-08 09:30:00","3":"19.5 hours"},{"1":"2016-08-31 21:00:00","2":"2016-09-02 17:00:00","3":"44.0 hours"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -803,16 +805,16 @@
 <li>Fractional number of days would be better:</li>
 </ul>
 <div class="cell" data-paged.print="true">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>stays <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb46-3"><a href="#cb46-3"></a>    <span class="at">stay_days =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge) <span class="sc">/</span> <span class="fu">days</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  admit               discharge           stay_days
-  &lt;dttm&gt;              &lt;dttm&gt;                  &lt;dbl&gt;
-1 1981-12-10 22:00:00 1982-01-03 14:00:00    23.7  
-2 2014-03-07 14:00:00 2014-03-08 09:30:00     0.812
-3 2016-08-31 21:00:00 2016-09-02 17:00:00     1.83 </code></pre>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>stays <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb33-3"><a href="#cb33-3"></a>    <span class="at">stay_days =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge) <span class="sc">/</span> <span class="fu">days</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["admit"],"name":[1],"type":["dttm"],"align":["right"]},{"label":["discharge"],"name":[2],"type":["dttm"],"align":["right"]},{"label":["stay_days"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1981-12-10 22:00:00","2":"1982-01-03 14:00:00","3":"23.666667"},{"1":"2014-03-07 14:00:00","2":"2014-03-08 09:30:00","3":"0.812500"},{"1":"2016-08-31 21:00:00","2":"2016-09-02 17:00:00","3":"1.833333"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -822,20 +824,20 @@
 <li>Pull out with <code>day()</code> etc, as for a date-time:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>stays <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb48-3"><a href="#cb48-3"></a>    <span class="at">stay =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge),</span>
-<span id="cb48-4"><a href="#cb48-4"></a>    <span class="at">stay_days =</span> <span class="fu">day</span>(stay),</span>
-<span id="cb48-5"><a href="#cb48-5"></a>    <span class="at">stay_hours =</span> <span class="fu">hour</span>(stay)</span>
-<span id="cb48-6"><a href="#cb48-6"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb48-7"><a href="#cb48-7"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"stay"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  stay          stay_days stay_hours
-  &lt;Period&gt;          &lt;dbl&gt;      &lt;dbl&gt;
-1 23d 16H 0M 0S        23         16
-2 19H 30M 0S            0         19
-3 1d 20H 0M 0S          1         20</code></pre>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>stays <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb34-3"><a href="#cb34-3"></a>    <span class="at">stay =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge),</span>
+<span id="cb34-4"><a href="#cb34-4"></a>    <span class="at">stay_days =</span> <span class="fu">day</span>(stay),</span>
+<span id="cb34-5"><a href="#cb34-5"></a>    <span class="at">stay_hours =</span> <span class="fu">hour</span>(stay)</span>
+<span id="cb34-6"><a href="#cb34-6"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"stay"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["stay"],"name":[1],"type":["Period"],"align":["right"]},{"label":["stay_days"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["stay_hours"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"23d 16H 0M 0S","2":"23","3":"16"},{"1":"19H 30M 0S","2":"0","3":"19"},{"1":"1d 20H 0M 0S","2":"1","3":"20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>

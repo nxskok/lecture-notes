@@ -307,6 +307,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -383,6 +384,9 @@
       margin-right: 0; 
     }
   </style>
+  
+  <link href="discrim_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+  <script src="discrim_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -522,16 +526,13 @@ weight -1.2513563</code></pre>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(hilo<span class="fl">.1</span>)</span>
 <span id="cb6-2"><a href="#cb6-2"></a>hilo<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(hilo, p)</span>
 <span id="cb6-3"><a href="#cb6-3"></a>hilo<span class="fl">.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  fertilizer yield weight class posterior.high posterior.low        LD1
-1        low    34     10   low   2.108619e-05  9.999789e-01  3.0931414
-2        low    29     14   low   1.245320e-03  9.987547e-01  1.9210963
-3        low    35     11   low   2.315016e-02  9.768498e-01  1.0751090
-4        low    32     13   low   4.579036e-02  9.542096e-01  0.8724245
-5       high    33     14  high   9.817958e-01  1.820422e-02 -1.1456079
-6       high    38     12  high   9.998195e-01  1.804941e-04 -2.4762756
-7       high    34     13  high   9.089278e-01  9.107216e-02 -0.6609276
-8       high    35     14  high   9.999109e-01  8.914534e-05 -2.6789600</code></pre>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["fertilizer"],"name":[1],"type":["chr"],"align":["left"]},{"label":["yield"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["class"],"name":[4],"type":["fct"],"align":["left"]},{"label":["posterior.high"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["posterior.low"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["LD1"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"low","2":"34","3":"10","4":"low","5":"2.108619e-05","6":"9.999789e-01","7":"3.0931414","_rn_":"1"},{"1":"low","2":"29","3":"14","4":"low","5":"1.245320e-03","6":"9.987547e-01","7":"1.9210963","_rn_":"2"},{"1":"low","2":"35","3":"11","4":"low","5":"2.315016e-02","6":"9.768498e-01","7":"1.0751090","_rn_":"3"},{"1":"low","2":"32","3":"13","4":"low","5":"4.579036e-02","6":"9.542096e-01","7":"0.8724245","_rn_":"4"},{"1":"high","2":"33","3":"14","4":"high","5":"9.817958e-01","6":"1.820422e-02","7":"-1.1456079","_rn_":"5"},{"1":"high","2":"38","3":"12","4":"high","5":"9.998195e-01","6":"1.804941e-04","7":"-2.4762756","_rn_":"6"},{"1":"high","2":"34","3":"13","4":"high","5":"9.089278e-01","6":"9.107216e-02","7":"-0.6609276","_rn_":"7"},{"1":"high","2":"35","3":"14","4":"high","5":"9.999109e-01","6":"8.914534e-05","7":"-2.6789600","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -539,18 +540,15 @@ weight -1.2513563</code></pre>
 <h2>LD1 scores in order</h2>
 <p>Most positive LD1 score is most obviously low fertilizer, most negative is most obviously high:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>hilo<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">select</span>(fertilizer, yield, weight, LD1) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(LD1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  fertilizer yield weight        LD1
-1        low    34     10  3.0931414
-2        low    29     14  1.9210963
-3        low    35     11  1.0751090
-4        low    32     13  0.8724245
-7       high    34     13 -0.6609276
-5       high    33     14 -1.1456079
-6       high    38     12 -2.4762756
-8       high    35     14 -2.6789600</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>hilo<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">select</span>(fertilizer, yield, weight, LD1) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(LD1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["fertilizer"],"name":[1],"type":["chr"],"align":["left"]},{"label":["yield"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["LD1"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"low","2":"34","3":"10","4":"3.0931414","_rn_":"1"},{"1":"low","2":"29","3":"14","4":"1.9210963","_rn_":"2"},{"1":"low","2":"35","3":"11","4":"1.0751090","_rn_":"3"},{"1":"low","2":"32","3":"13","4":"0.8724245","_rn_":"4"},{"1":"high","2":"34","3":"13","4":"-0.6609276","_rn_":"7"},{"1":"high","2":"33","3":"14","4":"-1.1456079","_rn_":"5"},{"1":"high","2":"38","3":"12","4":"-2.4762756","_rn_":"6"},{"1":"high","2":"35","3":"14","4":"-2.6789600","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>High fertilizer have yield and weight high, negative LD1 scores.</p>
@@ -559,7 +557,7 @@ weight -1.2513563</code></pre>
 <h2>Plotting LD1 scores</h2>
 <p>With one LD score, plot against (true) groups, eg. boxplot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">ggplot</span>(hilo<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> fertilizer, <span class="at">y =</span> LD1)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">ggplot</span>(hilo<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> fertilizer, <span class="at">y =</span> LD1)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/bDiscrim-8-1.png" width="960" class="r-stretch"></section>
@@ -575,24 +573,21 @@ weight -1.2513563</code></pre>
 <h2>Predictions and predicted groups</h2>
 <p>based on <code>yield</code> and <code>weight</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>hilo<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">select</span>(yield, weight, fertilizer, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  yield weight fertilizer class
-1    34     10        low   low
-2    29     14        low   low
-3    35     11        low   low
-4    32     13        low   low
-5    33     14       high  high
-6    38     12       high  high
-7    34     13       high  high
-8    35     14       high  high</code></pre>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>hilo<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">select</span>(yield, weight, fertilizer, class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["yield"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["weight"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["fertilizer"],"name":[3],"type":["chr"],"align":["left"]},{"label":["class"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"34","2":"10","3":"low","4":"low","_rn_":"1"},{"1":"29","2":"14","3":"low","4":"low","_rn_":"2"},{"1":"35","2":"11","3":"low","4":"low","_rn_":"3"},{"1":"32","2":"13","3":"low","4":"low","_rn_":"4"},{"1":"33","2":"14","3":"high","4":"high","_rn_":"5"},{"1":"38","2":"12","3":"high","4":"high","_rn_":"6"},{"1":"34","2":"13","3":"high","4":"high","_rn_":"7"},{"1":"35","2":"14","3":"high","4":"high","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="count-up-correct-and-incorrect-classification" class="slide level2">
 <h2>Count up correct and incorrect classification</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">with</span>(hilo<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> fertilizer, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">with</span>(hilo<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> fertilizer, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      pred
 obs    high low
@@ -609,19 +604,16 @@ obs    high low
 <h2>Posterior probabilities</h2>
 <p>show how clear-cut the classification decisions were:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>hilo<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">4</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">select</span>(<span class="sc">-</span>LD1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  fertilizer yield weight class posterior.high posterior.low
-1        low    34     10   low         0.0000        1.0000
-2        low    29     14   low         0.0012        0.9988
-3        low    35     11   low         0.0232        0.9768
-4        low    32     13   low         0.0458        0.9542
-5       high    33     14  high         0.9818        0.0182
-6       high    38     12  high         0.9998        0.0002
-7       high    34     13  high         0.9089        0.0911
-8       high    35     14  high         0.9999        0.0001</code></pre>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>hilo<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">4</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">select</span>(<span class="sc">-</span>LD1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["fertilizer"],"name":[1],"type":["chr"],"align":["left"]},{"label":["yield"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["class"],"name":[4],"type":["fct"],"align":["left"]},{"label":["posterior.high"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["posterior.low"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"low","2":"34","3":"10","4":"low","5":"0.0000","6":"1.0000","_rn_":"1"},{"1":"low","2":"29","3":"14","4":"low","5":"0.0012","6":"0.9988","_rn_":"2"},{"1":"low","2":"35","3":"11","4":"low","5":"0.0232","6":"0.9768","_rn_":"3"},{"1":"low","2":"32","3":"13","4":"low","5":"0.0458","6":"0.9542","_rn_":"4"},{"1":"high","2":"33","3":"14","4":"high","5":"0.9818","6":"0.0182","_rn_":"5"},{"1":"high","2":"38","3":"12","4":"high","5":"0.9998","6":"0.0002","_rn_":"6"},{"1":"high","2":"34","3":"13","4":"high","5":"0.9089","6":"0.0911","_rn_":"7"},{"1":"high","2":"35","3":"14","4":"high","5":"0.9999","6":"0.0001","_rn_":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Only obs.&nbsp;7 has any doubt: <code>yield</code> low for a high-fertilizer, but high <code>weight</code> makes up for it.</p>
@@ -629,25 +621,16 @@ obs    high low
 <section id="example-2-the-peanuts" class="slide level2">
 <h2>Example 2: the peanuts</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/peanuts.txt"</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>peanuts <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
-<span id="cb17-3"><a href="#cb17-3"></a>peanuts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 6
-     obs location variety     y   smk     w
-   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1     1        1       5  195.  153.  51.4
- 2     2        1       5  194.  168.  53.7
- 3     3        2       5  190.  140.  55.5
- 4     4        2       5  180.  121.  44.4
- 5     5        1       6  203   157.  49.8
- 6     6        1       6  196.  166   45.8
- 7     7        2       6  203.  166.  60.4
- 8     8        2       6  198.  162.  54.1
- 9     9        1       8  194.  164.  57.8
-10    10        1       8  187   165.  58.6
-11    11        2       8  202.  167.  65  
-12    12        2       8  200   174.  67.2</code></pre>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/peanuts.txt"</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>peanuts <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>peanuts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["obs"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["location"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["variety"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["smk"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["w"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"5","4":"195.3","5":"153.1","6":"51.4"},{"1":"2","2":"1","3":"5","4":"194.3","5":"167.7","6":"53.7"},{"1":"3","2":"2","3":"5","4":"189.7","5":"139.5","6":"55.5"},{"1":"4","2":"2","3":"5","4":"180.4","5":"121.1","6":"44.4"},{"1":"5","2":"1","3":"6","4":"203.0","5":"156.8","6":"49.8"},{"1":"6","2":"1","3":"6","4":"195.9","5":"166.0","6":"45.8"},{"1":"7","2":"2","3":"6","4":"202.7","5":"166.1","6":"60.4"},{"1":"8","2":"2","3":"6","4":"197.6","5":"161.8","6":"54.1"},{"1":"9","2":"1","3":"8","4":"193.5","5":"164.5","6":"57.8"},{"1":"10","2":"1","3":"8","4":"187.0","5":"165.1","6":"58.6"},{"1":"11","2":"2","3":"8","4":"201.5","5":"166.8","6":"65.0"},{"1":"12","2":"2","3":"8","4":"200.0","5":"173.8","6":"67.2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -657,33 +640,24 @@ obs    high low
 <section id="location-variety-combos" class="slide level2">
 <h2>Location-variety combos</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>peanuts <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>   <span class="fu">unite</span>(combo, <span class="fu">c</span>(variety, location)) <span class="ot">-&gt;</span> peanuts.combo</span>
-<span id="cb19-3"><a href="#cb19-3"></a>peanuts.combo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 5
-     obs combo     y   smk     w
-   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1     1 5_1    195.  153.  51.4
- 2     2 5_1    194.  168.  53.7
- 3     3 5_2    190.  140.  55.5
- 4     4 5_2    180.  121.  44.4
- 5     5 6_1    203   157.  49.8
- 6     6 6_1    196.  166   45.8
- 7     7 6_2    203.  166.  60.4
- 8     8 6_2    198.  162.  54.1
- 9     9 8_1    194.  164.  57.8
-10    10 8_1    187   165.  58.6
-11    11 8_2    202.  167.  65  
-12    12 8_2    200   174.  67.2</code></pre>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>peanuts <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>   <span class="fu">unite</span>(combo, <span class="fu">c</span>(variety, location)) <span class="ot">-&gt;</span> peanuts.combo</span>
+<span id="cb14-3"><a href="#cb14-3"></a>peanuts.combo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["obs"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["combo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["y"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["smk"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["w"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"5_1","3":"195.3","4":"153.1","5":"51.4"},{"1":"2","2":"5_1","3":"194.3","4":"167.7","5":"53.7"},{"1":"3","2":"5_2","3":"189.7","4":"139.5","5":"55.5"},{"1":"4","2":"5_2","3":"180.4","4":"121.1","5":"44.4"},{"1":"5","2":"6_1","3":"203.0","4":"156.8","5":"49.8"},{"1":"6","2":"6_1","3":"195.9","4":"166.0","5":"45.8"},{"1":"7","2":"6_2","3":"202.7","4":"166.1","5":"60.4"},{"1":"8","2":"6_2","3":"197.6","4":"161.8","5":"54.1"},{"1":"9","2":"8_1","3":"193.5","4":"164.5","5":"57.8"},{"1":"10","2":"8_1","3":"187.0","4":"165.1","5":"58.6"},{"1":"11","2":"8_2","3":"201.5","4":"166.8","5":"65.0"},{"1":"12","2":"8_2","3":"200.0","4":"173.8","5":"67.2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="discriminant-analysis-1" class="slide level2">
 <h2>Discriminant analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>peanuts<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lda</span>(combo <span class="sc">~</span> y <span class="sc">+</span> smk <span class="sc">+</span> w, <span class="at">data =</span> peanuts.combo)</span>
-<span id="cb21-2"><a href="#cb21-2"></a>peanuts<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>peanuts<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lda</span>(combo <span class="sc">~</span> y <span class="sc">+</span> smk <span class="sc">+</span> w, <span class="at">data =</span> peanuts.combo)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>peanuts<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 lda(combo ~ y + smk + w, data = peanuts.combo)
@@ -720,7 +694,7 @@ Proportion of trace:
 <li><p>Relationship of LDs to original variables. Look for coeffs far from zero:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>peanuts<span class="fl">.1</span><span class="sc">$</span>scaling</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>peanuts<span class="fl">.1</span><span class="sc">$</span>scaling</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           LD1         LD2         LD3
 y    0.4027356  0.02967881  0.18839237
@@ -737,9 +711,9 @@ w   -0.5792456 -0.16300221  0.07341123</code></pre>
 <section id="the-predictions-and-misclassification" class="slide level2">
 <h2>The predictions and misclassification</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(peanuts<span class="fl">.1</span>)</span>
-<span id="cb25-2"><a href="#cb25-2"></a>peanuts<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(peanuts.combo, p)</span>
-<span id="cb25-3"><a href="#cb25-3"></a><span class="fu">with</span>(peanuts<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> combo, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(peanuts<span class="fl">.1</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>peanuts<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(peanuts.combo, p)</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">with</span>(peanuts<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> combo, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pred
 obs   5_1 5_2 6_1 6_2 8_1 8_2
@@ -756,36 +730,16 @@ obs   5_1 5_2 6_1 6_2 8_1 8_2
 <section id="posterior-probabilities-1" class="slide level2">
 <h2>Posterior probabilities</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>peanuts<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">2</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">select</span>(combo,  class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   combo class posterior.5_1 posterior.5_2 posterior.6_1 posterior.6_2
-1    5_1   5_1          0.69             0             0          0.31
-2    5_1   5_1          0.73             0             0          0.27
-3    5_2   5_2          0.00             1             0          0.00
-4    5_2   5_2          0.00             1             0          0.00
-5    6_1   6_1          0.00             0             1          0.00
-6    6_1   6_1          0.00             0             1          0.00
-7    6_2   6_2          0.13             0             0          0.87
-8    6_2   5_1          0.53             0             0          0.47
-9    8_1   8_1          0.02             0             0          0.02
-10   8_1   8_1          0.00             0             0          0.00
-11   8_2   8_2          0.00             0             0          0.00
-12   8_2   8_2          0.00             0             0          0.00
-   posterior.8_1 posterior.8_2
-1           0.00          0.00
-2           0.00          0.00
-3           0.00          0.00
-4           0.00          0.00
-5           0.00          0.00
-6           0.00          0.00
-7           0.00          0.00
-8           0.00          0.00
-9           0.75          0.21
-10          0.99          0.01
-11          0.03          0.97
-12          0.06          0.94</code></pre>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>peanuts<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">2</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">select</span>(combo,  class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["combo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["class"],"name":[2],"type":["fct"],"align":["left"]},{"label":["posterior.5_1"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["posterior.5_2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["posterior.6_1"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["posterior.6_2"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["posterior.8_1"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["posterior.8_2"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"5_1","2":"5_1","3":"0.69","4":"0","5":"0","6":"0.31","7":"0.00","8":"0.00","_rn_":"1"},{"1":"5_1","2":"5_1","3":"0.73","4":"0","5":"0","6":"0.27","7":"0.00","8":"0.00","_rn_":"2"},{"1":"5_2","2":"5_2","3":"0.00","4":"1","5":"0","6":"0.00","7":"0.00","8":"0.00","_rn_":"3"},{"1":"5_2","2":"5_2","3":"0.00","4":"1","5":"0","6":"0.00","7":"0.00","8":"0.00","_rn_":"4"},{"1":"6_1","2":"6_1","3":"0.00","4":"0","5":"1","6":"0.00","7":"0.00","8":"0.00","_rn_":"5"},{"1":"6_1","2":"6_1","3":"0.00","4":"0","5":"1","6":"0.00","7":"0.00","8":"0.00","_rn_":"6"},{"1":"6_2","2":"6_2","3":"0.13","4":"0","5":"0","6":"0.87","7":"0.00","8":"0.00","_rn_":"7"},{"1":"6_2","2":"5_1","3":"0.53","4":"0","5":"0","6":"0.47","7":"0.00","8":"0.00","_rn_":"8"},{"1":"8_1","2":"8_1","3":"0.02","4":"0","5":"0","6":"0.02","7":"0.75","8":"0.21","_rn_":"9"},{"1":"8_1","2":"8_1","3":"0.00","4":"0","5":"0","6":"0.00","7":"0.99","8":"0.01","_rn_":"10"},{"1":"8_2","2":"8_2","3":"0.00","4":"0","5":"0","6":"0.00","7":"0.03","8":"0.97","_rn_":"11"},{"1":"8_2","2":"8_2","3":"0.00","4":"0","5":"0","6":"0.00","7":"0.06","8":"0.94","_rn_":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p><em>Some</em> doubt about which combo each plant belongs in, but not too much. The one misclassified plant was a close call.</p>
@@ -797,7 +751,7 @@ obs   5_1 5_2 6_1 6_2 8_1 8_2
 <li><p>Construct data frame with original data and discriminant scores side by side:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>peanuts<span class="fl">.1</span><span class="sc">$</span>scaling</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>peanuts<span class="fl">.1</span><span class="sc">$</span>scaling</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           LD1         LD2         LD3
 y    0.4027356  0.02967881  0.18839237
@@ -813,21 +767,14 @@ w   -0.5792456 -0.16300221  0.07341123</code></pre>
 <section id="discriminant-scores-for-data" class="slide level2">
 <h2>Discriminant scores for data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>peanuts<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">select</span>(y, w, <span class="fu">starts_with</span>(<span class="st">"x"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       y    w     x.LD1       x.LD2       x.LD3
-1  195.3 51.4  1.417354  1.01233393  0.26467918
-2  194.3 53.7  2.204444 -0.38421359 -1.12526629
-3  189.7 55.5 -5.562217  1.10184441  0.78720394
-4  180.4 44.4 -6.056558  3.88530191 -0.05263163
-5  203.0 49.8  6.084370  1.25027629  1.25054957
-6  195.9 45.8  7.131192  1.06649258 -1.24422021
-7  202.7 60.4  1.430084 -1.11831802  1.09926555
-8  197.6 54.1  2.282572  0.04938762  0.07958437
-9  193.5 57.8 -1.045438 -0.85884902 -0.67463274
-10 187.0 58.6 -4.022969 -1.22292871 -1.89677191
-11 201.5 65.0 -1.596806 -1.95130266  1.14518230
-12 200.0 67.2 -2.266028 -2.83002474  0.36705787</code></pre>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>peanuts<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">select</span>(y, w, <span class="fu">starts_with</span>(<span class="st">"x"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["y"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["w"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["x.LD1"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["x.LD2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["x.LD3"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"195.3","2":"51.4","3":"1.417354","4":"1.01233393","5":"0.26467918","_rn_":"1"},{"1":"194.3","2":"53.7","3":"2.204444","4":"-0.38421359","5":"-1.12526629","_rn_":"2"},{"1":"189.7","2":"55.5","3":"-5.562217","4":"1.10184441","5":"0.78720394","_rn_":"3"},{"1":"180.4","2":"44.4","3":"-6.056558","4":"3.88530191","5":"-0.05263163","_rn_":"4"},{"1":"203.0","2":"49.8","3":"6.084370","4":"1.25027629","5":"1.25054957","_rn_":"5"},{"1":"195.9","2":"45.8","3":"7.131192","4":"1.06649258","5":"-1.24422021","_rn_":"6"},{"1":"202.7","2":"60.4","3":"1.430084","4":"-1.11831802","5":"1.09926555","_rn_":"7"},{"1":"197.6","2":"54.1","3":"2.282572","4":"0.04938762","5":"0.07958437","_rn_":"8"},{"1":"193.5","2":"57.8","3":"-1.045438","4":"-0.85884902","5":"-0.67463274","_rn_":"9"},{"1":"187.0","2":"58.6","3":"-4.022969","4":"-1.22292871","5":"-1.89677191","_rn_":"10"},{"1":"201.5","2":"65.0","3":"-1.596806","4":"-1.95130266","5":"1.14518230","_rn_":"11"},{"1":"200.0","2":"67.2","3":"-2.266028","4":"-2.83002474","5":"0.36705787","_rn_":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <ul>
@@ -838,17 +785,17 @@ w   -0.5792456 -0.16300221  0.07341123</code></pre>
 <section id="plot-ld1-vs.-ld2-labelling-by-combo" class="slide level2">
 <h2>Plot LD1 vs.&nbsp;LD2, labelling by combo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(peanuts<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2, <span class="at">colour =</span> combo, </span>
-<span id="cb33-2"><a href="#cb33-2"></a>                    <span class="at">label =</span> combo)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">geom_text_repel</span>() <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">"none"</span>)</span>
-<span id="cb33-4"><a href="#cb33-4"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(peanuts<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2, <span class="at">colour =</span> combo, </span>
+<span id="cb25-2"><a href="#cb25-2"></a>                    <span class="at">label =</span> combo)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">geom_text_repel</span>() <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">"none"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/bDiscrim-24-1.png" width="960" class="r-stretch"></section>
 <section id="bi-plot-from-ggbiplot" class="slide level2">
 <h2>“Bi-plot” from <code>ggbiplot</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">ggbiplot</span>(peanuts<span class="fl">.1</span>, <span class="at">groups =</span> <span class="fu">factor</span>(peanuts.combo<span class="sc">$</span>combo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggbiplot</span>(peanuts<span class="fl">.1</span>, <span class="at">groups =</span> <span class="fu">factor</span>(peanuts.combo<span class="sc">$</span>combo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/bDiscrim-25-1.png" width="960" class="r-stretch"></section>
@@ -859,14 +806,14 @@ w   -0.5792456 -0.16300221  0.07341123</code></pre>
 <li><p>Install package <code>devtools</code> first (once):</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Then install <code>ggbiplot</code> (once):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="fu">install_github</span>(<span class="st">"vqv/ggbiplot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">install_github</span>(<span class="st">"vqv/ggbiplot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="cross-validation" class="slide level2">
@@ -884,11 +831,11 @@ w   -0.5792456 -0.16300221  0.07341123</code></pre>
 <li>Fitting and prediction all in one go:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>p <span class="ot">&lt;-</span> <span class="fu">lda</span>(combo <span class="sc">~</span> y <span class="sc">+</span> smk <span class="sc">+</span> w,</span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="at">data =</span> peanuts.combo, <span class="at">CV =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb37-3"><a href="#cb37-3"></a>peanuts<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(peanuts.combo, <span class="at">class =</span> p<span class="sc">$</span>class, </span>
-<span id="cb37-4"><a href="#cb37-4"></a>                   <span class="at">posterior =</span> p<span class="sc">$</span>posterior)</span>
-<span id="cb37-5"><a href="#cb37-5"></a><span class="fu">with</span>(peanuts<span class="fl">.3</span>, <span class="fu">table</span>(<span class="at">obs =</span> combo, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>p <span class="ot">&lt;-</span> <span class="fu">lda</span>(combo <span class="sc">~</span> y <span class="sc">+</span> smk <span class="sc">+</span> w,</span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="at">data =</span> peanuts.combo, <span class="at">CV =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>peanuts<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(peanuts.combo, <span class="at">class =</span> p<span class="sc">$</span>class, </span>
+<span id="cb29-4"><a href="#cb29-4"></a>                   <span class="at">posterior =</span> p<span class="sc">$</span>posterior)</span>
+<span id="cb29-5"><a href="#cb29-5"></a><span class="fu">with</span>(peanuts<span class="fl">.3</span>, <span class="fu">table</span>(<span class="at">obs =</span> combo, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pred
 obs   5_1 5_2 6_1 6_2 8_1 8_2
@@ -907,43 +854,23 @@ obs   5_1 5_2 6_1 6_2 8_1 8_2
 <section id="repeat-of-ld-plot" class="slide level2">
 <h2>Repeat of LD plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/graziani-1.png" width="960" class="r-stretch"></section>
 <section id="posterior-probabilities-2" class="slide level2">
 <h2>Posterior probabilities</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>peanuts<span class="fl">.3</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="#cb40-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">select</span>(combo, class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   combo class posterior.5_1 posterior.5_2 posterior.6_1 posterior.6_2
-1    5_1   6_2         0.162          0.00         0.000         0.838
-2    5_1   6_2         0.200          0.00         0.000         0.799
-3    5_2   8_1         0.000          0.18         0.000         0.000
-4    5_2   5_2         0.000          1.00         0.000         0.000
-5    6_1   6_1         0.194          0.00         0.669         0.137
-6    6_1   6_1         0.000          0.00         1.000         0.000
-7    6_2   6_2         0.325          0.00         0.000         0.667
-8    6_2   5_1         0.821          0.00         0.000         0.179
-9    8_1   8_2         0.000          0.00         0.000         0.000
-10   8_1   5_2         0.000          1.00         0.000         0.000
-11   8_2   8_2         0.001          0.00         0.000         0.004
-12   8_2   8_2         0.000          0.00         0.000         0.000
-   posterior.8_1 posterior.8_2
-1          0.000         0.000
-2          0.000         0.000
-3          0.820         0.000
-4          0.000         0.000
-5          0.000         0.000
-6          0.000         0.000
-7          0.001         0.008
-8          0.000         0.000
-9          0.000         1.000
-10         0.000         0.000
-11         0.083         0.913
-12         0.167         0.833</code></pre>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>peanuts<span class="fl">.3</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">select</span>(combo, class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["combo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["class"],"name":[2],"type":["fct"],"align":["left"]},{"label":["posterior.5_1"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["posterior.5_2"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["posterior.6_1"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["posterior.6_2"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["posterior.8_1"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["posterior.8_2"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"5_1","2":"6_2","3":"0.162","4":"0.00","5":"0.000","6":"0.838","7":"0.000","8":"0.000","_rn_":"1"},{"1":"5_1","2":"6_2","3":"0.200","4":"0.00","5":"0.000","6":"0.799","7":"0.000","8":"0.000","_rn_":"2"},{"1":"5_2","2":"8_1","3":"0.000","4":"0.18","5":"0.000","6":"0.000","7":"0.820","8":"0.000","_rn_":"3"},{"1":"5_2","2":"5_2","3":"0.000","4":"1.00","5":"0.000","6":"0.000","7":"0.000","8":"0.000","_rn_":"4"},{"1":"6_1","2":"6_1","3":"0.194","4":"0.00","5":"0.669","6":"0.137","7":"0.000","8":"0.000","_rn_":"5"},{"1":"6_1","2":"6_1","3":"0.000","4":"0.00","5":"1.000","6":"0.000","7":"0.000","8":"0.000","_rn_":"6"},{"1":"6_2","2":"6_2","3":"0.325","4":"0.00","5":"0.000","6":"0.667","7":"0.001","8":"0.008","_rn_":"7"},{"1":"6_2","2":"5_1","3":"0.821","4":"0.00","5":"0.000","6":"0.179","7":"0.000","8":"0.000","_rn_":"8"},{"1":"8_1","2":"8_2","3":"0.000","4":"0.00","5":"0.000","6":"0.000","7":"0.000","8":"1.000","_rn_":"9"},{"1":"8_1","2":"5_2","3":"0.000","4":"1.00","5":"0.000","6":"0.000","7":"0.000","8":"0.000","_rn_":"10"},{"1":"8_2","2":"8_2","3":"0.001","4":"0.00","5":"0.000","6":"0.004","7":"0.083","8":"0.913","_rn_":"11"},{"1":"8_2","2":"8_2","3":"0.000","4":"0.00","5":"0.000","6":"0.000","7":"0.167","8":"0.833","_rn_":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -968,36 +895,24 @@ obs   5_1 5_2 6_1 6_2 8_1 8_2
 <section id="the-data" class="slide level2">
 <h2>The data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/profile.txt"</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>active <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
-<span id="cb42-3"><a href="#cb42-3"></a>active</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 5
-   job         reading dance    tv   ski
-   &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 bellydancer       7    10     6     5
- 2 bellydancer       8     9     5     7
- 3 bellydancer       5    10     5     8
- 4 bellydancer       6    10     6     8
- 5 bellydancer       7     8     7     9
- 6 politician        4     4     4     4
- 7 politician        6     4     5     3
- 8 politician        5     5     5     6
- 9 politician        6     6     6     7
-10 politician        4     5     6     5
-11 admin             3     1     1     2
-12 admin             5     3     1     5
-13 admin             4     2     2     5
-14 admin             7     1     2     4
-15 admin             6     3     3     3</code></pre>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/profile.txt"</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>active <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
+<span id="cb33-3"><a href="#cb33-3"></a>active</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["job"],"name":[1],"type":["chr"],"align":["left"]},{"label":["reading"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["dance"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["tv"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["ski"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"bellydancer","2":"7","3":"10","4":"6","5":"5"},{"1":"bellydancer","2":"8","3":"9","4":"5","5":"7"},{"1":"bellydancer","2":"5","3":"10","4":"5","5":"8"},{"1":"bellydancer","2":"6","3":"10","4":"6","5":"8"},{"1":"bellydancer","2":"7","3":"8","4":"7","5":"9"},{"1":"politician","2":"4","3":"4","4":"4","5":"4"},{"1":"politician","2":"6","3":"4","4":"5","5":"3"},{"1":"politician","2":"5","3":"5","4":"5","5":"6"},{"1":"politician","2":"6","3":"6","4":"6","5":"7"},{"1":"politician","2":"4","3":"5","4":"6","5":"5"},{"1":"admin","2":"3","3":"1","4":"1","5":"2"},{"1":"admin","2":"5","3":"3","4":"1","5":"5"},{"1":"admin","2":"4","3":"2","4":"2","5":"5"},{"1":"admin","2":"7","3":"1","4":"2","5":"4"},{"1":"admin","2":"6","3":"3","4":"3","5":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
 <section id="discriminant-analysis-2" class="slide level2">
 <h2>Discriminant analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>active<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lda</span>(job <span class="sc">~</span> reading <span class="sc">+</span> dance <span class="sc">+</span> tv <span class="sc">+</span> ski, <span class="at">data =</span> active)</span>
-<span id="cb44-2"><a href="#cb44-2"></a>active<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>active<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lda</span>(job <span class="sc">~</span> reading <span class="sc">+</span> dance <span class="sc">+</span> tv <span class="sc">+</span> ski, <span class="at">data =</span> active)</span>
+<span id="cb34-2"><a href="#cb34-2"></a>active<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 lda(job ~ reading + dance + tv + ski, data = active)
@@ -1036,9 +951,9 @@ Proportion of trace:
 <section id="misclassification" class="slide level2">
 <h2>Misclassification</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(active<span class="fl">.1</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a>active<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(active, p)</span>
-<span id="cb46-3"><a href="#cb46-3"></a><span class="fu">with</span>(active<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> job, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(active<span class="fl">.1</span>)</span>
+<span id="cb36-2"><a href="#cb36-2"></a>active<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(active, p)</span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="fu">with</span>(active<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> job, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             pred
 obs           admin bellydancer politician
@@ -1052,16 +967,16 @@ obs           admin bellydancer politician
 <section id="plotting-lds" class="slide level2">
 <h2>Plotting LDs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(active<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2, <span class="at">colour =</span> job, <span class="at">label =</span> job)) <span class="sc">+</span> </span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_text_repel</span>() <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">"none"</span>)</span>
-<span id="cb48-3"><a href="#cb48-3"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(active<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2, <span class="at">colour =</span> job, <span class="at">label =</span> job)) <span class="sc">+</span> </span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_text_repel</span>() <span class="sc">+</span> <span class="fu">guides</span>(<span class="at">colour =</span> <span class="st">"none"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/bDiscrim-32-1.png" width="960" class="r-stretch"></section>
 <section id="biplot" class="slide level2">
 <h2>Biplot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">ggbiplot</span>(active<span class="fl">.1</span>, <span class="at">groups =</span> active<span class="sc">$</span>job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">ggbiplot</span>(active<span class="fl">.1</span>, <span class="at">groups =</span> active<span class="sc">$</span>job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/bDiscrim-33-1.png" width="960" class="r-stretch"></section>
@@ -1078,51 +993,25 @@ obs           admin bellydancer politician
 <h2>Plotting individual <code>persons</code></h2>
 <p>Make <code>label</code> be identifier of person. Now need legend:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>active<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">person =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2,  <span class="at">colour =</span> job, </span>
-<span id="cb50-3"><a href="#cb50-3"></a>               <span class="at">label =</span> person)) <span class="sc">+</span> </span>
-<span id="cb50-4"><a href="#cb50-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_text_repel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>active<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">person =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2,  <span class="at">colour =</span> job, </span>
+<span id="cb40-3"><a href="#cb40-3"></a>               <span class="at">label =</span> person)) <span class="sc">+</span> </span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_text_repel</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/bDiscrim-34-1.png" width="960" class="r-stretch"></section>
 <section id="posterior-probabilities-3" class="slide level2">
 <h2>Posterior probabilities</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>active<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">select</span>(job, class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           job       class posterior.admin posterior.bellydancer
-1  bellydancer bellydancer           0.000                 1.000
-2  bellydancer bellydancer           0.000                 1.000
-3  bellydancer bellydancer           0.000                 1.000
-4  bellydancer bellydancer           0.000                 1.000
-5  bellydancer bellydancer           0.000                 0.997
-6   politician  politician           0.003                 0.000
-7   politician  politician           0.000                 0.000
-8   politician  politician           0.000                 0.000
-9   politician  politician           0.000                 0.002
-10  politician  politician           0.000                 0.000
-11       admin       admin           1.000                 0.000
-12       admin       admin           1.000                 0.000
-13       admin       admin           1.000                 0.000
-14       admin       admin           1.000                 0.000
-15       admin       admin           0.982                 0.000
-   posterior.politician
-1                 0.000
-2                 0.000
-3                 0.000
-4                 0.000
-5                 0.003
-6                 0.997
-7                 1.000
-8                 1.000
-9                 0.998
-10                1.000
-11                0.000
-12                0.000
-13                0.000
-14                0.000
-15                0.018</code></pre>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>active<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">select</span>(job, class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["job"],"name":[1],"type":["chr"],"align":["left"]},{"label":["class"],"name":[2],"type":["fct"],"align":["left"]},{"label":["posterior.admin"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["posterior.bellydancer"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["posterior.politician"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"1"},{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"2"},{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"3"},{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"4"},{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"0.997","5":"0.003","_rn_":"5"},{"1":"politician","2":"politician","3":"0.003","4":"0.000","5":"0.997","_rn_":"6"},{"1":"politician","2":"politician","3":"0.000","4":"0.000","5":"1.000","_rn_":"7"},{"1":"politician","2":"politician","3":"0.000","4":"0.000","5":"1.000","_rn_":"8"},{"1":"politician","2":"politician","3":"0.000","4":"0.002","5":"0.998","_rn_":"9"},{"1":"politician","2":"politician","3":"0.000","4":"0.000","5":"1.000","_rn_":"10"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"11"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"12"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"13"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"14"},{"1":"admin","2":"admin","3":"0.982","4":"0.000","5":"0.018","_rn_":"15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Not much doubt.</p>
@@ -1131,9 +1020,9 @@ obs           admin bellydancer politician
 <h2>Cross-validating the jobs-activities data</h2>
 <p>Recall: no need for <code>predict</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>p <span class="ot">&lt;-</span> <span class="fu">lda</span>(job <span class="sc">~</span> reading <span class="sc">+</span> dance <span class="sc">+</span> tv <span class="sc">+</span> ski, <span class="at">data =</span> active, <span class="at">CV =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb53-2"><a href="#cb53-2"></a>active<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(active, <span class="at">class =</span> p<span class="sc">$</span>class, <span class="at">posterior =</span> p<span class="sc">$</span>posterior)</span>
-<span id="cb53-3"><a href="#cb53-3"></a><span class="fu">with</span>(active<span class="fl">.3</span>, <span class="fu">table</span>(<span class="at">obs =</span> job, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>p <span class="ot">&lt;-</span> <span class="fu">lda</span>(job <span class="sc">~</span> reading <span class="sc">+</span> dance <span class="sc">+</span> tv <span class="sc">+</span> ski, <span class="at">data =</span> active, <span class="at">CV =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-2"><a href="#cb42-2"></a>active<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(active, <span class="at">class =</span> p<span class="sc">$</span>class, <span class="at">posterior =</span> p<span class="sc">$</span>posterior)</span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="fu">with</span>(active<span class="fl">.3</span>, <span class="fu">table</span>(<span class="at">obs =</span> job, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             pred
 obs           admin bellydancer politician
@@ -1147,42 +1036,16 @@ obs           admin bellydancer politician
 <section id="and-look-at-the-posterior-probabilities" class="slide level2">
 <h2>and look at the posterior probabilities</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>active<span class="fl">.3</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb55-3"><a href="#cb55-3"></a>  <span class="fu">select</span>(job, class, <span class="fu">starts_with</span>(<span class="st">"post"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>           job       class posterior.admin posterior.bellydancer
-1  bellydancer bellydancer           0.000                 1.000
-2  bellydancer bellydancer           0.000                 1.000
-3  bellydancer bellydancer           0.000                 1.000
-4  bellydancer bellydancer           0.000                 1.000
-5  bellydancer  politician           0.000                 0.001
-6   politician  politician           0.006                 0.000
-7   politician  politician           0.001                 0.000
-8   politician  politician           0.000                 0.000
-9   politician  politician           0.000                 0.009
-10  politician  politician           0.000                 0.000
-11       admin       admin           1.000                 0.000
-12       admin       admin           1.000                 0.000
-13       admin       admin           1.000                 0.000
-14       admin       admin           1.000                 0.000
-15       admin       admin           0.819                 0.000
-   posterior.politician
-1                 0.000
-2                 0.000
-3                 0.000
-4                 0.000
-5                 0.999
-6                 0.994
-7                 0.999
-8                 1.000
-9                 0.991
-10                1.000
-11                0.000
-12                0.000
-13                0.000
-14                0.000
-15                0.181</code></pre>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>active<span class="fl">.3</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">select</span>(job, class, <span class="fu">starts_with</span>(<span class="st">"post"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["job"],"name":[1],"type":["chr"],"align":["left"]},{"label":["class"],"name":[2],"type":["fct"],"align":["left"]},{"label":["posterior.admin"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["posterior.bellydancer"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["posterior.politician"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"1"},{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"2"},{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"3"},{"1":"bellydancer","2":"bellydancer","3":"0.000","4":"1.000","5":"0.000","_rn_":"4"},{"1":"bellydancer","2":"politician","3":"0.000","4":"0.001","5":"0.999","_rn_":"5"},{"1":"politician","2":"politician","3":"0.006","4":"0.000","5":"0.994","_rn_":"6"},{"1":"politician","2":"politician","3":"0.001","4":"0.000","5":"0.999","_rn_":"7"},{"1":"politician","2":"politician","3":"0.000","4":"0.000","5":"1.000","_rn_":"8"},{"1":"politician","2":"politician","3":"0.000","4":"0.009","5":"0.991","_rn_":"9"},{"1":"politician","2":"politician","3":"0.000","4":"0.000","5":"1.000","_rn_":"10"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"11"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"12"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"13"},{"1":"admin","2":"admin","3":"1.000","4":"0.000","5":"0.000","_rn_":"14"},{"1":"admin","2":"admin","3":"0.819","4":"0.000","5":"0.181","_rn_":"15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -1222,9 +1085,9 @@ obs           admin bellydancer politician
 <section id="the-data-1" class="slide level2">
 <h2>The data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/remote-sensing.txt"</span></span>
-<span id="cb57-2"><a href="#cb57-2"></a>crops <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
-<span id="cb57-3"><a href="#cb57-3"></a>crops <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/remote-sensing.txt"</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>crops <span class="ot">&lt;-</span> <span class="fu">read_table</span>(my_url)</span>
+<span id="cb45-3"><a href="#cb45-3"></a>crops <span class="sc">%&gt;%</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 6
    crop          x1    x2    x3    x4 cr   
@@ -1260,8 +1123,8 @@ obs           admin bellydancer politician
 <section id="discriminant-analysis-3" class="slide level2">
 <h2>Discriminant analysis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>crops<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lda</span>(crop <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, <span class="at">data =</span> crops)</span>
-<span id="cb59-2"><a href="#cb59-2"></a>crops<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>crops<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lda</span>(crop <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4, <span class="at">data =</span> crops)</span>
+<span id="cb47-2"><a href="#cb47-2"></a>crops<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 lda(crop ~ x1 + x2 + x3 + x4, data = crops)
@@ -1305,9 +1168,9 @@ Proportion of trace:
 <li>Thus:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(crops<span class="fl">.1</span>)</span>
-<span id="cb61-2"><a href="#cb61-2"></a>crops<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(crops, p)</span>
-<span id="cb61-3"><a href="#cb61-3"></a><span class="fu">with</span>(crops<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> crop, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(crops<span class="fl">.1</span>)</span>
+<span id="cb49-2"><a href="#cb49-2"></a>crops<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">cbind</span>(crops, p)</span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="fu">with</span>(crops<span class="fl">.2</span>, <span class="fu">table</span>(<span class="at">obs =</span> crop, <span class="at">pred =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            pred
 obs          Corn Cotton Soybeans Sugarbeets
@@ -1324,8 +1187,8 @@ obs          Corn Cotton Soybeans Sugarbeets
 <section id="plotting-the-lds" class="slide level2">
 <h2>Plotting the LDs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">ggplot</span>(crops<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2, <span class="at">colour =</span> crop)) <span class="sc">+</span></span>
-<span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">ggplot</span>(crops<span class="fl">.2</span>, <span class="fu">aes</span>(<span class="at">x =</span> x.LD1, <span class="at">y =</span> x.LD2, <span class="at">colour =</span> crop)) <span class="sc">+</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/piacentini-1.png" width="960" class="r-stretch"><p>Corn (red) mostly left, cotton (green) sort of right, soybeans and sugarbeets (blue and purple) mixed up.</p>
@@ -1333,7 +1196,7 @@ obs          Corn Cotton Soybeans Sugarbeets
 <section id="biplot-1" class="slide level2">
 <h2>Biplot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">ggbiplot</span>(crops<span class="fl">.1</span>, <span class="at">groups =</span> crops<span class="sc">$</span>crop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">ggbiplot</span>(crops<span class="fl">.1</span>, <span class="at">groups =</span> crops<span class="sc">$</span>crop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="discrim_files/figure-revealjs/bDiscrim-45-1.png" width="960" class="r-stretch"></section>
@@ -1349,30 +1212,16 @@ obs          Corn Cotton Soybeans Sugarbeets
 <section id="posterior-probs-some" class="slide level2">
 <h2>Posterior probs (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>crops<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">filter</span>(crop <span class="sc">!=</span> class) <span class="sc">%&gt;%</span> </span>
-<span id="cb65-3"><a href="#cb65-3"></a>  <span class="fu">select</span>(crop, class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         crop      class posterior.Corn posterior.Cotton posterior.Soybeans
-4        Corn   Soybeans          0.443            0.034              0.494
-11   Soybeans Sugarbeets          0.010            0.107              0.299
-12   Soybeans       Corn          0.684            0.009              0.296
-13   Soybeans       Corn          0.467            0.199              0.287
-15     Cotton   Soybeans          0.056            0.241              0.379
-17     Cotton   Soybeans          0.066            0.138              0.489
-20 Sugarbeets   Soybeans          0.381            0.146              0.395
-21 Sugarbeets   Soybeans          0.106            0.144              0.518
-24 Sugarbeets   Soybeans          0.088            0.207              0.489
-   posterior.Sugarbeets
-4                 0.029
-11                0.584
-12                0.011
-13                0.047
-15                0.324
-17                0.306
-20                0.078
-21                0.232
-24                0.216</code></pre>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>crops<span class="fl">.2</span> <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"posterior"</span>), \(p) <span class="fu">round</span>(p, <span class="dv">3</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2"><a href="#cb53-2"></a>  <span class="fu">filter</span>(crop <span class="sc">!=</span> class) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3"></a>  <span class="fu">select</span>(crop, class, <span class="fu">starts_with</span>(<span class="st">"posterior"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["crop"],"name":[1],"type":["chr"],"align":["left"]},{"label":["class"],"name":[2],"type":["fct"],"align":["left"]},{"label":["posterior.Corn"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["posterior.Cotton"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["posterior.Soybeans"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["posterior.Sugarbeets"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Corn","2":"Soybeans","3":"0.443","4":"0.034","5":"0.494","6":"0.029","_rn_":"4"},{"1":"Soybeans","2":"Sugarbeets","3":"0.010","4":"0.107","5":"0.299","6":"0.584","_rn_":"11"},{"1":"Soybeans","2":"Corn","3":"0.684","4":"0.009","5":"0.296","6":"0.011","_rn_":"12"},{"1":"Soybeans","2":"Corn","3":"0.467","4":"0.199","5":"0.287","6":"0.047","_rn_":"13"},{"1":"Cotton","2":"Soybeans","3":"0.056","4":"0.241","5":"0.379","6":"0.324","_rn_":"15"},{"1":"Cotton","2":"Soybeans","3":"0.066","4":"0.138","5":"0.489","6":"0.306","_rn_":"17"},{"1":"Sugarbeets","2":"Soybeans","3":"0.381","4":"0.146","5":"0.395","6":"0.078","_rn_":"20"},{"1":"Sugarbeets","2":"Soybeans","3":"0.106","4":"0.144","5":"0.518","6":"0.232","_rn_":"21"},{"1":"Sugarbeets","2":"Soybeans","3":"0.088","4":"0.207","5":"0.489","6":"0.216","_rn_":"24"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 </section>
@@ -1387,9 +1236,9 @@ obs          Corn Cotton Soybeans Sugarbeets
 <h2>MANOVA</h2>
 <p>Began discriminant analysis as a followup to MANOVA. Do our variables significantly separate the crops?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(crops, <span class="fu">cbind</span>(x1, x2, x3, x4))</span>
-<span id="cb67-2"><a href="#cb67-2"></a>crops.manova <span class="ot">&lt;-</span> <span class="fu">manova</span>(response <span class="sc">~</span> crop, <span class="at">data =</span> crops)</span>
-<span id="cb67-3"><a href="#cb67-3"></a><span class="fu">summary</span>(crops.manova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>response <span class="ot">&lt;-</span> <span class="fu">with</span>(crops, <span class="fu">cbind</span>(x1, x2, x3, x4))</span>
+<span id="cb54-2"><a href="#cb54-2"></a>crops.manova <span class="ot">&lt;-</span> <span class="fu">manova</span>(response <span class="sc">~</span> crop, <span class="at">data =</span> crops)</span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="fu">summary</span>(crops.manova)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Df Pillai approx F num Df den Df  Pr(&gt;F)  
 crop       3 0.9113   2.1815     12     60 0.02416 *
@@ -1403,7 +1252,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>Box’s M test</h2>
 <p>We should also run Box’s M test to check for equal variance of each variable across crops:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, crops<span class="sc">$</span>crop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, crops<span class="sc">$</span>crop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Box's M Test 
 

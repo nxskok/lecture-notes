@@ -1,11 +1,5 @@
 ---
 title: "Dates and Times"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 

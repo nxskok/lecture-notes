@@ -1,0 +1,16 @@
+{
+  "hash": "29ec41764807407d218b14b451e1c1f4",
+  "result": {
+    "markdown": "---\ntitle: \"Parametrized R Notebook\"\noutput: html_notebook\nparams:\n  fruit: \"banana\"\n---\n\n\n\nThe fruit is banana. ",
+    "supporting": [
+      "param_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

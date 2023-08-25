@@ -1,11 +1,5 @@
 ---
 title: "Statistical Inference: Power"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Packages
