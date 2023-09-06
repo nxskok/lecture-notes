@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bootstrap again</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="bootstrap-again_files/libs/clipboard/clipboard.min.js"></script>
+<script src="bootstrap-again_files/libs/quarto-html/quarto.js"></script>
+<script src="bootstrap-again_files/libs/quarto-html/popper.min.js"></script>
+<script src="bootstrap-again_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="bootstrap-again_files/libs/quarto-html/anchor.min.js"></script>
+<link href="bootstrap-again_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="bootstrap-again_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="bootstrap-again_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="bootstrap-again_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="bootstrap-again_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="bootstrap-again.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="bootstrap-again.pdf"><i class="bi bi-file-pdf"></i>Beamer</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Bootstrap again</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bootstrap)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(conflicted)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">conflict_prefer</span>(<span class="st">"filter"</span>, <span class="st">"dplyr"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[conflicted] Will prefer dplyr::filter over any other package.</code></pre>
+</div>
+</div>
+</section>
+<section id="is-my-sampling-distribution-normal-enough" class="level2">
+<h2 class="anchored" data-anchor-id="is-my-sampling-distribution-normal-enough">Is my sampling distribution normal enough?</h2>
+<ul>
+<li>Recall the IRS data that we used as a motivation for the sign test:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(irs, <span class="fu">aes</span>(<span class="at">x=</span>Time))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>We said that a <span class="math inline">\(t\)</span> procedure for the mean would not be a good idea because the distribution is skewed.</li>
+</ul>
+</section>
+<section id="what-actually-matters" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-matters">What <em>actually</em> matters</h2>
+<ul>
+<li>It’s not the distribution of the <em>data</em> that has to be approx normal (for a <span class="math inline">\(t\)</span> procedure).</li>
+<li>What matters is the <em>sampling distribution of the sample mean</em>.</li>
+<li>If the sample size is large enough, the sampling distribution will be normal enough even if the data distribution is not.
+<ul>
+<li>This is why we had to consider the sample size as well as the shape.</li>
+</ul></li>
+<li>But how do we know whether this is the case or not? We only have <em>one</em> sample.</li>
+</ul>
+</section>
+<section id="the-nonparametric-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="the-nonparametric-bootstrap">The (nonparametric) bootstrap</h2>
+<ul>
+<li>Typically, our sample will be reasonably representative of the population.</li>
+<li>Idea: pretend the sample <em>is</em> the population, and sample from it <em>with replacement</em>.</li>
+<li>Calculate test statistic, and repeat many times.</li>
+<li>This gives an idea of how our statistic might vary in repeated samples: that is, its sampling distribution.</li>
+<li>Called the <strong>bootstrap distribution</strong> of the test statistic.</li>
+<li>If the bootstrap distribution is approx normal, infer that the true sampling distribution also approx normal, therefore inference about the mean such as <span class="math inline">\(t\)</span> is good enough.</li>
+<li>If not, we should be more careful.</li>
+</ul>
+</section>
+<section id="why-it-works" class="level2">
+<h2 class="anchored" data-anchor-id="why-it-works">Why it works</h2>
+<ul>
+<li>We typically estimate population parameters by using the corresponding sample thing: eg. estimate population mean using sample mean.</li>
+<li>This called <strong>plug-in principle</strong>.</li>
+<li>The fraction of sample values less than a value <span class="math inline">\(x\)</span> called the <strong>empirical distribution function</strong> (as a function of <span class="math inline">\(x\)</span>).</li>
+<li>By plug-in principle, the empirical distribution function is an estimate of the population CDF.</li>
+<li>In this sense, the sample <em>is</em> an estimate of the population, and so sampling from it is an estimate of sampling from the population.</li>
+</ul>
+</section>
+<section id="bootstrapping-the-irs-data" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-the-irs-data">Bootstrapping the IRS data</h2>
+<ul>
+<li>Sampling with replacement is done like this (the default sample size is as long as the original data):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>boot<span class="ot">=</span><span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace=</span>T)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(boot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 202.4667</code></pre>
+</div>
+</div>
+<ul>
+<li>That’s one bootstrapped mean. We need a whole bunch.</li>
+<li>Use the same idea as for simulating power:</li>
+</ul>
+<div class="cell" data-hash="bootstrap-again_cache/html/bootstrap-again-6_8385c4259c65314a6d0f05998bf7fdcc">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rerun</span>(<span class="dv">1000</span>, <span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace=</span>T)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span><span class="fu">mean</span>(.)) <span class="ot">-&gt;</span> means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `rerun()` was deprecated in purrr 1.0.0.
+ℹ Please use `map()` instead.
+  # Previously
+  rerun(1000, sample(irs$Time, replace = T))
+
+  # Now
+  map(1:1000, ~ sample(irs$Time, replace = T))</code></pre>
+</div>
+</div>
+</section>
+<section id="sampling-distribution-of-sample-mean" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-distribution-of-sample-mean">Sampling distribution of sample mean</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(means), <span class="fu">aes</span>(<span class="at">x=</span>means))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="comments" class="level2">
+<h2 class="anchored" data-anchor-id="comments">Comments</h2>
+<p>This is not so bad: a long right tail, maybe:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(means), <span class="fu">aes</span>(<span class="at">sample=</span>means))<span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>()<span class="sc">+</span><span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>or not so much.</p>
+</section>
+<section id="confidence-interval-from-the-bootstrap-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-interval-from-the-bootstrap-distribution">Confidence interval from the bootstrap distribution</h2>
+<p>There are two ways (at least):</p>
+<ul>
+<li>percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to get the middle 95%). This is easy, but not always the best:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">b_p=</span><span class="fu">quantile</span>(means, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5%    97.5% 
+159.5292 244.1075 </code></pre>
+</div>
+</div>
+<ul>
+<li>bootstrap <span class="math inline">\(t\)</span>: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a <span class="math inline">\(t\)</span> interval:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">length</span>(irs<span class="sc">$</span>Time)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>t_star<span class="ot">=</span><span class="fu">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-1</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>(<span class="at">b_t=</span><span class="fu">mean</span>(means)<span class="sc">+</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="sc">*</span>t_star<span class="sc">*</span><span class="fu">sd</span>(means))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 157.9020 245.4334</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing" class="level2">
+<h2 class="anchored" data-anchor-id="comparing">Comparing</h2>
+<ul>
+<li>get ordinary <span class="math inline">\(t\)</span> interval:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_names<span class="ot">=</span><span class="fu">c</span>(<span class="st">"LCL"</span>, <span class="st">"UCL"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>o_t<span class="ot">=</span><span class="fu">t.test</span>(irs<span class="sc">$</span>Time)<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Compare the 2 bootstrap intervals with the ordinary <span class="math inline">\(t\)</span>-interval:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">limit=</span>my_names, o_t, b_t, b_p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  limit   o_t   b_t   b_p
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 LCL    155.  158.  160.
+2 UCL    247.  245.  244.</code></pre>
+</div>
+</div>
+<ul>
+<li>The bootstrap <span class="math inline">\(t\)</span> and the ordinary <span class="math inline">\(t\)</span> are very close</li>
+<li>The percentile bootstrap interval is noticeably shorter (common) and higher (skewness).</li>
+</ul>
+</section>
+<section id="which-to-prefer" class="level2">
+<h2 class="anchored" data-anchor-id="which-to-prefer">Which to prefer?</h2>
+<ul>
+<li>If the intervals agree, then they are all good.</li>
+<li>If they disagree, they are all bad!</li>
+<li>In that case, use BCA interval (over).</li>
+</ul>
+</section>
+<section id="bias-correction-and-acceleration" class="level2">
+<h2 class="anchored" data-anchor-id="bias-correction-and-acceleration">Bias correction and acceleration</h2>
+<ul>
+<li>this from “An introduction to the bootstrap”, by Brad Efron and Robert J. Tibshirani.</li>
+<li>there is way of correcting the CI for skewness in the bootstrap distribution, called the BCa method</li>
+<li>complicated (see the Efron and Tibshirani book), but implemented in <code>bootstrap</code> package.</li>
+</ul>
+</section>
+<section id="run-this-on-the-irs-data" class="level2">
+<h2 class="anchored" data-anchor-id="run-this-on-the-irs-data">Run this on the IRS data:</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bca<span class="ot">=</span><span class="fu">bcanon</span>(irs<span class="sc">$</span>Time, <span class="dv">1000</span>, mean)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>bca<span class="sc">$</span>confpoints</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     alpha bca point
+[1,] 0.025  162.8000
+[2,] 0.050  166.8000
+[3,] 0.100  174.4667
+[4,] 0.160  179.5667
+[5,] 0.840  224.6000
+[6,] 0.900  234.3000
+[7,] 0.950  247.4333
+[8,] 0.975  256.3000</code></pre>
+</div>
+</div>
+</section>
+<section id="use-2.5-and-97.5-points-for-ci" class="level2">
+<h2 class="anchored" data-anchor-id="use-2.5-and-97.5-points-for-ci">use 2.5% and 97.5% points for CI</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bca<span class="sc">$</span>confpoints <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(alpha <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">`</span><span class="at">bca point</span><span class="st">`</span>) <span class="ot">-&gt;</span> b_bca</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>b_bca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 162.8 256.3</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-1" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-1">Comparing</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">limit=</span>my_names, o_t, b_t, b_p, b_bca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  limit   o_t   b_t   b_p b_bca
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 LCL    155.  158.  160.  163.
+2 UCL    247.  245.  244.  256.</code></pre>
+</div>
+</div>
+<ul>
+<li>The BCA interval says that the mean should be estimated even higher than the bootstrap percentile interval does.</li>
+<li>The BCA interval is the one to trust.</li>
+</ul>
+</section>
+<section id="bootstrapping-the-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-the-correlation">Bootstrapping the correlation</h2>
+<p>Recall the soap data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>url<span class="ot">=</span><span class="st">"http://ritsokiguess.site/datafiles/soap.txt"</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>soap<span class="ot">=</span><span class="fu">read_delim</span>(url,<span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 27 Columns: 4
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: " "
+chr (1): line
+dbl (3): case, scrap, speed
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+</section>
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(soap, <span class="fu">aes</span>(<span class="at">x=</span>speed, <span class="at">y=</span>scrap, <span class="at">colour=</span>line))<span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="comments-1" class="level2">
+<h2 class="anchored" data-anchor-id="comments-1">Comments</h2>
+<ul>
+<li>Line B produces less scrap for any given speed.</li>
+<li>For line B, estimate the correlation between speed and scrap (with a confidence interval.)</li>
+</ul>
+</section>
+<section id="extract-the-line-b-data-standard-correlation-test" class="level2">
+<h2 class="anchored" data-anchor-id="extract-the-line-b-data-standard-correlation-test">Extract the line B data; standard correlation test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>soap <span class="sc">%&gt;%</span> <span class="fu">filter</span>(line<span class="sc">==</span><span class="st">"b"</span>) <span class="ot">-&gt;</span> line_b</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(line_b, <span class="fu">cor.test</span>(speed, scrap))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  speed and scrap
+t = 15.829, df = 10, p-value = 2.083e-08
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.9302445 0.9947166
+sample estimates:
+      cor 
+0.9806224 </code></pre>
+</div>
+</div>
+</section>
+<section id="bootstrapping-a-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-a-correlation">Bootstrapping a correlation</h2>
+<ul>
+<li>Sample from data with replacement, but have to keep the <code>speed</code>-<code>scrap</code> <em>pairs</em> together</li>
+<li>Sample <em>rows</em> at random, then take the variable values that belong to those rows:</li>
+</ul>
+<p>*** REDO THIS ***</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rerun</span>(<span class="dv">1000</span>, <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(line_b), <span class="at">replace=</span>T)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">slice</span>(line_b, .)) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span><span class="fu">with</span>(.,<span class="fu">cor</span>(speed, scrap))) <span class="ot">-&gt;</span> cors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `rerun()` was deprecated in purrr 1.0.0.
+ℹ Please use `map()` instead.
+  # Previously
+  rerun(1000, sample(1:nrow(line_b), replace = T))
+
+  # Now
+  map(1:1000, ~ sample(1:nrow(line_b), replace = T))</code></pre>
+</div>
+</div>
+</section>
+<section id="a-picture-of-this" class="level2">
+<h2 class="anchored" data-anchor-id="a-picture-of-this">A picture of this</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(cors), <span class="fu">aes</span>(<span class="at">x=</span>cors))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="comments-and-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="comments-and-next-steps">Comments and next steps</h2>
+<ul>
+<li>This is very left-skewed.</li>
+<li>Bootstrap percentile interval is:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">b_p=</span><span class="fu">quantile</span>(cors, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     2.5%     97.5% 
+0.9443861 0.9960207 </code></pre>
+</div>
+</div>
+<ul>
+<li>We probably need the BCA interval instead.</li>
+</ul>
+</section>
+<section id="getting-the-bca-interval-12" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-bca-interval-12">Getting the BCA interval 1/2</h2>
+<ul>
+<li>To use <code>bcanon</code>, write a function that takes a vector of row numbers and returns the correlation between <code>speed</code> and <code>scrap</code> for those rows:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>theta<span class="ot">=</span><span class="cf">function</span>(rows, d) {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  d <span class="sc">%&gt;%</span> <span class="fu">slice</span>(rows) <span class="sc">%&gt;%</span> <span class="fu">with</span>(., <span class="fu">cor</span>(speed, scrap))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theta</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, line_b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9928971</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>line_b <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+   case scrap speed line 
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1    16   140   105 b    
+2    17   277   215 b    
+3    18   384   270 b    </code></pre>
+</div>
+</div>
+<ul>
+<li>That looks about right.</li>
+</ul>
+</section>
+<section id="getting-the-bca-interval-22" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-bca-interval-22">Getting the BCA interval 2/2</h2>
+<ul>
+<li>Inputs to <code>bcanon</code> are now:
+<ul>
+<li>row numbers (1 through 12 in our case: 12 rows in <code>line_b</code>)</li>
+<li>number of bootstrap samples</li>
+<li>the function we just wrote</li>
+<li>the data frame:</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>points<span class="ot">=</span><span class="fu">bcanon</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1000</span>, theta, line_b)<span class="sc">$</span>confpoints</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>points <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(alpha <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">`</span><span class="at">bca point</span><span class="st">`</span>) <span class="ot">-&gt;</span> b_bca</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>b_bca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9281762 0.9945016</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-the-results" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-the-results">Comparing the results</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">limit=</span>my_names, o_c, b_p, b_bca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  limit   o_c   b_p b_bca
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 LCL   0.930 0.944 0.928
+2 UCL   0.995 0.996 0.995</code></pre>
+</div>
+</div>
+<ul>
+<li>The bootstrap percentile interval doesn’t go down far enough.</li>
+<li>The BCA interval seems to do a better job than the ordinary <code>cor.test</code> interval in capturing the skewness of the distribution.</li>
+</ul>
+</section>
+<section id="a-problem" class="level2">
+<h2 class="anchored" data-anchor-id="a-problem">A problem</h2>
+<p>Consider this example: samples of UK and Ontario (Canada) children, and their journey times to school, in minutes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>my_url<span class="ot">=</span><span class="st">"http://ritsokiguess.site/datafiles/to-school.csv"</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>to_school<span class="ot">=</span><span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 80 Columns: 2
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (1): location
+dbl (1): traveltime
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>to_school</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 2
+   traveltime location
+        &lt;dbl&gt; &lt;chr&gt;   
+ 1         30 Ontario 
+ 2         10 Ontario 
+ 3          8 Ontario 
+ 4         30 Ontario 
+ 5          5 Ontario 
+ 6          8 Ontario 
+ 7          7 Ontario 
+ 8         15 Ontario 
+ 9         10 Ontario 
+10         35 Ontario 
+# ℹ 70 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>to_school <span class="sc">%&gt;%</span> <span class="fu">count</span>(location)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  location     n
+  &lt;chr&gt;    &lt;int&gt;
+1 Ontario     40
+2 UK          40</code></pre>
+</div>
+</div>
+<p>We want to compare the mean journey times in the two different places. This is a two-sample sitation, and if we are not careful with the bootstrap, things will go wrong:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(to_school), <span class="at">replace=</span>T) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(to_school, .) <span class="sc">%&gt;%</span> <span class="fu">count</span>(location)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  location     n
+  &lt;chr&gt;    &lt;int&gt;
+1 Ontario     46
+2 UK          34</code></pre>
+</div>
+</div>
+<p>Our original samples were 40 from each location, but by randomly resampling rows, we probably <em>don’t</em> get 40 from each. We need to draw “stratified resamples” to ensure that we get 40 from each place. This is hard to organize with the build-it-yourself bootstrap. To make things easier, we use the <code>rsample</code> package, but then we have to worry about handling the results.</p>
+</section>
+<section id="automating-the-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="automating-the-bootstrap">Automating the bootstrap</h2>
+<p>Let’s go back to our IRS data for a moment:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>irs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 1
+    Time
+   &lt;dbl&gt;
+ 1    91
+ 2    64
+ 3   243
+ 4   167
+ 5   123
+ 6    65
+ 7    71
+ 8   204
+ 9   110
+10   178
+# ℹ 20 more rows</code></pre>
+</div>
+</div>
+<p>What happens if we use <code>rsample</code> to resample from these? Let’s just do a few to start. <code>rsample</code> has a function <code>bootstraps</code> that does this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">bootstraps</span>(irs, <span class="at">times=</span><span class="dv">1000</span>) </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Bootstrap sampling 
+# A tibble: 1,000 × 2
+   splits          id           
+   &lt;list&gt;          &lt;chr&gt;        
+ 1 &lt;split [30/8]&gt;  Bootstrap0001
+ 2 &lt;split [30/10]&gt; Bootstrap0002
+ 3 &lt;split [30/15]&gt; Bootstrap0003
+ 4 &lt;split [30/8]&gt;  Bootstrap0004
+ 5 &lt;split [30/11]&gt; Bootstrap0005
+ 6 &lt;split [30/9]&gt;  Bootstrap0006
+ 7 &lt;split [30/13]&gt; Bootstrap0007
+ 8 &lt;split [30/11]&gt; Bootstrap0008
+ 9 &lt;split [30/12]&gt; Bootstrap0009
+10 &lt;split [30/11]&gt; Bootstrap0010
+# ℹ 990 more rows</code></pre>
+</div>
+</div>
+<p>Each of those things in <code>splits</code> is one bootstrap resample. To get at the things in them, we use <code>analysis</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sample=</span><span class="fu">map</span>(splits, <span class="sc">~</span><span class="fu">analysis</span>(.))) <span class="ot">-&gt;</span> dd</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>dd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Bootstrap sampling 
+# A tibble: 1,000 × 3
+   splits          id            sample             
+   &lt;list&gt;          &lt;chr&gt;         &lt;list&gt;             
+ 1 &lt;split [30/8]&gt;  Bootstrap0001 &lt;spc_tbl_ [30 × 1]&gt;
+ 2 &lt;split [30/10]&gt; Bootstrap0002 &lt;spc_tbl_ [30 × 1]&gt;
+ 3 &lt;split [30/15]&gt; Bootstrap0003 &lt;spc_tbl_ [30 × 1]&gt;
+ 4 &lt;split [30/8]&gt;  Bootstrap0004 &lt;spc_tbl_ [30 × 1]&gt;
+ 5 &lt;split [30/11]&gt; Bootstrap0005 &lt;spc_tbl_ [30 × 1]&gt;
+ 6 &lt;split [30/9]&gt;  Bootstrap0006 &lt;spc_tbl_ [30 × 1]&gt;
+ 7 &lt;split [30/13]&gt; Bootstrap0007 &lt;spc_tbl_ [30 × 1]&gt;
+ 8 &lt;split [30/11]&gt; Bootstrap0008 &lt;spc_tbl_ [30 × 1]&gt;
+ 9 &lt;split [30/12]&gt; Bootstrap0009 &lt;spc_tbl_ [30 × 1]&gt;
+10 &lt;split [30/11]&gt; Bootstrap0010 &lt;spc_tbl_ [30 × 1]&gt;
+# ℹ 990 more rows</code></pre>
+</div>
+</div>
+<p>and then <code>unnest</code> the actual samples to see them:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30,000 × 3
+   splits         id             Time
+   &lt;list&gt;         &lt;chr&gt;         &lt;dbl&gt;
+ 1 &lt;split [30/8]&gt; Bootstrap0001    84
+ 2 &lt;split [30/8]&gt; Bootstrap0001   264
+ 3 &lt;split [30/8]&gt; Bootstrap0001   302
+ 4 &lt;split [30/8]&gt; Bootstrap0001    64
+ 5 &lt;split [30/8]&gt; Bootstrap0001   142
+ 6 &lt;split [30/8]&gt; Bootstrap0001   527
+ 7 &lt;split [30/8]&gt; Bootstrap0001   264
+ 8 &lt;split [30/8]&gt; Bootstrap0001   209
+ 9 &lt;split [30/8]&gt; Bootstrap0001   243
+10 &lt;split [30/8]&gt; Bootstrap0001   527
+# ℹ 29,990 more rows</code></pre>
+</div>
+</div>
+<p>The values in <code>Time</code> are the resampled-with-replacement times to fill in the form.</p>
+<p>What we cared about here was the bootstrap distribution of the sample mean, so that for each of the samples in <code>dd</code> we need to find the mean <code>Time</code> in it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">the_mean=</span><span class="fu">map_dbl</span>(sample, <span class="sc">~</span><span class="fu">mean</span>(.<span class="sc">$</span>Time))) <span class="ot">-&gt;</span> ddd</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>ddd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Bootstrap sampling 
+# A tibble: 1,000 × 4
+   splits          id            sample              the_mean
+   &lt;list&gt;          &lt;chr&gt;         &lt;list&gt;                 &lt;dbl&gt;
+ 1 &lt;split [30/8]&gt;  Bootstrap0001 &lt;spc_tbl_ [30 × 1]&gt;     234.
+ 2 &lt;split [30/10]&gt; Bootstrap0002 &lt;spc_tbl_ [30 × 1]&gt;     200.
+ 3 &lt;split [30/15]&gt; Bootstrap0003 &lt;spc_tbl_ [30 × 1]&gt;     175.
+ 4 &lt;split [30/8]&gt;  Bootstrap0004 &lt;spc_tbl_ [30 × 1]&gt;     212.
+ 5 &lt;split [30/11]&gt; Bootstrap0005 &lt;spc_tbl_ [30 × 1]&gt;     233.
+ 6 &lt;split [30/9]&gt;  Bootstrap0006 &lt;spc_tbl_ [30 × 1]&gt;     211.
+ 7 &lt;split [30/13]&gt; Bootstrap0007 &lt;spc_tbl_ [30 × 1]&gt;     230.
+ 8 &lt;split [30/11]&gt; Bootstrap0008 &lt;spc_tbl_ [30 × 1]&gt;     175.
+ 9 &lt;split [30/12]&gt; Bootstrap0009 &lt;spc_tbl_ [30 × 1]&gt;     216.
+10 &lt;split [30/11]&gt; Bootstrap0010 &lt;spc_tbl_ [30 × 1]&gt;     181.
+# ℹ 990 more rows</code></pre>
+</div>
+</div>
+<p>and for example make a histogram of them, to see how normal this is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ddd, <span class="fu">aes</span>(<span class="at">x=</span>the_mean))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This actually looks pretty normal:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ddd, <span class="fu">aes</span>(<span class="at">sample=</span>the_mean))<span class="sc">+</span><span class="fu">stat_qq</span>()<span class="sc">+</span><span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>all of which suggests that the <span class="math inline">\(t\)</span>-interval for the mean:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(irs, <span class="fu">t.test</span>(Time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  Time
+t = 8.9035, df = 29, p-value = 8.589e-10
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 155.0081 247.4585
+sample estimates:
+mean of x 
+ 201.2333 </code></pre>
+</div>
+</div>
+<p>and some kind of bootstrap interval for the mean, say the percentile-based one:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(ddd<span class="sc">$</span>the_mean, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5%    97.5% 
+159.0658 246.3008 </code></pre>
+</div>
+</div>
+<p>won’t be all that far apart.</p>
+<p>How do I get the BCa interval from this output? First write a function that gets the mean Time from given rows of a data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="cf">function</span>(rows, d) {</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  d <span class="sc">%&gt;%</span> <span class="fu">slice</span>(rows) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">with</span>(., <span class="fu">mean</span>(Time))</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>irs <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 1
+   Time
+  &lt;dbl&gt;
+1    91
+2    64
+3   243</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theta</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, irs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 132.6667</code></pre>
+</div>
+</div>
+<p>check. And then feed into <code>bcanon</code> these things:</p>
+<ul>
+<li>row numbers of data frame that we want to use (all of them)</li>
+<li>number of … oh, but this uses the original data, or rows thereof</li>
+</ul>
+<p>can I do “stratified resampling”? <a href="https://gist.github.com/ramhiser/8b5ffd0ffbfbf1f49e71bbbd330bf72d">Yes</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>to_school <span class="sc">%&gt;%</span> </span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(location) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_frac</span>(<span class="at">replace=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(location)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+# Groups:   location [2]
+  location     n
+  &lt;chr&gt;    &lt;int&gt;
+1 Ontario     40
+2 UK          40</code></pre>
+</div>
+</div>
+<p>that seems to work, but I want to try it on groups of different sizes</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>group, <span class="sc">~</span>y,</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A"</span>, <span class="dv">1</span>,</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A"</span>, <span class="dv">2</span>,</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B"</span>, <span class="dv">3</span>,</span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B"</span>, <span class="dv">4</span>,</span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"B"</span>, <span class="dv">5</span></span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>groups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  group     y
+  &lt;chr&gt; &lt;dbl&gt;
+1 A         1
+2 A         2
+3 B         3
+4 B         4
+5 B         5</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>groups <span class="sc">%&gt;%</span> </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_frac</span>(<span class="at">replace=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+# Groups:   group [2]
+  group     y
+  &lt;chr&gt; &lt;dbl&gt;
+1 A         1
+2 A         2
+3 B         4
+4 B         3
+5 B         4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>resample_by_group <span class="ot">&lt;-</span> <span class="cf">function</span>(d, var, gp) {</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>    d <span class="sc">%&gt;%</span> <span class="fu">group_by</span>({{ gp }}) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample_frac</span>(<span class="at">replace=</span>T)</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>groups <span class="sc">%&gt;%</span> <span class="fu">resample_by_group</span>(<span class="at">var=</span>y, <span class="at">gp=</span>group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+# Groups:   group [2]
+  group     y
+  &lt;chr&gt; &lt;dbl&gt;
+1 A         1
+2 A         1
+3 B         5
+4 B         5
+5 B         4</code></pre>
+</div>
+</div>
+<p>second step: difference in means between (evidently two) grooups</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>mean_diff<span class="ot">=</span><span class="cf">function</span>(d, var, gp) {</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  d <span class="sc">%&gt;%</span> <span class="fu">group_by</span>({{ gp }}) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">m=</span><span class="fu">mean</span>({{ var }})) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(m) <span class="ot">-&gt;</span> v</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  v[<span class="dv">1</span>]<span class="sc">-</span>v[<span class="dv">2</span>]</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_diff</span>(groups, y, group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2.5</code></pre>
+</div>
+</div>
+<p>bootstrap it</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rerun</span>(<span class="dv">1000</span>, <span class="fu">resample_by_group</span>(groups, y, group)) <span class="sc">%&gt;%</span> </span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span><span class="fu">mean_diff</span>(., y, group)) <span class="ot">-&gt;</span> means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `rerun()` was deprecated in purrr 1.0.0.
+ℹ Please use `map()` instead.
+  # Previously
+  rerun(1000, resample_by_group(groups, y, group))
+
+  # Now
+  map(1:1000, ~ resample_by_group(groups, y, group))</code></pre>
+</div>
+</div>
+<p>vis</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(means), <span class="fu">aes</span>(<span class="at">x=</span>means))<span class="sc">+</span><span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-44-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>or even</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(means) <span class="sc">%&gt;%</span> <span class="fu">count</span>(means)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 2
+   means     n
+   &lt;dbl&gt; &lt;int&gt;
+ 1 -4       14
+ 2 -3.67    25
+ 3 -3.5     17
+ 4 -3.33    51
+ 5 -3.17    57
+ 6 -3       68
+ 7 -2.83   107
+ 8 -2.67    30
+ 9 -2.67    64
+10 -2.5    128
+11 -2.33    27
+12 -2.33    56
+13 -2.17   115
+14 -2       76
+15 -1.83    57
+16 -1.67    47
+17 -1.5     23
+18 -1.33    25
+19 -1       13</code></pre>
+</div>
+</div>
+<p>this distribution is discrete but more or less normal:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(means), <span class="fu">aes</span>(<span class="at">sample=</span>means))<span class="sc">+</span><span class="fu">stat_qq</span>()<span class="sc">+</span><span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-46-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>now do it on travel times: this is wrong, because I have to sample the rows properly</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rerun</span>(<span class="dv">1000</span>, <span class="fu">resample_by_group</span>(to_school, traveltime, location)) <span class="sc">%&gt;%</span> </span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span><span class="fu">mean_diff</span>(., traveltime, location)) <span class="ot">-&gt;</span> means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `rerun()` was deprecated in purrr 1.0.0.
+ℹ Please use `map()` instead.
+  # Previously
+  rerun(1000, resample_by_group(to_school, traveltime, location))
+
+  # Now
+  map(1:1000, ~ resample_by_group(to_school, traveltime, location))</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(means), <span class="fu">aes</span>(<span class="at">x=</span>means))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-48-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>normal quantile plot</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(means), <span class="fu">aes</span>(<span class="at">sample=</span>means))<span class="sc">+</span><span class="fu">stat_qq</span>()<span class="sc">+</span><span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="bootstrap-again_files/figure-html/bootstrap-again-49-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>ok, but that still doesn’t solve bcanon. (I think, don’t solve that.)</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

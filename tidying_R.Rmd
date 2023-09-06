@@ -34,7 +34,7 @@ saying which feed that weight goes with.
   
 ## Packages for this section
 
-```{r tidying-R-1, eval=F}
+```{r tidying-R-1}
 library(tidyverse)
 library(readxl)
 ```
