@@ -1,23 +1,24 @@
 ---
 title: "Reading data files"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
 
 ## Introduction
 
-- First thing we need to do is to read in data, so that we can use our
-software to analyze.
-- Consider these:
-  - Spreadsheet data saved as `.csv` file.
-  - “Delimited” data such as values separated by spaces.
-  - Actual Excel spreadsheets.
-  
+-   First thing we need to do is to read in data, so that we can use our
+    software to analyze.
+-   Consider these:
+    -   Spreadsheet data saved as `.csv` file.
+    -   "Delimited" data such as values separated by spaces.
+    -   Actual Excel spreadsheets.
+
 ## Packages for this section
 
 ```{r readfile-R-1}
 library(tidyverse)
 ```
-
 
 ## A spreadsheet
 
@@ -25,19 +26,18 @@ library(tidyverse)
 
 ## Save as `.csv`
 
-- `.csv` or “comma-separated values” is a way of turning spreadsheet
-values into plain text.
-- Easy to read into R
-- but does not preserve formulas. (This is a reason for doing all your
-calculations in your statistical software, and only having data in your
-spreadsheet.)
-- File, Save As Text CSV (or similar). 
-- used name `test1.csv`.
-
+-   `.csv` or "comma-separated values" is a way of turning spreadsheet
+    values into plain text.
+-   Easy to read into R
+-   but does not preserve formulas. (This is a reason for doing all your
+    calculations in your statistical software, and only having data in
+    your spreadsheet.)
+-   File, Save As Text CSV (or similar).
+-   used name `test1.csv`.
 
 ## The `.csv` file
 
-```
+```         
 id,x,y,group
 p1,10,21,upper
 p2,11,20,lower
@@ -47,19 +47,19 @@ p5,16,30,upper
 p6,17,31,lower
 ```
 
-
 To read this in:
 
-- Fire up  R Studio at `r.datatools.utoronto.ca` 
-- Upload this .csv file. (Bottom right, next to New Folder, Upload.)
-Click Choose File, find the file, click Open. Click OK. See the file
-appear bottom right.
+-   Fire up R Studio at `r.datatools.utoronto.ca`
+-   Upload this .csv file. (Bottom right, next to New Folder, Upload.)
+    Click Choose File, find the file, click Open. Click OK. See the file
+    appear bottom right.
 
 ## Make a new Quarto document
 
-- File, New File, Quarto Document
-- ...and get rid of the template document (leaving the first four lines).
-- Make a code chunk and in it put this. Run it.
+-   File, New File, Quarto Document
+-   ...and get rid of the template document (leaving the first four
+    lines).
+-   Make a code chunk and in it put this. Run it.
 
 ```{r readfile-R-2, eval=F}
 library(tidyverse)
@@ -67,9 +67,9 @@ library(tidyverse)
 
 ## Reading in the file
 
-- Use `read_csv` with the name of the file, in quotes. Save the read-in
-file in something, here called `mydata`. Make a new code chunk for
-this:
+-   Use `read_csv` with the name of the file, in quotes. Save the
+    read-in file in something, here called `mydata`. Make a new code
+    chunk for this:
 
 ```{r readfile-R-3}
 mydata <- read_csv("test1.csv")
@@ -78,20 +78,21 @@ mydata
 
 ## More on the above
 
-- read_csv guesses what kind of thing is in each column. Here it
-correctly guesses that:
-  - id and group are text (categorical variables). id is actually “identifier
-variable”: identifies individuals.
-  - x and y are "double": numbers that might have a decimal point in them.
+-   read_csv guesses what kind of thing is in each column. Here it
+    correctly guesses that:
+    -   id and group are text (categorical variables). id is actually
+        "identifier variable": identifies individuals.
+    -   x and y are "double": numbers that might have a decimal point in
+        them.
 
 ## R Studio on your own computer
 
-- Put the .csv file in the same folder as your project. Then read it in
-as above like `read_csv("test1.csv")`.
-- Or, use
+-   Put the .csv file in the same folder as your project. Then read it
+    in as above like `read_csv("test1.csv")`.
+-   Or, use
 
 ```{r, eval=FALSE}
-f <- file.choose()
+# f <- file.choose()
 f
 ```
 
@@ -103,80 +104,84 @@ saved in `f`, and then:
 mydata <- read_csv(f)
 ```
 
-- When you have selected the file, comment out the `file.choose` line
-by putting a # on the front of it. That will save you having to find
-the file again by mistake. (Keyboard shortcut: go to the line, type
-control-shift-C or Mac equivalent with Cmd.)
+-   When you have selected the file, comment out the `file.choose` line
+    by putting a \# on the front of it. That will save you having to
+    find the file again by mistake. (Keyboard shortcut: go to the line,
+    type control-shift-C or Mac equivalent with Cmd.)
 
 ## Looking at what we read in
-- Again, type the name of the thing to display it:
+
+-   Again, type the name of the thing to display it:
 
 \scriptsize
+
 ```{r readfile-R-4}
 mydata
 ```
+
 \normalsize
 
-- This is a “tibble” or data frame, the standard way of storing a data
-set in R.
-- Tibbles print as much as will display on the screen. If there are more
-rows or columns, it will say so.
-- You will see navigation keys to display more rows or columns (if there are more).
+-   This is a "tibble" or data frame, the standard way of storing a data
+    set in R.
+-   Tibbles print as much as will display on the screen. If there are
+    more rows or columns, it will say so.
+-   You will see navigation keys to display more rows or columns (if
+    there are more).
 
 ## `View`-ing your data frame
 
-- Another way to examine your data frame is to View it, like this:
+-   Another way to examine your data frame is to View it, like this:
 
 ```{r readfile-R-5, eval=F}
 View(mydata)
 ```
 
-...or find your data frame in the Global Environment top right and
-click it.
-- This pops up a “data frame viewer” top left:
+...or find your data frame in the Global Environment top right and click
+it. - This pops up a "data frame viewer" top left:
 
-![](viewview.png){height=500px}
+![](viewview.png){height="500px"}
 
 ## This View
 
-- Read-only: cannot edit data
-- Can display data satisfying conditions: click on Filter, then:
-  - for a categorical variable, type name of category you want
-  - for a quantitative variable, use slider to describe values you want.
-- Can sort a column into ascending or descending order (click little
-arrows next to column name).
-- Clicking the symbol with arrow on it left of Filter “pops out” View
-into separate (bigger) window.
+-   Read-only: cannot edit data
+-   Can display data satisfying conditions: click on Filter, then:
+    -   for a categorical variable, type name of category you want
+    -   for a quantitative variable, use slider to describe values you
+        want.
+-   Can sort a column into ascending or descending order (click little
+    arrows next to column name).
+-   Clicking the symbol with arrow on it left of Filter "pops out" View
+    into separate (bigger) window.
 
 ## Summarizing what we read in
 
-- It is always a good idea to look at your data after you have read it in,
-to make sure you have believable numbers (and the right number of
-individuals and variables).
-- Quick check for errors: these often show up as values too high or too
-low, so the min and/or max will be unreasonable.
-- Five-number summary:
+-   It is always a good idea to look at your data after you have read it
+    in, to make sure you have believable numbers (and the right number
+    of individuals and variables).
+-   Quick check for errors: these often show up as values too high or
+    too low, so the min and/or max will be unreasonable.
+-   Five-number summary:
 
 ```{r readfile-R-6}
 summary(mydata)
 ```
 
-- Quantitative, five-number summary plus mean.
-- Categorical, how many rows.
+-   Quantitative, five-number summary plus mean.
+-   Categorical, how many rows.
 
 ## Reading from a URL
-- Any data file on the Web can be read directly.
-- [Example data link:](http://ritsokiguess.site/datafiles/global.csv)
-- Use URL instead of filename.
-- I like to save the URL in a variable first (because URLs tend to be
-long), and then put that variable in the `read_` function:
 
-\small
+-   Any data file on the Web can be read directly.
+-   [Example data link:](http://ritsokiguess.site/datafiles/global.csv)
+-   Use URL instead of filename.
+-   I like to save the URL in a variable first (because URLs tend to be
+    long), and then put that variable in the `read_` function:
+
 ```{r readfile-R-7}
-my_url <- url("http://ritsokiguess.site/datafiles/global.csv")
+my_url <- "http://ritsokiguess.site/datafiles/global.csv"
+my_url
 global <- read_csv(my_url)
 ```
-\normalsize
 
 ## The data
 
@@ -186,25 +191,25 @@ global
 
 ## Space-delimited files
 
-- Another common format for data is a text file with the values
-separated by spaces. Top of some other data:
+-   Another common format for data is a text file with the values
+    separated by spaces. Top of some other data:
 
-```
-cup tempdiff      	    
-Starbucks 13   	  	    
-Starbucks 7    	   
-Starbucks 7    	   
-Starbucks 17.5 	   
-Starbucks 10   	   
-Starbucks 15.5 	   
-Starbucks 6    	   
-Starbucks 6    	   
-SIGG 12	       	   
-SIGG 16	       	   
-SIGG 9	       	   
-SIGG 23	       	   
-SIGG 11	       	   
-SIGG 20.5      	   
+```         
+cup tempdiff            
+Starbucks 13            
+Starbucks 7        
+Starbucks 7        
+Starbucks 17.5     
+Starbucks 10       
+Starbucks 15.5     
+Starbucks 6        
+Starbucks 6        
+SIGG 12            
+SIGG 16            
+SIGG 9             
+SIGG 23            
+SIGG 11            
+SIGG 20.5          
 SIGG 12.5      
 SIGG 20.5      
 SIGG 24.5      
@@ -214,20 +219,19 @@ CUPPS 18.5
 CUPPS 10   
 ```
 
-
 ## Reading the coffee data
 
-- This file was on my computer so I uploaded it to `r.datatools.utoronto.ca`
-first.
-- This time, `read_delim`, and we also have to say what the thing is
-separating the values:
+-   This file was on my computer so I uploaded it to
+    `r.datatools.utoronto.ca` first.
+-   This time, `read_delim`, and we also have to say what the thing is
+    separating the values:
 
 ```{r readfile-R-9}
 coffee <- read_delim("coffee.txt", " ")
 coffee
 ```
 
-- Name of the cup, text, and tempdiff, a decimal number.
+-   Name of the cup, text, and tempdiff, a decimal number.
 
 ## Looking at the values (some)
 
@@ -239,8 +243,9 @@ These were four brands of travel mug (in cup), and for each, how much
 the temperature of the coffee in the mug decreased over 30 minutes.
 
 ## Reading from the Web; the soap data
-- Use the URL in place of the filename.
-- Save the URL in a variable first:
+
+-   Use the URL in place of the filename.
+-   Save the URL in a variable first:
 
 ```{r readfile-R-11}
 url <- url("http://ritsokiguess.site/datafiles/soap.txt")
@@ -254,14 +259,15 @@ soap
 ```
 
 ## Data aligned in columns
-- Sometimes you see data aligned in columns, thus:
 
-![](Screenshot_2019-04-24_20-16-24.png){height=400px}
+-   Sometimes you see data aligned in columns, thus:
 
-- `read_delim` will not work: values separated by more than one space.
-- The number of spaces between values is not constant, because there
-is one fewer space before the 10.
-- `read_table` works for this.
+![](Screenshot_2019-04-24_20-16-24.png){height="400px"}
+
+-   `read_delim` will not work: values separated by more than one space.
+-   The number of spaces between values is not constant, because there
+    is one fewer space before the 10.
+-   `read_table` works for this.
 
 ## Reading in column-aligned data
 
@@ -270,27 +276,25 @@ drugs <- read_table("migraine.txt")
 drugs
 ```
 
-
 ## Reading an Excel sheet directly
 
-- Here is [my spreadsheet](test2.xlsx) from before, but tarted up a bit:
+-   Here is [my spreadsheet](test2.xlsx) from before, but tarted up a
+    bit:
 
-![](excel.png){height=450px}
+![](excel.png){height="450px"}
 
-- It is now a workbook with a second sheet called “notes” (that we
-don’t want).
-- Install package `readxl` first.
+-   It is now a workbook with a second sheet called "notes" (that we
+    don't want).
+-   Install package `readxl` first.
 
 ## Reading it in
 
-- Read into R, saying that we only want the sheet “data”. Upload
-spreadsheet first.
-- Excel spreadsheets must be “local”:
-cannot read one in from a URL.
+-   Read into R, saying that we only want the sheet "data". Upload
+    spreadsheet first.
+-   Excel spreadsheets must be "local": cannot read one in from a URL.
 
 ```{r readfile-R-15, warning=F}
 library(readxl)
 mydata2 <- read_excel("test2.xlsx", sheet = "data")
 mydata2
 ```
-

@@ -1,0 +1,16 @@
+{
+  "hash": "df1a40aed2a3cc26f04f22868e5e4a60",
+  "result": {
+    "markdown": "My packages and conflicts:\n\n\n\n::: {.cell}\n\n:::\n",
+    "supporting": [
+      "packages_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

@@ -1,17 +1,21 @@
 ---
 title: "Drawing graphs"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Our data
-- To illustrate making graphs, we need some data.
-- Data on 202 male and female athletes at the Australian Institute of
-Sport.
-- Variables:
-  - categorical: Sex of athlete, sport they play
-  - quantitative: height (cm), weight (kg), lean body mass, red and white
-  blood cell counts, haematocrit and haemoglobin (blood), ferritin
-  concentration, body mass index, percent body fat.
-- Values separated by tabs (which impacts reading in).
+
+-   To illustrate making graphs, we need some data.
+-   Data on 202 male and female athletes at the Australian Institute of
+    Sport.
+-   Variables:
+    -   categorical: Sex of athlete, sport they play
+    -   quantitative: height (cm), weight (kg), lean body mass, red and
+        white blood cell counts, haematocrit and haemoglobin (blood),
+        ferritin concentration, body mass index, percent body fat.
+-   Values separated by tabs (which impacts reading in).
 
 ## Packages for this section
 
@@ -19,17 +23,15 @@ Sport.
 library(tidyverse)
 ```
 
-
 ## Reading data into R
-- Use `read_tsv` (“tab-separated values”), like `read_csv`.
-- Data in `ais.txt`:
 
-\scriptsize
+-   Use `read_tsv` ("tab-separated values"), like `read_csv`.
+-   Data in `ais.txt`:
+
 ```{r graphs-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
-\normalsize
 
 ## The data (some)
 
@@ -38,43 +40,39 @@ athletes <- read_tsv(my_url)
 options(width = 72)
 ```
 
-
 ```{r graphs-R-3}
 athletes
 ```
-
 
 ## Types of graph {.smaller}
 
 Depends on number and type of variables:
 
-|   Categorical | Quantitative | Graph |
-|----:|----:|:--------------------|
-    |1 | 0 | bar chart |
-    |0 | 1 | histogram|
-    |2 | 0 | grouped bar charts |
-    |1 | 1 | side-by-side boxplots|
-    |0 |2 | scatterplot|
-    |2 | 1 | grouped boxplots|
-    |1 | 2 | scatterplot with points identified by group (eg.\ by colour)|
+| Categorical | Quantitative | Graph                                                       |
+|------------:|-------------:|:------------------------------------------------------------|
+|           1 |            0 | bar chart                                                   |
+|           0 |            1 | histogram                                                   |
+|           2 |            0 | grouped bar charts                                          |
+|           1 |            1 | side-by-side boxplots                                       |
+|           0 |            2 | scatterplot                                                 |
+|           2 |            1 | grouped boxplots                                            |
+|           1 |            2 | scatterplot with points identified by group (eg. by colour) |
 
-With more (categorical) variables, might want *separate plots by groups*. This is called
-`facetting` in R.
-
+With more (categorical) variables, might want *separate plots by
+groups*. This is called `facetting` in R.
 
 ## `ggplot`
 
-- R has a standard graphing procedure ggplot, that we use for all our
-graphs.
-- Use in different ways to get precise graph we want.
-- Let’s start with bar chart of the sports played by the athletes.
+-   R has a standard graphing procedure ggplot, that we use for all our
+    graphs.
+-   Use in different ways to get precise graph we want.
+-   Let's start with bar chart of the sports played by the athletes.
 
 ## Bar chart
 
 ```{r graphs-R-4, fig.height=3.9}
 ggplot(athletes, aes(x = Sport)) + geom_bar()
 ```
-
 
 ## Histogram of body mass index
 
@@ -139,9 +137,10 @@ Default uses same scale for each facet. To use different scales for each
 facet, this:
 
 \small
+
 ```{r graphs-R-13, fig.height=3.2}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport, scales = "free")
 ```
-\normalsize
 
+\normalsize
