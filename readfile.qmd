@@ -92,7 +92,7 @@ mydata
 -   Or, use
 
 ```{r, eval=FALSE}
-f <- file.choose()
+# f <- file.choose()
 f
 ```
 
@@ -179,6 +179,7 @@ summary(mydata)
 
 ```{r readfile-R-7}
 my_url <- "http://ritsokiguess.site/datafiles/global.csv"
+my_url
 global <- read_csv(my_url)
 ```
 

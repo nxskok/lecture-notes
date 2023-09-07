@@ -2578,7 +2578,7 @@ p6,17,31,lower</code></pre>
 <li>Or, use</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>f <span class="ot">&lt;-</span> <span class="fu">file.choose</span>()</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># f &lt;- file.choose()</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>f</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>which brings up a file selector (as if you were going to find a file to load or save it). Find your <code>.csv</code> file, the address of which will be saved in <code>f</code>, and then:</p>
@@ -2669,13 +2669,17 @@ p6,17,31,lower</code></pre>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>my_url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/global.csv&quot;</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>global <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-2"><a href="#cb11-2"></a>my_url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] &quot;http://ritsokiguess.site/datafiles/global.csv&quot;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>global <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-data" class="slide level2">
 <h2>The data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>global</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>global</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2721,8 +2725,8 @@ CUPPS 10   </code></pre>
 <li>This time, <code>read_delim</code>, and we also have to say what the thing is separating the values:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>coffee <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">&quot;coffee.txt&quot;</span>, <span class="st">&quot; &quot;</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>coffee <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">&quot;coffee.txt&quot;</span>, <span class="st">&quot; &quot;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2739,7 +2743,7 @@ CUPPS 10   </code></pre>
 <section id="looking-at-the-values-some" class="slide level2">
 <h2>Looking at the values (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>coffee</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2758,14 +2762,14 @@ CUPPS 10   </code></pre>
 <li>Save the URL in a variable first:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>url <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">&quot;http://ritsokiguess.site/datafiles/soap.txt&quot;</span>)</span>
-<span id="cb16-2"><a href="#cb16-2"></a>soap <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url, <span class="st">&quot; &quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>url <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">&quot;http://ritsokiguess.site/datafiles/soap.txt&quot;</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a>soap <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url, <span class="st">&quot; &quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-soap-data-some" class="slide level2">
 <h2>The soap data (some)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>soap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>soap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2791,8 +2795,8 @@ CUPPS 10   </code></pre>
 <section id="reading-in-column-aligned-data" class="slide level2">
 <h2>Reading in column-aligned data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>drugs <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;migraine.txt&quot;</span>)</span>
-<span id="cb18-2"><a href="#cb18-2"></a>drugs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>drugs <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="st">&quot;migraine.txt&quot;</span>)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>drugs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2821,9 +2825,9 @@ CUPPS 10   </code></pre>
 <li>Excel spreadsheets must be “local”: cannot read one in from a URL.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb19-2"><a href="#cb19-2"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;test2.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>)</span>
-<span id="cb19-3"><a href="#cb19-3"></a>mydata2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;test2.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>mydata2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
