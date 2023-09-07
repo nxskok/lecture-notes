@@ -1,11 +1,5 @@
 ---
 title: "Tidying data"
-format: revealjs
-execute:
-  echo: true
-editor: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Tidying data {.scrollable}
@@ -206,7 +200,10 @@ age group. Split that up using separate.
 - For “how to split”, here “after first character”:
 
 ```{r tidying-R-15}
-tb2 %>% separate(genage, c("gender", "age"), 1) -> tb3
+tb2 %>% separate_wider_position(genage, 
+                                widths = c("gender" = 1, "age" = 4), 
+                                too_few = "align_start") -> tb3
+tb3
 ```
 
 ## Tidied tuberculosis data (some)
@@ -230,7 +227,9 @@ output as input to the next step, thus:
 tb %>%
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = TRUE) %>% 
-  separate(genage, c("gender", "age"), 1) 
+  separate_wider_position(genage, 
+                          widths = c("gender" = 1, "age" = 4), 
+                          too_few = "align_start")
 ```
 
 - You can split the R code over as many lines as you like, as long as
