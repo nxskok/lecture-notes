@@ -36,7 +36,7 @@ athletes %>% select(Sport)
 athletes %>% select(Sport, Hg, BMI)
 ```
 
-## Choosing consecutive columns
+## Choosing consecAutive columns
 
 ```{r choosing-R-4}
 athletes %>% select(Sex:WCC)
@@ -58,7 +58,7 @@ Other ways to select columns: those whose name:
 -   `matches` a "regular expression"
 -   `everything()` select all the columns
 
-## Columns whose names begin with S
+## Columns whose names Abegin with S
 
 ```{r choosing-R-6}
 athletes %>% select(starts_with("S"))
@@ -109,44 +109,28 @@ athletes %>% select(where(is.character))
 
 ## Choosing rows by number
 
-\tiny
-
 ```{r choosing-R-12}
 athletes %>% slice(16:25)
 ```
 
-\normalsize
-
 ## Non-consecutive rows
-
-\tiny
 
 ```{r choosing-R-13}
 athletes %>% 
   slice(10, 13, 17, 42)
 ```
 
-\normalsize
-
 ## A random sample of rows
-
-\tiny
 
 ```{r choosing-R-14}
 athletes %>% slice_sample(n=8)
 ```
 
-\normalsize
-
 ## Rows for which something is true
-
-\tiny
 
 ```{r choosing-R-15}
 athletes %>% filter(Sport == "Tennis")
 ```
-
-\normalsize
 
 ## More complicated selections
 

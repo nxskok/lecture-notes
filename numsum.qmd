@@ -49,10 +49,12 @@ athletes %>% summarize(m = mean(BMI), s = sd(BMI)) -> d
 d
 ```
 
+This doesn't work:
+
 ```{r}
+#| error: true
 mean(BMI)
 ```
-
 
 ## Quartiles
 
