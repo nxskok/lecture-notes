@@ -10,29 +10,19 @@ The usual:
 library(tidyverse)
 ```
 
-
 ## Doing things with data frames
-Let’s go back to our Australian athletes: 
+
+Let's go back to our Australian athletes:
 
 ```{r read-athletes, echo=F}
 #| message = FALSE
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
-# athletes %>% slice_sample(n = 300) -> athletes
 ```
-
-\scriptsize
-
-```{r}
-#| echo = FALSE
-options(width = 72)
-```
-
 
 ```{r choosing-R-1}
 athletes
 ```
-\normalsize
 
 ## Choosing a column
 
@@ -59,15 +49,16 @@ athletes %>% select(-(RCC:LBM))
 ```
 
 ## Select-helpers
+
 Other ways to select columns: those whose name:
 
-- `starts_with` something
-- `ends_with` something
-- `contains` something
-- `matches` a “regular expression”
-- `everything()` select all the columns
+-   `starts_with` something
+-   `ends_with` something
+-   `contains` something
+-   `matches` a "regular expression"
+-   `everything()` select all the columns
 
-## Columns whose names begin with S 
+## Columns whose names begin with S
 
 ```{r choosing-R-6}
 athletes %>% select(starts_with("S"))
@@ -89,7 +80,6 @@ This works with any of the select-helpers:
 athletes %>% select(ends_with("C", ignore.case=FALSE))
 ```
 
-
 ## Column names containing letter R
 
 ```{r choosing-R-9}
@@ -100,34 +90,34 @@ athletes %>% select(contains("r"))
 
 In regular expression terms, this is `^.t$`:
 
-- `^` means “start of text”
-- `.` means “exactly one character, but could be anything”
-- `$` means “end of text”.
+-   `^` means "start of text"
+-   `.` means "exactly one character, but could be anything"
+-   `$` means "end of text".
+
 ```{r choosing-R-10}
 athletes %>% select(matches("^.t$"))
 ```
 
 ## Choosing columns by property
 
-- Use `where` as with summarizing several columns
-- eg, to choose text columns:
+-   Use `where` as with summarizing several columns
+-   eg, to choose text columns:
 
 ```{r choosing-R-11}
 athletes %>% select(where(is.character))
 ```
 
-
-## Choosing rows by number 
+## Choosing rows by number
 
 \tiny
+
 ```{r choosing-R-12}
 athletes %>% slice(16:25)
 ```
+
 \normalsize
 
-
-
-## Non-consecutive rows 
+## Non-consecutive rows
 
 \tiny
 
@@ -141,17 +131,21 @@ athletes %>%
 ## A random sample of rows
 
 \tiny
+
 ```{r choosing-R-14}
 athletes %>% slice_sample(n=8)
 ```
+
 \normalsize
 
 ## Rows for which something is true
 
 \tiny
+
 ```{r choosing-R-15}
 athletes %>% filter(Sport == "Tennis")
 ```
+
 \normalsize
 
 ## More complicated selections
@@ -166,7 +160,6 @@ athletes %>% filter(Sport == "Tennis", RCC < 5)
 athletes %>% filter(Sport == "Tennis") %>% 
   filter(RCC < 5)
 ```
-
 
 ## Either/Or
 
@@ -192,8 +185,7 @@ athletes %>% arrange(RCC, BMI)
 athletes %>% arrange(desc(BMI))
 ```
 
-## “The top ones”
-
+## "The top ones"
 
 ```{r choosing-R-22}
 athletes %>%
@@ -210,7 +202,6 @@ athletes %>%
   select(Sport, Wt)
 ```
 
-
 ## Create new variables from old ones
 
 ```{r new-from-old}
@@ -221,6 +212,7 @@ athletes %>%
 ```
 
 ## Turning the result into a number
+
 Output is always data frame unless you explicitly turn it into something
 else, eg. the weight of the heaviest athlete, as a number:
 
@@ -229,7 +221,6 @@ athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1)
 ```
 
 Or the 20 heaviest weights in descending order:
-
 
 ```{r choosing-R-24}
 athletes %>%
@@ -247,12 +238,15 @@ athletes %>%
   pull("Wt")
 ```
 
-`pull` grabs the column you name *as a vector* (of whatever it contains).
+`pull` grabs the column you name *as a vector* (of whatever it
+contains).
 
 ## To find the mean height of the women athletes
+
 Two ways:
 
 \small
+
 ```{r choosing-R-26}
 athletes %>% group_by(Sex) %>% summarize(m = mean(Ht))
 ```
@@ -267,24 +261,24 @@ athletes %>%
 
 ## Summary of data selection/arrangement "verbs" {.smaller}
 
-  | Verb | Purpose|
-  |:-----|:-------------------------------|
-  |`select` | Choose columns|
-  |`slice` | Choose rows by number|
-  |`slice_sample` | Choose random rows |
-  |`slice_max` | Choose rows with largest values on a variable (also `slice_min`) |
-  |`filter` | Choose rows satisfying conditions|
-  | `arrange` | Sort in order by column(s) |
-  | `mutate` | Create new variables | 
-  | `group_by` | Create groups to work with|
-  |`summarize` | Calculate summary statistics (by groups if defined) |
-  | `pluck` | Extract items from data frame |
-  | `pull` | Extract a single column from a data frame as a vector|
+| Verb           | Purpose                                                          |
+|:---------------|:-------------------------------------------------------|
+| `select`       | Choose columns                                                   |
+| `slice`        | Choose rows by number                                            |
+| `slice_sample` | Choose random rows                                               |
+| `slice_max`    | Choose rows with largest values on a variable (also `slice_min`) |
+| `filter`       | Choose rows satisfying conditions                                |
+| `arrange`      | Sort in order by column(s)                                       |
+| `mutate`       | Create new variables                                             |
+| `group_by`     | Create groups to work with                                       |
+| `summarize`    | Calculate summary statistics (by groups if defined)              |
+| `pluck`        | Extract items from data frame                                    |
+| `pull`         | Extract a single column from a data frame as a vector            |
 
-  
 ## Looking things up in another data frame
 
-- Suppose you are working in the nails department of a hardware store and you find that you have sold these items:
+-   Suppose you are working in the nails department of a hardware store
+    and you find that you have sold these items:
 
 ```{r choosing-R-28, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/nail_sales.csv"
@@ -292,12 +286,12 @@ sales <- read_csv(my_url)
 sales
 ```
 
-
 ## Product descriptions and prices
 
-- but you don't remember what these product codes are, and you would like to know the total revenue from these sales.
+-   but you don't remember what these product codes are, and you would
+    like to know the total revenue from these sales.
 
-- Fortunately you found a list of product descriptions and prices:
+-   Fortunately you found a list of product descriptions and prices:
 
 \small
 
@@ -307,14 +301,17 @@ desc <- read_csv(my_url)
 desc
 ```
 
-- the `size` values are measured in inches (symbol `"`), but R uses the same symbol for the start and end of text, so the `"` representing "inches" is "escaped". Hence the odd look.
+-   the `size` values are measured in inches (symbol `"`), but R uses
+    the same symbol for the start and end of text, so the `"`
+    representing "inches" is "escaped". Hence the odd look.
 
 \normalsize
 
 ## The lookup
 
-- How do you "look up" the product codes to find the product descriptions and prices?
-- `left_join`.
+-   How do you "look up" the product codes to find the product
+    descriptions and prices?
+-   `left_join`.
 
 ```{r choosing-R-30}
 sales %>% left_join(desc)
@@ -322,9 +319,12 @@ sales %>% left_join(desc)
 
 ## What we have
 
-- this looks up all the rows in the *first* dataframe that are also in the *second*. 
-- by default matches all columns with same name in two dataframes (`product_code` here)
-- get *all* columns in *both* dataframes. The rows are the ones for that `product_code`.
+-   this looks up all the rows in the *first* dataframe that are also in
+    the *second*.
+-   by default matches all columns with same name in two dataframes
+    (`product_code` here)
+-   get *all* columns in *both* dataframes. The rows are the ones for
+    that `product_code`.
 
 So now can work out how much the total revenue was:
 
@@ -334,27 +334,36 @@ sales %>% left_join(desc) %>%
   summarize(total_revenue = sum(product_revenue))
 ```
 
-
 ## More comments
 
-- if any product codes are not matched, you get NA in the added columns
-- anything in the *second* dataframe that was not in the first does not appear (here, any products that were not sold)
-- other variations (examples follow):
-  - if there are two columns with the same name in the two dataframes, and you only want to match on one, use `by` with one column name
-  - if the columns you want to look up have different names in the two dataframes, use `by` with a "named list"
+-   if any product codes are not matched, you get NA in the added
+    columns
+-   anything in the *second* dataframe that was not in the first does
+    not appear (here, any products that were not sold)
+-   other variations (examples follow):
+    -   if there are two columns with the same name in the two
+        dataframes, and you only want to match on one, use `by` with one
+        column name
+    -   if the columns you want to look up have different names in the
+        two dataframes, use `by` with a "named list"
 
 ## Matching on only some matching names
 
-- Suppose the `sales` dataframe *also* had a column `qty` (which was the quantity sold): 
+-   Suppose the `sales` dataframe *also* had a column `qty` (which was
+    the quantity sold):
 
 \small
+
 ```{r choosing-R-32}
 sales %>% rename("qty"="sales") -> sales1
 sales1
 ```
+
 \normalsize
 
-- The `qty` in `sales1` is the quantity sold, but the `qty` in `desc` is the number of nails in a package. These should *not* be matched: they are different things.
+-   The `qty` in `sales1` is the quantity sold, but the `qty` in `desc`
+    is the number of nails in a package. These should *not* be matched:
+    they are different things.
 
 ## Matching only on product code
 
@@ -363,24 +372,26 @@ sales1 %>%
   left_join(desc, join_by(product_code))
 ```
 
-- Get `qty.x` (from `sales1`) and `qty.y` (from `desc`).
+-   Get `qty.x` (from `sales1`) and `qty.y` (from `desc`).
 
 ## Matching on different names 1/2
 
-- Suppose the product code in `sales` was just `code`:
+-   Suppose the product code in `sales` was just `code`:
 
 \small
+
 ```{r choosing-R-34}
 sales %>% rename("code" = "product_code") -> sales2
 sales2
 ```
+
 \normalsize
 
-- How to match the two product codes that have different names?
+-   How to match the two product codes that have different names?
 
-##  Matching on different names 2/2
+## Matching on different names 2/2
 
-- Use `by`, but like this:
+-   Use `by`, but like this:
 
 ```{r choosing-R-35}
 sales2 %>% 
@@ -389,20 +400,26 @@ sales2 %>%
 
 ## Other types of join
 
-- `right_join`: interchanges roles, looking up keys from second dataframe in first.
-- `anti_join`: give me all the rows in the first dataframe that are *not* in the second. (Use this eg. to see whether the product descriptions are incomplete.)
-- `full_join`: give me all the rows in both dataframes, with missings as needed.
+-   `right_join`: interchanges roles, looking up keys from second
+    dataframe in first.
+-   `anti_join`: give me all the rows in the first dataframe that are
+    *not* in the second. (Use this eg. to see whether the product
+    descriptions are incomplete.)
+-   `full_join`: give me all the rows in both dataframes, with missings
+    as needed.
 
 ## Full join here
 
 \small
+
 ```{r choosing-R-36}
 sales %>% full_join(desc)
 ```
+
 \normalsize
 
-- The missing `sales` for "masonry nail" says that it was in the lookup table `desc`, but we didn't sell any.
-
+-   The missing `sales` for "masonry nail" says that it was in the
+    lookup table `desc`, but we didn't sell any.
 
 ## The same thing, but with `anti_join`
 
@@ -412,5 +429,5 @@ Anything in first df but not in second?
 desc %>% anti_join(sales)
 ```
 
-Masonry nails are the only thing in our product description file that we did not sell any of.
-
+Masonry nails are the only thing in our product description file that we
+did not sell any of.

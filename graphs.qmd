@@ -28,6 +28,8 @@ library(tidyverse)
 -   Use `read_tsv` ("tab-separated values"), like `read_csv`.
 -   Data in `ais.txt`:
 
+\scriptsize
+
 ```{r graphs-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
@@ -92,7 +94,7 @@ ggplot(athletes, aes(x = Sport, fill = Sex)) +
 ## BMI by gender
 
 ```{r graphs-R-7, fig.height=4}
-ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot()
+ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot() 
 ```
 
 ## Height vs. weight
@@ -113,7 +115,22 @@ ggplot(athletes, aes(x = Ht, y = Wt)) +
 ## BMI by sport and gender
 
 ```{r graphs-R-10, fig.height=3.6}
-ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
+ggplot(athletes, aes(y = Sport, x = BMI, fill = Sex)) +
+  geom_boxplot()
+```
+
+A variation that is colour-blind-friendly:
+
+```{r}
+library(RColorBrewer)
+ggplot(athletes, aes(colour = Sport, y = BMI, x = Sex)) +
+  geom_boxplot() + scale_color_brewer(palette = "Set3")
+```
+
+A variation that uses `fill` instead of `colour`:
+
+```{r}
+ggplot(athletes, aes(x = Sport, y = BMI, fill = Sex)) +
   geom_boxplot()
 ```
 
@@ -136,11 +153,14 @@ ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
 Default uses same scale for each facet. To use different scales for each
 facet, this:
 
-\small
-
-```{r graphs-R-13, fig.height=3.2}
+```{r graphs-R-13, fig.height=5.2}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport, scales = "free")
 ```
 
-\normalsize
+## Another view of height vs weight
+
+```{r}
+ggplot(athletes, aes(x = Ht, y = Wt)) +
+  geom_point() + facet_wrap(~ Sex)
+```
