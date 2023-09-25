@@ -355,6 +355,11 @@ sales1
 sales1 %>% 
   left_join(desc, join_by(product_code))
 ```
+```{r}
+sales1 %>% 
+  left_join(desc)
+
+```
 
 -   Get `qty.x` (from `sales1`) and `qty.y` (from `desc`).
 
@@ -375,7 +380,7 @@ sales2
 
 ## Matching on different names 2/2
 
--   Use `by`, but like this:
+-   Use `join_by`, but like this:
 
 ```{r choosing-R-35}
 sales2 %>% 
@@ -411,6 +416,8 @@ Anything in first df but not in second?
 
 ```{r}
 desc %>% anti_join(sales)
+sales %>% anti_join(desc)
+
 ```
 
 Masonry nails are the only thing in our product description file that we
