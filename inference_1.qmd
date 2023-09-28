@@ -47,8 +47,6 @@ jays <- read_csv(my_url)
 jays
 ```
 
-\normalsize
-
 ## Another way
 
 -   This is a big data set: only 25 observations, but a lot of
@@ -64,8 +62,6 @@ options(width=72)
 ```{r inference-1-R-5}
 glimpse(jays)
 ```
-
-\normalsize
 
 ## Attendance histogram
 
@@ -147,21 +143,13 @@ with(jays, t.test(attendance))
     -   do not reject null hypothesis.
 -   but decision may be wrong:
 
-```{=tex}
-\begin{center}
-  
-  
-\begin{tabular}{|l|cc|}
-\hline
-  & \multicolumn{2}{c|}{Decision}\\
-Truth & Do not reject & Reject null\\
-\hline
-Null true & Correct & Type I error\\
-Null false & Type II error & Correct\\
-\hline
-\end{tabular}
-\end{center}
-```
+|                | Decision          |                 |
+|----------------|-------------------|-----------------|
+| **Truth**      | **Do not reject** | **reject null** |
+| **Null true**  | Correct           | Type I error    |
+| **Null false** | Type II error     | Correct         |
+
+
 -   Either type of error is bad, but for now focus on controlling Type I
     error: write $\alpha$ = P(type I error), and devise test so that
     $\alpha$ small, typically 0.05.

@@ -1,5 +1,8 @@
 ---
 title: "Statistical Inference: Power"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Packages
@@ -19,19 +22,7 @@ What can happen:
 | **Null true**  | Correct           | Type I error    |     |
 | **Null false** | Type II error     | Correct         |     |
 
-```{=tex}
-\begin{center}
-\begin{tabular}{|l|cc|}
-\hline
-  & \multicolumn{2}{c|}{Decision}\\
-Truth & Do not reject & Reject null\\
-\hline
-Null true & Correct & Type I error\\
-Null false & Type II error & Correct\\
-\hline
-\end{tabular}  
-\end{center}
-```
+
 Tension between truth and decision about truth (imperfect).
 
 -   Prob. of type I error denoted $\alpha$. Usually fix $\alpha$, eg.
