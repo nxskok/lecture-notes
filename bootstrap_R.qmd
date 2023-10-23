@@ -48,6 +48,14 @@ s <- sample(jays$attendance, replace = TRUE)
 s
 ```
 
+-   It is easier to see what is happening if we sort both the actual
+    attendances and the bootstrap sample:
+
+```{r}
+sort(jays$attendance)
+sort(s)
+```
+
 ## Getting mean of bootstrap sample
 
 -   A bootstrap sample is same size as original, but contains repeated
@@ -84,35 +92,33 @@ tibble(sim = 1:4)
 -   Then set up to work one row at a time, and draw a bootstrap sample
     of the attendances in each row:
 
-\small
-
 ```{r bootstrap-R-7}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE)))
 ```
 
-\normalsize
-
 -   Each row of our dataframe contains *all* of a bootstrap sample of 25
     observations drawn with replacement from the attendances.
-
-\normalsize
 
 ## Sample means
 
 -   Find the mean of each sample:
 
-\footnotesize
-
 ```{r bootstrap-R-8}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
-  mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
-  mutate(my_mean = mean(sample))
+  mutate(sample = list(sample(jays$attendance, replace = TRU
+                              
+                              
 ```
 
-\normalsize
+```{r}
+
+
+```
+
+`{E))) %>%}   mutate(my_mean = mean(sample))`
 
 -   These are (four simulated values of) the bootstrapped sampling
     distribution of the sample mean.
@@ -121,8 +127,6 @@ tibble(sim = 1:4) %>%
 
 -   rather pointless here, but to get the idea:
 
-\footnotesize
-
 ```{r bootstrap-R-9}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
@@ -130,8 +134,6 @@ tibble(sim = 1:4) %>%
   mutate(my_mean = mean(sample)) %>% 
   ggplot(aes(x = my_mean)) + geom_histogram(bins = 3) -> g
 ```
-
-\normalsize
 
 ## The (pointless) histogram
 
@@ -143,8 +145,6 @@ g
 
 -   say 1000, and put a decent number of bins on the histogram also:
 
-\footnotesize
-
 ```{r bootstrap-R-11}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
@@ -152,8 +152,6 @@ tibble(sim = 1:1000) %>%
   mutate(my_mean = mean(sample)) %>% 
   ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
 ```
-
-\normalsize
 
 ## The (better) histogram
 
@@ -194,8 +192,8 @@ tibble(sim = 1:4) %>%
 ## Two samples
 
 -   Assumption: *both* samples are from a normal distribution.
--   In practice, each sample is "normal enough" given its sample size,
-    since Central Limit Theorem will help.
+-   In this case, each sample should be "normal enough" given its sample
+    size, since Central Limit Theorem will help.
 -   Use bootstrap on each group independently, as above.
 
 ## Kids learning to read
@@ -203,6 +201,7 @@ tibble(sim = 1:4) %>%
 ```{r bootstrap-R-14, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
+kids
 ```
 
 ```{r bootstrap-R-15}
