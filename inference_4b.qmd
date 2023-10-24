@@ -1,48 +1,52 @@
 ---
 title: "Matched pairs"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
 
 ## Matched pairs
 
-Some data: 
+Some data:
 
-![](Screenshot_2019-04-26_13-41-29.png)
-
+![](Screenshot_2019-04-26_13-41-29.png){width="679"}
 
 ## Matched pairs 1/2
-- Data are comparison of 2 drugs for effectiveness at reducing pain.
 
-     - 12 subjects (cases) were arthritis sufferers
-     - Response is #hours of pain relief from each drug.
-      
-- In reading example, each child tried only one reading method.
-- But here, each subject tried out both drugs, giving us two
-measurements.
-- Possible because, if you wait long enough, one drug has no influence
-over effect of other.
+-   Data are comparison of 2 drugs for effectiveness at reducing pain.
+
+    -   12 subjects (cases) were arthritis sufferers
+    -   Response is #hours of pain relief from each drug.
+
+-   In reading example, each child tried only one reading method.
+
+-   But here, each subject tried out both drugs, giving us two
+    measurements.
+
+-   Possible because, if you wait long enough, one drug has no influence
+    over effect of other.
 
 ## Matched pairs 2/2
 
-- Advantage: focused comparison of drugs. Compare one drug with
-another on same person, removes a lot of variability due to differences between people. 
+-   Advantage: focused comparison of drugs. Compare one drug with
+    another on same person, removes a lot of variability due to
+    differences between people.
 
-- Matched pairs, requires different analysis.
-      
-- Design: randomly choose 6 of 12 subjects to get drug A first, other 6
-get drug B first.
+-   Matched pairs, requires different analysis.
+
+-   Design: randomly choose 6 of 12 subjects to get drug A first, other
+    6 get drug B first.
 
 ## Packages
-
 
 ```{r}
 library(tidyverse)
 library(smmr) # for a sign test later
 ```
 
-
 ## Reading the data
-Values aligned in columns:  
+
+Values aligned in columns:
 
 ```{r inference-4b-R-1}
 my_url <- 
@@ -51,73 +55,80 @@ pain <- read_table(my_url)
 pain
 ```
 
-## Paired *t*-test 
-
-\small
+## Paired *t*-test
 
 ```{r inference-4b-R-3}
 with(pain, t.test(druga, drugb, paired = TRUE))
 ```
 
-\normalsize
-
-- P-value is 0.053. 
-- Not quite evidence of difference between drugs.
+-   P-value is 0.053.
+-   Not quite evidence of difference between drugs.
 
 ## t-testing the differences
 
-- Likewise, you can calculate the differences yourself and
-then do a 1-sample t-test on them.
+-   Likewise, you can calculate the differences yourself and then do a
+    1-sample t-test on them.
 
 ```{r inference-4b-R-4}
 pain %>% mutate(diff = druga - drugb) -> pain
 pain
 ```
 
-
 ## t-test on the differences
-- then throw them into t.test, testing that the mean is zero, with
-same result as before:
+
+-   then throw them into t.test, testing that the mean is zero, with
+    same result as before:
+
 ```{r inference-4b-R-5}
 with(pain, t.test(diff, mu = 0))
 ```
 
-- Same P-value (0.053) and conclusion.
+-   Same P-value (0.053) and conclusion.
 
-## Assessing normality 
-- 1-sample and 2-sample t-tests assume (each) group normally
-distributed.
-- Matched pairs analyses assume (theoretically) that differences
-normally distributed.
-- How to assess normality? A normal quantile plot.
+## Assessing normality
+
+-   1-sample and 2-sample t-tests assume (each) group normally
+    distributed.
+-   Matched pairs analyses assume (theoretically) that differences
+    normally distributed.
+-   How to assess normality? A normal quantile plot.
 
 ## The normal quantile plot (of differences)
-
 
 ```{r inference-4b-R-6, fig.height=4}
 ggplot(pain,aes(sample=diff))+stat_qq()+stat_qq_line()
 ```
 
-- Points should follow the straight line. Bottom left one way off, so
-normality questionable here: outlier.
+-   Points should follow the straight line. Bottom left one way off, so
+    normality questionable here: outlier.
 
 ## What to do instead?
 
-
-- Matched pairs $t$-test based on one sample of differences
-- the differences not normal (enough)
-- so do *sign test* on differences, null median 0:
-
+-   Matched pairs $t$-test based on one sample of differences
+-   the differences not normal (enough)
+-   so do *sign test* on differences, null median 0:
 
 ```{r inference-4b-R-7}
 sign_test(pain, diff, 0)
 ```
 
+## Did we need to worry about that outlier?
+
+Bootstrap sampling distribution of sample mean differences:
+
+```{r}
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) %>% 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
+```
+
+Yes we did; this is clearly skewed left and not normal.
 
 ## Comments
 
-- no evidence of any difference between drugs (P-value 0.1460)
-- in $t$-test, the low outlier difference pulled mean difference downward and made it look more negative than it should have been
-- therefore, there really isn't any difference between the drugs.
-
-
+-   no evidence of any difference between drugs (P-value 0.1460)
+-   in $t$-test, the low outlier difference pulled mean difference
+    downward and made it look more negative than it should have been
+-   therefore, there really isn't any difference between the drugs.
