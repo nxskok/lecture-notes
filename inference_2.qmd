@@ -1,5 +1,8 @@
 ---
 title: "Statistical Inference: Power"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Packages
@@ -13,25 +16,12 @@ library(tidyverse)
 
 What can happen:
 
-|                | Decision          |                 |     |
-|:---------------|:------------------|:----------------|:----|
-| **Truth**      | **Do not reject** | **Reject null** |     |
-| **Null true**  | Correct           | Type I error    |     |
-| **Null false** | Type II error     | Correct         |     |
+|                | Decision          |                 |
+|:---------------|:------------------|:----------------|
+| **Truth**      | **Do not reject** | **Reject null** |
+| **Null true**  | Correct           | Type I error    |
+| **Null false** | Type II error     | Correct         |
 
-```{=tex}
-\begin{center}
-\begin{tabular}{|l|cc|}
-\hline
-  & \multicolumn{2}{c|}{Decision}\\
-Truth & Do not reject & Reject null\\
-\hline
-Null true & Correct & Type I error\\
-Null false & Type II error & Correct\\
-\hline
-\end{tabular}  
-\end{center}
-```
 Tension between truth and decision about truth (imperfect).
 
 -   Prob. of type I error denoted $\alpha$. Usually fix $\alpha$, eg.
@@ -43,7 +33,7 @@ Tension between truth and decision about truth (imperfect).
 
 ## Power
 
--   Suppose $H_0 : \theta = 10$, $H a : \theta \ne 10$ for some
+-   Suppose $H_0 : \theta = 10$, $H_a : \theta \ne 10$ for some
     parameter $\theta$.
 -   Suppose $H_0$ wrong. What does that say about $\theta$?
 -   Not much. Could have $\theta = 11$ or $\theta = 8$ or
@@ -94,7 +84,7 @@ set.seed(457299)
 ```
 
 ```{r}
-x  <-  rnorm(15, 8, 4)
+x <- rnorm(15, 8, 4)
 x
 ```
 
@@ -111,7 +101,9 @@ t.test(x, mu = 10)
 ## or get just P-value
 
 ```{r}
-t.test(x, mu = 10)$p.value
+ans <- t.test(x, mu = 10)
+str(ans)
+ans$p.value
 ```
 
 ## Run this lots of times
@@ -141,6 +133,15 @@ tibble(sim = 1:1000) %>%
 We correctly rejected 422 times out of 1000, so the estimated power is
 0.422.
 
+```{r inference-2-R-6}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(rnorm(30, 8, 4))) %>% 
+  mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
+  mutate(p_val = t_test$p.value) %>% 
+  count(p_val <= 0.05)
+```
+
 ## Calculating power
 
 -   Simulation approach very flexible: will work for any test. But
@@ -150,28 +151,17 @@ We correctly rejected 422 times out of 1000, so the estimated power is
 -   `power.t.test`. Input `delta` is difference between null and true
     mean:
 
-\small
-
 ```{r inference-2-R-7}
 power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
 ```
 
-\normalsize
-
 ## Comparison of results
 
-```{=tex}
-\begin{center}
-  \begin{tabular}{lr}
-    Method & Power\\
-    \hline
-    Simulation & 0.422\\
-    \texttt{power.t.test} & 0.4378\\
-    \hline
-  \end{tabular}
-    
-  \end{center}
-```
+| Method             | Power  |
+|:-------------------|:-------|
+| Simulation         | 0.422  |
+| **`power.t.test`** | 0.4378 |
+
 -   Simulation power is similar to calculated power; to get more
     accurate value, repeat more times (eg. 10,000 instead of 1,000),
     which takes longer.
@@ -188,6 +178,8 @@ power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
     certain power.
 -   The simulation approach does not work naturally with this, since you
     have to supply a sample size.
+    -   For that, you try different sample sizes until you get power
+        close to what you want.
 -   For the power-calculation method, you supply a value for the power,
     but leave the sample size missing.
 -   Re-use the same problem: $H_0 : \mu = 10$ against 2-sided
@@ -200,6 +192,12 @@ power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
 
 ```{r inference-2-R-8}
 power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
+```
+
+one-sided test?
+
+```{r}
+power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one.sided")
 ```
 
 -   Sample size must be a whole number, so round up to 34 (to get at
@@ -231,7 +229,8 @@ ns
 -   Calculate powers:
 
 ```{r inference-2-R-10}
-ans <- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
+ans<- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
+ans
 ans$power
 ```
 

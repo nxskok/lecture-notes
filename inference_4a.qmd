@@ -2,15 +2,15 @@
 title: "Normal quantile plots"
 ---
 
-
 ## The normal quantile plot
 
-- see that normal distributions of data (or being normal enough) important
-- only tools we have to assess this are histograms and maybe boxplots
-- a better tool is **normal quantile plot**:
-  - plot data against what you expect if data actually normal
-  - look for points to follow a straight line, at least approx
-- `ggplot` code: `aes` `sample`; geoms `stat_qq` and `stat_qq_line` 
+-   see that normal distributions of data (or being normal enough)
+    important
+-   only tools we have to assess this are histograms and maybe boxplots
+-   a better tool is **normal quantile plot**:
+    -   plot data against what you expect if data actually normal
+    -   look for points to follow a straight line, at least approx
+-   `ggplot` code: `aes` `sample`; geoms `stat_qq` and `stat_qq_line`
 
 ## Packages
 
@@ -20,7 +20,6 @@ The usual:
 library(tidyverse)
 ```
 
-  
 ## Kids learning to read
 
 ```{r inference-4a-R-1, echo=FALSE, message=FALSE}
@@ -28,10 +27,10 @@ my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 
-
 ```{r inference-4a-R-2}
 ggplot(kids, aes(x = group, y = score)) + geom_boxplot()
 ```
+
 Each group looks normal, or at least symmetric.
 
 ## Get the groups separately
@@ -54,6 +53,7 @@ control %>% count(group)
 ggplot(treatment, aes(sample = score)) + 
   stat_qq() + stat_qq_line()
 ```
+
 only problem here is lowest value a little too low (mild outlier).
 
 ## Control group
@@ -63,7 +63,8 @@ ggplot(control, aes(sample = score)) +
   stat_qq() + stat_qq_line()
 ```
 
-This time, highest value a little too high, but again, no real problem with normality.
+This time, highest value a little too high, but again, no real problem
+with normality.
 
 ## Facetting more than one sample
 
@@ -74,13 +75,11 @@ ggplot(kids, aes(sample = score)) +
   stat_qq() + stat_qq_line() + facet_wrap(~group)
 ```
 
-
 ## Blue Jays attendances, skewed to right
 
 ```{r inference-4a-R-8, echo=FALSE, message=FALSE}
 jays <- read_csv("jays15-home.csv")
 ```
-
 
 ```{r inference-4a-R-9}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
@@ -93,27 +92,27 @@ ggplot(jays, aes(sample = attendance)) +
   stat_qq() + stat_qq_line()
 ```
 
-   
-- Attendances at low end too bunched up: skewed to right. 
-- Right-skewness can also show up as highest values being too high, or as a curved pattern in the points.
+-   Attendances at low end too bunched up: skewed to right.
+-   Right-skewness can also show up as highest values being too high, or
+    as a curved pattern in the points.
 
 ## More normal quantile plots
-- How straight does a normal quantile plot have to be?
-- There is randomness in real data, so even a normal quantile plot from
-normal data won’t look perfectly straight.
-- With a small sample, can look not very straight even from normal
-data.
-- Looking for systematic departure from a straight line; random wiggles
-ought not to concern us.
-- Look at some examples where we know the answer, so that we can
-see what to expect.
+
+-   How straight does a normal quantile plot have to be?
+-   There is randomness in real data, so even a normal quantile plot
+    from normal data won't look perfectly straight.
+-   With a small sample, can look not very straight even from normal
+    data.
+-   Looking for systematic departure from a straight line; random
+    wiggles ought not to concern us.
+-   Look at some examples where we know the answer, so that we can see
+    what to expect.
 
 ## Normal data, large sample
 
 ```{r set-seed, echo=F}
 set.seed(457299)
 ```
-
 
 ```{r inference-4a-R-11, fig.height=4.5}
 d <- tibble(x=rnorm(200))
@@ -132,20 +131,17 @@ ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 set.seed(457299)
 ```
 
-- Not so convincingly normal, but not obviously skewed:
-
+-   Not so convincingly normal, but not obviously skewed:
 
 ```{r normal-small, fig.height=4.5}
 d <- tibble(x=rnorm(20))
 ggplot(d, aes(x=x)) + geom_histogram(bins=5)
 ```
 
-
 ## The normal quantile plot
 
-Good, apart from the highest and lowest points being slightly off. I’d call
-this good:
-
+Good, apart from the highest and lowest points being slightly off. I'd
+call this good:
 
 ```{r inference-4a-R-14, fig.height=4.5}
 ggplot(d, aes(sample=x)) + stat_qq() + stat_qq_line()
@@ -160,8 +156,6 @@ d <- tibble(x=rchisq(100, 10))
 ggplot(d,aes(x=x)) + geom_histogram(bins=10)
 ```
 
-
-
 ## The normal quantile plot
 
 Somewhat opening-up curve:
@@ -169,7 +163,6 @@ Somewhat opening-up curve:
 ```{r inference-4a-R-16, fig.height=4.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
-
 
 ## Chi-squared data, df = 3
 
@@ -180,8 +173,6 @@ d <- tibble(x=rchisq(100, 3))
 ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 ```
 
-
-
 ## The normal quantile plot
 
 Clear upward-opening curve:
@@ -189,8 +180,6 @@ Clear upward-opening curve:
 ```{r inference-4a-R-17, fig.height=4.5}
 ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 ```
-
-
 
 ## t-distributed data, df = 3
 
@@ -200,8 +189,6 @@ Long tails (or a very sharp peak):
 d <- tibble(x=rt(300, 3))
 ggplot(d, aes(x=x)) + geom_histogram(bins=15)
 ```
-
-
 
 ## The normal quantile plot
 
@@ -215,30 +202,17 @@ ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
 
 On a normal quantile plot:
 
-- points following line (with some small wiggles): normal.
-- kind of deviation from a straight line indicates kind of nonnormality:
-  - a few highest point(s) too high and/or lowest too low: outliers
-  - else see how points at each end off the line:
-  
-  \vspace{2ex}
-  
-  \begin{center}
-  
-  \begin{tabular}{lcc}
-  \hline
-  & \multicolumn{2}{c}{High points}\\
-  Low points & Too low & too high\\
-  \hline
-  Too low & Skewed left & Long tails\\
-  Too high & Short tails & Skewed right \\
-  \hline
-  
-  \end{tabular}
-  
-  \end{center}
-  
-  \vspace{2ex}
-  
-- short-tailed distribution OK for $t$ (mean still good), but others problematic (depending on sample size).  
+-   points following line (with some small wiggles): normal.
+-   kind of deviation from a straight line indicates kind of
+    nonnormality:
+    -   a few highest point(s) too high and/or lowest too low: outliers
+    -   else see how points at each end off the line:
 
+|                | High points |              |
+|----------------|-------------|--------------|
+| **Low points** | **Too low** | **Too high** |
+| **Too low**    | Skewed left | Long tails   |
+| **Too high**   | Short tails | Skewed right |
 
+-   short-tailed distribution OK for $t$ (mean still good), but others
+    problematic (depending on sample size).
