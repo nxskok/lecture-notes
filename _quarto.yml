@@ -1,5 +1,22 @@
 project:
   title: "lecture-notes"
+  render:
+    - outline*.qmd
+    - running.qmd
+    - readfile.qmd
+    - graphs.qmd
+    - numsum.qmd
+# - choosing.qmd
+    - inference*.qmd
+    - reports.qmd
+    - tidy*.qmd
+    - wider_wrong.qmd
+    - windmill.qmd
+    - asphalt.qmd
+    - with_categ.qmd
+    - functions.qmd
+    - dates_and_times.qmd
+    - dip.qmd
 format: 
   revealjs:
      df-print: paged
@@ -13,5 +30,4 @@ execute:
 editor: 
   markdown: 
     wrap: 72
-
-
+ 

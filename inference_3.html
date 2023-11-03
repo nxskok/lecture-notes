@@ -2557,8 +2557,8 @@ mean in group 1 mean in group 2
 </div>
 </div>
 </section>
-<section id="hypothesis-test" class="slide level2">
-<h2>Hypothesis test</h2>
+<section id="too-highhypothesis-test" class="slide level2">
+<h2>Too highHypothesis test</h2>
 <p>Null is that difference in means is zero:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">t.test</span>(y <span class="sc">~</span> group, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">data =</span> twogroups)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2592,9 +2592,9 @@ mean in group 1 mean in group 2
 <p>Not just coincidence. Let <span class="math inline">\(C = 100(1 - \alpha)\)</span>, so C% gives corresponding CI to level-<span class="math inline">\(\alpha\)</span> test. Then following always true. (Symbol <span class="math inline">\(\iff\)</span> means “if and only if”.)</p>
 <table>
 <colgroup>
-<col style="width: 41%">
-<col style="width: 17%">
-<col style="width: 41%">
+<col style="width: 37%">
+<col style="width: 25%">
+<col style="width: 37%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -2637,7 +2637,7 @@ mean in group 1 mean in group 2
 <li>The IRS (“Internal Revenue Service”) is the US authority that deals with taxes (like Revenue Canada).</li>
 <li>One of their forms is supposed to take no more than 160 minutes to complete. A citizen’s organization claims that it takes people longer than that on average.</li>
 <li>Sample of 30 people; time to complete form recorded.</li>
-<li>Read in data, and do <span class="math inline">\(t\)</span>-test of <span class="math inline">\(H_0 : \mu = 160\)</span> vs. <span class="math inline">\(H_a : \mu &gt; 160\)</span>.</li>
+<li>Read in data, and do <span class="math inline">\(t\)</span>-test of <span class="math inline">\(H_0 : \mu = 160\)</span> vs. <span class="math inline">\(H_a : \mu &gt; 160\)</span>.</li>
 <li>For reading in, there is only one column, so can pretend it is delimited by anything.</li>
 </ul>
 </section>
@@ -2964,7 +2964,7 @@ $p_values
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>try <span class="ot">&lt;-</span> (lo <span class="sc">+</span> hi) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>try </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-2"><a href="#cb34-2"></a>try</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 210</code></pre>
 </div>
@@ -2980,8 +2980,9 @@ $p_values
 <section id="bisection-continued" class="slide level2">
 <h2>… bisection continued</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>lo <span class="ot">=</span> try</span>
-<span id="cb38-2"><a href="#cb38-2"></a>(<span class="at">try =</span> (lo <span class="sc">+</span> hi) <span class="sc">/</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>lo <span class="ot">&lt;-</span> try</span>
+<span id="cb38-2"><a href="#cb38-2"></a>try <span class="ot">&lt;-</span> (lo <span class="sc">+</span> hi) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>try</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 215</code></pre>
 </div>

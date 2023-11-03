@@ -2529,7 +2529,8 @@ window.onload = function() {
 </div>
 <p>or to get mean and SD of BMI:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m=</span><span class="fu">mean</span>(BMI),<span class="at">s=</span><span class="fu">sd</span>(BMI))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(BMI), <span class="at">s =</span> <span class="fu">sd</span>(BMI)) <span class="ot">-&gt;</span> d</span>
+<span id="cb3-2"><a href="#cb3-2"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2539,6 +2540,13 @@ window.onload = function() {
 </div>
 </div>
 </div>
+<p>This doesn’t work:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">mean</span>(BMI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in eval(expr, envir, enclos): object &#39;BMI&#39; not found</code></pre>
+</div>
+</div>
 </section>
 <section id="quartiles" class="slide level2">
 <h2>Quartiles</h2>
@@ -2546,8 +2554,8 @@ window.onload = function() {
 <li><code>quantile</code> calculates percentiles (“fractiles”), so we want the 25th and 75th percentiles:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>( <span class="at">Q1=</span><span class="fu">quantile</span>(Wt, <span class="fl">0.25</span>),</span>
-<span id="cb4-2"><a href="#cb4-2"></a>                        <span class="at">Q3=</span><span class="fu">quantile</span>(Wt, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>( <span class="at">Q1=</span><span class="fu">quantile</span>(Wt, <span class="fl">0.25</span>),</span>
+<span id="cb6-2"><a href="#cb6-2"></a>                        <span class="at">Q3=</span><span class="fu">quantile</span>(Wt, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2566,9 +2574,10 @@ window.onload = function() {
 <li>Create new column and summarize that:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">wt_lb=</span>Wt<span class="sc">*</span><span class="fl">2.2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">summarize</span>(<span class="at">Q1_lb=</span><span class="fu">quantile</span>(wt_lb, <span class="fl">0.25</span>),</span>
-<span id="cb5-3"><a href="#cb5-3"></a>            <span class="at">Q3_lb=</span><span class="fu">quantile</span>(wt_lb, <span class="fl">0.75</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">wt_lb=</span>Wt<span class="sc">*</span><span class="fl">2.2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">summarize</span>(<span class="at">Q1_lb=</span><span class="fu">quantile</span>(wt_lb, <span class="fl">0.25</span>),</span>
+<span id="cb7-3"><a href="#cb7-3"></a>            <span class="at">Q3_lb=</span><span class="fu">quantile</span>(wt_lb, <span class="fl">0.75</span>)) <span class="ot">-&gt;</span> dd</span>
+<span id="cb7-4"><a href="#cb7-4"></a>dd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2583,12 +2592,12 @@ window.onload = function() {
 <h2>Counting how many</h2>
 <p>for example, number of athletes in each sport:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">count</span>(Sport)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">count</span>(Sport)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Sport"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"BBall","2":"25"},{"1":"Field","2":"19"},{"1":"Gym","2":"4"},{"1":"Netball","2":"23"},{"1":"Row","2":"37"},{"1":"Swim","2":"22"},{"1":"T400m","2":"29"},{"1":"TSprnt","2":"15"},{"1":"Tennis","2":"11"},{"1":"WPolo","2":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Sport"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"BBall","2":"25"},{"1":"Field","2":"19"},{"1":"Gym","2":"4"},{"1":"Netball","2":"23"},{"1":"Row","2":"37"},{"1":"Swim","2":"22"},{"1":"T400m","2":"29"},{"1":"Tennis","2":"11"},{"1":"TSprnt","2":"15"},{"1":"WPolo","2":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -2598,13 +2607,13 @@ window.onload = function() {
 <h2>Counting how many, variation 2:</h2>
 <p>Another way (which will make sense in a moment):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sport) <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">summarize</span>(<span class="at">count=</span><span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sport) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">summarize</span>(<span class="at">count=</span><span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Sport"],"name":[1],"type":["chr"],"align":["left"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"BBall","2":"25"},{"1":"Field","2":"19"},{"1":"Gym","2":"4"},{"1":"Netball","2":"23"},{"1":"Row","2":"37"},{"1":"Swim","2":"22"},{"1":"T400m","2":"29"},{"1":"TSprnt","2":"15"},{"1":"Tennis","2":"11"},{"1":"WPolo","2":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Sport"],"name":[1],"type":["chr"],"align":["left"]},{"label":["count"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"BBall","2":"25"},{"1":"Field","2":"19"},{"1":"Gym","2":"4"},{"1":"Netball","2":"23"},{"1":"Row","2":"37"},{"1":"Swim","2":"22"},{"1":"T400m","2":"29"},{"1":"Tennis","2":"11"},{"1":"TSprnt","2":"15"},{"1":"WPolo","2":"17"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -2616,8 +2625,8 @@ window.onload = function() {
 <li>Might want separate summaries for each “group”, eg. mean and SD of height for males and females. Strategy is <code>group_by</code> (to define the groups) and then <code>summarize</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">summarize</span>(<span class="at">mean_Ht =</span> <span class="fu">mean</span>(Ht), <span class="at">sd_Ht =</span> <span class="fu">sd</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">summarize</span>(<span class="at">mean_Ht =</span> <span class="fu">mean</span>(Ht), <span class="at">sd_Ht =</span> <span class="fu">sd</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2634,8 +2643,8 @@ window.onload = function() {
 <li>If you want number of observations per group plus some stats, you need to go the <code>n()</code> way:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_Ht =</span> <span class="fu">mean</span>(Ht), <span class="at">sd_Ht =</span> <span class="fu">sd</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean_Ht =</span> <span class="fu">mean</span>(Ht), <span class="at">sd_Ht =</span> <span class="fu">sd</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2655,7 +2664,7 @@ window.onload = function() {
 <li>Standard deviation of each (numeric) column:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), \(x) <span class="fu">sd</span>(x))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), \(x) <span class="fu">sd</span>(x))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2669,9 +2678,9 @@ window.onload = function() {
 <li>Median and IQR of all columns whose name starts with H:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;H&quot;</span>),</span>
-<span id="cb11-2"><a href="#cb11-2"></a>                       <span class="fu">list</span>(<span class="at">med =</span> \(x) <span class="fu">median</span>(x), </span>
-<span id="cb11-3"><a href="#cb11-3"></a>                            <span class="at">iqr =</span> \(x) <span class="fu">IQR</span>(x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>athletes <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;H&quot;</span>),</span>
+<span id="cb13-2"><a href="#cb13-2"></a>                       <span class="fu">list</span>(<span class="at">med =</span> \(x) <span class="fu">median</span>(x), </span>
+<span id="cb13-3"><a href="#cb13-3"></a>                            <span class="at">iqr =</span> \(x) <span class="fu">IQR</span>(x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -2685,11 +2694,11 @@ window.onload = function() {
 <section id="same-thing-by-group" class="slide level2">
 <h2>Same thing by group</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>athletes <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;H&quot;</span>), </span>
-<span id="cb12-4"><a href="#cb12-4"></a>                   <span class="fu">list</span>(<span class="at">med =</span> \(h) <span class="fu">median</span>(h), </span>
-<span id="cb12-5"><a href="#cb12-5"></a>                        <span class="at">iqr =</span> \(h) <span class="fu">IQR</span>(h))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>athletes <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">summarize</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&quot;H&quot;</span>), </span>
+<span id="cb14-4"><a href="#cb14-4"></a>                   <span class="fu">list</span>(<span class="at">med =</span> \(h) <span class="fu">median</span>(h), </span>
+<span id="cb14-5"><a href="#cb14-5"></a>                        <span class="at">iqr =</span> \(h) <span class="fu">IQR</span>(h))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
