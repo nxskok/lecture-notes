@@ -1,13 +1,17 @@
 ---
 title: "Tidying data"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Tidying data {.scrollable}
-- Data rarely come to us as we want to use them.
-- Before we can do analysis, typically have organizing to do.
-- This is typical of ANOVA-type data, “wide format”:
 
-```
+-   Data rarely come to us as we want to use them.
+-   Before we can do analysis, typically have organizing to do.
+-   This is typical of ANOVA-type data, "wide format":
+
+```         
      pig feed1 feed2 feed3 feed4
        1  60.8  68.7  92.6  87.9
        2  57.0  67.7  92.1  84.2
@@ -16,33 +20,32 @@ title: "Tidying data"
        5  61.7  69.8  99.1  90.3
 ```
 
-- 20 pigs randomly allocated to one of four feeds. At end of 
-study, weight of each pig is recorded. 
-- Are any differences in mean weights among the feeds?
-- Problem: want all weights in one column, with 2nd column
-labelling which feed. Untidy!
-
+-   20 pigs randomly allocated to one of four feeds. At end of study,
+    weight of each pig is recorded.
+-   Are any differences in mean weights among the feeds?
+-   Problem: want all weights in one column, with 2nd column labelling
+    which feed. Untidy!
 
 ## Tidy and untidy data (Wickham) {.scrollable}
-- Data set easier to deal with if:
-  - each observation is one row
-  - each variable is one column
-  - each type of observation unit is one table
-- Data arranged this way called “tidy”; otherwise called “untidy”.
-- For the pig data:
-  - response variable is weight, but scattered over 4
-columns, which are levels of a factor `feed`.
-  - Want all the weights in one column, with a second column `feed`
-saying which feed that weight goes with.
-  - Then we can run `aov`.
-  
+
+-   Data set easier to deal with if:
+    -   each observation is one row
+    -   each variable is one column
+    -   each type of observation unit is one table
+-   Data arranged this way called "tidy"; otherwise called "untidy".
+-   For the pig data:
+    -   response variable is weight, but scattered over 4 columns, which
+        are levels of a factor `feed`.
+    -   Want all the weights in one column, with a second column `feed`
+        saying which feed that weight goes with.
+    -   Then we can run `aov`.
+
 ## Packages for this section
 
 ```{r tidying-R-1}
 library(tidyverse)
 ```
 
-  
 ## Reading in the pig data
 
 ```{r tidying-R-2, message=F}
@@ -53,46 +56,64 @@ pigs1
 
 ## Making it longer
 
-- We wanted all the weights in one column, labelled by which feed they went with.
-- This is a very common reorganization, and the magic “verb” is
-`pivot_longer`:
+-   We wanted all the weights in one column, labelled by which feed they
+    went with.
+-   This is a very common reorganization, and the magic "verb" is
+    `pivot_longer`:
+
 ```{r tidying-R-3}
 pigs1 %>% pivot_longer(feed1:feed4, names_to="feed", 
                        values_to="weight") -> pigs2
 pigs2
 ```
 
+## Alternatives
+
+Any way of choosing the columns to pivot longer is good, eg:
+
+```{r}
+pigs1 %>% pivot_longer(-pig, names_to="feed", 
+                       values_to="weight") 
+```
+
+or
+
+```{r}
+pigs1 %>% pivot_longer(starts_with("feed"), names_to="feed", 
+                       values_to="weight") 
+```
+
 ## Comments
 
-- `pigs2` now in “long” format, ready for analysis. 
-- Anatomy of `pivot_longer`: 
-    - columns to combine
-    - a name for column that will contain groups ("names")
-    - a name for column that will contain measurements ("values")
-
+-   `pigs2` now in "long" format, ready for analysis.
+-   Anatomy of `pivot_longer`:
+    -   columns to combine
+    -   a name for column that will contain groups ("names")
+    -   a name for column that will contain measurements ("values")
 
 ## Identifying the pigs
 
-- Values in `pig` identify pigs *within each group*: pig 1 is four different pigs!
-- Create unique pig IDs by gluing pig number onto feed:
+-   Values in `pig` identify pigs *within each group*: pig 1 is four
+    different pigs!
+-   Create unique pig IDs by gluing pig number onto feed:
 
 ```{r tidying-R-6}
 pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) -> pigs2
-pigs2 %>% slice_sample(n=7)
+pigs2
 ```
 
-
 ## ...and finally, the analysis
-- which is just what we saw before:
+
+-   which is just what we saw before:
 
 ```{r tidying-R-7}
 weight.1 <- aov(weight ~ feed, data = pigs2)
 summary(weight.1)
 ```
 
-- The mean weights of pigs on the different feeds are definitely not all
-equal.
-- So we run Tukey to see which ones differ (over).
+-   The mean weights of pigs on the different feeds are definitely not
+    all equal.
+-   So we run Tukey to see which ones differ (over).
 
 ## Tukey
 
@@ -100,12 +121,12 @@ equal.
 TukeyHSD(weight.1)
 ```
 
-All of the feeds differ! 
+All of the feeds differ!
 
-## Mean weights by feed 
+## Mean weights by feed
 
-To find the best and worst, get mean weight by 
-feed group. I borrowed an idea from earlier to put the means in descending order:
+To find the best and worst, get mean weight by feed group. I borrowed an
+idea from earlier to put the means in descending order:
 
 ```{r tidying-R-9}
 pigs2 %>%
@@ -118,39 +139,33 @@ Feed 3 is best, feed 1 worst.
 
 ## Should we have any concerns about the ANOVA?
 
-
 ```{r pigfeedplot}
 ggplot(pigs2, aes(x = feed, y = weight)) + geom_boxplot()
 ```
 
 ## Comments
 
-- Feed 2 has an outlier
-- But there are only 5 pigs in each group
-- The
-conclusion is so clear that I am OK with this.
-
+-   Feed 2 has an outlier
+-   But there are only 5 pigs in each group
+-   The conclusion is so clear that I am OK with this.
 
 ## Tuberculosis
 
-- The World Health Organization keeps track of number of cases of
-various diseases, eg. tuberculosis.
-- Some data:
+-   The World Health Organization keeps track of number of cases of
+    various diseases, eg. tuberculosis.
+-   Some data:
 
 ```{r tidying-R-10}
 my_url <- "http://ritsokiguess.site/datafiles/tb.csv"
 tb <- read_csv(my_url)
 ```
 
-
 ## The data (randomly chosen rows)
-
 
 ```{r}
 #| echo: false
 options(width = 72)
 ```
-
 
 ```{r tidying-R-11}
 tb %>% slice_sample(n = 10)
@@ -162,15 +177,14 @@ Many rows:
 nrow(tb)
 ```
 
-
 ## What we have
 
-- Variables:  country (abbreviated), year. Then number of
-cases for each gender and age group, eg. `m1524` is males aged 15–24.
-Also `mu` and `fu`, where age is unknown.
-- Lots of missings. Want to get rid of.
-- Abbreviations [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
-
+-   Variables: country (abbreviated), year. Then number of cases for
+    each gender and age group, eg. `m1524` is males aged 15--24. Also
+    `mu` and `fu`, where age is unknown.
+-   Lots of missings. Want to get rid of.
+-   Abbreviations
+    [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 
 ```{r tidying-R-13}
 tb %>% 
@@ -178,11 +192,11 @@ tb %>%
                values_to = "freq", values_drop_na = TRUE) -> tb2
 ```
 
-- Code for `pivot_longer`:
-  - columns to make longer
-  - column to contain the names (categorical)
-  - column to contain the values (quantitative)
-  - drop missings in the values
+-   Code for `pivot_longer`:
+    -   columns to make longer
+    -   column to contain the names (categorical)
+    -   column to contain the values (quantitative)
+    -   drop missings in the values
 
 ## Results (some)
 
@@ -191,13 +205,14 @@ tb2
 ```
 
 ## Separating
-- 4 columns, but 5 variables, since `genage` contains both gender and
-age group. Split that up using separate.
-- `separate` needs 3 things:
-  - what to separate (no quotes needed),
-  - what to separate into (here you do need quotes),
-  - how to split.
-- For “how to split”, here “after first character”:
+
+-   4 columns, but 5 variables, since `genage` contains both gender and
+    age group. Split that up using separate.
+-   `separate` needs 3 things:
+    -   what to separate (no quotes needed),
+    -   what to separate into (here you do need quotes),
+    -   how to split.
+-   For "how to split", here "after first character":
 
 ```{r tidying-R-15}
 tb2 %>% separate_wider_position(genage, 
@@ -216,12 +231,11 @@ tb3
 write_rds(tb3, "tb3.rds")
 ```
 
+## In practice... {.smaller}
 
-## In practice... {.smaller }
-
-- instead of doing the pipe one step at a time, you *debug* it one step at
-a time, and when you have each step working, you use that step’s
-output as input to the next step, thus:
+-   instead of doing the pipe one step at a time, you *debug* it one
+    step at a time, and when you have each step working, you use that
+    step's output as input to the next step, thus:
 
 ```{r tidying-R-18}
 tb %>%
@@ -232,9 +246,9 @@ tb %>%
                           too_few = "align_start")
 ```
 
-- You can split the R code over as many lines as you like, as long as
-each line is incomplete, so that R knows more is to come.
-- I like to put the pipe symbol on the end of the line.
+-   You can split the R code over as many lines as you like, as long as
+    each line is incomplete, so that R knows more is to come.
+-   I like to put the pipe symbol on the end of the line.
 
 ## Total tuberculosis cases by year (some of the years)
 
@@ -244,11 +258,11 @@ tb3 %>%
   group_by(year) %>% summarize(total=sum(freq))
 ```
 
-- Something very interesting happened between 1994 and 1995.
+-   Something very interesting happened between 1994 and 1995.
 
 ## To find out what
 
-- try counting up total cases by country:
+-   try counting up total cases by country:
 
 ```{r tidying-R-20}
 tb3 %>% group_by(iso2) %>% 
@@ -268,12 +282,11 @@ tb3 %>% filter(iso2=="CN") %>%
 
 ## First year of recording by country?
 
-- A lot of countries started recording in about 1995, in fact:
+-   A lot of countries started recording in about 1995, in fact:
 
 ```{r tidying-R-22, echo=FALSE}
 options(dplyr.summarise.inform = FALSE)
 ```
-
 
 ```{r tidying-R-23}
 tb3 %>% group_by(iso2) %>% 
@@ -281,7 +294,8 @@ tb3 %>% group_by(iso2) %>%
   count(first_year)
 ```
 
-- So the reason for the big jump in cases is that so many countries started recording then, not that there really were more cases.
+-   So the reason for the big jump in cases is that so many countries
+    started recording then, not that there really were more cases.
 
 ## Some Toronto weather data
 
@@ -294,17 +308,18 @@ weather
 
 ## The columns
 
-- Daily weather records for "Toronto City" weather station in 2018:
+-   Daily weather records for "Toronto City" weather station in 2018:
 
-  - `station`: identifier for this weather station (always same here)
-  - `Year`, `Month`
-  - `element`: whether temperature given was daily max or daily min
-  - `d01`, `d02`,... `d31`: day of the month from 1st to 31st.
+    -   `station`: identifier for this weather station (always same
+        here)
+    -   `Year`, `Month`
+    -   `element`: whether temperature given was daily max or daily min
+    -   `d01`, `d02`,... `d31`: day of the month from 1st to 31st.
 
 ## Off we go
 
-Numbers in data frame all temperatures (for different days of the month),
-so first step is
+Numbers in data frame all temperatures (for different days of the
+month), so first step is
 
 ```{r tidying-R-26}
 weather %>% 
@@ -315,11 +330,11 @@ weather %>%
 
 ## `Element`
 
-- Column `element` contains names of two different variables, that
-should each be in separate column.
-- Distinct from eg. `m1524` in tuberculosis data, that contained levels of
-two different factors, handled by separate.
-- Untangling names of variables handled by `pivot_wider`.
+-   Column `element` contains names of two different variables, that
+    should each be in separate column.
+-   Distinct from eg. `m1524` in tuberculosis data, that contained
+    levels of two different factors, handled by separate.
+-   Untangling names of variables handled by `pivot_wider`.
 
 ## Handling `element`
 
@@ -332,17 +347,15 @@ weather %>%
                 values_from=temperature) 
 ```
 
-
-
 ## Further improvements 1/2
-- We have tidy data now, but can improve things further.
-- `mutate` creates new columns from old (or assign back to change a
-variable).
-- Would like numerical dates. `separate` works, or pull out number as
-below.
-- `select` keeps columns (or drops, with minus). Station name has no
-value to us.
 
+-   We have tidy data now, but can improve things further.
+-   `mutate` creates new columns from old (or assign back to change a
+    variable).
+-   Would like numerical dates. `separate` works, or pull out number as
+    below.
+-   `select` keeps columns (or drops, with minus). Station name has no
+    value to us.
 
 ## Further improvements 2/2
 
@@ -355,11 +368,11 @@ weather %>%
   select(-station)
 ```
 
-
 ## Final step(s)
-- Make year-month-day into proper date.
-- Keep only date, tmax, tmin:
-\small
+
+-   Make year-month-day into proper date.
+-   Keep only date, tmax, tmin:
+
 ```{r tidying-R-32}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
@@ -371,7 +384,6 @@ weather %>%
   mutate(date = as.Date(datestr)) %>%
   select(c(date, tmax, tmin)) -> weather_tidy
 ```
-\normalsize
 
 ## Our tidy data frame
 
@@ -379,46 +391,55 @@ weather %>%
 weather_tidy
 ```
 
-## Plotting the temperatures
-- Plot temperature against date joined by lines, but with separate lines
-for max and min. `ggplot` requires something like
+##  Plotting the temperatures
+
+-   Plot temperature against date joined by lines, but with separate
+    lines for max and min. `ggplot` requires something like
 
 \footnotesize
+
 ```{r tidying-R-34, eval=F}
 ggplot(..., aes(x = date, y = temperature)) + geom_point() + 
   geom_line()
 ```
+
 \normalsize
 
-only we have two temperatures, one a max and one a min, that we
-want to keep separate.
+only we have two temperatures, one a max and one a min, that we want to
+keep separate.
 
-- The trick: combine `tmax` and `tmin` together into one column, keeping
-track of what kind of temp they are. (This actually same format as
-untidy `weather`.) Are making `weather_tidy`
-untidy for purposes of drawing graph only.
-- Then can do something like
+-   The trick: combine `tmax` and `tmin` together into one column,
+    keeping track of what kind of temp they are. (This actually same
+    format as untidy `weather`.) Are making `weather_tidy` untidy for
+    purposes of drawing graph only.
+-   Then can do something like
 
 \footnotesize
+
 ```{r tidying-R-35, eval=F}
 ggplot(d, aes(x = date, y = temperature, colour = maxmin)) 
   + geom_point() + geom_line()
 ```
+
 \normalsize
+
 to distinguish max and min on graph.
 
 ## Setting up plot
-- Since we only need data frame for plot, we can do the
-column-creation and plot in a pipeline.
-- For a `ggplot` in a pipeline, the initial data frame is omitted, because it
-is whatever came out of the previous step.
-- To make those “one column”s: `pivot_longer`. I save the graph to show overleaf:
+
+-   Since we only need data frame for plot, we can do the
+    column-creation and plot in a pipeline.
+-   For a `ggplot` in a pipeline, the initial data frame is omitted,
+    because it is whatever came out of the previous step.
+-   To make those "one column"s: `pivot_longer`. I save the graph to
+    show overleaf:
+
 ```{r tidying-R-36}
 weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%
-  ggplot(aes(x = date, y = temperature, colour = maxmin)) +
-      geom_line() -> g
+  ggplot(aes(x = date, y = temperature, colour = maxmin)) + geom_point() +
+      geom_line() 
 ```
 
 ## The plot
@@ -427,17 +448,14 @@ weather_tidy %>%
 g
 ```
 
-## Summary of tidying “verbs”
+## Summary of tidying "verbs"
 
-  |Verb | Purpose|
-  |:-----|:-------------------------------|
-  |`pivot_longer` |  Combine columns that measure same thing into one |
-    |`pivot_wider`  |  Take column that measures one thing under different conditions and put into multiple columns |
-    |`separate` | Turn a column that encodes several variables into several columns |
-    |`unite` | Combine several (related) variables into one  "combination" variable |
+| Verb           | Purpose                                                                                      |
+|:---------------|:-------------------------------------------------------|
+| `pivot_longer` | Combine columns that measure same thing into one                                             |
+| `pivot_wider`  | Take column that measures one thing under different conditions and put into multiple columns |
+| `separate`     | Turn a column that encodes several variables into several columns                            |
+| `unite`        | Combine several (related) variables into one "combination" variable                          |
 
-  `pivot_longer` and `pivot_wider` are opposites; `separate` and
-  `unite` are opposites.
-  
-
-
+`pivot_longer` and `pivot_wider` are opposites; `separate` and `unite`
+are opposites.

@@ -1,7 +1,9 @@
 ---
 title: "Mood's Median Test"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
 
 ## Packages
 
@@ -10,21 +12,22 @@ library(tidyverse)
 library(smmr)
 ```
 
-
 ## Two-sample test: What to do if normality fails
 
-- If normality fails (for one or both of the groups), what do we do then?
-- Again, can compare medians: use the thought process of the sign test,
-which does not depend on normality and is not damaged by outliers.
-- A suitable test called Mood’s median test.
-- Before we get to that, a diversion.
+-   If normality fails (for one or both of the groups), what do we do
+    then?
+-   Again, can compare medians: use the thought process of the sign
+    test, which does not depend on normality and is not damaged by
+    outliers.
+-   A suitable test called Mood's median test.
+-   Before we get to that, a diversion.
 
 ## The chi-squared test for independence
 
-Suppose we want to know whether people are in favour of having
-daylight savings time all year round. We ask 20 males and 20 females
-whether they each agree with having DST all year round (“yes”) or
-not (“no”). Some randomly chosen data:
+Suppose we want to know whether people are in favour of having daylight
+savings time all year round. We ask 20 males and 20 females whether they
+each agree with having DST all year round ("yes") or not ("no"). Some
+randomly chosen data:
 
 ```{r inference-5-R-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
@@ -36,17 +39,18 @@ dst %>% slice_sample(n = 10)
 
 Count up individuals in each category combination, and arrange in
 contingency table:
+
 ```{r inference-5-R-2}
 tab <- with(dst, table(gender, agree))
 tab
 ```
 
-- Most of the males say “yes”, but the females are about evenly split.
-- Looks like males more likely to say “yes”, ie. an association between
-gender and agreement.
-- Test an $H_0$ of “no association” (“independence”) vs. alternative that
-there is really some association. 
-- Done with `chisq.test`.
+-   Most of the males say "yes", but the females are about evenly split.
+-   Looks like males more likely to say "yes", ie. an association
+    between gender and agreement.
+-   Test an $H_0$ of "no association" ("independence") vs. alternative
+    that there is really some association.
+-   Done with `chisq.test`.
 
 ## ...And finally
 
@@ -54,82 +58,85 @@ there is really some association.
 chisq.test(tab, correct=FALSE)
 ```
 
-- Reject null hypothesis of no association (P-value 0.008)
-- therefore there is a difference in rates of agreement between (all)
-males and females (or that gender and agreement are associated).
-- This calculation gives same answers as you would get by hand. (Omitting `correct = FALSE` uses “Yates correction”.
+-   Reject null hypothesis of no association (P-value 0.008)
+-   therefore there is a difference in rates of agreement between (all)
+    males and females (or that gender and agreement are associated).
+-   This calculation gives same answers as you would get by hand.
+    (Omitting `correct = FALSE` uses "Yates correction".
 
-## Mood’s median test
-- Earlier: compare medians of two groups.
-- Sign test: count number of values above and below something
-(there, hypothesized median).
-- Mood’s median test:
-  - Find "grand median" of all the data, regardless of group
-  - Count data values in each group above/below grand
-median.
-  - Make contingency table of group vs. above/below.
-  - Test for association.
-- If group medians equal, each group should have about half its
-observations above/below grand median. If not, one group will be
-mostly above grand median and other below.
+## Mood's median test
 
-## Mood’s median test for reading data
+-   Earlier: compare medians of two groups.
+-   Sign test: count number of values above and below something (there,
+    hypothesized median).
+-   Mood's median test:
+    -   Find "grand median" of all the data, regardless of group
+    -   Count data values in each group above/below grand median.
+    -   Make contingency table of group vs. above/below.
+    -   Test for association.
+-   If group medians equal, each group should have about half its
+    observations above/below grand median. If not, one group will be
+    mostly above grand median and other below.
+
+## Mood's median test for reading data
 
 ```{r inference-5-R-4, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
 ```
 
+-   Find overall median score:
 
-- Find overall median score: 
 ```{r inference-5-R-5}
 kids %>% summarize(med=median(score)) %>% pull(med) -> m
 m
 ```
 
-- Make table of above/below vs. group:
+-   Make table of above/below vs. group:
+
 ```{r inference-5-R-6}
 tab <- with(kids, table(group, score > m))
 tab
 ```
 
-
-- Treatment group scores mostly above median, control group scores
-mostly below, as expected.
+-   Treatment group scores mostly above median, control group scores
+    mostly below, as expected.
 
 ## The test
-- Do chi-squared test:
+
+-   Do chi-squared test:
+
 ```{r inference-5-R-7}
-chisq.test(tab,correct=F)
+chisq.test(tab, correct=F)
 ```
 
-
-- This test actually two-sided (tests for any association). 
-- Here want to test that new reading method *better* (one-sided).
-- Most of treatment children above overall median, so
-do 1-sided test by halving P-value to get 0.017. 
-- This way too, children do better at learning to read using the new
-method.
+-   This test actually two-sided (tests for any association).
+-   Here want to test that new reading method *better* (one-sided).
+-   Most of treatment children above overall median, so do 1-sided test
+    by halving P-value to get 0.017.
+-   This way too, children do better at learning to read using the new
+    method.
 
 ## Or by smmr
-- `median_test` does the whole thing:
+
+-   `median_test` does the whole thing:
 
 ```{r inference-5-R-8}
 median_test(kids,score,group)
 ```
 
-- P-value again two-sided.
+-   P-value again two-sided.
 
 ## Comments
-- P-value 0.013 for (1-sided) t-test, 0.017 for (1-sided) Mood median
-test.
-- Like the sign test, Mood’s median test doesn’t use the data very
-efficiently (only, is each value above or below grand median).
-- Thus, if we can justify doing *t*-test, we should do it. This is the case
-here.
-- The *t*-test will usually give smaller P-value because it uses the data
-more efficiently.
-- The time to use Mood’s median test is if we are definitely unhappy
-with the normality assumption (and thus the t-test P-value is not to
-be trusted).
 
+-   P-value 0.013 for (1-sided) t-test, 0.017 for (1-sided) Mood median
+    test.
+-   Like the sign test, Mood's median test doesn't use the data very
+    efficiently (only, is each value above or below grand median).
+-   Thus, if we can justify doing *t*-test, we should do it. This is the
+    case here.
+-   The *t*-test will usually give smaller P-value because it uses the
+    data more efficiently.
+-   The time to use Mood's median test is if we are definitely unhappy
+    with the normality assumption (and thus the t-test P-value is not to
+    be trusted).
