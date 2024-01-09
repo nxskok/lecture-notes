@@ -391,7 +391,7 @@ weather %>%
 weather_tidy
 ```
 
-##  Plotting the temperatures
+## Plotting the temperatures
 
 -   Plot temperature against date joined by lines, but with separate
     lines for max and min. `ggplot` requires something like
@@ -451,7 +451,7 @@ g
 ## Summary of tidying "verbs"
 
 | Verb           | Purpose                                                                                      |
-|:---------------|:-------------------------------------------------------|
+|:---------------|:---------------------------------------------------------------------------------------------|
 | `pivot_longer` | Combine columns that measure same thing into one                                             |
 | `pivot_wider`  | Take column that measures one thing under different conditions and put into multiple columns |
 | `separate`     | Turn a column that encodes several variables into several columns                            |

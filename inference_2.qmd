@@ -133,7 +133,9 @@ tibble(sim = 1:1000) %>%
 We correctly rejected 422 times out of 1000, so the estimated power is
 0.422.
 
-```{r inference-2-R-6}
+## Try again with bigger sample
+
+```{r inference-2-R-6a}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(my_sample = list(rnorm(30, 8, 4))) %>% 
