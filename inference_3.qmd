@@ -70,7 +70,7 @@ corresponding CI to level-$\alpha$ test. Then following always true.
 (Symbol $\iff$ means "if and only if".)
 
 | Test decision                         |        | Confidence interval                   |
-|:--------------------------|:----------------:|:--------------------------|
+|:----------------------------|:-------------:|:----------------------------|
 | Reject $H_0$ at level $\alpha$        | $\iff$ | $C\%$ CI does not contain $H_0$ value |
 | Do not reject $H_0$ at level $\alpha$ | $\iff$ | $C\%$ CI contains $H_0$ value         |
 

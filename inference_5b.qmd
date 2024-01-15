@@ -1,7 +1,9 @@
 ---
 title: "Analysis of variance"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
 
 ## Packages
 
@@ -11,46 +13,40 @@ library(smmr)
 library(PMCMRplus)
 ```
 
-
-
-
 ## Jumping rats
-- Link between exercise and healthy bones (many studies).
-- Exercise stresses bones and causes them to get stronger.
-- Study (Purdue): effect of jumping on bone density of growing rats.
-- 30 rats, randomly assigned to 1 of 3 treatments:
-  - No jumping (control)
-  - Low-jump treatment (30 cm)
-  - High-jump treatment (60 cm)
-- 8 weeks, 10 jumps/day, 5 days/week.
-- Bone density of rats (mg/cm$^3$) measured at end.
+
+-   Link between exercise and healthy bones (many studies).
+-   Exercise stresses bones and causes them to get stronger.
+-   Study (Purdue): effect of jumping on bone density of growing rats.
+-   30 rats, randomly assigned to 1 of 3 treatments:
+    -   No jumping (control)
+    -   Low-jump treatment (30 cm)
+    -   High-jump treatment (60 cm)
+-   8 weeks, 10 jumps/day, 5 days/week.
+-   Bone density of rats (mg/cm$^3$) measured at end.
 
 ## Jumping rats 2/2
 
-- See whether larger amount of exercise (jumping) went with higher
-bone density.
-- Random assignment: rats in each group similar in all important ways.
-- So entitled to draw conclusions about cause and effect.
+-   See whether larger amount of exercise (jumping) went with higher
+    bone density.
+-   Random assignment: rats in each group similar in all important ways.
+-   So entitled to draw conclusions about cause and effect.
 
 ## Reading the data
-Values separated by spaces:
 
-\small
+Values separated by spaces:
 
 ```{r inference-5-R-9}
 my_url <- "http://ritsokiguess.site/datafiles/jumping.txt"
 rats <- read_delim(my_url," ")
 ```
 
-\normalsize
-
 ## The data (some random rows)
 
-\small
 ```{r inference-5-R-10}
-rats %>% slice_sample(n=12)
+rats %>% slice_sample(n=10)
+rats
 ```
-\normalsize
 
 ## Boxplots
 
@@ -66,12 +62,13 @@ ggplot(rats, aes(y=density, x=fct_inorder(group))) +
 ```
 
 ## Analysis of Variance
-- Comparing > 2 groups of independent observations (each rat only
-does one amount of jumping).
-- Standard procedure: analysis of variance (ANOVA).
-- Null hypothesis: all groups have same mean.
-- Alternative: “not all means the same”, at least one is different from
-others.
+
+-   Comparing \> 2 groups of independent observations (each rat only
+    does one amount of jumping).
+-   Standard procedure: analysis of variance (ANOVA).
+-   Null hypothesis: all groups have same mean.
+-   Alternative: "not all means the same", at least one is different
+    from others.
 
 ## Testing: ANOVA in R
 
@@ -80,16 +77,17 @@ rats.aov <- aov(density~group,data=rats)
 summary(rats.aov)
 ```
 
-- Usual ANOVA table, small P-value: significant result.
-- Conclude that the mean bone densities are not all equal.
-- Reject null, but not very useful finding.
+-   Usual ANOVA table, small P-value: significant result.
+-   Conclude that the mean bone densities are not all equal.
+-   Reject null, but not very useful finding.
 
 ## Which groups are different from which?
-- ANOVA really only answers half our questions: it says “there are
-differences”, but doesn’t tell us which groups different.
-- One possibility (not the best): compare all possible pairs of groups,
-via two-sample t.
-- First pick out each group:
+
+-   ANOVA really only answers half our questions: it says "there are
+    differences", but doesn't tell us which groups different.
+-   One possibility (not the best): compare all possible pairs of
+    groups, via two-sample t.
+-   First pick out each group:
 
 ```{r inference-5-R-14}
 rats %>% filter(group=="Control") -> controls
@@ -122,40 +120,38 @@ t.test(lows$density, highs$density)
 These are different too.
 
 ## But...
-- We just did 3 tests instead of 1.
-- So we have given ourselves 3 chances to reject $H_0:$ all means equal,
-instead of 1.
-- Thus $\alpha$ for this combined test is not 0.05.
 
-## John W. Tukey 
+-   We just did 3 tests instead of 1.
+-   So we have given ourselves 3 chances to reject $H_0:$ all means
+    equal, instead of 1.
+-   Thus $\alpha$ for this combined test is not 0.05.
 
-:::: {.columns}
+## John W. Tukey
 
+::: columns
 ::: {.column width="40%"}
-![](John_Tukey.jpg){width=400}
+![](John_Tukey.jpg){width="400"}
 :::
 
 ::: {.column width="60%"}
-
-- American statistician, 1915--2000
-- Big fan of exploratory data analysis
-- Popularized boxplot
-- Invented "honestly significant differences"
-- Invented jackknife estimation
-- Coined computing term "bit"
-- Co-inventor of Fast Fourier Transform
-  
+-   American statistician, 1915--2000
+-   Big fan of exploratory data analysis
+-   Popularized boxplot
+-   Invented "honestly significant differences"
+-   Invented jackknife estimation
+-   Coined computing term "bit"
+-   Co-inventor of Fast Fourier Transform
+:::
 :::
 
-::::
-
 ## Honestly Significant Differences
-- Compare several groups with one test, telling you which groups differ
-from which.
-- Idea: if all population means equal, find distribution of highest sample
-mean minus lowest sample mean.
-- Any means unusually different compared to that declared significantly
-different.
+
+-   Compare several groups with one test, telling you which groups
+    differ from which.
+-   Idea: if all population means equal, find distribution of highest
+    sample mean minus lowest sample mean.
+-   Any means unusually different compared to that declared
+    significantly different.
 
 ## Tukey on rat data
 
@@ -164,25 +160,23 @@ width <- getOption("width")
 options(width = 60)
 ```
 
-
-\small
 ```{r inference-5-R-19}
 rats.aov <- aov(density~group, data = rats)
 TukeyHSD(rats.aov)
 ```
-\normalsize
 
 ```{r inference-5-R-20, echo=F}
 options(width=width)
 ```
 
-- Again conclude that bone density for highjump group significantly higher
-than for other two groups.
+-   Again conclude that bone density for highjump group significantly
+    higher than for other two groups.
 
-## Why Tukey’s procedure better than all t-tests 
+## Why Tukey's procedure better than all t-tests
+
 Look at P-values for the two tests:
 
-```
+```         
 Comparison        Tukey    t-tests
 ----------------------------------
 Highjump-Control 0.0016     0.0021
@@ -190,10 +184,9 @@ Lowjump-Control  0.4744     0.2977
 Lowjump-Highjump 0.0298     0.0045
 ```
 
-  
-- Tukey P-values (mostly) higher.
-- Proper adjustment for doing three t-tests at once, not just one in
-isolation.
+-   Tukey P-values (mostly) higher.
+-   Proper adjustment for doing three t-tests at once, not just one in
+    isolation.
 
 ## Checking assumptions
 
@@ -205,8 +198,8 @@ ggplot(rats,aes(y = density, x = fct_inorder(group)))+
 
 Assumptions:
 
-- Normally distributed data within each group
-- with equal group SDs.
+-   Normally distributed data within each group
+-   with equal group SDs.
 
 ## Normal quantile plots by group
 
@@ -216,67 +209,69 @@ ggplot(rats, aes(sample = density)) + stat_qq() +
 ```
 
 ## The assumptions
-- Normally-distributed data within each group
-- Equal group SDs.
-- These are shaky here because:
-  - control group has outliers
-  - highjump group appears to have less spread than others.
-- Possible remedies (in general):
-  - Transformation of response (usually works best when SD increases
-with mean)
-  - If normality OK but equal spreads not, can use Welch ANOVA.
-(Regular ANOVA like pooled t-test; Welch ANOVA like
-Welch-Satterthwaite t-test.)
-  - Can also use Mood’s Median Test (see over). This works for any
-number of groups.
 
-## Mood’s median test here
+-   Normally-distributed data within each group
+-   Equal group SDs.
+-   These are shaky here because:
+    -   control group has outliers
+    -   highjump group appears to have less spread than others.
+-   Possible remedies (in general):
+    -   Transformation of response (usually works best when SD increases
+        with mean)
+    -   If normality OK but equal spreads not, can use Welch ANOVA.
+        (Regular ANOVA like pooled t-test; Welch ANOVA like
+        Welch-Satterthwaite t-test.)
+    -   Can also use Mood's Median Test (see over). This works for any
+        number of groups.
 
-- Find median of all bone densities, regardless of group
-- Count up how many observations in each group above or below
-overall median
-- Test association between group and being above/below
-overall median, using chi-squared test.
+## Mood's median test here
 
-- Actually do this using `median_test`:
+-   Find median of all bone densities, regardless of group
+
+-   Count up how many observations in each group above or below overall
+    median
+
+-   Test association between group and being above/below overall median,
+    using chi-squared test.
+
+-   Actually do this using `median_test`:
 
 ```{r inference-5-R-27}
 median_test(rats, density, group)
 ```
 
-
-
 ## Comments
-- No doubt that medians differ between groups (not all same). 
-- This test is equivalent of $F$-test, not of Tukey. 
-- To determine which groups differ from which, can compare all possible
-pairs of groups via (2-sample) Mood’s median tests, then adjust
-P-values by multiplying by number of 2-sample Mood tests done (Bonferroni):
+
+-   No doubt that medians differ between groups (not all same).
+-   This test is equivalent of $F$-test, not of Tukey.
+-   To determine which groups differ from which, can compare all
+    possible pairs of groups via (2-sample) Mood's median tests, then
+    adjust P-values by multiplying by number of 2-sample Mood tests done
+    (Bonferroni):
 
 ```{r inference-5-R-28}
 pairwise_median_test(rats, density, group)
 ```
 
-- Now, lowjump-highjump difference no longer significant. 
+-   Now, lowjump-highjump difference no longer significant.
 
 ## Welch ANOVA
-- For these data, Mood’s median test probably best because we doubt
-both normality and equal spreads.
-- When normality OK but spreads differ, Welch ANOVA way to go.
-- Welch ANOVA done by `oneway.test` as shown (for illustration):
+
+-   For these data, Mood's median test probably best because we doubt
+    both normality and equal spreads.
+-   When normality OK but spreads differ, Welch ANOVA way to go.
+-   Welch ANOVA done by `oneway.test` as shown (for illustration):
 
 ```{r inference-5-R-29}
 oneway.test(density~group, data=rats)
 ```
 
-- P-value very similar, as expected.
-- Appropriate Tukey-equivalent here called Games-Howell.
+-   P-value very similar, as expected.
+-   Appropriate Tukey-equivalent here called Games-Howell.
 
 ## Games-Howell
 
-- Lives in package `PMCMRplus`. Install
-first.
-
+-   Lives in package `PMCMRplus`. Install first.
 
 ```{r games-howell, warning=F}
 gamesHowellTest(density~factor(group),data=rats)
@@ -287,4 +282,3 @@ gamesHowellTest(density~factor(group),data=rats)
 For two or more samples:
 
 ![](testflow.png)
-

@@ -248,7 +248,7 @@ the temperature of the coffee in the mug decreased over 30 minutes.
 -   Save the URL in a variable first:
 
 ```{r readfile-R-11}
-url <- url("http://ritsokiguess.site/datafiles/soap.txt")
+url <- "http://ritsokiguess.site/datafiles/soap.txt"
 soap <- read_delim(url, " ")
 ```
 
@@ -287,6 +287,10 @@ drugs
     don't want).
 -   Install package `readxl` first.
 
+```{r}
+
+```
+
 ## Reading it in
 
 -   Read into R, saying that we only want the sheet "data". Upload
@@ -294,6 +298,7 @@ drugs
 -   Excel spreadsheets must be "local": cannot read one in from a URL.
 
 ```{r readfile-R-15, warning=F}
+# install.packages("readxl")
 library(readxl)
 mydata2 <- read_excel("test2.xlsx", sheet = "data")
 mydata2

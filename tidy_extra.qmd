@@ -11,7 +11,7 @@ library(tidyverse)
 ## The pig feed data again
 
 ```{r tidy-extra-R-2, message=F}
-my_url <- "http://ritsokiguess.site/STAC32/pigs1.txt"
+my_url <- "http://ritsokiguess.site/datafiles/pigs1.txt"
 pigs <- read_table(my_url)
 pigs
 ```
@@ -46,18 +46,23 @@ pigs_longer %>%
 
 ## Disease presence and absence at two locations
 
-Frequencies of plants observed with and without disease at two locations:
+Frequencies of plants observed with and without disease at two
+locations:
 
-    Species     Disease present         Disease absent
-           Location X Location Y  Location X Location Y
-    A            44         12          38        10
-    B            28         22          20        18
+```         
+Species     Disease present         Disease absent
+       Location X Location Y  Location X Location Y
+A            44         12          38        10
+B            28         22          20        18
+```
 
 This has two rows of headers, so I rewrote the data file:
 
-    Species  present_x present_y    absent_x  absent_y
-    A            44         12          38        10
-    B            28         22          20        18
+```         
+Species  present_x present_y    absent_x  absent_y
+A            44         12          38        10
+B            28         22          20        18
+```
 
 Read into data frame called `prevalence`.
 
@@ -80,10 +85,10 @@ prevalence %>%
 ## Making longer, the better way
 
 ```{r tidy-extra-R-8}
-prevalence %>% 
+prevalence  %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
-               names_sep="_", values_to="frequency") %>% 
-  arrange(Species, location, disease) -> prevalence_longer
+               names_sep="_", 
+               values_to="frequency") -> prevalence_longer 
 prevalence_longer
 ```
 
@@ -127,8 +132,6 @@ pigs_longer %>%
   unnest(r)
 ```
 
-
-
 ## or, even better, use `enframe`:
 
 ```{r tidy-extra-R-14}
@@ -138,7 +141,7 @@ enframe(quantile(pigs_longer$weight, c(0.25, 0.75)))
 
 ## A nice look
 
-Run this one line at a time to see how it works: 
+Run this one line at a time to see how it works:
 
 ```{r tidy-extra-R-15, warning=FALSE}
 pigs_longer %>% 
@@ -150,11 +153,15 @@ pigs_longer %>%
 
 ## A hairy one
 
-18 people receive one of three treatments. At 3 different times (pre, post, followup) two variables `y` and `z` are measured on each person:
+18 people receive one of three treatments. At 3 different times (pre,
+post, followup) two variables `y` and `z` are measured on each person:
 
 ```{r tidy-extra-R-16, echo=F, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
+repmes0
+
+
 repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
   select(-rep) %>% 
   select(id, everything()) -> repmes
@@ -166,11 +173,13 @@ repmes
 ```{r tidy-extra-R-17}
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", "var"),
-                        names_sep="_"
+                        names_sep="_",
+                        values_to = "vvv"
                          )
 ```
 
-This is *too* long! We wanted a column called `y` and a column called `z`, but they have been pivoted-longer too. 
+This is *too* long! We wanted a column called `y` and a column called
+`z`, but they have been pivoted-longer too.
 
 ## Attempt 2
 
@@ -192,7 +201,8 @@ ggplot(repmes3, aes(x=fct_inorder(time), y=y,
   geom_point() + geom_line()
 ```
 
-A so-called spaghetti plot. The three measurements for each person are joined by lines, and the lines are coloured by treatment.
+A so-called spaghetti plot. The three measurements for each person are
+joined by lines, and the lines are coloured by treatment.
 
 ## or do the plot with means
 
@@ -204,5 +214,5 @@ repmes3 %>% group_by(treatment, ftime=fct_inorder(time)) %>%
     geom_point() + geom_line()
 ```
 
-On average, the two real treatments go up and level off, but the control group is very different.
-
+On average, the two real treatments go up and level off, but the control
+group is very different.
