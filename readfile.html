@@ -2762,7 +2762,7 @@ CUPPS 10   </code></pre>
 <li>Save the URL in a variable first:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>url <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">&quot;http://ritsokiguess.site/datafiles/soap.txt&quot;</span>)</span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/soap.txt&quot;</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>soap <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url, <span class="st">&quot; &quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -2825,9 +2825,10 @@ CUPPS 10   </code></pre>
 <li>Excel spreadsheets must be “local”: cannot read one in from a URL.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb21-2"><a href="#cb21-2"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;test2.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>)</span>
-<span id="cb21-3"><a href="#cb21-3"></a>mydata2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># install.packages(&quot;readxl&quot;)</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb21-3"><a href="#cb21-3"></a>mydata2 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;test2.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;data&quot;</span>)</span>
+<span id="cb21-4"><a href="#cb21-4"></a>mydata2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">

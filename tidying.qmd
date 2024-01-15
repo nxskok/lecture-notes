@@ -439,7 +439,7 @@ weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%
   ggplot(aes(x = date, y = temperature, colour = maxmin)) + geom_point() +
-      geom_line() 
+      geom_line() -> g
 ```
 
 ## The plot

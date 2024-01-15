@@ -7,7 +7,7 @@ title: "Functions"
 ```{r functions-1}
 library(tidyverse)
 library(broom)
-install.packages("vctrs")
+# install.packages("vctrs")
 ```
 
 
@@ -72,6 +72,7 @@ sqrt_minus_1(3)
 ```
 
 ```{r}
+#| error: true
 q <- 17
 sqrt_minus_1(q)
 sqrt_minus_1("text")
