@@ -108,17 +108,9 @@ tibble(sim = 1:4) %>%
 ```{r bootstrap-R-8}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
-  mutate(sample = list(sample(jays$attendance, replace = TRU
-                              
-                              
+  mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>%   
+  mutate(my_mean = mean(sample))
 ```
-
-```{r}
-
-
-```
-
-`{E))) %>%}   mutate(my_mean = mean(sample))`
 
 -   These are (four simulated values of) the bootstrapped sampling
     distribution of the sample mean.

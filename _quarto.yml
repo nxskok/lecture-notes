@@ -6,7 +6,8 @@ project:
     - readfile.qmd
     - graphs.qmd
     - numsum.qmd
-# - choosing.qmd
+    - choosing.qmd
+    - bootstrap_R.qmd
     - inference*.qmd
     - reports.qmd
     - tidy*.qmd
@@ -17,6 +18,23 @@ project:
     - functions.qmd
     - dates_and_times.qmd
     - dip.qmd
+    - vector_matrix.qmd
+    - bootstrap.qmd
+    - stan.qmd
+    - regression.qmd
+    - logistic.qmd
+    - survival.qmd
+    - anova.qmd
+    - ancova.qmd
+    - manova.qmd
+    - profile.qmd
+    - discrim.qmd
+    - cluster.qmd
+    - mapping.qmd
+    - princomp.qmd
+    - factor.qmd
+    - multiway.qmd
+    
 format: 
   revealjs:
      df-print: paged
