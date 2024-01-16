@@ -213,7 +213,16 @@ dataframe `new` as before:
 ```{r bRegression-12 }
 pp <- predict(sleep.1, new, interval = "p")
 pp
-cbind(new, pp) %>% select(-atst)
+cbind(new, pp) 
+
+%>% select(-atst)
+
+```
+
+## Plotting the confidence intervals for mean response again:
+
+```{r}
+plot_predictions(sleep.1, condition = "age")
 ```
 
 ## Comments

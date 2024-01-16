@@ -28,19 +28,12 @@ library(tidyverse)
 -   Use `read_tsv` ("tab-separated values"), like `read_csv`.
 -   Data in `ais.txt`:
 
-\scriptsize
-
 ```{r graphs-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
 
 ## The data (some)
-
-```{r}
-#| echo: false
-options(width = 72)
-```
 
 ```{r graphs-R-3}
 athletes
@@ -51,7 +44,7 @@ athletes
 Depends on number and type of variables:
 
 | Categorical | Quantitative | Graph                                                       |
-|------------:|-------------:|:------------------------------------------------------------|
+|-------------:|-------------:|:-------------------------------------------|
 |           1 |            0 | bar chart                                                   |
 |           0 |            1 | histogram                                                   |
 |           2 |            0 | grouped bar charts                                          |
@@ -65,8 +58,8 @@ groups*. This is called `facetting` in R.
 
 ## `ggplot`
 
--   R has a standard graphing procedure ggplot, that we use for all our
-    graphs.
+-   R has a standard graphing procedure `ggplot`, that we use for all
+    our graphs.
 -   Use in different ways to get precise graph we want.
 -   Let's start with bar chart of the sports played by the athletes.
 
@@ -115,22 +108,14 @@ ggplot(athletes, aes(x = Ht, y = Wt)) +
 ## BMI by sport and gender
 
 ```{r graphs-R-10, fig.height=3.6}
-ggplot(athletes, aes(y = Sport, x = BMI, fill = Sex)) +
+ggplot(athletes, aes(x = Sport, y = BMI, fill = Sex)) +
   geom_boxplot()
 ```
 
-A variation that is colour-blind-friendly:
+A variation that uses `colour` instead of `fill`:
 
 ```{r}
-library(RColorBrewer)
-ggplot(athletes, aes(colour = Sport, y = BMI, x = Sex)) +
-  geom_boxplot() + scale_color_brewer(palette = "Set3")
-```
-
-A variation that uses `fill` instead of `colour`:
-
-```{r}
-ggplot(athletes, aes(x = Sport, y = BMI, fill = Sex)) +
+ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
   geom_boxplot()
 ```
 
