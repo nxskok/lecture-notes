@@ -121,7 +121,9 @@ ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
 
 ## Height and weight by gender
 
-```{r graphs-R-11, fig.height=3.6}
+```{r}
+#| fig-height: 9
+#| fig-width: 9
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point()
 ```

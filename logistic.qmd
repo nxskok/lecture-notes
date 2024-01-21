@@ -1,31 +1,32 @@
 ---
 title: "Logistic Regression"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
 
 ## Logistic regression
 
+-   When response variable is measured/counted, regression can work
+    well.
 
-* When response variable is measured/counted, regression can work well.
+-   But what if response is yes/no, lived/died, success/failure?
 
-* But what if response is yes/no, lived/died, success/failure?
+-   Model *probability* of success.
 
-* Model *probability* of success.
+-   Probability must be between 0 and 1; need method that ensures this.
 
-* Probability must be between 0 and 1; need method that ensures this.
+-   *Logistic regression* does this. In R, is a *generalized linear
+    model* with binomial "family":
 
-* *Logistic regression* does this. In R, is a
-*generalized linear model* with binomial "family": 
-```{r bLogistic-1, eval=F}
+```{r bLogistic-1, eval=FALSE}
 glm(y ~ x, family="binomial")
 ```
 
-
-* Begin with simplest case.
-
-
+-   Begin with simplest case.
 
 ## Packages
+
 ```{r bLogistic-2, message = FALSE}
 library(MASS)
 library(tidyverse)
@@ -39,16 +40,11 @@ conflict_prefer("rename", "dplyr")
 conflict_prefer("summarize", "dplyr")
 ```
 
-   
-
-
 ## The rats, part 1
 
+-   Rats given dose of some poison; either live or die:
 
-* Rats given dose of some poison; either live or die:
-
-\small
-```
+```         
 dose status
 0 lived
 1 died
@@ -58,74 +54,51 @@ dose status
 5 died
 ```
 
-\normalsize
-
-## Read in: 
+## Read in:
 
 ```{r bLogistic-3, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/rat.txt"
 rats <- read_delim(my_url, " ")
 rats
 ```
- 
-
 
 ## Basic logistic regression
 
+-   Make response into a factor first:
 
-* Make response into a factor first:
-
-\small
 ```{r bLogistic-4}
 rats2 <- rats %>% mutate(status = factor(status))
+rats2
 ```
-\normalsize
-   
 
+-   then fit model:
 
-* then fit model:
-
-\small
 ```{r bLogistic-5, error=T}
 status.1 <- glm(status ~ dose, family = "binomial", data = rats2)
 ```
-\normalsize
-   
-
-   
-
 
 ## Output
 
-\scriptsize
 ```{r bLogistic-6}
 summary(status.1)
 ```
-\normalsize
-
 
 ## Interpreting the output
 
+-   Like (multiple) regression, get tests of significance of individual
+    $x$'s
 
-* Like (multiple) regression, get
-tests of significance of individual $x$'s
+-   Here not significant (only 6 observations).
 
-* Here not significant (only 6 observations).
-
-* "Slope" for dose is negative, meaning that as dose increases, probability of event modelled (survival) decreases.
-
-
-
-
+-   "Slope" for dose is negative, meaning that as dose increases,
+    probability of event modelled (survival) decreases.
 
 ## Output part 2: predicted survival probs
 
-\small
 ```{r bLogistic-7 }
 cbind(predictions(status.1)) %>% 
-  select(dose, estimate)
+  select(dose, estimate, conf.low, conf.high)
 ```
-\normalsize 
 
 ## On a graph
 
@@ -133,17 +106,15 @@ cbind(predictions(status.1)) %>%
 plot_predictions(status.1, condition = "dose")
 ```
 
-
 ## The rats, more
 
+-   More realistic: more rats at each dose (say 10).
 
-* More realistic: more rats at each dose (say 10).
+-   Listing each rat on one line makes a big data file.
 
-* Listing each rat on one line makes a big data file.
+-   Use format below: dose, number of survivals, number of deaths.
 
-* Use format below: dose, number of survivals, number of deaths.
-
-```
+```         
 
 dose lived died
 0    10    0
@@ -152,83 +123,69 @@ dose lived died
 3     4    6 
 4     2    8 
 5     1    9  
-
 ```
 
+-   6 lines of data correspond to 60 actual rats.
 
-* 6 lines of data correspond to 60 actual rats.
-
-* Saved in `rat2.txt`.
-
-
+-   Saved in `rat2.txt`.
 
 ## These data
 
-\footnotesize
 ```{r bLogistic-8}
 my_url <- "http://ritsokiguess.site/datafiles/rat2.txt"
 rat2 <- read_delim(my_url, " ")
 rat2
 ```
-\normalsize
-
 
 ## Create response matrix:
 
-- Each row contains *multiple* observations.
-- Create *two-column* response:
-  - \#survivals in first column, 
-  - \#deaths in second.
+-   Each row contains *multiple* observations.
+-   Create *two-column* response:
+    -   #survivals in first column,
+    -   #deaths in second.
 
-
-\footnotesize
 ```{r bLogistic-9 }
 response <- with(rat2, cbind(lived, died))
 response
 ```
-\normalsize
 
-- Response is R `matrix`:
+-   Response is R `matrix`:
 
-\scriptsize
 ```{r bLogistic-10 }
 class(response)
 ```
-\normalsize
 
-     
 ## Fit logistic regression
 
-- using response you just made:
+-   using response you just made:
 
 ```{r bLogistic-11}
-rat2.1 <- glm(response ~ dose,
-  family = "binomial",
-  data = rat2
-)
+rat2.1 <- glm(response ~ dose, family = "binomial", data = rat2)
 ```
-
-
-
 
 ## Output
 
-\scriptsize
 ```{r bLogistic-12}
 summary(rat2.1)
 ```
-\normalsize
 
+##  Predicted survival probs
 
-## Predicted survival probs
 ```{r bLogistic-13 }
 #| warning = FALSE
 new <- datagrid(model = rat2.1, dose = 0:5)
-cbind(predictions(rat2.1, newdata = new))
+cbind(predictions(rat2.1, newdata = new)) %>% 
+  select(estimate, dose, conf.low, conf.high)
 ```
- 
 
-## On a picture
+## On a picture, attempt 1
+
+```{r}
+#| error: true
+plot_predictions(rat2.1, condition = "dose")
+```
+
+## On a picture, attempt 2
 
 ```{r, fig.height=3.5}
 #| warning = FALSE
@@ -236,50 +193,45 @@ cbind(predictions(rat2.1, newdata = new)) %>%
   select(estimate, conf.low, conf.high, dose) %>% 
   ggplot(aes(x = dose, y = estimate, 
              ymin = conf.low, ymax = conf.high)) + 
-    geom_line() + geom_ribbon(alpha = 0.3)
+    geom_line() + geom_ribbon(alpha = 0.2)
 ```
-
 
 ## Comments
 
+-   Significant effect of dose.
 
+-   Effect of larger dose is to *decrease* survival probability ("slope"
+    negative; also see in decreasing predictions.)
 
-* Significant effect of dose. 
-
-* Effect of larger dose is to *decrease* survival probability
-("slope" negative; also see in decreasing predictions.)
-
-* Confidence intervals around prediction narrower (more data).
+-   Confidence intervals around prediction narrower (more data).
 
 ## Multiple logistic regression
 
+-   With more than one $x$, works much like multiple regression.
 
-* With more than one $x$, works much like multiple regression.
+-   Example: study of patients with blood poisoning severe enough to
+    warrant surgery. Relate survival to other potential risk factors.
 
-* Example: study of patients with blood poisoning severe enough to warrant surgery. Relate survival to other potential risk factors.
+-   Variables, 1=present, 0=absent:
 
-* Variables, 1=present, 0=absent:
+    -   survival (death from sepsis=1), response
+    -   shock
+    -   malnutrition
+    -   alcoholism
+    -   age (as numerical variable)
+    -   bowel infarction
 
-
-  * survival (death from sepsis=1), response
-  * shock
-  * malnutrition
-  * alcoholism
-  * age (as numerical variable)
-  * bowel infarction
-
-
-* See what relates to death.
-
-
+-   See what relates to death.
 
 ## Read in data
-```{r bLogistic-14, size="footnotesize"}
+
+```{r bLogistic-14}
 my_url <- 
   "http://ritsokiguess.site/datafiles/sepsis.txt"
 sepsis <- read_delim(my_url, " ")
+sepsis
 ```
- 
+
 ## Make sure categoricals really are
 
 ```{r}
@@ -287,16 +239,14 @@ sepsis %>%
   mutate(across(-age, \(x) factor(x))) -> sepsis
 ```
 
-
 ## The data (some)
-```{r bLogistic-15, size="footnotesize"}
+
+```{r bLogistic-15}
 sepsis
 ```
 
-   
-
-
 ## Fit model
+
 ```{r bLogistic-16 }
 sepsis.1 <- glm(death ~ shock + malnut + alcohol + age +
   bowelinf,
@@ -305,73 +255,60 @@ data = sepsis
 )
 ```
 
-   
-
-
 ## Output part 1
-```{r bLogistic-17, size="footnotesize"}
+
+```{r bLogistic-17}
+summary(sepsis.1)
 tidy(sepsis.1)
 ```
- 
 
+-   All P-values fairly small
 
-
-* All P-values fairly small
-
-* but `malnut` not significant: remove.
-
-
+-   but `malnut` not significant: remove.
 
 ## Removing `malnut`
-```{r bLogistic-18, size="footnotesize"}
+
+```{r bLogistic-18}
 sepsis.2 <- update(sepsis.1, . ~ . - malnut)
 tidy(sepsis.2)
 ```
- 
 
-
-
-* Everything significant now.
-
-
+-   Everything significant now.
 
 ## Comments
 
+-   Most of the original $x$'s helped predict death. Only `malnut`
+    seemed not to add anything.
 
-* Most of the original $x$'s helped predict death. Only `malnut` seemed not to add anything.
+-   Removed `malnut` and tried again.
 
-* Removed `malnut` and tried again.
+-   Everything remaining is significant (though `bowelinf` actually
+    became *less* significant).
 
-* Everything remaining is significant (though `bowelinf`
-actually became *less* significant).
-
-* All coefficients are *positive*, so having any of the risk
-factors (or being older)
-*increases* risk of death.  
-
+-   All coefficients are *positive*, so having any of the risk factors
+    (or being older) *increases* risk of death.
 
 ## Predictions from model without "malnut"
 
+-   A few (rows of original dataframe) chosen "at random":
 
-* A few (rows of original dataframe) chosen "at random":
-
-\tiny
 ```{r bLogistic-19}
 sepsis %>% slice(c(4, 1, 2, 11, 32)) -> new
 new
 cbind(predictions(sepsis.2, newdata = new)) %>% 
-  select(estimate, conf.low, conf.high, shock:bowelinf)
+  select(estimate, conf.low, conf.high, shock:bowelinf) 
 ```
-\normalsize
 
+## Comments
 
-## Comments 
+-   Survival chances pretty good if no risk factors, though decreasing
+    with age.
 
-* Survival chances pretty good if no risk factors, though decreasing with age.
+-   Having more than one risk factor reduces survival chances
+    dramatically.
 
-* Having more than one risk factor reduces survival chances dramatically.
-
-* Usually good job of predicting survival; sometimes death predicted to survive.
+-   Usually good job of predicting survival; sometimes death predicted
+    to survive.
 
 ## Another way to assess effects
 
@@ -382,8 +319,7 @@ new <- datagrid(model = sepsis.2, age = seq(30, 70, 10))
 new
 ```
 
-
-## Assessing age effect 
+## Assessing age effect
 
 ```{r}
 cbind(predictions(sepsis.2, newdata = new)) %>% 
@@ -392,108 +328,87 @@ cbind(predictions(sepsis.2, newdata = new)) %>%
 
 ## Assessing shock effect
 
-\footnotesize
 ```{r}
 new <- datagrid(shock = c(0, 1), model = sepsis.2)
 new
 cbind(predictions(sepsis.2, newdata = new)) %>% 
   select(estimate, death:shock)
 ```
-\normalsize
 
 ## Assessing proportionality of odds for age
 
+-   An assumption we made is that log-odds of survival depends linearly
+    on age.
 
-* An assumption we made is that log-odds of survival depends
-linearly on age.
+-   Hard to get your head around, but basic idea is that survival
+    chances go continuously up (or down) with age, instead of (for
+    example) going up and then down.
 
-* Hard to get your head around, but 
-basic idea is that survival chances go continuously up (or down)
-with age, instead of (for example) going up and then down.
+-   In this case, seems reasonable, but should check:
 
-* In this case, seems reasonable, but should check:
+## Residuals vs. age
 
-
-## Residuals vs.\ age
 ```{r virtusentella,fig.height=3.4, warning=F}
 sepsis.2 %>% augment(sepsis) %>% 
-  ggplot(aes(x = age, y = .resid)) +
+  ggplot(aes(x = age, y = .resid, colour = death)) +
   geom_point()
 ```
- 
+
 ## Comments
 
-* No apparent problems overall.
+-   No apparent problems overall.
 
-* Confusing "line" across: no risk factors, survived. 
-
-
+-   Confusing "line" across: no risk factors, survived.
 
 ## Probability and odds
 
-* For probability $p$, odds is $p/(1-p)$:
+For probability $p$, odds is $p/(1-p)$:
 
+| Prob | Odds             | Log-odds | Words      |
+|------|------------------|----------|------------|
+| 0.5  | 0.5 / 0.5 = 1.00 | 0.00     | even money |
+| 0.1  | 0.1 / 0.9 = 0.11 | -2.20    | 9 to 1     |
+| 0.4  | 0.4 / 0.6 = 0.67 | -0.41    | 1.5 to 1   |
+| 0.8  | 0.8 / 0.2 = 4.00 | 1.39     | 4 to 1 on  |
 
-  \begin{tabular}{rrrl}
-      \hline
-      Prob.\ & Odds & log-odds & in words\\
-      \hline
-      0.5 & $0.5/0.5=1/1=1.00$ & $0.00$ &  ``even money''\\
-      0.1 & $0.1/0.9=1/9=0.11$ & $-2.20$ & ``9 to 1''\\
-      0.4 & $0.4/0.6=1/1.5=0.67$ & $-0.41$ & ``1.5 to 1''\\
-      0.8 & $0.8/0.2=4/1=4.00$ & $1.39$ & ``4 to 1 on''\\
-      \hline
-    \end{tabular}
+-   Gamblers use odds: if you win at 9 to 1 odds, get original stake
+    back plus 9 times the stake.
 
+-   Probability has to be between 0 and 1
 
-* Gamblers use odds: if you win at 9 to 1 odds, get original
-stake back plus 9 times the stake.
+-   Odds between 0 and infinity
 
-* Probability has to be between 0 and 1
-
-* Odds between 0 and infinity
-
-* *Log*-odds can be anything: any log-odds corresponds to
-valid probability.
-
-
+-   *Log*-odds can be anything: any log-odds corresponds to valid
+    probability.
 
 ## Odds ratio
 
+-   Suppose 90 of 100 men drank wine last week, but only 20 of 100
+    women.
 
-* Suppose 90 of 100 men drank wine last week, but only 20 of 100 women.
+-   Prob of man drinking wine $90/100=0.9$, woman $20/100=0.2$.
 
-* Prob of man drinking wine $90/100=0.9$, woman $20/100=0.2$.
+-   Odds of man drinking wine $0.9/0.1=9$, woman $0.2/0.8=0.25$.
 
-* Odds of man drinking wine $0.9/0.1=9$, woman $0.2/0.8=0.25$.
+-   Ratio of odds is $9/0.25=36$.
 
-* Ratio of odds is $9/0.25=36$.
-
-* Way of quantifying difference between men and women: ``odds of
-drinking wine 36 times larger for males than females''. 
-
-
+-   Way of quantifying difference between men and women: \`\`odds of
+    drinking wine 36 times larger for males than females''.
 
 ## Sepsis data again
 
+-   Recall prediction of probability of death from risk factors:
 
-* Recall prediction of probability of death from risk factors:
-```{r bLogistic-20, size="small"}
+```{r bLogistic-20}
 sepsis.2.tidy <- tidy(sepsis.2)
 sepsis.2.tidy
 ```
 
-     
-
-
-* Slopes in column `estimate`.
-
-
+-   Slopes in column `estimate`.
 
 ## Multiplying the odds
 
-
-* Can interpret slopes by taking "exp" of them. We ignore intercept.
+-   Can interpret slopes by taking "exp" of them. We ignore intercept.
 
 ```{r expo}
 sepsis.2.tidy %>% 
@@ -503,91 +418,82 @@ sepsis.2.tidy %>%
 
 ## Interpretation
 
-\small
 ```{r bLogistic-21, ref.label="expo", echo=F}
 ```
-\normalsize
 
+-   These say "how much do you *multiply* odds of death by for increase
+    of 1 in corresponding risk factor?" Or, what is odds ratio for that
+    factor being 1 (present) vs. 0 (absent)?
 
-* These say "how much do you *multiply* odds of death by
-for increase of 1 in corresponding risk factor?" Or, what is odds
-ratio for that factor being 1 (present) vs.\ 0 (absent)?
+-   Eg. being alcoholic vs. not increases odds of death by 24 times
 
-* Eg.\ being alcoholic vs.\ not increases odds of death by 24 times
-
-* One year older multiplies odds by about 1.1 times. Over 40 years,
-about  $1.09^{40}=31$ times. 
-
-
+-   One year older multiplies odds by about 1.1 times. Over 40 years,
+    about $1.09^{40}=31$ times.
 
 ## Odds ratio and relative risk
 
+-   **Relative risk** is ratio of probabilities.
 
-* **Relative risk** is ratio of probabilities.
+-   Above: 90 of 100 men (0.9) drank wine, 20 of 100 women (0.2).
 
-* Above: 90 of 100 men (0.9) drank wine, 20 of 100 women (0.2).
+-   Relative risk 0.9/0.2=4.5. (odds ratio was 36).
 
-* Relative risk 0.9/0.2=4.5. (odds ratio was 36).
+-   When probabilities small, relative risk and odds ratio similar.
 
-* When probabilities small, relative risk and odds ratio similar.
+-   Eg. prob of man having disease 0.02, woman 0.01.
 
-* Eg.\ prob of man having disease 0.02, woman 0.01.
+-   Relative risk $0.02/0.01=2$.
 
-* Relative risk $0.02/0.01=2$.
+## Odds ratio vs. relative risk
 
-## Odds ratio vs.\ relative risk
-
-- Odds for men and for women:
+-   Odds for men and for women:
 
 ```{r bLogistic-22 }
 (od1 <- 0.02 / 0.98) # men
 (od2 <- 0.01 / 0.99) # women
 ```
 
--  Odds ratio 
+-   Odds ratio
 
 ```{r bLogistic-23 }
 od1 / od2
 ```
 
-
-- Very close to relative risk of 2.
-
+-   Very close to relative risk of 2.
 
 ## More than 2 response categories
 
+-   With 2 response categories, model the probability of one, and prob
+    of other is one minus that. So doesn't matter which category you
+    model.
 
-* With 2 response categories, model the probability of one, and prob of other is one minus that. So doesn't matter which category you model.
+-   With more than 2 categories, have to think more carefully about the
+    categories: are they
 
-* With more than 2 categories, have to think more carefully about the categories: are they
+-   *ordered*: you can put them in a natural order (like low, medium,
+    high)
 
+-   *nominal*: ordering the categories doesn't make sense (like red,
+    green, blue).
 
-* *ordered*: you can put them in a natural order (like low, medium, high)
-
-* *nominal*: ordering the categories doesn't make sense (like red, green, blue).
-
-
-* R handles both kinds of response; learn how.
-
-
+-   R handles both kinds of response; learn how.
 
 ## Ordinal response: the miners
 
+-   Model probability of being in given category *or lower*.
 
-* 
-Model probability of being in given category *or lower*.
+-   Example: coal-miners often suffer disease pneumoconiosis. Likelihood
+    of disease believed to be greater among miners who have worked
+    longer.
 
-* Example: coal-miners often suffer disease pneumoconiosis. Likelihood of disease believed to be greater 
-among miners who have worked longer. 
-
-* Severity of disease measured on categorical scale: none,
-moderate, severe.
+-   Severity of disease measured on categorical scale: none, moderate,
+    severe.
 
 ## Miners data
 
-* Data are frequencies:
+-   Data are frequencies:
 
-```
+```         
 Exposure None Moderate Severe
 5.8       98      0       0
 15.0      51      2       1
@@ -599,52 +505,37 @@ Exposure None Moderate Severe
 51.5       4      2       5
 ```
 
-
-
-
 ## Reading the data
 
-Data in aligned columns with more than one space between, so: 
+Data in aligned columns with more than one space between, so:
 
-\small
 ```{r bLogistic-24 }
 my_url <- "http://ritsokiguess.site/datafiles/miners-tab.txt"
 freqs <- read_table(my_url)
 ```
-\normalsize
-
 
 ## The data
+
 ```{r bLogistic-25 }
 freqs
 ```
 
-   
+## Tidying
 
-
-## Tidying 
 ```{r bLogistic-26 }
 freqs %>%
   pivot_longer(-Exposure, names_to = "Severity", values_to = "Freq") %>%
   mutate(Severity = fct_inorder(Severity)) -> miners
 ```
 
-   
-
-
 ## Result
 
-\tiny
 ```{r bLogistic-27 }
 miners
 ```
-\normalsize
-     
-
 
 ## Plot proportions against exposure
 
-\small
 ```{r bLogistic-28, fig.height=3.5, message=F}
 miners %>% 
   group_by(Exposure) %>% 
@@ -653,25 +544,16 @@ ggplot(prop, aes(x = Exposure, y = proportion,
                    colour = Severity)) + 
   geom_point() + geom_smooth(se = F)
 ```
-\normalsize
-
 
 ## Reminder of data setup
-\footnotesize
+
 ```{r bLogistic-29 }
 miners
 ```
 
-   
-\normalsize
-
-
-
 ## Fitting ordered logistic model
 
 Use function `polr` from package `MASS`. Like `glm`.
-
-
 
 ```{r bLogistic-34 }
 sev.1 <- polr(Severity ~ Exposure,
@@ -679,13 +561,8 @@ sev.1 <- polr(Severity ~ Exposure,
   data = miners
 )
 ```
- 
-
 
 ## Output: not very illuminating
-
-
-\scriptsize
 
 ```{r}
 sev.1 <- polr(Severity ~ Exposure,
@@ -695,48 +572,36 @@ sev.1 <- polr(Severity ~ Exposure,
 )
 ```
 
-
 ```{r bLogistic-35 }
 summary(sev.1)
 ```
-\normalsize
-   
 
 ## Does exposure have an effect?
-Fit model without `Exposure`, and compare
-using `anova`. Note `1` for model with just intercept:
+
+Fit model without `Exposure`, and compare using `anova`. Note `1` for
+model with just intercept:
 
 ```{r bLogistic-36, echo=F}
 w <- getOption("width")
 options(width = w - 20)
 ```
 
- 
-
-\small
 ```{r bLogistic-37}
 sev.0 <- polr(Severity ~ 1, weights = Freq, data = miners)
 anova(sev.0, sev.1)
 ```
-\normalsize
 
-Exposure definitely has effect on severity of disease. 
-
+Exposure definitely has effect on severity of disease.
 
 ## Another way
 
+-   What (if anything) can we drop from model with `exposure`?
 
-* What (if anything) can we drop from model with `exposure`?
 ```{r bLogistic-38 }
 drop1(sev.1, test = "Chisq")
 ```
 
-     
-
-
-* Nothing. Exposure definitely has effect.
-
-
+-   Nothing. Exposure definitely has effect.
 
 ## Predicted probabilities 1/2
 
@@ -745,16 +610,13 @@ freqs %>% select(Exposure) -> new
 new
 ```
 
-
 ## Predicted probabilities 2/2
 
-\small
 ```{r}
 cbind(predictions(sev.1, newdata = new)) %>%
   select(group, estimate, Exposure) %>% 
   pivot_wider(names_from = group, values_from = estimate)
 ```
-\normalsize
 
 ## Plot of predicted probabilities
 
@@ -771,49 +633,39 @@ plot_predictions(model = sev.1, condition = c("Exposure", "group"),
 ggg
 ```
 
-
 ## Comments
 
+-   Model appears to match data well enough.
 
-* Model appears to match data well enough.
+-   As exposure goes up, prob of None goes down, Severe goes up (sharply
+    for high exposure).
 
-- As exposure goes up, prob of None
-goes down, Severe goes up (sharply for high exposure).
-
-- So more exposure means worse disease.
-
+-   So more exposure means worse disease.
 
 ## Unordered responses
 
+-   With unordered (nominal) responses, can use *generalized logit*.
 
-* With unordered (nominal) responses, can use *generalized logit*.
+-   Example: 735 people, record age and sex (male 0, female 1), which of
+    3 brands of some product preferred.
 
-* Example: 735 people, record age and sex (male 0, female 1), which of 3 brands of some product preferred.
+-   Data in `mlogit.csv` separated by commas (so `read_csv` will work):
 
-* Data in `mlogit.csv` separated by commas (so
-`read_csv` will work):
 ```{r bLogistic-45 }
 my_url <- "http://ritsokiguess.site/datafiles/mlogit.csv"
 brandpref <- read_csv(my_url)
 ```
- 
-
-
-
 
 ## The data (some)
+
 ```{r bLogistic-46 }
 brandpref
 ```
 
-   
-
-
 ## Bashing into shape
 
+-   `sex` and `brand` not meaningful as numbers, so turn into factors:
 
-* `sex` and `brand` not meaningful as numbers, so
-turn into factors:
 ```{r bLogistic-47 }
 brandpref %>%
   mutate(sex = ifelse(sex == 1, "female", "male"), 
@@ -821,69 +673,55 @@ brandpref %>%
          brand = factor(brand)
          ) -> brandpref
 ```
- 
- 
-## Fitting model 
 
-* We use `multinom` from package `nnet`. Works
-like `polr`.
+## Fitting model
+
+-   We use `multinom` from package `nnet`. Works like `polr`.
 
 ```{r bLogistic-48 }
 brands.1 <- multinom(brand ~ age + sex, data = brandpref)
 ```
- 
-
 
 ## Can we drop anything?
 
+-   Unfortunately `drop1` seems not to work:
 
-* Unfortunately `drop1` seems not to work:
 ```{r bLogistic-49, error=TRUE}
 drop1(brands.1, test = "Chisq", trace = 0)
 ```
 
-* So, fall back on fitting model without what you want to test, and
-comparing using `anova`.    
-
-
+-   So, fall back on fitting model without what you want to test, and
+    comparing using `anova`.
 
 ## Do age/sex help predict brand? 1/3
 
 Fit models without each of age and sex:
+
 ```{r bLogistic-50 }
 brands.2 <- multinom(brand ~ age, data = brandpref)
 brands.3 <- multinom(brand ~ sex, data = brandpref)
 ```
- 
-
 
 ## Do age/sex help predict brand? 2/3
 
-\scriptsize
 ```{r bLogistic-51}
 anova(brands.2, brands.1)
 anova(brands.3, brands.1)
 ```
-\normalsize
-
 
 ## Do age/sex help predict brand? 3/3
 
+-   `age` definitely significant (second `anova`)
 
-* `age` definitely significant (second `anova`)
+-   `sex` significant also (first `anova`), though P-value less dramatic
 
-* `sex` significant also (first `anova`), though P-value less dramatic
+-   Keep both.
 
-* Keep both.
-- Expect to see a large effect of `age`, and a smaller one of `sex`.
-
-
-
+-   Expect to see a large effect of `age`, and a smaller one of `sex`.
 
 ## Another way to build model
 
-
-* Start from model with everything and run `step`:
+-   Start from model with everything and run `step`:
 
 ```{r}
 #| echo = FALSE,
@@ -892,31 +730,22 @@ anova(brands.3, brands.1)
 brands.1 <- with(brandpref, multinom(brand ~ age + sex))
 ```
 
-
-\footnotesize
 ```{r bLogistic-52 }
 step(brands.1, trace = 0)
 ```
-\normalsize
-     
 
-* Final model contains both `age` and `sex` so neither
-could be removed.
-
+-   Final model contains both `age` and `sex` so neither could be
+    removed.
 
 ## Making predictions
 
 Find age 5-number summary, and the two sexes:
-
-\small
 
 ```{r}
 summary(brandpref)
 ```
 
 Space the ages out a bit for prediction (see over).
-
-\normalsize
 
 ## Combinations
 
@@ -936,18 +765,22 @@ cbind(predictions(brands.1, newdata = new)) %>%
 
 ## Comments
 
-* Young males prefer brand 1, 
-but older males prefer brand 3.
+-   Young males prefer brand 1, but older males prefer brand 3.
 
-* Females similar, but like brand 1 less and
-brand 2 more.
+-   Females similar, but like brand 1 less and brand 2 more.
 
-- A clear `brand` effect, but the `sex` effect is less clear. 
+-   A clear `brand` effect, but the `sex` effect is less clear.
 
 ## Making a plot
 
-- `plot_predictions` doesn't quite work
-- so don't draw, edit, *then* make graph:
+-   `plot_predictions` doesn't work as we want:
+
+```{r}
+plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
+         type = "probs")
+```
+
+-   so don't draw, edit, *then* make graph:
 
 ```{r}
 plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
@@ -962,37 +795,33 @@ plot_predictions(brands.1, condition = c("age", "brand", "sex"),
 ```{r, fig.height=4.5}
 g
 ```
-  
 
 ## Digesting the plot
 
+-   Brand vs. age: younger people (of both genders) prefer brand 1, but
+    older people (of both genders) prefer brand 3. (Explains significant
+    age effect.)
 
-* Brand vs.\ age: younger people (of both genders) prefer brand
-1, but older people (of both genders) prefer brand 3. (Explains
-significant age effect.)
+-   Brand vs. sex: females (solid) like brand 1 less than males
+    (dashed), like brand 2 more (for all ages).
 
-* Brand vs.\ sex: females (solid) like brand 1 less than males
-(dashed), like brand 2 more (for all ages). 
+-   Not much brand difference between genders (solid and dashed lines of
+    same colours close), but enough to be significant.
 
-* Not much brand difference between genders (solid and dashed
-lines of same colours close), but enough to be significant.
-
-* Model didn't include interaction, so modelled effect of gender
-on brand same for each age, modelled effect of age same for each
-gender. (See also later.) 
-
+-   Model didn't include interaction, so modelled effect of gender on
+    brand same for each age, modelled effect of age same for each
+    gender. (See also later.)
 
 ## Alternative data format
 
-Summarize all people of same brand preference, same sex, same age on one line of data file with frequency on end:
-
+Summarize all people of same brand preference, same sex, same age on one
+line of data file with frequency on end:
 
 ```{r}
 brandpref
 ```
 
-
-```
+```         
 1 0 24 1
 1 0 26 2
 1 0 27 4
@@ -1004,8 +833,8 @@ brandpref
 
 Whole data set in 65 lines not 735! But how?
 
-
 ## Getting alternative data format
+
 ```{r bLogistic-60, warning=FALSE, message=FALSE}
 brandpref %>%
   group_by(age, sex, brand) %>%
@@ -1014,20 +843,14 @@ brandpref %>%
 b
 ```
 
-   
-
 ## Fitting models, almost the same
 
+-   Just have to remember `weights` to incorporate frequencies.
 
-* Just have to remember `weights` to incorporate
-frequencies.
+-   Otherwise `multinom` assumes you have just 1 obs on each line!
 
-* Otherwise `multinom` assumes you have just 1 obs
-on each line!
+-   Again turn (numerical) `sex` and `brand` into factors:
 
-* Again turn (numerical) `sex` and `brand` into factors:
-
-\footnotesize
 ```{r bLogistic-61, results="hide"}
 b %>%
   mutate(sex = factor(sex)) %>%
@@ -1035,22 +858,14 @@ b %>%
 b.1 <- multinom(brand ~ age + sex, data = bf, weights = Freq)
 b.2 <- multinom(brand ~ age, data = bf, weights = Freq)
 ```
-\normalsize
-
-
 
 ## P-value for `sex` identical
 
-\footnotesize
 ```{r bLogistic-62}
 anova(b.2, b.1)
 ```
-\normalsize
 
 Same P-value as before, so we haven't changed anything important.
-
-
-
 
 ## Trying interaction between age and gender
 
@@ -1058,18 +873,13 @@ Same P-value as before, so we haven't changed anything important.
 options(width = 60)
 ```
 
-   
-\scriptsize
 ```{r bLogistic-70 }
 brands.4 <- update(brands.1, . ~ . + age:sex)
 anova(brands.1, brands.4)
 ```
 
-   
-\normalsize
-
-* No evidence that effect of age on brand preference differs for
-the two genders.
+-   No evidence that effect of age on brand preference differs for the
+    two genders.
 
 ## Make graph again
 
@@ -1080,7 +890,6 @@ plot_predictions(brands.4, condition = c("age", "brand", "sex"),
              linetype = sex)) +
   geom_line() -> g4
 ```
-
 
 ## Not much difference in the graph
 
@@ -1093,4 +902,3 @@ g4
 ```{r, fig.height=4.5}
 g
 ```
-

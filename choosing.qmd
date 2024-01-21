@@ -36,7 +36,7 @@ athletes %>% select(Sport)
 athletes %>% select(Sport, Hg, BMI)
 ```
 
-## Choosing consecAutive columns
+## Choosing consecutive columns
 
 ```{r choosing-R-4}
 athletes %>% select(Sex:WCC)
@@ -58,7 +58,7 @@ Other ways to select columns: those whose name:
 -   `matches` a "regular expression"
 -   `everything()` select all the columns
 
-## Columns whose names Abegin with S
+## Columns whose names begin with S
 
 ```{r choosing-R-6}
 athletes %>% select(starts_with("S"))
@@ -229,8 +229,6 @@ contains).
 
 Two ways:
 
-\small
-
 ```{r choosing-R-26}
 athletes %>% group_by(Sex) %>% summarize(m = mean(Ht))
 ```
@@ -241,12 +239,10 @@ athletes %>%
   summarize(m = mean(Ht))
 ```
 
-\normalsize
-
 ## Summary of data selection/arrangement "verbs" {.smaller}
 
 | Verb           | Purpose                                                          |
-|:---------------|:-------------------------------------------------------|
+|:-----------------|:-----------------------------------------------------|
 | `select`       | Choose columns                                                   |
 | `slice`        | Choose rows by number                                            |
 | `slice_sample` | Choose random rows                                               |
@@ -277,8 +273,6 @@ sales
 
 -   Fortunately you found a list of product descriptions and prices:
 
-\small
-
 ```{r choosing-R-29, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/nail_desc.csv"
 desc <- read_csv(my_url)
@@ -288,8 +282,6 @@ desc
 -   the `size` values are measured in inches (symbol `"`), but R uses
     the same symbol for the start and end of text, so the `"`
     representing "inches" is "escaped". Hence the odd look.
-
-\normalsize
 
 ## The lookup
 
@@ -336,14 +328,10 @@ sales %>% left_join(desc) %>%
 -   Suppose the `sales` dataframe *also* had a column `qty` (which was
     the quantity sold):
 
-\small
-
 ```{r choosing-R-32}
 sales %>% rename("qty"="sales") -> sales1
 sales1
 ```
-
-\normalsize
 
 -   The `qty` in `sales1` is the quantity sold, but the `qty` in `desc`
     is the number of nails in a package. These should *not* be matched:
@@ -355,6 +343,7 @@ sales1
 sales1 %>% 
   left_join(desc, join_by(product_code))
 ```
+
 ```{r}
 sales1 %>% 
   left_join(desc)
@@ -367,14 +356,10 @@ sales1 %>%
 
 -   Suppose the product code in `sales` was just `code`:
 
-\small
-
 ```{r choosing-R-34}
 sales %>% rename("code" = "product_code") -> sales2
 sales2
 ```
-
-\normalsize
 
 -   How to match the two product codes that have different names?
 
@@ -399,13 +384,9 @@ sales2 %>%
 
 ## Full join here
 
-\small
-
 ```{r choosing-R-36}
 sales %>% full_join(desc)
 ```
-
-\normalsize
 
 -   The missing `sales` for "masonry nail" says that it was in the
     lookup table `desc`, but we didn't sell any.
