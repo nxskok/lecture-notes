@@ -242,7 +242,7 @@ athletes %>%
 ## Summary of data selection/arrangement "verbs" {.smaller}
 
 | Verb           | Purpose                                                          |
-|:-----------------|:-----------------------------------------------------|
+|:----------------|:------------------------------------------------------|
 | `select`       | Choose columns                                                   |
 | `slice`        | Choose rows by number                                            |
 | `slice_sample` | Choose random rows                                               |

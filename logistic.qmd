@@ -169,7 +169,7 @@ rat2.1 <- glm(response ~ dose, family = "binomial", data = rat2)
 summary(rat2.1)
 ```
 
-##  Predicted survival probs
+## Predicted survival probs
 
 ```{r bLogistic-13 }
 #| warning = FALSE
@@ -400,6 +400,8 @@ For probability $p$, odds is $p/(1-p)$:
 -   Recall prediction of probability of death from risk factors:
 
 ```{r bLogistic-20}
+sepsis
+summary(sepsis.2)
 sepsis.2.tidy <- tidy(sepsis.2)
 sepsis.2.tidy
 ```
@@ -540,6 +542,7 @@ miners
 miners %>% 
   group_by(Exposure) %>% 
   mutate(proportion = Freq / sum(Freq)) -> prop
+prop
 ggplot(prop, aes(x = Exposure, y = proportion,
                    colour = Severity)) + 
   geom_point() + geom_smooth(se = F)
@@ -622,7 +625,11 @@ cbind(predictions(sev.1, newdata = new)) %>%
 
 ```{r}
 plot_predictions(model = sev.1, condition = c("Exposure", "group"),
-         type = "probs") +
+         type = "probs") 
+
+```
+
+```{+}
   geom_point(data = prop, aes(x = Exposure, y = proportion, 
                               colour = Severity)) -> ggg
 ```
