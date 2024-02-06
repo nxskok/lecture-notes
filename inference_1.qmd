@@ -55,10 +55,6 @@ jays
 -   To see the first few values in all the variables, can also use
     `glimpse`:
 
-```{r inference-1-R-4, echo=FALSE}
-options(width=72)
-```
-
 ```{r inference-1-R-5}
 glimpse(jays)
 ```
@@ -148,7 +144,6 @@ with(jays, t.test(attendance))
 | **Truth**      | **Do not reject** | **reject null** |
 | **Null true**  | Correct           | Type I error    |
 | **Null false** | Type II error     | Correct         |
-
 
 -   Either type of error is bad, but for now focus on controlling Type I
     error: write $\alpha$ = P(type I error), and devise test so that
@@ -266,6 +261,17 @@ In `group`, `t` is "treatment" (the new reading method) and `c` is
 ```{r inference-1-R-14, fig.height=3.7}
 ggplot(kids, aes(x = group, y = score)) + geom_boxplot()
 ```
+
+## Two kinds of two-sample t-test
+
+-   pooled (derived in B57):
+    $t = { \bar{x}_1 - \bar{x}_2 \over s_p \sqrt{(1 / n_1) + (1 / n_2)}}$,
+    -   where
+        $s_p^2 = {(n_1 - 1) s_1^2 + (n_2 - 1)s_2^2 \over n_1 + n_2 -2}$
+-   Welch-Satterthwaite:
+    $t = {\bar{x}_1 - \bar{x}_2 \over \sqrt {{s_1^2 / n_1} + {s_2^2 / n_2}}}$
+    -   this $t$ does not have exact $t$-distribution, but is approx $t$
+        with non-integer df.
 
 ## Two kinds of two-sample t-test
 

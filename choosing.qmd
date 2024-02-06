@@ -242,7 +242,7 @@ athletes %>%
 ## Summary of data selection/arrangement "verbs" {.smaller}
 
 | Verb           | Purpose                                                          |
-|:----------------|:------------------------------------------------------|
+|:---------------|:-----------------------------------------------------------------|
 | `select`       | Choose columns                                                   |
 | `slice`        | Choose rows by number                                            |
 | `slice_sample` | Choose random rows                                               |
@@ -278,10 +278,6 @@ my_url <- "http://ritsokiguess.site/datafiles/nail_desc.csv"
 desc <- read_csv(my_url)
 desc
 ```
-
--   the `size` values are measured in inches (symbol `"`), but R uses
-    the same symbol for the start and end of text, so the `"`
-    representing "inches" is "escaped". Hence the odd look.
 
 ## The lookup
 
@@ -344,12 +340,6 @@ sales1 %>%
   left_join(desc, join_by(product_code))
 ```
 
-```{r}
-sales1 %>% 
-  left_join(desc)
-
-```
-
 -   Get `qty.x` (from `sales1`) and `qty.y` (from `desc`).
 
 ## Matching on different names 1/2
@@ -397,7 +387,7 @@ Anything in first df but not in second?
 
 ```{r}
 desc %>% anti_join(sales)
-sales %>% anti_join(desc)
+# sales %>% anti_join(desc)
 
 ```
 

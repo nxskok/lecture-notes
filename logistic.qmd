@@ -617,21 +617,18 @@ new
 
 ```{r}
 cbind(predictions(sev.1, newdata = new)) %>%
-  select(group, estimate, Exposure) %>% 
+  select(group, estimate, Exposure)
+%>% 
   pivot_wider(names_from = group, values_from = estimate)
 ```
 
 ## Plot of predicted probabilities
 
 ```{r}
-plot_predictions(model = sev.1, condition = c("Exposure", "group"),
-         type = "probs") 
+plot_predictions(model = sev.1, condition = c("Exposure", "group"), type = "probs") 
 
-```
-
-```{+}
-  geom_point(data = prop, aes(x = Exposure, y = proportion, 
-                              colour = Severity)) -> ggg
++ 
+  geom_point(data = prop, aes(x = Exposure, y = proportion, colour = Severity)) -> ggg
 ```
 
 ## The graph
@@ -681,11 +678,18 @@ brandpref %>%
          ) -> brandpref
 ```
 
+```{r}
+brandpref %>% count(sex)
+```
+
 ## Fitting model
 
 -   We use `multinom` from package `nnet`. Works like `polr`.
 
 ```{r bLogistic-48 }
+library(nnet)
+levels(brandpref$sex)
+
 brands.1 <- multinom(brand ~ age + sex, data = brandpref)
 ```
 
@@ -757,7 +761,7 @@ Space the ages out a bit for prediction (see over).
 ## Combinations
 
 ```{r}
-new <- datagrid(age = c(24, 30, 33, 35, 38), 
+new <- datagrid(age = seq(24, 30, 2), 
                 sex = c("female", "male"), model = brands.1)
 new
 ```
@@ -766,7 +770,8 @@ new
 
 ```{r bLogistic-54 }
 cbind(predictions(brands.1, newdata = new)) %>%
-  select(group, estimate, age, sex) %>% 
+  select(group, estimate, age, sex) 
+%>% 
   pivot_wider(names_from = group, values_from = estimate)
 ```
 
@@ -780,7 +785,8 @@ cbind(predictions(brands.1, newdata = new)) %>%
 
 ## Making a plot
 
--   `plot_predictions` doesn't work as we want:
+-   I thought `plot_predictions` doesn't work as we want, but I was
+    (sort of) wrong about that:
 
 ```{r}
 plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
@@ -797,7 +803,23 @@ plot_predictions(brands.1, condition = c("age", "brand", "sex"),
   geom_line() -> g
 ```
 
-## The graph
+-   We have to include `group` in the `condition`:
+
+```{r}
+plot_predictions(brands.1, condition = c("age", "group"))
+```
+
+This (I think) picks the most common `sex` in the data. If we add the
+other variable to the *end*, we get facets for `sex`:
+
+```{r}
+plot_predictions(brands.1, condition = c("age", "group", "sex"))
+```
+
+and we see that there isn't actually much difference between males and
+females.
+
+## The graph I had before
 
 ```{r, fig.height=4.5}
 g
