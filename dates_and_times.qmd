@@ -126,7 +126,7 @@ dates0 <- read_delim(my_url, " ")
 ```{r dates-and-times-12}
 dates0
 dates0 %>%
-  unite(dates, day, month, year) %>%
+  unite(dates, day, month, year)%>%
   mutate(d = dmy(dates)) -> newdates
 ```
 
@@ -151,7 +151,7 @@ newdates %>%
   mutate(
     mon = month(d),
     day = day(d),
-    weekday = wday(d, label = T)
+    weekday = wday(d, label = TRUE)
   )
 ```
 

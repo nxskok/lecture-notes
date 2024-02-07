@@ -49,7 +49,6 @@ list(
   tar_quarto(inference_5b, "inference_5b.qmd"),
   tar_quarto(logistic, "logistic.qmd"),
   tar_quarto(manova, "manova.qmd"),
-  tar_quarto(mapping, "mapping.qmd"),
   tar_quarto(multiway, "multiway.qmd"),
   tar_quarto(numsum, "numsum.qmd"),
   tar_quarto(outline_c32, "outline_c32.qmd"),

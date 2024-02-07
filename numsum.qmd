@@ -34,6 +34,10 @@ my_url <- url("http://ritsokiguess.site/datafiles/ais.txt")
 athletes <- read_tsv(my_url)
 ```
 
+```{r}
+summary(athletes)
+```
+
 ## Summarizing one column
 
 -   Mean height:
@@ -76,8 +80,8 @@ athletes %>% summarize( Q1=quantile(Wt, 0.25),
 ```{r numsum-R-6}
 athletes %>% mutate(wt_lb=Wt*2.2) %>%
   summarize(Q1_lb=quantile(wt_lb, 0.25),
-            Q3_lb=quantile(wt_lb, 0.75)) -> dd
-dd
+            Q3_lb=quantile(wt_lb, 0.75)) 
+
 ```
 
 ## Counting how many
@@ -143,6 +147,14 @@ athletes %>% summarize(across(starts_with("H"),
 athletes %>% 
   group_by(Sex) %>% 
   summarize(across(starts_with("H"), 
+                   list(med = \(h) median(h), 
+                        iqr = \(h) IQR(h))))
+```
+
+```{r}
+athletes %>% 
+  group_by(Sex) %>% 
+  summarize(across(ends_with("C"), 
                    list(med = \(h) median(h), 
                         iqr = \(h) IQR(h))))
 ```

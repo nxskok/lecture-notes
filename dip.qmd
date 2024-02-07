@@ -138,7 +138,7 @@ Sometime in December 2019 or January 2020, I downloaded some information about t
 \small
 
 ```{r dip-10}
-my_url <- "http://ritsokiguess.site/STAD29/manu.csv"
+my_url <- "http://ritsokiguess.site/datafiles/manu.csv"
 read_csv(my_url) %>% 
   select(name, date_of_birth, age) -> man_united
 ```
