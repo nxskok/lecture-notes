@@ -2649,7 +2649,7 @@ window.onload = function() {
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">list</span>(<span class="fu">sample</span>(jays<span class="sc">$</span>attendance, <span class="at">replace =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">mutate</span>(<span class="at">my_mean =</span> <span class="fu">mean</span>(sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> my_mean)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">3</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> my_mean)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">3</span>)  <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-pointless-histogram" class="slide level2">

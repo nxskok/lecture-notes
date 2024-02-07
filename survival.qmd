@@ -1,33 +1,33 @@
 ---
 title: "Survival Analysis"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
-
 
 ## Survival analysis
 
+-   So far, have seen:
 
-* So far, have seen:
+    -   response variable counted or measured (regression)
 
+    -   response variable categorized (logistic regression)
 
-   * response variable counted or measured (regression)
+-   But what if response is time until event (eg. time of survival after
+    surgery)?
 
-   * response variable categorized (logistic regression)
+-   Additional complication: event might not have happened at end of
+    study (eg. patient still alive). But knowing that patient has "not
+    died yet" presumably informative. Such data called *censored*.
 
-* But what if response is time until event (eg. time of
-survival after surgery)?
+-   Enter *survival analysis*, in particular the "Cox proportional
+    hazards model".
 
-* Additional complication: event might not have happened at end of study (eg. patient still alive). But knowing that patient has "not died yet" presumably informative. Such data called *censored*. 
-
-* Enter *survival analysis*, in particular the "Cox proportional hazards model". 
-
-* Explanatory variables in this context often called *covariates*.
-
+-   Explanatory variables in this context often called *covariates*.
 
 ## Packages
 
-* Install packages `survival` and `survminer` if not done. 
-
+-   Install packages `survival` and `survminer` if not done.
 
 ```{r}
 library(tidyverse)
@@ -37,25 +37,23 @@ library(broom)
 library(marginaleffects)
 ```
 
-
 ## Example: still dancing?
 
+-   12 women who have just started taking dancing lessons are followed
+    for up to a year, to see whether they are still taking dancing
+    lessons, or have quit. The "event" here is "quit".
 
-* 12 women who have just started taking dancing lessons are
-followed for up to a year, to see whether they are still taking
-dancing lessons, or have quit. The "event" here is "quit".
+-   This might depend on:
 
-* This might depend on:
+    -   a treatment (visit to a dance competition)
 
-
-   * a treatment (visit to a dance competition)
-
-   * woman's age (at start of study).
+    -   woman's age (at start of study).
 
 ## Data
 
 \normalsize
-```
+
+```         
 Months  Quit   Treatment Age
 1        1        0      16
 2        1        0      24
@@ -68,133 +66,133 @@ Months  Quit   Treatment Age
 10       0        1      45
 12       1        1      47
 ```
+
 \normalsize
 
 ## About the data
 
+-   `months` and `quit` are kind of combined response:
 
-* `months` and `quit` are kind of combined response:
+    -   `Months` is number of months a woman was actually observed
+        dancing
 
+    -   `quit` is 1 if woman quit, 0 if still dancing at end of study.
 
-   *  `Months` is number of months a woman was actually observed dancing
+-   Treatment is 1 if woman went to dance competition, 0 otherwise.
 
-   * `quit` is 1 if woman quit, 0 if still dancing at end of study.
+-   Fit model and see whether `Age` or `Treatment` have effect on
+    survival.
 
+-   Want to do predictions for probabilities of still dancing as they
+    depend on whatever is significant, and draw plot.
 
-* Treatment is 1 if woman went to dance competition, 0 otherwise.
+## Read data
 
-* Fit model and see whether `Age` or `Treatment`
-have effect on survival.
-
-* Want to do predictions for probabilities of still dancing as
-they depend on whatever is significant, and draw plot.
-
-
-## Read data 
-
-
-- Column-aligned: 
+-   Column-aligned:
 
 \normalsize
+
 ```{r bSurvival-2}
 url <- "http://ritsokiguess.site/datafiles/dancing.txt"
 dance <- read_table(url)
 ```
-\normalsize
 
+\normalsize
 
 ## The data
 
 \small
+
 ```{r bSurvival-3}
 dance
 ```
+
 \normalsize
-   
 
 ## Examine response and fit model
 
-
-* Response variable: 
+-   Response variable:
 
 \small
+
 ```{r bSurvival-4}
 dance %>% mutate(mth = Surv(Months, Quit)) -> dance
 dance
 ```
+
 \normalsize
 
+-   Then fit model, predicting `mth` from explanatories:
 
-  
-
-* Then fit model, predicting `mth` from explanatories:
 ```{r bSurvival-5 }
 dance.1 <- coxph(mth ~ Treatment + Age, data = dance)
 ```
- 
-
 
 ## Output looks a lot like regression
 
 \scriptsize
+
 ```{r bSurvival-6}
 summary(dance.1)
 ```
+
 \normalsize
 
 ## Conclusions
 
+-   Use $\alpha=0.10$ here since not much data.
 
-* Use $\alpha=0.10$ here since not much data.
+-   Three tests at bottom like global F-test. Consensus that something
+    predicts survival time (whether or not dancer quit and how long it
+    took).
 
-* Three tests at bottom like global F-test. Consensus that
-something predicts survival time (whether or not dancer quit and how
-long it took).
-
-* `Age` (definitely), `Treatment` (marginally) both
-predict survival time.
+-   `Age` (definitely), `Treatment` (marginally) both predict survival
+    time.
 
 ## Behind the scenes
 
-- All depends on *hazard rate*, which is based on probability that event happens in the next short time period, given that event has not happened yet:
+-   All depends on *hazard rate*, which is based on probability that
+    event happens in the next short time period, given that event has
+    not happened yet:
 
-- $X$ denotes time to event, $\delta$ is small time interval:
+-   $X$ denotes time to event, $\delta$ is small time interval:
 
-- $h(t) = P(X \le t + \delta | X \ge t) / \delta$
+-   $h(t) = P(X \le t + \delta | X \ge t) / \delta$
 
-- if $h(t)$ large, event likely to happen soon (lifetime short)
+-   if $h(t)$ large, event likely to happen soon (lifetime short)
 
-- if $h(t)$ small, event unlikely to happen soon (lifetime long).
+-   if $h(t)$ small, event unlikely to happen soon (lifetime long).
 
 ## Modelling lifetime
 
-- want to model hazard rate
+-   want to model hazard rate
 
-- but hazard rate always positive, so actually model *log* of hazard rate
+-   but hazard rate always positive, so actually model *log* of hazard
+    rate
 
-- modelling how (log-)hazard rate depends on other things eg $X_1 =$ age, $X_2 =$ treatment, with the $\beta$ being regression coefficients:
+-   modelling how (log-)hazard rate depends on other things eg $X_1 =$
+    age, $X_2 =$ treatment, with the $\beta$ being regression
+    coefficients:
 
-- Cox model $h(t)=h_0(t)\exp(\beta_0+\beta_1X_1+\beta_2 X_2+\cdots)$, or:
+-   Cox model $h(t)=h_0(t)\exp(\beta_0+\beta_1X_1+\beta_2 X_2+\cdots)$,
+    or:
 
-- $\log(h(t)) = \log(h_0(t)) + \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots$
+-   $\log(h(t)) = \log(h_0(t)) + \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots$
 
-- like a generalized linear model with log link.
+-   like a generalized linear model with log link.
 
 ## Model checking
 
+-   With regression, usually plot residuals against fitted values.
 
-* With regression, usually plot residuals against fitted values.
+-   Not quite same here (nonlinear model), but \`\`martingale
+    residuals'' should have no pattern vs. "linear predictor".
 
-* Not quite same here (nonlinear model), but ``martingale
-residuals'' should have no pattern vs.\ "linear predictor".
+-   `ggcoxdiagnostics` from package `survminer` makes plot, to which we
+    add smooth. If smooth trend more or less straight across, model OK.
 
-* `ggcoxdiagnostics` from package `survminer`
-makes plot, to which we add smooth. If smooth trend more or less
-straight across, model OK. 
-
-* Martingale residuals can go very negative, so won't always
-look normal.
-
+-   Martingale residuals can go very negative, so won't always look
+    normal.
 
 ## Martingale residual plot for dance data
 
@@ -202,30 +200,28 @@ This looks good (with only 12 points):
 
 ```{r bSurvival-7, fig.height=3}
 #| warning = FALSE
-ggcoxdiagnostics(dance.1) + geom_smooth(se = F)
+ggcoxdiagnostics(dance.1) 
 ```
 
-   
+## Predicted survival probs
 
-## Predicted survival probs 
-- The function we use is called
-`survfit`, though actually works rather like
-`predict`. 
-- First create a data frame of values to predict from. We'll do all
-combos of ages 20 and 40, treatment and not, using
-`crossing` to get all the combos:
+-   The function we use is called `survfit`, though actually works
+    rather like `predict`.
+-   First create a data frame of values to predict from. We'll do all
+    combos of ages 20 and 40, treatment and not, using `datagrid` to get
+    all the combos:
 
-\small
 ```{r bSurvival-8}
 treatments <- c(0, 1)
 ages <- c(20, 40)
-dance.new <- crossing(Treatment = treatments, Age = ages)
+dance.new <- datagrid(model = dance.1, Treatment = treatments, Age = ages)
 dance.new
 ```
-\normalsize 
 
-## The predictions  
-One prediction *for each time* for each combo of age and treatment in `dance.new`:
+## The predictions
+
+One prediction *for each time* for each combo of age and treatment in
+`dance.new`:
 
 ```{r bSurvival-9, echo=F}
 options(width = 80)
@@ -234,31 +230,25 @@ dance <- read_table(url)
 dance %>% mutate(mth = Surv(Months, Quit)) -> dance
 ```
 
-
-
 \footnotesize
+
 ```{r bSurvival-10}
 s <- survfit(dance.1, newdata = dance.new, data = dance)
 summary(s)
 ```
+
 \normalsize
-
-
 
 ## Conclusions from predicted probs
 
+-   Older women more likely to be still dancing than younger women
+    (compare "profiles" for same treatment group).
 
-* Older women more likely to be still dancing than younger women
-(compare "profiles" for same treatment group).
+-   Effect of treatment seems to be to increase prob of still dancing
+    (compare "profiles" for same age for treatment group vs. not)
 
-* Effect of treatment seems to be to increase prob of still
-dancing (compare "profiles" for same age for treatment group
-vs.\ not)
-
-* Would be nice to see this on a graph. This is `ggsurvplot` from package `survminer`:
-
-
-
+-   Would be nice to see this on a graph. This is `ggsurvplot` from
+    package `survminer`:
 
 ```{r bSurvival-11 }
 g <- ggsurvplot(s, conf.int = F)
@@ -266,130 +256,119 @@ g <- ggsurvplot(s, conf.int = F)
 
 ## "Strata" (groups)
 
-- uses "strata" thus (`dance.new`): 
+-   uses "strata" thus (`dance.new`):
 
 \footnotesize
 
 ```{r bSurvival-12, echo=F}
 dance.new
 ```
+
 \normalsize
 
+## Plotting survival probabilities
 
-
-
-## Plotting survival probabilities 
 ```{r survival-plot, fig.height=3.8}
 g
 ```
 
-   
+## Discussion
 
-## Discussion 
+-   Survivor curve farther to the right is better (better chance of
+    surviving longer).
 
+-   Best is age 40 with treatment, worst age 20 without.
 
-* Survivor curve farther to the right is better (better chance
-of surviving longer).
+-   Appears to be:
 
-* Best is age 40 with treatment, worst age 20 without.
+    -   age effect (40 better than 20)
 
-* Appears to be: 
+    -   treatment effect (treatment better than not)
 
-
-   * age effect (40 better than 20)
-
-   * treatment effect (treatment better than not)
-
-
-   * In analysis, treatment effect only marginally significant.
-
+    -   In analysis, treatment effect only marginally significant.
 
 ## A more realistic example: lung cancer
 
+-   When you load in an R package, get data sets to illustrate functions
+    in the package.
 
-* When you
-load in an R package, get data sets to illustrate 
-functions in the package. 
+-   One such is `lung`. Data set measuring survival in patients with
+    advanced lung cancer.
 
-* One such is `lung`. Data
-set measuring survival in patients with advanced lung cancer. 
+-   Along with survival time, number of "performance scores" included,
+    measuring how well patients can perform daily activities.
 
-* Along with survival time, number of "performance scores"
-included, measuring how well patients can perform daily
-activities.
+-   Sometimes high good, but sometimes bad!
 
-* Sometimes high good, but sometimes bad!
-
-* Variables below,
-from the data set help file  (`?lung`).
-
+-   Variables below, from the data set help file (`?lung`).
 
 ## The variables
 
 ![](lung-cancer-data.png)
-  
 
 ## Uh oh, missing values
 
 \scriptsize
+
 ```{r bSurvival-13}
-lung %>% slice(1:16)
+lung
 ```
+
 \normalsize
-       
 
-## A closer look 
-
+## A closer look
 
 ```{r bSurvival-14, echo=F}
 options(width = 70)
 ```
 
-
 \tiny
- 
+
 ```{r bSurvival-15}
 summary(lung)
 ```
+
 \normalsize
 
-   
-
-## Remove obs with *any* missing values 
+## Remove obs with *any* missing values
 
 \small
+
 ```{r bSurvival-16}
 lung %>% drop_na() -> lung.complete
 lung.complete %>%
   select(meal.cal:wt.loss) %>%
   slice(1:10)
 ```
+
 \normalsize
 
-
-   
 Missing values seem to be gone.
 
-## Check! 
+## Check!
+
 \tiny
+
 ```{r bSurvival-17}
 summary(lung.complete)
 ```
+
 \normalsize
 
-
-   
 No missing values left.
 
 ## Model 1: use everything except `inst`
+
 \footnotesize
+
 ```{r bSurvival-18}
 names(lung.complete)
 ```
+
 \normalsize
 
-- Event was death, goes with `status` of 2:
- 
+-   Event was death, goes with `status` of 2:
+
 ```{r bSurvival-19 }
 lung.complete %>% 
    mutate(resp = Surv(time, status == 2)) ->
@@ -398,85 +377,82 @@ lung.1 <- coxph(resp ~ . - inst - time - status,
   data = lung.complete
 )
 ```
- 
+
 "Dot" means "all the other variables".
 
 ## `summary` of model 1
+
 \tiny
+
 ```{r bSurvival-20}
 summary(lung.1)
 ```
+
 \normalsize
 
- 
-
 ## Overall significance
-The three tests of overall significance: 
-\small
+
+The three tests of overall significance: \small
+
 ```{r bSurvival-21}
 glance(lung.1) %>% select(starts_with("p.value"))
 ```
+
 \normalsize
 
- 
-All strongly significant. *Something* predicts survival. 
+All strongly significant. *Something* predicts survival.
 
+## Coefficients for model 1
 
-## Coefficients for model 1 
 \small
+
 ```{r bSurvival-22 }
 tidy(lung.1) %>% select(term, p.value) %>% arrange(p.value)
 ```
+
 \normalsize
 
- 
+-   `sex` and `ph.ecog` definitely significant here
 
+-   `age`, `pat.karno` and `meal.cal` definitely not
 
-* `sex` and
-`ph.ecog` definitely significant here 
-
-* `age`, `pat.karno` and
-`meal.cal` definitely not
-
-* Take out definitely non-sig variables, and try again.
-
+-   Take out definitely non-sig variables, and try again.
 
 ## Model 2
+
 \normalsize
+
 ```{r bSurvival-23}
 lung.2 <- update(lung.1, . ~ . - age - pat.karno - meal.cal)
 tidy(lung.2) %>% select(term, p.value)
 ```
+
 \normalsize
 
-## Compare with first model: 
+## Compare with first model:
 
 \normalsize
 
 ```{r bSurvival-24}
 anova(lung.2, lung.1)
 ```
+
 \normalsize
 
+-   No harm in taking out those variables.
 
-       
+## Model 3
 
-* No harm in taking out those variables.
-
-
-## Model 3 
-
-Take out `ph.karno` and `wt.loss` as well. 
-
+Take out `ph.karno` and `wt.loss` as well.
 
 ```{r bSurvival-25}
 lung.3 <- update(lung.2, . ~ . - ph.karno - wt.loss)
 ```
- 
+
 ```{r tidy-lung-3}
 tidy(lung.3) %>% select(term, estimate, p.value)
+summary(lung.3)
 ```
- 
 
 ## Check whether that was OK
 
@@ -484,98 +460,90 @@ tidy(lung.3) %>% select(term, estimate, p.value)
 anova(lung.3, lung.2)
 ```
 
-*Just* OK. 
-
+*Just* OK.
 
 ## Commentary
 
+-   OK (just) to take out those two covariates.
 
-* OK (just) to take out those two covariates.
+-   Both remaining variables strongly significant.
 
-* Both remaining variables strongly significant.
+-   Nature of effect on survival time? Consider later.
 
-* Nature of effect on survival time? Consider later. 
-
-* Picture?
-
+-   Picture?
 
 ## Plotting survival probabilities
 
-
-* Create new data frame of values to predict for, then predict:
+-   Create new data frame of values to predict for, then predict:
 
 \footnotesize
+
 ```{r bSurvival-27}
 sexes <- c(1, 2)
 ph.ecogs <- 0:3
 lung.new <- datagrid(sex = sexes, ph.ecog = ph.ecogs, model = lung.3)
 lung.new
 ```
+
 \normalsize
 
- 
+## Making the plot
 
-## Making the plot 
 ```{r bSurvival-29, fig.height=3.8}
 s <- survfit(lung.3, newdata = lung.new, data = lung)
+summary(s)
 g <- ggsurvplot(s, conf.int = F)
 ```
- 
+
 ## The plot
 
 ```{r bSurvival-30, fig.height=3.8}
 g
 ```
 
-
 ## Discussion of survival curves
 
+-   Best survival is teal-blue curve, stratum 5, females with `ph.ecog`
+    score 0.
 
-* Best survival is teal-blue curve, stratum 5, females with
-`ph.ecog` score 0.
+-   Next best: blue, stratum 6, females with score 1, and red, stratum
+    1, males score 0.
 
-* Next best: blue, stratum 6, females with score 1, and
-red, stratum 1, males score 0.
+-   Worst: green, stratum 4, males score 3.
 
-* Worst: green, stratum 4, males score 3.
+-   For any given `ph.ecog` score, females have better predicted
+    survival than males.
 
-* For any given `ph.ecog` score, females have better
-predicted survival than males.
+-   For both genders, a lower score associated with better survival.
 
-* For both genders, a lower score associated with better
-survival.
-
-## The coefficients in model 3 
+## The coefficients in model 3
 
 ```{r bSurvival-31, ref.label="tidy-lung-3"}
 ```
 
+-   `sex` coeff negative, so being higher `sex` value (female) goes with
+    *less* hazard of dying.
 
-* `sex` coeff negative, so being higher
-`sex` value (female) goes with *less* hazard of dying.
+-   `ph.ecog` coeff positive, so higher `ph.ecog` score goes with *more*
+    hazard of dying
 
-* `ph.ecog` coeff positive, so higher
-`ph.ecog` score goes with *more* hazard of dying
-
-* Two coeffs about same size, so being male rather than female
-corresponds to 1-point increase in `ph.ecog` score. Note
-how survival curves come in 3 pairs plus 2 odd.
-
+-   Two coeffs about same size, so being male rather than female
+    corresponds to 1-point increase in `ph.ecog` score. Note how
+    survival curves come in 3 pairs plus 2 odd.
 
 ## Martingale residuals for this model
+
 No problems here:
 
 ```{r bSurvival-32, fig.height=3}
 ggcoxdiagnostics(lung.3) + geom_smooth(se = F)
 ```
 
-   
-
 ## When the Cox model fails
 
+-   Invent some data where survival is best at middling age, and worse
+    at high *and* low age:
 
-* Invent some data where survival is best at middling age, and
-worse at high *and* low age:
 ```{r bSurvival-33 }
 age <- seq(20, 60, 5)
 survtime <- c(10, 12, 11, 21, 15, 20, 8, 9, 11)
@@ -584,13 +552,10 @@ d <- tibble(age, survtime, stat)
 d %>% mutate(y = Surv(survtime, stat)) -> d
 ```
 
-     
+-   Small survival time 15 in middle was actually censored, so would
+    have been longer if observed.
 
-* Small survival time 15 in middle was actually censored, so would
-have been longer if observed.
-
-
-## Fit Cox model 
+## Fit Cox model
 
 \footnotesize
 
@@ -598,36 +563,30 @@ have been longer if observed.
 y.1 <- coxph(y ~ age, data = d)
 summary(y.1)
 ```
+
 \normalsize
 
-   
+## Martingale residuals
 
-## Martingale residuals 
-
-Down-and-up indicates incorrect relationship between age and
-survival: 
+Down-and-up indicates incorrect relationship between age and survival:
 
 ```{r bSurvival-35, fig.height=3.4, message=F}
 #| warning = FALSE
 ggcoxdiagnostics(y.1) + geom_smooth(se = F)
 ```
 
-   
-
 ## Attempt 2
 
 Add squared term in age:
-
 
 ```{r bSurvival-36}
 y.2 <- coxph(y ~ age + I(age^2), data = d)
 tidy(y.2) %>% select(term, estimate, p.value)
 ```
 
-- (Marginally) helpful.
-       
+-   (Marginally) helpful.
 
-## Martingale residuals this time 
+## Martingale residuals this time
 
 Not great, but less problematic than before:
 
@@ -635,7 +594,3 @@ Not great, but less problematic than before:
 #| warning = FALSE
 ggcoxdiagnostics(y.2) + geom_smooth(se = F)
 ```
-
-   
-
-
