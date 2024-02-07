@@ -154,6 +154,31 @@ long it took).
 * `Age` (definitely), `Treatment` (marginally) both
 predict survival time.
 
+## Behind the scenes
+
+- All depends on *hazard rate*, which is based on probability that event happens in the next short time period, given that event has not happened yet:
+
+- $X$ denotes time to event, $\delta$ is small time interval:
+
+- $h(t) = P(X \le t + \delta | X \ge t) / \delta$
+
+- if $h(t)$ large, event likely to happen soon (lifetime short)
+
+- if $h(t)$ small, event unlikely to happen soon (lifetime long).
+
+## Modelling lifetime
+
+- want to model hazard rate
+
+- but hazard rate always positive, so actually model *log* of hazard rate
+
+- modelling how (log-)hazard rate depends on other things eg $X_1 =$ age, $X_2 =$ treatment, with the $\beta$ being regression coefficients:
+
+- Cox model $h(t)=h_0(t)\exp(\beta_0+\beta_1X_1+\beta_2 X_2+\cdots)$, or:
+
+- $\log(h(t)) = \log(h_0(t)) + \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots$
+
+- like a generalized linear model with log link.
 
 ## Model checking
 

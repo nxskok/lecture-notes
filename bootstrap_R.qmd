@@ -124,9 +124,7 @@ tibble(sim = 1:4) %>%
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3) 
-
--> g
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3)  -> g
 ```
 
 ## The (pointless) histogram
@@ -225,7 +223,7 @@ tibble(sim = 1:1000) %>%
 
 ```{r bootstrap-R-19}
 kids %>% filter(group=="t") -> treats
-tibble(sim = 1:10000) %>% 
+tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
@@ -234,5 +232,6 @@ tibble(sim = 1:10000) %>%
 
 ## Comments
 
--   sampling distributions of sample means both look pretty normal
+-   sampling distributions of sample means both look pretty normal,
+    though treatment group is a tiny bit left-skewed
 -   as we thought, no problems with our two-sample $t$ at all.
