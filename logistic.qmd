@@ -617,8 +617,7 @@ new
 
 ```{r}
 cbind(predictions(sev.1, newdata = new)) %>%
-  select(group, estimate, Exposure)
-%>% 
+  select(group, estimate, Exposure) %>% 
   pivot_wider(names_from = group, values_from = estimate)
 ```
 
@@ -770,8 +769,7 @@ new
 
 ```{r bLogistic-54 }
 cbind(predictions(brands.1, newdata = new)) %>%
-  select(group, estimate, age, sex) 
-%>% 
+  select(group, estimate, age, sex) %>% 
   pivot_wider(names_from = group, values_from = estimate)
 ```
 

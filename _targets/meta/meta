@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|62d2e146ccf617b8|||||||||||||||
+.Random.seed|object|ac10b355cec08834|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> d3cd1ce2b203be81e283bf46a4e925b610972dd8|||||||||||||||||
@@ -41,13 +41,13 @@ choosing_R_slides|stem|5d2951d9087b0c78|bd4d9a7cc0e8af9e|8f1e747f00e044e1|176770
 cluster|stem|791a635ec546bab5|df887ed2fa41ab97|d84d7cdd1c3c4b08|534813681|cluster_files*cluster.html*cluster.qmd|t19492.175131927s|e3f1b89a17bd9fda|169183|file|local|vector|||92.287||
 dates_and_times|stem|4be502b7fdce478d|04fb57e99ca9a7de|d84d7cdd1c3c4b08|-552915072|dates_and_times_files*dates_and_times.html*dates_and_times.qmd|t19489.7179533219s|3d0959f2b9c8e9c3|78537|file|local|vector|||4.018||
 dates_and_times_slides|stem|ec7ac5bc2b39360b|3e88a8b319a2a4af|6ea95c1512e41064|1009841895|dates_and_times_slides.pdf*dates_and_times_slides.Rmd|t19379.7269122926s|8f908f5d3ce5521b|61381|file|local|vector|||9.204||
-dip|stem|713e2dbfd6785f69|5054b0299a393842|d84d7cdd1c3c4b08|1553108846|dip_files*dip.html*dip.qmd|t19489.7182186937s|534e9c2f61fe5ffe|69738|file|local|vector|||3.664||
+dip|stem|713e2dbfd6785f69|e58a6570a8cc28f9|ef46db3751d8e999|-2102641860|dip_files*dip.html*dip.qmd|t19489.7182186937s||69738|file|local|vector|||27.015||33m39m System command quarto failed
 dip_slides|stem|e45b151a344de6e0|028287feb08ba36b|4bd369eab708936e|377450994|dip_slides.pdf*dip_slides.Rmd|t19379.9149262551s|482edfd674df0778|64079|file|local|vector|||9.384||
 discrim|stem|2561fc1f8f16a339|e57612d38ef99da4|d84d7cdd1c3c4b08|-1950677120|discrim_files*discrim.html*discrim.qmd|t19489.7181286469s|69934756830bff67|128267|file|local|vector|||9.338||
 factor|stem|7d9b5a5b81e91093|963b8fbf4654d4c0|d84d7cdd1c3c4b08|2062570087|factor_files*factor.html*factor.qmd|t19489.7165475734s|ff4f0e0fa70a68f2|745669|file|local|vector|||7.766||
 functions|stem|accac62ebf6f2d67|3f9359bfa307e254|d84d7cdd1c3c4b08|1242340633|functions_files*functions.html*functions.qmd|t19489.7174351246s|44ec2bb4d7a41db8|107629|file|local|vector|||3.867||
 functions_slides|stem|753549b2a6c2a00d|a358bcb497d662e9|8479d19d644288c3|-1669360982|functions_slides.pdf*functions_slides.Rmd|t19380.2030381983s|bc8fdbe7b51a4f12|121311|file|local|vector|||12.815||
-graphs|stem|9c4bfefe18beb0cd|562c238578d595b7|d84d7cdd1c3c4b08|-877084551|graphs_files*graphs.html*graphs.qmd|t19489.7177827654s|c3654a02aec28f16|86105|file|local|vector|||7.445||
+graphs|stem|031e32802a7b89b8|a463d9dc4ff86aa9|ef46db3751d8e999|944069367|graphs_files*graphs.html*graphs.pdf*graphs.qmd|t19760.7787251277s|cad8751fb220e4dd|5102137|file|local|vector|||77.963||
 graphs_R|stem|a9612ab8f8323e91|ba2a1604eedf5507|ef46db3751d8e999|-2115159619|graphs_R.Rmd|t19374.6868897982s|7031694a7cef1c81|3132|file|local|vector|||0||
 graphs_R_slides|stem|c9db4d02569b0fd9|9bb7e2a8f597b3d0|9530f23b1dba258e|451036043|graphs_R_slides.pdf*graphs_R_slides.Rmd|t19380.2030385224s|395818be89bc4bab|178723|file|local|vector|||33.991|package cmdstanr was built under R version 4.3.0|
 index|stem|f0ad8d6594e19b43|9c1f36055ca71e73|d84d7cdd1c3c4b08|-1857023687|index.md*index.qmd|t19528.6331516957s|2ce6fb1ce1bc570c|16893|file|local|vector|||1.295||
@@ -76,7 +76,7 @@ manova|stem|2399ae12596c6cc0|6a05bd6d50d2ea9c|d84d7cdd1c3c4b08|-1229247710|manov
 mapping|stem|12496460bfbb5ac3|536e887c80c1e8e5|d84d7cdd1c3c4b08|607285889|mapping_files*mapping.html*mapping.qmd|t19489.7175367455s|222c2ca194f36476|80109|file|local|vector|||8.232||
 mapping_slides|stem|5e9a22f37f1de127|2b764460e0b0deac|356053bfec8b35bb|223396972|mapping_slides.pdf*mapping_slides.Rmd|t19467.7695602666s|6dcaaab2c36eca21|1387804|file|local|vector|||12.003||
 multiway|stem|8105ea90708e1698|c186b8ec5195f70b|d84d7cdd1c3c4b08|-473389404|multiway_files*multiway.html*multiway.qmd|t19528.7194421593s|3b193c2f5e15e6c0|115807|file|local|vector|||8.118||
-numsum|stem|ecb1afc138961a48|42d495ad7bc288d4|d84d7cdd1c3c4b08|-1550205955|numsum_files*numsum.html*numsum.qmd|t19489.7167354911s|915efab74dd0f6fa|59046|file|local|vector|||3.364||
+numsum|stem|0b9deb2a59376b97|f5e11d82936e927b|ef46db3751d8e999|-689001887|numsum.html*numsum.pdf*numsum.qmd|t19760.7792746703s|fda7d2cc5be12742|3649837|file|local|vector|||47.36||
 numsum_R|stem|acd019b6452a088f|c07540b74fb11021|ef46db3751d8e999|1220761656|numsum_R.Rmd|t19382.6543901302s|da93582f847e2101|3272|file|local|vector|||3.722||
 numsum_R_slides|stem|3fb5bb2e413a8d27|6038baeebed6f1b9|ca0e97cc3749c5ed|807988737|numsum_R_slides.pdf*numsum_R_slides.Rmd|t19382.6549249018s|fc6b9977db24f018|38725|file|local|vector|||20.623|Package microtype Warning Unable to apply patch footnote on input line 145.|
 outline_c32|stem|1ea2c04ef4b09061|2f26092057504600|d84d7cdd1c3c4b08|1640658786|outline_c32_files*outline_c32.html*outline_c32.qmd|t19489.7181505452s|bc0ec832e9bd3869|53952|file|local|vector|||1.435||
@@ -108,7 +108,7 @@ tidying|stem|9fbd188ded1ca789|0bfcb58605926bfb|d84d7cdd1c3c4b08|-653550833|tidyi
 tidying_R|stem|7e812dfd7161baa5|45cc31f6e5e85a71|ef46db3751d8e999|1298264764|tidying_R.Rmd|t19430.6527178298s|82f22308315f063e|10839|file|local|vector|||0||
 tidying_R_slides|stem|b08fa955622715cf|c902e5afc4569891|430369db8d858b0b|348967195|tidying_R_slides.pdf*tidying_R_slides.Rmd|t19380.2030581059s|856608e6a12a2eeb|1464366|file|local|vector|||2437.661||
 vector_matrix|stem|1e33d47964471126|bde6f035bf107e47|d84d7cdd1c3c4b08|1156809554|vector_matrix_files*vector_matrix.html*vector_matrix.pdf*vector_matrix.qmd|t19529.1246313368s|6bda47f46e69d7ea|5972344|file|local|vector|||17.364||
-wider_wrong|stem|1cf810c6563e176d|4c636f6fc83379e8|d84d7cdd1c3c4b08|1191330650|wider_wrong_files*wider_wrong.html*wider_wrong.qmd|t19489.7170241038s|c5bc620ad17d500a|55410|file|local|vector|||3.242||
+wider_wrong|stem|dc9b3a98e6c4b303|584ba85738c635f6|ef46db3751d8e999|217220171|wider_wrong_files*wider_wrong.html*wider_wrong.pdf*wider_wrong.qmd|t19760.7778210906s|9938ca3f14151702|3686311|file|local|vector|||37.373||
 wider_wrong_slides|stem|608292203f981279|e4a5847aa25bd829|cdc50657a9350338|262913204|wider_wrong_slides.pdf*wider_wrong_slides.Rmd|t19380.2030608837s|dd7ce027b6fa5365|45021|file|local|vector|||85.929|package cmdstanr was built under R version 4.3.0|
 windmill|stem|68564af0bbe48d7a|f0d3185fcb23b9bf|d84d7cdd1c3c4b08|1981348093|windmill_files*windmill.html*windmill.qmd|t19489.7183108702s|324ab0e94a2f5f31|105624|file|local|vector|||7.191||
 windmill_slides|stem|4231604f24ed30b6|ca80591eeba57987|ddbba9933c9282f4|-365915698|windmill_slides.pdf*windmill_slides.Rmd|t19380.0237043962s|80de266df74f2b95|167475|file|local|vector|||14.146||
