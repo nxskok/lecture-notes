@@ -147,7 +147,7 @@ summary(dance.1)
     took).
 
 -   `Age` (definitely), `Treatment` (marginally) both predict survival
-    time.
+    time. 
 
 ## Behind the scenes
 
