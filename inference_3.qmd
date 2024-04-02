@@ -46,7 +46,7 @@ t.test(y ~ group, data = twogroups)
 t.test(y ~ group, data = twogroups, conf.level = 0.90)
 ```
 
-## Too highHypothesis test
+## Hypothesis test
 
 Null is that difference in means is zero:
 
@@ -70,7 +70,7 @@ corresponding CI to level-$\alpha$ test. Then following always true.
 (Symbol $\iff$ means "if and only if".)
 
 | Test decision                         |        | Confidence interval                   |
-|:----------------------------|:-------------:|:----------------------------|
+|:--------------------------|:---------------:|:--------------------------|
 | Reject $H_0$ at level $\alpha$        | $\iff$ | $C\%$ CI does not contain $H_0$ value |
 | Do not reject $H_0$ at level $\alpha$ | $\iff$ | $C\%$ CI contains $H_0$ value         |
 
@@ -175,6 +175,20 @@ tibble(x=17:30) %>%
   mutate(prob=dbinom(x, 30, 0.5)) %>% 
   summarize(total=sum(prob))
 ```
+
+or
+
+```{r}
+pbinom(17, 30, 0.5) # prob of <= 17
+```
+
+and hence (note first input):
+
+```{r}
+pbinom(16, 30, 0.5, lower.tail = FALSE)
+```
+
+This last is $P(X \ge 17) = P(X > 16)$.
 
 ## Using my package `smmr`
 

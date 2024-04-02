@@ -142,7 +142,7 @@ cbind(predictions(prepost.1, newdata = new)) %>%
 ## Predictions (with interaction included), plotted
 
 ```{r, fig.height=4}
-plot_cap(model = prepost.1, condition = c("before", "drug"))
+plot_predictions(model = prepost.1, condition = c("before", "drug"))
 ```
 
 Lines almost parallel, but not quite.
@@ -175,7 +175,7 @@ cbind(predictions(prepost.2, newdata = new)) %>%
 ## Plot of predicted values
 
 ```{r, fig.height=4}
-plot_cap(prepost.2, condition = c("before", "drug"))
+plot_predictions(prepost.2, condition = c("before", "drug"))
 ```
 
 This time the lines are *exactly* parallel. No-interaction model forces them

@@ -1788,8 +1788,8 @@ output: github_document
 
 ## STAC32/C33 lecture notes:
 
-- [STAC32 lecture notes](https://github.com/nxskok/notes/blob/master/slides_c32.pdf)
-- [STAC32 R Markdown file](https://raw.githubusercontent.com/nxskok/notes/master/slides_c32.Rmd)
+- [STAC32 lecture notes](https://github.com/nxskok/notes/blob/slides_c32.pdf)
+- [STAC32 R Markdown file](http://ritsokiguess.site/notes/slides_c32.Rmd)
 
 ```{r -main-47}
 

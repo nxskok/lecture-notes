@@ -25,13 +25,14 @@ library(tidyverse)
 ```{r inference-4a-R-1, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
+glimpse(kids)
 ```
 
 ```{r inference-4a-R-2}
 ggplot(kids, aes(x = group, y = score)) + geom_boxplot()
 ```
 
-Each group looks normal, or at least symmetric.
+Each group looks more or less normal, or at least close to symmetric.
 
 ## Get the groups separately
 

@@ -162,6 +162,7 @@ options(width = 60)
 
 ```{r inference-5-R-19}
 rats.aov <- aov(density~group, data = rats)
+summary(rats.aov)
 TukeyHSD(rats.aov)
 ```
 
@@ -274,7 +275,7 @@ oneway.test(density~group, data=rats)
 -   Lives in package `PMCMRplus`. Install first.
 
 ```{r games-howell, warning=F}
-gamesHowellTest(density~factor(group),data=rats)
+gamesHowellTest(density ~ factor(group), data = rats)
 ```
 
 ## Deciding which test to do

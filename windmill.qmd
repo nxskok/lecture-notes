@@ -55,7 +55,7 @@ ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
 
 ```{r windmill-5, echo=FALSE, message=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth(se = F) 
+  geom_point() + geom_smooth(se = FALSE) 
 ```
 
 ## Comments

@@ -138,7 +138,7 @@ We correctly rejected 422 times out of 1000, so the estimated power is
 ```{r inference-2-R-6a}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
-  mutate(my_sample = list(rnorm(30, 8, 4))) %>% 
+  mutate(my_sample = list(rnorm(40, 8, 4))) %>% 
   mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
   mutate(p_val = t_test$p.value) %>% 
   count(p_val <= 0.05)
@@ -233,6 +233,7 @@ ns
 ```{r inference-2-R-10}
 ans<- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
 ans
+str(ans)
 ans$power
 ```
 
@@ -254,7 +255,9 @@ d
 
 ```{r inference-2-R-12}
 g  <-  ggplot(d, aes(x = n, y = power)) + geom_point() + 
-  geom_line() + 
+  geom_line() 
+
++ 
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
 

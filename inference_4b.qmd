@@ -53,6 +53,7 @@ my_url <-
   "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
 pain
+glimpse(pain)
 ```
 
 ## Paired *t*-test

@@ -125,7 +125,7 @@ predictions(status.1)
 ## On a graph
 
 ```{r, fig.height=4}
-plot_cap(status.1, condition = "dose")
+plot_predictions(status.1, condition = "dose")
 ```
 
 
@@ -226,7 +226,7 @@ cbind(predictions(rat2.1))
 ## On a picture
 
 ```{r, fig.height=4}
-# plot_cap(rat2.1, condition = "dose", draw = FALSE)
+# plot_predictions(rat2.1, condition = "dose", draw = FALSE)
 cbind(predictions(rat2.1)) %>% 
   select(estimate, conf.low, conf.high, dose) %>% 
   ggplot(aes(x = dose, y = estimate, ymin = conf.low, ymax = conf.high)) + geom_line() +
@@ -762,7 +762,7 @@ cbind(predictions(sev.1, newdata = new)) %>%
 ## Plot of predicted probabilities
 
 ```{r}
-plot_cap(model = sev.1, condition = c("Exposure", "group"),
+plot_predictions(model = sev.1, condition = c("Exposure", "group"),
          type = "probs") +
   geom_point(data = prop, aes(x = Exposure, y = proportion, 
                               colour = Severity)) -> ggg
@@ -949,11 +949,11 @@ brand 2 more.
 
 ## Making a plot
 
-- `plot_cap` doesn't quite work
+- `plot_predictions` doesn't quite work
 - so don't draw, edit, *then* make graph:
 
 ```{r}
-plot_cap(brands.1, condition = c("age", "brand", "sex"), 
+plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
          type = "probs", draw = FALSE)  %>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
@@ -1185,7 +1185,7 @@ the two genders.
 ## Make graph again
 
 ```{r}
-plot_cap(brands.4, condition = c("age", "brand", "sex"), 
+plot_predictions(brands.4, condition = c("age", "brand", "sex"), 
          type = "probs", draw = FALSE)  %>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +

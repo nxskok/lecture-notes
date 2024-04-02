@@ -1,29 +1,31 @@
 ---
-title: "Discrimimant Analysis"
+title: "Discriminant Analysis"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
-
-
 
 ## Discriminant analysis
 
+-   ANOVA and MANOVA: predict a (counted/measured) response from group
+    membership.
 
-* ANOVA and MANOVA: predict a (counted/measured) response from group membership.
+-   Discriminant analysis: predict group membership based on
+    counted/measured variables.
 
-* Discriminant analysis: predict group membership based on counted/measured variables.
+-   Covers same ground as logistic regression (and its variations), but
+    emphasis on classifying observed data into correct groups.
 
-* Covers same ground as logistic regression (and its variations), but emphasis on classifying observed data into correct groups.
+-   Does so by searching for linear combination of original variables
+    that best separates data into groups (canonical variables).
 
-* Does so by searching for linear combination of original variables that best separates data into groups (canonical variables).
-
-* Assumption here that groups are known (for data we have). If trying to "best separate" data into unknown groups, see *cluster analysis*.
-
-
+-   Assumption here that groups are known (for data we have). If trying
+    to "best separate" data into unknown groups, see *cluster analysis*.
 
 ## Packages
 
 ```{r bDiscrim-1, message=FALSE, warning=FALSE}
-library(MASS)
+library(MASS, exclude = "select")
 library(tidyverse)
 library(ggrepel)
 library(ggbiplot)
@@ -36,32 +38,29 @@ conflict_prefer("filter", "dplyr")
 conflict_prefer("mutate", "dplyr")
 ```
 
-   
-
-- `ggrepel` allows labelling points on a plot so they don't
-overwrite each other.
-- `ggbiplot` uses `plyr` rather than `dplyr`, which has functions by similar names.
+-   `ggrepel` allows labelling points on a plot so they don't overwrite
+    each other.
+-   `ggbiplot` uses `plyr` rather than `dplyr`, which has functions by
+    similar names.
 
 ## About `select`
 
+-   Both `dplyr` (in `tidyverse`) and `MASS` have a function called
+    `select`, and *they do different things*.
 
-* Both `dplyr` (in `tidyverse`) and `MASS`
-have a function called `select`, and *they do
-different things*.
+-   How do you know which `select` is going to get called?
 
-* How do you know which `select` is going to get called? 
+-   With `library`, the one loaded *last* is visible, and others are
+    not.
 
-* With `library`, the one loaded *last* is visible,
-and others are not.
+-   Thus we can access the `select` in `dplyr` but not the one in
+    `MASS`. If we wanted that one, we'd have to say `MASS::select`.
 
-* Thus we can access the `select` in `dplyr` but
-not the one in `MASS`. If we wanted that one, we'd have to
-say `MASS::select`.
-
-- Better: load `conflicted` package. Any time you load two packages containing functions with same name, you get error and have to choose between them. 
+-   Better: load `conflicted` package. Any time you load two packages
+    containing functions with same name, you get error and have to
+    choose between them.
 
 ## Example 1: seed yields and weights
-
 
 ```{r bDiscrim-2, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/manova1.txt"
@@ -69,28 +68,21 @@ hilo <- read_delim(my_url, " ")
 g <- ggplot(hilo, aes(x = yield, y = weight,
   colour = fertilizer)) + geom_point(size = 4)
 ```
- 
 
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="40%"}
 Recall data from MANOVA: needed a multivariate analysis to find
-difference in seed yield and weight based on whether they were high
-or low fertilizer.
+difference in seed yield and weight based on whether they were high or
+low fertilizer.
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo = FALSE
 g
 ```
-
-
 :::
-
-::::
+:::
 
 ## Basic discriminant analysis
 
@@ -98,71 +90,55 @@ g
 hilo.1 <- lda(fertilizer ~ yield + weight, data = hilo)
 ```
 
- 
+-   Uses `lda` from package MASS.
 
-
-
-* Uses `lda` from package MASS.
-
-* "Predicting" group membership from measured variables.
-
-
-
+-   "Predicting" group membership from measured variables.
 
 ## Output
 
 \small
+
 ```{r bDiscrim-5}
 hilo.1
 ```
+
 \normalsize
- 
-
-
 
 ## Things to take from output
 
+-   Group means: high-fertilizer plants have (slightly) higher mean
+    yield and weight than low-fertilizer plants.
 
-* Group means: high-fertilizer plants have (slightly) higher
-mean yield and weight than low-fertilizer plants.
+-   "Coefficients of linear discriminants": \texttt{LD1,
+    LD2,}\ldots are scores constructed from observed variables that best
+    separate the groups.
 
-* "Coefficients of linear discriminants": \texttt{LD1,
-LD2,}\ldots are scores constructed from observed variables that
-best separate the groups.
+-   For any plant, get LD1 score by taking $-0.76$ times yield plus
+    $-1.25$ times weight, add up, standardize.
 
+-   the LD1 coefficients are like slopes:
 
-* For any plant, get LD1 score by taking $-0.76$ times yield
-plus $-1.25$ times weight, add up, standardize.
+    -   if yield higher, LD1 score for a plant lower
+    -   if weight higher, LD1 score for a plant lower
 
-- the LD1 coefficients are like slopes: 
-  - if yield higher, LD1 score for a plant lower
-  - if weight higher, LD1 score for a plant lower
+-   High-fertilizer plants have higher yield and weight, thus low
+    (negative) LD1 score. Low-fertilizer plants have low yield and
+    weight, thus high (positive) LD1 score.
 
-* High-fertilizer plants have higher yield and weight, thus
-low (negative) LD1 score. Low-fertilizer plants have low yield and
-weight, thus high (positive) LD1 score.
-
-* One LD1 score for each observation. Plot with actual groups.
-
-
-
+-   One LD1 score for each observation. Plot with actual groups.
 
 ## How many linear discriminants?
 
+-   Smaller of these:
 
-* Smaller of these:
+    -   Number of variables
 
-  * Number of variables
+    -   Number of groups *minus 1*
 
-  * Number of groups *minus 1*
-
-
-* Seed yield and weight: 2 variables, 2 groups,
-$\min(2,2-1)=1$. 
-
-
+-   Seed yield and weight: 2 variables, 2 groups, $\min(2,2-1)=1$.
 
 ## Getting LD scores
+
 Feed output from LDA into `predict`:
 
 \scriptsize
@@ -177,67 +153,66 @@ hilo.2
 
 ## LD1 scores in order
 
-Most positive LD1 score is most obviously low fertilizer, most negative is most obviously high:
+Most positive LD1 score is most obviously low fertilizer, most negative
+is most obviously high:
 
 \footnotesize
+
 ```{r bDiscrim-7}
 hilo.2 %>% select(fertilizer, yield, weight, LD1) %>% 
   arrange(desc(LD1))
 ```
+
 \normalsize
- 
+
 High fertilizer have yield and weight high, negative LD1 scores.
 
-
 ## Plotting LD1 scores
-With one LD score, plot against (true) groups, eg. boxplot: 
+
+With one LD score, plot against (true) groups, eg. boxplot:
+
 ```{r bDiscrim-8, fig.height=3.4}
 ggplot(hilo.2, aes(x = fertilizer, y = LD1)) + geom_boxplot()
 ```
 
-   
-
 ## What else is in `hilo.2`?
 
+-   `class`: predicted fertilizer level (based on values of `yield` and
+    `weight`).
 
+-   `posterior`: predicted probability of being low or high fertilizer
+    given `yield` and `weight`.
 
-* `class`: predicted fertilizer level (based on values of
-`yield` and `weight`).
-
-* `posterior`: predicted probability of being low or high
-fertilizer given `yield` and `weight`.
- 
-- `LD1`: scores for (each) linear discriminant (here is only LD1) on each observation.
+-   `LD1`: scores for (each) linear discriminant (here is only LD1) on
+    each observation.
 
 ## Predictions and predicted groups
-\ldots based on `yield` and `weight`: 
+
+\ldots based on `yield` and `weight`:
 
 \footnotesize
+
 ```{r bDiscrim-12}
 hilo.2 %>% select(yield, weight, fertilizer, class)
 ```
+
 \normalsize
 
-
-## Count up correct and incorrect classification
+## Count up correct and incorrect classificationot()
 
 ```{r}
 with(hilo.2, table(obs = fertilizer, pred = class))
 ```
 
- 
-* Each predicted fertilizer level is exactly same as observed
-one (perfect prediction).
+-   Each predicted fertilizer level is exactly same as observed one
+    (perfect prediction).
 
-* Table shows no errors: all values on top-left to bottom-right
-diagonal. 
-
-
+-   Table shows no errors: all values on top-left to bottom-right
+    diagonal.
 
 ## Posterior probabilities
 
 \footnotesize
-
 
 show how clear-cut the classification decisions were:
 
@@ -247,30 +222,30 @@ hilo.2 %>%
   select(-LD1)
 ```
 
-Only obs.\ 7 has any doubt: `yield` low for a high-fertilizer,
-but high `weight` makes up for it.
- 
+Only obs. 7 has any doubt: `yield` low for a high-fertilizer, but high
+`weight` makes up for it.
+
 \normalsize
 
-
-## Example 2: the peanuts 
+## Example 2: the peanuts
 
 \scriptsize
+
 ```{r bDiscrim-14, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/peanuts.txt"
 peanuts <- read_delim(my_url, " ")
 peanuts
 ```
+
 \normalsize
- 
 
-- Recall: `location` and `variety` both significant in
-MANOVA. Make combo of them (over):
-
+-   Recall: `location` and `variety` both significant in MANOVA. Make
+    combo of them (over):
 
 ## Location-variety combos
 
 \footnotesize
+
 ```{r combos}
 peanuts %>%
    unite(combo, c(variety, location)) -> peanuts.combo
@@ -282,51 +257,44 @@ peanuts.combo
 ## Discriminant analysis
 
 \tiny
+
 ```{r bDiscrim-15}
+# peanuts.1 <- lda(str_c(location, variety, sep = "_") ~ y + smk + w, data = peanuts)
 peanuts.1 <- lda(combo ~ y + smk + w, data = peanuts.combo)
 peanuts.1
 ```
+
 \normalsize
-   
-
-
-
 
 ## Comments
 
-* Now 3 LDs (3 variables, 6 groups, $\min(3,6-1)=3$).
+-   Now 3 LDs (3 variables, 6 groups, $\min(3,6-1)=3$).
 
-* Relationship of LDs to original variables. Look for
-coeffs far from zero: 
+-   Relationship of LDs to original variables. Look for coeffs far from
+    zero:
 
 ```{r}
 peanuts.1$scaling
 ```
 
+-   high `LD1` mainly high `y` or low `w`.
 
+-   high `LD2` mainly low `w`.
 
-   *   high `LD1` mainly high `y`
-or low `w`.
-
-   * high `LD2` mainly low `w`.
-
-
-* Proportion of trace values show relative importance of LDs:
-`LD1` much more important than `LD2`; `LD3` worthless.
-
-
+-   Proportion of trace values show relative importance of LDs: `LD1`
+    much more important than `LD2`; `LD3` worthless.
 
 ## The predictions and misclassification
 
 ```{r bDiscrim-17 }
 p <- predict(peanuts.1)
 peanuts.2 <- cbind(peanuts.combo, p)
+peanuts.2
 with(peanuts.2, table(obs = combo, pred = class))
 ```
 
-Actually classified very well. Only one `6_2` classified as a
-`5_1`, rest all correct.
-
+Actually classified very well. Only one `6_2` classified as a `5_1`,
+rest all correct.
 
 ## Posterior probabilities
 
@@ -338,54 +306,47 @@ peanuts.2 %>%
   select(combo,  class, starts_with("posterior"))
 ```
 
-\small   
+\small
 
-*Some* doubt about which combo each plant belongs in, but not too
-much. The one misclassified plant was a close call.
+*Some* doubt about which combo each plant belongs in, but not too much.
+The one misclassified plant was a close call.
 
 \normalsize
 
 ## Discriminant scores, again
 
+-   How are discriminant scores related to original variables?
 
-* How are discriminant scores related to original variables?
-
-* Construct data frame with original data and discriminant
-scores side by side:
+-   Construct data frame with original data and discriminant scores side
+    by side:
 
 \footnotesize
+
 ```{r bDiscrim-19}
 peanuts.1$scaling
 ```
+
 \normalsize
-   
 
-* LD1 positive if `y` large and/or `w` small.
+-   LD1 positive if `y` large and/or `w` small.
 
-* LD2 positive if `w` small.    
-
-
-
-
+-   LD2 positive if `w` small.
 
 ## Discriminant scores for data
 
 \footnotesize
+
 ```{r bDiscrim-20}
 peanuts.2 %>% select(y, w, starts_with("x"))
 ```
-   
 
-* Obs.\ 5 and 6 have most positive `LD1`: large `y`,
-small `w`.
+-   Obs. 5 and 6 have most positive `LD1`: large `y`, small `w`.
 
-* Obs.\ 4 has most positive `LD2`: small `w`.
+-   Obs. 4 has most positive `LD2`: small `w`.
 
 \normalsize
 
-
-
-## Plot LD1 vs.\ LD2, labelling by combo
+## Plot LD1 vs. LD2, labelling by combo
 
 \small
 
@@ -396,8 +357,7 @@ g <- ggplot(peanuts.2, aes(x = x.LD1, y = x.LD2, colour = combo,
 g
 ```
 
-\normalsize   
-
+\normalsize
 
 ## "Bi-plot" from `ggbiplot`
 
@@ -405,51 +365,42 @@ g
 ggbiplot(peanuts.1, groups = factor(peanuts.combo$combo))
 ```
 
-
 ## Installing `ggbiplot`
 
+-   `ggbiplot` not on CRAN, so usual `install.packages` will not work.
 
-* `ggbiplot` not on CRAN, so usual
-`install.packages` will not work.
+-   Install package `devtools` first (once):
 
-* Install package `devtools` first (once):
 ```{r bDiscrim-26, eval=F}
 install.packages("devtools")
 ```
 
-     
+-   Then install `ggbiplot` (once):
 
-* Then install `ggbiplot` (once):
 ```{r bDiscrim-27, eval=F}
 library(devtools)
 install_github("vqv/ggbiplot")
 ```
 
-     
-
-
 ## Cross-validation
 
+-   So far, have predicted group membership from same data used to form
+    the groups --- dishonest!
 
-* So far, have predicted group membership from same data used to
-form the groups --- dishonest!
+-   Better: *cross-validation*: form groups from all observations
+    *except one*, then predict group membership for that left-out
+    observation.
 
-* Better: *cross-validation*: form groups from all
-observations *except one*, then predict group membership for
-that left-out observation.
+-   No longer cheating!
 
-* No longer cheating!
-
-* Illustrate with peanuts data again.
-
-
+-   Illustrate with peanuts data again.
 
 ## Misclassifications
 
-
-* Fitting and prediction all in one go:
+-   Fitting and prediction all in one go:
 
 \small
+
 ```{r bDiscrim-28 }
 p <- lda(combo ~ y + smk + w,
   data = peanuts.combo, CV = TRUE)
@@ -457,63 +408,57 @@ peanuts.3 <- cbind(peanuts.combo, class = p$class,
                    posterior = p$posterior)
 with(peanuts.3, table(obs = combo, pred = class))
 ```
+
 \normalsize
-   
-* Some more misclassification this time.
 
-
-
+-   Some more misclassification this time.
 
 ## Repeat of LD plot
+
 ```{r graziani,fig.height=4.7}
 g
 ```
 
-   
-
-
 ## Posterior probabilities
 
 \footnotesize
+
 ```{r bDiscrim-29}
 peanuts.3 %>% 
   mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
   select(combo, class, starts_with("posterior"))
 ```
-\normalsize
-   
 
+\normalsize
 
 ## Why more misclassification?
 
+-   When predicting group membership for one observation, only uses the
+    *other one* in that group.
 
-* When predicting group membership for one observation, only
-uses the *other one* in that group.
+-   So if two in a pair are far apart, or if two groups overlap, great
+    potential for misclassification.
 
-* So if two in a pair are far apart, or if two groups overlap,
-great potential for misclassification.
+-   Groups `5_1` and `6_2` overlap.
 
-* Groups `5_1` and `6_2` overlap.
+-   `5_2` closest to `8_1`s looks more like an `8_1` than a `5_2` (other
+    one far away).
 
-* `5_2` closest to `8_1`s looks more like an
-`8_1` than a `5_2` (other one far away).
-
-* `8_1`s relatively far apart and close to other things,
-so one appears to be a `5_2` and the other an `8_2`.
-
+-   `8_1`s relatively far apart and close to other things, so one
+    appears to be a `5_2` and the other an `8_2`.
 
 ## Example 3: professions and leisure activities
 
+-   15 individuals from three different professions (politicians,
+    administrators and belly dancers) each participate in four different
+    leisure activities: reading, dancing, TV watching and skiing. After
+    each activity they rate it on a 0--10 scale.
 
-* 15 individuals from three different professions (politicians,
-administrators and belly dancers) each participate in four
-different leisure activities: reading, dancing, TV watching and
-skiing. After each activity they rate it on a 0--10 scale.
+-   How can we best use the scores on the activities to predict a
+    person's profession?
 
-* How can we best use the scores on the activities to predict a person's profession?
-
-* Or, what combination(s) of scores best separate data into profession groups?
-
+-   Or, what combination(s) of scores best separate data into profession
+    groups?
 
 ## The data
 
@@ -528,8 +473,6 @@ active
 
 \normalsize
 
-
-
 ## Discriminant analysis
 
 \tiny
@@ -538,66 +481,58 @@ active
 active.1 <- lda(job ~ reading + dance + tv + ski, data = active)
 active.1
 ```
+
 \normalsize
 
-## Comments   
+## Comments
 
-* Two discriminants, first fair bit more important than second.
+-   Two discriminants, first fair bit more important than second.
 
-* `LD1` depends (negatively) most on `dance`, a bit
-on `tv`.
+-   `LD1` depends (negatively) most on `dance`, a bit on `tv`.
 
-* `LD2` depends mostly (negatively) on `tv`.
-
-
+-   `LD2` depends mostly (negatively) on `tv`.
 
 ## Misclassification
+
 ```{r bDiscrim-31 }
 p <- predict(active.1)
 active.2 <- cbind(active, p)
 with(active.2, table(obs = job, pred = class))
 ```
 
-   
-
 Everyone correctly classified.
 
-
-## Plotting LDs 
+## Plotting LDs
 
 \small
+
 ```{r bDiscrim-32, fig.height=4}
 g <- ggplot(active.2, aes(x = x.LD1, y = x.LD2, colour = job, label = job)) + 
   geom_point() + geom_text_repel() + guides(colour = "none")
 g
 ```
+
 \normalsize
-   
 
+## Biplot
 
-## Biplot 
 ```{r bDiscrim-33, fig.height=4.3}
 ggbiplot(active.1, groups = active$job)
 ```
 
-   
-
-
 ## Comments on plot
 
+-   Groups well separated: bellydancers top left, administrators top
+    right, politicians lower middle.
 
-* Groups well separated: bellydancers top left, administrators
-top right, politicians lower middle.
+-   Bellydancers most negative on `LD1`: like dancing most.
 
-* Bellydancers most negative on `LD1`: like dancing most.
+-   Administrators most positive on `LD1`: like dancing least.
 
-* Administrators most positive on `LD1`: like dancing least.
-
-* Politicians most negative on `LD2`: like TV-watching most.
-
-
+-   Politicians most negative on `LD2`: like TV-watching most.
 
 ## Plotting individual `persons`
+
 Make `label` be identifier of person. Now need legend:
 
 ```{r bDiscrim-34, fig.height=3.5}
@@ -607,22 +542,21 @@ active.2 %>% mutate(person = row_number()) %>%
   geom_point() + geom_text_repel()
 ```
 
-   
-
-
 ## Posterior probabilities
 
 \scriptsize
+
 ```{r bDiscrim-35}
 active.2 %>% mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
   select(job, class, starts_with("posterior"))
 ```
+
 \normalsize
-   
+
 Not much doubt.
 
-
 ## Cross-validating the jobs-activities data
+
 Recall: no need for `predict`:
 
 ```{r bDiscrim-36 }
@@ -631,14 +565,12 @@ active.3 <- cbind(active, class = p$class, posterior = p$posterior)
 with(active.3, table(obs = job, pred = class))
 ```
 
-   
-
 This time one of the bellydancers was classified as a politician.
-
 
 ## and look at the posterior probabilities
 
 \scriptsize
+
 ```{r bDiscrim-37}
 active.3 %>% 
   mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
@@ -647,65 +579,51 @@ active.3 %>%
 
 \normalsize
 
-
 ## Comments
 
-* Bellydancer was "definitely" a politician!
+-   Bellydancer was "definitely" a politician!
 
-* One of the administrators might have been a politician too.
-
-
+-   One of the administrators might have been a politician too.
 
 ## Why did things get misclassified?
 
-
-
-:::: {.columns}
-
+::: columns
 ::: {.column width="40%"}
 Go back to plot of discriminant scores:
 
-- one bellydancer much closer to the politicians,
+-   one bellydancer much closer to the politicians,
 
-- one administrator a bit closer to the politicians.
-
+-   one administrator a bit closer to the politicians.
 :::
 
 ::: {.column width="60%"}
-
 ```{r}
 #| echo = FALSE
 g
 ```
-
-
 :::
-
-::::
-
+:::
 
 ## Example 4: remote-sensing data
 
+-   View 25 crops from air, measure 4 variables `x1-x4`.
 
-* View 25 crops from air, measure 4 variables `x1-x4`.
+-   Go back and record what each crop was.
 
-* Go back and record what each crop was.
-
-* Can we use the 4 variables to distinguish crops?
-
-
+-   Can we use the 4 variables to distinguish crops?
 
 ## The data
 
 \footnotesize
+
 ```{r bDiscrim-39 }
 #| message = FALSE
 my_url <- "http://ritsokiguess.site/datafiles/remote-sensing.txt"
 crops <- read_table(my_url)
 crops %>% print(n = 25)
 ```
+
 \normalsize
-   
 
 ## Discriminant analysis
 
@@ -720,86 +638,75 @@ crops.1
 
 ## Assessing
 
-* 3 LDs (four variables, four groups).
+-   3 LDs (four variables, four groups).
 
-* 1st two important.
+-   1st two important.
 
+-   `LD1` mostly `x1` (minus)
 
-* `LD1` mostly `x1` (minus)
-
-* `LD2` `x3` (minus)
+-   `LD2` `x3` (minus)
 
 ## Predictions
 
-
-* Thus:
+-   Thus:
 
 \footnotesize
+
 ```{r bDiscrim-43}
 p <- predict(crops.1)
 crops.2 <- cbind(crops, p)
 with(crops.2, table(obs = crop, pred = class))
 ```
+
 \normalsize
-   
 
-* Not very good, eg. only half the Soybeans and Sugarbeets classified correctly.
+-   Not very good, eg. only half the Soybeans and Sugarbeets classified
+    correctly.
 
-   
+## Plotting the LDs
 
-
-## Plotting the LDs 
 ```{r piacentini,fig.height=3.4}
 ggplot(crops.2, aes(x = x.LD1, y = x.LD2, colour = crop)) +
   geom_point()
 ```
 
-Corn (red) mostly left, cotton (green) sort of right, soybeans and sugarbeets (blue and purple) mixed up.
-   
-
+Corn (red) mostly left, cotton (green) sort of right, soybeans and
+sugarbeets (blue and purple) mixed up.
 
 ## Biplot
+
 ```{r bDiscrim-45, fig.height=6}
 ggbiplot(crops.1, groups = crops$crop)
 ```
 
-
-
-
 ## Comments
 
+-   Corn low on LD1 (left), hence low on `x1`
 
-* Corn low on LD1 (left), hence low on `x1`
+-   Cotton tends to be high on LD1 (high `x1`)
 
-* Cotton tends to be high on LD1 (high `x1`)
+-   one cotton very low on LD2 (high `x3`?)
 
-- one cotton very low on LD2 (high `x3`?)
-
-* Rather mixed up.
-
-
-
-
+-   Rather mixed up.
 
 ## Posterior probs (some)
 
-\scriptsize  
+\scriptsize
+
 ```{r bDiscrim-52 }
 crops.2 %>% mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
   filter(crop != class) %>% 
   select(crop, class, starts_with("posterior"))
 ```
+
 \normalsize
 
 ## Comments
 
-* These were the misclassified ones, but the posterior probability
-of being correct was not usually too low. 
+-   These were the misclassified ones, but the posterior probability of
+    being correct was not usually too low.
 
-* The correctly-classified ones are not very clear-cut either.
-
-
-
+-   The correctly-classified ones are not very clear-cut either.
 
 ## MANOVA
 
@@ -814,47 +721,41 @@ summary(crops.manova)
 
 ## Box's M test
 
-We should also run Box's M test to check for equal variance of each variable across crops:
+We should also run Box's M test to check for equal variance of each
+variable across crops:
 
 \small
+
 ```{r}
 summary(BoxM(response, crops$crop))
 ```
+
 \normalsize
 
-- The P-value for the M test is smaller even than our guideline of 0.001. So we should not take the MANOVA seriously.
+-   The P-value for the M test is smaller even than our guideline of
+    0.001. So we should not take the MANOVA seriously.
 
-- *Apparently* at least one of the crops differs (in means) from the others. So
-it is worth doing this analysis.
+-   *Apparently* at least one of the crops differs (in means) from the
+    others. So it is worth doing this analysis.
 
-- We did this the wrong way around, though!
-
+-   We did this the wrong way around, though!
 
 ## The right way around
 
+-   *First*, do a MANOVA to see whether any of the groups differ
+    significantly on any of the variables.
 
-* *First*, do a MANOVA to see whether any of the groups
-differ significantly on any of the variables.
+-   Check that the MANOVA is believable by using Box's M test.
 
-- Check that the MANOVA is believable by using Box's M test.
+-   *If the MANOVA is significant*, do a discriminant analysis in the
+    hopes of understanding how the groups are different.
 
-* *If the MANOVA is significant*, do a discriminant
-analysis in the hopes of understanding how the groups are different.
+-   For remote-sensing data (without Clover):
 
-* For remote-sensing data (without Clover):
+    -   LD1 a fair bit more important than LD2 (definitely ignore LD3).
 
+    -   LD1 depends mostly on `x1`, on which Cotton was high and Corn
+        was low.
 
-  * LD1 a fair bit more important than LD2 (definitely ignore LD3).
-
-  * LD1 depends mostly on `x1`, on which Cotton was high
-and Corn was low. 
-
-
-* Discriminant analysis in MANOVA plays the same kind of role
-that Tukey does in ANOVA.
-
-
-   
-
-
-
+-   Discriminant analysis in MANOVA plays the same kind of role that
+    Tukey does in ANOVA.
