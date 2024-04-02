@@ -1,7 +1,7 @@
 // Estimating Poisson mean
 
 data {
-  int x[8];
+  array[8] int x;
 }
 
 parameters {

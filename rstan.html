@@ -549,7 +549,7 @@
 <li>first in the Stan code:</li>
 </ul>
 <pre><code>data {
-  int x[8];
+  array[8] int x;
 }
 
 parameters {
@@ -570,7 +570,7 @@ parameters {
 <pre><code>// Estimating Poisson mean
 
 data {
-  int x[8];
+  array[8] int x;
 }
 
 parameters {
@@ -702,7 +702,7 @@ Chain 4 finished in 0.0 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.0 seconds.
-Total execution time: 0.9 seconds.</code></pre>
+Total execution time: 0.8 seconds.</code></pre>
 </div>
 </div>
 </section>
@@ -735,7 +735,7 @@ Total execution time: 0.9 seconds.</code></pre>
   int&lt;lower=1&gt; n;
   real&lt;lower=0&gt; a;
   real&lt;lower=0&gt; b;
-  int x[n];
+  array[n] int x;
 }
 ...
 model {
@@ -1081,7 +1081,7 @@ iteration   1   2   3   4
 <h2>Parameters</h2>
 <p>The elements of <code>mu</code>, one per group, and also <code>sigma</code>, scalar, lower limit zero:</p>
 <pre><code>parameters {
-  real mu[n_group];
+  array[n_group] real mu;
   real&lt;lower=0&gt; sigma;
 }</code></pre>
 <ul>
@@ -1095,8 +1095,8 @@ iteration   1   2   3   4
 <pre><code>data {
   int n_obs;
   int n_group;
-  real density[n_obs];
-  int&lt;lower=1, upper=n_group&gt; group_no[n_obs];
+  array[n_obs] real density;
+  array[n_obs] int&lt;lower=1, upper=n_group&gt; group_no;
 }</code></pre>
 </section>
 <section id="compile" class="slide level2">
@@ -1215,7 +1215,7 @@ Chain 4 finished in 0.1 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.1 seconds.
-Total execution time: 0.5 seconds.</code></pre>
+Total execution time: 0.8 seconds.</code></pre>
 </div>
 </div>
 </section>
@@ -1224,7 +1224,7 @@ Total execution time: 0.5 seconds.</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>anova_fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Processing csv files: /tmp/Rtmp3mI6iC/anova-202404021126-1-34202a.csv, /tmp/Rtmp3mI6iC/anova-202404021126-2-34202a.csv, /tmp/Rtmp3mI6iC/anova-202404021126-3-34202a.csv, /tmp/Rtmp3mI6iC/anova-202404021126-4-34202a.csv
+<pre><code>Processing csv files: /tmp/RtmppU6rNq/anova-202404021506-1-345dc1.csv, /tmp/RtmppU6rNq/anova-202404021506-2-345dc1.csv, /tmp/RtmppU6rNq/anova-202404021506-3-345dc1.csv, /tmp/RtmppU6rNq/anova-202404021506-4-345dc1.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.

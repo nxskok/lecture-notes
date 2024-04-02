@@ -1,12 +1,12 @@
 data {
   int n_obs;
   int n_group;
-  real density[n_obs];
-  int<lower=1, upper=n_group> group_no[n_obs];
+  array[n_obs] real density;
+  array[n_obs] int<lower=1, upper=n_group> group_no;
 }
 
 parameters {
-  real mu[n_group];
+  array[n_group] real mu;
   real<lower=0> sigma;
 }
 

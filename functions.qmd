@@ -444,14 +444,19 @@ d %>% mutate(root = map_dbl(x, \(x) sqrt(x)))
 hotpo <- function(x) {
   stopifnot(round(x) == x) # passes if input an integer
   remainder <- x %% 2
-  if (remainder == 1) {
+  if (remainder == 1) { # odd number
     ans <- 3 * x + 1
   }
-  else {
+  else { # even number
     ans <- x %/% 2 # integer division
   }
   ans
 }
+```
+
+```{r}
+x <- 4
+ifelse((x %% 2) == 1, 3 * x + 1, x %/% 2)
 ```
 
 ## Test it

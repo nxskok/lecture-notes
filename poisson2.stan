@@ -4,7 +4,7 @@ data {
   int<lower=1> n;
   real<lower=0> a;
   real<lower=0> b;
-  int x[n];
+  array[n] int x;
 }
 
 parameters {

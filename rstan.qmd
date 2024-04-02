@@ -33,7 +33,6 @@ install.packages("cmdstanr",
                            getOption("repos")))
 ```
 
-
 -   `posterior` and `bayesplot`, from the same place:
 
 ```{r}
@@ -46,7 +45,6 @@ install.packages("bayesplot",
                  repos = c("https://mc-stan.org/r-packages/", 
                             getOption("repos")))
 ```
-
 
 ## Installation 2/2
 
@@ -181,7 +179,7 @@ model {
 
 ```         
 data {
-  int x[8];
+  array[8] int x;
 }
 
 parameters {
@@ -240,7 +238,7 @@ data {
   int<lower=1> n;
   real<lower=0> a;
   real<lower=0> b;
-  int x[n];
+  array[n] int x;
 }
 ...
 model {
@@ -487,7 +485,7 @@ limit zero:
 
 ```         
 parameters {
-  real mu[n_group];
+  array[n_group] real mu;
   real<lower=0> sigma;
 }
 ```
@@ -504,8 +502,8 @@ Everything else:
 data {
   int n_obs;
   int n_group;
-  real density[n_obs];
-  int<lower=1, upper=n_group> group_no[n_obs];
+  array[n_obs] real density;
+  array[n_obs] int<lower=1, upper=n_group> group_no;
 }
 ```
 
