@@ -1,5 +1,7 @@
 ---
 title: "Bayesian Statistics with Stan"
+execute:
+  echo: true
 ---
 
 ## Packages for this section
@@ -21,15 +23,19 @@ set.seed(457299)
 
 -   `cmdstanr`:
 
-```
+```{r}
+#| eval: false
 install.packages("cmdstanr", 
                  repos = c("https://mc-stan.org/r-packages/", 
                            getOption("repos")))
 ```
 
+
 -   `posterior` and `bayesplot`, from the same place:
 
-```
+```{r}
+#| eval: false
+
 install.packages("posterior", 
                  repos = c("https://mc-stan.org/r-packages/", 
                             getOption("repos")))
@@ -37,6 +43,7 @@ install.packages("bayesplot",
                  repos = c("https://mc-stan.org/r-packages/", 
                             getOption("repos")))
 ```
+
 
 ## Installation 2/2
 
@@ -48,7 +55,8 @@ check_cmdstan_toolchain()
 
 and then:
 
-```
+```{r}
+#| eval: false
 install_cmdstan(cores = 4)
 ```
 
