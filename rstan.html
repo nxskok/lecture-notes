@@ -339,14 +339,24 @@
 <ul>
 <li><code>cmdstanr</code>:</li>
 </ul>
+<pre><code>install.packages("cmdstanr", 
+                 repos = c("https://mc-stan.org/r-packages/", 
+                           getOption("repos")))</code></pre>
 <ul>
 <li><code>posterior</code> and <code>bayesplot</code>, from the same place:</li>
 </ul>
+<pre><code>install.packages("posterior", 
+                 repos = c("https://mc-stan.org/r-packages/", 
+                            getOption("repos")))
+install.packages("bayesplot", 
+                 repos = c("https://mc-stan.org/r-packages/", 
+                            getOption("repos")))</code></pre>
 </section>
 <section id="installation-22" class="slide level2">
 <h2>Installation 2/2</h2>
 <p>Then, to check that you have the C++ stuff needed to compile Stan code:</p>
 <p>and then:</p>
+<pre><code>install_cmdstan(cores = 4)</code></pre>
 <p>If you happen to know how many cores (processors) your computer has, insert the appropriate number. (My laptop has 4 and my desktop 6.)</p>
 <p>All of this is done once. If you have problems, go <a href="https://mc-stan.org/cmdstanr/articles/cmdstanr.html">here (link)</a>.</p>
 </section>
@@ -621,7 +631,7 @@ Total execution time: 0.8 seconds.</code></pre>
 <h2>Comments</h2>
 <ul>
 <li>This summarizes the posterior distribution of <span class="math inline">\(\lambda\)</span></li>
-<li>the posterior mean is 3.19</li>
+<li>the posterior mean is 3.21</li>
 <li>with a 90% posterior interval of 2.25 to 4.33.</li>
 <li>The probability that <span class="math inline">\(\lambda\)</span> is between these two values really is 90%.</li>
 </ul>
@@ -1052,7 +1062,7 @@ Chain 4 finished in 0.1 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.1 seconds.
-Total execution time: 0.6 seconds.</code></pre>
+Total execution time: 0.5 seconds.</code></pre>
 </div>
 </div>
 </section>
@@ -1060,7 +1070,7 @@ Total execution time: 0.6 seconds.</code></pre>
 <h2>Check that the sampling worked properly</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Processing csv files: /tmp/Rtmp1TxPXt/anova-202404021044-1-34049c.csv, /tmp/Rtmp1TxPXt/anova-202404021044-2-34049c.csv, /tmp/Rtmp1TxPXt/anova-202404021044-3-34049c.csv, /tmp/Rtmp1TxPXt/anova-202404021044-4-34049c.csv
+<pre><code>Processing csv files: /tmp/RtmpzeXy4K/anova-202404021103-1-341274.csv, /tmp/RtmpzeXy4K/anova-202404021103-2-341274.csv, /tmp/RtmpzeXy4K/anova-202404021103-3-341274.csv, /tmp/RtmpzeXy4K/anova-202404021103-4-341274.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
