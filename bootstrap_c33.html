@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The bootstrap</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="bootstrap_c33_files/libs/clipboard/clipboard.min.js"></script>
+<script src="bootstrap_c33_files/libs/quarto-html/quarto.js"></script>
+<script src="bootstrap_c33_files/libs/quarto-html/popper.min.js"></script>
+<script src="bootstrap_c33_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="bootstrap_c33_files/libs/quarto-html/anchor.min.js"></script>
+<link href="bootstrap_c33_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="bootstrap_c33_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="bootstrap_c33_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="bootstrap_c33_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="bootstrap_c33_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="bootstrap_c33.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="bootstrap_c33.pdf"><i class="bi bi-file-pdf"></i>Beamer</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The bootstrap</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="packages-for-this-section" class="level2">
+<h2 class="anchored" data-anchor-id="packages-for-this-section">Packages for this section</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bootstrap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Source: <a href="https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests">Hesterberg et al</a></p>
+</section>
+<section id="is-my-sampling-distribution-normal-enough" class="level2">
+<h2 class="anchored" data-anchor-id="is-my-sampling-distribution-normal-enough">Is my sampling distribution normal enough?</h2>
+<ul>
+<li>Recall IRS data (used as a motivation for the sign test) :</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(irs, <span class="fu">aes</span>(<span class="at">x=</span>Time))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bootstrap_c33_files/figure-html/bootstrap-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><span class="math inline">\(t\)</span> procedure for the mean would not be a good idea because the distribution is skewed.</li>
+</ul>
+</section>
+<section id="what-actually-matters" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-matters">What <em>actually</em> matters</h2>
+<ul>
+<li>It’s not the distribution of the <em>data</em> that has to be approx normal (for a <span class="math inline">\(t\)</span> procedure).</li>
+<li>What matters is the <em>sampling distribution of the sample mean</em>.</li>
+<li>If the sample size is large enough, the sampling distribution will be normal enough even if the data distribution is not.
+<ul>
+<li>This is why we had to consider the sample size as well as the shape.</li>
+</ul></li>
+<li>But how do we know whether this is the case or not? We only have <em>one</em> sample.</li>
+</ul>
+</section>
+<section id="the-nonparametric-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="the-nonparametric-bootstrap">The (nonparametric) bootstrap</h2>
+<ul>
+<li>Typically, our sample will be reasonably representative of the population.</li>
+<li>Idea: pretend the sample <em>is</em> the population, and sample from it <em>with replacement</em>.</li>
+<li>Calculate test statistic, and repeat many times.</li>
+<li>This gives an idea of how our statistic might vary in repeated samples: that is, its sampling distribution.</li>
+<li>Called the <strong>bootstrap distribution</strong> of the test statistic.</li>
+<li>If the bootstrap distribution is approx normal, infer that the true sampling distribution also approx normal, therefore inference about the mean such as <span class="math inline">\(t\)</span> is good enough.</li>
+<li>If not, we should be more careful.</li>
+</ul>
+</section>
+<section id="why-it-works" class="level2">
+<h2 class="anchored" data-anchor-id="why-it-works">Why it works</h2>
+<ul>
+<li>We typically estimate population parameters by using the corresponding sample thing: eg. estimate population mean using sample mean.</li>
+<li>This called <strong>plug-in principle</strong>.</li>
+<li>The fraction of sample values less than a value <span class="math inline">\(x\)</span> called the <strong>empirical distribution function</strong> (as a function of <span class="math inline">\(x\)</span>).</li>
+<li>By plug-in principle, the empirical distribution function is an estimate of the population CDF.</li>
+<li>In this sense, the sample <em>is</em> an estimate of the population, and so sampling from it is an estimate of sampling from the population.</li>
+</ul>
+</section>
+<section id="bootstrapping-the-irs-data" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-the-irs-data">Bootstrapping the IRS data</h2>
+<ul>
+<li>Sampling with replacement is done like this (the default sample size is as long as the original data):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace=</span>T)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(boot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 222.6333</code></pre>
+</div>
+</div>
+<ul>
+<li>That’s one bootstrapped mean. We need a whole bunch.</li>
+</ul>
+</section>
+<section id="a-whole-bunch" class="level2">
+<h2 class="anchored" data-anchor-id="a-whole-bunch">A whole bunch</h2>
+<ul>
+<li>Use the same idea as for simulating power:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">sim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">boot_sample =</span> <span class="fu">list</span>(<span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,000 × 2
+# Rowwise: 
+     sim boot_sample
+   &lt;int&gt; &lt;list&gt;     
+ 1     1 &lt;dbl [30]&gt; 
+ 2     2 &lt;dbl [30]&gt; 
+ 3     3 &lt;dbl [30]&gt; 
+ 4     4 &lt;dbl [30]&gt; 
+ 5     5 &lt;dbl [30]&gt; 
+ 6     6 &lt;dbl [30]&gt; 
+ 7     7 &lt;dbl [30]&gt; 
+ 8     8 &lt;dbl [30]&gt; 
+ 9     9 &lt;dbl [30]&gt; 
+10    10 &lt;dbl [30]&gt; 
+# ℹ 990 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="get-the-mean-of-each-of-those" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-mean-of-each-of-those">Get the mean of each of those</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">sim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">boot_sample =</span> <span class="fu">list</span>(<span class="fu">sample</span>(irs<span class="sc">$</span>Time, <span class="at">replace =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">my_mean =</span> <span class="fu">mean</span>(boot_sample)) <span class="ot">-&gt;</span> samples</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,000 × 3
+# Rowwise: 
+     sim boot_sample my_mean
+   &lt;int&gt; &lt;list&gt;        &lt;dbl&gt;
+ 1     1 &lt;dbl [30]&gt;     196 
+ 2     2 &lt;dbl [30]&gt;     202.
+ 3     3 &lt;dbl [30]&gt;     263.
+ 4     4 &lt;dbl [30]&gt;     173.
+ 5     5 &lt;dbl [30]&gt;     204.
+ 6     6 &lt;dbl [30]&gt;     197.
+ 7     7 &lt;dbl [30]&gt;     210.
+ 8     8 &lt;dbl [30]&gt;     160.
+ 9     9 &lt;dbl [30]&gt;     198.
+10    10 &lt;dbl [30]&gt;     178.
+# ℹ 990 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="sampling-distribution-of-sample-mean" class="level2">
+<h2 class="anchored" data-anchor-id="sampling-distribution-of-sample-mean">Sampling distribution of sample mean</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(samples, <span class="fu">aes</span>(<span class="at">x=</span>my_mean)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bootstrap_c33_files/figure-html/bootstrap-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Is that a slightly long right tail?</li>
+</ul>
+</section>
+<section id="normal-quantile-plot" class="level2">
+<h2 class="anchored" data-anchor-id="normal-quantile-plot">Normal quantile plot</h2>
+<p>might be better than a histogram:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(samples, <span class="fu">aes</span>(<span class="at">sample =</span> my_mean)) <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>()<span class="sc">+</span><span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bootstrap_c33_files/figure-html/bootstrap-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>a very very slight right-skewness, but very close to normal.</li>
+</ul>
+</section>
+<section id="confidence-interval-from-the-bootstrap-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-interval-from-the-bootstrap-distribution">Confidence interval from the bootstrap distribution</h2>
+<p>There are two ways (at least):</p>
+<ul>
+<li>percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to get the middle 95%). This is easy, but not always the best:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">b_p=</span><span class="fu">quantile</span>(samples<span class="sc">$</span>my_mean, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5%    97.5% 
+162.5775 246.9092 </code></pre>
+</div>
+</div>
+<ul>
+<li>bootstrap <span class="math inline">\(t\)</span>: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a <span class="math inline">\(t\)</span> interval:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(irs<span class="sc">$</span>Time)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t_star <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, n<span class="dv">-1</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>b_t <span class="ot">&lt;-</span> <span class="fu">with</span>(samples, <span class="fu">mean</span>(my_mean)<span class="sc">+</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)<span class="sc">*</span>t_star<span class="sc">*</span><span class="fu">sd</span>(my_mean))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>b_t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 156.5070 246.4032</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing" class="level2">
+<h2 class="anchored" data-anchor-id="comparing">Comparing</h2>
+<ul>
+<li>get ordinary <span class="math inline">\(t\)</span> interval:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>my_names<span class="ot">=</span><span class="fu">c</span>(<span class="st">"LCL"</span>, <span class="st">"UCL"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>o_t <span class="ot">&lt;-</span> <span class="fu">t.test</span>(irs<span class="sc">$</span>Time)<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Compare the 2 bootstrap intervals with the ordinary <span class="math inline">\(t\)</span>-interval:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">limit=</span>my_names, o_t, b_t, b_p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  limit   o_t   b_t   b_p
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 LCL    155.  157.  163.
+2 UCL    247.  246.  247.</code></pre>
+</div>
+</div>
+<ul>
+<li>The bootstrap <span class="math inline">\(t\)</span> and the ordinary <span class="math inline">\(t\)</span> are very close</li>
+<li>The percentile bootstrap interval is noticeably shorter (common) and higher (skewness).</li>
+</ul>
+</section>
+<section id="which-to-prefer" class="level2">
+<h2 class="anchored" data-anchor-id="which-to-prefer">Which to prefer?</h2>
+<ul>
+<li>If the intervals agree, then they are all good.</li>
+<li>If they disagree, they are all bad!</li>
+<li>In that case, use BCA interval (over).</li>
+</ul>
+</section>
+<section id="bias-correction-and-acceleration" class="level2">
+<h2 class="anchored" data-anchor-id="bias-correction-and-acceleration">Bias correction and acceleration</h2>
+<ul>
+<li>this from “An introduction to the bootstrap”, by Brad Efron and Robert J. Tibshirani.</li>
+<li>there is way of correcting the CI for skewness in the bootstrap distribution, called the BCa method</li>
+<li>complicated (see the Efron and Tibshirani book), but implemented in <code>bootstrap</code> package.</li>
+</ul>
+</section>
+<section id="run-this-on-the-irs-data" class="level2">
+<h2 class="anchored" data-anchor-id="run-this-on-the-irs-data">Run this on the IRS data:</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bca<span class="ot">=</span><span class="fu">bcanon</span>(irs<span class="sc">$</span>Time, <span class="dv">1000</span>, mean)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>bca<span class="sc">$</span>confpoints</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     alpha bca point
+[1,] 0.025  161.8333
+[2,] 0.050  168.0667
+[3,] 0.100  174.8333
+[4,] 0.160  180.7667
+[5,] 0.840  224.1333
+[6,] 0.900  232.3000
+[7,] 0.950  241.9333
+[8,] 0.975  253.7333</code></pre>
+</div>
+</div>
+</section>
+<section id="use-2.5-and-97.5-points-for-ci" class="level2">
+<h2 class="anchored" data-anchor-id="use-2.5-and-97.5-points-for-ci">use 2.5% and 97.5% points for CI</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>bca<span class="sc">$</span>confpoints <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(alpha <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">`</span><span class="at">bca point</span><span class="st">`</span>) <span class="ot">-&gt;</span> b_bca</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>b_bca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 161.8333 253.7333</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-1" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-1">Comparing</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">limit=</span>my_names, o_t, b_t, b_p, b_bca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  limit   o_t   b_t   b_p b_bca
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 LCL    155.  157.  163.  162.
+2 UCL    247.  246.  247.  254.</code></pre>
+</div>
+</div>
+<ul>
+<li>The BCA interval says that the mean should be estimated even higher than the bootstrap percentile interval does.</li>
+<li>The BCA interval is the one to trust.</li>
+</ul>
+</section>
+<section id="bootstrapping-the-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-the-correlation">Bootstrapping the correlation</h2>
+<p>Recall the soap data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://ritsokiguess.site/datafiles/soap.txt"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>soap <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(url,<span class="st">" "</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>soap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 4
+    case scrap speed line 
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+ 1     1   218   100 a    
+ 2     2   248   125 a    
+ 3     3   360   220 a    
+ 4     4   351   205 a    
+ 5     5   470   300 a    
+ 6     6   394   255 a    
+ 7     7   332   225 a    
+ 8     8   321   175 a    
+ 9     9   410   270 a    
+10    10   260   170 a    
+# ℹ 17 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="scatterplot" class="level2">
+<h2 class="anchored" data-anchor-id="scatterplot">Scatterplot</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(soap, <span class="fu">aes</span>(<span class="at">x=</span>speed, <span class="at">y=</span>scrap, <span class="at">colour=</span>line))<span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bootstrap_c33_files/figure-html/bootstrap-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="comments" class="level2">
+<h2 class="anchored" data-anchor-id="comments">Comments</h2>
+<ul>
+<li>Line B produces less scrap for any given speed.</li>
+<li>For line B, estimate the correlation between speed and scrap (with a confidence interval.)</li>
+</ul>
+</section>
+<section id="extract-the-line-b-data-standard-correlation-test-xxx" class="level2">
+<h2 class="anchored" data-anchor-id="extract-the-line-b-data-standard-correlation-test-xxx">Extract the line B data; standard correlation test xxx</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>soap <span class="sc">%&gt;%</span> <span class="fu">filter</span>(line<span class="sc">==</span><span class="st">"b"</span>) <span class="ot">-&gt;</span> line_b</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(line_b, <span class="fu">cor.test</span>(speed, scrap))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  speed and scrap
+t = 15.829, df = 10, p-value = 2.083e-08
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.9302445 0.9947166
+sample estimates:
+      cor 
+0.9806224 </code></pre>
+</div>
+</div>
+</section>
+<section id="bootstrapping-a-correlation-12" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-a-correlation-12">Bootstrapping a correlation 1/2</h2>
+<ul>
+<li>This illustrates a different technique: we need to keep the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values <em>together</em>.</li>
+<li>Sample <em>rows</em> of the data frame rather than individual values of <code>speed</code> and <code>scrap</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>line_b <span class="sc">%&gt;%</span> <span class="fu">sample_frac</span>(<span class="at">replace=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+    case scrap speed line 
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+ 1    24   252   155 b    
+ 2    22   260   200 b    
+ 3    16   140   105 b    
+ 4    25   422   320 b    
+ 5    16   140   105 b    
+ 6    19   341   255 b    
+ 7    19   341   255 b    
+ 8    19   341   255 b    
+ 9    17   277   215 b    
+10    16   140   105 b    
+11    20   215   175 b    
+12    18   384   270 b    </code></pre>
+</div>
+</div>
+</section>
+<section id="bootstrapping-a-correlation-22" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping-a-correlation-22">Bootstrapping a correlation 2/2</h2>
+<p>1000 times:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">sim =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">boot_df =</span> <span class="fu">list</span>(<span class="fu">sample_frac</span>(line_b, <span class="at">replace =</span> <span class="cn">TRUE</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">my_cor =</span> <span class="fu">with</span>(boot_df, <span class="fu">cor</span>(speed, scrap))) <span class="ot">-&gt;</span> cors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="a-picture-of-this" class="level2">
+<h2 class="anchored" data-anchor-id="a-picture-of-this">A picture of this</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cors, <span class="fu">aes</span>(<span class="at">x=</span>my_cor))<span class="sc">+</span><span class="fu">geom_histogram</span>(<span class="at">bins=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bootstrap_c33_files/figure-html/bootstrap-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="comments-and-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="comments-and-next-steps">Comments and next steps</h2>
+<ul>
+<li>This is very left-skewed.</li>
+<li>Bootstrap percentile interval is:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">b_p=</span><span class="fu">quantile</span>(cors<span class="sc">$</span>my_cor, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     2.5%     97.5% 
+0.9415748 0.9962462 </code></pre>
+</div>
+</div>
+<ul>
+<li>We probably need the BCA interval instead.</li>
+</ul>
+</section>
+<section id="getting-the-bca-interval-12" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-bca-interval-12">Getting the BCA interval 1/2</h2>
+<ul>
+<li>To use <code>bcanon</code>, write a function that takes a vector of row numbers and returns the correlation between <code>speed</code> and <code>scrap</code> for those rows:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="cf">function</span>(rows, d) {</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  d <span class="sc">%&gt;%</span> <span class="fu">slice</span>(rows) <span class="sc">%&gt;%</span> <span class="fu">with</span>(., <span class="fu">cor</span>(speed, scrap))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">theta</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, line_b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9928971</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>line_b <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+   case scrap speed line 
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1    16   140   105 b    
+2    17   277   215 b    
+3    18   384   270 b    </code></pre>
+</div>
+</div>
+<ul>
+<li>That looks about right.</li>
+</ul>
+</section>
+<section id="getting-the-bca-interval-22" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-bca-interval-22">Getting the BCA interval 2/2</h2>
+<ul>
+<li>Inputs to <code>bcanon</code> are now:
+<ul>
+<li>row numbers (1 through 12 in our case: 12 rows in <code>line_b</code>)</li>
+<li>number of bootstrap samples</li>
+<li>the function we just wrote</li>
+<li>the data frame:</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>points<span class="ot">=</span><span class="fu">bcanon</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1000</span>, theta, line_b)<span class="sc">$</span>confpoints</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>points <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(alpha <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">`</span><span class="at">bca point</span><span class="st">`</span>) <span class="ot">-&gt;</span> b_bca</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>b_bca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9314334 0.9947799</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-the-results" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-the-results">Comparing the results</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">limit=</span>my_names, o_c, b_p, b_bca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  limit   o_c   b_p b_bca
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 LCL   0.930 0.942 0.931
+2 UCL   0.995 0.996 0.995</code></pre>
+</div>
+</div>
+<ul>
+<li>The bootstrap percentile interval doesn’t go down far enough.</li>
+<li>The BCA interval seems to do a better job in capturing the skewness of the distribution.</li>
+<li>The ordinary confidence interval for the correlation is very similar to the BCA one, and thus seems to be trustworthy here even though the correlation has a very skewed distribution. (<code>cor.test</code> uses the Fisher <span class="math inline">\(z\)</span> transformation which “spreads out” correlations close to 1).</li>
+</ul>
+</section>
+<section id="the-z-transformed-bootstrapped-correlations" class="level2">
+<h2 class="anchored" data-anchor-id="the-z-transformed-bootstrapped-correlations">The <span class="math inline">\(z\)</span>-transformed bootstrapped correlations</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>cors <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z =</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">log</span>((<span class="dv">1</span><span class="sc">+</span>my_cor)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>my_cor))) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample=</span>z)) <span class="sc">+</span> <span class="fu">stat_qq</span>() <span class="sc">+</span> <span class="fu">stat_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bootstrap_c33_files/figure-html/bootstrap-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

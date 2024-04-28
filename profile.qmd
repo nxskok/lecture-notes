@@ -83,6 +83,7 @@ times.df
 ## Fitting the model
 
 ```{r}
+dogs.1 <- lm(response ~ drug, data = dogs)
 dogs.2 <- Manova(dogs.1,
   idata = times.df,
   idesign = ~times

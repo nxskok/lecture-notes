@@ -20,6 +20,7 @@ project:
     - dip.qmd
     - vector_matrix.qmd
     - bootstrap.qmd
+    - bootstrap_c33.qmd
     - stan.qmd
     - regression.qmd
     - logistic.qmd

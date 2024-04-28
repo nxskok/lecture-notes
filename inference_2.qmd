@@ -255,9 +255,7 @@ d
 
 ```{r inference-2-R-12}
 g  <-  ggplot(d, aes(x = n, y = power)) + geom_point() + 
-  geom_line() 
-
-+ 
+  geom_line() + 
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
 
