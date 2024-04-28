@@ -1,5 +1,6 @@
 # Lecture notes
 
+
 Here are my lecture notes, all of them, in chronological order, with the
 slideshows, PDF versions of those (for printing) and the Quarto
 documents with the code that made the slides:
@@ -32,6 +33,7 @@ documents with the code that made the slides:
 | Functions                             | [Slides](http://ritsokiguess.site/lecture-notes/functions.html)       | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/functions.pdf)       | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/functions.qmd)       |
 | Vector and matrix algebra             | [Slides](http://ritsokiguess.site/lecture-notes/vector_matrix.html)   | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/vector_matrix.pdf)   | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/vector_matrix.qmd)   |
 | Bootstrap revisited                   | [Slides](http://ritsokiguess.site/lecture-notes/bootstrap.html)       | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap.pdf)       | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap.qmd)       |
+| Bootstrap revisited (ver 2)           | [Slides](http://ritsokiguess.site/lecture-notes/bootstrap_c33.html)   | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap_c33.pdf)   | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/bootstrap_c33.qmd)   |
 | Bayesian statistics with Stan         | [Slides](http://ritsokiguess.site/lecture-notes/rstan.html)           | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/rstan.pdf)           | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/rstan.qmd)           |
 | Regression revisited                  | [Slides](http://ritsokiguess.site/lecture-notes/regression.html)      | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/regression.pdf)      | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/regression.qmd)      |
 | Logistic regression                   | [Slides](http://ritsokiguess.site/lecture-notes/logistic.html)        | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/logistic.pdf)        | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/logistic.qmd)        |
