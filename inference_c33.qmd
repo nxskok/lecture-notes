@@ -197,5 +197,160 @@ t.test(jays$attendance, mu = 29327)
 -   Do not reject null at $\alpha=0.05$: no evidence that mean
     attendance has changed.
 
+## Another example: learning to read
 
+- You devised new method for teaching children to read.
+- Guess it will be more effective than current methods.
+- To support this guess, collect data.
+- Want to generalize to “all children in Canada”.
+- So take random sample of all children in Canada.
+- Or, argue that sample you actually have is “typical” of all children in
+Canada.
+- Randomization (1): whether or not a child in sample or not has
+nothing to do with anything else about that child.
+- Randomization (2): randomly choose whether each child gets new
+reading method (t) or standard one (c).
+
+## Reading in data 
+- File at <http://ritsokiguess.site/datafiles/drp.txt>.
+- Proper reading-in function is `read_delim` (check file to see)
+- Read in thus:
+
+```{r inference-1-R-12}
+my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
+kids <- read_delim(my_url," ")
+```
+
+## The data (some) 
+
+```{r inference-1-R-13}
+kids
+```
+
+## Boxplots
+
+```{r inference-1-R-14, fig.height=3.7}
+ggplot(kids, aes(x = group, y = score)) + geom_boxplot()
+```
+
+## Two kinds of two-sample t-test
+
+- Do the two groups have same spread (SD, variance)?
+    - If yes (shaky assumption here), can use pooled t-test.
+    - If not, use Welch-Satterthwaite t-test (safe).
+- Pooled test derived in STAB57 (easier to derive, but assumes equal variances).
+- Welch-Satterthwaite does not assume equality of variances.
+- Assess (approx) equality of spreads using boxplot.
+
+## The (Welch-Satterthwaite) t-test
+- `c` (control) before `t` (treatment) alphabetically, so proper alternative
+is “less”.
+- R does Welch-Satterthwaite test by default 
+- Answer to "does the new reading program really help?"
+- (in a moment) how to get R to do pooled test?
+
+## Welch-Satterthwaite 
+
+```{r inference-1-R-15}
+t.test(score ~ group, data = kids, alternative = "less")
+```
+
+## The pooled t-test 
+
+```{r inference-1-R-16}
+t.test(score ~ group, data = kids, 
+       alternative = "less", var.equal = TRUE)
+```
+
+## Two-sided test; CI
+- To do 2-sided test, leave out `alternative`:
+
+```{r inference-1-R-17}
+t.test(score ~ group, data = kids)
+```
+
+
+## Comments:
+
+- P-values for pooled and Welch-Satterthwaite tests very similar (even though the pooled test seemed inferior): 0.013 vs.\ 0.014.
+- Two-sided test also gives CI: new reading program increases average scores by
+somewhere between about 1 and 19 points.
+- Confidence intervals inherently two-sided, so do 2-sided test to get
+them.
+
+## Pain relief
+
+Some data: 
+
+\centering{
+  \includegraphics[height=0.7\textheight]{Screenshot_2019-04-26_13-41-29}
+}
+
+
+## Matched pairs data
+- Data are comparison of 2 drugs for effectiveness at reducing pain.
+
+     - 12 subjects (cases) were arthritis sufferers
+     - Response is #hours of pain relief from each drug.
+      
+- In reading example, each child tried only one reading method.
+- But here, each subject tried out both drugs, giving us two
+measurements.
+
+    - Possible because, if you wait long enough, one drug has no influence
+over effect of other.
+    - Advantage: focused comparison of drugs. Compare one drug with
+another on same person, removes a lot of variability due to differences between people. 
+    - Matched pairs, requires different analysis.
+      
+- Design: randomly choose 6 of 12 subjects to get drug A first, other 6
+get drug B first.
+
+## Paired t test: reading the data
+Values aligned in columns:  
+
+```{r inference-4-R-1}
+my_url <- "http://ritsokiguess.site/datafiles/analgesic.txt"
+pain <- read_table(my_url)
+```
+
+## The data
+
+```{r inference-4-R-2}
+pain
+```
+
+## Paired *t*-test 
+
+\small
+
+```{r inference-4-R-3}
+with(pain, t.test(druga, drugb, paired = T))
+```
+
+\normalsize
+
+- P-value is 0.053. 
+- Not quite evidence of difference between drugs.
+
+## t-testing the differences
+
+- Likewise, you can calculate the differences yourself and
+do a 1-sample t-test on them.
+- First calculate a column of differences:
+
+\footnotesize
+
+```{r inference-4-R-4}
+(pain %>% mutate(diff=druga-drugb) -> pain)
+```
+
+\normalsize
+
+## t-test on the differences
+- then throw them into t.test, testing that the mean is zero, with
+same result as before:
+```{r inference-4-R-5}
+with(pain, t.test(diff, mu=0))
+```
 
