@@ -1,0 +1,36 @@
+---
+title: "STAC33 2025"
+format: html
+editor: visual
+---
+
+sitting outside on the long curved seat for a change of scene. Not sure how long I will stay awake.
+
+ideas:
+
+- R studio connection and quarto docs
+- graphs (including normal quantile?)
+- numerical summaries
+- choosing stuff (dplyr)
+- inference (faster):
+  - 1-sample
+  - 2-sample
+  - matched pairs
+- assumptions
+- bootstrap with CIs and simulation (same or different sections?)
+- functions here?
+- tidying
+- sign test, mood median
+- anova as now
+- regression as now
+- stan as now
+
+new stuff needed
+
+- abbreviated version of normal-theory inference
+- a new intro to functions
+- coherent bootstrap and simulation
+
+think about how I am making it more challenging (maybe it's mostly more stuff in less time).
+
+is there room for more computationally-intensive stuff? (find out about what might be useful). Make a big deal about simulation.
