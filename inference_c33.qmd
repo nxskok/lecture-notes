@@ -1,0 +1,201 @@
+---
+title: "Basic statistical inference"
+---
+
+## Packages for this section
+
+```{r inference-1-R-1}
+library(tidyverse)
+```
+
+
+## Inference for means (from STAB57)
+
+Three kinds of inference for means of normally-distributed data:
+
+- **One-sample $t$**: a single sample from a population, estimate that population's mean
+- **Two-sample $t$**: one sample from each of 2 populations, estimate difference in population means
+- **Matched pairs $t$**: two paired measurements on same (or matched) individuals, estimate population mean difference
+
+Two forms of inference for a population parameter:
+ 
+- **Confidence interval**: "what is the population parameter?"
+- **Hypothesis test**: "could the population parameter be equal to this value?"
+
+
+## Examples:
+
+- Blue jays attendances (one-sample)
+- Kids learning to read (two-sample)
+- Pain relief (matched pairs)
+
+## Confidence interval
+
+- You have a sample from some population
+- Imagine repeated sampling from that population
+- Procedure that gives an interval containing the true parameter in 95% (or 90% or 99%) of all possible samples
+
+## Hypothesis test
+
+- Null hypothesis gives value for population parameter
+- Alternative hypothesis says how you are trying to prove the null hypothesis wrong (not equal, greater, less).
+- Test statistic measures "distance" between data and null hypothesis
+- P-value gives probability of observing test statistic *as extreme or more extreme*, **if the null hypothesis is true**.
+- Reject null hypothesis if P-value small enough (eg smaller than 0.05).
+
+## Why 0.05? This man.
+
+::: columns
+::: {.column width="40%"}
+![](fisher.png)
+:::
+
+::: {.column width="60%"}
+-   analysis of variance
+-   Fisher information
+-   Linear discriminant analysis
+-   Fisher's $z$-transformation
+-   Fisher-Yates shuffle
+-   Behrens-Fisher problem
+
+Sir Ronald A. Fisher, 1890--1962.
+:::
+:::
+
+## Why 0.05? (2)
+
+-   From The Arrangement of Field Experiments (1926):
+
+![](fisher1.png){width="200%"}
+
+-   and
+
+![](fisher2.png){width="200%"}
+
+## $\alpha$ and errors
+
+-   Hypothesis test ends with decision:
+    -   reject null hypothesis
+    -   do not reject null hypothesis.
+-   but decision may be wrong:
+
+|                | Decision          |                 |
+|----------------|-------------------|-----------------|
+| **Truth**      | **Do not reject** | **reject null** |
+| **Null true**  | Correct           | Type I error    |
+| **Null false** | Type II error     | Correct         |
+
+-   Either type of error is bad, but for now focus on controlling Type I
+    error: write $\alpha$ = P(type I error), and devise test so that
+    $\alpha$ small, typically 0.05.
+-   That is, **if null hypothesis true**, have only small chance to
+    reject it (which would be a mistake).
+-   Worry about type II errors later (when we consider power of test).
+
+
+
+## One sample: the Blue Jays attendances
+
+
+-   The Toronto Blue Jays' average home attendance in part of 2015
+    season was 25,070 (up to May 27 2015, from baseball-reference.com).
+-   Does that mean the attendance at every game was exactly 25,070?
+    Certainly not. Actual attendance depends on many things, eg.:
+    -   how well the Jays are playing
+    -   the opposition
+    -   day of week
+    -   weather
+    -   random chance
+
+
+## Reading the attendances
+
+...as a `.csv` file:
+
+```{r inference-1-R-2}
+my_url <- "http://ritsokiguess.site/datafiles/jays15-home.csv"
+jays <- read_csv(my_url) 
+jays
+```
+
+## Another way
+
+-   This is a big data set: only 25 observations, but a lot of
+    *variables*.
+
+-   To see the first few values in all the variables, can also use
+    `glimpse`:
+
+```{r inference-1-R-5}
+glimpse(jays)
+```
+
+## Attendance histogram
+
+```{r inference-1-R-6, fig.height=3.8}
+ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
+```
+
+## Comments
+
+-   Attendances have substantial variability, ranging from just over
+    10,000 to around 50,000.
+-   Distribution somewhat skewed to right (but no outliers).
+-   These are a sample of "all possible games" (or maybe "all possible
+    games played in April and May"). What can we say about mean
+    attendance in all possible games based on this evidence?
+
+## CI for mean attendance
+
+-   `t.test` function does CI and test. Look at CI first:
+
+```{r inference-1-R-7}
+t.test(jays$attendance)
+```
+
+-   From 20,500 to 29,600.
+
+## Or, 90% CI
+
+-   by including a value for conf.level:
+
+```{r inference-1-R-8}
+t.test(jays$attendance, conf.level = 0.90)
+```
+
+-   From 21,300 to 28,800. (Shorter, as it should be.)
+
+## Comments
+
+-   Need to say "column attendance within data frame `jays`" using `$`.
+-   95% CI from about 20,000 to about 30,000.
+-   Not estimating mean attendance well at all!
+-   Generally want confidence interval to be shorter, which happens if:
+    -   SD smaller
+    -   sample size bigger
+    -   confidence level smaller
+-   Last one is a cheat, really, since reducing confidence level
+    increases chance that interval won't contain pop. mean at all!
+
+## Another way to access data frame columns
+
+```{r inference-1-R-9}
+with(jays, t.test(attendance))
+```
+
+## Hypothesis testing for Blue Jays attendances
+
+
+- Previous year's mean attendance was 29,327, so test to see whether the mean is different from that in any way (two-sided test):
+
+
+```{r inference-1-R-10}
+t.test(jays$attendance, mu = 29327)
+```
+
+-   See test statistic $-1.93$, P-value 0.065.
+-   Do not reject null at $\alpha=0.05$: no evidence that mean
+    attendance has changed.
+
+
+

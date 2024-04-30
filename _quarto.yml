@@ -5,6 +5,7 @@ project:
     - running.qmd
     - readfile.qmd
     - graphs.qmd
+    - graphs_c33.qmd
     - numsum.qmd
     - choosing.qmd
     - bootstrap_R.qmd
