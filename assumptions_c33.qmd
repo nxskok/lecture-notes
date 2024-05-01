@@ -14,6 +14,8 @@ title: "Assumptions"
 
 ```{r inference-1-R-2}
 #| echo: false
+
+library(tidyverse)
 my_url <- "http://ritsokiguess.site/datafiles/jays15-home.csv"
 jays <- read_csv(my_url) 
 ```

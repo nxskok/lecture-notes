@@ -10,6 +10,7 @@ project:
     - choosing.qmd
     - bootstrap_R.qmd
     - inference*.qmd
+    - assumptions_c33.qmd
     - reports.qmd
     - tidy*.qmd
     - wider_wrong.qmd
