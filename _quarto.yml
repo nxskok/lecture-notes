@@ -10,6 +10,8 @@ project:
     - choosing.qmd
     - bootstrap_R.qmd
     - inference*.qmd
+    - simboot.qmd
+    - power_c33.qmd
     - reports.qmd
     - tidy*.qmd
     - wider_wrong.qmd

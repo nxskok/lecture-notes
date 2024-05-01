@@ -162,7 +162,7 @@ mean(boot)
 
 ## A whole bunch
 
-- We are now doing a simulation:
+- We are now doing a simulation. I like 10,000 samples when testing for normality:
 
 ```{r bootstrap-5, echo=FALSE}
 set.seed(457299)
