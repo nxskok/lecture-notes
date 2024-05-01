@@ -20,8 +20,8 @@ project:
     - dates_and_times.qmd
     - dip.qmd
     - vector_matrix.qmd
+    - simboot.qmd
     - bootstrap.qmd
-    - bootstrap_c33.qmd
     - stan.qmd
     - regression.qmd
     - logistic.qmd

@@ -1,0 +1,306 @@
+---
+title: "Simulation and the bootstrap"
+format: 
+  revealjs:
+     df-print: paged
+     scrollable: true
+     embed-resources: true
+  beamer:
+    incremental: false
+execute: 
+  echo: true
+---
+
+## packages
+
+```{r}
+library(tidyverse)
+```
+
+
+## Simulation
+
+- Sometimes you know the exact mathematical answer to a problem, eg:
+  - $X_1,  \ldots X_n \sim N(\mu, \sigma^2)$, what is distribution of $\bar{X}$? (Ans: $N(\mu, \sigma^2/n)$.)
+- More often, though, you don't:
+  - if $X \sim Bin(2, 0.5), Y \sim Bin(3, 0.2)$, what is dist of $Z = X+Y$?
+  
+- Simulation: generate random $X$ and $Y$, calculate sum, repeat many times. Gives you (approx) dist of $X+Y$ without any mathematics!
+
+## Random numbers in R
+
+- R knows about a lot of distributions, eg: `norm binom pois exp gamma t chisq` (type `?distributions` in Console to see more)
+- to generate random numbers from a distribution, put `r` on front of these; inputs are number of random values to generate, and parameters of distribution to simulate from.
+- Examples:
+
+```{r}
+#| echo: false
+
+set.seed(457298)
+``` 
+
+
+```{r}
+rnorm(5, 100, 15)
+```
+
+and 
+
+```{r}
+rpois(10, 3.5)
+```
+
+## Our problem: simulating once
+
+- if $X \sim Bin(2, 0.5), Y \sim Bin(3, 0.2)$, what is dist of $Z = X+Y$?
+ 
+```{r}
+x <- rbinom(1, 2, 0.5)
+y <- rbinom(1, 3, 0.2)
+x
+y
+x + y
+```
+
+To simulate many times: 
+- set up dataframe with space for each simulated value
+- work rowwise
+- do one simulation per row
+
+## Simulating many times
+
+```{r}
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(x = rbinom(1, 2, 0.5),
+         y = rbinom(1, 3, 0.2),
+         z = x + y) -> d
+d
+```
+
+## Distribution of sum
+
+Make a bar chart rather than a histogram because distribution of $Z$ is discrete:
+
+```{r}
+ggplot(d, aes(x = z)) + geom_bar()
+```
+
+## (Simulated) probability that the sum is at least 4:
+
+```{r}
+d %>% count(z >= 4)
+```
+
+Only this much:
+
+```{r}
+285/10000
+```
+
+A sum of 5 is possible though very unlikely.
+
+## The bootstrap
+ 
+Source: [Hesterberg et al](https://drive.google.com/file/d/10s780DfNtfSs1YqFzrUkq1mcHAEw6WNF/edit)
+
+- Sampling distribution of a statistic is distribution of that statistic over "all possible samples" from population of interest.
+- "Plug-in principle": sample mean estimates population mean, sample variance estimates population variance, etc.
+- Also, sample is estimate of population (precisely, proportion of sample values $\le x$ estimates probability of drawing value $\le x$ from population, for any $x$).
+- As long as your sample is representative, sampling *from the sample* (!) is an estimate of sampling from the population. Called a *bootstrap sample*.
+- Sample from sample *with* replacement, or else you get original sample back.
+
+## Blue Jays attendances:
+
+```{r inference-1-R-2}
+#| echo: false
+
+my_url <- "http://ritsokiguess.site/datafiles/jays15-home.csv"
+jays <- read_csv(my_url) 
+```
+
+```{r inference-1-R-66, fig.height=3.8}
+ggplot(jays, aes(sample = attendance)) + 
+  stat_qq() + stat_qq_line()
+```
+
+- $t$ procedure for the mean may not be a good idea because the distribution is skewed.
+- Previously: hand-waving with sample size.
+
+## What *actually* matters
+
+- It's not the distribution of the *data* that has to be approx normal (for a $t$ procedure).
+- What matters is the *sampling distribution of the sample mean*.
+- If the sample size is large enough, the sampling distribution will be normal enough even if the data distribution is not.
+  - This is why we had to consider the sample size as well as the shape.
+- But how do we know whether this is the case or not? We only have *one* sample.
+- Use the bootstrap to simulate sampling distribution.
+
+## Simulating the sampling distribution of sample statistic
+
+- Sample from our sample *with replacement*.
+- Calculate statistic
+- Repeat many times (simulation).
+- This gives an idea of how our statistic might vary in repeated samples: that is, its sampling distribution.
+- Called the **bootstrap distribution** of the statistic.
+- If the bootstrap distribution is approx normal, infer that the true sampling distribution also approx normal, therefore inference about the mean such as $t$ is good enough.
+- If not, we should be more careful.
+
+
+## Bootstrapping the Blue Jays attendances
+
+- Sampling with replacement is done like this (the default sample size is as long as the original data):
+
+```{r bootstrap-4}
+boot <- sample(jays$attendance, replace=TRUE)
+sort(jays$attendance)
+sort(boot)
+mean(boot)
+```
+
+- That's one bootstrapped mean. We need a whole bunch.
+
+## A whole bunch
+
+- We are now doing a simulation:
+
+```{r bootstrap-5, echo=FALSE}
+set.seed(457299)
+```
+
+```{r bootstrap-7}
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(boot_sample = list(sample(jays$attendance, replace = TRUE))) %>% 
+  mutate(my_mean = mean(boot_sample)) -> samples
+samples
+```
+
+- for each row:
+  - obtain a bootstrap sample (`list` because we are saving the whole sample in one cell of the dataframe)
+  - work out the mean of that bootstrap sample.
+  
+## Sampling distribution of sample mean
+
+```{r bootstrap-8, fig.height=4}
+ggplot(samples, aes(x=my_mean)) + geom_histogram(bins=10)
+```
+
+- Is that a slightly long right tail?
+
+## Normal quantile plot
+
+might be better than a histogram:
+
+```{r bootstrap-9, fig.height=3.5}
+ggplot(samples, aes(sample = my_mean)) + 
+  stat_qq()+stat_qq_line()
+```
+
+- a very very slight right-skewness, but very close to normal.
+- hence the $t$-test is fine for the Blue Jays attendances.
+
+## Kids learning to read
+
+```{r inference-1-R-12}
+#| echo: false
+my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
+kids <- read_delim(my_url," ")
+```
+
+- Normal quantile plots, one for each sample:
+
+```{r inference-1-R-14, fig.height=3.7}
+ggplot(kids, aes(sample = score)) + 
+  stat_qq() + stat_qq_line() +
+  facet_wrap(~ group)
+```
+
+- These both look close to normal.
+
+## Control group
+
+- Pull out control group children
+- Obtain bootstrap sampling distribution of scores
+
+```{r}
+kids %>% filter(group == "c") -> controls
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(controls$score, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) -> samples1
+samples1
+```
+
+## The bootstrap sampling distribution
+
+```{r}
+ggplot(samples1, aes(sample = my_mean)) +
+  stat_qq() + stat_qq_line()
+```
+
+- Close to normal
+
+## Same, for treatment group
+
+```{r}
+kids %>% filter(group == "t") -> treated
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(treated$score, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) -> samples2
+```
+
+## The bootstrap sampling distribution
+
+```{r}
+ggplot(samples2, aes(sample = my_mean)) +
+  stat_qq() + stat_qq_line()
+```
+
+- Very slightly left-skewed, but close to normal. Not a problem.
+
+
+## Pain relief
+
+```{r inference-4b-R-1}
+#| echo: false
+my_url <- 
+  "http://ritsokiguess.site/datafiles/analgesic.txt"
+pain <- read_table(my_url)
+```
+
+- With matched pairs, assumption is of normality of *differences*:
+
+```{r}
+pain %>% mutate(diff = druga - drugb) -> pain
+pain
+```
+
+## Bootstrap sampling distribution of differences
+
+```{r}
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) -> samples
+samples
+```
+
+## Assess it for normality
+
+```{r}
+ggplot(samples, aes(sample = my_mean)) +
+  stat_qq() + stat_qq_line()
+```
+
+- Very skewed to the left (because of low outlier)
+- Matched pairs $t$ not to be trusted at all.
+
+## Histogram with many bins
+
+```{r}
+ggplot(samples, aes(x = my_mean)) + geom_histogram(bins = 60)
+```
+
+- actually a very multimodal distribution: one mode for each time the low outlier appears in the bootstrap sampling distribution (can be none at all up to several times, because bootstrap sampling is with replacement).
