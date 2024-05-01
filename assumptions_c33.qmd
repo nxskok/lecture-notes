@@ -21,13 +21,13 @@ jays <- read_csv(my_url)
 ```
 
 ```{r inference-1-R-66, fig.height=3.8}
-ggplot(jays, aes(x = attendance)) + 
+ggplot(jays, aes(sample = attendance)) + 
   stat_qq() + stat_qq_line()
 ```
 
 ## Comments
 
-- Distribution of attendances somewhat skewed to the right
+- Distribution of attendances somewhat skewed to the right (because of the short lower tail and the sort-of curve)
 - Sample size $n = 25$ is reasonably large in  Central Limit Theorem terms
 - Use of $t$ *may* be OK here despite skewed shape.
 
@@ -42,7 +42,7 @@ kids <- read_delim(my_url," ")
 - Make normal quantile plots, one for each sample:
 
 ```{r inference-1-R-14, fig.height=3.7}
-ggplot(kids, aes(x = group, y = score)) + 
+ggplot(kids, aes(sample = score)) + 
   stat_qq() + stat_qq_line() +
   facet_wrap(~ group)
 ```
@@ -77,7 +77,7 @@ ggplot(pain,aes(sample=diff)) + stat_qq() + stat_qq_line()
 ## Comments
 
 - This is very non-normal (the low outlier)
-- The sample size of $n = 12$ xxx is not large
+- The sample size of $n = 12$ is not large
 - We should have concerns about our matched pairs $t$-test.
 
 ## Doing things properly
