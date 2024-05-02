@@ -1,5 +1,5 @@
 ---
-title: "Statistical Inference: Power"
+title: "Power of hypothesis tests"
 editor: 
   markdown: 
     wrap: 72
@@ -31,17 +31,20 @@ Tension between truth and decision about truth (imperfect).
 -   Prob. of not making type II error called **power** (= $1 - \beta$).
     *High* power good.
 
-## Power
+## Power 1/2
 
 -   Suppose $H_0 : \theta = 10$, $H_a : \theta \ne 10$ for some
     parameter $\theta$.
 -   Suppose $H_0$ wrong. What does that say about $\theta$?
 -   Not much. Could have $\theta = 11$ or $\theta = 8$ or
     $\theta = 496$. In each case, $H_0$ wrong.
+    
+## Power 2/2
+    
 -   How likely a type II error is depends on what $\theta$ is:
-    -   If $\theta = 496$, should be able to reject $H_0 : \theta = 10$
-        even for small sample, so $\beta$ should be small (power large).
-    -   If $\theta = 11$, might have hard time rejecting $H_0$ even with
+    -   If $\theta = 496$, should reject $H_0 : \theta = 10$
+        even for small sample, so $\beta$ small (power large).
+    -   If $\theta = 11$, hard to reject $H_0$ even with
         large sample, so $\beta$ would be larger (power smaller).
 -   Power depends on true parameter value, and on sample size.
 -   So we play "what if": "if $\theta$ were 11 (or 8 or 496), what would
@@ -71,8 +74,7 @@ Tension between truth and decision about truth (imperfect).
     take the $n$ we plan to use.
 -   Idea: draw a random sample from the true distribution, test whether
     its mean is 10 or not.
--   Repeat previous step "many" times.
--   Simulation.
+-   Repeat previous step "many" times: simulation.
 
 ## Making it go
 
@@ -96,19 +98,17 @@ x
 t.test(x, mu = 10)
 ```
 
--   Fail to reject the mean being 10 (a Type II error).
+-   P-value 0.081, so fail to reject the mean being 10 (a Type II error).
 
 ## or get just P-value
 
 ```{r}
 ans <- t.test(x, mu = 10)
-str(ans)
 ans$p.value
 ```
 
 ## Run this lots of times via simulation
 
--   use `rowwise` to work one random sample at a time
 -   draw random samples from the truth
 -   test that $\mu = 10$
 -   get P-value
@@ -142,6 +142,8 @@ tibble(sim = 1:1000) %>%
   mutate(p_val = t_test$p.value) %>% 
   count(p_val <= 0.05)
 ```
+ 
+Power is (much) larger with a bigger sample. 
  
 ## How accurate is my simulation?
 
@@ -234,18 +236,12 @@ power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
 power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 ```
 
-one-sided test?
-
-```{r}
-power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one.sided")
-```
 
 -   Sample size must be a whole number, so round up to 34 (to get at
     least as much power as you want).
 
 ## Power curves
 
-- xxx edit down
 -   Rather than calculating power for one sample size, or sample size
     for one power, might want a picture of relationship between sample
     size and power.
@@ -254,60 +250,11 @@ power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one
 -   Called power curve.
 -   Build and plot it yourself.
 
-## Building it
 
--   If you feed power.t.test a collection ("vector") of values, it will
-    do calculation for each one.
--   Do power for variety of sample sizes, from 10 to 100 in steps of 10:
-
-```{r inference-2-R-9}
-ns <- seq(10,100,10)
-ns
-```
-
-\small
-
--   Calculate powers:
-
-```{r inference-2-R-10}
-ans<- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
-ans
-str(ans)
-ans$power
-```
-
-\normalsize
-
-## Building a plot (1/2)
-
--   Make a data frame out of the values to plot:
-
-```{r inference-2-R-11}
-d <- tibble(n=ns, power=ans$power)
-d
-```
-
-## Building a plot (2/2)
-
--   Plot these as points joined by lines, and add horizontal line at 1
-    (maximum power):
-
-```{r inference-2-R-12}
-g  <-  ggplot(d, aes(x = n, y = power)) + geom_point() + 
-  geom_line() + 
-  geom_hline(yintercept = 1, linetype = "dashed")
-```
-
-## The power curve
-
-```{r inference-2-R-13}
-g
-```
-
-## Another way to do it:
+## Building it:
 
 ```{r inference-2-R-14}
-tibble(n=ns) %>% rowwise() %>%
+tibble(n=seq(10, 100, 10)) %>% rowwise() %>%
   mutate(power_output = 
            list(power.t.test(n = n, delta = 10-8, sd = 4, 
                              type = "one.sample"))) %>% 
@@ -316,7 +263,7 @@ tibble(n=ns) %>% rowwise() %>%
     geom_hline(yintercept=1, linetype="dashed") -> g2
 ```
 
-## The power curve done the other way
+## The power curve
 
 ```{r inference-2-R-15}
 g2
@@ -331,9 +278,7 @@ g2
 
 ```{r inference-2-R-16}
 means <- seq(6,10,0.5)
-means
 ns <- c(15,30)
-ns
 combos <- crossing(mean=means, n=ns)
 ```
 
@@ -347,32 +292,26 @@ combos
 
 \normalsize
 
-## Calculate and plot
-
--   Calculate the powers, carefully:
+## Calculate powers:
 
 ```{r inference-2-R-18}
-ans <- with(combos, power.t.test(n=n, delta=10-mean, sd=4, 
-                              type="one.sample"))
-ans$power
-```
-
-## Make a data frame to plot, pulling things from the right places:
-
-```{r inference-2-R-20}
-d <- tibble(n=factor(combos$n), mean=combos$mean, 
-         power=ans$power)
-d
+combos %>% 
+  rowwise() %>% 
+  mutate(power_stuff = list(power.t.test(n=n, delta=10-mean, sd=4, 
+                              type="one.sample"))) %>% 
+  mutate(power = power_stuff$power) -> powers
 ```
 
 ## then make the plot:
 
 ```{r inference-2-R-21}
-g  <-  ggplot(d, aes(x = mean, y = power, colour = n)) +
+g  <-  ggplot(powers, aes(x = mean, y = power, colour = factor(n))) +
   geom_point() + geom_line() +
   geom_hline(yintercept = 1, linetype = "dashed") +
   geom_vline(xintercept = 10, linetype = "dotted")
 ```
+
+- Need `n` as categorical so that `colour` works properly.
 
 ## The power curves
 
