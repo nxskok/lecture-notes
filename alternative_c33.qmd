@@ -1,0 +1,587 @@
+---
+title: "Alternative tests"
+---
+
+## What to do when there isn't sufficient normality
+
+- When your samples are not normal enough, cannot use $t$ procedures
+- Sometimes transforming the data (eg taking logs of all the values) will help
+- Or, use test with no assumptions about normality:
+  - for one sample, use *sign test* for median
+  - for two samples, use *Mood's median test*
+  - for matched pairs, use *sign test* on differences.
+  
+  
+##  One-sample: the IRS data
+
+-   The IRS ("Internal Revenue Service") is the US authority that deals
+    with taxes (like Revenue Canada).
+-   One of their forms is supposed to take no more than 160 minutes to
+    complete. A citizen's organization claims that it takes people
+    longer than that on average.
+-   Sample of 30 people; time to complete form recorded.
+-   Read in data, and do $t$-test of $H_0 : \mu = 160$ vs.
+    $H_a : \mu > 160$.
+-   For reading in, there is only one column, so can pretend it is
+    delimited by anything.
+
+## Read in data
+
+```{r}
+library(tidyverse)
+library(smmr)
+```
+
+
+```{r inference-3-R-6, message=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
+irs <- read_csv(my_url)
+irs
+```
+
+## Test whether mean is 160 or greater
+
+```{r inference-3-R-7}
+with(irs, t.test(Time, mu = 160, 
+                 alternative = "greater"))
+```
+
+Reject null; mean (for all people to complete form) greater than 160.
+
+## But, look at a graph
+
+```{r inference-3-R-8, fig.height=3.5}
+ggplot(irs, aes(x = Time)) + geom_histogram(bins = 6)
+```
+
+## Comments
+
+-   Skewed to right.
+-   Should look at *median*, not mean.
+
+## The sign test
+
+-   But how to test whether the median is greater than 160?
+-   Idea: if the median really is 160 ($H_0$ true), the sampled values
+    from the population are equally likely to be above or below 160.
+-   If the population median is greater than 160, there will be a lot of
+    sample values greater than 160, not so many less. Idea: test
+    statistic is number of sample values greater than hypothesized
+    median.
+
+## Getting a P-value for sign test 1/3
+
+-   How to decide whether "unusually many" sample values are greater
+    than 160? Need a sampling distribution.
+-   If $H_0$ true, pop. median is 160, then each sample value
+    independently equally likely to be above or below 160.
+-   So number of observed values above 160 has binomial distribution
+    with $n = 30$ (number of data values) and $p = 0.5$ (160 is
+    hypothesized to be *median*).
+
+## Getting P-value for sign test 2/3
+
+-   Count values above/below 160:
+
+```{r inference-3-R-9}
+irs %>% count(Time > 160)
+```
+
+-   17 above, 13 below. How unusual is that? Need a *binomial table*.
+
+## Getting P-value for sign test 3/3
+
+-   R function `dbinom` gives the probability of eg. exactly 17
+    successes in a binomial with $n = 30$ and $p = 0.5$:
+
+```{r inference-3-R-10}
+dbinom(17, 30, 0.5)
+```
+
+-   but we want probability of 17 *or more*, so get all of those, find
+    probability of each, and add them up:
+
+```{r inference-3-R-11}
+tibble(x=17:30) %>% 
+  mutate(prob=dbinom(x, 30, 0.5)) %>% 
+  summarize(total=sum(prob))
+```
+
+or
+
+```{r}
+pbinom(17, 30, 0.5) # prob of <= 17
+```
+
+and hence (note first input):
+
+```{r}
+pbinom(16, 30, 0.5, lower.tail = FALSE)
+```
+
+This last is $P(X \ge 17) = P(X > 16)$.
+
+## Using my package `smmr`
+
+-   I wrote a package `smmr` to do the sign test (and some other
+    things). Installation is non-standard:
+
+    
+```{r}
+#| eval: false
+install.packages("smmr", repos = "nxskok.r-universe.dev")
+```
+    
+
+-   Then load it:
+
+```{r inference-3-R-13, eval=FALSE}
+library(smmr)
+```
+
+## `smmr` for sign test
+
+-   `smmr`'s function `sign_test` needs three inputs: a data frame, a
+    column and a null median:
+
+```{r inference-3-R-14}
+sign_test(irs, Time, 160)
+```
+
+## Comments (1/3)
+
+-   Testing whether population median *greater than* 160, so want
+    *upper-tail* P-value 0.2923. Same as before.
+-   Also get table of values above and below; this too as we got.
+
+## Comments (2/3)
+
+-   P-values are:
+
+| Test | P-value |
+|:-----|--------:|
+| $t$  |  0.0392 |
+| Sign |  0.2923 |
+
+-   These are very different: we reject a mean of 160 (in favour of the
+    mean being bigger), but clearly *fail* to reject a median of 160 in
+    favour of a bigger one.
+-   Why is that? Obtain mean and median:
+
+```{r inference-3-R-15}
+irs %>% summarize(mean_time = mean(Time), 
+                  median_time = median(Time))
+```
+
+## Comments (3/3) {.smaller}
+
+-   The mean is pulled a long way up by the right skew, and is a fair
+    bit bigger than 160.
+-   The median is quite close to 160.
+-   We ought to be trusting the sign test and not the t-test here
+    (median and not mean), and therefore there is no evidence that the
+    "typical" time to complete the form is longer than 160 minutes.
+-   Having said that, there are clearly some people who take a lot
+    longer than 160 minutes to complete the form, and the IRS could
+    focus on simplifying its form for these people.
+-   In this example, looking at any kind of average is not really
+    helpful; a better question might be "do an unacceptably large
+    fraction of people take longer than (say) 300 minutes to complete
+    the form?": that is, thinking about worst-case rather than
+    average-case.
+
+## Confidence interval for the median 1/2
+
+-   The sign test does not naturally come with a confidence interval for
+    the median.
+-   So we use the "duality" between test and confidence interval to say:
+    the (95%) confidence interval for the median contains exactly those
+    values of the null median that would not be rejected by the
+    two-sided sign test (at $\alpha = 0.05$).
+    
+## Confidence interval for the median 2/2
+
+- Precisely: Let $C = 100(1 - \alpha)$, so C% gives
+corresponding CI to level-$\alpha$ test. Then following always true.
+(Symbol $\iff$ means "if and only if".)
+
+| Test decision                         |        | Confidence interval                   |
+|:--------------------------|:---------------:|:--------------------------|
+| Reject $H_0$ at level $\alpha$        | $\iff$ | $C\%$ CI does not contain $H_0$ value |
+| Do not reject $H_0$ at level $\alpha$ | $\iff$ | $C\%$ CI contains $H_0$ value         |
+
+Idea: "Plausible" parameter value inside CI, not rejected; "Implausible"
+parameter value outside CI, rejected.
+
+## The value of this
+
+-   If you have a test procedure but no corresponding CI:
+-   you make a CI by including all the parameter values that would not
+    be rejected by your test.
+-   Use:
+    -   $\alpha = 0.01$ for a 99% CI,
+    -   $\alpha = 0.05$ for a 95% CI,
+    -   $\alpha = 0.10$ for a 90% CI, and so on.
+
+## For our data
+
+-   The procedure is to try some values for the null median and see
+    which ones are inside and which outside our CI.
+-   smmr has pval_sign that gets just the 2-sided P-value:
+
+```{r inference-3-R-16}
+pval_sign(160, irs, Time)
+```
+
+-   Try a couple of null medians:
+
+```{r inference-3-R-17}
+pval_sign(200, irs, Time)
+pval_sign(300, irs, Time)
+```
+
+-   So 200 inside the 95% CI and 300 outside.
+
+## Doing a whole bunch
+
+-   Choose our null medians first:
+
+```{r inference-3-R-18}
+(d <- tibble(null_median=seq(100,300,20)))
+```
+
+## ... and then
+
+"for each null median, run the function `pval_sign` for that null median
+and get the P-value":
+
+```{r inference-3-R-19}
+d %>% rowwise() %>% 
+  mutate(p_value = pval_sign(null_median, irs, Time))
+```
+
+## Make it easier for ourselves
+
+```{r inference-3-R-20}
+d %>% rowwise() %>% 
+  mutate(p_value = pval_sign(null_median, irs, Time)) %>% 
+  mutate(in_out = ifelse(p_value > 0.05, "inside", "outside"))
+```
+
+## confidence interval for median?
+
+-   95% CI to this accuracy from 120 to 200.
+-   Can get it more accurately by looking more closely in intervals from
+    100 to 120, and from 200 to 220.
+
+## A more efficient way: bisection
+
+-   Know that top end of CI between 200 and 220:
+
+```{r inference-3-R-21}
+lo <- 200 
+hi <- 220
+```
+
+-   Try the value halfway between: is it inside or outside?
+
+```{r inference-3-R-22}
+try <- (lo + hi) / 2
+try
+pval_sign(try,irs,Time)
+```
+
+-   Inside, so upper end is between 210 and 220. Repeat (over):
+
+## ... bisection continued
+
+```{r inference-3-R-23}
+lo <- try
+try <- (lo + hi) / 2
+try
+pval_sign(try, irs, Time)
+```
+
+-   215 is inside too, so upper end between 215 and 220.
+-   Continue until have as accurate a result as you want.
+
+## Bisection automatically
+
+-   A loop, but not a `for` since we don't know how many times we're
+    going around. Keep going `while` a condition is true:
+
+```{r inference-3-R-24, eval=F}
+lo = 200
+hi = 220
+while (hi - lo > 1) {
+  try = (hi + lo) / 2
+  ptry = pval_sign(try, irs, Time)
+  print(c(try, ptry))
+  if (ptry <= 0.05)
+    hi = try
+  else
+    lo = try
+}
+```
+
+## The output from this loop
+
+```{r inference-3-R-25, echo=F}
+lo = 200
+hi = 220
+while (hi - lo > 1) {
+  try = (hi + lo) / 2
+  ptry = pval_sign(try, irs, Time)
+  print(c(try, ptry))
+  if (ptry <= 0.05)
+    hi = try
+  else
+    lo = try
+}
+```
+
+-   215 inside, 215.625 outside. Upper end of interval to this accuracy
+    is 215.
+
+## Using smmr
+
+-   `smmr` has function `ci_median` that does this (by default 95% CI):
+
+```{r inference-3-R-26}
+ci_median(irs, Time)
+```
+
+-   Uses a more accurate bisection than we did.
+-   Or get, say, 90% CI for median:
+
+```{r inference-3-R-27}
+ci_median(irs, Time, conf.level=0.90)
+```
+
+-   90% CI is shorter, as it should be.
+
+## Bootstrap
+
+-   but, was the sample size (30) big enough to overcome the skewness?
+-   Bootstrap, again:
+
+```{r inference-3-R-28, echo=FALSE}
+set.seed(457299)
+```
+
+```{r inference-3-R-29}
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) %>% 
+  ggplot(aes(sample = my_mean)) + 
+    stat_qq() + stat_qq_line() -> g
+```
+
+## The sampling distribution
+
+```{r inference-3-R-30}
+g
+```
+
+## Comments
+
+-   A little skewed to right, but not nearly as much as I was expecting.
+-   The $t$-test for the mean might actually be OK for these data, *if
+    the mean is what you want*.
+-   In actual data, mean and median very different; we chose to make
+    inference about the median.
+-   Thus for us it was right to use the sign test.
+
+## Two samples: Mood's median test
+
+-   If normality fails (for one or both of the groups), what do we do
+    then?
+-   Again, can compare medians: use the thought process of the sign
+    test, which does not depend on normality and is not damaged by
+    outliers.
+-   A suitable test called Mood's median test.
+-   Before we get to that, a diversion.
+
+## The chi-squared test for independence
+
+Suppose we want to know whether people are in favour of having daylight
+savings time all year round. We ask 20 males and 20 females whether they
+each agree with having DST all year round ("yes") or not ("no"). Some
+randomly chosen data:
+
+```{r inference-5-R-1, message=F}
+my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
+dst <- read_delim(my_url," ")
+dst %>% slice_sample(n = 10)
+```
+
+## ... continued
+
+Count up individuals in each category combination, and arrange in
+contingency table:
+
+```{r inference-5-R-2}
+tab <- with(dst, table(gender, agree))
+tab
+```
+
+-   Most of the males say "yes", but the females are about evenly split.
+-   Looks like males more likely to say "yes", ie. an association
+    between gender and agreement.
+-   Test an $H_0$ of "no association" ("independence") vs. alternative
+    that there is really some association.
+-   Done with `chisq.test`.
+
+## ...And finally
+
+```{r inference-5-R-3}
+chisq.test(tab, correct=FALSE)
+```
+
+-   Reject null hypothesis of no association (P-value 0.008)
+-   therefore there is a difference in rates of agreement between (all)
+    males and females (or that gender and agreement are associated).
+-   This calculation gives same answers as you would get by hand.
+    (Omitting `correct = FALSE` uses "Yates correction".
+
+## Mood's median test
+
+-   Earlier: compare medians of two groups.
+-   Sign test: count number of values above and below something (there,
+    hypothesized median).
+-   Mood's median test:
+    -   Find "grand median" of all the data, regardless of group
+    -   Count data values in each group above/below grand median.
+    -   Make contingency table of group vs. above/below.
+    -   Test for association.
+-   If group medians equal, each group should have about half its
+    observations above/below grand median. If not, one group will be
+    mostly above grand median and other below.
+
+## Mood's median test for reading data
+
+```{r inference-5-R-4, echo=FALSE, message=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
+kids <- read_delim(my_url," ")
+```
+
+-   Find overall median score:
+
+```{r inference-5-R-5}
+kids %>% summarize(med=median(score)) %>% pull(med) -> m
+m
+```
+
+-   Make table of above/below vs. group:
+
+```{r inference-5-R-6}
+tab <- with(kids, table(group, score > m))
+tab
+```
+
+-   Treatment group scores mostly above median, control group scores
+    mostly below, as expected.
+
+## The test
+
+-   Do chi-squared test:
+
+```{r inference-5-R-7}
+chisq.test(tab, correct=F)
+```
+
+-   This test actually two-sided (tests for any association).
+-   Here want to test that new reading method *better* (one-sided).
+-   Most of treatment children above overall median, so do 1-sided test
+    by halving P-value to get 0.017.
+-   This way too, children do better at learning to read using the new
+    method.
+
+## Or by smmr
+
+-   `median_test` does the whole thing:
+
+```{r inference-5-R-8}
+median_test(kids,score,group)
+```
+
+-   P-value again two-sided.
+
+## Comments
+
+-   P-value 0.013 for (1-sided) t-test, 0.017 for (1-sided) Mood median
+    test.
+-   Like the sign test, Mood's median test doesn't use the data very
+    efficiently (only, is each value above or below grand median).
+-   Thus, if we can justify doing *t*-test, we should do it. This is the
+    case here.
+-   The *t*-test will usually give smaller P-value because it uses the
+    data more efficiently.
+-   The time to use Mood's median test is if we are definitely unhappy
+    with the normality assumption (and thus the t-test P-value is not to
+    be trusted).
+-   There is no obvious way to get a confidence interval for the difference between the two medians.
+
+
+## Matched pairs: the pain relief data
+
+Values aligned in columns:
+
+```{r inference-4b-R-1}
+my_url <- 
+  "http://ritsokiguess.site/datafiles/analgesic.txt"
+pain <- read_table(my_url)
+pain %>% mutate(diff = druga - drugb) -> pain
+glimpse(pain)
+```
+
+
+## Assessing normality
+
+-   Matched pairs analyses assume (theoretically) that differences
+    normally distributed.
+-   How to assess normality? A normal quantile plot.
+
+## The normal quantile plot (of differences)
+
+```{r inference-4b-R-6, fig.height=4}
+ggplot(pain, aes(sample = diff)) + stat_qq() + stat_qq_line()
+```
+
+-   Points should follow the straight line. Bottom left one way off, so
+    normality questionable here: outlier.
+
+## What to do instead?
+
+-   Matched pairs $t$-test based on one sample of differences
+-   the differences not normal (enough)
+-   so do *sign test* on differences, null median 0:
+
+```{r inference-4b-R-7}
+sign_test(pain, diff, 0)
+```
+
+- No evidence of any difference between the drugs (that the median difference is not zero).
+
+## Did we really need to worry about that outlier?
+
+Bootstrap sampling distribution of sample mean differences:
+
+```{r}
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) %>% 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line() -> g
+```
+
+## The normal quantile plot
+
+```{r}
+g
+```
+
+
+Yes we did need to worry; this is clearly skewed left and not normal.
+
