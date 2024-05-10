@@ -5,11 +5,14 @@ project:
     - running.qmd
     - readfile.qmd
     - graphs.qmd
+    - graphs_c33.qmd
     - numsum.qmd
     - choosing.qmd
     - bootstrap_R.qmd
     - inference*.qmd
-    - alternative_c33.qmd
+    - assumptions_c33.qmd
+    - simboot.qmd
+    - power_c33.qmd
     - reports.qmd
     - tidy*.qmd
     - wider_wrong.qmd
@@ -20,8 +23,8 @@ project:
     - dates_and_times.qmd
     - dip.qmd
     - vector_matrix.qmd
+    - simboot.qmd
     - bootstrap.qmd
-    - bootstrap_c33.qmd
     - stan.qmd
     - regression.qmd
     - logistic.qmd
