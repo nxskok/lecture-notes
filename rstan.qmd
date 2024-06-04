@@ -28,9 +28,8 @@ set.seed(457299)
 
 ```{r}
 #| eval: false
-install.packages("cmdstanr", 
-                 repos = c("https://mc-stan.org/r-packages/", 
-                           getOption("repos")))
+install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev",
+                                       "https://cloud.r-project.org"))
 ```
 
 -   `posterior` and `bayesplot`, from the same place:
@@ -38,12 +37,10 @@ install.packages("cmdstanr",
 ```{r}
 #| eval: false
 
-install.packages("posterior", 
-                 repos = c("https://mc-stan.org/r-packages/", 
-                            getOption("repos")))
-install.packages("bayesplot", 
-                 repos = c("https://mc-stan.org/r-packages/", 
-                            getOption("repos")))
+install.packages("posterior", repos = c("https://stan-dev.r-universe.dev",
+                                        "https://cloud.r-project.org"))
+install.packages("bayesplot", repos = c("https://stan-dev.r-universe.dev",
+                                        "https://cloud.r-project.org"))
 ```
 
 ## Installation 2/2
@@ -58,7 +55,7 @@ and then:
 
 ```{r}
 #| eval: false
-install_cmdstan(cores = 4)
+install_cmdstan(cores = 6)
 ```
 
 If you happen to know how many cores (processors) your computer has,
