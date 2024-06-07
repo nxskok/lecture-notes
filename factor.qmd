@@ -100,7 +100,7 @@ I used `kids.0` here since I want `kids.1` and `kids.2` later.
 
 ##  Scree plot
 ```{r bFactor-3, fig.height=3.5}
-ggscreeplot(kids.0)
+# ggscreeplot(kids.0)
 ```
 
  
@@ -235,7 +235,7 @@ kids.1$PVAL
 
 ```{r bFactor-10, message=FALSE, fig.height=6}
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
-places0 <- read_table(my_url)
+places0 <- read_table2(my_url)
 places0 %>% 
 mutate(across(-id, \(x) log(x))) -> places
 places %>% select(-id) -> places_numeric

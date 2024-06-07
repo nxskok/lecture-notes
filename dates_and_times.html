@@ -2498,7 +2498,7 @@ window.onload = function() {
 <ul>
 <li>Dates represented on computers as “days since an origin”, typically Jan 1, 1970, with a negative date being before the origin:</li>
 </ul>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href></a>mydates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;1970-01-01&quot;</span>, <span class="st">&quot;2007-09-04&quot;</span>, <span class="st">&quot;1931-08-05&quot;</span>)</span>
 <span id="cb2-2"><a href></a>(somedates <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> mydates) <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href></a>  <span class="fu">mutate</span>(</span>
@@ -2519,7 +2519,7 @@ window.onload = function() {
 <ul>
 <li>Dates are “actually” numbers, so can add and subtract (difference is 2007 date in <code>d</code> minus others):</li>
 </ul>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href></a>somedates <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">plus30 =</span> d <span class="sc">+</span> <span class="dv">30</span>, <span class="at">diffs =</span> d[<span class="dv">2</span>] <span class="sc">-</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -2552,7 +2552,7 @@ window.onload = function() {
 </section>
 <section id="the-data-as-read-in" class="slide level2">
 <h2>The data as read in</h2>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href></a>ddd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -2569,7 +2569,7 @@ window.onload = function() {
 <li>Preceding shows that dates should be stored as text in format yyyy-mm-dd (ISO standard).</li>
 <li>To deal with dates in other formats, use package <code>lubridate</code> and convert. For example, dates in US format with month first:</li>
 </ul>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href></a><span class="fu">tibble</span>(<span class="at">usdates =</span> <span class="fu">c</span>(<span class="st">&quot;05/27/2012&quot;</span>, <span class="st">&quot;01/03/2016&quot;</span>, <span class="st">&quot;12/31/2015&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">iso =</span> <span class="fu">mdy</span>(usdates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2583,7 +2583,7 @@ window.onload = function() {
 </section>
 <section id="trying-to-read-these-as-uk-dates" class="slide level2">
 <h2>Trying to read these as UK dates</h2>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href></a><span class="fu">tibble</span>(<span class="at">usdates =</span> <span class="fu">c</span>(<span class="st">&quot;05/27/2012&quot;</span>, <span class="st">&quot;01/03/2016&quot;</span>, <span class="st">&quot;12/31/2015&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">uk =</span> <span class="fu">dmy</span>(usdates))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -2603,7 +2603,7 @@ window.onload = function() {
 <ul>
 <li>Back to this:</li>
 </ul>
-<div class="cell" data-paged.print="false">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href></a>ddd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -2620,7 +2620,7 @@ window.onload = function() {
 </section>
 <section id="so-interpret-as-such" class="slide level2">
 <h2>so interpret as such</h2>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href></a>(ddd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">date2 =</span> <span class="fu">mdy</span>(dunno)) <span class="ot">-&gt;</span> d4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -2636,7 +2636,7 @@ window.onload = function() {
 <ul>
 <li>Column <code>date2</code> was correctly converted from column <code>dunno</code>:</li>
 </ul>
-<div class="cell" data-paged.print="false">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href></a>d4 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">equal =</span> <span class="fu">identical</span>(date, date2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
@@ -2681,7 +2681,7 @@ window.onload = function() {
 </section>
 <section id="the-results" class="slide level2">
 <h2>The results</h2>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href></a>newdates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -2699,7 +2699,7 @@ window.onload = function() {
 </section>
 <section id="extracting-information-from-dates" class="slide level2">
 <h2>Extracting information from dates</h2>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href></a>newdates <span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href></a>  <span class="fu">mutate</span>(</span>
 <span id="cb19-3"><a href></a>    <span class="at">mon =</span> <span class="fu">month</span>(d),</span>
@@ -2720,7 +2720,7 @@ window.onload = function() {
 <ul>
 <li>Standard format for times is to put the time after the date, hours, minutes, seconds:</li>
 </ul>
-<div class="cell" data-paged.print="false">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href></a>(dd <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">text =</span> <span class="fu">c</span>(</span>
 <span id="cb20-2"><a href></a>  <span class="st">&quot;1970-01-01 07:50:01&quot;</span>, <span class="st">&quot;2007-09-04 15:30:00&quot;</span>,</span>
 <span id="cb20-3"><a href></a>  <span class="st">&quot;1940-04-15 06:45:10&quot;</span>, <span class="st">&quot;2016-02-10 12:26:40&quot;</span></span>
@@ -2741,7 +2741,7 @@ window.onload = function() {
 <ul>
 <li>Then get from this text using <code>ymd_hms</code>:</li>
 </ul>
-<div class="cell" data-paged.print="false">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
@@ -2759,7 +2759,7 @@ window.onload = function() {
 <ul>
 <li>Default timezone is “Universal Coordinated Time”. Change it via <code>tz=</code> and the name of a timezone:</li>
 </ul>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a>dd <span class="sc">%&gt;%</span> </span>
 <span id="cb24-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text, <span class="at">tz =</span> <span class="st">&quot;America/Toronto&quot;</span>)) <span class="ot">-&gt;</span> dd</span>
 <span id="cb24-3"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">zone =</span> <span class="fu">tz</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2777,7 +2777,7 @@ window.onload = function() {
 <ul>
 <li>As you would expect:</li>
 </ul>
-<div class="cell" data-paged.print="false">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
 <span id="cb25-2"><a href></a>  <span class="fu">select</span>(<span class="sc">-</span>text) <span class="sc">%&gt;%</span></span>
 <span id="cb25-3"><a href></a>  <span class="fu">mutate</span>(</span>
@@ -2799,7 +2799,7 @@ window.onload = function() {
 </section>
 <section id="same-times-but-different-time-zone" class="slide level2">
 <h2>Same times, but different time zone:</h2>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
 <span id="cb27-2"><a href></a>  <span class="fu">select</span>(dt) <span class="sc">%&gt;%</span></span>
 <span id="cb27-3"><a href></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">&quot;Australia/Sydney&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2877,7 +2877,7 @@ window.onload = function() {
 <ul>
 <li>Fractional number of days would be better:</li>
 </ul>
-<div class="cell" data-paged.print="true">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a>stays <span class="sc">%&gt;%</span> </span>
 <span id="cb33-2"><a href></a>  <span class="fu">mutate</span>(</span>
 <span id="cb33-3"><a href></a>    <span class="at">stay_days =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge) <span class="sc">/</span> <span class="fu">days</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

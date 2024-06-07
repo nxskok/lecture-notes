@@ -107,7 +107,7 @@ tab
 -   Do chi-squared test:
 
 ```{r inference-5-R-7}
-chisq.test(tab, correct=F)
+chisq.test(tab, correct=FALSE)
 ```
 
 -   This test actually two-sided (tests for any association).
