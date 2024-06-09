@@ -161,7 +161,6 @@ pigs_longer %>%
   unnest(r) %>% 
   pivot_wider(names_from=name, values_from=value) -> d
 d
-d$`25%`
 ```
 
 ## A hairy one
