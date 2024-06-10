@@ -304,7 +304,7 @@ Each city also has a numbered `id`.
 \small
 ```{r bPrincomp-10}
 my_url <- "http://ritsokiguess.site/datafiles/places.txt"
-places0 <- read_table2(my_url)
+places0 <- read_table(my_url)
 ```
 \normalsize
 
