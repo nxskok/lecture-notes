@@ -100,7 +100,7 @@ I used `kids.0` here since I want `kids.1` and `kids.2` later.
 
 ##  Scree plot
 ```{r bFactor-3, fig.height=3.5}
-ggscreeplot(kids.0)
+# ggscreeplot(kids.0)
 ```
 
  

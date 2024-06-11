@@ -1,0 +1,14 @@
+notes for c33
+
+new lecture notes:
+
+- graphs_c33: all the graphs including normal quantile plot
+- inference_c33: one and two samples and matched pairs
+- assumptions_c33: normality assumptions and assessing
+- bootstrap_c33: all the bootstrap starting from sampling dist of sample mean
+- power_c33: about the same treatment of power
+- alternative_c33: sign and mood median tests
+
+thinking: estimation numerically
+which means bringing functions forward
+

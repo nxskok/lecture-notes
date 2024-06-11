@@ -10,26 +10,24 @@ library(tidyverse)
 library(bootstrap)
 ```
 
-Source: [Hesterberg et al](https://drive.google.com/file/d/10s780DfNtfSs1YqFzrUkq1mcHAEw6WNF/edit)
+Source: [Hesterberg et al](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
 
 
 ## Is my sampling distribution normal enough?
 
-- Blue Jays attendances:
+- Recall IRS data (used as a motivation for the sign test) :
 
-```{r inference-1-R-2}
-#| echo: false
-
-my_url <- "http://ritsokiguess.site/datafiles/jays15-home.csv"
-jays <- read_csv(my_url) 
+```{r bootstrap-2, include=FALSE}
+my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
+irs <- read_csv(my_url)
 ```
 
-```{r inference-1-R-66, fig.height=3.8}
-ggplot(jays, aes(sample = attendance)) + 
-  stat_qq() + stat_qq_line()
+
+```{r bootstrap-3, fig.height=5}
+ggplot(irs, aes(x=Time))+geom_histogram(bins=10)
 ```
 
-- $t$ procedure for the mean may not be a good idea because the distribution is skewed.
+- $t$ procedure for the mean would not be a good idea because the distribution is skewed.
 
 ## What *actually* matters
 

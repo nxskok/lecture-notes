@@ -27,12 +27,11 @@ editor:
 
 ## Packages
 
--   Install packages `survival` and `survminer` if not done.
+-   Install package `survival` if not done. Also use `broom` and `marginaleffects` from earlier.
 
 ```{r}
 library(tidyverse)
 library(survival)
-library(survminer)
 library(broom)
 library(marginaleffects)
 ```
@@ -109,23 +108,16 @@ dance
 
 \normalsize
 
-## Examine response and fit model
+## Fit model
 
--   Response variable:
-
-\small
-
-```{r bSurvival-4}
-dance %>% mutate(mth = Surv(Months, Quit)) -> dance
-dance
-```
-
-\normalsize
-
--   Then fit model, predicting `mth` from explanatories:
+-   Response variable has to incorporate both the survival time (`Months`) and whether or not the event, quitting, happened (that is, if `Quit` is 1).
+- This is made using `Surv` from `survival` package, with two inputs:
+  - the column that has the survival times
+  - something that is `TRUE` or 1 if the event happened.
+- Easiest for us to create this when we fit the model, predicting response from explanatories:
 
 ```{r bSurvival-5 }
-dance.1 <- coxph(mth ~ Treatment + Age, data = dance)
+dance.1 <- coxph(Surv(Months, Quit) ~ Treatment + Age, data = dance)
 ```
 
 ## Output looks a lot like regression
@@ -143,7 +135,7 @@ summary(dance.1)
 -   Use $\alpha=0.10$ here since not much data.
 
 -   Three tests at bottom like global F-test. Consensus that something
-    predicts survival time (whether or not dancer quit and how long it
+    predicts survival time (whether or not dancer quit and/or  how long it
     took).
 
 -   `Age` (definitely), `Treatment` (marginally) both predict survival
@@ -181,111 +173,118 @@ summary(dance.1)
 
 -   like a generalized linear model with log link.
 
+
+## Predictions with `marginaleffects`
+
+- `marginaleffects` knows about survival models (with sufficient care)
+- Predicted survival probabilities depend on:
+  - the combination of explanatory variables you are looking at
+  - the time at which you are looking at them (when more time has passed, it is more likely that the event has happened, so the "survival probability" should be lower).
+- look at effect of age by comparing ages 20 and 40, and later look at the effect of treatment (values 1 and 0).
+- Also have to provide some times to predict for, in `Months`.
+  
+## Effect of age
+
+```{r}
+new <- datagrid(model = dance.1, Age = c(20, 40), Months = c(3, 5, 7))
+new
+```
+
+These are actually for women who *did not* go to the dance competition.
+
+## The predictions
+
+```{r}
+cbind(predictions(dance.1, newdata = new, type = "survival")) %>% 
+  select(Age, Treatment, Months, estimate)
+```
+
+The estimated survival probabilities go down over time. For example a 20-year-old woman here has estimated probability 0.0293 of still dancing after 5 months.
+
+## A graph
+
+We can plot the predictions over time for an experimental condition such as age. The key for `plot_predictions` is to put time *first* in the `condition`:
+
+```{r}
+plot_predictions(dance.1, condition = c("Months", "Age"), 
+                 type = "survival")
+```
+
+## Comments
+
+- The plot picks some representative ages. 
+- It is (usually) best to be up and to the right (has the highest chance of surviving longest). 
+- Hence the oldest women have the best chance to still be dancing longest (the youngest women are most likely to quit soonest).
+
+## The effect of treatment
+
+The same procedure will get predictions for women who did or did not go to the dance competition, at various times:
+
+```{r}
+new <- datagrid(model = dance.1, Treatment = c(0, 1), Months = c(3, 5, 7))
+new
+```
+
+The age used for predictions is the mean of all ages.
+
+## The predictions
+
+```{r}
+cbind(predictions(dance.1, newdata = new, type = "survival")) %>% 
+  select(Age, Treatment, Months, estimate)
+```
+
+Women of this age have a high (0.879) chance of still dancing after 7 months if they went to the dance competition, but much lower (0.165) if they did not.
+
+
+## A graph
+
+In `condition`, put the time variable first, and then the effect of interest:
+
+```{r}
+plot_predictions(dance.1, condition = c("Months", "Treatment"), 
+                 type = "survival")
+```
+
+## Comments
+
+- The survival curve for Treatment 1 is higher all the way along
+- Hence at any time, the women who went to the dance competition have a higher chance of still dancing than those who did not.
+
+## The model summary again
+
+```{r}
+summary(dance.1)
+```
+
+## Comments 
+
+- The numbers in the `coef` column describe effect of that variable on log-hazard of quitting.
+- Both numbers are negative, so a higher value on both variables goes with a lower hazard of quitting:
+  - an older woman is less likely to quit soon (more likely to be still dancing)
+  - a woman who went to the dance competition (`Treatment = 1`) is less likely to quit soon vs. a woman who didn't (more likely to be still dancing).
+
 ## Model checking
 
 -   With regression, usually plot residuals against fitted values.
 
--   Not quite same here (nonlinear model), but \`\`martingale
-    residuals'' should have no pattern vs. "linear predictor".
+-   Not quite same here (nonlinear model), but "martingale
+    residuals" should have no pattern vs. "linear predictor".
 
--   `ggcoxdiagnostics` from package `survminer` makes plot, to which we
-    add smooth. If smooth trend more or less straight across, model OK.
+- Use `broom` ideas to get them, in `.resid` and `.fitted` as below.
 
 -   Martingale residuals can go very negative, so won't always look
     normal.
+    
+    
+## Martingale residuals
 
-## Martingale residual plot for dance data
-
-This looks good (with only 12 points):
-
-```{r bSurvival-7, fig.height=3}
-#| warning = FALSE
-ggcoxdiagnostics(dance.1) 
+```{r}
+dance.1 %>% augment(dance) %>% 
+  ggplot(aes(x = .fitted, y = .resid)) + geom_point() + geom_smooth()
 ```
 
-## Predicted survival probs
 
--   The function we use is called `survfit`, though actually works
-    rather like `predict`.
--   First create a data frame of values to predict from. We'll do all
-    combos of ages 20 and 40, treatment and not, using `datagrid` to get
-    all the combos:
-
-```{r bSurvival-8}
-treatments <- c(0, 1)
-ages <- c(20, 40)
-dance.new <- datagrid(model = dance.1, Treatment = treatments, Age = ages)
-dance.new
-```
-
-## The predictions
-
-One prediction *for each time* for each combo of age and treatment in
-`dance.new`:
-
-```{r bSurvival-9, echo=F}
-options(width = 80)
-url <- "http://ritsokiguess.site/datafiles/dancing.txt"
-dance <- read_table(url)
-dance %>% mutate(mth = Surv(Months, Quit)) -> dance
-```
-
-\footnotesize
-
-```{r bSurvival-10}
-s <- survfit(dance.1, newdata = dance.new, data = dance)
-summary(s)
-```
-
-\normalsize
-
-## Conclusions from predicted probs
-
--   Older women more likely to be still dancing than younger women
-    (compare "profiles" for same treatment group).
-
--   Effect of treatment seems to be to increase prob of still dancing
-    (compare "profiles" for same age for treatment group vs. not)
-
--   Would be nice to see this on a graph. This is `ggsurvplot` from
-    package `survminer`:
-
-```{r bSurvival-11 }
-g <- ggsurvplot(s, conf.int = F)
-```
-
-## "Strata" (groups)
-
--   uses "strata" thus (`dance.new`):
-
-\footnotesize
-
-```{r bSurvival-12, echo=F}
-dance.new
-```
-
-\normalsize
-
-## Plotting survival probabilities
-
-```{r survival-plot, fig.height=3.8}
-g
-```
-
-## Discussion
-
--   Survivor curve farther to the right is better (better chance of
-    surviving longer).
-
--   Best is age 40 with treatment, worst age 20 without.
-
--   Appears to be:
-
-    -   age effect (40 better than 20)
-
-    -   treatment effect (treatment better than not)
-
-    -   In analysis, treatment effect only marginally significant.
 
 ## A more realistic example: lung cancer
 
@@ -332,7 +331,6 @@ summary(lung)
 
 ## Remove obs with *any* missing values
 
-\small
 
 ```{r bSurvival-16}
 lung %>% drop_na() -> lung.complete
@@ -341,19 +339,16 @@ lung.complete %>%
   slice(1:10)
 ```
 
-\normalsize
 
 Missing values seem to be gone.
 
 ## Check!
 
-\tiny
 
 ```{r bSurvival-17}
 summary(lung.complete)
 ```
 
-\normalsize
 
 No missing values left.
 
@@ -370,10 +365,7 @@ names(lung.complete)
 -   Event was death, goes with `status` of 2:
 
 ```{r bSurvival-19 }
-lung.complete %>% 
-   mutate(resp = Surv(time, status == 2)) ->
-   lung.complete
-lung.1 <- coxph(resp ~ . - inst - time - status,
+lung.1 <- coxph(Surv(time, status == 2) ~ . - inst - time - status,
   data = lung.complete
 )
 ```
@@ -474,72 +466,68 @@ anova(lung.3, lung.2)
 
 ## Plotting survival probabilities
 
--   Create new data frame of values to predict for, then predict:
+- Assess (separately) the effect of `sex` and `ph.ecog` score using `plot_predictions`
+- Don't forget to add time (here actually called `time`) to the `condition`.
 
-\footnotesize
 
-```{r bSurvival-27}
-sexes <- c(1, 2)
-ph.ecogs <- 0:3
-lung.new <- datagrid(sex = sexes, ph.ecog = ph.ecogs, model = lung.3)
-lung.new
+## Effect of `sex`:
+
+```{r}
+plot_predictions(lung.3, condition = c("time", "sex"), type = "survival")
 ```
 
-\normalsize
+- Females (`sex = 2`)  have better survival than males.
+- This graph from a mean `ph.ecog` score, but the male-female comparison is the same for any score.
 
-## Making the plot
+## Effect of `ph.ecog` score:
 
-```{r bSurvival-29, fig.height=3.8}
-s <- survfit(lung.3, newdata = lung.new, data = lung)
-summary(s)
-g <- ggsurvplot(s, conf.int = F)
+```{r}
+plot_predictions(lung.3, condition = c("time", "ph.ecog"), type = "survival")
 ```
 
-## The plot
+## Comments
 
-```{r bSurvival-30, fig.height=3.8}
-g
+- A lower `ph.ecog` score is better.
+- For example, a patient with a score of 0 has almost a 50-50 chance of living 500 days, but a patient with a score of 3 has almost no chance to survive that long.
+- Is this for males or females? See over. (The comparison of scores is the same for both.)
+
+## Sex and `ph.ecog`  score
+
+```{r}
+plot_predictions(lung.3, condition = c("time", "ph.ecog", "sex"), type = "survival")
 ```
 
-## Discussion of survival curves
 
--   Best survival is teal-blue curve, stratum 5, females with `ph.ecog`
-    score 0.
+## Comments
 
--   Next best: blue, stratum 6, females with score 1, and red, stratum
-    1, males score 0.
+- I think the previous graph was males.
+- This pair of graphs shows the effect of `ph.ecog` score (above and below on each facet), and the effect of males (left) vs. females (right).
+- The difference between males and females is about the same as 1 point on the `ph.ecog` scale (compare the red curve on the left facet with the green curve on the right facet).
 
--   Worst: green, stratum 4, males score 3.
+## The summary again
 
--   For any given `ph.ecog` score, females have better predicted
-    survival than males.
-
--   For both genders, a lower score associated with better survival.
-
-## The coefficients in model 3
-
-```{r bSurvival-31, ref.label="tidy-lung-3"}
+```{r}
+summary(lung.3)
 ```
 
--   `sex` coeff negative, so being higher `sex` value (female) goes with
-    *less* hazard of dying.
 
--   `ph.ecog` coeff positive, so higher `ph.ecog` score goes with *more*
-    hazard of dying
+## Comments
 
--   Two coeffs about same size, so being male rather than female
-    corresponds to 1-point increase in `ph.ecog` score. Note how
-    survival curves come in 3 pairs plus 2 odd.
+- A higher-numbered sex (female) has a lower hazard of death (negative coef). That is, females are more likely to survive longer than males.
+- A higher `ph.ecog` score goes with a *higher* hazard of death (positive coef). So patients with a *lower* score are more likely to survive longer.
+- These are consistent with the graphs we drew.
+
 
 ## Martingale residuals for this model
 
 No problems here:
 
 ```{r bSurvival-32, fig.height=3}
-ggcoxdiagnostics(lung.3) + geom_smooth(se = F)
+lung.3 %>% augment(lung.complete) %>% 
+  ggplot(aes(x = .fitted, y = .resid)) + geom_point() + geom_smooth()
 ```
 
-## When the Cox model fails
+## When the Cox model fails (optional)
 
 -   Invent some data where survival is best at middling age, and worse
     at high *and* low age:
@@ -572,7 +560,9 @@ Down-and-up indicates incorrect relationship between age and survival:
 
 ```{r bSurvival-35, fig.height=3.4, message=F}
 #| warning = FALSE
-ggcoxdiagnostics(y.1) + geom_smooth(se = F)
+
+y.1 %>% augment(d) %>% 
+  ggplot(aes(x = .fitted, y = .resid)) + geom_point() + geom_smooth()
 ```
 
 ## Attempt 2
@@ -592,5 +582,6 @@ Not great, but less problematic than before:
 
 ```{r bSurvival-37, fig.height=3.2, message=F}
 #| warning = FALSE
-ggcoxdiagnostics(y.2) + geom_smooth(se = F)
+y.2 %>% augment(d) %>% 
+  ggplot(aes(x = .fitted, y = .resid)) + geom_point() + geom_smooth()
 ```

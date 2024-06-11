@@ -27,7 +27,7 @@ editor:
 ## Packages
 
 ```{r bRegression-1, results='hide'}
-library(MASS) # for Box-Cox, later
+library(MASS, exclude = "select") # for Box-Cox, later
 library(tidyverse)
 library(broom)
 library(marginaleffects)
@@ -213,7 +213,7 @@ dataframe `new` as before:
 ```{r bRegression-12 }
 pp <- predict(sleep.1, new, interval = "p")
 pp
-cbind(new, pp) %>% select(-atst)
+cbind(new, pp)
 
 ```
 

@@ -137,33 +137,25 @@ rat2 <- read_delim(my_url, " ")
 rat2
 ```
 
-## Create response matrix:
+## Response matrix:
 
 -   Each row contains *multiple* observations.
--   Create *two-column* response:
+-   Create *two-column* response with `cbind`:
     -   #survivals in first column,
     -   #deaths in second.
 
-```{r bLogistic-9 }
-response <- with(rat2, cbind(lived, died))
-response
-```
-
--   Response is R `matrix`:
-
-```{r bLogistic-10 }
-class(response)
-```
 
 ## Fit logistic regression
 
--   using response you just made:
+-   constructing the response in the `glm`:
 
 ```{r bLogistic-11}
-rat2.1 <- glm(response ~ dose, family = "binomial", data = rat2)
+rat2.1 <- glm(cbind(lived, died) ~ dose, family = "binomial", data = rat2)
 ```
 
 ## Output
+
+Significant effect of dose now:
 
 ```{r bLogistic-12}
 summary(rat2.1)
@@ -178,22 +170,11 @@ cbind(predictions(rat2.1, newdata = new)) %>%
   select(estimate, dose, conf.low, conf.high)
 ```
 
-## On a picture, attempt 1
+## On a picture
 
 ```{r}
 #| error: true
 plot_predictions(rat2.1, condition = "dose")
-```
-
-## On a picture, attempt 2
-
-```{r, fig.height=3.5}
-#| warning = FALSE
-cbind(predictions(rat2.1, newdata = new)) %>% 
-  select(estimate, conf.low, conf.high, dose) %>% 
-  ggplot(aes(x = dose, y = estimate, 
-             ymin = conf.low, ymax = conf.high)) + 
-    geom_line() + geom_ribbon(alpha = 0.2)
 ```
 
 ## Comments
@@ -789,7 +770,35 @@ plot_predictions(brands.1, condition = c("age", "brand", "sex"),
          type = "probs")
 ```
 
--   so don't draw, edit, *then* make graph:
+
+
+## Making it go 
+
+-   We have to include `group` in the `condition`:
+
+```{r}
+plot_predictions(brands.1, condition = c("age", "group"))
+```
+
+- This picks the most common `sex` in the data (females).
+- See younger females prefer brand 1, older ones preferring brand 3.
+
+## For each `sex`
+
+If we add the
+other variable to the *end*, we get facets for `sex`:
+
+```{r}
+plot_predictions(brands.1, condition = c("age", "group", "sex"))
+```
+
+Not actually much difference between males and
+females.
+
+## A better graph
+
+- but the male-female difference *was* significant. How?
+- *don't* actually plot the graph, then plot the right things:
 
 ```{r}
 plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
@@ -799,23 +808,8 @@ plot_predictions(brands.1, condition = c("age", "brand", "sex"),
   geom_line() -> g
 ```
 
--   We have to include `group` in the `condition`:
 
-```{r}
-plot_predictions(brands.1, condition = c("age", "group"))
-```
-
-This (I think) picks the most common `sex` in the data. If we add the
-other variable to the *end*, we get facets for `sex`:
-
-```{r}
-plot_predictions(brands.1, condition = c("age", "group", "sex"))
-```
-
-and we see that there isn't actually much difference between males and
-females.
-
-## The graph I had before
+## The graph
 
 ```{r, fig.height=4.5}
 g
