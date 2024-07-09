@@ -2,22 +2,38 @@
 title: "Running R"
 ---
 
-## Running R online
 
-Go to [https://r.datatools.utoronto.ca](https://r.datatools.utoronto.ca). 
+## Running R online, 2024/2025 version
 
-You should see this:
+Go to [https://r.datatools.utoronto.ca](https://r.datatools.utoronto.ca):
 
-![](Screenshot_2023-05-14_18-09-15.png)
-
-If you do, find the line that says "after logging in, open" and click the button next to R Studio to make it blue. Then click the orange Log In to Start, and log in with UTorID and password. (You might need to enter your `utoronto.ca` email first.)
+![](2024-07-08 15.25.09 datatools.utoronto.ca 6844eeb6155e.png)
 
 
-## How R Studio looks
+Click Log In under R Studio.
 
-![](Screenshot_2023-05-14_18-19-08.png)
 
-If you are already signed in with UTorID and password, you might come directly here. (If you look at the URL that you are now at, you'll see that it has your email address in it.)
+## Log in
+
+
+![](2024-07-08 15.26.11 cilogon.org b0ad75daa5a3.png)
+
+Click Log On, to verify that you actually are at U of T.
+
+## UTorID and password
+
+![](2024-07-08 15.26.56 idpz.utorauth.utoronto.ca 0ee390b6ec53.png)
+
+as usual, but with *your* UTorID and password, not mine!
+
+## After a moment...
+
+... gets you to R Studio:
+
+![](2024-07-08 15.29.43 r.datatools.utoronto.ca e7e5f3ca4081.png)
+
+If already signed in with UTorID and password, you may get to skip some steps.
+
 
 ## Projects
 
@@ -26,7 +42,7 @@ stored.
 - Within that workspace, you can have as many Projects as you like.
 - To create a new Project, click on the blue New Project button.
 - I recommend having one project per *course*.
-- R Studio restarts where you left off.
+- R Studio restarts in project where you left off.
 
 ## Make a new project
 
@@ -121,8 +137,7 @@ save it, and run Render again. For example, you can try putting some of the text
 - Click Download R.
 
 - R is stored on numerous “mirrors”, sites around the world. The top
-one, “0-Cloud”, picks one for you. Or you can choose one close to
-you (might be faster), eg. U of T:
+one, “0-Cloud”, picks one for you. 
 
 ![](Screenshot_2018-08-17_11-09-02.png){width=150%}
 
@@ -143,7 +158,7 @@ you (might be faster), eg. U of T:
 
 ## The actual download
 
-- The version number is, as I write this, 4.3.0, but there may be an update between me writing this and you reading it.
+- The version number is, as I write this, 4.4.1, but there may be an update between me writing this and you reading it.
 
 - For Windows, click something like the top link below:
 
@@ -152,7 +167,7 @@ you (might be faster), eg. U of T:
 
 
 - Then install usual way.
-- For Mac, install `R-4.3.0-arm64.pkg` (Big Sur and newer), `R-4.3.0-x86_64.pkg` (older), or a newer version if available.
+- For Mac, install `R-4.4.1-arm64.pkg` (Big Sur with Apple Silicon M1-3), `R-4.4.1-x86_64.pkg` (Intel), or a newer version if available.
 - Or, for Linux, click your distribution (eg. Ubuntu), then follow the instructions.
 
 ## Now, R Studio
