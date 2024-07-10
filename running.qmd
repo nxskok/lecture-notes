@@ -1,4 +1,4 @@
----
+ ---
 title: "Running R"
 ---
 
@@ -134,7 +134,7 @@ save it, and run Render again. For example, you can try putting some of the text
 
 ![](r30.png)
 
-- Click Download R.
+- Click Download R (the link in the first paragraph) .
 
 - R is stored on numerous “mirrors”, sites around the world. The top
 one, “0-Cloud”, picks one for you. 
@@ -162,9 +162,7 @@ one, “0-Cloud”, picks one for you.
 
 - For Windows, click something like the top link below:
 
-
-![](Screenshot_2023-05-14_21-38-35.png){width=200%}
-
+![](2024-07-10 11.25.47 cloud.r-project.org bad5510fdcbc.png)
 
 - Then install usual way.
 - For Mac, install `R-4.4.1-arm64.pkg` (Big Sur with Apple Silicon M1-3), `R-4.4.1-x86_64.pkg` (Intel), or a newer version if available.
@@ -176,11 +174,7 @@ one, “0-Cloud”, picks one for you.
 - Top right, click Download R Studio (the blue link).
 
 
-- Scroll down to the non-blue Download R Studio. 
-
-- There are two choices. You want the free one on the left.
-
-- Click left-side Download.
+- Scroll down to where it says R Studio Desktop, Free, and a blue Download button underneath. Click Download.
 
 ## Find the one for you
 
@@ -188,8 +182,9 @@ one, “0-Cloud”, picks one for you.
 
 - Scroll down to All Installers, and click the installer for your machine
     (Windows, Mac, several flavours of Linux). Install as usual.
+
+![](2024-07-10 11.35.59 posit.co 20e75bc39fc2.png)
     
-![](Screenshot_2023-05-14_21-47-40.png)
 
 
 ## Quarto
@@ -197,14 +192,11 @@ one, “0-Cloud”, picks one for you.
 The last thing we need is Quarto, so that we can render documents (and thus hand in assignments).
 
 - Go to <https://quarto.org/>.
-- Click on one of the Get Started links.
+- Click on one of the Get Started links (blue).
 - Find your operating system and install as usual:
 
-
-
-![](Screenshot_2023-05-14_21-51-32.png)
-
-
+![](2024-07-10 11.38.21 quarto.org 61c6a8702423.png)
+ 
 ## Running R
 
 - All of above only done once.
