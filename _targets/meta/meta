@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|7169097cb1b9f959|||||||||||||||
+.Random.seed|object|262cb2c88a5d7a0c|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> d3cd1ce2b203be81e283bf46a4e925b610972dd8|||||||||||||||||
@@ -97,7 +97,7 @@ reports_R|stem|f2a7307fa631fa49|cd36f5f411f1d0d7|ef46db3751d8e999|-1546692884|re
 reports_R_slides|stem|d7896837f7310291|0638f1a4a0224d58|75b053450548efad|-1062154994|reports_R_slides.pdf*reports_R_slides.Rmd|t19380.0233067553s|5e743874e1de034c|2642418|file|local|vector|||8.732||
 rstan|stem|0241fd13d189c793|b190426b2cc1a697|2c530c1562a7fbd1|1919994806|rstan_files*rstan.html*rstan.qmd|t19885.041517425s|1f5abd87d9cca2ab|112562|file|local|vector|||13.283||
 rstan_slides|stem|1678b3ba6df1994e|1f6c68a19f272d50|bf02041e2155e7a7|1178787472|rstan_slides.pdf*rstan_slides.Rmd|t19467.7808394849s|473a1d3596ffc77b|181378|file|local|vector|||18.821||
-running|stem|7b1d5ce5324a4299|956b64ad94546a1a|2c530c1562a7fbd1|-862476045|running.html*running.pdf*running.qmd|t19885.0415175639s|fc87ba0c8e7f0d4a|5319378|file|local|vector|||7.821||
+running|stem|4044bd7401d713b8|956b64ad94546a1a|2c530c1562a7fbd1|-862476045|running.html*running.pdf*running.qmd|t19914.6548209697s|b643d0a766a22b62|8544912|file|local|vector|||26.646||
 running_R|stem|b7ad3a2d6cd23fb4|fafabdc392a1c457|ef46db3751d8e999|1823033080|running_R.Rmd|t19491.8569417426s|abae671ba45f936d|6269|file|local|vector|||0||
 running_R_slides|stem|b2f471da9a1054c1|9e6a9740611d51c0|6c2c968cb09b7f32|-177892044|running_R_slides.pdf*running_R_slides.Rmd|t19380.023540738s|f68c06cce266f515|683789|file|local|vector|||9.82||
 survival|stem|913d11b9bedcdbf3|56b23edcc67219d9|2c530c1562a7fbd1|677208215|survival.html*survival.pdf*survival.qmd|t19885.0465445033s|e031bcb14e6c18f3|4692065|file|local|vector|||69.944||
