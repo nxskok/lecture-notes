@@ -10,7 +10,7 @@ Go to [https://r.datatools.utoronto.ca](https://r.datatools.utoronto.ca):
 ![](2024-07-08 15.25.09 datatools.utoronto.ca 6844eeb6155e.png)
 
 
-Click Log In under R Studio.
+Click Log In (the blue button) under R Studio.
 
 
 ## Log in
@@ -74,7 +74,7 @@ brings up an example document as over.
 
 - It begins with a title (that you can change).
 - Most of the document is text (narrative). 
-- Pieces beginning with `{r}`, in grey, are called code cells (code chunks). They
+- Pieces beginning with `{r}`, with grey background, are called code cells (code chunks). They
 contain R code. 
 - Run code cells by clicking on the green “play button” at the top
 right of the first cell. This one does some very exciting arithmetic.
@@ -85,28 +85,32 @@ right of the first cell. This one does some very exciting arithmetic.
   
 ## Making our own document 1/2
 
-- Create another new document. Give it a title of “Some random normal data”, and click Create. When the document opens, delete the template that it gives you (leaving only the five or so lines that begin and end with `---`).
-- You will probably be sitting on a line that says (greyed out) Heading 2. On this line, type **Packages** (which you'll see big and bold like a title) and hit Enter a couple of times. At the top of the window, on the line with Visual, Format, Insert, and Table, it should now say Normal (which is normal text). If you want a heading, click the arrow to the right of Normal and select one. Header 2 is a good one for section titles in your document.
+- Create another new document. Give it a title of “Chicken weights by diet”, and click Create. When the document opens, delete the template that it gives you (leaving only the six lines that begin and end with `---`).
+- Move the cursor to the next line below those top six lines.
+- Type a `/` (slash). This allows you to insert something. 
+- Start typing "heading". When you see "Heading 2" in the list, select that.
+- On this line, type **Packages** (which you'll see big and bold like a title) and hit Enter a couple of times. At the top of the window, you should now see Normal ( normal text). 
 
 ## Making our own document 2/2
 
-- Make a new code chunk by clicking Insert (at the top of the notebook
-window) and selecting Code Cell and R. Inside that cell, type
+- Make a new code chunk: type a slash, then select the top option "R Code Chunk".
+- Inside that cell, type
 `library(tidyverse)`.
-- Below that, make another "Header 2" and put "Random normal data" on that line.
-- Make another new code cell below that, and insert two lines of
-code: `z <- rnorm(100)` and then `z`.
-- Below that, make another Header 2, "A histogram", and a code cell containing
-`ggplot(tibble(z), aes(x=z)) + geom_histogram(bins = 10)`.
+- Below that, make another "Header 2" and put "Weights of chickens" on that line.
+- Make another new code cell below that, and insert the line of
+code: `chickwts`
+- Below that, make another Header 2, "A boxplot", and another code cell containing
+`ggplot(chickwts, aes(x = feed, y = weight)) + geom_boxplot()`.
 
 ## My document
 
-![](Screenshot_2023-05-14_18-49-36.png){width=150%}
+![](2024-07-09 13.56.58 r.datatools.utoronto.ca a3ab120e66da.png)
+
   
 ## Run the chunks
 
 - Now run each of the three chunks in order. You’ll see output below
-each one, including a histogram below the last one.
+each one, including a boxplot below the last one.
 - When it works, add some narrative text before the code chunks
 explaining what is going to be done, and some text after describing
 what you see.
@@ -117,7 +121,8 @@ save it, and run Render again. For example, you can try putting some of the text
 
 ## The end of my (rendered) report 
 
-![](Screenshot_2023-05-14_18-56-55.png){width=150%}
+![](2024-07-09 14.01.27 r.datatools.utoronto.ca ee49aba03d21.png)
+
 
 ## Installing R on your own computer
 
@@ -144,7 +149,7 @@ one, “0-Cloud”, picks one for you.
 
 ## Click your mirror
 
-- Click 0-Cloud or U of T (or other mirror), get:
+- Click 0-Cloud  (or other mirror), get:
 
 ![](r32.png){width=150%}
 
@@ -162,6 +167,7 @@ one, “0-Cloud”, picks one for you.
 
 - For Windows, click something like the top link below:
 
+![](2024)
 
 ![](Screenshot_2023-05-14_21-38-35.png){width=200%}
 
