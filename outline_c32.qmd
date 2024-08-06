@@ -84,11 +84,11 @@ The blue things are all links:
 
 ## Assessment
 
--   Assignments: 9 total, due after weeks 2 through 11. Best 7 count, total 30% (about 4% each).
+-   Assignments: 9 total, due after weeks 2 through 11. Best 7 count, total 25% (about 3.5% each).
     - expect that each assignment will cover up to the Tuesday lecture before it is due
     - will become available after the Wednesday tutorial, and will be due Monday at 11:59pm
     - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
--   Midterm (30%), final (40%) exams  (in person). You *must get at least 40%* on the final exam to pass the course.
+-   Midterm (30%), final (45%) exams  (in person). You *must get at least 40%* on the final exam to pass the course.
 
 ## Grading
 
