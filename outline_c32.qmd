@@ -10,11 +10,11 @@ title: "STAC32 Course Outline"
 
     -   2 hours of lectures / week, in person.
     -   1 hour of tutorial / week, in person **starting in week 1**
-    -   "office hours" in person only. For 1 hour after each lecture in IC 471.
+    -   "office hours" in person only. For 1 hour after each lecture in IA 4028.
 
 -   Instructor:
 
-    -   Ken Butler, `ken.butler@utoronto.ca`, office IC 471
+    -   Ken Butler, `ken.butler@utoronto.ca`, office IA 4028
 
 ## Programs and Prerequisites 1/2
 

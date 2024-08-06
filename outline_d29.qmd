@@ -17,7 +17,7 @@ title: "STAD29 / STA 1007 course outline"
 
 ## Instructor:
 
-  -   Ken Butler, `ken.butler@utoronto.ca`, office IC 471
+  -   Ken Butler, `ken.butler@utoronto.ca`, office IA 4028
   -   I like sharing what I know about applied statistics and the use of R
 
 ## Prerequisites
