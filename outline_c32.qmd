@@ -4,7 +4,7 @@ title: "STAC32 Course Outline"
 
 ## This course
 
--   STAC32, Applications of Statistical Methods (Fall 2023)
+-   STAC32, Applications of Statistical Methods (Fall 2024)
 
 -   Classes:
 
