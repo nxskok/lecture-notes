@@ -169,6 +169,8 @@ one, “0-Cloud”, picks one for you.
 
 ![](2024-07-10 11.25.47 cloud.r-project.org bad5510fdcbc.png)
 
+## ... continued
+
 ![](Screenshot from 2024-08-28 19-58-56.png)
 
 - Then install usual way.
