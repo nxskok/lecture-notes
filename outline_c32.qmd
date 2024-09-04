@@ -10,7 +10,7 @@ title: "STAC32 Course Outline"
 
     -   2 hours of lectures / week, in person.
     -   1 hour of tutorial / week, in person **starting in week 2**
-    -   "office hours" in person only. For 1 hour after each LEC01 lecture in IA 4028, or catch me after class.
+    -   "office hours" in person only. For 1 hour after each LEC01 lecture in IA 4028, or catch me after class, specifically Tu 14:00-14:45 and Th 13:00-14:00.
 
 -   Instructor:
 
