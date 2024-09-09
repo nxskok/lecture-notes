@@ -80,7 +80,7 @@ The blue thing on each line is a link:
 
 -   To run R, can use [Datatools](r.datatools.utoronto.ca) (needs only web browser) or install R and R Studio on your computer. Instructions in lecture notes.
 
--   [Reference: R for Data Science](https://r4ds.hadley.nz/)
+-   [Reference: R for Data Science, 2nd ed](https://r4ds.hadley.nz/intro)
 
 ## Assignments
 

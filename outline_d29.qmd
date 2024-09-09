@@ -75,7 +75,7 @@ The first thing on each line is a link:
 
 -   [Problems and Solutions in Applied Statistics](http://ritsokiguess.site/pasias/): what it says; PASIAS for short.
 
--   [Reference: R for Data Science](https://r4ds.had.co.nz/)
+-   [Reference: R for Data Science, 2nd ed](https://r4ds.hadley.nz/intro)
 
 ## Assessment
 
