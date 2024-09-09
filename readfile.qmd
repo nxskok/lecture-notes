@@ -75,7 +75,6 @@ library(tidyverse)
 mydata <- read_csv("test1.csv")
 mydata
 ```
-
 ## More on the above
 
 -   read_csv guesses what kind of thing is in each column. Here it
