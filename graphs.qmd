@@ -72,7 +72,7 @@ ggplot(athletes, aes(x = Sport)) + geom_bar()
 ## Histogram of body mass index
 
 ```{r graphs-R-5, fig.height=3.9}
-ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
+ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 16)
 ```
 
 ## Which sports are played by males and females?
