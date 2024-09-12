@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|8b3ff8013b167baf|||||||||||||||
+.Random.seed|object|6f637f4043039a80|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -48,7 +48,7 @@ discrim|stem|21ad8e8105bf687b|30476f43e4d51aaf|2c530c1562a7fbd1|396770949|discri
 factor|stem|2eb3b1de84b0fb8b|81e8ff2db34166af|2c530c1562a7fbd1|2116289380|factor_files*factor.html*factor.pdf*factor.qmd|t19968.8859755554s|ea48274cd17cf735|5392351|file|local|vector|||31.856||
 functions|stem|1d71d0bc297739ea|7a3a21540d13fcb0|2c530c1562a7fbd1|512566530|functions.html*functions.pdf*functions.qmd|t19968.8859756248s|eb6ddfab21f25bbb|3746448|file|local|vector|||13.453||
 functions_slides|stem|753549b2a6c2a00d|a358bcb497d662e9|8479d19d644288c3|-1669360982|functions_slides.pdf*functions_slides.Rmd|t19380.2030381983s|bc8fdbe7b51a4f12|121311|file|local|vector|||12.815||
-graphs|stem|09f5985182ab4c7c|d5d2fe8b0f516064|2c530c1562a7fbd1|-1036428570|graphs_files*graphs.html*graphs.pdf*graphs.qmd|t19968.8859758563s|519749c926caadc6|4647929|file|local|vector|||32.087||
+graphs|stem|09f5985182ab4c7c|d5d2fe8b0f516064|2c530c1562a7fbd1|-1036428570|graphs_files*graphs.html*graphs.pdf*graphs.qmd|t19968.8859758563s||4647929|file|local|vector|||30.964||Error running quarto cli.ℹ Rerun with quiet  FALSE to see the full error message.Caused by error System command quarto failed
 graphs_R|stem|a9612ab8f8323e91|ba2a1604eedf5507|ef46db3751d8e999|-2115159619|graphs_R.Rmd|t19374.6868897982s|7031694a7cef1c81|3132|file|local|vector|||0||
 graphs_R_slides|stem|c9db4d02569b0fd9|9bb7e2a8f597b3d0|9530f23b1dba258e|451036043|graphs_R_slides.pdf*graphs_R_slides.Rmd|t19380.2030385224s|395818be89bc4bab|178723|file|local|vector|||33.991|package cmdstanr was built under R version 4.3.0|
 index|stem|5d6b940fd80484a3|d33883dcca1b4532|2c530c1562a7fbd1|554519753|index_files*index.md*index.qmd|t19968.8859758794s|cbe167f5e73e2b4f|32722|file|local|vector|||3.192||
