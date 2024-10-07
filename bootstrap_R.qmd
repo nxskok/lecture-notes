@@ -205,7 +205,7 @@ ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 -   Use `filter` to select rows where something is true:
 
 ```{r bootstrap-R-16}
-kids %>% filter(group=="c") -> controls
+kids %>% filter(group == "c") -> controls
 controls
 ```
 

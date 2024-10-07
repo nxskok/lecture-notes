@@ -39,7 +39,12 @@ athletes %>% select(Sport, Hg, BMI)
 ## Choosing consecutive columns
 
 ```{r choosing-R-4}
-athletes %>% select(Sex:WCC)
+athletes %>% select(Sex:WCC, BMI)
+```
+
+
+```{r}
+1:5
 ```
 
 ## Choosing all-but some columns
@@ -47,6 +52,11 @@ athletes %>% select(Sex:WCC)
 ```{r choosing-R-5}
 athletes %>% select(-(RCC:LBM))
 ```
+
+```{r}
+athletes %>% select(Sex:Sport, Ht:Wt)
+```
+
 
 ## Select-helpers
 
@@ -192,7 +202,7 @@ athletes %>%
 athletes %>%
   mutate(wt_lb = Wt * 2.2) %>%
   select(Sport, Sex, Wt, wt_lb) %>% 
-  arrange(Wt)
+  arrange(Wt) 
 ```
 
 ## Turning the result into a number
@@ -201,7 +211,10 @@ Output is always data frame unless you explicitly turn it into something
 else, eg. the weight of the heaviest athlete, as a number:
 
 ```{r to-number}
-athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1)
+athletes %>% arrange(desc(Wt)) %>% 
+  pluck("Wt", 1) -> heavy
+heavy
+heavy * 2.2
 ```
 
 Or the 20 heaviest weights in descending order:

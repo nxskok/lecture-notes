@@ -196,14 +196,15 @@ power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
 power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 ```
 
+
+-   Sample size must be a whole number, so round up to 34 (to get at
+    least as much power as you want).
+
 one-sided test?
 
 ```{r}
 power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one.sided")
 ```
-
--   Sample size must be a whole number, so round up to 34 (to get at
-    least as much power as you want).
 
 ## Power curves
 
