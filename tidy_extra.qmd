@@ -66,7 +66,7 @@ B            28         22          20        18
 
 Read into data frame called `prevalence`.
 
-```{r tidy-extra-R-6, echo=F, message=F}
+```{r tidy-extra-R-6, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/disease.txt"
 prevalence <- read_table(my_url)
 prevalence
@@ -85,6 +85,7 @@ prevalence %>%
 ## Making longer, the better way
 
 ```{r tidy-extra-R-8}
+prevalence
 prevalence  %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
                names_sep="_", 
@@ -168,7 +169,7 @@ d
 18 people receive one of three treatments. At 3 different times (pre,
 post, followup) two variables `y` and `z` are measured on each person:
 
-```{r tidy-extra-R-16, echo=F, message=F}
+```{r tidy-extra-R-16, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
 repmes0
@@ -216,7 +217,7 @@ This has done what we wanted.
 
 ```{r tidy-extra-R-19}
 ggplot(repmes3, aes(x=fct_inorder(time), y=y, 
-                    colour=treatment, group=id)) +
+                    colour=treatment, group = id)) +
   geom_point() + geom_line()
 ```
 

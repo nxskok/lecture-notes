@@ -39,6 +39,7 @@ Each group looks more or less normal, or at least close to symmetric.
 ```{r inference-4a-R-3}
 kids %>% filter(group == "t") -> treatment
 kids %>% filter(group == "c") -> control
+treatment
 ```
 
 to check

@@ -44,7 +44,7 @@ rats <- read_delim(my_url," ")
 ## The data (some random rows)
 
 ```{r inference-5-R-10}
-rats %>% slice_sample(n=10)
+# rats %>% slice_sample(n=10)
 rats
 ```
 
@@ -275,6 +275,7 @@ oneway.test(density~group, data=rats)
 -   Lives in package `PMCMRplus`. Install first.
 
 ```{r games-howell, warning=F}
+# gamesHowellTest(density ~ group, data = rats)
 gamesHowellTest(density ~ factor(group), data = rats)
 ```
 

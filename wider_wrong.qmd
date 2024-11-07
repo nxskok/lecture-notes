@@ -12,7 +12,7 @@ library(tidyverse)
 
 ## Some long data that should be wide
 
-```{r wider-wrong-1, echo=FALSE}
+```{r wider-wrong-1}
 d <- tribble(
   ~obs, ~time, ~y,
   1, "pre", 19,
@@ -32,6 +32,11 @@ d
 -   `pivot_wider`.
 
 ## What happens here?
+
+
+```{r}
+d
+```
 
 ```{r wider-wrong-2}
 d %>% pivot_wider(names_from = time, values_from = y)
@@ -56,7 +61,7 @@ d %>% pivot_wider(names_from = time, values_from = y)
 
 ## Fixing it up
 
-```{r wider-wrong-4, echo=FALSE}
+```{r wider-wrong-4}
 d2 <- tribble(
   ~subject, ~time, ~y,
   1, "pre", 19,

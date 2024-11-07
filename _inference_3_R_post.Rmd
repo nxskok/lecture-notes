@@ -372,7 +372,7 @@ set.seed(457299)
 ```
 
 \small
-```{r inference-3-R-29}
+```{r inference-3-R-29p}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 

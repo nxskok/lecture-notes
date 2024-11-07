@@ -200,7 +200,7 @@ power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 -   Sample size must be a whole number, so round up to 34 (to get at
     least as much power as you want).
 
-one-sided test?
+## One-sided test
 
 ```{r}
 power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one.sided")
@@ -218,7 +218,7 @@ power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one
 
 ## Building it
 
--   If you feed power.t.test a collection ("vector") of values, it will
+-   If you feed `power.t.test` a collection ("vector") of values, it will
     do calculation for each one.
 -   Do power for variety of sample sizes, from 10 to 100 in steps of 10:
 
@@ -255,7 +255,7 @@ d
     (maximum power):
 
 ```{r inference-2-R-12}
-g  <-  ggplot(d, aes(x = n, y = power)) + geom_point() + 
+g <-   ggplot(d, aes(x = n, y = power)) + geom_point() + 
   geom_line() + 
   geom_hline(yintercept = 1, linetype = "dashed")
 ```
@@ -322,8 +322,10 @@ ans$power
 ## Make a data frame to plot, pulling things from the right places:
 
 ```{r inference-2-R-20}
-d <- tibble(n=factor(combos$n), mean=combos$mean, 
-         power=ans$power)
+d <- tibble(n=factor(combos$n), mean=combos$mean,
+power=ans$power)
+# d <- tibble(n=combos$n, mean=combos$mean,
+#          power=ans$power)
 d
 ```
 
@@ -379,7 +381,7 @@ kids %>% group_by(group) %>%
 
 -   suppose a 5-point improvement in reading score was considered
     important (on this scale)
--   in a 2-sample test, null (difference of) mean is zero, so `delta` is
+-   in a 2-sample test, nul(difference of) mean is zero, so `delta` is
     true difference in means
 -   what is power for these sample sizes, and what sample size would be
     needed to get power up to 0.80?

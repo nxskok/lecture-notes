@@ -369,7 +369,7 @@ ci_median(irs, Time, conf.level=0.90)
 set.seed(457299)
 ```
 
-```{r inference-3-R-29}
+```{r inference-3-R-29i}
 tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 

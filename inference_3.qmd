@@ -429,6 +429,18 @@ tibble(sim = 1:1000) %>%
   ggplot(aes(x=my_mean)) + geom_histogram(bins=10) -> g
 ```
 
+## With normal quantile plot (see after that section)
+
+```{r inference-3-R-29xxx}
+tibble(sim = 1:10000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 
+  mutate(my_mean = mean(my_sample)) %>% 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
+
+```
+
+
 ## The sampling distribution
 
 ```{r inference-3-R-30}

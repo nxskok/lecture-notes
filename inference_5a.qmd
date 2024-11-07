@@ -83,6 +83,7 @@ chisq.test(tab, correct=FALSE)
 ```{r inference-5-R-4, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
+kids
 ```
 
 -   Find overall median score:
@@ -122,7 +123,7 @@ chisq.test(tab, correct=FALSE)
 -   `median_test` does the whole thing:
 
 ```{r inference-5-R-8}
-median_test(kids,score,group)
+median_test(kids, score, group)
 ```
 
 -   P-value again two-sided.
@@ -140,3 +141,25 @@ median_test(kids,score,group)
 -   The time to use Mood's median test is if we are definitely unhappy
     with the normality assumption (and thus the t-test P-value is not to
     be trusted).
+
+## A graph
+
+- Two categorical variables (above/below and group), so grouped bar chart
+- `group` is "explanatory" and above/below is "response".
+- Plot explanatory as `x` and plot response as `fill` (`y` will be frequency):
+
+
+```{r}
+kids %>% 
+  mutate(above = (score > m)) %>% 
+  ggplot(aes(x = group, fill = above)) + geom_bar(position = "dodge") -> g
+```
+
+## The graph
+
+```{r}
+g
+```
+
+- The significant association is because the treatment group children mostly score above the grand median, and the control group children score mostly below.
+
