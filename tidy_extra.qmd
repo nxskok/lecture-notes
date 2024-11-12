@@ -204,6 +204,7 @@ This is *too* long! We wanted a column called `y` and a column called
 ## Attempt 2
 
 ```{r tidy-extra-R-18}
+repmes
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", ".value"),
                         names_sep="_"

@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|1d7bcbd0b58011f0|||||||||||||||
+.Random.seed|object|a03200921334c2c6|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -102,16 +102,16 @@ running|stem|61eead8ba963be3f|956b64ad94546a1a|2c530c1562a7fbd1|-862476045|runni
 running_R|stem|b7ad3a2d6cd23fb4|fafabdc392a1c457|ef46db3751d8e999|1823033080|running_R.Rmd|t19491.8569417426s|abae671ba45f936d|6269|file|local|vector|||0||
 running_R_slides|stem|b2f471da9a1054c1|9e6a9740611d51c0|6c2c968cb09b7f32|-177892044|running_R_slides.pdf*running_R_slides.Rmd|t19380.023540738s|f68c06cce266f515|683789|file|local|vector|||9.82||
 survival|stem|913d11b9bedcdbf3|56b23edcc67219d9|2c530c1562a7fbd1|677208215|survival.html*survival.pdf*survival.qmd|t19981.1364955421s|e031bcb14e6c18f3|4692065|file|local|vector|||69.944||
-tidy_extra|stem|03f92a2964d81ee8|340d430efa8cfacb|2c530c1562a7fbd1|-1229011653|tidy_extra.html*tidy_extra.pdf*tidy_extra.qmd|t20034.7656642459s|84aed80aab5eaa8a|4046975|file|local|vector|||8.908||
+tidy_extra|stem|bb338b4e0ccb5c52|340d430efa8cfacb|2c530c1562a7fbd1|-1229011653|tidy_extra.html*tidy_extra.pdf*tidy_extra.qmd|t20039.6499388493s|047d43ff3d553dc1|4050010|file|local|vector|||8.878||
 tidy_extra_R|stem|40b3bb2cad848afe|27ae0db1566ab416|ef46db3751d8e999|494476271|tidy_extra_R.Rmd|t19489.6454055228s|8180f285072afcc2|4383|file|local|vector|||0||
 tidy_extra_R_slides|stem|60356cce088e9e58|1873ac2e1bc89784|48b1a36c6a6b1301|681695817|tidy_extra_R_slides.pdf*tidy_extra_R_slides.Rmd|t19379.994590682s|a684e4b4621b7b7e|61834|file|local|vector|||11.032||
-tidying|stem|520c0b5ceda4b705|e3399ae573ccf4de|2c530c1562a7fbd1|-815462382|tidying.html*tidying.pdf*tidying.qmd|t20034.7242282032s|5537748544c54f28|6190832|file|local|vector|||20.085||
+tidying|stem|520c0b5ceda4b705|e3399ae573ccf4de|2c530c1562a7fbd1|-815462382|tidying.html*tidying.pdf*tidying.qmd|t20039.1947738296s|5537748544c54f28|6190832|file|local|vector|||20.085||
 tidying_R|stem|7e812dfd7161baa5|45cc31f6e5e85a71|ef46db3751d8e999|1298264764|tidying_R.Rmd|t19430.6527178298s|82f22308315f063e|10839|file|local|vector|||0||
 tidying_R_slides|stem|b08fa955622715cf|c902e5afc4569891|430369db8d858b0b|348967195|tidying_R_slides.pdf*tidying_R_slides.Rmd|t19380.2030581059s|856608e6a12a2eeb|1464366|file|local|vector|||2437.661||
 vector_matrix|stem|2652568af1bc3c43|2508c865e81ead66|2c530c1562a7fbd1|-848478896|vector_matrix.html*vector_matrix.pdf*vector_matrix.qmd|t19981.1364964101s|8c58fbe885a6a4d5|3681938|file|local|vector|||12.722||
-wider_wrong|stem|ba1f3f9c6202ae7f|ef920a95f0d273a3|2c530c1562a7fbd1|-1326064152|wider_wrong_files*wider_wrong.html*wider_wrong.pdf*wider_wrong.qmd|t20034.7655602492s|ea5c4a8abe9b84b1|3697736|file|local|vector|||7.55||
+wider_wrong|stem|ba1f3f9c6202ae7f|ef920a95f0d273a3|2c530c1562a7fbd1|-1326064152|wider_wrong_files*wider_wrong.html*wider_wrong.pdf*wider_wrong.qmd|t20039.1947772898s|7d2b550262ee57af|3684274|file|local|vector|||7.55||
 wider_wrong_slides|stem|608292203f981279|e4a5847aa25bd829|cdc50657a9350338|262913204|wider_wrong_slides.pdf*wider_wrong_slides.Rmd|t19380.2030608837s|dd7ce027b6fa5365|45021|file|local|vector|||85.929|package cmdstanr was built under R version 4.3.0|
-windmill|stem|e04d1da06349aad2|7310a077a4901c9a|2c530c1562a7fbd1|-761679766|windmill.html*windmill.pdf*windmill.qmd|t19981.1364966532s|36ea5094a4f0f646|4518903|file|local|vector|||23.365||
+windmill|stem|1e153068a7e04f9f|7310a077a4901c9a|2c530c1562a7fbd1|-761679766|windmill.html*windmill.pdf*windmill.qmd|t20039.64983588s|a36b427641f7ae74|4518388|file|local|vector|||14.414||
 windmill_slides|stem|4231604f24ed30b6|ca80591eeba57987|ddbba9933c9282f4|-365915698|windmill_slides.pdf*windmill_slides.Rmd|t19380.0237043962s|80de266df74f2b95|167475|file|local|vector|||14.146||
 with_categ|stem|c894d365a5a65584|015a716e3c0ecdcc|2c530c1562a7fbd1|-1943781519|with_categ_files*with_categ.html*with_categ.pdf*with_categ.qmd|t19981.1364966995s|a31bce9bfd516735|3778260|file|local|vector|||13.89||
 with_categ_R|stem|bdf3967c9bc92f14|3a4a4b51d78d174f|ef46db3751d8e999|-425767943|with_categ_R.Rmd|t19320.6773734849s|493ddf0ca9d8fe86|3759|file|local|vector|||0||

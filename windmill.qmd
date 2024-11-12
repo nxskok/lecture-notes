@@ -281,7 +281,7 @@ ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
   geom_point() + geom_smooth(se = F)
 ```
 
--   and run regression like this (output page after):
+##   and run regression like this:
 
 ```{r asyreg}
 DC.3 <- lm(DC_output ~ wind_pace, data = windmill)
@@ -299,13 +299,13 @@ ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
 
 ## Regression output
 
-\scriptsize
+
 
 ```{r windmill-21}
 glance(DC.3)
 ```
 
-\normalsize
+
 
 ```{r windmill-22}
 tidy(DC.3)
