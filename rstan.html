@@ -8,7 +8,7 @@
 <link href="rstan_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="rstan_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="rstan_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.549">
+  <meta name="generator" content="quarto-1.5.57">
 
   <title>Bayesian Statistics with Stan</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -83,7 +83,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -626,8 +626,10 @@ Chain 1 Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
 Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 0.0 seconds.
+Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Chain 1 finished in 0.0 seconds.
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
 Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -649,8 +651,10 @@ Chain 2 Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling) 
 Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
-Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 0.0 seconds.
+Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Chain 2 finished in 0.0 seconds.
 Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
 Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -700,14 +704,14 @@ Chain 4 finished in 0.0 seconds.
 
 All 4 chains finished successfully.
 Mean chain execution time: 0.0 seconds.
-Total execution time: 0.7 seconds.</code></pre>
+Total execution time: 0.6 seconds.</code></pre>
 </div>
 </div>
 </section>
 <section id="the-output" class="slide level2">
 <h2>The output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>poisson1_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>poisson1_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> variable mean median   sd  mad   q5  q95 rhat ess_bulk ess_tail
    lp__   3.75   4.04 0.73 0.30 2.33 4.26 1.00     1844     2236
@@ -749,14 +753,14 @@ x ~ poisson(lambda);
 <li>Compile again:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>poisson2 <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(<span class="st">"poisson2.stan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>poisson2 <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(<span class="st">"poisson2.stan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>set up the data again including the new things we need:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>poisson2_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">n =</span> <span class="fu">length</span>(x), <span class="at">a =</span> <span class="fl">1.1</span>, <span class="at">b =</span> <span class="dv">6</span>)</span>
-<span id="cb22-2"><a href=""></a>poisson2_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>poisson2_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">x =</span> x, <span class="at">n =</span> <span class="fu">length</span>(x), <span class="at">a =</span> <span class="fl">1.1</span>, <span class="at">b =</span> <span class="dv">6</span>)</span>
+<span id="cb24-2"><a href=""></a>poisson2_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$x
 [1] 0 4 3 6 3 3 2 4
@@ -776,10 +780,10 @@ $b
 <h2>Sample again</h2>
 <p>Output should be the same (to within randomness):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>poisson2_fit <span class="ot">&lt;-</span> poisson2<span class="sc">$</span><span class="fu">sample</span>(<span class="at">data =</span> poisson2_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>poisson2_fit <span class="ot">&lt;-</span> poisson2<span class="sc">$</span><span class="fu">sample</span>(<span class="at">data =</span> poisson2_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>poisson2_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>poisson2_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> variable mean median   sd  mad   q5  q95 rhat ess_bulk ess_tail
    lp__   3.77   4.05 0.71 0.28 2.38 4.25 1.00     1835     1943
@@ -790,7 +794,7 @@ $b
 <section id="picture-of-posterior" class="slide level2">
 <h2>Picture of posterior</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">mcmc_hist</span>(poisson2_fit<span class="sc">$</span><span class="fu">draws</span>(<span class="st">"lambda"</span>), <span class="at">binwidth =</span> <span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">mcmc_hist</span>(poisson2_fit<span class="sc">$</span><span class="fu">draws</span>(<span class="st">"lambda"</span>), <span class="at">binwidth =</span> <span class="fl">0.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/rstan-16-1.png" width="960" class="r-stretch"></section>
@@ -798,7 +802,7 @@ $b
 <h2>Extracting actual sampled values</h2>
 <p>A little awkward at first:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>poisson2_fit<span class="sc">$</span><span class="fu">draws</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>poisson2_fit<span class="sc">$</span><span class="fu">draws</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A draws_array: 1000 iterations, 4 chains, and 2 variables
 , , variable = lp__
@@ -829,9 +833,9 @@ iteration   1   2   3   4
 <section id="sampled-values-as-dataframe" class="slide level2">
 <h2>Sampled values as dataframe</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">as_draws_df</span>(poisson2_fit<span class="sc">$</span><span class="fu">draws</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href=""></a>  <span class="fu">as_tibble</span>() <span class="ot">-&gt;</span> poisson2_draws</span>
-<span id="cb30-3"><a href=""></a>poisson2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">as_draws_df</span>(poisson2_fit<span class="sc">$</span><span class="fu">draws</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href=""></a>  <span class="fu">as_tibble</span>() <span class="ot">-&gt;</span> poisson2_draws</span>
+<span id="cb32-3"><a href=""></a>poisson2_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,000 × 5
     lp__ lambda .chain .iteration .draw
@@ -856,15 +860,15 @@ iteration   1   2   3   4
 <li>Another use for the actual sampled values is to see what kind of <em>response</em> values we might get in the future. This should look something like our data. For a Poisson distribution, the response values are integers:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>poisson2_draws <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href=""></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">xsim =</span> <span class="fu">rpois</span>(<span class="dv">1</span>, lambda)) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>poisson2_draws <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href=""></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">xsim =</span> <span class="fu">rpois</span>(<span class="dv">1</span>, lambda)) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="the-simulated-posterior-distribution-in-xsim" class="slide level2">
 <h2>The simulated posterior distribution (in <code>xsim</code>)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>d <span class="sc">%&gt;%</span> <span class="fu">select</span>(lambda, xsim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>d <span class="sc">%&gt;%</span> <span class="fu">select</span>(lambda, xsim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,000 × 2
 # Rowwise: 
@@ -888,7 +892,7 @@ iteration   1   2   3   4
 <h2>Comparison</h2>
 <p>Our actual data values were these:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0 4 3 6 3 3 2 4</code></pre>
 </div>
@@ -898,9 +902,9 @@ iteration   1   2   3   4
 <li>Or make a plot: a bar chart with the data on it as well (over):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> xsim)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb37-2"><a href=""></a>  <span class="fu">geom_dotplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(x), <span class="fu">aes</span>(<span class="at">x =</span> x), <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb37-3"><a href=""></a>  <span class="fu">scale_y_continuous</span>(<span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">ggplot</span>(d, <span class="fu">aes</span>(<span class="at">x =</span> xsim)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb39-2"><a href=""></a>  <span class="fu">geom_dotplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(x), <span class="fu">aes</span>(<span class="at">x =</span> x), <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb39-3"><a href=""></a>  <span class="fu">scale_y_continuous</span>(<span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>This also shows that the distribution of the data conforms well enough to the posterior predictive distribution (over).</li>
@@ -909,15 +913,15 @@ iteration   1   2   3   4
 <section id="the-plot" class="slide level2">
 <h2>The plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/rstan-22-1.png" width="960" class="r-stretch"></section>
 <section id="do-they-have-the-same-distribution" class="slide level2">
 <h2>Do they have the same distribution?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">qqplot</span>(d<span class="sc">$</span>xsim, x, <span class="at">plot.it =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="ot">-&gt;</span> dd</span>
-<span id="cb39-2"><a href=""></a>dd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">qqplot</span>(d<span class="sc">$</span>xsim, x, <span class="at">plot.it =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="ot">-&gt;</span> dd</span>
+<span id="cb41-2"><a href=""></a>dd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
       x     y
@@ -936,7 +940,7 @@ iteration   1   2   3   4
 <section id="the-plot-1" class="slide level2">
 <h2>The plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">ggplot</span>(dd, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">ggplot</span>(dd, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"><p>the observed zero is a bit too small compared to expected (from the posterior), but the other points seem pretty well on a line.</p>
@@ -945,10 +949,10 @@ iteration   1   2   3   4
 <h2>Analysis of variance, the Bayesian way</h2>
 <p>Recall the jumping rats data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>my_url <span class="ot">&lt;-</span> </span>
-<span id="cb42-2"><a href=""></a>  <span class="st">"http://ritsokiguess.site/datafiles/jumping.txt"</span></span>
-<span id="cb42-3"><a href=""></a>rats0 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
-<span id="cb42-4"><a href=""></a>rats0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>my_url <span class="ot">&lt;-</span> </span>
+<span id="cb44-2"><a href=""></a>  <span class="st">"http://ritsokiguess.site/datafiles/jumping.txt"</span></span>
+<span id="cb44-3"><a href=""></a>rats0 <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(my_url, <span class="st">" "</span>)</span>
+<span id="cb44-4"><a href=""></a>rats0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 × 2
    group   density
@@ -985,11 +989,11 @@ iteration   1   2   3   4
 <li>Take opportunity to put groups in logical order:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>rats0 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
-<span id="cb44-2"><a href=""></a>  <span class="at">group_fct =</span> <span class="fu">fct_inorder</span>(group),</span>
-<span id="cb44-3"><a href=""></a>  <span class="at">group_no =</span> <span class="fu">as.integer</span>(group_fct)</span>
-<span id="cb44-4"><a href=""></a>) <span class="ot">-&gt;</span> rats</span>
-<span id="cb44-5"><a href=""></a>rats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>rats0 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb46-2"><a href=""></a>  <span class="at">group_fct =</span> <span class="fu">fct_inorder</span>(group),</span>
+<span id="cb46-3"><a href=""></a>  <span class="at">group_no =</span> <span class="fu">as.integer</span>(group_fct)</span>
+<span id="cb46-4"><a href=""></a>) <span class="ot">-&gt;</span> rats</span>
+<span id="cb46-5"><a href=""></a>rats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 × 4
    group   density group_fct group_no
@@ -1012,8 +1016,8 @@ iteration   1   2   3   4
 <h2>Plotting the data 1/2</h2>
 <p>Most obviously, boxplots:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">x =</span> group_fct, <span class="at">y =</span> density)) <span class="sc">+</span> </span>
-<span id="cb46-2"><a href=""></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">x =</span> group_fct, <span class="at">y =</span> density)) <span class="sc">+</span> </span>
+<span id="cb48-2"><a href=""></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/rstan-26-1.png" width="960" class="r-stretch"></section>
@@ -1021,8 +1025,8 @@ iteration   1   2   3   4
 <h2>Plotting the data 2/2</h2>
 <p>Another way: density plot (smoothed out histogram); can distinguish groups by colours:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">x =</span> density, <span class="at">fill =</span> group_fct)) <span class="sc">+</span></span>
-<span id="cb47-2"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">ggplot</span>(rats, <span class="fu">aes</span>(<span class="at">x =</span> density, <span class="at">fill =</span> group_fct)) <span class="sc">+</span></span>
+<span id="cb49-2"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/density_plot-1.png" width="960" class="r-stretch"></section>
@@ -1101,20 +1105,20 @@ iteration   1   2   3   4
 <h2>Compile</h2>
 <p>Arrange these in order data, parameters, model in file <code>anova.stan</code>, then:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>anova <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(<span class="st">"anova.stan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>anova <span class="ot">&lt;-</span> <span class="fu">cmdstan_model</span>(<span class="st">"anova.stan"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="set-up-data-and-sample" class="slide level2">
 <h2>Set up data and sample</h2>
 <p>Supply values for <em>everything</em> declared in <code>data</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>anova_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb53-2"><a href=""></a>  <span class="at">n_obs =</span> <span class="dv">30</span>,</span>
-<span id="cb53-3"><a href=""></a>  <span class="at">n_group =</span> <span class="dv">3</span>,</span>
-<span id="cb53-4"><a href=""></a>  <span class="at">density =</span> rats<span class="sc">$</span>density,</span>
-<span id="cb53-5"><a href=""></a>  <span class="at">group_no =</span> rats<span class="sc">$</span>group_no</span>
-<span id="cb53-6"><a href=""></a>)</span>
-<span id="cb53-7"><a href=""></a>anova_fit <span class="ot">&lt;-</span> anova<span class="sc">$</span><span class="fu">sample</span>(<span class="at">data =</span> anova_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>anova_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb55-2"><a href=""></a>  <span class="at">n_obs =</span> <span class="dv">30</span>,</span>
+<span id="cb55-3"><a href=""></a>  <span class="at">n_group =</span> <span class="dv">3</span>,</span>
+<span id="cb55-4"><a href=""></a>  <span class="at">density =</span> rats<span class="sc">$</span>density,</span>
+<span id="cb55-5"><a href=""></a>  <span class="at">group_no =</span> rats<span class="sc">$</span>group_no</span>
+<span id="cb55-6"><a href=""></a>)</span>
+<span id="cb55-7"><a href=""></a>anova_fit <span class="ot">&lt;-</span> anova<span class="sc">$</span><span class="fu">sample</span>(<span class="at">data =</span> anova_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Running MCMC with 4 sequential chains...
 
@@ -1140,7 +1144,7 @@ Chain 1 Iteration: 1700 / 2000 [ 85%]  (Sampling)
 Chain 1 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 1 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 1 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 1 finished in 0.1 seconds.
+Chain 1 finished in 0.0 seconds.
 Chain 2 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 2 Iteration:  100 / 2000 [  5%]  (Warmup) 
 Chain 2 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -1163,7 +1167,7 @@ Chain 2 Iteration: 1700 / 2000 [ 85%]  (Sampling)
 Chain 2 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 2 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 2 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 2 finished in 0.1 seconds.
+Chain 2 finished in 0.0 seconds.
 Chain 3 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 3 Iteration:  100 / 2000 [  5%]  (Warmup) 
 Chain 3 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -1186,7 +1190,7 @@ Chain 3 Iteration: 1700 / 2000 [ 85%]  (Sampling)
 Chain 3 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 3 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 3 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 3 finished in 0.1 seconds.
+Chain 3 finished in 0.0 seconds.
 Chain 4 Iteration:    1 / 2000 [  0%]  (Warmup) 
 Chain 4 Iteration:  100 / 2000 [  5%]  (Warmup) 
 Chain 4 Iteration:  200 / 2000 [ 10%]  (Warmup) 
@@ -1209,10 +1213,10 @@ Chain 4 Iteration: 1700 / 2000 [ 85%]  (Sampling)
 Chain 4 Iteration: 1800 / 2000 [ 90%]  (Sampling) 
 Chain 4 Iteration: 1900 / 2000 [ 95%]  (Sampling) 
 Chain 4 Iteration: 2000 / 2000 [100%]  (Sampling) 
-Chain 4 finished in 0.1 seconds.
+Chain 4 finished in 0.0 seconds.
 
 All 4 chains finished successfully.
-Mean chain execution time: 0.1 seconds.
+Mean chain execution time: 0.0 seconds.
 Total execution time: 0.5 seconds.</code></pre>
 </div>
 </div>
@@ -1220,9 +1224,9 @@ Total execution time: 0.5 seconds.</code></pre>
 <section id="check-that-the-sampling-worked-properly" class="slide level2">
 <h2>Check that the sampling worked properly</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>anova_fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a>anova_fit<span class="sc">$</span><span class="fu">cmdstan_diagnose</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Processing csv files: /tmp/RtmpUZqHI4/anova-202406061809-1-3b51f4.csv, /tmp/RtmpUZqHI4/anova-202406061809-2-3b51f4.csv, /tmp/RtmpUZqHI4/anova-202406061809-3-3b51f4.csv, /tmp/RtmpUZqHI4/anova-202406061809-4-3b51f4.csv
+<pre><code>Processing csv files: /tmp/RtmpTG1unS/anova-202411191216-1-38340d.csv, /tmp/RtmpTG1unS/anova-202411191216-2-38340d.csv, /tmp/RtmpTG1unS/anova-202411191216-3-38340d.csv, /tmp/RtmpTG1unS/anova-202411191216-4-38340d.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
@@ -1244,7 +1248,7 @@ Processing complete, no problems detected.</code></pre>
 <section id="look-at-the-results" class="slide level2">
 <h2>Look at the results</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a>anova_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a>anova_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> variable   mean median   sd  mad     q5    q95 rhat ess_bulk ess_tail
     lp__  -41.02 -40.68 1.51 1.26 -43.87 -39.27 1.00     1867     2073
@@ -1265,15 +1269,15 @@ Processing complete, no problems detected.</code></pre>
 <section id="plotting-the-posterior-distributions-for-the-mu" class="slide level2">
 <h2>Plotting the posterior distributions for the <code>mu</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="fu">mcmc_hist</span>(anova_fit<span class="sc">$</span><span class="fu">draws</span>(<span class="st">"mu"</span>), <span class="at">binwidth =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">mcmc_hist</span>(anova_fit<span class="sc">$</span><span class="fu">draws</span>(<span class="st">"mu"</span>), <span class="at">binwidth =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/rstan-29-1.png" width="960" class="r-stretch"></section>
 <section id="extract-the-sampled-values" class="slide level2">
 <h2>Extract the sampled values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="fu">as_draws_df</span>(anova_fit<span class="sc">$</span><span class="fu">draws</span>()) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="ot">-&gt;</span> anova_draws</span>
-<span id="cb60-2"><a href=""></a>anova_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a><span class="fu">as_draws_df</span>(anova_fit<span class="sc">$</span><span class="fu">draws</span>()) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="ot">-&gt;</span> anova_draws</span>
+<span id="cb62-2"><a href=""></a>anova_draws</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4,000 × 8
     lp__ `mu[1]` `mu[2]` `mu[3]` sigma .chain .iteration .draw
@@ -1295,9 +1299,9 @@ Processing complete, no problems detected.</code></pre>
 <section id="estimated-probability-that-mu_3-mu_1" class="slide level2">
 <h2>estimated probability that <span class="math inline">\(\mu_3 &gt; \mu_1\)</span></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a>anova_draws <span class="sc">%&gt;%</span> </span>
-<span id="cb62-2"><a href=""></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">mu[3]</span><span class="st">`</span><span class="sc">&gt;</span><span class="st">`</span><span class="at">mu[1]</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb62-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> n<span class="sc">/</span><span class="fu">sum</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>anova_draws <span class="sc">%&gt;%</span> </span>
+<span id="cb64-2"><a href=""></a>  <span class="fu">count</span>(<span class="st">`</span><span class="at">mu[3]</span><span class="st">`</span><span class="sc">&gt;</span><span class="st">`</span><span class="at">mu[1]</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> n<span class="sc">/</span><span class="fu">sum</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   `\`mu[3]\` &gt; \`mu[1]\``     n    prob
@@ -1318,21 +1322,21 @@ Processing complete, no problems detected.</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>anova_draws <span class="sc">%&gt;%</span> </span>
-<span id="cb64-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"mu"</span>), </span>
-<span id="cb64-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"group"</span>, </span>
-<span id="cb64-4"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"bone_density"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb64-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">fct_recode</span>(group,</span>
-<span id="cb64-6"><a href=""></a>    <span class="at">Control =</span> <span class="st">"mu[1]"</span>,</span>
-<span id="cb64-7"><a href=""></a>    <span class="at">Lowjump =</span> <span class="st">"mu[2]"</span>,</span>
-<span id="cb64-8"><a href=""></a>    <span class="at">Highjump =</span> <span class="st">"mu[3]"</span></span>
-<span id="cb64-9"><a href=""></a>  )) <span class="ot">-&gt;</span> sims</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>anova_draws <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="fu">starts_with</span>(<span class="st">"mu"</span>), </span>
+<span id="cb66-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"group"</span>, </span>
+<span id="cb66-4"><a href=""></a>               <span class="at">values_to =</span> <span class="st">"bone_density"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">fct_recode</span>(group,</span>
+<span id="cb66-6"><a href=""></a>    <span class="at">Control =</span> <span class="st">"mu[1]"</span>,</span>
+<span id="cb66-7"><a href=""></a>    <span class="at">Lowjump =</span> <span class="st">"mu[2]"</span>,</span>
+<span id="cb66-8"><a href=""></a>    <span class="at">Highjump =</span> <span class="st">"mu[3]"</span></span>
+<span id="cb66-9"><a href=""></a>  )) <span class="ot">-&gt;</span> sims</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="what-we-have-now" class="slide level2">
 <h2>What we have now:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>sims </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>sims </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12,000 × 7
     lp__ sigma .chain .iteration .draw group    bone_density
@@ -1354,8 +1358,8 @@ Processing complete, no problems detected.</code></pre>
 <section id="density-plots-of-posterior-mean-distributions" class="slide level2">
 <h2>Density plots of posterior mean distributions</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a><span class="fu">ggplot</span>(sims, <span class="fu">aes</span>(<span class="at">x =</span> bone_density, <span class="at">fill =</span> group)) <span class="sc">+</span> </span>
-<span id="cb67-2"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a><span class="fu">ggplot</span>(sims, <span class="fu">aes</span>(<span class="at">x =</span> bone_density, <span class="at">fill =</span> group)) <span class="sc">+</span> </span>
+<span id="cb69-2"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/rstan-33-1.png" width="960" class="r-stretch"></section>
@@ -1363,8 +1367,8 @@ Processing complete, no problems detected.</code></pre>
 <h2>Posterior predictive distributions</h2>
 <p>Randomly sample from posterior means and SDs in <code>sims</code>. There are 12000 rows in <code>sims</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>sims <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sim_data =</span> <span class="fu">rnorm</span>(<span class="dv">12000</span>, bone_density, sigma)) <span class="ot">-&gt;</span> ppd</span>
-<span id="cb68-2"><a href=""></a>ppd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a>sims <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sim_data =</span> <span class="fu">rnorm</span>(<span class="dv">12000</span>, bone_density, sigma)) <span class="ot">-&gt;</span> ppd</span>
+<span id="cb70-2"><a href=""></a>ppd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12,000 × 8
     lp__ sigma .chain .iteration .draw group    bone_density sim_data
@@ -1391,15 +1395,15 @@ Processing complete, no problems detected.</code></pre>
 <li>Use facets, one for each treatment group:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a>my_binwidth <span class="ot">&lt;-</span> <span class="dv">15</span></span>
-<span id="cb70-2"><a href=""></a><span class="fu">ggplot</span>(ppd, <span class="fu">aes</span>(<span class="at">x =</span> sim_data)) <span class="sc">+</span></span>
-<span id="cb70-3"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> my_binwidth) <span class="sc">+</span></span>
-<span id="cb70-4"><a href=""></a>  <span class="fu">geom_dotplot</span>(</span>
-<span id="cb70-5"><a href=""></a>    <span class="at">data =</span> rats, <span class="fu">aes</span>(<span class="at">x =</span> density),</span>
-<span id="cb70-6"><a href=""></a>    <span class="at">binwidth =</span> my_binwidth</span>
-<span id="cb70-7"><a href=""></a>  ) <span class="sc">+</span></span>
-<span id="cb70-8"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group) <span class="sc">+</span></span>
-<span id="cb70-9"><a href=""></a>  <span class="fu">scale_y_continuous</span>(<span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a>my_binwidth <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb72-2"><a href=""></a><span class="fu">ggplot</span>(ppd, <span class="fu">aes</span>(<span class="at">x =</span> sim_data)) <span class="sc">+</span></span>
+<span id="cb72-3"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> my_binwidth) <span class="sc">+</span></span>
+<span id="cb72-4"><a href=""></a>  <span class="fu">geom_dotplot</span>(</span>
+<span id="cb72-5"><a href=""></a>    <span class="at">data =</span> rats, <span class="fu">aes</span>(<span class="at">x =</span> density),</span>
+<span id="cb72-6"><a href=""></a>    <span class="at">binwidth =</span> my_binwidth</span>
+<span id="cb72-7"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb72-8"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group) <span class="sc">+</span></span>
+<span id="cb72-9"><a href=""></a>  <span class="fu">scale_y_continuous</span>(<span class="cn">NULL</span>, <span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="ot">-&gt;</span> g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>See (over) that the data values are mainly in the middle of the predictive distributions.</li>
@@ -1409,7 +1413,7 @@ Processing complete, no problems detected.</code></pre>
 <section id="the-plot-2" class="slide level2">
 <h2>The plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href=""></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href=""></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="rstan_files/figure-revealjs/rstan-35-1.png" width="960" class="r-stretch"></section>
@@ -1708,18 +1712,7 @@ Processing complete, no problems detected.</code></pre>
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1751,7 +1744,47 @@ Processing complete, no problems detected.</code></pre>
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
       function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
@@ -1788,7 +1821,11 @@ Processing complete, no problems detected.</code></pre>
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

@@ -22,7 +22,7 @@ editor:
 ## Packages for this section
 
 ```{r asphalt-1}
-library(MASS)
+library(MASS, exclude = "select")
 library(tidyverse)
 library(broom)
 library(leaps)
@@ -89,16 +89,16 @@ g
 
 -   Take this back to asphalt engineer: suggests log of `viscosity`:
 
-```{r logvisplot, fig.keep="none", warning=F, message=F}
+```{r logvisplot, warning=F, message=F}
 ggplot(asphalt, aes(y = rut.depth, x = log(viscosity))) +
-  geom_point() + geom_smooth(se = F) -> g
+  geom_point() + geom_smooth(se = FALSE) -> g
 ```
 
 (plot overleaf)
 
 ## Rut depth against log-viscosity
 
-```{r asphalt-6, ref.label="logvisplot", echo=FALSE, message=FALSE}
+```{r asphalt-6}
 g
 ```
 
@@ -139,17 +139,12 @@ tidy(rut.1)
 -   But confused by clearly non-significant variables: remove those to
     get clearer picture of what is helpful.
 
--   
 
-    ## Before we do anything, look at residual plots:
+## Before we do anything, look at residual plots:
 
-    ```         
-    (a) of residuals against fitted values (as usual)
-    ```
+- (a) of residuals against fitted values (as usual)
 
-    -   
-
-        (b) of residuals against each explanatory.
+-  (b) of residuals against each explanatory.
 
 -   Problem fixes:
 

@@ -501,6 +501,7 @@ my_fits %>%
     y = fit, x = wind_velocity,
     colour = model
   )) + geom_line() -> g
+g
 ```
 
 ## Making a plot 2/2
@@ -517,7 +518,7 @@ my_fits %>%
 ```{r rectangle, eval=F}
 g + geom_rect(
   xmin = vels[1], xmax = vels[2], ymin = 0, ymax = 3,
-  alpha=0, colour = "black"
+  alpha = 0, colour = "black"
 )
 ```
 
