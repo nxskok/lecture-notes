@@ -29,7 +29,7 @@ library(leaps)
 ```
 
 Make sure to load `MASS` before `tidyverse` (for annoying technical
-reasons).
+reasons), or to load `MASS` excluding its `select` (as above).
 
 ## Getting set up
 
@@ -173,6 +173,7 @@ ggplot(rut.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 
 ```{r asphalt-10}
 rut.1 %>% augment(asphalt) -> rut.1a
+rut.1a
 ```
 
 ## What does rut.1a contain?
@@ -325,6 +326,7 @@ anova(rut.3, rut.2)
 
 ```{r asphalt-22}
 tidy(rut.2)
+summary(rut.2)
 ```
 
 -   Largest P-value is 0.78 for `pct.a.base`, not significant.
@@ -350,6 +352,7 @@ tidy(rut.2) %>% arrange(p.value)
 ```{r asphalt-24}
 rut.4 <- lm(log(rut.depth) ~ pct.a.surf + fines + voids + 
               log(viscosity) + run, data = asphalt)
+summary(rut.4)
 tidy(rut.4) %>% arrange(p.value) %>% dplyr::select(term, p.value)
 ```
 
@@ -363,6 +366,7 @@ Another way to do the same thing:
 
 ```{r asphalt-25}
 rut.4 <- update(rut.2, . ~ . - pct.a.base)
+summary(rut.4)
 tidy(rut.4) %>% arrange(p.value)
 ```
 
@@ -372,6 +376,7 @@ tidy(rut.4) %>% arrange(p.value)
 
 ```{r asphalt-26}
 rut.5 <- update(rut.4, . ~ . - fines)
+summary(rut.5)
 tidy(rut.5) %>% arrange(p.value) %>% dplyr::select(term, p.value)
 ```
 
@@ -381,6 +386,7 @@ Can't take out intercept, so `run`, with P-value 0.36, goes next.
 
 ```{r asphalt-27}
 rut.6 <- update(rut.5, . ~ . - run)
+summary(rut.6)
 tidy(rut.6) %>% arrange(p.value) %>% dplyr::select(term, p.value)
 ```
 
@@ -413,8 +419,8 @@ coef(rut.3)
 
 ```{r asphalt-29, eval=F}
 step(rut.2, direction = "backward", test = "F")
-```
 
+```
 Gets same answer as we did (by removing least significant x).
 
 -   Removing non-significant $x$'s may remove interesting ones whose
@@ -493,6 +499,7 @@ options(width=wid)
 
 ```{r asphalt-37}
 tidy(rut.6)
+summary(rut.6)
 ```
 
 ## Revisiting (2)

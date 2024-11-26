@@ -227,10 +227,15 @@ sqrt_minus_value(6, 8)
 ```{r functions-19}
 my_df <- data.frame(x = 1:4, y = c(10, 11, 10, 14))
 my_df
+```
+
+## Running the regression
+
+```{r}
 my_df.1 <- lm(y ~ x, data = my_df)
-summary(my_df.1)
 tidy(my_df.1)
 ```
+
 
 ## Pulling out just the slope
 

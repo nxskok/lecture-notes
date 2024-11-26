@@ -120,6 +120,7 @@ crickets %>% slice_sample(n = 10)
 ```{r with-categ-R-10}
 crickets.1 <- lm(pulse_rate ~ temperature + species, 
                  data = crickets)
+summary(crickets.1)
 ```
 
 Can I remove anything? No:
@@ -159,8 +160,7 @@ t1 <- "Pulse rate against temperature for two species of crickets"
 t2 <- "Temperature in degrees Celsius"
 ggplot(crickets, aes(x = temperature, y = pulse_rate,
   colour = species)) +
-  geom_point() + geom_smooth(method = "lm", se = FALSE) +
-  ggtitle(t1, t2) -> g
+  geom_point() + geom_smooth(method = "lm", se = FALSE) -> g
 ```
 
 ## The graph
