@@ -32,9 +32,7 @@ title: "STAD29 / STA 1007 course outline"
 
 ## Getting help
 
--   Option 1: come to tutorial and ask.
-
--   Option 2: Quercus discussion board:
+-   Option 1: Quercus discussion board:
 
     -   If it's a question about course procedures, look in this course outline first.
     -   Then: look at the Quercus discussion forum. Your question might have an answer there.
@@ -42,7 +40,7 @@ title: "STAD29 / STA 1007 course outline"
     -   If you don't see an answer to your question, post your question on the discussion forum.
     -   For an issue that is more personal, email me (below).
 
-- Option 3: talk with me after class (that's assuming I have any voice left after a two-hour lecture)
+- Option 2: talk with me after class (that's assuming I have any voice left after a two-hour lecture).
 
 ## E-mail
 
@@ -81,9 +79,9 @@ The first thing on each line is a link:
 
 -   Assignments: $n = 8$ or so, approx weekly.
     - Best $n-2$ count.
-    - available on Tuesdays, due on Sundays at 11:59pm
+    - available on Tuesdays, due on Fridays at 11:59pm
     - based on the previous week's lectures
-    - *do not expect to get much help on the assignments themselves*. The time to get help is at tutorial or by working through the practice problems from PASIAS.
+    - *do not expect to get much help on the assignments themselves*. The time to get help is by working through the worksheets and practice problems from PASIAS.
 - for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
     - project is due on the last day of classes.
     
@@ -94,8 +92,8 @@ The first thing on each line is a link:
 
 ## Grading schemes
 
-- if you are taking STAD29, 30% assignments (dropping worst 2), 30% midterm, 40% final.
-- if you are taking STA 1007, 15% project, 25% assignments (dropping worst 2), 25% midterm, 35% final.
+- if you are taking STAD29, 25% assignments (dropping worst 2), 30% midterm, 45% final.
+- if you are taking STA 1007, 10% project, 25% assignments (dropping worst 2), 25% midterm, 40% final.
 
 ## Grading
 
