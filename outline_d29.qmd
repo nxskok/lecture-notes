@@ -93,7 +93,7 @@ The first thing on each line is a link:
 ## Grading schemes
 
 - if you are taking STAD29, 25% assignments (dropping worst 2), 30% midterm, 45% final.
-- if you are taking STA 1007, 10% project, 20% assignments (dropping worst 2), 30% midterm, 40% final.
+- if you are taking STA 1007, 10% project, 25% assignments (dropping worst 2), 25% midterm, 40% final.
 
 ## Grading
 
