@@ -108,8 +108,11 @@ sqrt_minus_1(c(50, 11, 3))
 -   or even data frames:
 
 ```{r functions-8}
-d <- data.frame(x = 1:2, y = 3:4)
+d <- tibble(x = 1:2, y = 3:4)
 d
+```
+
+```{r}
 sqrt_minus_1(d)
 ```
 
@@ -137,7 +140,9 @@ sqrt_minus_value(d = 2, x = 51)
 ```
 
 ```{r}
-lm(y ~ x, data = d)
+d
+d.1 <- lm(y ~ x, data = d)
+summary(d.1)
 ```
 
 ## Defaults 1/2
@@ -147,6 +152,7 @@ lm(y ~ x, data = d)
 
 ```{r functions-12}
 x <- c(3, 4, 5, NA, 6, 7)
+x
 mean(x)
 mean(x, na.rm = TRUE)
 ```
@@ -170,6 +176,7 @@ sqrt_minus_value <- function(x, d = 1) {
 
 -   If you specify a value for d, it will be used. If you don't, 1 will
     be used instead:
+
 
 ```{r functions-14}
 sqrt_minus_value(51, 2)
@@ -225,7 +232,7 @@ sqrt_minus_value(6, 8)
     regression calculations, like this:
 
 ```{r functions-19}
-my_df <- data.frame(x = 1:4, y = c(10, 11, 10, 14))
+my_df <- tibble(x = 1:4, y = c(10, 11, 10, 14))
 my_df
 ```
 
@@ -299,6 +306,12 @@ my_df %>% slice(3:4)
 
 -   so the slope should be $(14 − 10)/(4 − 3) = 4$ and is.
 
+```{r}
+with(my_df, slope(x, y, hair = "spiky"))
+```
+
+
+
 ## Running a function for each of several inputs
 
 -   Suppose we have a data frame containing several different `x`’s to
@@ -337,6 +350,10 @@ slopes
     with inputs "it" and `y`), and collect together the answers.
 -   Since slope returns a decimal number (a `dbl`), appropriate
     function-running function is `map_dbl`:
+
+```{r}
+d
+```
 
 ```{r functions-28}
 map_dbl(d, \(d) slope(d, my_df$y))
@@ -382,15 +399,27 @@ quartiles(1:5)
 
 -   Try:
 
-```{r functions-32}
-map(d, \(d) quartiles(d))
+```{r}
+d
 ```
+
+
+```{r functions-32}
+d
+map(d, \(d) quartiles(d)) -> e
+e
+```
+
+```{r}
+e[[3]][2]
+```
+
 
 -   A list.
 
 ## Or
 
--   Better: pretend output from quartiles is one-column data frame:
+-   Better: pretend output from quartiles is one-row data frame:
 
 ```{r functions-33}
 map_df(d, \(d) quartiles(d))
@@ -416,6 +445,7 @@ d %>% map_df(\(d) quartiles(d))
 
 ```{r functions-35}
 d <- tibble(x = 1:10)
+d
 d %>% mutate(root = map_dbl(x, \(x) sqrt(x)))
 ```
 
@@ -436,6 +466,7 @@ d %>% mutate(root = map_dbl(x, \(x) sqrt(x)))
 ```{r functions-36}
 6 %% 2
 5 %% 2
+# 13 %/% 2
 ```
 
 -   5 has remainder 1 so it is odd.
@@ -475,6 +506,10 @@ hotpo(4.5)
 ## One through ten
 
 -   Use a data frame of numbers 1 through 10 again:
+
+```{r}
+# tibble(x = 1:10) %>% mutate(y = hotpo(x))
+```
 
 ```{r functions-39}
 tibble(x = 1:10) %>% mutate(y = map_int(x, \(x) hotpo(x)))
@@ -577,7 +612,7 @@ tibble(start = 1:7) %>%
 ```{r functions-46}
 tibble(start=1:7) %>% 
   rowwise() %>% 
-  mutate(sequence = list(hotpo_seq(start))) %>% 
+  mutate(sequence = 0) %>% 
   mutate(seq_length = length(sequence)) %>% 
   mutate(seq_max = max(sequence))
 ```
