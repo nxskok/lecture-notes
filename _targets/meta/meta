@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|74c7bcadede04283|||||||||||||||
+.Random.seed|object|4e79e0e4ff21860e|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -92,7 +92,7 @@ profile|stem|4ef0c6c96046ebe5|5fcbc00ad0b78c2e|2c530c1562a7fbd1|1381439627|profi
 readfile|stem|8cffc131f9a8d983|921cd7f782c1e1c5|2c530c1562a7fbd1|-1339943692|readfile.html*readfile.pdf*readfile.qmd|t20046.7232787426s|1683ec11c7ec290f|4092165|file|local|vector|||7.446||
 readfile_R|stem|50ae80e9a0bb9e41|f657773094628a4a|ef46db3751d8e999|-701932185|readfile_R.Rmd|t19467.7566442397s|799025e7fe6c3bbb|7063|file|local|vector|||1.415||
 readfile_R_slides|stem|aa413eabc0cf2713|55a0e7e99a0fd29c|7ebf8625991ada44|1359483203|readfile_R_slides.pdf*readfile_R_slides.Rmd|t19379.9944595239s|b5a5310861665ed0|209071|file|local|vector|||13.397|package cmdstanr was built under R version 4.3.0|
-regression|stem|e73d68e5a5ddbec8|9e88f085b9bf7f3f|2c530c1562a7fbd1|16270653|regression_files*regression.html*regression.pdf*regression.qmd|t20046.7209948522s|a0477123449be1ae|5054598|file|local|vector|||16.305||
+regression|stem|92f3ef5fab277c4c|9e88f085b9bf7f3f|2c530c1562a7fbd1|16270653|regression_files*regression.html*regression.pdf*regression.qmd|t20094.6844119957s|f7e0fcd30efcd98d|6040524|file|local|vector|||17.492||
 reports|stem|8db5b4976b4cba75|9e596f55583d3fb2|2c530c1562a7fbd1|536393307|reports.html*reports.pdf*reports.qmd|t20046.7296055135s|cadb4cd67fdc14e0|7864822|file|local|vector|||5.485||
 reports_R|stem|f2a7307fa631fa49|cd36f5f411f1d0d7|ef46db3751d8e999|-1546692884|reports_R.Rmd|t18961.1805118278s|60085227176e1a57|6786|file|local|vector|||0||
 reports_R_slides|stem|d7896837f7310291|0638f1a4a0224d58|75b053450548efad|-1062154994|reports_R_slides.pdf*reports_R_slides.Rmd|t19380.0233067553s|5e743874e1de034c|2642418|file|local|vector|||8.732||

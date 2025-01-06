@@ -31,8 +31,8 @@ library(MASS, exclude = "select") # for Box-Cox, later
 library(tidyverse)
 library(broom)
 library(marginaleffects)
-library(conflicted)
-conflict_prefer("select", "dplyr")
+# library(conflicted) # add these lines if you forget the exclude
+# conflict_prefer("select", "dplyr")
 ```
 
 ## A regression with one $x$
