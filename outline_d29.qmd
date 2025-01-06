@@ -79,7 +79,7 @@ The first thing on each line is a link:
 
 -   Assignments: $n = 8$ or so, approx weekly.
     - Best $n-2$ count.
-    - available on Tuesdays, due on Fridays at 11:59pm
+    - available on Fridays, due the following Friday at 11:59pm
     - based on the previous week's lectures
     - *do not expect to get much help on the assignments themselves*. The time to get help is by working through the worksheets and practice problems from PASIAS.
 - for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
