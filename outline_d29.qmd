@@ -8,8 +8,8 @@ title: "STAD29 / STA 1007 course outline"
 
 -   In-person:
 
-   -   2 hours of lectures / week, Wed afternoon
-  -   1 hour tutorial / week, Mon afternoon
+   -   2 hours of lectures / week, Mon or Wed afternoon
+  -   a worksheet on the material you have learned, for practice
   -   This course will help you develop further skills to analyze data.
   -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
    -   I want you to demonstrate your understanding and insight about the data you're working with  
