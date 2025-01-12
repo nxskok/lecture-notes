@@ -28,16 +28,16 @@ glm(y ~ x, family="binomial")
 ## Packages
 
 ```{r bLogistic-2, message = FALSE}
-library(MASS)
+library(MASS, exclude = "select")
 library(tidyverse)
 library(marginaleffects)
 library(broom)
 library(nnet)
-library(conflicted)
-conflict_prefer("select", "dplyr")
-conflict_prefer("filter", "dplyr")
-conflict_prefer("rename", "dplyr")
-conflict_prefer("summarize", "dplyr")
+# library(conflicted)
+# conflict_prefer("select", "dplyr")
+# conflict_prefer("filter", "dplyr")
+# conflict_prefer("rename", "dplyr")
+# conflict_prefer("summarize", "dplyr")
 ```
 
 ## The rats, part 1
