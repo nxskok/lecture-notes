@@ -361,6 +361,8 @@ For probability $p$, odds is $p/(1-p)$:
 
 -   *Log*-odds can be anything: any log-odds corresponds to valid
     probability.
+    
+-   Thus, predict log-odds of probability from explanatory variable(s)
 
 ## Odds ratio
 
@@ -373,8 +375,8 @@ For probability $p$, odds is $p/(1-p)$:
 
 -   Ratio of odds is $9/0.25=36$.
 
--   Way of quantifying difference between men and women: \`\`odds of
-    drinking wine 36 times larger for males than females''.
+-   Way of quantifying difference between men and women: "odds of
+    drinking wine 36 times larger for males than females".
 
 ## Sepsis data again
 

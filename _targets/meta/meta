@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|c3c3f6a8577392e8|||||||||||||||
+.Random.seed|object|3176e83efd71f41e|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -72,7 +72,7 @@ inference_5_R|stem|bd7456365f950f40|c25099eac5c02304|ef46db3751d8e999|1236966356
 inference_5_R_slides|stem|9a6c8a642be33856|40870de14c3e2baa|815bfd1e6342f80f|1497279634|inference_5_R_slides.pdf*inference_5_R_slides.Rmd|t19379.964625005s|9c197f16ff795a13|126686|file|local|vector|||12.588||
 inference_5a|stem|568ef7c336ed6680|fe6f8ae88388ba6e|2c530c1562a7fbd1|1274852786|inference_5a.html*inference_5a.pdf*inference_5a.qmd|t20046.7202511114s|582edc62d2f37422|3682079|file|local|vector|||7.615||
 inference_5b|stem|41ea7547aa342fdc|3710ee578f6887b2|2c530c1562a7fbd1|62240231|inference_5b.html*inference_5b.pdf*inference_5b.qmd|t20046.7204938827s|49143c75029c436f|3871285|file|local|vector|||9.045||
-logistic|stem|e5c748e487fc4435|727c1f99245ba22d|2c530c1562a7fbd1|1448786029|logistic_files*logistic.html*logistic.pdf*logistic.qmd|t20100.8365491129s|97a5b9a0aff8d45b|6105842|file|local|vector|||20.956||
+logistic|stem|df04e5491f874b60|727c1f99245ba22d|2c530c1562a7fbd1|1448786029|logistic_files*logistic.html*logistic.pdf*logistic.qmd|t20101.7169585998s|685dec7e369178a7|6106056|file|local|vector|||19.23||
 manova|stem|28faf7f4b1dfe1c7|7c91e26bc384b3c3|2c530c1562a7fbd1|1967024412|manova.html*manova.pdf*manova.qmd|t20046.7226860213s|0a1151d1d336a341|3853221|file|local|vector|||9.389||
 mapping|stem|12496460bfbb5ac3|536e887c80c1e8e5|d84d7cdd1c3c4b08|607285889|mapping_files*mapping.html*mapping.qmd|t19489.7175367455s|222c2ca194f36476|80109|file|local|vector|||8.232||
 mapping_slides|stem|5e9a22f37f1de127|2b764460e0b0deac|356053bfec8b35bb|223396972|mapping_slides.pdf*mapping_slides.Rmd|t19467.7695602666s|6dcaaab2c36eca21|1387804|file|local|vector|||12.003||
