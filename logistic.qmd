@@ -62,9 +62,23 @@ rats <- read_delim(my_url, " ")
 rats
 ```
 
+## This doesn't work
+
+```{r}
+#| error: true
+
+
+status.0 <- glm(status ~ dose, family = "binomial", data = rats)
+```
+
+Values of response variable (here `status`) must be either:
+
+- 1 = "success", 0 = "failure"
+- a `factor` (not text) with two levels.
+
 ## Basic logistic regression
 
--   Make response into a factor first:
+-   So, make response into a factor first:
 
 ```{r bLogistic-4}
 rats2 <- rats %>% mutate(status = factor(status))
@@ -143,6 +157,11 @@ rat2
 -   Create *two-column* response with `cbind`:
     -   #survivals in first column,
     -   #deaths in second.
+    
+
+```{r}
+with(rat2, cbind(lived, died))
+```
 
 
 ## Fit logistic regression
@@ -176,6 +195,12 @@ cbind(predictions(rat2.1, newdata = new)) %>%
 #| error: true
 plot_predictions(rat2.1, condition = "dose")
 ```
+
+```{r}
+#| error: true
+plot_predictions(rat2.1, condition = "dose", type = "link")
+```
+
 
 ## Comments
 
@@ -251,6 +276,7 @@ tidy(sepsis.1)
 
 ```{r bLogistic-18}
 sepsis.2 <- update(sepsis.1, . ~ . - malnut)
+summary(sepsis.2)
 tidy(sepsis.2)
 ```
 
@@ -362,7 +388,7 @@ For probability $p$, odds is $p/(1-p)$:
 -   *Log*-odds can be anything: any log-odds corresponds to valid
     probability.
     
--   Thus, predict log-odds of probability from explanatory variable(s)
+-   Thus, predict *log-odds of probability* from explanatory variable(s), rather than probability itself.
 
 ## Odds ratio
 
@@ -519,17 +545,23 @@ freqs %>%
 miners
 ```
 
-## Plot proportions against exposure
+## Plot proportions against exposure 1/2
 
 ```{r bLogistic-28, fig.height=3.5, message=F}
 miners %>% 
   group_by(Exposure) %>% 
   mutate(proportion = Freq / sum(Freq)) -> prop
 prop
+```
+
+## Plot proportions against exposure 2/2
+
+```{r}
 ggplot(prop, aes(x = Exposure, y = proportion,
                    colour = Severity)) + 
   geom_point() + geom_smooth(se = F)
 ```
+
 
 ## Reminder of data setup
 
@@ -554,7 +586,6 @@ sev.1 <- polr(Severity ~ Exposure,
 sev.1 <- polr(Severity ~ Exposure,
   weights = Freq,
   data = miners,
-  Hess = TRUE
 )
 ```
 
@@ -607,6 +638,7 @@ cbind(predictions(sev.1, newdata = new)) %>%
 ## Plot of predicted probabilities
 
 ```{r}
+
 plot_predictions(model = sev.1, condition = c("Exposure", "group"), type = "probs") + 
   geom_point(data = prop, aes(x = Exposure, y = proportion, colour = Severity)) -> ggg
 ```
@@ -659,6 +691,7 @@ brandpref %>%
 ```
 
 ```{r}
+brandpref 
 brandpref %>% count(sex)
 ```
 
@@ -668,7 +701,7 @@ brandpref %>% count(sex)
 
 ```{r bLogistic-48 }
 library(nnet)
-levels(brandpref$sex)
+# levels(brandpref$sex)
 
 brands.1 <- multinom(brand ~ age + sex, data = brandpref)
 ```
@@ -741,7 +774,7 @@ Space the ages out a bit for prediction (see over).
 ## Combinations
 
 ```{r}
-new <- datagrid(age = seq(24, 30, 2), 
+new <- datagrid(age = seq(24, 40, 4), 
                 sex = c("female", "male"), model = brands.1)
 new
 ```
@@ -768,7 +801,7 @@ cbind(predictions(brands.1, newdata = new)) %>%
     (sort of) wrong about that:
 
 ```{r}
-plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
+plot_predictions(brands.1, condition = c("age", "sex"), 
          type = "probs")
 ```
 
@@ -782,8 +815,12 @@ plot_predictions(brands.1, condition = c("age", "brand", "sex"),
 plot_predictions(brands.1, condition = c("age", "group"))
 ```
 
+## Comments
+
 - This picks the most common `sex` in the data (females).
 - See younger females prefer brand 1, older ones preferring brand 3.
+
+(Mon section to here.)
 
 ## For each `sex`
 
