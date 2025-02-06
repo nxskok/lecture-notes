@@ -2675,7 +2675,7 @@ window.onload = function() {
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href></a>dates0 <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href></a>  <span class="fu">unite</span>(dates, day, month, year)<span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href></a>  <span class="fu">unite</span>(dates, day, month, year) <span class="sc">%&gt;%</span></span>
 <span id="cb17-3"><a href></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">dmy</span>(dates)) <span class="ot">-&gt;</span> newdates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -2742,15 +2742,10 @@ window.onload = function() {
 <li>Then get from this text using <code>ymd_hms</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text)) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(dt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  text                dt                 
-  &lt;chr&gt;               &lt;dttm&gt;             
-1 1970-01-01 07:50:01 1970-01-01 07:50:01
-2 2007-09-04 15:30:00 2007-09-04 15:30:00
-3 1940-04-15 06:45:10 1940-04-15 06:45:10
-4 2016-02-10 12:26:40 2016-02-10 12:26:40</code></pre>
+<pre><code>[1] &quot;1970-01-01 07:50:01 UTC&quot; &quot;2007-09-04 15:30:00 UTC&quot;
+[3] &quot;1940-04-15 06:45:10 UTC&quot; &quot;2016-02-10 12:26:40 UTC&quot;</code></pre>
 </div>
 </div>
 </section>
@@ -2760,9 +2755,264 @@ window.onload = function() {
 <li>Default timezone is “Universal Coordinated Time”. Change it via <code>tz=</code> and the name of a timezone:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text, <span class="at">tz =</span> <span class="st">&quot;America/Toronto&quot;</span>)) <span class="ot">-&gt;</span> dd</span>
-<span id="cb24-3"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">zone =</span> <span class="fu">tz</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a><span class="fu">OlsonNames</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] &quot;Africa/Abidjan&quot;                 &quot;Africa/Accra&quot;                  
+  [3] &quot;Africa/Addis_Ababa&quot;             &quot;Africa/Algiers&quot;                
+  [5] &quot;Africa/Asmara&quot;                  &quot;Africa/Bamako&quot;                 
+  [7] &quot;Africa/Bangui&quot;                  &quot;Africa/Banjul&quot;                 
+  [9] &quot;Africa/Bissau&quot;                  &quot;Africa/Blantyre&quot;               
+ [11] &quot;Africa/Brazzaville&quot;             &quot;Africa/Bujumbura&quot;              
+ [13] &quot;Africa/Cairo&quot;                   &quot;Africa/Casablanca&quot;             
+ [15] &quot;Africa/Ceuta&quot;                   &quot;Africa/Conakry&quot;                
+ [17] &quot;Africa/Dakar&quot;                   &quot;Africa/Dar_es_Salaam&quot;          
+ [19] &quot;Africa/Djibouti&quot;                &quot;Africa/Douala&quot;                 
+ [21] &quot;Africa/El_Aaiun&quot;                &quot;Africa/Freetown&quot;               
+ [23] &quot;Africa/Gaborone&quot;                &quot;Africa/Harare&quot;                 
+ [25] &quot;Africa/Johannesburg&quot;            &quot;Africa/Juba&quot;                   
+ [27] &quot;Africa/Kampala&quot;                 &quot;Africa/Khartoum&quot;               
+ [29] &quot;Africa/Kigali&quot;                  &quot;Africa/Kinshasa&quot;               
+ [31] &quot;Africa/Lagos&quot;                   &quot;Africa/Libreville&quot;             
+ [33] &quot;Africa/Lome&quot;                    &quot;Africa/Luanda&quot;                 
+ [35] &quot;Africa/Lubumbashi&quot;              &quot;Africa/Lusaka&quot;                 
+ [37] &quot;Africa/Malabo&quot;                  &quot;Africa/Maputo&quot;                 
+ [39] &quot;Africa/Maseru&quot;                  &quot;Africa/Mbabane&quot;                
+ [41] &quot;Africa/Mogadishu&quot;               &quot;Africa/Monrovia&quot;               
+ [43] &quot;Africa/Nairobi&quot;                 &quot;Africa/Ndjamena&quot;               
+ [45] &quot;Africa/Niamey&quot;                  &quot;Africa/Nouakchott&quot;             
+ [47] &quot;Africa/Ouagadougou&quot;             &quot;Africa/Porto-Novo&quot;             
+ [49] &quot;Africa/Sao_Tome&quot;                &quot;Africa/Timbuktu&quot;               
+ [51] &quot;Africa/Tripoli&quot;                 &quot;Africa/Tunis&quot;                  
+ [53] &quot;Africa/Windhoek&quot;                &quot;America/Adak&quot;                  
+ [55] &quot;America/Anchorage&quot;              &quot;America/Anguilla&quot;              
+ [57] &quot;America/Antigua&quot;                &quot;America/Araguaina&quot;             
+ [59] &quot;America/Argentina/Buenos_Aires&quot; &quot;America/Argentina/Catamarca&quot;   
+ [61] &quot;America/Argentina/Cordoba&quot;      &quot;America/Argentina/Jujuy&quot;       
+ [63] &quot;America/Argentina/La_Rioja&quot;     &quot;America/Argentina/Mendoza&quot;     
+ [65] &quot;America/Argentina/Rio_Gallegos&quot; &quot;America/Argentina/Salta&quot;       
+ [67] &quot;America/Argentina/San_Juan&quot;     &quot;America/Argentina/San_Luis&quot;    
+ [69] &quot;America/Argentina/Tucuman&quot;      &quot;America/Argentina/Ushuaia&quot;     
+ [71] &quot;America/Aruba&quot;                  &quot;America/Asuncion&quot;              
+ [73] &quot;America/Atikokan&quot;               &quot;America/Atka&quot;                  
+ [75] &quot;America/Bahia&quot;                  &quot;America/Bahia_Banderas&quot;        
+ [77] &quot;America/Barbados&quot;               &quot;America/Belem&quot;                 
+ [79] &quot;America/Belize&quot;                 &quot;America/Blanc-Sablon&quot;          
+ [81] &quot;America/Boa_Vista&quot;              &quot;America/Bogota&quot;                
+ [83] &quot;America/Boise&quot;                  &quot;America/Cambridge_Bay&quot;         
+ [85] &quot;America/Campo_Grande&quot;           &quot;America/Cancun&quot;                
+ [87] &quot;America/Caracas&quot;                &quot;America/Cayenne&quot;               
+ [89] &quot;America/Cayman&quot;                 &quot;America/Chicago&quot;               
+ [91] &quot;America/Chihuahua&quot;              &quot;America/Ciudad_Juarez&quot;         
+ [93] &quot;America/Coral_Harbour&quot;          &quot;America/Costa_Rica&quot;            
+ [95] &quot;America/Creston&quot;                &quot;America/Cuiaba&quot;                
+ [97] &quot;America/Curacao&quot;                &quot;America/Danmarkshavn&quot;          
+ [99] &quot;America/Dawson&quot;                 &quot;America/Dawson_Creek&quot;          
+[101] &quot;America/Denver&quot;                 &quot;America/Detroit&quot;               
+[103] &quot;America/Dominica&quot;               &quot;America/Edmonton&quot;              
+[105] &quot;America/Eirunepe&quot;               &quot;America/El_Salvador&quot;           
+[107] &quot;America/Ensenada&quot;               &quot;America/Fort_Nelson&quot;           
+[109] &quot;America/Fortaleza&quot;              &quot;America/Glace_Bay&quot;             
+[111] &quot;America/Goose_Bay&quot;              &quot;America/Grand_Turk&quot;            
+[113] &quot;America/Grenada&quot;                &quot;America/Guadeloupe&quot;            
+[115] &quot;America/Guatemala&quot;              &quot;America/Guayaquil&quot;             
+[117] &quot;America/Guyana&quot;                 &quot;America/Halifax&quot;               
+[119] &quot;America/Havana&quot;                 &quot;America/Hermosillo&quot;            
+[121] &quot;America/Indiana/Indianapolis&quot;   &quot;America/Indiana/Knox&quot;          
+[123] &quot;America/Indiana/Marengo&quot;        &quot;America/Indiana/Petersburg&quot;    
+[125] &quot;America/Indiana/Tell_City&quot;      &quot;America/Indiana/Vevay&quot;         
+[127] &quot;America/Indiana/Vincennes&quot;      &quot;America/Indiana/Winamac&quot;       
+[129] &quot;America/Inuvik&quot;                 &quot;America/Iqaluit&quot;               
+[131] &quot;America/Jamaica&quot;                &quot;America/Juneau&quot;                
+[133] &quot;America/Kentucky/Louisville&quot;    &quot;America/Kentucky/Monticello&quot;   
+[135] &quot;America/Kralendijk&quot;             &quot;America/La_Paz&quot;                
+[137] &quot;America/Lima&quot;                   &quot;America/Los_Angeles&quot;           
+[139] &quot;America/Lower_Princes&quot;          &quot;America/Maceio&quot;                
+[141] &quot;America/Managua&quot;                &quot;America/Manaus&quot;                
+[143] &quot;America/Marigot&quot;                &quot;America/Martinique&quot;            
+[145] &quot;America/Matamoros&quot;              &quot;America/Mazatlan&quot;              
+[147] &quot;America/Menominee&quot;              &quot;America/Merida&quot;                
+[149] &quot;America/Metlakatla&quot;             &quot;America/Mexico_City&quot;           
+[151] &quot;America/Miquelon&quot;               &quot;America/Moncton&quot;               
+[153] &quot;America/Monterrey&quot;              &quot;America/Montevideo&quot;            
+[155] &quot;America/Montreal&quot;               &quot;America/Montserrat&quot;            
+[157] &quot;America/Nassau&quot;                 &quot;America/New_York&quot;              
+[159] &quot;America/Nipigon&quot;                &quot;America/Nome&quot;                  
+[161] &quot;America/Noronha&quot;                &quot;America/North_Dakota/Beulah&quot;   
+[163] &quot;America/North_Dakota/Center&quot;    &quot;America/North_Dakota/New_Salem&quot;
+[165] &quot;America/Nuuk&quot;                   &quot;America/Ojinaga&quot;               
+[167] &quot;America/Panama&quot;                 &quot;America/Pangnirtung&quot;           
+[169] &quot;America/Paramaribo&quot;             &quot;America/Phoenix&quot;               
+[171] &quot;America/Port_of_Spain&quot;          &quot;America/Port-au-Prince&quot;        
+[173] &quot;America/Porto_Acre&quot;             &quot;America/Porto_Velho&quot;           
+[175] &quot;America/Puerto_Rico&quot;            &quot;America/Punta_Arenas&quot;          
+[177] &quot;America/Rainy_River&quot;            &quot;America/Rankin_Inlet&quot;          
+[179] &quot;America/Recife&quot;                 &quot;America/Regina&quot;                
+[181] &quot;America/Resolute&quot;               &quot;America/Rio_Branco&quot;            
+[183] &quot;America/Santa_Isabel&quot;           &quot;America/Santarem&quot;              
+[185] &quot;America/Santiago&quot;               &quot;America/Santo_Domingo&quot;         
+[187] &quot;America/Sao_Paulo&quot;              &quot;America/Scoresbysund&quot;          
+[189] &quot;America/Shiprock&quot;               &quot;America/Sitka&quot;                 
+[191] &quot;America/St_Barthelemy&quot;          &quot;America/St_Johns&quot;              
+[193] &quot;America/St_Kitts&quot;               &quot;America/St_Lucia&quot;              
+[195] &quot;America/St_Thomas&quot;              &quot;America/St_Vincent&quot;            
+[197] &quot;America/Swift_Current&quot;          &quot;America/Tegucigalpa&quot;           
+[199] &quot;America/Thule&quot;                  &quot;America/Thunder_Bay&quot;           
+[201] &quot;America/Tijuana&quot;                &quot;America/Toronto&quot;               
+[203] &quot;America/Tortola&quot;                &quot;America/Vancouver&quot;             
+[205] &quot;America/Virgin&quot;                 &quot;America/Whitehorse&quot;            
+[207] &quot;America/Winnipeg&quot;               &quot;America/Yakutat&quot;               
+[209] &quot;America/Yellowknife&quot;            &quot;Antarctica/Casey&quot;              
+[211] &quot;Antarctica/Davis&quot;               &quot;Antarctica/DumontDUrville&quot;     
+[213] &quot;Antarctica/Macquarie&quot;           &quot;Antarctica/Mawson&quot;             
+[215] &quot;Antarctica/McMurdo&quot;             &quot;Antarctica/Palmer&quot;             
+[217] &quot;Antarctica/Rothera&quot;             &quot;Antarctica/Syowa&quot;              
+[219] &quot;Antarctica/Troll&quot;               &quot;Antarctica/Vostok&quot;             
+[221] &quot;Arctic/Longyearbyen&quot;            &quot;Asia/Aden&quot;                     
+[223] &quot;Asia/Almaty&quot;                    &quot;Asia/Amman&quot;                    
+[225] &quot;Asia/Anadyr&quot;                    &quot;Asia/Aqtau&quot;                    
+[227] &quot;Asia/Aqtobe&quot;                    &quot;Asia/Ashgabat&quot;                 
+[229] &quot;Asia/Atyrau&quot;                    &quot;Asia/Baghdad&quot;                  
+[231] &quot;Asia/Bahrain&quot;                   &quot;Asia/Baku&quot;                     
+[233] &quot;Asia/Bangkok&quot;                   &quot;Asia/Barnaul&quot;                  
+[235] &quot;Asia/Beirut&quot;                    &quot;Asia/Bishkek&quot;                  
+[237] &quot;Asia/Brunei&quot;                    &quot;Asia/Chita&quot;                    
+[239] &quot;Asia/Choibalsan&quot;                &quot;Asia/Chongqing&quot;                
+[241] &quot;Asia/Colombo&quot;                   &quot;Asia/Damascus&quot;                 
+[243] &quot;Asia/Dhaka&quot;                     &quot;Asia/Dili&quot;                     
+[245] &quot;Asia/Dubai&quot;                     &quot;Asia/Dushanbe&quot;                 
+[247] &quot;Asia/Famagusta&quot;                 &quot;Asia/Gaza&quot;                     
+[249] &quot;Asia/Harbin&quot;                    &quot;Asia/Hebron&quot;                   
+[251] &quot;Asia/Ho_Chi_Minh&quot;               &quot;Asia/Hong_Kong&quot;                
+[253] &quot;Asia/Hovd&quot;                      &quot;Asia/Irkutsk&quot;                  
+[255] &quot;Asia/Istanbul&quot;                  &quot;Asia/Jakarta&quot;                  
+[257] &quot;Asia/Jayapura&quot;                  &quot;Asia/Jerusalem&quot;                
+[259] &quot;Asia/Kabul&quot;                     &quot;Asia/Kamchatka&quot;                
+[261] &quot;Asia/Karachi&quot;                   &quot;Asia/Kashgar&quot;                  
+[263] &quot;Asia/Kathmandu&quot;                 &quot;Asia/Khandyga&quot;                 
+[265] &quot;Asia/Kolkata&quot;                   &quot;Asia/Krasnoyarsk&quot;              
+[267] &quot;Asia/Kuala_Lumpur&quot;              &quot;Asia/Kuching&quot;                  
+[269] &quot;Asia/Kuwait&quot;                    &quot;Asia/Macau&quot;                    
+[271] &quot;Asia/Magadan&quot;                   &quot;Asia/Makassar&quot;                 
+[273] &quot;Asia/Manila&quot;                    &quot;Asia/Muscat&quot;                   
+[275] &quot;Asia/Nicosia&quot;                   &quot;Asia/Novokuznetsk&quot;             
+[277] &quot;Asia/Novosibirsk&quot;               &quot;Asia/Omsk&quot;                     
+[279] &quot;Asia/Oral&quot;                      &quot;Asia/Phnom_Penh&quot;               
+[281] &quot;Asia/Pontianak&quot;                 &quot;Asia/Pyongyang&quot;                
+[283] &quot;Asia/Qatar&quot;                     &quot;Asia/Qostanay&quot;                 
+[285] &quot;Asia/Qyzylorda&quot;                 &quot;Asia/Riyadh&quot;                   
+[287] &quot;Asia/Sakhalin&quot;                  &quot;Asia/Samarkand&quot;                
+[289] &quot;Asia/Seoul&quot;                     &quot;Asia/Shanghai&quot;                 
+[291] &quot;Asia/Singapore&quot;                 &quot;Asia/Srednekolymsk&quot;            
+[293] &quot;Asia/Taipei&quot;                    &quot;Asia/Tashkent&quot;                 
+[295] &quot;Asia/Tbilisi&quot;                   &quot;Asia/Tehran&quot;                   
+[297] &quot;Asia/Tel_Aviv&quot;                  &quot;Asia/Thimphu&quot;                  
+[299] &quot;Asia/Tokyo&quot;                     &quot;Asia/Tomsk&quot;                    
+[301] &quot;Asia/Ulaanbaatar&quot;               &quot;Asia/Urumqi&quot;                   
+[303] &quot;Asia/Ust-Nera&quot;                  &quot;Asia/Vientiane&quot;                
+[305] &quot;Asia/Vladivostok&quot;               &quot;Asia/Yakutsk&quot;                  
+[307] &quot;Asia/Yangon&quot;                    &quot;Asia/Yekaterinburg&quot;            
+[309] &quot;Asia/Yerevan&quot;                   &quot;Atlantic/Azores&quot;               
+[311] &quot;Atlantic/Bermuda&quot;               &quot;Atlantic/Canary&quot;               
+[313] &quot;Atlantic/Cape_Verde&quot;            &quot;Atlantic/Faroe&quot;                
+[315] &quot;Atlantic/Jan_Mayen&quot;             &quot;Atlantic/Madeira&quot;              
+[317] &quot;Atlantic/Reykjavik&quot;             &quot;Atlantic/South_Georgia&quot;        
+[319] &quot;Atlantic/St_Helena&quot;             &quot;Atlantic/Stanley&quot;              
+[321] &quot;Australia/Adelaide&quot;             &quot;Australia/Brisbane&quot;            
+[323] &quot;Australia/Broken_Hill&quot;          &quot;Australia/Canberra&quot;            
+[325] &quot;Australia/Currie&quot;               &quot;Australia/Darwin&quot;              
+[327] &quot;Australia/Eucla&quot;                &quot;Australia/Hobart&quot;              
+[329] &quot;Australia/Lindeman&quot;             &quot;Australia/Lord_Howe&quot;           
+[331] &quot;Australia/Melbourne&quot;            &quot;Australia/Perth&quot;               
+[333] &quot;Australia/Sydney&quot;               &quot;Australia/Yancowinna&quot;          
+[335] &quot;CET&quot;                            &quot;CST6CDT&quot;                       
+[337] &quot;EET&quot;                            &quot;EST&quot;                           
+[339] &quot;EST5EDT&quot;                        &quot;Etc/GMT&quot;                       
+[341] &quot;Etc/GMT-0&quot;                      &quot;Etc/GMT-1&quot;                     
+[343] &quot;Etc/GMT-10&quot;                     &quot;Etc/GMT-11&quot;                    
+[345] &quot;Etc/GMT-12&quot;                     &quot;Etc/GMT-13&quot;                    
+[347] &quot;Etc/GMT-14&quot;                     &quot;Etc/GMT-2&quot;                     
+[349] &quot;Etc/GMT-3&quot;                      &quot;Etc/GMT-4&quot;                     
+[351] &quot;Etc/GMT-5&quot;                      &quot;Etc/GMT-6&quot;                     
+[353] &quot;Etc/GMT-7&quot;                      &quot;Etc/GMT-8&quot;                     
+[355] &quot;Etc/GMT-9&quot;                      &quot;Etc/GMT+0&quot;                     
+[357] &quot;Etc/GMT+1&quot;                      &quot;Etc/GMT+10&quot;                    
+[359] &quot;Etc/GMT+11&quot;                     &quot;Etc/GMT+12&quot;                    
+[361] &quot;Etc/GMT+2&quot;                      &quot;Etc/GMT+3&quot;                     
+[363] &quot;Etc/GMT+4&quot;                      &quot;Etc/GMT+5&quot;                     
+[365] &quot;Etc/GMT+6&quot;                      &quot;Etc/GMT+7&quot;                     
+[367] &quot;Etc/GMT+8&quot;                      &quot;Etc/GMT+9&quot;                     
+[369] &quot;Etc/GMT0&quot;                       &quot;Etc/Greenwich&quot;                 
+[371] &quot;Etc/UCT&quot;                        &quot;Etc/Universal&quot;                 
+[373] &quot;Etc/UTC&quot;                        &quot;Etc/Zulu&quot;                      
+[375] &quot;Europe/Amsterdam&quot;               &quot;Europe/Andorra&quot;                
+[377] &quot;Europe/Astrakhan&quot;               &quot;Europe/Athens&quot;                 
+[379] &quot;Europe/Belfast&quot;                 &quot;Europe/Belgrade&quot;               
+[381] &quot;Europe/Berlin&quot;                  &quot;Europe/Bratislava&quot;             
+[383] &quot;Europe/Brussels&quot;                &quot;Europe/Bucharest&quot;              
+[385] &quot;Europe/Budapest&quot;                &quot;Europe/Busingen&quot;               
+[387] &quot;Europe/Chisinau&quot;                &quot;Europe/Copenhagen&quot;             
+[389] &quot;Europe/Dublin&quot;                  &quot;Europe/Gibraltar&quot;              
+[391] &quot;Europe/Guernsey&quot;                &quot;Europe/Helsinki&quot;               
+[393] &quot;Europe/Isle_of_Man&quot;             &quot;Europe/Istanbul&quot;               
+[395] &quot;Europe/Jersey&quot;                  &quot;Europe/Kaliningrad&quot;            
+[397] &quot;Europe/Kirov&quot;                   &quot;Europe/Kyiv&quot;                   
+[399] &quot;Europe/Lisbon&quot;                  &quot;Europe/Ljubljana&quot;              
+[401] &quot;Europe/London&quot;                  &quot;Europe/Luxembourg&quot;             
+[403] &quot;Europe/Madrid&quot;                  &quot;Europe/Malta&quot;                  
+[405] &quot;Europe/Mariehamn&quot;               &quot;Europe/Minsk&quot;                  
+[407] &quot;Europe/Monaco&quot;                  &quot;Europe/Moscow&quot;                 
+[409] &quot;Europe/Nicosia&quot;                 &quot;Europe/Oslo&quot;                   
+[411] &quot;Europe/Paris&quot;                   &quot;Europe/Podgorica&quot;              
+[413] &quot;Europe/Prague&quot;                  &quot;Europe/Riga&quot;                   
+[415] &quot;Europe/Rome&quot;                    &quot;Europe/Samara&quot;                 
+[417] &quot;Europe/San_Marino&quot;              &quot;Europe/Sarajevo&quot;               
+[419] &quot;Europe/Saratov&quot;                 &quot;Europe/Simferopol&quot;             
+[421] &quot;Europe/Skopje&quot;                  &quot;Europe/Sofia&quot;                  
+[423] &quot;Europe/Stockholm&quot;               &quot;Europe/Tallinn&quot;                
+[425] &quot;Europe/Tirane&quot;                  &quot;Europe/Tiraspol&quot;               
+[427] &quot;Europe/Ulyanovsk&quot;               &quot;Europe/Vaduz&quot;                  
+[429] &quot;Europe/Vatican&quot;                 &quot;Europe/Vienna&quot;                 
+[431] &quot;Europe/Vilnius&quot;                 &quot;Europe/Volgograd&quot;              
+[433] &quot;Europe/Warsaw&quot;                  &quot;Europe/Zagreb&quot;                 
+[435] &quot;Europe/Zurich&quot;                  &quot;Factory&quot;                       
+[437] &quot;GMT&quot;                            &quot;HST&quot;                           
+[439] &quot;Indian/Antananarivo&quot;            &quot;Indian/Chagos&quot;                 
+[441] &quot;Indian/Christmas&quot;               &quot;Indian/Cocos&quot;                  
+[443] &quot;Indian/Comoro&quot;                  &quot;Indian/Kerguelen&quot;              
+[445] &quot;Indian/Mahe&quot;                    &quot;Indian/Maldives&quot;               
+[447] &quot;Indian/Mauritius&quot;               &quot;Indian/Mayotte&quot;                
+[449] &quot;Indian/Reunion&quot;                 &quot;MET&quot;                           
+[451] &quot;MST&quot;                            &quot;MST7MDT&quot;                       
+[453] &quot;Pacific/Apia&quot;                   &quot;Pacific/Auckland&quot;              
+[455] &quot;Pacific/Bougainville&quot;           &quot;Pacific/Chatham&quot;               
+[457] &quot;Pacific/Chuuk&quot;                  &quot;Pacific/Easter&quot;                
+[459] &quot;Pacific/Efate&quot;                  &quot;Pacific/Fakaofo&quot;               
+[461] &quot;Pacific/Fiji&quot;                   &quot;Pacific/Funafuti&quot;              
+[463] &quot;Pacific/Galapagos&quot;              &quot;Pacific/Gambier&quot;               
+[465] &quot;Pacific/Guadalcanal&quot;            &quot;Pacific/Guam&quot;                  
+[467] &quot;Pacific/Honolulu&quot;               &quot;Pacific/Johnston&quot;              
+[469] &quot;Pacific/Kanton&quot;                 &quot;Pacific/Kiritimati&quot;            
+[471] &quot;Pacific/Kosrae&quot;                 &quot;Pacific/Kwajalein&quot;             
+[473] &quot;Pacific/Majuro&quot;                 &quot;Pacific/Marquesas&quot;             
+[475] &quot;Pacific/Midway&quot;                 &quot;Pacific/Nauru&quot;                 
+[477] &quot;Pacific/Niue&quot;                   &quot;Pacific/Norfolk&quot;               
+[479] &quot;Pacific/Noumea&quot;                 &quot;Pacific/Pago_Pago&quot;             
+[481] &quot;Pacific/Palau&quot;                  &quot;Pacific/Pitcairn&quot;              
+[483] &quot;Pacific/Pohnpei&quot;                &quot;Pacific/Port_Moresby&quot;          
+[485] &quot;Pacific/Rarotonga&quot;              &quot;Pacific/Saipan&quot;                
+[487] &quot;Pacific/Samoa&quot;                  &quot;Pacific/Tahiti&quot;                
+[489] &quot;Pacific/Tarawa&quot;                 &quot;Pacific/Tongatapu&quot;             
+[491] &quot;Pacific/Wake&quot;                   &quot;Pacific/Wallis&quot;                
+[493] &quot;Pacific/Yap&quot;                    &quot;PST8PDT&quot;                       
+[495] &quot;UTC&quot;                            &quot;WET&quot;                           
+attr(,&quot;Version&quot;)
+[1] &quot;2024a&quot;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text, <span class="at">tz =</span> <span class="st">&quot;America/Toronto&quot;</span>)) <span class="ot">-&gt;</span> dd</span>
+<span id="cb26-3"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">zone =</span> <span class="fu">tz</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2778,14 +3028,14 @@ window.onload = function() {
 <li>As you would expect:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
-<span id="cb25-2"><a href></a>  <span class="fu">select</span>(<span class="sc">-</span>text) <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href></a>  <span class="fu">mutate</span>(</span>
-<span id="cb25-4"><a href></a>    <span class="at">h =</span> <span class="fu">hour</span>(dt),</span>
-<span id="cb25-5"><a href></a>    <span class="at">sec =</span> <span class="fu">second</span>(dt),</span>
-<span id="cb25-6"><a href></a>    <span class="at">min =</span> <span class="fu">minute</span>(dt),</span>
-<span id="cb25-7"><a href></a>    <span class="at">zone =</span> <span class="fu">tz</span>(dt)</span>
-<span id="cb25-8"><a href></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href></a>  <span class="fu">select</span>(<span class="sc">-</span>text) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-4"><a href></a>    <span class="at">h =</span> <span class="fu">hour</span>(dt),</span>
+<span id="cb27-5"><a href></a>    <span class="at">sec =</span> <span class="fu">second</span>(dt),</span>
+<span id="cb27-6"><a href></a>    <span class="at">min =</span> <span class="fu">minute</span>(dt),</span>
+<span id="cb27-7"><a href></a>    <span class="at">zone =</span> <span class="fu">tz</span>(dt)</span>
+<span id="cb27-8"><a href></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   dt                      h   sec   min zone           
@@ -2800,9 +3050,9 @@ window.onload = function() {
 <section id="same-times-but-different-time-zone" class="slide level2">
 <h2>Same times, but different time zone:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href></a>  <span class="fu">select</span>(dt) <span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a href></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">&quot;Australia/Sydney&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href></a>  <span class="fu">select</span>(dt) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">&quot;Australia/Sydney&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2813,9 +3063,9 @@ window.onload = function() {
 </div>
 <p>In more detail:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">&quot;Australia/Sydney&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href></a>  <span class="fu">pull</span>(oz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">&quot;Australia/Sydney&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href></a>  <span class="fu">pull</span>(oz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] &quot;1970-01-01 22:50:01 AEST&quot; &quot;2007-09-05 05:30:00 AEST&quot;
 [3] &quot;1940-04-15 21:45:10 AEST&quot; &quot;2016-02-11 04:26:40 AEDT&quot;</code></pre>
@@ -2838,9 +3088,9 @@ window.onload = function() {
 <li>These ought to get read in and converted to date-times:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href></a>my_url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/hospital.csv&quot;</span></span>
-<span id="cb31-2"><a href></a>stays <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
-<span id="cb31-3"><a href></a>stays</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a>my_url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/hospital.csv&quot;</span></span>
+<span id="cb33-2"><a href></a>stays <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
+<span id="cb33-3"><a href></a>stays</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2859,7 +3109,7 @@ window.onload = function() {
 <li>In the obvious way, this gets us an answer:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a>stays <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">stay =</span> discharge <span class="sc">-</span> admit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a>stays <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">stay =</span> discharge <span class="sc">-</span> admit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2878,9 +3128,9 @@ window.onload = function() {
 <li>Fractional number of days would be better:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a>stays <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href></a>  <span class="fu">mutate</span>(</span>
-<span id="cb33-3"><a href></a>    <span class="at">stay_days =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge) <span class="sc">/</span> <span class="fu">days</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href></a>stays <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href></a>  <span class="fu">mutate</span>(</span>
+<span id="cb35-3"><a href></a>    <span class="at">stay_days =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge) <span class="sc">/</span> <span class="fu">days</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2896,13 +3146,13 @@ window.onload = function() {
 <li>Pull out with <code>day()</code> etc, as for a date-time:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a>stays <span class="sc">%&gt;%</span> </span>
-<span id="cb34-2"><a href></a>  <span class="fu">mutate</span>(</span>
-<span id="cb34-3"><a href></a>    <span class="at">stay =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge),</span>
-<span id="cb34-4"><a href></a>    <span class="at">stay_days =</span> <span class="fu">day</span>(stay),</span>
-<span id="cb34-5"><a href></a>    <span class="at">stay_hours =</span> <span class="fu">hour</span>(stay)</span>
-<span id="cb34-6"><a href></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb34-7"><a href></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;stay&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href></a>stays <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href></a>  <span class="fu">mutate</span>(</span>
+<span id="cb36-3"><a href></a>    <span class="at">stay =</span> <span class="fu">as.period</span>(admit <span class="sc">%--%</span> discharge),</span>
+<span id="cb36-4"><a href></a>    <span class="at">stay_days =</span> <span class="fu">day</span>(stay),</span>
+<span id="cb36-5"><a href></a>    <span class="at">stay_hours =</span> <span class="fu">hour</span>(stay)</span>
+<span id="cb36-6"><a href></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb36-7"><a href></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;stay&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">

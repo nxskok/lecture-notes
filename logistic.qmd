@@ -545,6 +545,11 @@ freqs %>%
 miners
 ```
 
+```{r}
+levels(miners$Severity)
+```
+
+
 ## Plot proportions against exposure 1/2
 
 ```{r bLogistic-28, fig.height=3.5, message=F}
@@ -704,6 +709,7 @@ library(nnet)
 # levels(brandpref$sex)
 
 brands.1 <- multinom(brand ~ age + sex, data = brandpref)
+summary(brands.1)
 ```
 
 ## Can we drop anything?
@@ -755,6 +761,7 @@ brands.1 <- with(brandpref, multinom(brand ~ age + sex))
 ```
 
 ```{r bLogistic-52 }
+step(brands.1)
 step(brands.1, trace = 0)
 ```
 
@@ -774,16 +781,19 @@ Space the ages out a bit for prediction (see over).
 ## Combinations
 
 ```{r}
-new <- datagrid(age = seq(24, 40, 4), 
+new <- datagrid(age = seq(24, 40, 4), # cover the entire range of ages
                 sex = c("female", "male"), model = brands.1)
 new
+# new <- datagrid(age = seq(24, 40, 4), # cover the entire range of ages
+                # model = brands.1)
 ```
 
 ## The predictions
 
 ```{r bLogistic-54 }
 cbind(predictions(brands.1, newdata = new)) %>%
-  select(group, estimate, age, sex) %>% 
+  select(group, estimate, age, sex) 
+%>% 
   pivot_wider(names_from = group, values_from = estimate)
 ```
 
@@ -820,8 +830,6 @@ plot_predictions(brands.1, condition = c("age", "group"))
 - This picks the most common `sex` in the data (females).
 - See younger females prefer brand 1, older ones preferring brand 3.
 
-(Mon section to here.)
-
 ## For each `sex`
 
 If we add the
@@ -841,7 +849,8 @@ females.
 
 ```{r}
 plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
-         type = "probs", draw = FALSE)  %>% 
+         type = "probs", draw = FALSE) 
+%>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
   geom_line() -> g

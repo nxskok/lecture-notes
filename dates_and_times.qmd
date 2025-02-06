@@ -126,7 +126,7 @@ dates0 <- read_delim(my_url, " ")
 ```{r dates-and-times-12}
 dates0
 dates0 %>%
-  unite(dates, day, month, year)%>%
+  unite(dates, day, month, year) %>%
   mutate(d = dmy(dates)) -> newdates
 ```
 
@@ -169,7 +169,7 @@ minutes, seconds:
 
 - Then get from this text using `ymd_hms`:
 ```{r dates-and-times-16, paged.print=F}
-dd %>% mutate(dt = ymd_hms(text))
+dd %>% mutate(dt = ymd_hms(text)) %>% pull(dt)
 ```
 
 
@@ -177,6 +177,11 @@ dd %>% mutate(dt = ymd_hms(text))
 
 - Default timezone is “Universal Coordinated Time”. Change it via `tz=`
 and the name of a timezone: 
+
+```{r}
+OlsonNames()
+```
+
 
 ```{r dates-and-times-17, paged.print=T}
 dd %>% 
@@ -212,7 +217,6 @@ dd %>%
   mutate(oz = with_tz(dt, "Australia/Sydney")) %>%
   pull(oz)
 ```
-
 
 ## How long between date-times?
 - We may need to calculate the time between two events. For example,

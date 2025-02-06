@@ -124,6 +124,13 @@ dance
 dance.1 <- coxph(Surv(Months, Quit) ~ Treatment + Age, data = dance)
 ```
 
+## What does `Surv` output actually look like?
+
+```{r}
+dance %>% mutate(y = Surv(Months, Quit))
+```
+
+
 ## Output looks a lot like regression
 
 \scriptsize
@@ -219,6 +226,8 @@ as age. The key for `plot_predictions` is to put time *first* in the
 plot_predictions(dance.1, condition = c("Months", "Age"), 
                  type = "survival")
 ```
+
+
 
 ## Comments
 
@@ -351,6 +360,7 @@ summary(lung)
 
 ```{r bSurvival-16}
 lung %>% drop_na() -> lung.complete
+summary(lung.complete)
 lung.complete %>%
   select(meal.cal:wt.loss) %>%
   slice(1:10)
@@ -430,6 +440,7 @@ tidy(lung.1) %>% select(term, p.value) %>% arrange(p.value)
 
 ```{r bSurvival-23}
 lung.2 <- update(lung.1, . ~ . - age - pat.karno - meal.cal)
+summary(lung.2)
 tidy(lung.2) %>% select(term, p.value)
 ```
 
@@ -546,7 +557,7 @@ summary(lung.3)
 
 No problems here:
 
-```{r bSurvival-32, fig.height=3}
+```{r bSurvival-32, fig.height=5}
 lung.3 %>% augment(lung.complete) %>% 
   ggplot(aes(x = .fitted, y = .resid)) + geom_point() + geom_smooth()
 ```
@@ -562,6 +573,7 @@ survtime <- c(10, 12, 11, 21, 15, 20, 8, 9, 11)
 stat <- c(1, 1, 1, 1, 0, 1, 1, 1, 1)
 d <- tibble(age, survtime, stat)
 d %>% mutate(y = Surv(survtime, stat)) -> d
+d
 ```
 
 -   Small survival time 15 in middle was actually censored, so would
@@ -596,6 +608,7 @@ Add squared term in age:
 ```{r bSurvival-36}
 y.2 <- coxph(y ~ age + I(age^2), data = d)
 tidy(y.2) %>% select(term, estimate, p.value)
+summary(y.2)
 ```
 
 -   (Marginally) helpful.
