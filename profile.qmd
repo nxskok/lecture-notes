@@ -113,18 +113,13 @@ summary(dogs.2)
 
 -   three sets of tests, for
 
-    -   times
-    -   drug
-    -   their interaction
+    -   times; drug; their interaction
 
 -   two *types* of test for each of these:
 
-    -   multivariate
-    -   univariate
+    -   univariate; multivariate
 
--   multivariate is the same as MANOVA
-
--   univariate is more powerful *if* it applies
+-   univariate is more powerful *if* it applies; if it doesn't, can make adjustments to it
 
 ## Sphericity
 

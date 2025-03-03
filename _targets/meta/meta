@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|81d5a59f0946743d|||||||||||||||
+.Random.seed|object|9a006a7c1c0906f3|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -88,7 +88,7 @@ outline_d29|stem|2c3c8a462c08e366|21e0fbc6ebca1be2|2c530c1562a7fbd1|1144950870|o
 outline_d29_slides|stem|c86e6574c0e8baf8|a3b0856e19383b86|9822ff9a3bceac94|-1261836023|outline_d29_slides.pdf*outline_d29_slides.Rmd|t19379.9747499287s|7576e187105e8737|52917|file|local|vector|||13.456|package cmdstanr was built under R version 4.3.0|
 preliminaries|stem|a1e21d9c34145d58|587ad1253cdee6ea|ef46db3751d8e999|2144827096|preliminaries.Rmd|t19353.7199907083s|2691f4548de0c6bf|1321|file|local|vector|||0||
 princomp|stem|8faae32c4da67fc9|5edaefa2542aa5fc|2c530c1562a7fbd1|-486004891|princomp.html*princomp.pdf*princomp.qmd|t20046.7211882406s|d2d4a73f1ec002ee|4716688|file|local|vector|||12.883||
-profile|stem|1fda29e158de15a7|5fcbc00ad0b78c2e|2c530c1562a7fbd1|1381439627|profile.html*profile.pdf*profile.qmd|t20150.7004127292s|ea9b08bd3cbde783|4244151|file|local|vector|||12.612||
+profile|stem|181dac1774e489b3|5fcbc00ad0b78c2e|2c530c1562a7fbd1|1381439627|profile.html*profile.pdf*profile.qmd|t20150.706527097s|e0b250fc049d75ae|4244098|file|local|vector|||12.274||
 readfile|stem|8cffc131f9a8d983|921cd7f782c1e1c5|2c530c1562a7fbd1|-1339943692|readfile.html*readfile.pdf*readfile.qmd|t20046.7232787426s|1683ec11c7ec290f|4092165|file|local|vector|||7.446||
 readfile_R|stem|50ae80e9a0bb9e41|f657773094628a4a|ef46db3751d8e999|-701932185|readfile_R.Rmd|t19467.7566442397s|799025e7fe6c3bbb|7063|file|local|vector|||1.415||
 readfile_R_slides|stem|aa413eabc0cf2713|55a0e7e99a0fd29c|7ebf8625991ada44|1359483203|readfile_R_slides.pdf*readfile_R_slides.Rmd|t19379.9944595239s|b5a5310861665ed0|209071|file|local|vector|||13.397|package cmdstanr was built under R version 4.3.0|
