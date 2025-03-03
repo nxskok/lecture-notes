@@ -306,7 +306,7 @@ vitaminb
 
 ## Grouped boxplot
 
-```{r bAnova-10, fig.height=3.0}
+```{r bAnova-10, fig.height=6.0}
 ggplot(vitaminb, aes(
   x = ratsize, y = kidneyweight,
   fill = diet
@@ -359,7 +359,7 @@ g <- ggplot(summary, aes(
 
 ## The interaction plot
 
-```{r bAnova-14, fig.height=3.7}
+```{r bAnova-14, fig.height=6}
 g
 ```
 
@@ -478,6 +478,7 @@ autonoise <- read_table(u)
 ## The data
 
 ```{r bAnova-24 }
+autonoise
 glimpse(autonoise)
 ```
 
@@ -549,6 +550,7 @@ The lines are definitely *not* parallel, showing that the effect of
 `type` is different for medium-sized engines than for others:
 
 ```{r bAnova-30}
+#| fig-height: 5
 g
 ```
 
@@ -678,6 +680,8 @@ autonoise %>%
     engine size):
 
 ```{r bAnova-39}
+autonoise
+
 autonoise %>%
   nest_by(size) %>% 
   rowwise() %>% 
@@ -866,32 +870,32 @@ cis %>% select(-data)
 -   But: models A and D are designed to be used at home, while models B
     and C are industrial models.
 
--   Suggests these comparisons of interest:
+- Suggests these comparisons of interest:
 
--   home vs. industrial
+  - home vs. industrial
 
--   the two home models A vs. D
+  - the two home models A vs. D
 
--   the two industrial models B vs. C.
+  - the two industrial models B vs. C.
 
--   Don't need to compare *all* the pairs of models.
+- Don't need to compare *all* the pairs of models.
 
 ## What is a contrast?
 
--   Contrast is a linear combination of group means.
+- Contrast is a linear combination of group means.
 
--   Notation: $\mu_A$ for (population) mean of group $A$, and so on.
+- Notation: $\mu_A$ for (population) mean of group $A$, and so on. In example:
 
--   In example, compare two home models: $H_0: \mu_A-\mu_D=0$.
+  - compare two home models: $H_0: \mu_A-\mu_D=0$.
 
--   Compare two industrial models: $H_0: \mu_B-\mu_C=0$.
+  - compare two industrial models: $H_0: \mu_B-\mu_C=0$.
 
--   Compare average of two home models vs. average of two industrial
+  - compare average of two home models vs. average of two industrial
     models: $H_0: \frac{1}{2}(\mu_A+\mu_D)-{1\over 2}(\mu_B+\mu_C)=0$ or
     $H_0: 0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$.
 
--   Note that coefficients of contrasts add to 0, and right-hand side is
-    0.
+- Note that coefficients of contrasts add to 0, 
+and right-hand side is 0.
 
 ## Contrasts in R
 
@@ -907,7 +911,7 @@ c.home <- c(1, 0, 0, -1)
 c.industrial <- c(0, 1, -1, 0)
 ```
 
--   Comparing home average vs. industrial average
+-   Comparing home average vs. industrial average
     ($0.5\mu_A-0.5\mu_B-0.5\mu_C+0.5\mu_D=0$):
 
 ```{r bAnova-50 }
@@ -919,8 +923,11 @@ c.home.ind <- c(0.5, -0.5, -0.5, 0.5)
 -   What happens if we multiply the contrast coefficients one by one?
 
 ```{r bAnova-51 }
-c.home * c.industrial
-c.home * c.home.ind
+# c.home
+c.industrial
+c.home.ind
+# c.home * c.industrial
+# c.home * c.home.ind
 c.industrial * c.home.ind
 ```
 
@@ -949,7 +956,7 @@ Not zero, so `c1` and `c2` are *not* orthogonal.
 
 ## Read in data
 
-```{r bAnova-53, message=F}
+```{r bAnova-53, message=FALSE}
 url <- "http://ritsokiguess.site/datafiles/chainsaw.txt"
 chain.wide <- read_table(url)
 chain.wide

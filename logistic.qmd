@@ -792,8 +792,7 @@ new
 
 ```{r bLogistic-54 }
 cbind(predictions(brands.1, newdata = new)) %>%
-  select(group, estimate, age, sex) 
-%>% 
+  select(group, estimate, age, sex) %>% 
   pivot_wider(names_from = group, values_from = estimate)
 ```
 
@@ -849,8 +848,7 @@ females.
 
 ```{r}
 plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
-         type = "probs", draw = FALSE) 
-%>% 
+         type = "probs", draw = FALSE) %>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
   geom_line() -> g

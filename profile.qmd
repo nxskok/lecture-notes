@@ -50,15 +50,24 @@ library(lme4) # for mixed models later
 ```{r bProfile-2 }
 my_url <- "http://ritsokiguess.site/datafiles/dogs.txt"
 dogs <- read_table(my_url)
+dogs
 ```
 
 ## Setting things up
 
 ```{r bProfile-3}
-dogs
 response <- with(dogs, cbind(lh0, lh1, lh3, lh5))
 response
 ```
+
+## Another way to make response
+
+```{r}
+dogs %>% select(starts_with("lh")) %>% 
+  as.matrix() -> response
+response
+```
+
 
 ## The repeated measures MANOVA
 

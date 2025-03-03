@@ -106,6 +106,7 @@ prepost %>%
 
 ```{r bAncova-4 }
 prepost.1 <- lm(after ~ before * drug, data = prepost)
+drop1(prepost.1, test = "F")
 anova(prepost.1)
 summary(prepost.1)
 ```
@@ -149,6 +150,7 @@ Lines almost parallel, but not quite.
 
 ```{r bAncova-8 }
 prepost.2 <- update(prepost.1, . ~ . - before:drug)
+drop1(prepost.2, test = "F")
 summary(prepost.2)
 anova(prepost.2)
 ```

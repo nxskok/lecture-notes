@@ -92,6 +92,7 @@ d <- tribble(
   31, 14,
   38, 10
 )
+d
 ```
 
 -   Then plot data as points, and add line through points in `d`:
@@ -107,7 +108,7 @@ ggplot(hilo, aes(x = yield, y = weight,
 
 ## The plot
 
-```{r charlecombe, echo=F, fig.height=4}
+```{r charlecombe, echo=F, fig.height=3}
 g
 ```
 
@@ -138,6 +139,7 @@ options(width = 60)
 
 ```{r bManova-8}
 response <- with(hilo, cbind(yield, weight))
+response
 hilo.1 <- manova(response ~ fertilizer, data = hilo)
 summary(hilo.1)
 ```
@@ -238,8 +240,9 @@ g
         with `$`).
 
 ```{r}
-hilo %>% select(yield, weight) -> numeric_values
-summary(BoxM(numeric_values, hilo$fertilizer))
+library(MVTests)
+# hilo %>% select(yield, weight) -> numeric_values
+summary(BoxM(response, hilo$fertilizer))
 ```
 
 -   No problem at all with unequal spreads.
