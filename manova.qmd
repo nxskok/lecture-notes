@@ -326,6 +326,15 @@ options(width = w)
 -   there is some evidence of unequal spread (slopes of lines), but is
     it bad enough to worry about? (Box M-test, over).
 
+## Assessing normality
+
+```{r}
+peanuts %>% pivot_longer(y:w, names_to = "yname", values_to = "y") %>% 
+  ggplot(aes(sample = y)) + stat_qq() + stat_qq_line() +
+  facet_grid(yname ~ location, scales = "free_y")
+```
+
+
 ## Box's M tests
 
 -   One for location, one for variety:
