@@ -221,7 +221,7 @@ dogs %>%
 
 -   I realized that `pivot_longer` was going to produce something like
     `lh1`, which I needed to do something further with, so this time I
-    gave it a temporary name `timex`.
+    gave it a temporary name `timex` (which we actually *do* use later).
 
 -   This enabled me to use the name `time` for the actual numeric time.
 
@@ -370,8 +370,8 @@ g
 ## Fitting the model (uses `lme4`)
 
 ```{r bProfile-13, message=FALSE}
-# dogs.long including time zero
-dogs.3 <- lmer(lh~drug*time+(1|dog), data=dogs.long)
+# dogs.long including time zero with categorical timex
+dogs.3 <- lmer(lh ~ drug * timex + (1|dog), data=dogs.long)
 ```
 
 -   note specification of random effect: each dog has "random intercept"
@@ -385,18 +385,28 @@ dogs.3 <- lmer(lh~drug*time+(1|dog), data=dogs.long)
 drop1(dogs.3,test="Chisq")
 ```
 
--   Interaction again not significant, but P-value smaller than before
+-   Interaction is very significant. Including time zero, the pattern of log-histamine over time is different for the two drugs (as we found before).
 
-## Re-fit without interaction
+## Omitting time zero
 
-```{r bProfile-15}
-dogs.4 <- update(dogs.3,.~.-drug:time)
-drop1(dogs.4,test="Chisq")
+Let's pretend we are working at $\alpha = 0.01$:
+
+```{r}
+dogs.long %>% filter(timex != "lh0") -> dogs.long.no0
+dogs.4 <- lmer(lh ~ drug * timex + (1|dog), data=dogs.long.no0)
+drop1(dogs.4, test = "Chisq")
 ```
 
--   This time neither drug nor (surprisingly) time is significant.
--   MANOVA and `lmer` methods won't agree, but both valid ways to
-    approach problem.
+Interaction is not quite significant at $\alpha = 0.01$. So we could remove it.
+
+## Removing the interaction
+
+```{r}
+dogs.5 <- update(dogs.4, . ~ . - drug:timex)
+drop1(dogs.5, test = "Chisq")
+```
+
+There is definitely an effect of time, but drug is not quite significant (at $\alpha = 0.01$).
 
 ## The exercise data
 

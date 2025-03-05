@@ -2935,8 +2935,30 @@ Chi-Squared Value = 10.56304 , df = 12  and p-value: 0.567 </code></pre>
 </div>
 </div>
 <ul>
-<li>Neither of these P-values is low enough to worry about. (Remember, the P-value here has to be <em>really</em> small to indicate a problem.)</li>
+<li><p>Neither of these P-values is low enough to worry about. (Remember, the P-value here has to be <em>really</em> small to indicate a problem.)</p></li>
+<li><p>Box’s M test does not work well (and can fail to work at all) if the sample sizes are too small.</p></li>
 </ul>
+</section>
+<section id="addendum-boxs-m-for-interaction" class="slide level2">
+<h2>Addendum: Box’s M for interaction</h2>
+<ul>
+<li>Create a combo column that is the combination of location and variety:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a>peanuts <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">combo =</span> <span class="fu">str_c</span>(location, <span class="st">&quot;-&quot;</span>, variety)) <span class="ot">-&gt;</span> d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>then run Box’s M test as usual:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a><span class="fu">summary</span>(<span class="fu">BoxM</span>(response, d<span class="sc">$</span>combo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Box&#39;s M Test 
+
+Chi-Squared Value = -Inf , df = 30  and p-value: 1 </code></pre>
+</div>
+</div>
+<p>except that the result makes no sense. This is because there are only two observations per location-variety combination, which is not enough to estimate anything, and so the test no longer works.</p>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 

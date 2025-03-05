@@ -346,3 +346,22 @@ summary(BoxM(response, peanuts$variety))
 
 -   Neither of these P-values is low enough to worry about. (Remember,
     the P-value here has to be *really* small to indicate a problem.)
+    
+- Box's M test does not work well (and can fail to work at all) if the sample sizes are too small.
+
+## Addendum: Box's M for interaction
+
+- Create a combo column that is the combination of location and variety:
+
+```{r}
+peanuts %>% mutate(combo = str_c(location, "-", variety)) -> d
+```
+
+- then run Box's M test as usual:
+
+```{r}
+summary(BoxM(response, d$combo))
+```
+
+except that the result makes no sense. This is because there are only two observations per location-variety combination, which is not enough to estimate anything, and so the test no longer works.
+
