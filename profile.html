@@ -3032,7 +3032,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <h2>Fitting the model (uses <code>lme4</code>)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a><span class="co"># dogs.long including time zero with categorical timex</span></span>
-<span id="cb33-2"><a href></a>dogs<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(lh <span class="sc">~</span> drug <span class="sc">*</span> timex <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>dog), <span class="at">data=</span>dogs.long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-2"><a href></a><span class="fu">library</span>(lme4)</span>
+<span id="cb33-3"><a href></a>dogs<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lmer</span>(lh <span class="sc">~</span> drug <span class="sc">*</span> timex <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>dog), <span class="at">data=</span>dogs.long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>note specification of random effect: each dog has “random intercept” that moves log-histamine up or down for that dog over all times</li>
@@ -3132,7 +3133,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["diet"],"name":[2],"type":["chr"],"align":["left"]},{"label":["exertype"],"name":[3],"type":["chr"],"align":["left"]},{"label":["min01"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["min15"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["min30"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"20","2":"lowfat","3":"walking","4":"102","5":"104","6":"103"},{"1":"9","2":"lowfat","3":"atrest","4":"97","5":"99","6":"96"},{"1":"6","2":"lowfat","3":"atrest","4":"83","5":"83","6":"84"},{"1":"25","2":"nonlowfat","3":"running","4":"94","5":"110","6":"116"},{"1":"24","2":"nonlowfat","3":"running","4":"87","5":"132","6":"120"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["diet"],"name":[2],"type":["chr"],"align":["left"]},{"label":["exertype"],"name":[3],"type":["chr"],"align":["left"]},{"label":["min01"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["min15"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["min30"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"29","2":"lowfat","3":"running","4":"94","5":"135","6":"130"},{"1":"25","2":"nonlowfat","3":"running","4":"94","5":"110","6":"116"},{"1":"21","2":"nonlowfat","3":"running","4":"93","5":"98","6":"110"},{"1":"18","2":"lowfat","3":"walking","4":"92","5":"96","6":"101"},{"1":"19","2":"lowfat","3":"walking","4":"97","5":"98","6":"100"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>

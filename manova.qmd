@@ -277,6 +277,7 @@ peanuts.orig %>%
     location = factor(location),
     variety = factor(variety)
   ) -> peanuts
+peanuts
 response <- with(peanuts, cbind(y, smk, w))
 head(response)
 ```
@@ -355,6 +356,7 @@ summary(BoxM(response, peanuts$variety))
 
 ```{r}
 peanuts %>% mutate(combo = str_c(location, "-", variety)) -> d
+d
 ```
 
 - then run Box's M test as usual:

@@ -28,7 +28,7 @@ editor:
 library(MASS, exclude = "select")
 library(tidyverse)
 library(ggrepel)
-library(ggbiplot)
+library(ggbiplot) # this loads plyr (different from dplyr)
 library(MVTests) # for Box M test
 library(conflicted)
 conflict_prefer("arrange", "dplyr")
@@ -36,6 +36,7 @@ conflict_prefer("summarize", "dplyr")
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
 conflict_prefer("mutate", "dplyr")
+conflicts_prefer(dplyr::count) 
 ```
 
 -   `ggrepel` allows labelling points on a plot so they don't overwrite
@@ -145,6 +146,7 @@ Feed output from LDA into `predict`:
 
 ```{r bDiscrim-6 }
 p <- predict(hilo.1)
+p
 hilo.2 <- cbind(hilo, p)
 hilo.2
 ```
@@ -198,7 +200,7 @@ hilo.2 %>% select(yield, weight, fertilizer, class)
 
 \normalsize
 
-## Count up correct and incorrect classificationot()
+## Count up correct and incorrect classification
 
 ```{r}
 with(hilo.2, table(obs = fertilizer, pred = class))
@@ -311,6 +313,11 @@ peanuts.2 %>%
 *Some* doubt about which combo each plant belongs in, but not too much.
 The one misclassified plant was a close call.
 
+```{r}
+peanuts.2 %>% count(combo, class) %>% pivot_wider(names_from = "class" , values_from = n, values_fill = 0)
+```
+
+
 \normalsize
 
 ## Discriminant scores, again
@@ -350,7 +357,7 @@ peanuts.2 %>% select(y, w, starts_with("x"))
 
 \small
 
-```{r bDiscrim-24, fig.height=4}
+```{r bDiscrim-24, fig.height=6}
 g <- ggplot(peanuts.2, aes(x = x.LD1, y = x.LD2, colour = combo, 
                     label = combo)) + geom_point() +
   geom_text_repel() + guides(colour = "none")
@@ -361,7 +368,7 @@ g
 
 ## "Bi-plot" from `ggbiplot`
 
-```{r bDiscrim-25, fig.height=3.3}
+```{r bDiscrim-25, fig.height=6.3}
 ggbiplot(peanuts.1, groups = factor(peanuts.combo$combo))
 ```
 
@@ -404,6 +411,7 @@ install_github("vqv/ggbiplot")
 ```{r bDiscrim-28 }
 p <- lda(combo ~ y + smk + w,
   data = peanuts.combo, CV = TRUE)
+p
 peanuts.3 <- cbind(peanuts.combo, class = p$class, 
                    posterior = p$posterior)
 with(peanuts.3, table(obs = combo, pred = class))
@@ -490,13 +498,14 @@ active.1
 
 -   `LD1` depends (negatively) most on `dance`, a bit on `tv`.
 
--   `LD2` depends mostly (negatively) on `tv`.
+-   `LD2` depends mostly (positively) on `tv`.
 
 ## Misclassification
 
 ```{r bDiscrim-31 }
 p <- predict(active.1)
 active.2 <- cbind(active, p)
+active.2 %>% mutate(across(starts_with("posterior"), \(p) round(p,3)))
 with(active.2, table(obs = job, pred = class))
 ```
 
@@ -642,7 +651,7 @@ crops.1
 
 -   1st two important.
 
--   `LD1` mostly `x1` (minus)
+-   `LD1` mostly `x1` (plus)
 
 -   `LD2` `x3` (minus)
 
