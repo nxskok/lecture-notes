@@ -664,11 +664,12 @@ vital.3 <- tibble(
   country = vital.s$country,
   cluster = vital.km3$cluster
 )
+vital.3
 ```
 
-Next, which countries in which cluster?
+## Which countries in which cluster? 
 
-Write function to extract them:
+Write function to extract cluster  number `i` from dataframe `d` with a column called `country`:
 
 ```{r bCluster-43 }
 get_countries <- function(i, d) {
