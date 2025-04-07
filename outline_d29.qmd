@@ -5,39 +5,50 @@ title: "STAD29 / STA 1007 course outline"
 ## This course
 
 -   STAD29 / STA 1007, Statistics for the Life and Social Sciences
--   2 hours of lectures / week, Mon or Wed afternoon
--   a worksheet on the material you have learned, for practice
 -   This course will help you develop further skills to analyze data.
 -   Effective communication of results is key, since in applied work you are always trying to convince someone of what you found
 -   I want you to demonstrate your understanding and insight about the data you're working with  
 -   I will help you to work towards this.
+
+## In this course 
+
+-   2 hours of lectures / week, Mon or Wed afternoon
+-   a worksheet on the material you have learned, for practice (instead of a tutorial)
+
 
 ## Instructor:
 
   -   Ken Butler, `ken.butler@utoronto.ca`, office IA 4028
   -   I like sharing what I know about applied statistics and the use of R
 
-## Prerequisites
+## Prerequisites 1/2
 
 - If you are taking this course as STAD29, you *must* have completed STAC32.
 - This course *only* offers program credit for the Statistics Applied Minor program. It *may not* be taken for credit by students in the Statistics Specialist, Major, or Minor programs. (The Exclusions for the course reflect this.)
+
+## Prerequisites 2/2
+
 - If you are taking this course as STA 1007: 
   - it is best if you know about R and the Tidyverse, at least up to the level of running regressions.
   - please reach out to me as soon as you can so that I can learn something about your background.
 
 
 
-## Getting help
+## Getting help 1/2
 
 -   Option 1: Quercus discussion board:
 
     -   If it's a question about course procedures, look in this course outline first.
     -   Then: look at the Quercus discussion forum. Your question might have an answer there.
-    -   If you see a question there that you can answer, go ahead and answer it.
     -   If you don't see an answer to your question, post your question on the discussion forum.
     -   For an issue that is more personal, email me (below).
 
-- Option 2: talk with me after class (that's assuming I have any voice left after a two-hour lecture).
+## Getting help 2/2
+
+- Option 2: talk with me after class (that's assuming I have any voice left after a two-hour lecture) or in office hours.
+
+-   If you see a question on the discussion board that you can answer, go ahead and answer it.
+
 
 ## E-mail
 
@@ -47,12 +58,14 @@ title: "STAD29 / STA 1007 course outline"
 -   Include your name (as U of T knows it) *and* student number
 -   I aim to reply within one working day.
 
-## Course objectives
+## Course objectives 1/2
 
 -   You will learn about a number of more advanced statistical methods:
     - what each method is useful for
     - how to run it in R
     - what the results tell you.
+
+## Course objectives 2/2
 
 -   This will be assessed through assignments (approximately weekly).
 
@@ -79,8 +92,7 @@ The first thing on each line is a link:
     - available on Fridays, due the following Friday at 11:59pm
     - based on the previous week's lectures
     - *do not expect to get much help on the assignments themselves*. The time to get help is by working through the worksheets and practice problems from PASIAS.
-- for those taking this course as STA 1007, you will also need to complete a project using data from your field of study and illustrating a statistical method that you learned in this course
-    - project is due on the last day of classes.
+- STA 1007 only: complete a project using data from your field of study and illustrating a statistical method that you learned in this course, due on the last day of classes.
     
 ## Exams
 - midterm exam, final exam. See [course website](https://ritsokiguess.site/STAD29/old_exams.html) for old exams. 
@@ -98,7 +110,7 @@ The first thing on each line is a link:
 -   Assignments will be accepted up to 2 days late, at a penalty of 1% per *hour*.
 -   You have two "free" assignments (since only the best other ones count); you may miss these without explanation. 
 -   There are no make-up assessments or other extensions.
--   Things may change during the semester. I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
+-   I reserve the right to make changes to this course outline as we proceed, including taking class votes if needed.
 
 
 
@@ -128,28 +140,33 @@ The first thing on each line is a link:
 ::::
 
 
-## Accessibility statement {.scrollable}
+## Accessibility statement 1/2 {.scrollable}
 
 Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confidential. The UTSC AccessAbility Services staff are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability.utsc@utoronto.ca`.
 
+## Accessibility statement 2/2 {.scrollable}
+
 Extensions on assignments, if part of your accommodation, are limited to two days, because (a) I will be sharing my solutions with the class after that, and (b) you need to be preparing for the next assignment. Any longer extension would be setting you up for failure. If you need to take advantage of this, claim your extension (by email to me) before the original due date.
 
-## Expectations 1/3
+## Expectations 1/4
 
 -   I expect that you will do your own work in this course, and not seek help from outside this course. Expect consequences if you do not do your own work. 
 -   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
 
-## Expectations 2/3
+## Expectations 2/4
 
 -   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with me.
 -   Anything from outside the course, for example, material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there. If you learned it in another course, say which course, but be aware that things may be done differently in other courses.
 
-## Expectations 3/3
+## Expectations 3/4
 
 -   If you want credit for any ideas that come from outside the course materials, you *must* say where they came from.
 -   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view.
 -   Detailed course policies [here](policies.pdf).
 -   I expect you to learn how to do things *as they are done in this course*. 
+
+## Expectations 3/4
+
 -   I am doing my best to give you an opportunity to learn something that will help you in your future. I would like you to take that opportunity.
 
 

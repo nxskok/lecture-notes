@@ -24,6 +24,8 @@ What can happen:
 
 Tension between truth and decision about truth (imperfect).
 
+## ... continued
+
 -   Prob. of type I error denoted $\alpha$. Usually fix $\alpha$, eg.
     $\alpha = 0.05$.
 -   Prob. of type II error denoted $\beta$. Determined by the planned
@@ -50,13 +52,16 @@ Tension between truth and decision about truth (imperfect).
 -   So we play "what if": "if $\theta$ were 11 (or 8 or 496), what would
     power be?".
 
-## Figuring out power
+## Figuring out power 1/2
 
 -   Time to figure out power is before you collect any data, as part of
     planning process.
 -   Need to have idea of what kind of departure from null hypothesis of
     interest to you, eg. average improvement of 5 points on reading test
     scores. (Subject-matter decision, not statistical one.)
+
+## Figuring out power 2/2
+
 -   Then, either:
     -   "I have this big a sample and this big a departure I want to
         detect. What is my power for detecting it?"
@@ -185,13 +190,18 @@ prop.test(4353, 10000)
 0.426 to 0.445, about factor $\sqrt{10}$ shorter because number of simulations 10 times bigger.
 
 
-## Calculating power
+## Calculating power 1/2
 
 -   Simulation approach very flexible: will work for any test. But
     answer different each time because of randomness.
 -   In some cases, for example 1-sample and 2-sample t-tests, power can
     be calculated.
--   `power.t.test`. Input `delta` is difference between null and true
+-   `power.t.test`. 
+
+
+## Calculating power 2/2
+
+- Input `delta` is difference between null and true
     mean:
 
 ```{r inference-2-R-7}
@@ -224,12 +234,12 @@ power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
         close to what you want.
 -   For the power-calculation method, you supply a value for the power,
     but leave the sample size missing.
--   Re-use the same problem: $H_0 : \mu = 10$ against 2-sided
-    alternative, true $\mu = 8$, $\sigma = 4$, but now aim for power
-    0.80.
 
 ## Using power.t.test
 
+-   Re-use the same problem: $H_0 : \mu = 10$ against 2-sided
+    alternative, true $\mu = 8$, $\sigma = 4$, but now aim for power
+    0.80.
 -   No `n=`, replaced by a `power=`:
 
 ```{r inference-2-R-8}
@@ -319,7 +329,7 @@ g  <-  ggplot(powers, aes(x = mean, y = power, colour = factor(n))) +
 g
 ```
 
-## Comments
+## Comments 1/2
 
 -   When `mean=10`, that is, the true mean equals the null mean, $H_0$
     is actually true, and the probability of rejecting it then is
@@ -329,6 +339,10 @@ g
 -   The blue power curve is above the red one for any mean \< 10,
     meaning that no matter how wrong $H_0$ is, you always have a greater
     chance of correctly rejecting it with a larger sample size.
+
+## Comments 2/2
+
+
 -   Previously, we had $H_0 : \mu = 10$ and a true $\mu = 8$, so a mean
     of 8 produces power 0.42 and 0.80 as shown on the graph.
 -   With $n = 30$, a true mean that is less than about 7 is almost
