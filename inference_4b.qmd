@@ -52,11 +52,10 @@ Values aligned in columns:
 my_url <- 
   "http://ritsokiguess.site/datafiles/analgesic.txt"
 pain <- read_table(my_url)
-pain
-glimpse(pain)
+pain %>% slice(1:6) # display first six rows
 ```
 
-## Paired *t*-test
+## Paired $t$ -test
 
 ```{r inference-4b-R-3}
 with(pain, t.test(druga, drugb, paired = TRUE))
@@ -72,7 +71,7 @@ with(pain, t.test(druga, drugb, paired = TRUE))
 
 ```{r inference-4b-R-4}
 pain %>% mutate(diff = druga - drugb) -> pain
-pain
+pain %>% slice(1:5)
 ```
 
 ## t-test on the differences

@@ -49,7 +49,7 @@ format:
     incremental: false
 execute:
   echo: true
-  freeze: true
+  freeze: auto
 editor: 
   markdown: 
     wrap: 72
