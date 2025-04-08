@@ -41,6 +41,8 @@ instructions.
 library(ggbiplot) 
 library(tidyverse)
 library(ggrepel)
+library(conflicted)
+conflicts_prefer(dplyr::mutate)
 ```
 
 `ggbiplot` has a special installation: see over.
@@ -101,6 +103,7 @@ g + geom_smooth(method = "lm", se = F)
 * Grab just the numeric columns:
 ```{r bPrincomp-4}
 test12 %>% select(where(is.numeric)) -> test12_numbers
+test12_numbers
 ```
      
 
@@ -218,7 +221,7 @@ ggplot(d, aes(x = Comp.1, y = Comp.2, label = id)) +
 
 * Shows how exam scores really spread out along one dimension:
 
-```{r eqsc2,fig.height=1 }
+```{r eqsc2,fig.height=6 }
 g
 ```
 
@@ -247,7 +250,7 @@ g <- ggbiplot(test12.pc, labels = test12$id)
 
 ##  The biplot
 ```{r ff3,fig.height=6,echo=F}
-g
+g 
 ```
   
 
@@ -333,6 +336,7 @@ g
 ```{r bPrincomp-13}
 places0 %>% 
   mutate(across(-id, \(x) log(x))) -> places
+places
 ```
 
 ## Just the numerical columns
@@ -403,6 +407,7 @@ How can we make a visual showing the cities? We need a "score" for each city on 
 ```{r bPrincomp-20}
 cbind(city_id = places$id, places.1$scores) %>% 
   as_tibble() -> places_score
+places_score
 ```
 
 The `as_tibble` is needed at the end because the scores are a `matrix`.
@@ -415,6 +420,9 @@ The `as_tibble` is needed at the end because the scores are a `matrix`.
 ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
                          label = city_id)) +
   geom_text() -> g
+ggplot(places_score, aes(x = Comp.1, y = Comp.2, 
+                         label = city_id)) +
+  geom_point() + geom_text_repel() 
 ```
 
 ## Making a plot 3/3
@@ -456,8 +464,9 @@ options(width = 80)
 - Cities 270, 213, and 116 were extreme on component 1, which depended mainly on health and arts:
 
 ```{r bPrincomp-26}
+conflicts_prefer(dplyr::filter)
 places %>% select(id, health, arts) %>% 
-  filter(id %in% c(270, 213, 166))
+  filter(id %in% c(270, 213, 116))
 ```
 
 City 166 is near or below Q1 on both variables. City 213 is the highest of all on both `health` and `arts`, while city 270 is well above Q3 on both.
@@ -482,6 +491,7 @@ places %>% select(id, econ, crime, educate) %>%
 ```{r bPrincomp-28}
 places %>% 
   mutate(across(-id, \(x) percent_rank(x))) -> places_pr
+places_pr
 ```
 
 ## Look up cities and variables again

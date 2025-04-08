@@ -1,0 +1,33 @@
+select uncleaned lecture code to clean
+
+```{r}
+library(tidyverse)
+library(fs)
+```
+
+select actual lecture notes files
+
+```{r}
+dir_ls(glob = "*.qmd") %>% enframe(name = NULL, value = "file") %>% 
+  mutate(preus = str_detect(file, "^_")) %>% 
+  filter(!preus) %>% 
+  select(-preus) -> notes_files
+notes_files
+```
+
+read in files I have already cleaned
+
+```{r}
+cleaned <- read_csv("clean.csv")
+cleaned
+```
+
+select a random file that has not been cleaned
+
+```{r}
+notes_files %>% 
+  anti_join(cleaned, join_by(file)) %>% 
+  slice_sample(n = 1)
+
+```
+

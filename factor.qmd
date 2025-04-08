@@ -248,7 +248,7 @@ g <- ggbiplot(places.1, labels = places$id,
 
 ## The biplot
 
-```{r bFactor-11, fig.height=3}
+```{r bFactor-11, fig.height=8}
 g
 ```
 
@@ -279,7 +279,7 @@ places.3 <- factanal(places_numeric, 3, scores = "r")
 
 ```{r bFactor-13, fig.height=4}
 biplot(places.3$scores, places.3$loadings,
-xlabs = places$id)
+  xlabs = places$id)
 ```
 
 

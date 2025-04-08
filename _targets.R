@@ -27,6 +27,7 @@ options(clustermq.scheduler = "multicore")
 # Replace the target list below with your own:
 list(
   tar_quarto(index, "index.qmd"),
+  tar_quarto(alternative_c33, "alternative_c33.qmd"),
   tar_quarto(ancova, "ancova.qmd"),
   tar_quarto(anova, "anova.qmd"),
   tar_quarto(asphalt, "asphalt.qmd"),

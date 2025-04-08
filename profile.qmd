@@ -371,6 +371,7 @@ g
 
 ```{r bProfile-13, message=FALSE}
 # dogs.long including time zero with categorical timex
+library(lme4)
 dogs.3 <- lmer(lh ~ drug * timex + (1|dog), data=dogs.long)
 ```
 

@@ -106,7 +106,8 @@ ontario3
 ```{r mapping-7}
 leaflet(data = ontario3) %>% 
   addTiles() %>% 
-  addCircleMarkers(lng = ~x, lat = ~y) 
+  addCircleMarkers(lng = ~x, lat = ~y)
+  # addMarkers(lng = ~x, lat = ~y)
 ```
  
 

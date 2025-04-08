@@ -1,45 +1,45 @@
 project:
   title: "lecture-notes"
   render:
-    - outline*.qmd
-    - running.qmd
-    - readfile.qmd
-    - graphs.qmd
-    - graphs_c33.qmd
-    - numsum.qmd
-    - choosing.qmd
-    - bootstrap_R.qmd
-    - inference*.qmd
-    - assumptions_c33.qmd
-    - simboot.qmd
-    - power_c33.qmd
-    - reports.qmd
-    - tidy*.qmd
-    - wider_wrong.qmd
-    - windmill.qmd
-    - asphalt.qmd
-    - with_categ.qmd
-    - functions.qmd
-    - dates_and_times.qmd
-    - dip.qmd
-    - vector_matrix.qmd
-    - simboot.qmd
-    - bootstrap.qmd
-    - stan.qmd
-    - regression.qmd
-    - logistic.qmd
-    - survival.qmd
+    - alternative_c33.qmd
     - anova.qmd
     - ancova.qmd
-    - manova.qmd
-    - profile.qmd
-    - discrim.qmd
+    - asphalt.qmd
+    - assumptions_c33.qmd
+    - bootstrap.qmd
+    - bootstrap_R.qmd
+    - choosing.qmd
     - cluster.qmd
-    - mapping.qmd
-    - princomp.qmd
+    - dates_and_times.qmd
+    - dip.qmd
+    - discrim.qmd
     - factor.qmd
+    - functions.qmd
+    - graphs.qmd
+    - graphs_c33.qmd
+    - inference*.qmd
+    - logistic.qmd
+    - manova.qmd
+    - mapping.qmd
     - multiway.qmd
-    
+    - numsum.qmd
+    - outline*.qmd
+    - power_c33.qmd
+    - princomp.qmd
+    - profile.qmd
+    - readfile.qmd
+    - regression.qmd
+    - reports.qmd
+    - running.qmd
+    - simboot.qmd
+    - stan.qmd
+    - survival.qmd
+    - tidy*.qmd
+    - vector_matrix.qmd
+    - wider_wrong.qmd
+    - windmill.qmd
+    - with_categ.qmd
+
 format: 
   revealjs:
      df-print: paged
@@ -49,8 +49,11 @@ format:
     incremental: false
 execute:
   echo: true
-  freeze: auto
+  freeze: true
 editor: 
   markdown: 
     wrap: 72
  
+
+    
+

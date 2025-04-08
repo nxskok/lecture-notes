@@ -604,6 +604,7 @@ vital
 ```{r bCluster-35, size="footnotesize"}
 vital %>% 
   mutate(across(where(is.numeric), \(x) scale(x))) -> vital.s
+vital.s
 ```
 
 ## Three clusters
@@ -618,6 +619,7 @@ set.seed(457299)
 ```{r bCluster-37 }
 vital.s %>% select(-country) %>% 
   kmeans(3) -> vital.km3
+vital.km3
 names(vital.km3)
 ```
 
@@ -637,7 +639,7 @@ vital.km3$size
 vital.km3$centers
 ```
 
--   Cluster 2 has lower than average rates on everything; cluster 3 has
+-   Cluster 1 has lower than average rates on everything; cluster 2 has
     much higher than average.
 
 ## Cluster sums of squares and membership
@@ -662,11 +664,12 @@ vital.3 <- tibble(
   country = vital.s$country,
   cluster = vital.km3$cluster
 )
+vital.3
 ```
 
-Next, which countries in which cluster?
+## Which countries in which cluster? 
 
-Write function to extract them:
+Write function to extract cluster  number `i` from dataframe `d` with a column called `country`:
 
 ```{r bCluster-43 }
 get_countries <- function(i, d) {
@@ -898,10 +901,10 @@ Compared to 3-cluster solution:
 
 -   most of (old) cluster 1 gone to (new) cluster 6
 
--   cluster 2 split into clusters 2 and 5 (two types of "poor"
+-   Old cluster 2 split into new clusters 2 and 5 (two types of "developing"
     countries)
 
--   cluster 3 split into clusters 1 and 3 (two types of "intermediate"
+-   Old cluster 3 split into new clusters 1 and 3 (two types of "intermediate"
     countries, divided by death rate).
 
 ## Getting a picture from `kmeans`
