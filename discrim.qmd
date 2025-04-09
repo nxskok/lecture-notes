@@ -16,6 +16,8 @@ editor:
 -   Covers same ground as logistic regression (and its variations), but
     emphasis on classifying observed data into correct groups.
 
+## ... continued
+
 -   Does so by searching for linear combination of original variables
     that best separates data into groups (canonical variables).
 
@@ -51,15 +53,13 @@ conflicts_prefer(dplyr::count)
 
 -   How do you know which `select` is going to get called?
 
--   With `library`, the one loaded *last* is visible, and others are
-    not.
+-   With `library`: one loaded *last* visible, others not.
 
 -   Thus we can access the `select` in `dplyr` but not the one in
-    `MASS`. If we wanted that one, we'd have to say `MASS::select`.
-
+    `MASS`. 
+    
 -   Better: load `conflicted` package. Any time you load two packages
-    containing functions with same name, you get error and have to
-    choose between them.
+    containing functions with same name, get error, choose between them.
 
 ## Example 1: seed yields and weights
 
@@ -95,17 +95,18 @@ hilo.1 <- lda(fertilizer ~ yield + weight, data = hilo)
 
 -   "Predicting" group membership from measured variables.
 
-## Output
+## Output (in `hilo.1`)
 
 \small
 
 ```{r bDiscrim-5}
+#| echo: false
 hilo.1
 ```
 
 \normalsize
 
-## Things to take from output
+## Things to take from output 1/2
 
 -   Group means: high-fertilizer plants have (slightly) higher mean
     yield and weight than low-fertilizer plants.
@@ -116,6 +117,8 @@ hilo.1
 
 -   For any plant, get LD1 score by taking $-0.76$ times yield plus
     $-1.25$ times weight, add up, standardize.
+
+## Things to take from output 1/2
 
 -   the LD1 coefficients are like slopes:
 
@@ -146,26 +149,28 @@ Feed output from LDA into `predict`:
 
 ```{r bDiscrim-6 }
 p <- predict(hilo.1)
-p
 hilo.2 <- cbind(hilo, p)
+```
+
+## the LD scores
+
+```{r}
 hilo.2
 ```
 
-\normalsize
 
 ## LD1 scores in order
 
-Most positive LD1 score is most obviously low fertilizer, most negative
-is most obviously high:
-
-\footnotesize
 
 ```{r bDiscrim-7}
 hilo.2 %>% select(fertilizer, yield, weight, LD1) %>% 
   arrange(desc(LD1))
 ```
 
-\normalsize
+## LD1 scores and fertilizer
+
+Most positive LD1 score is most obviously low fertilizer, most negative
+is most obviously high.
 
 High fertilizer have yield and weight high, negative LD1 scores.
 
@@ -224,14 +229,13 @@ hilo.2 %>%
   select(-LD1)
 ```
 
+## Comments
+
 Only obs. 7 has any doubt: `yield` low for a high-fertilizer, but high
 `weight` makes up for it.
 
-\normalsize
 
 ## Example 2: the peanuts
-
-\scriptsize
 
 ```{r bDiscrim-14, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/peanuts.txt"
