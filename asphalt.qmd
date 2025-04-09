@@ -44,9 +44,13 @@ asphalt <- read_delim(my_url, " ")
 
 ## The data (some)
 
+\small
+
 ```{r asphalt-3}
 asphalt
 ```
+
+\normalsize
 
 ## Plotting response "rut depth" against everything else
 
@@ -71,6 +75,7 @@ I saved this graph to plot later (on the next page).
 ## The plot
 
 ```{r asphalt-5}
+#| fig-height: 5
 g
 ```
 
@@ -99,6 +104,7 @@ ggplot(asphalt, aes(y = rut.depth, x = log(viscosity))) +
 ## Rut depth against log-viscosity
 
 ```{r asphalt-6}
+#| fig-height: 5
 g
 ```
 
@@ -113,16 +119,14 @@ g
 ```{r asphalt-7}
 rut.1 <- lm(rut.depth ~ pct.a.surf + pct.a.base + fines +
   voids + log(viscosity) + run, data = asphalt)
-summary(rut.1)
 ```
 
-## Regression output: `summary(rut.1)` or:
+## Regression output:
 
-\footnotesize
+\scriptsize
 
-```{r asphalt-8}
-glance(rut.1)
-tidy(rut.1)
+```{r}
+summary(rut.1)
 ```
 
 \normalsize
@@ -154,13 +158,17 @@ tidy(rut.1)
 ## Plot fitted values against residuals
 
 ```{r asphalt-9}
+#| fig-height: 5
 ggplot(rut.1, aes(x = .fitted, y = .resid)) + geom_point()
 ```
 
 ## Normal quantile plot of residuals
 
 ```{r}
-ggplot(rut.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+#| fig-height: 5
+
+ggplot(rut.1, aes(sample = .resid)) + stat_qq() + 
+  stat_qq_line()
 ```
 
 ## Plotting residuals against $x$ variables
@@ -171,20 +179,24 @@ ggplot(rut.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
     together so that they can later be plotted: start with a model
     first, and then augment with a data frame:
 
+\scriptsize
+
 ```{r asphalt-10}
 rut.1 %>% augment(asphalt) -> rut.1a
 rut.1a
 ```
 
+\normalsize
+
 ## What does rut.1a contain?
 
-```{r asphalt-11, echo=FALSE}
-#options(width = 70)
-```
+\small
 
 ```{r asphalt-12}
 names(rut.1a)
 ```
+
+\normalsize
 
 -   all the stuff in original data frame, plus:
 -   quantities from regression (starting with a dot)
@@ -205,6 +217,7 @@ rut.1a %>%
 ## The plot
 
 ```{r asphalt-14}
+#| fig-height: 5
 g
 ```
 
@@ -233,6 +246,7 @@ g
 From package `MASS`:
 
 ```{r asphalt-15}
+#| fig-height: 5
 boxcox(rut.depth ~ pct.a.surf + pct.a.base + fines + voids +
   log(viscosity) + run, data = asphalt)
 ```
@@ -269,6 +283,7 @@ asphalt %>%
 ## The new plots
 
 ```{r asphalt-17}
+#| fig-height: 5
 g3
 ```
 
@@ -292,7 +307,6 @@ rut.2 <- lm(log(rut.depth) ~ pct.a.surf + pct.a.base +
 
 ```{r asphalt-19}
 tidy(rut.2)
-summary(rut.2)
 ```
 
 ## Taking out everything non-significant
@@ -303,14 +317,13 @@ summary(rut.2)
 
 ```{r asphalt-20}
 rut.3 <- lm(log(rut.depth) ~ pct.a.surf + log(viscosity), data = asphalt)
-summary(rut.3)
+tidy(rut.3)
 ```
 
 \normalsize
 
-\footnotesize
 
--   Check that removing all those variables wasn't too much:
+## Check that removing all those variables wasn't too much
 
 ```{r asphalt-21}
 anova(rut.3, rut.2)
@@ -326,7 +339,6 @@ anova(rut.3, rut.2)
 
 ```{r asphalt-22}
 tidy(rut.2)
-summary(rut.2)
 ```
 
 -   Largest P-value is 0.78 for `pct.a.base`, not significant.
@@ -352,8 +364,7 @@ tidy(rut.2) %>% arrange(p.value)
 ```{r asphalt-24}
 rut.4 <- lm(log(rut.depth) ~ pct.a.surf + fines + voids + 
               log(viscosity) + run, data = asphalt)
-summary(rut.4)
-tidy(rut.4) %>% arrange(p.value) %>% dplyr::select(term, p.value)
+tidy(rut.4) %>% arrange(p.value) %>% select(term, p.value)
 ```
 
 \normalsize
@@ -366,7 +377,6 @@ Another way to do the same thing:
 
 ```{r asphalt-25}
 rut.4 <- update(rut.2, . ~ . - pct.a.base)
-summary(rut.4)
 tidy(rut.4) %>% arrange(p.value)
 ```
 
@@ -376,8 +386,7 @@ tidy(rut.4) %>% arrange(p.value)
 
 ```{r asphalt-26}
 rut.5 <- update(rut.4, . ~ . - fines)
-summary(rut.5)
-tidy(rut.5) %>% arrange(p.value) %>% dplyr::select(term, p.value)
+tidy(rut.5) %>% arrange(p.value) %>% select(term, p.value)
 ```
 
 Can't take out intercept, so `run`, with P-value 0.36, goes next.
@@ -386,8 +395,7 @@ Can't take out intercept, so `run`, with P-value 0.36, goes next.
 
 ```{r asphalt-27}
 rut.6 <- update(rut.5, . ~ . - run)
-summary(rut.6)
-tidy(rut.6) %>% arrange(p.value) %>% dplyr::select(term, p.value)
+tidy(rut.6) %>% arrange(p.value) %>% select(term, p.value)
 ```
 
 Again, can't take out intercept, so largest P-value is for `voids`,
@@ -401,7 +409,6 @@ Again, can't take out intercept, so largest P-value is for `voids`,
     than by taking out 4 at once (bottom):
 
 ```{r asphalt-28}
-summary(rut.6)
 coef(rut.6)
 coef(rut.3)
 ```
@@ -495,11 +502,10 @@ options(width=wid)
 
 ## Revisiting the best model
 
--   Best model was our rut.6:
+-   Best model was our `rut.6`:
 
 ```{r asphalt-37}
 tidy(rut.6)
-summary(rut.6)
 ```
 
 ## Revisiting (2)
@@ -518,11 +524,15 @@ geom_point()
 ## Residuals against fitted values
 
 ```{r asphalt-39}
+#| fig-height: 5
 g
 ```
 
+## Normal quantile plot of residuals
 
 ```{r}
+#| fig-height: 5
+
 ggplot(rut.6, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 ```
 
@@ -544,6 +554,8 @@ augment(rut.6, asphalt) %>%
 ## Residuals against the x's
 
 ```{r asphalt-41}
+#| fig-height: 5
+
 g2
 ```
 
