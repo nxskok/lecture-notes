@@ -48,6 +48,7 @@ format:
      slide-number: true
   beamer:
     incremental: false
+    theme: Boadilla
 execute:
   echo: true
   freeze: auto
