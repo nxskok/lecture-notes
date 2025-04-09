@@ -27,7 +27,8 @@ select a random file that has not been cleaned
 ```{r}
 notes_files %>% 
   anti_join(cleaned, join_by(file)) %>% 
-  slice_sample(n = 1)
+  slice_sample(n = 1) %>% 
+  pull(file)
 
 ```
 

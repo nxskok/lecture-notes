@@ -51,7 +51,7 @@ Depends on number and type of variables:
 |           1 |            1 | side-by-side boxplots                                       |
 |           0 |            2 | scatterplot                                                 |
 |           2 |            1 | grouped boxplots                                            |
-|           1 |            2 | scatterplot with points identified by group (eg. by colour) |
+|           1 |            2 | scatterplot with points identified by group (eg. by colour) |
 
 With more (categorical) variables, might want *separate plots by
 groups*. This is called `facetting` in R.

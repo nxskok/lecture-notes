@@ -1,4 +1,4 @@
----
+ ---
 title: "Survival Analysis"
 editor: 
   markdown: 
@@ -19,6 +19,9 @@ editor:
 -   Additional complication: event might not have happened at end of
     study (eg. patient still alive). But knowing that patient has "not
     died yet" presumably informative. Such data called *censored*.
+    
+    
+## ... continued 
 
 -   Enter *survival analysis*, in particular the "Cox proportional
     hazards model".
@@ -127,7 +130,8 @@ dance.1 <- coxph(Surv(Months, Quit) ~ Treatment + Age, data = dance)
 ## What does `Surv` output actually look like?
 
 ```{r}
-dance %>% mutate(y = Surv(Months, Quit))
+dance %>% mutate(y = Surv(Months, Quit)) %>% 
+  slice(1:6) # top 6 rows to fit
 ```
 
 

@@ -5,26 +5,24 @@ editor:
     wrap: 72
 ---
 
-## Repeated measures by profile analysis
+## Repeated measures 
 
--   More than one response *measurement* for each subject. Might be
-
-    -   measurements of the same thing at different times
-
-    -   measurements of different but related things
+-   More than one response *measurement* for each subject,
+    same thing at different times
 
 -   Generalization of matched pairs ("matched triples", etc.).
 
--   Variation: each subject does several different treatments at
-    different times (called *crossover design*).
 
 -   Expect measurements on same subject to be correlated, so assumptions
     of independence will fail.
 
--   Called *repeated measures*. Different approaches, but *profile
-    analysis* uses `Manova` (set up right way).
+-   *Repeated measures*.  *Profile
+    analysis* uses `Manova` (set up).
 
 -   Another approach uses *mixed models* (random effects).
+
+-   Variation: each subject does all treatments at
+    different times (called *crossover design*).
 
 ## Packages
 
@@ -99,12 +97,22 @@ dogs.2 <- Manova(dogs.1,
 )
 ```
 
-## The output (some; there is a lot)
+## The output (there is a lot)
 
-\tiny
+- normally you just run
 
 ```{r}
+#| output: false
+
 summary(dogs.2)
+```
+
+and pull out what you need to answer the question. 
+
+- But you can grab just individual pieces as shown below:
+
+```{r}
+names(summary(dogs.2))
 ```
 
 \normalsize
@@ -131,67 +139,57 @@ summary(dogs.2)
 -   If sphericity rejected, there are adjustments to the univariate
     P-values due to Huynh-Feldt and Greenhouse-Geisser. Huynh-Feldt
     better if responses not actually normal (safer).
+    
+## Sphericity tests
+
+```{r}
+summary(dogs.2)$sphericity.tests
+```
+
+Sphericity is not rejected; proceed to univariate tests.
+
 
 ## Univariate tests
 
 \scriptsize
 
 ```{r}
-summary(dogs.2)$sphericity.tests
-summary(dogs.2)$pval.adjustments
 summary(dogs.2)$univariate.tests
 ```
 
+- Significant interaction between `drug` and time: the pattern of log-histamine over time is different for the different drugs.
+
 \normalsize
 
+## If sphericity had been rejected
+
+then we would use the H-F adjusted P-values:
+
+```{r}
+summary(dogs.2)$pval.adjustments
+```
+
+In this case (because sphericity was not rejected), these are very similar to the ones from the univariate tests, and the conclusion (significant interaction) was the same.
+
+
 ## Comments
 
--   The sphericity test for the interaction is almost significant
--   The H-F adjusted P-value for the interaction is a bit bigger than
-    the univariate one, but still strongly significant.
--   Therefore any lack of sphericity does not affect our conclusion:
-    there is an interaction between drug and time
--   ie that the effect of time on log-histamine is different for the two
-    drugs.
-
-## Comments
-
--   Here, univariate test with Huynh-Feldt correction to P-value for
-    interaction was 0.00073.
--   Significant interaction *is* the conclusion here.
 -   If the interaction had not been significant:
     -   cannot remove interaction with time
-    -   so look at univariate (better, especially if adjusted for
-        sphericity) tests of main effects in *this* model
+    -   so look at univariate (or adjusted for
+        sphericity) tests of main effects in model with non-significant interaction
 
 ## Next
 
--   Interaction significant. Pattern of response over time different for
-    the two drugs.
-
--   Want to investigate interaction.
-
-## The wrong shape
-
--   But data frame has several observations per line ("wide format"):
-
-\scriptsize
-
-```{r bProfile-6 }
-dogs %>% slice(1:6)
-```
-
-\normalsize
-
--   Plotting works with data in "long format": one response per line.
-
--   The responses are log-histamine at different times, labelled
+  - investigate interaction with graph
+  - but dataframe has several observations per line ("wide").
+  -   Plotting works with data in "long format": one response per line.
+  -   The responses are log-histamine at different times, labelled
     `lh`-something. Call them all `lh` and put them in one column, with
     the time they belong to labelled.
 
 ## Running `pivot_longer`, try 1
 
-\footnotesize
 
 ```{r bProfile-7, size="footnotesize"}
 dogs %>% pivot_longer(starts_with("lh"), 
@@ -202,17 +200,26 @@ dogs %>% pivot_longer(starts_with("lh"),
 
 ## Getting the times
 
-Not quite right: for the times, we want just the numbers, not the
-letters `lh` every time. Want new variable containing just number in
-`time`: `parse_number`.
+Not quite right: want new variable containing just number in
+`time`: `parse_number`. (Top 5 rows shown.)
 
 \footnotesize
 
 ```{r bProfile-8}
+#| output: false
 dogs %>%
   pivot_longer(starts_with("lh"), 
                names_to = "timex", values_to = "lh") %>% 
   mutate(time = parse_number(timex)) 
+```
+
+```{r bProfile-8a}
+#| echo: false
+dogs %>%
+  pivot_longer(starts_with("lh"), 
+               names_to = "timex", values_to = "lh") %>% 
+  mutate(time = parse_number(timex)) %>% 
+  slice(1:5)
 ```
 
 \normalsize
@@ -227,14 +234,13 @@ dogs %>%
 
 -   This works now, so next save into a new data frame `dogs.long`.
 
-## Saving the pipelined results
+## Saving 
 
 ```{r bProfile-9 }
 dogs %>%
   pivot_longer(starts_with("lh"), 
                names_to = "timex", values_to = "lh") %>% 
   mutate(time = parse_number(timex)) -> dogs.long
-dogs.long
 ```
 
 ## Comments
@@ -253,7 +259,6 @@ This says:
 
 ## Interaction plot
 
-\small
 
 ```{r bProfile-10, fig.height=3.5}
 ggplot(dogs.long, aes(x = time, y = lh, 
@@ -262,7 +267,6 @@ ggplot(dogs.long, aes(x = time, y = lh,
   stat_summary(fun = mean, geom = "line")
 ```
 
-\normalsize
 
 ## Comments
 
@@ -299,7 +303,7 @@ dogs.2 <- Manova(dogs.1,
 
 ```{r}
 summary(dogs.2)$sphericity.tests
-summary(dogs.2)$pval.adjustments
+# summary(dogs.2)$pval.adjustments
 summary(dogs.2)$univariate.tests
 ```
 
@@ -314,19 +318,16 @@ summary(dogs.2)$univariate.tests
     -   strong significance of time, even after taking out time 0
     -   actually *not* significant drug effect, despite interaction plot
 
-## Is the non-significant drug effect reasonable?
+## Non-significant drug effect reasonable?
 
 -   Plot *actual data*: `lh` against `days`, labelling observations by
     drug: "spaghetti plot".
 
--   Uses long data frame (confusing, yes I know):
+-   Uses long data frame:
 
--   Plot (time,lh) points coloured by drug
-
--   and connecting measurements for each *dog* by lines.
-
--   This time, we want `group = dog` (want the measurements for each
-    *dog* joined by lines), but `colour = drug`:
+    -   Plot (`time`, `lh`) points coloured by *drug*
+    -   connecting measurements for each *dog* by lines.
+    -   Hence, `group = dog`, but `colour = drug`:
 
 ```{r platanias}
 ggplot(dogs.long, aes(x = time, y = lh,
@@ -342,20 +343,19 @@ g
 
 ## Comments
 
--   For each dog over time, there is a strong increase and gradual
-    decrease in log-histamine. The gradual decrease explains the
+-   For each dog over time, gradual decrease in log-histamine from time 1:
     significant time effect after we took out time 0.
 
--   The pattern is more or less the same for each dog, regardless of
-    drug. This explains the non-significant interaction.
+-   Pattern about same for each dog, regardless of
+    drug, hence non-significant interaction.
 
--   Most of the trimethaphan dogs (blue) have higher log-histamine
-    throughout (time 1 and after), and some of the morphine dogs have
+-   Most trimethaphan dogs (blue) have higher log-histamine
+    throughout (time 1 and after), some morphine dogs (red) have
     lower.
 
--   *But* two of the morphine dogs have log-histamine profiles like the
-    trimethaphan dogs. This ambiguity is probably why the `drug` effect
-    is not quite significant.
+-   *But* two morphine dogs have log-histamine profiles like
+    trimethaphan dogs. This ambiguity probably why `drug` effect
+    not quite significant.
 
 ## Mixed models
 
@@ -371,7 +371,6 @@ g
 
 ```{r bProfile-13, message=FALSE}
 # dogs.long including time zero with categorical timex
-library(lme4)
 dogs.3 <- lmer(lh ~ drug * timex + (1|dog), data=dogs.long)
 ```
 
@@ -383,10 +382,10 @@ dogs.3 <- lmer(lh ~ drug * timex + (1|dog), data=dogs.long)
 -   using `drop1`:
 
 ```{r bProfile-14}
-drop1(dogs.3,test="Chisq")
+drop1(dogs.3, test="Chisq")
 ```
 
--   Interaction is very significant. Including time zero, the pattern of log-histamine over time is different for the two drugs (as we found before).
+-   Interaction very significant. Including time zero, the pattern of log-histamine over time is different for the two drugs (as we found before).
 
 ## Omitting time zero
 
@@ -407,22 +406,21 @@ dogs.5 <- update(dogs.4, . ~ . - drug:timex)
 drop1(dogs.5, test = "Chisq")
 ```
 
-There is definitely an effect of time, but drug is not quite significant (at $\alpha = 0.01$).
+- Definitely an effect of time, but drug is not quite significant (at $\alpha = 0.01$).
+- More or less same conclusions as from MANOVA.
 
 ## The exercise data
 
 -   30 people took part in an exercise study.
 
--   Each subject was randomly assigned to one of two diets ("low fat" or
+-   Each subject randomly assigned to one of two diets ("low fat" or
     "non-low fat") and to one of three exercise programs ("at rest",
     "walking", "running").
 
--   There are $2\times3 = 6$ experimental treatments, and thus each one
-    is replicated $30/6=5$ times.
+-   $2\times3 = 6$ experimental treatments, and thus each one
+    replicated $30/6=5$ times. (Two-way ANOVA, so far?)
 
--   Nothing unusual so far.
-
--   However, each subject had their pulse rate measured at three
+-   However, each subject had pulse rate measured at three
     different times (1, 15 and 30 minutes after starting their
     exercise), so have repeated measures.
 
@@ -433,12 +431,18 @@ Separated by *tabs*:
 ```{r bProfile-16 }
 url <- "http://ritsokiguess.site/datafiles/exercise2.txt"
 exercise.long <- read_tsv(url)
-exercise.long
+exercise.long %>% slice(1:7) # top 7 rows
 ```
 
--   This is "long format", which is usually what we want.
+## Comments
+
+-   "Long format", usually what we want.
 
 -   But for repeated measures analysis, we want *wide* format!
+
+- Keep track of which is which:
+  - `Manova` analysis: wider
+  - graphs and `lmer` analysis: longer.
 
 -   `pivot_wider`.
 
@@ -447,35 +451,23 @@ exercise.long
 -   `pivot_wider` needs: a column that is going to be split, and the
     column to make the values out of:
 
-\footnotesize
 
 ```{r bProfile-18}
 exercise.long %>% pivot_wider(names_from=time, 
                               values_from=pulse) -> exercise.wide
-exercise.wide %>% sample_n(5)
+exercise.wide %>% sample_n(5) # random 5 rows
 ```
 
-\normalsize
 
--   Normally `pivot_longer` \texttt{min01, min15,
-    min30} into one column called `pulse` labelled by the number of
-    minutes. But `Manova` needs it the other way.
+## Setting up 
 
-## Setting up the repeated-measures analysis
-
--   Make a response variable consisting of `min01, min15, min30`:
-
-\small
+-   Make response variable from `min01, min15, min30`:
 
 ```{r bProfile-19 }
 response <- with(exercise.wide, cbind(min01, min15, min30))
 ```
 
-\normalsize
-
--   Predict that from `diet` and `exertype` and interaction using `lm`:
-
-\small
+-   Predict from `diet`, `exertype`, interaction using `lm`:
 
 ```{r bProfile-20 }
 exercise.1 <- lm(response ~ diet * exertype,
@@ -483,11 +475,9 @@ exercise.1 <- lm(response ~ diet * exertype,
 )
 ```
 
-\normalsize
+## ... continued
 
 -   Run this through `Manova`:
-
-\small
 
 ```{r bProfile-21, error=TRUE}
 times <- colnames(response)
@@ -496,8 +486,6 @@ exercise.2 <- Manova(exercise.1,
                      idata = times.df, 
                      idesign = ~times)
 ```
-
-\normalsize
 
 ## Sphericity tests
 
@@ -509,12 +497,7 @@ No problem with sphericity; go to univariate tests.
 
 ## Univariate tests
 
-```{r, include=FALSE}
-w <- getOption("width")
-options(width = 120)
-```
-
-\scriptsize
+\footnotesize
 
 ```{r}
 summary(exercise.2)$univariate.tests
@@ -522,12 +505,10 @@ summary(exercise.2)$univariate.tests
 
 \normalsize
 
-```{r, include=FALSE}
-options(width = w)
-```
+## Comments
 
 -   The three-way interaction is significant
-    -   the effect of diet on pulse rate over time is different for the
+-   the effect of diet on pulse rate over time is different for the
         different exercise types
 
 ## Making some graphs
@@ -537,6 +518,13 @@ options(width = w)
 
 -   Plot time trace of pulse rates for each individual, joined by lines,
     and make *separate* plots for each `diet-exertype` combo.
+
+-   `facet_grid(diet~exertype)`: do a separate plot for each combination
+    of diet and exercise type, with diets going down the page and
+    exercise types going across. (Graphs are usually landscape, so have
+    the factor `exertype` with more levels going across.)
+
+## ... continued
 
 -   `ggplot` again. Using *long* data frame:
 
@@ -548,10 +536,6 @@ g <- ggplot(exercise.long, aes(
   facet_grid(diet ~ exertype)
 ```
 
--   `facet_grid(diet~exertype)`: do a separate plot for each combination
-    of diet and exercise type, with diets going down the page and
-    exercise types going across. (Graphs are usually landscape, so have
-    the factor `exertype` with more levels going across.)
 
 ## The graph(s)
 
@@ -561,20 +545,17 @@ g
 
 ## Comments on graphs
 
--   For subjects who were at rest, no change in pulse rate over time,
-    for both diet groups.
+-   At rest: no change in pulse rate over time
 
--   For walking subjects, not much change in pulse rates over time.
-    Maybe a small increase on average between 1 and 15 minutes.
+-   Walking: not much change in pulse rates over time.
 
--   For both running groups, an overall increase in pulse rate over
-    time, but the increase is stronger for the `lowfat` group.
+-   Running: overall increase in pulse rate over
+    time, but increase stronger for `lowfat` group.
 
--   No consistent effect of diet over all exercise groups.
-
--   No consistent effect of exercise type over both diet groups.
-
--   No consistent effect of time over all diet-exercise type combos.
+-   No consistent effect of: 
+    - diet over all exercise groups.
+    -   exercise type over both diet groups.
+    -   time over all diet-exercise type combos.
 
 ## "Simple effects" of diet for the subjects who ran
 
@@ -588,10 +569,10 @@ exercise.wide %>%
   filter(exertype == "running") -> runners.wide
 ```
 
+## ... continued
+
 -   Create response variable and do MANOVA. Some of this looks like
     before, but I have different data now:
-
-\footnotesize
 
 ```{r bProfile-27}
 response <- with(runners.wide, cbind(min01, min15, min30))
@@ -603,8 +584,6 @@ runners.2 <- Manova(runners.1,
   idesign = ~times
 )
 ```
-
-\normalsize
 
 ## Sphericity tests
 
@@ -646,24 +625,6 @@ runners.wide %>%
 -   Result of `summarize` is data frame, so can save it (and do more
     with it if needed).
 
-## Understanding diet-time interaction
-
--   The summary:
-
-\footnotesize
-
-```{r bProfile-30}
-summ
-```
-
-\normalsize
-
--   Pulse rates at any given time higher for `lowfat` (diet effect),
-
--   Pulse rates increase over time of exercise (time effect),
-
--   but the *amount by which pulse rate higher* for a diet depends on
-    time: `diet` by `time` interaction.
 
 ## Interaction plot
 
