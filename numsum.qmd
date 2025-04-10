@@ -29,14 +29,31 @@ title: "Numerical Summaries"
 library(tidyverse)
 ```
 
+## The athletes
+
+\scriptsize
+
 ```{r numsum-R-2, echo=F, message=F}
-my_url <- url("http://ritsokiguess.site/datafiles/ais.txt")
+my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
+
+```{r asphalt-34, echo=F}
+wid=getOption("width")
+options(width=85)
+```
+
 
 ```{r}
 summary(athletes)
 ```
+
+
+```{r asphalt-36, echo=F}
+options(width=wid)
+```
+
+\normalsize
 
 ## Summarizing one column
 
@@ -49,9 +66,10 @@ athletes %>% summarize(m=mean(Ht))
 or to get mean and SD of BMI:
 
 ```{r numsum-R-4}
-athletes %>% summarize(m = mean(BMI), s = sd(BMI)) -> d
-d
+athletes %>% summarize(m = mean(BMI), s = sd(BMI))
 ```
+
+## A warning
 
 This doesn't work:
 
@@ -59,6 +77,8 @@ This doesn't work:
 #| error: true
 mean(BMI)
 ```
+
+because R needs to know what *dataframe* `BMI` lives in.
 
 ## Quartiles
 
@@ -125,13 +145,19 @@ summarize(n = n(), mean_Ht = mean(Ht), sd_Ht = sd(Ht))
 -   This explains second variation on counting within group: "within
     each sport/Sex, how many athletes were there?"
 
-## Summarizing several columns
+## Summarizing several columns 1/2
 
 -   Standard deviation of each (numeric) column:
+
+\footnotesize
 
 ```{r numsum-R-10}
 athletes %>% summarize(across(where(is.numeric), \(x) sd(x))) 
 ```
+
+\normalsize
+
+## Summarizing several columns 2/2
 
 -   Median and IQR of all columns whose name starts with H:
 
@@ -150,6 +176,8 @@ athletes %>%
                    list(med = \(h) median(h), 
                         iqr = \(h) IQR(h))))
 ```
+
+## ... another one
 
 ```{r}
 athletes %>% 

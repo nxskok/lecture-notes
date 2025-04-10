@@ -64,8 +64,18 @@ pigs1
 ```{r tidying-R-3}
 pigs1 %>% pivot_longer(feed1:feed4, names_to="feed", 
                        values_to="weight") -> pigs2
+```
+
+## The long dataframe `pigs2`
+
+\scriptsize
+
+```{r}
+#| echo: false
 pigs2
 ```
+
+\normalsize
 
 ## Alternatives
 
@@ -99,8 +109,19 @@ pigs1 %>% pivot_longer(starts_with("feed"), names_to="feed",
 
 ```{r tidying-R-6}
 pigs2 %>% mutate(pig_id=str_c(feed, "_", pig)) -> pigs2
+```
+
+## The new `pigs2`
+
+\scriptsize
+
+```{r}
+#| echo: false
 pigs2
 ```
+
+\normalsize
+
 
 ## ...and finally, the analysis
 
@@ -140,6 +161,7 @@ Feed 3 is best, feed 1 worst.
 ## Should we have any concerns about the ANOVA?
 
 ```{r pigfeedplot}
+#| fig-height: 5
 ggplot(pigs2, aes(x = feed, y = weight)) + geom_boxplot()
 ```
 
@@ -160,7 +182,9 @@ my_url <- "http://ritsokiguess.site/datafiles/tb.csv"
 tb <- read_csv(my_url)
 ```
 
-## The data (randomly chosen rows)
+## The data (10 randomly chosen rows)
+
+\footnotesize
 
 ```{r}
 #| echo: false
@@ -171,10 +195,13 @@ options(width = 72)
 tb %>% slice_sample(n = 10)
 ```
 
-Many rows:
+\normalsize
+
+## Many rows and columns
 
 ```{r}
 nrow(tb)
+ncol(tb)
 ```
 
 ## What we have
@@ -208,18 +235,20 @@ tb2
 
 -   4 columns, but 5 variables, since `genage` contains both gender and
     age group. Split that up using separate.
--   `separate` needs 3 things:
+-   `separate` needs to know:
     -   what to separate (no quotes needed),
-    -   what to separate into (here you do need quotes),
-    -   how to split.
--   For "how to split", here "after first character":
+    - how to split, and what to separate into (here you do need quotes):
+
+\small
 
 ```{r tidying-R-15}
-tb2 %>% separate_wider_position(genage, 
-                                widths = c("gender" = 1, "age" = 4), 
-                                too_few = "align_start") -> tb3
-tb3
+tb2 %>% 
+  separate_wider_position(genage, 
+                          widths = c("gender" = 1, "age" = 4), 
+                          too_few = "align_start") -> tb3
 ```
+
+\normalsize
 
 ## Tidied tuberculosis data (some)
 
@@ -237,23 +266,34 @@ write_rds(tb3, "tb3.rds")
     step at a time, and when you have each step working, you use that
     step's output as input to the next step, thus:
 
+\small
+
 ```{r tidying-R-18}
+#| output: false
 tb %>%
   pivot_longer(m04:fu, names_to = "genage", 
                values_to = "freq", values_drop_na = TRUE) %>% 
   separate_wider_position(genage, 
                           widths = c("gender" = 1, "age" = 4), 
-                          too_few = "align_start")
+                          too_few = "align_start") -> tb_tidy
 ```
+
+\normalsize
+
+- When you have it working, save the final result (for further work).
+
+
+## Comments
 
 -   You can split the R code over as many lines as you like, as long as
     each line is incomplete, so that R knows more is to come.
 -   I like to put the pipe symbol on the end of the line.
+- Sometimes one function call gets very long, in which case you can separate at commas.
 
 ## Total tuberculosis cases by year (some of the years)
 
 ```{r tidying-R-19}
-tb3 %>%
+tb_tidy %>%
   filter(between(year, 1991, 1998)) %>% 
   group_by(year) %>% summarize(total=sum(freq))
 ```
@@ -264,21 +304,29 @@ tb3 %>%
 
 -   try counting up total cases by country:
 
+\small
+
 ```{r tidying-R-20}
-tb3 %>% group_by(iso2) %>% 
+tb_tidy %>% group_by(iso2) %>% 
   summarize(total=sum(freq)) %>% 
   arrange(desc(total))
 ```
+
+\normalsize
 
 ## What years do I have for China?
 
 China started recording in 1995, which is at least part of the problem:
 
+\small
+
 ```{r tidying-R-21}
-tb3 %>% filter(iso2=="CN") %>% 
+tb_tidy %>% filter(iso2 == "CN") %>% 
   group_by(year) %>% 
-  summarize(total=sum(freq))
+  summarize(total = sum(freq))
 ```
+
+\normalsize
 
 ## First year of recording by country?
 
@@ -288,23 +336,32 @@ tb3 %>% filter(iso2=="CN") %>%
 options(dplyr.summarise.inform = FALSE)
 ```
 
+\small
+
 ```{r tidying-R-23}
-tb3 %>% group_by(iso2) %>% 
+tb_tidy %>% group_by(iso2) %>% 
   summarize(first_year=min(year)) %>% 
   count(first_year)
 ```
+
+\normalsize
+
+## Comment
 
 -   So the reason for the big jump in cases is that so many countries
     started recording then, not that there really were more cases.
 
 ## Some Toronto weather data
 
+\footnotesize
+
 ```{r tidying-R-24}
-my_url <- 
-  "http://ritsokiguess.site/STAC32/toronto_weather.csv"
+my_url <- "http://ritsokiguess.site/STAC32/toronto_weather.csv"
 weather <- read_csv(my_url)
 weather
 ```
+
+\normalsize
 
 ## The columns
 
@@ -321,12 +378,16 @@ weather
 Numbers in data frame all temperatures (for different days of the
 month), so first step is
 
+\small
+
 ```{r tidying-R-26}
 weather %>% 
   pivot_longer(d01:d31, names_to="day", 
                values_to="temperature", 
                values_drop_na = TRUE)
 ```
+
+\normalsize
 
 ## `Element`
 
@@ -359,6 +420,8 @@ weather %>%
 
 ## Further improvements 2/2
 
+\small
+
 ```{r tidying-R-30}
 weather %>%
   pivot_longer(d01:d31, names_to="day", 
@@ -368,10 +431,14 @@ weather %>%
   select(-station)
 ```
 
+\normalsize
+
 ## Final step(s)
 
 -   Make year-month-day into proper date.
 -   Keep only date, tmax, tmin:
+
+\small
 
 ```{r tidying-R-32}
 weather %>%
@@ -384,6 +451,8 @@ weather %>%
   mutate(date = as.Date(datestr)) %>%
   select(c(date, tmax, tmin)) -> weather_tidy
 ```
+
+\normalsize
 
 ## Our tidy data frame
 
@@ -438,24 +507,25 @@ to distinguish max and min on graph.
 weather_tidy %>%
   pivot_longer(tmax:tmin, names_to="maxmin", 
                values_to="temperature") %>%
-  ggplot(aes(x = date, y = temperature, colour = maxmin)) + geom_point() +
-      geom_line() -> g
+  ggplot(aes(x = date, y = temperature, colour = maxmin)) + 
+      geom_point() + geom_line() -> g
 ```
 
 ## The plot
 
 ```{r temp-plot}
+#| fig-height: 5
 g
 ```
 
 ## Summary of tidying "verbs"
 
-| Verb           | Purpose                                                                                      |
-|:---------------|:---------------------------------------------------------------------------------------------|
-| `pivot_longer` | Combine columns that measure same thing into one                                             |
-| `pivot_wider`  | Take column that measures one thing under different conditions and put into multiple columns |
-| `separate`     | Turn a column that encodes several variables into several columns                            |
-| `unite`        | Combine several (related) variables into one "combination" variable                          |
+| Verb                | Purpose                                                                                      |
+|:--------------------|:---------------------------------------------------------------------------------------------|
+| `pivot_longer`      | Combine columns that measure same thing into one                                             |
+| `pivot_wider`       | Take column that measures one thing under different conditions and put into multiple columns |
+| `separate`          | Turn a column that encodes several variables into several columns                            |
+| `unite`             | Combine several (related) variables into one "combination" variable                          |
 
 `pivot_longer` and `pivot_wider` are opposites; `separate` and `unite`
 are opposites.
