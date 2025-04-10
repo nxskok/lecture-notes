@@ -13,10 +13,8 @@ library(tidyverse)
 
 ## Vector addition
 
-
-Adds 2 to each element.
-
 - Adding vectors:
+
 ```{r vector-matrix-2}
 u <- c(2, 3, 6, 5, 7)
 v <- c(1, 8, 3, 2, 0)
@@ -153,18 +151,29 @@ M %*% v
 ## Making a genuine matrix
 
 Do this first:
+
+\small
+
 ```{r vector-matrix-14}
 M <- as.matrix(M)
 M
 v 
 ```
 
+\normalsize
+
 and then all is good:
+
+\small
+
 ```{r vector-matrix-15}
 M %*% v
 ```
 
+\normalsize
+
 ## Linear algebra stuff
+
 - To solve system of equations
 $Ax = w$ for $x$:
 ```{r vector-matrix-16}
@@ -181,7 +190,23 @@ A
 solve(A)
 ```
 
-- You can check that the matrix inverse and equation solution are
+## Checking
+
+Matrix inverse:
+
+```{r}
+A %*% solve(A)
+```
+
+System of equations:
+
+```{r}
+A %*% solve(A, w)
+w
+```
+
+
+- Thus, matrix inverse and equation solution are
 correct.
 
 ## Inner product
@@ -226,7 +251,7 @@ A[1,]
 
 
 
-## Eigenvalues and eigenvectors
+## Eigenvalues and eigenvectors 1/2
 
 - For a matrix $A$, these are scalars $\lambda$ and vectors $v$ that solve
 
@@ -240,14 +265,14 @@ e <- eigen(A)
 ```
 
 
-## Eigenvalues and eigenvectors
+## Eigenvalues and eigenvectors 2/2
 
 ```{r}
 e
 ```
 
 
-## To check that the eigenvalues/vectors are correct
+## Eigenvalues/vectors correct?
 
 - $\lambda_1 v_1$: (scalar) multiply first eigenvalue by first eigenvector (in column)
 
