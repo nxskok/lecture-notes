@@ -45,8 +45,10 @@ format:
      df-print: paged
      scrollable: true
      embed-resources: true
+     slide-number: true
   beamer:
     incremental: false
+    theme: Boadilla
 execute:
   echo: true
   freeze: auto

@@ -124,7 +124,8 @@ dance
     response from explanatories:
 
 ```{r bSurvival-5 }
-dance.1 <- coxph(Surv(Months, Quit) ~ Treatment + Age, data = dance)
+dance.1 <- coxph(Surv(Months, Quit) ~ Treatment + Age, 
+                 data = dance)
 ```
 
 ## What does `Surv` output actually look like?
@@ -190,7 +191,6 @@ summary(dance.1)
 
 ## Predictions with `marginaleffects`
 
--   `marginaleffects` knows about survival models (with sufficient care)
 -   Predicted survival probabilities depend on:
     -   the combination of explanatory variables you are looking at
     -   the time at which you are looking at them (when more time has
@@ -227,8 +227,10 @@ as age. The key for `plot_predictions` is to put time *first* in the
 `condition`:
 
 ```{r}
+#| fig.height: 4
 plot_predictions(dance.1, condition = c("Months", "Age"), 
-                 type = "survival")
+                 type = "survival") +
+     coord_cartesian(ylim = c(0, 1)) # y-axis from 0 to 1
 ```
 
 
@@ -261,18 +263,26 @@ cbind(predictions(dance.1, newdata = new, type = "survival")) %>%
 ```
 
 Women of this age have a high (0.879) chance of still dancing after 7
-months if they went to the dance competition, but much lower (0.165) if
+months if they went to the dance competition, but much lower (almost zero) if
 they did not.
 
 ## A graph
 
-In `condition`, put the time variable first, and then the effect of
-interest:
+Again, time first, effect of interest second (as colours):
 
 ```{r}
-plot_predictions(dance.1, condition = c("Months", "Treatment"), 
-                 type = "survival")
+plot_predictions(dance.1, 
+                 condition = c("Months", "Treatment"), 
+                 type = "survival") + 
+  coord_cartesian(ylim = c(0, 1)) -> g
 ```
+
+## The graph
+
+```{r}
+g
+```
+
 
 ## Comments
 
@@ -341,7 +351,7 @@ dance.1 %>% augment(dance) %>%
 \scriptsize
 
 ```{r bSurvival-13}
-lung
+lung %>% select(meal.cal, wt.loss)
 ```
 
 \normalsize
@@ -364,19 +374,20 @@ summary(lung)
 
 ```{r bSurvival-16}
 lung %>% drop_na() -> lung.complete
-summary(lung.complete)
 lung.complete %>%
   select(meal.cal:wt.loss) %>%
-  slice(1:10)
+  slice(1:10) 
 ```
 
-Missing values seem to be gone.
-
 ## Check!
+
+\tiny
 
 ```{r bSurvival-17}
 summary(lung.complete)
 ```
+
+\normalsize
 
 No missing values left.
 
@@ -393,7 +404,8 @@ names(lung.complete)
 -   Event was death, goes with `status` of 2:
 
 ```{r bSurvival-19 }
-lung.1 <- coxph(Surv(time, status == 2) ~ . - inst - time - status,
+lung.1 <- coxph(
+  Surv(time, status == 2) ~ . - inst - time - status,
   data = lung.complete
 )
 ```
@@ -440,12 +452,11 @@ tidy(lung.1) %>% select(term, p.value) %>% arrange(p.value)
 
 ## Model 2
 
-\normalsize
+\small
 
 ```{r bSurvival-23}
 lung.2 <- update(lung.1, . ~ . - age - pat.karno - meal.cal)
 summary(lung.2)
-tidy(lung.2) %>% select(term, p.value)
 ```
 
 \normalsize
@@ -503,7 +514,9 @@ anova(lung.3, lung.2)
 ## Effect of `sex`:
 
 ```{r}
-plot_predictions(lung.3, condition = c("time", "sex"), type = "survival")
+#| fig.height: 5
+plot_predictions(lung.3, condition = c("time", "sex"), 
+                 type = "survival")
 ```
 
 -   Females (`sex = 2`) have better survival than males.
@@ -513,7 +526,9 @@ plot_predictions(lung.3, condition = c("time", "sex"), type = "survival")
 ## Effect of `ph.ecog` score:
 
 ```{r}
-plot_predictions(lung.3, condition = c("time", "ph.ecog"), type = "survival")
+#| fig.height: 5
+plot_predictions(lung.3, condition = c("time", "ph.ecog"), 
+                 type = "survival")
 ```
 
 ## Comments
@@ -523,7 +538,12 @@ plot_predictions(lung.3, condition = c("time", "ph.ecog"), type = "survival")
     of living 500 days, but a patient with a score of 3 has almost no
     chance to survive that long.
 -   Is this for males or females? See over. (The comparison of scores is
-    the same for both.)
+    the same for both.) How many males and females did we observe?
+    
+```{r}
+lung %>% count(sex)
+```
+    
 
 ## Sex and `ph.ecog` score
 
@@ -533,7 +553,7 @@ plot_predictions(lung.3, condition = c("time", "ph.ecog", "sex"), type = "surviv
 
 ## Comments
 
--   I think the previous graph was males.
+-   The previous graph was males. There were more males in the dataset (`sex` of 1).
 -   This pair of graphs shows the effect of `ph.ecog` score (above and
     below on each facet), and the effect of males (left) vs. females
     (right).
@@ -543,9 +563,13 @@ plot_predictions(lung.3, condition = c("time", "ph.ecog", "sex"), type = "surviv
 
 ## The summary again
 
+\small
+
 ```{r}
 summary(lung.3)
 ```
+
+\normalsize
 
 ## Comments
 
@@ -611,7 +635,6 @@ Add squared term in age:
 
 ```{r bSurvival-36}
 y.2 <- coxph(y ~ age + I(age^2), data = d)
-tidy(y.2) %>% select(term, estimate, p.value)
 summary(y.2)
 ```
 

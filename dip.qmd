@@ -25,7 +25,7 @@ stays %>% mutate(stay_days = (discharge - admit) / ddays(1))
 
 but what if we wanted days, hours and minutes?
 
-## Intervals {.smaller}
+## Intervals
 
 ```{r}
 #| echo = FALSE
@@ -55,7 +55,7 @@ A period is exact as long as it has a start and an end (accounting for daylight 
 
 Take `day` of the periods:
 
-\small
+\footnotesize
 
 ```{r dip-5}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
@@ -68,7 +68,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 - Not quite what you think:
 
-\small
+\footnotesize
 
 ```{r dip-6}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
@@ -83,7 +83,7 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 - To get total hours, count each day as 24 hours also:
 
-\small
+\footnotesize
 
 ```{r dip-7}
 stays %>% mutate(stay = as.period(admit %--% discharge)) %>% 
@@ -96,9 +96,13 @@ stays %>% mutate(stay = as.period(admit %--% discharge)) %>%
 
 - What's the difference between `duration` and `period`?
 
+\small
+
 ```{r dip-8}
 stays %>% mutate(stay = as.duration(admit %--% discharge)) 
 ```
+
+\normalsize
 
 - A duration is always a number of *seconds*. 
 - Also shown is an approx equivalent on a more human scale (calculated from seconds).
@@ -186,10 +190,14 @@ d %>% select(name, age, age_years)
 
 ## Which ones are different?
 
+\small
+
 ```{r dip-14}
 d %>% filter(age != age_years) %>% 
   select(name, date_of_birth, age, age_years)
 ```
+
+\normalsize
 
 - these three players were calculated wrong: we got one year too many.
 - Our guessed date, January 10, was too *late*.

@@ -100,7 +100,7 @@ I used `kids.0` here since I want `kids.1` and `kids.2` later.
 
 ##  Scree plot
 ```{r bFactor-3, fig.height=3.5}
-# ggscreeplot(kids.0)
+ggscreeplot(kids.0)
 ```
 
  
@@ -381,9 +381,22 @@ This is very clear.
 
 - We said earlier that the economy was not part of any of our factors:
 
+```{r}
+#| echo: false 
+wid <- getOption("width")
+options(width = 60)
+```
+
+
 ```{r bFactor-23}
 places.3$uniquenesses
 ```
+
+```{r}
+#| echo: false 
+options(width = wid)
+```
+
 
 - The higher the uniqueness, the less the variable concerned is part of any of our factors (and that  maybe another factor is needed to accommodate it).
 - This includes economy and maybe crime.

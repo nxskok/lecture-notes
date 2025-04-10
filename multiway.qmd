@@ -55,14 +55,6 @@ eyewear %>%
 eyes
 ```
 
-## Making tidy data back into a table
-
--   use `pivot_wider`
--   which you can also use to reformat:
-
-```{r bMultiway-3}
-eyes %>% pivot_wider(names_from = gender, values_from = frequency)
-```
 
 ## Modelling
 
@@ -105,6 +97,7 @@ nothing!
 ## Making a graph
 
 ```{r}
+#| fig-height: 5
 ggplot(eyes, aes(x = gender, y = frequency, fill = eyewear)) + 
   geom_col(position = "fill")
 ```
@@ -156,7 +149,6 @@ eyewear2
 eyewear2 %>% 
    pivot_longer(contacts:none, names_to = "eyewear", 
                 values_to = "frequency") -> eyes2
-eyes2
 ```
 
 
@@ -195,6 +187,7 @@ drop1(eyes.3, test = "Chisq")
 ## Graph shows no association
 
 ```{r}
+#| fig-height: 5
 ggplot(eyes2, aes(x = gender, y = frequency, fill = eyewear)) + 
   geom_col(position = "fill")
 ```
@@ -281,6 +274,7 @@ drop1(chest.3, test = "Chisq")
 ## `ecg:bmi`
 
 ```{r}
+#| fig-height: 5
 ggplot(chest, aes(x = bmi, y = count, fill = ecg)) + 
   geom_col(position = "fill")
 ```
@@ -292,6 +286,7 @@ ggplot(chest, aes(x = bmi, y = count, fill = ecg)) +
 ## `ecg:smoke`
 
 ```{r}
+#| fig-height: 5
 ggplot(chest, aes(x = smoke, y = count, fill = ecg)) + 
   geom_col(position = "fill")
 ```
@@ -347,8 +342,14 @@ Seattle     1841         305       201         61
 ```{r bMultiway-16, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/airlines.txt"
 airlines <- read_table(my_url)
+```
+
+## Data, as read in
+
+```{r}
 airlines
 ```
+
 
 ## Tidying
 
@@ -373,11 +374,15 @@ punctual
 ## Proportions delayed by airline
 
 ```{r}
+#| fig-height: 5
 ggplot(punctual, aes(x = airline, y = freq, fill = status)) + 
   geom_col(position = "fill")
 ```
 
+## Shrinking the $y$-axis
+
 ```{r}
+#| fig-height: 5
 ggplot(punctual, aes(x = airline, y = freq, fill = status)) + 
   geom_col(position = "fill") +
   coord_cartesian(ylim = c(0.75, 1))
@@ -396,6 +401,7 @@ We now have *three* categorical variables, so use one of the explanatories (for 
 ## The graph(s)
 
 ```{r}
+#| fig-height: 5
 ggplot(punctual, aes(x = airline, y = freq, fill = status)) +
   geom_col(position = "fill") + facet_wrap(~ airport)
 ```
@@ -403,6 +409,7 @@ ggplot(punctual, aes(x = airline, y = freq, fill = status)) +
 ## Zoom in on the $y$-scale
 
 ```{r}
+#| fig-height: 5
 ggplot(punctual, aes(x = airline, y = freq, fill = status)) +
   geom_col(position = "fill") + facet_wrap(~ airport) +
   coord_cartesian(ylim = c(0.6, 1))
@@ -444,6 +451,8 @@ Stop here, and draw graphs to understand significant results.
 ##   `airline:status`:
 
 ```{r}
+#| fig-height: 5
+
 ggplot(punctual, aes(x = airline, y = freq, fill = status)) + 
   geom_col(position = "fill")
 ```
@@ -457,6 +466,8 @@ ggplot(punctual, aes(x = airline, y = freq, fill = status)) +
 ##   `airport:status`:
 
 ```{r}
+#| fig-height: 5
+
 ggplot(punctual, aes(x = airport, y = freq, fill = status)) + 
   geom_col(position = "fill")
 ```
@@ -471,6 +482,8 @@ ggplot(punctual, aes(x = airport, y = freq, fill = status)) +
 ##   `airport:airline`:
 
 ```{r}
+#| fig-height: 5
+
 ggplot(punctual, aes(x = airport, y = freq, fill = airline)) + 
   geom_col(position = "fill")
 ```
@@ -683,6 +696,8 @@ Finally done!
 ## The graph
 
 ```{r}
+#| fig-height: 5
+
 ggplot(cancer, aes(x = stage, y = freq, fill = survival)) + 
   geom_col(position = "fill")
 ```
@@ -698,6 +713,8 @@ ggplot(cancer, aes(x = stage, y = freq, fill = survival)) +
 ## What about that other interaction?
 
 ```{r}
+#| fig-height: 5
+
 ggplot(cancer, aes(x = stage, y = freq, fill = xray)) + 
   geom_col(position = "fill") + facet_wrap(~ operation)
 ```
