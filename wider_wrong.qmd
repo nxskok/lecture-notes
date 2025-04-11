@@ -13,6 +13,7 @@ library(tidyverse)
 ## Some long data that should be wide
 
 ```{r wider-wrong-1}
+#| echo: false
 d <- tribble(
   ~obs, ~time, ~y,
   1, "pre", 19,
@@ -22,6 +23,9 @@ d <- tribble(
   5, "pre", 15,
   6, "post", 14
 )
+```
+
+```{r}
 d
 ```
 
@@ -32,11 +36,6 @@ d
 -   `pivot_wider`.
 
 ## What happens here?
-
-
-```{r}
-d
-```
 
 ```{r wider-wrong-2}
 d %>% pivot_wider(names_from = time, values_from = y)
@@ -62,6 +61,7 @@ d %>% pivot_wider(names_from = time, values_from = y)
 ## Fixing it up
 
 ```{r wider-wrong-4}
+#| echo: false
 d2 <- tribble(
   ~subject, ~time, ~y,
   1, "pre", 19,
@@ -71,8 +71,12 @@ d2 <- tribble(
   3, "pre", 15,
   3, "post", 14
 )
+```
+
+```{r}
 d2
 ```
+
 
 -   column `subject` shows which subject provided each `pre` and `post`.
 -   when we do `pivot_wider`, now only *3* rows, one per subject.
@@ -87,18 +91,7 @@ d2 %>% pivot_wider(names_from = time, values_from = y)
     and now a `pre` and `post` for each `subject`.
 -   right layout for matched pairs $t$ or to make differences for sign
     test or normal quantile plot.
--   "spaghetti plot" needs data longer, as `d2`.
 
-## Spaghetti plot
-
-```{r wider-wrong-6}
-d2 %>% mutate(time = fct_inorder(time)) %>% 
-  ggplot(aes(x = time, y = y, group = subject)) +
-    geom_point() + geom_line()
-```
-
--   each subject's `y` decreases over time, with subject 1 highest
-    overall.
 
 ## Another example
 
@@ -146,14 +139,3 @@ d3 %>% pivot_wider(names_from = group, values_from = y) %>%
 
 -   in this case, wrong layout, because data values not paired.
 
-## A proper use of list-columns
-
-```{r wider-wrong-11}
-d3 %>% nest_by(group) %>% 
-  summarize(n = nrow(data), 
-            mean_y = mean(data$y), 
-            sd_y = sd(data$y))
-```
-
--   another way to do `group_by` and `summarize` to find stats by group.
--   run this one piece at a time to see what it does.
