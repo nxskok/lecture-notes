@@ -2438,7 +2438,7 @@ window.onload = function() {
 </div>
 </div>
 <ul>
-<li>For UK-format dates with month second, one of these dates is legit, but the other two make no sense.</li>
+<li>For UK-format dates with month second, one of these dates is legit (but wrong), but the other two make no sense.</li>
 </ul>
 </section>
 <section id="our-data-frames-last-column" class="slide level2">
@@ -2598,271 +2598,36 @@ window.onload = function() {
 <li>Default timezone is “Universal Coordinated Time”. Change it via <code>tz=</code> and the name of a timezone:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a><span class="fu">OlsonNames</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1] &quot;Africa/Abidjan&quot;                 &quot;Africa/Accra&quot;                  
-  [3] &quot;Africa/Addis_Ababa&quot;             &quot;Africa/Algiers&quot;                
-  [5] &quot;Africa/Asmara&quot;                  &quot;Africa/Bamako&quot;                 
-  [7] &quot;Africa/Bangui&quot;                  &quot;Africa/Banjul&quot;                 
-  [9] &quot;Africa/Bissau&quot;                  &quot;Africa/Blantyre&quot;               
- [11] &quot;Africa/Brazzaville&quot;             &quot;Africa/Bujumbura&quot;              
- [13] &quot;Africa/Cairo&quot;                   &quot;Africa/Casablanca&quot;             
- [15] &quot;Africa/Ceuta&quot;                   &quot;Africa/Conakry&quot;                
- [17] &quot;Africa/Dakar&quot;                   &quot;Africa/Dar_es_Salaam&quot;          
- [19] &quot;Africa/Djibouti&quot;                &quot;Africa/Douala&quot;                 
- [21] &quot;Africa/El_Aaiun&quot;                &quot;Africa/Freetown&quot;               
- [23] &quot;Africa/Gaborone&quot;                &quot;Africa/Harare&quot;                 
- [25] &quot;Africa/Johannesburg&quot;            &quot;Africa/Juba&quot;                   
- [27] &quot;Africa/Kampala&quot;                 &quot;Africa/Khartoum&quot;               
- [29] &quot;Africa/Kigali&quot;                  &quot;Africa/Kinshasa&quot;               
- [31] &quot;Africa/Lagos&quot;                   &quot;Africa/Libreville&quot;             
- [33] &quot;Africa/Lome&quot;                    &quot;Africa/Luanda&quot;                 
- [35] &quot;Africa/Lubumbashi&quot;              &quot;Africa/Lusaka&quot;                 
- [37] &quot;Africa/Malabo&quot;                  &quot;Africa/Maputo&quot;                 
- [39] &quot;Africa/Maseru&quot;                  &quot;Africa/Mbabane&quot;                
- [41] &quot;Africa/Mogadishu&quot;               &quot;Africa/Monrovia&quot;               
- [43] &quot;Africa/Nairobi&quot;                 &quot;Africa/Ndjamena&quot;               
- [45] &quot;Africa/Niamey&quot;                  &quot;Africa/Nouakchott&quot;             
- [47] &quot;Africa/Ouagadougou&quot;             &quot;Africa/Porto-Novo&quot;             
- [49] &quot;Africa/Sao_Tome&quot;                &quot;Africa/Timbuktu&quot;               
- [51] &quot;Africa/Tripoli&quot;                 &quot;Africa/Tunis&quot;                  
- [53] &quot;Africa/Windhoek&quot;                &quot;America/Adak&quot;                  
- [55] &quot;America/Anchorage&quot;              &quot;America/Anguilla&quot;              
- [57] &quot;America/Antigua&quot;                &quot;America/Araguaina&quot;             
- [59] &quot;America/Argentina/Buenos_Aires&quot; &quot;America/Argentina/Catamarca&quot;   
- [61] &quot;America/Argentina/Cordoba&quot;      &quot;America/Argentina/Jujuy&quot;       
- [63] &quot;America/Argentina/La_Rioja&quot;     &quot;America/Argentina/Mendoza&quot;     
- [65] &quot;America/Argentina/Rio_Gallegos&quot; &quot;America/Argentina/Salta&quot;       
- [67] &quot;America/Argentina/San_Juan&quot;     &quot;America/Argentina/San_Luis&quot;    
- [69] &quot;America/Argentina/Tucuman&quot;      &quot;America/Argentina/Ushuaia&quot;     
- [71] &quot;America/Aruba&quot;                  &quot;America/Asuncion&quot;              
- [73] &quot;America/Atikokan&quot;               &quot;America/Atka&quot;                  
- [75] &quot;America/Bahia&quot;                  &quot;America/Bahia_Banderas&quot;        
- [77] &quot;America/Barbados&quot;               &quot;America/Belem&quot;                 
- [79] &quot;America/Belize&quot;                 &quot;America/Blanc-Sablon&quot;          
- [81] &quot;America/Boa_Vista&quot;              &quot;America/Bogota&quot;                
- [83] &quot;America/Boise&quot;                  &quot;America/Cambridge_Bay&quot;         
- [85] &quot;America/Campo_Grande&quot;           &quot;America/Cancun&quot;                
- [87] &quot;America/Caracas&quot;                &quot;America/Cayenne&quot;               
- [89] &quot;America/Cayman&quot;                 &quot;America/Chicago&quot;               
- [91] &quot;America/Chihuahua&quot;              &quot;America/Ciudad_Juarez&quot;         
- [93] &quot;America/Coral_Harbour&quot;          &quot;America/Costa_Rica&quot;            
- [95] &quot;America/Coyhaique&quot;              &quot;America/Creston&quot;               
- [97] &quot;America/Cuiaba&quot;                 &quot;America/Curacao&quot;               
- [99] &quot;America/Danmarkshavn&quot;           &quot;America/Dawson&quot;                
-[101] &quot;America/Dawson_Creek&quot;           &quot;America/Denver&quot;                
-[103] &quot;America/Detroit&quot;                &quot;America/Dominica&quot;              
-[105] &quot;America/Edmonton&quot;               &quot;America/Eirunepe&quot;              
-[107] &quot;America/El_Salvador&quot;            &quot;America/Ensenada&quot;              
-[109] &quot;America/Fort_Nelson&quot;            &quot;America/Fortaleza&quot;             
-[111] &quot;America/Glace_Bay&quot;              &quot;America/Goose_Bay&quot;             
-[113] &quot;America/Grand_Turk&quot;             &quot;America/Grenada&quot;               
-[115] &quot;America/Guadeloupe&quot;             &quot;America/Guatemala&quot;             
-[117] &quot;America/Guayaquil&quot;              &quot;America/Guyana&quot;                
-[119] &quot;America/Halifax&quot;                &quot;America/Havana&quot;                
-[121] &quot;America/Hermosillo&quot;             &quot;America/Indiana/Indianapolis&quot;  
-[123] &quot;America/Indiana/Knox&quot;           &quot;America/Indiana/Marengo&quot;       
-[125] &quot;America/Indiana/Petersburg&quot;     &quot;America/Indiana/Tell_City&quot;     
-[127] &quot;America/Indiana/Vevay&quot;          &quot;America/Indiana/Vincennes&quot;     
-[129] &quot;America/Indiana/Winamac&quot;        &quot;America/Inuvik&quot;                
-[131] &quot;America/Iqaluit&quot;                &quot;America/Jamaica&quot;               
-[133] &quot;America/Juneau&quot;                 &quot;America/Kentucky/Louisville&quot;   
-[135] &quot;America/Kentucky/Monticello&quot;    &quot;America/Kralendijk&quot;            
-[137] &quot;America/La_Paz&quot;                 &quot;America/Lima&quot;                  
-[139] &quot;America/Los_Angeles&quot;            &quot;America/Lower_Princes&quot;         
-[141] &quot;America/Maceio&quot;                 &quot;America/Managua&quot;               
-[143] &quot;America/Manaus&quot;                 &quot;America/Marigot&quot;               
-[145] &quot;America/Martinique&quot;             &quot;America/Matamoros&quot;             
-[147] &quot;America/Mazatlan&quot;               &quot;America/Menominee&quot;             
-[149] &quot;America/Merida&quot;                 &quot;America/Metlakatla&quot;            
-[151] &quot;America/Mexico_City&quot;            &quot;America/Miquelon&quot;              
-[153] &quot;America/Moncton&quot;                &quot;America/Monterrey&quot;             
-[155] &quot;America/Montevideo&quot;             &quot;America/Montreal&quot;              
-[157] &quot;America/Montserrat&quot;             &quot;America/Nassau&quot;                
-[159] &quot;America/New_York&quot;               &quot;America/Nipigon&quot;               
-[161] &quot;America/Nome&quot;                   &quot;America/Noronha&quot;               
-[163] &quot;America/North_Dakota/Beulah&quot;    &quot;America/North_Dakota/Center&quot;   
-[165] &quot;America/North_Dakota/New_Salem&quot; &quot;America/Nuuk&quot;                  
-[167] &quot;America/Ojinaga&quot;                &quot;America/Panama&quot;                
-[169] &quot;America/Pangnirtung&quot;            &quot;America/Paramaribo&quot;            
-[171] &quot;America/Phoenix&quot;                &quot;America/Port_of_Spain&quot;         
-[173] &quot;America/Port-au-Prince&quot;         &quot;America/Porto_Acre&quot;            
-[175] &quot;America/Porto_Velho&quot;            &quot;America/Puerto_Rico&quot;           
-[177] &quot;America/Punta_Arenas&quot;           &quot;America/Rainy_River&quot;           
-[179] &quot;America/Rankin_Inlet&quot;           &quot;America/Recife&quot;                
-[181] &quot;America/Regina&quot;                 &quot;America/Resolute&quot;              
-[183] &quot;America/Rio_Branco&quot;             &quot;America/Santa_Isabel&quot;          
-[185] &quot;America/Santarem&quot;               &quot;America/Santiago&quot;              
-[187] &quot;America/Santo_Domingo&quot;          &quot;America/Sao_Paulo&quot;             
-[189] &quot;America/Scoresbysund&quot;           &quot;America/Shiprock&quot;              
-[191] &quot;America/Sitka&quot;                  &quot;America/St_Barthelemy&quot;         
-[193] &quot;America/St_Johns&quot;               &quot;America/St_Kitts&quot;              
-[195] &quot;America/St_Lucia&quot;               &quot;America/St_Thomas&quot;             
-[197] &quot;America/St_Vincent&quot;             &quot;America/Swift_Current&quot;         
-[199] &quot;America/Tegucigalpa&quot;            &quot;America/Thule&quot;                 
-[201] &quot;America/Thunder_Bay&quot;            &quot;America/Tijuana&quot;               
-[203] &quot;America/Toronto&quot;                &quot;America/Tortola&quot;               
-[205] &quot;America/Vancouver&quot;              &quot;America/Virgin&quot;                
-[207] &quot;America/Whitehorse&quot;             &quot;America/Winnipeg&quot;              
-[209] &quot;America/Yakutat&quot;                &quot;America/Yellowknife&quot;           
-[211] &quot;Antarctica/Casey&quot;               &quot;Antarctica/Davis&quot;              
-[213] &quot;Antarctica/DumontDUrville&quot;      &quot;Antarctica/Macquarie&quot;          
-[215] &quot;Antarctica/Mawson&quot;              &quot;Antarctica/McMurdo&quot;            
-[217] &quot;Antarctica/Palmer&quot;              &quot;Antarctica/Rothera&quot;            
-[219] &quot;Antarctica/Syowa&quot;               &quot;Antarctica/Troll&quot;              
-[221] &quot;Antarctica/Vostok&quot;              &quot;Arctic/Longyearbyen&quot;           
-[223] &quot;Asia/Aden&quot;                      &quot;Asia/Almaty&quot;                   
-[225] &quot;Asia/Amman&quot;                     &quot;Asia/Anadyr&quot;                   
-[227] &quot;Asia/Aqtau&quot;                     &quot;Asia/Aqtobe&quot;                   
-[229] &quot;Asia/Ashgabat&quot;                  &quot;Asia/Atyrau&quot;                   
-[231] &quot;Asia/Baghdad&quot;                   &quot;Asia/Bahrain&quot;                  
-[233] &quot;Asia/Baku&quot;                      &quot;Asia/Bangkok&quot;                  
-[235] &quot;Asia/Barnaul&quot;                   &quot;Asia/Beirut&quot;                   
-[237] &quot;Asia/Bishkek&quot;                   &quot;Asia/Brunei&quot;                   
-[239] &quot;Asia/Chita&quot;                     &quot;Asia/Choibalsan&quot;               
-[241] &quot;Asia/Chongqing&quot;                 &quot;Asia/Colombo&quot;                  
-[243] &quot;Asia/Damascus&quot;                  &quot;Asia/Dhaka&quot;                    
-[245] &quot;Asia/Dili&quot;                      &quot;Asia/Dubai&quot;                    
-[247] &quot;Asia/Dushanbe&quot;                  &quot;Asia/Famagusta&quot;                
-[249] &quot;Asia/Gaza&quot;                      &quot;Asia/Harbin&quot;                   
-[251] &quot;Asia/Hebron&quot;                    &quot;Asia/Ho_Chi_Minh&quot;              
-[253] &quot;Asia/Hong_Kong&quot;                 &quot;Asia/Hovd&quot;                     
-[255] &quot;Asia/Irkutsk&quot;                   &quot;Asia/Istanbul&quot;                 
-[257] &quot;Asia/Jakarta&quot;                   &quot;Asia/Jayapura&quot;                 
-[259] &quot;Asia/Jerusalem&quot;                 &quot;Asia/Kabul&quot;                    
-[261] &quot;Asia/Kamchatka&quot;                 &quot;Asia/Karachi&quot;                  
-[263] &quot;Asia/Kashgar&quot;                   &quot;Asia/Kathmandu&quot;                
-[265] &quot;Asia/Khandyga&quot;                  &quot;Asia/Kolkata&quot;                  
-[267] &quot;Asia/Krasnoyarsk&quot;               &quot;Asia/Kuala_Lumpur&quot;             
-[269] &quot;Asia/Kuching&quot;                   &quot;Asia/Kuwait&quot;                   
-[271] &quot;Asia/Macau&quot;                     &quot;Asia/Magadan&quot;                  
-[273] &quot;Asia/Makassar&quot;                  &quot;Asia/Manila&quot;                   
-[275] &quot;Asia/Muscat&quot;                    &quot;Asia/Nicosia&quot;                  
-[277] &quot;Asia/Novokuznetsk&quot;              &quot;Asia/Novosibirsk&quot;              
-[279] &quot;Asia/Omsk&quot;                      &quot;Asia/Oral&quot;                     
-[281] &quot;Asia/Phnom_Penh&quot;                &quot;Asia/Pontianak&quot;                
-[283] &quot;Asia/Pyongyang&quot;                 &quot;Asia/Qatar&quot;                    
-[285] &quot;Asia/Qostanay&quot;                  &quot;Asia/Qyzylorda&quot;                
-[287] &quot;Asia/Riyadh&quot;                    &quot;Asia/Sakhalin&quot;                 
-[289] &quot;Asia/Samarkand&quot;                 &quot;Asia/Seoul&quot;                    
-[291] &quot;Asia/Shanghai&quot;                  &quot;Asia/Singapore&quot;                
-[293] &quot;Asia/Srednekolymsk&quot;             &quot;Asia/Taipei&quot;                   
-[295] &quot;Asia/Tashkent&quot;                  &quot;Asia/Tbilisi&quot;                  
-[297] &quot;Asia/Tehran&quot;                    &quot;Asia/Tel_Aviv&quot;                 
-[299] &quot;Asia/Thimphu&quot;                   &quot;Asia/Tokyo&quot;                    
-[301] &quot;Asia/Tomsk&quot;                     &quot;Asia/Ulaanbaatar&quot;              
-[303] &quot;Asia/Urumqi&quot;                    &quot;Asia/Ust-Nera&quot;                 
-[305] &quot;Asia/Vientiane&quot;                 &quot;Asia/Vladivostok&quot;              
-[307] &quot;Asia/Yakutsk&quot;                   &quot;Asia/Yangon&quot;                   
-[309] &quot;Asia/Yekaterinburg&quot;             &quot;Asia/Yerevan&quot;                  
-[311] &quot;Atlantic/Azores&quot;                &quot;Atlantic/Bermuda&quot;              
-[313] &quot;Atlantic/Canary&quot;                &quot;Atlantic/Cape_Verde&quot;           
-[315] &quot;Atlantic/Faroe&quot;                 &quot;Atlantic/Jan_Mayen&quot;            
-[317] &quot;Atlantic/Madeira&quot;               &quot;Atlantic/Reykjavik&quot;            
-[319] &quot;Atlantic/South_Georgia&quot;         &quot;Atlantic/St_Helena&quot;            
-[321] &quot;Atlantic/Stanley&quot;               &quot;Australia/Adelaide&quot;            
-[323] &quot;Australia/Brisbane&quot;             &quot;Australia/Broken_Hill&quot;         
-[325] &quot;Australia/Canberra&quot;             &quot;Australia/Currie&quot;              
-[327] &quot;Australia/Darwin&quot;               &quot;Australia/Eucla&quot;               
-[329] &quot;Australia/Hobart&quot;               &quot;Australia/Lindeman&quot;            
-[331] &quot;Australia/Lord_Howe&quot;            &quot;Australia/Melbourne&quot;           
-[333] &quot;Australia/Perth&quot;                &quot;Australia/Sydney&quot;              
-[335] &quot;Australia/Yancowinna&quot;           &quot;CET&quot;                           
-[337] &quot;CST6CDT&quot;                        &quot;EET&quot;                           
-[339] &quot;EST&quot;                            &quot;EST5EDT&quot;                       
-[341] &quot;Etc/GMT&quot;                        &quot;Etc/GMT-0&quot;                     
-[343] &quot;Etc/GMT-1&quot;                      &quot;Etc/GMT-10&quot;                    
-[345] &quot;Etc/GMT-11&quot;                     &quot;Etc/GMT-12&quot;                    
-[347] &quot;Etc/GMT-13&quot;                     &quot;Etc/GMT-14&quot;                    
-[349] &quot;Etc/GMT-2&quot;                      &quot;Etc/GMT-3&quot;                     
-[351] &quot;Etc/GMT-4&quot;                      &quot;Etc/GMT-5&quot;                     
-[353] &quot;Etc/GMT-6&quot;                      &quot;Etc/GMT-7&quot;                     
-[355] &quot;Etc/GMT-8&quot;                      &quot;Etc/GMT-9&quot;                     
-[357] &quot;Etc/GMT+0&quot;                      &quot;Etc/GMT+1&quot;                     
-[359] &quot;Etc/GMT+10&quot;                     &quot;Etc/GMT+11&quot;                    
-[361] &quot;Etc/GMT+12&quot;                     &quot;Etc/GMT+2&quot;                     
-[363] &quot;Etc/GMT+3&quot;                      &quot;Etc/GMT+4&quot;                     
-[365] &quot;Etc/GMT+5&quot;                      &quot;Etc/GMT+6&quot;                     
-[367] &quot;Etc/GMT+7&quot;                      &quot;Etc/GMT+8&quot;                     
-[369] &quot;Etc/GMT+9&quot;                      &quot;Etc/GMT0&quot;                      
-[371] &quot;Etc/Greenwich&quot;                  &quot;Etc/UCT&quot;                       
-[373] &quot;Etc/Universal&quot;                  &quot;Etc/UTC&quot;                       
-[375] &quot;Etc/Zulu&quot;                       &quot;Europe/Amsterdam&quot;              
-[377] &quot;Europe/Andorra&quot;                 &quot;Europe/Astrakhan&quot;              
-[379] &quot;Europe/Athens&quot;                  &quot;Europe/Belfast&quot;                
-[381] &quot;Europe/Belgrade&quot;                &quot;Europe/Berlin&quot;                 
-[383] &quot;Europe/Bratislava&quot;              &quot;Europe/Brussels&quot;               
-[385] &quot;Europe/Bucharest&quot;               &quot;Europe/Budapest&quot;               
-[387] &quot;Europe/Busingen&quot;                &quot;Europe/Chisinau&quot;               
-[389] &quot;Europe/Copenhagen&quot;              &quot;Europe/Dublin&quot;                 
-[391] &quot;Europe/Gibraltar&quot;               &quot;Europe/Guernsey&quot;               
-[393] &quot;Europe/Helsinki&quot;                &quot;Europe/Isle_of_Man&quot;            
-[395] &quot;Europe/Istanbul&quot;                &quot;Europe/Jersey&quot;                 
-[397] &quot;Europe/Kaliningrad&quot;             &quot;Europe/Kirov&quot;                  
-[399] &quot;Europe/Kyiv&quot;                    &quot;Europe/Lisbon&quot;                 
-[401] &quot;Europe/Ljubljana&quot;               &quot;Europe/London&quot;                 
-[403] &quot;Europe/Luxembourg&quot;              &quot;Europe/Madrid&quot;                 
-[405] &quot;Europe/Malta&quot;                   &quot;Europe/Mariehamn&quot;              
-[407] &quot;Europe/Minsk&quot;                   &quot;Europe/Monaco&quot;                 
-[409] &quot;Europe/Moscow&quot;                  &quot;Europe/Nicosia&quot;                
-[411] &quot;Europe/Oslo&quot;                    &quot;Europe/Paris&quot;                  
-[413] &quot;Europe/Podgorica&quot;               &quot;Europe/Prague&quot;                 
-[415] &quot;Europe/Riga&quot;                    &quot;Europe/Rome&quot;                   
-[417] &quot;Europe/Samara&quot;                  &quot;Europe/San_Marino&quot;             
-[419] &quot;Europe/Sarajevo&quot;                &quot;Europe/Saratov&quot;                
-[421] &quot;Europe/Simferopol&quot;              &quot;Europe/Skopje&quot;                 
-[423] &quot;Europe/Sofia&quot;                   &quot;Europe/Stockholm&quot;              
-[425] &quot;Europe/Tallinn&quot;                 &quot;Europe/Tirane&quot;                 
-[427] &quot;Europe/Tiraspol&quot;                &quot;Europe/Ulyanovsk&quot;              
-[429] &quot;Europe/Vaduz&quot;                   &quot;Europe/Vatican&quot;                
-[431] &quot;Europe/Vienna&quot;                  &quot;Europe/Vilnius&quot;                
-[433] &quot;Europe/Volgograd&quot;               &quot;Europe/Warsaw&quot;                 
-[435] &quot;Europe/Zagreb&quot;                  &quot;Europe/Zurich&quot;                 
-[437] &quot;Factory&quot;                        &quot;GMT&quot;                           
-[439] &quot;HST&quot;                            &quot;Indian/Antananarivo&quot;           
-[441] &quot;Indian/Chagos&quot;                  &quot;Indian/Christmas&quot;              
-[443] &quot;Indian/Cocos&quot;                   &quot;Indian/Comoro&quot;                 
-[445] &quot;Indian/Kerguelen&quot;               &quot;Indian/Mahe&quot;                   
-[447] &quot;Indian/Maldives&quot;                &quot;Indian/Mauritius&quot;              
-[449] &quot;Indian/Mayotte&quot;                 &quot;Indian/Reunion&quot;                
-[451] &quot;MET&quot;                            &quot;MST&quot;                           
-[453] &quot;MST7MDT&quot;                        &quot;Pacific/Apia&quot;                  
-[455] &quot;Pacific/Auckland&quot;               &quot;Pacific/Bougainville&quot;          
-[457] &quot;Pacific/Chatham&quot;                &quot;Pacific/Chuuk&quot;                 
-[459] &quot;Pacific/Easter&quot;                 &quot;Pacific/Efate&quot;                 
-[461] &quot;Pacific/Fakaofo&quot;                &quot;Pacific/Fiji&quot;                  
-[463] &quot;Pacific/Funafuti&quot;               &quot;Pacific/Galapagos&quot;             
-[465] &quot;Pacific/Gambier&quot;                &quot;Pacific/Guadalcanal&quot;           
-[467] &quot;Pacific/Guam&quot;                   &quot;Pacific/Honolulu&quot;              
-[469] &quot;Pacific/Johnston&quot;               &quot;Pacific/Kanton&quot;                
-[471] &quot;Pacific/Kiritimati&quot;             &quot;Pacific/Kosrae&quot;                
-[473] &quot;Pacific/Kwajalein&quot;              &quot;Pacific/Majuro&quot;                
-[475] &quot;Pacific/Marquesas&quot;              &quot;Pacific/Midway&quot;                
-[477] &quot;Pacific/Nauru&quot;                  &quot;Pacific/Niue&quot;                  
-[479] &quot;Pacific/Norfolk&quot;                &quot;Pacific/Noumea&quot;                
-[481] &quot;Pacific/Pago_Pago&quot;              &quot;Pacific/Palau&quot;                 
-[483] &quot;Pacific/Pitcairn&quot;               &quot;Pacific/Pohnpei&quot;               
-[485] &quot;Pacific/Port_Moresby&quot;           &quot;Pacific/Rarotonga&quot;             
-[487] &quot;Pacific/Saipan&quot;                 &quot;Pacific/Samoa&quot;                 
-[489] &quot;Pacific/Tahiti&quot;                 &quot;Pacific/Tarawa&quot;                
-[491] &quot;Pacific/Tongatapu&quot;              &quot;Pacific/Wake&quot;                  
-[493] &quot;Pacific/Wallis&quot;                 &quot;Pacific/Yap&quot;                   
-[495] &quot;PST8PDT&quot;                        &quot;UTC&quot;                           
-[497] &quot;WET&quot;                           
-attr(,&quot;Version&quot;)
-[1] &quot;2025b&quot;</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text, <span class="at">tz =</span> <span class="st">&quot;America/Toronto&quot;</span>)) <span class="ot">-&gt;</span> dd</span>
-<span id="cb26-3"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">zone =</span> <span class="fu">tz</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">dt =</span> <span class="fu">ymd_hms</span>(text, <span class="at">tz =</span> <span class="st">&quot;America/Toronto&quot;</span>)) <span class="ot">-&gt;</span> dd</span>
+<span id="cb24-3"><a href></a>dd <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">zone =</span> <span class="fu">tz</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["text"],"name":[1],"type":["chr"],"align":["left"]},{"label":["dt"],"name":[2],"type":["dttm"],"align":["right"]},{"label":["zone"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1970-01-01 07:50:01","2":"1970-01-01 07:50:01","3":"America/Toronto"},{"1":"2007-09-04 15:30:00","2":"2007-09-04 15:30:00","3":"America/Toronto"},{"1":"1940-04-15 06:45:10","2":"1940-04-15 06:45:10","3":"America/Toronto"},{"1":"2016-02-10 12:26:40","2":"2016-02-10 12:26:40","3":"America/Toronto"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+</div>
+</div>
+</section>
+<section id="finding-a-timezone-name" class="slide level2">
+<h2>Finding a timezone name</h2>
+<ul>
+<li>Use <code>OlsonNames()</code>. Some of them:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href></a><span class="fu">sample</span>(<span class="fu">OlsonNames</span>(), <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] &quot;Pacific/Chatham&quot;               
+ [2] &quot;America/Swift_Current&quot;         
+ [3] &quot;America/Dominica&quot;              
+ [4] &quot;Antarctica/Palmer&quot;             
+ [5] &quot;Europe/Copenhagen&quot;             
+ [6] &quot;Asia/Hong_Kong&quot;                
+ [7] &quot;Antarctica/DumontDUrville&quot;     
+ [8] &quot;America/North_Dakota/New_Salem&quot;
+ [9] &quot;Europe/Minsk&quot;                  
+[10] &quot;America/St_Lucia&quot;              </code></pre>
 </div>
 </div>
 </section>
@@ -2875,11 +2640,9 @@ attr(,&quot;Version&quot;)
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
 <span id="cb27-2"><a href></a>  <span class="fu">select</span>(<span class="sc">-</span>text) <span class="sc">%&gt;%</span></span>
 <span id="cb27-3"><a href></a>  <span class="fu">mutate</span>(</span>
-<span id="cb27-4"><a href></a>    <span class="at">h =</span> <span class="fu">hour</span>(dt),</span>
-<span id="cb27-5"><a href></a>    <span class="at">sec =</span> <span class="fu">second</span>(dt),</span>
-<span id="cb27-6"><a href></a>    <span class="at">min =</span> <span class="fu">minute</span>(dt),</span>
-<span id="cb27-7"><a href></a>    <span class="at">zone =</span> <span class="fu">tz</span>(dt)</span>
-<span id="cb27-8"><a href></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-4"><a href></a>    <span class="at">h =</span> <span class="fu">hour</span>(dt), <span class="at">sec =</span> <span class="fu">second</span>(dt),</span>
+<span id="cb27-5"><a href></a>    <span class="at">min =</span> <span class="fu">minute</span>(dt), <span class="at">zone =</span> <span class="fu">tz</span>(dt)</span>
+<span id="cb27-6"><a href></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   dt                      h   sec   min zone           
@@ -2905,7 +2668,9 @@ attr(,&quot;Version&quot;)
 </div>
 </div>
 </div>
-<p>In more detail:</p>
+</section>
+<section id="in-more-detail" class="slide level2">
+<h2>In more detail</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href></a>dd <span class="sc">%&gt;%</span></span>
 <span id="cb30-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">oz =</span> <span class="fu">with_tz</span>(dt, <span class="st">&quot;Australia/Sydney&quot;</span>)) <span class="sc">%&gt;%</span></span>
@@ -2915,6 +2680,7 @@ attr(,&quot;Version&quot;)
 [3] &quot;1940-04-15 21:45:10 AEST&quot; &quot;2016-02-11 04:26:40 AEDT&quot;</code></pre>
 </div>
 </div>
+<p>“Australian Eastern Time”, Standard or Daylight. Note when the Australian summer is.</p>
 </section>
 <section id="how-long-between-date-times" class="slide level2">
 <h2>How long between date-times?</h2>

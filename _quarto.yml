@@ -30,6 +30,7 @@ project:
     - readfile.qmd
     - regression.qmd
     - reports.qmd
+    - rstan.qmd
     - running.qmd
     - simboot.qmd
     - stan.qmd
