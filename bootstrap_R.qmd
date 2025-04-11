@@ -37,6 +37,17 @@ jays <- read_csv("http://ritsokiguess.site/datafiles/jays15-home.csv")
 set.seed(457299)
 ```
 
+
+\small
+
+```{r}
+#| echo: false
+
+wid <- getOption("width")
+options(width = 60)
+```
+
+
 ```{r bootstrap-R-2}
 jays$attendance
 ```
@@ -48,13 +59,28 @@ s <- sample(jays$attendance, replace = TRUE)
 s
 ```
 
+\normalsize
+
+## Sorting
+
 -   It is easier to see what is happening if we sort both the actual
     attendances and the bootstrap sample:
+
+\small
 
 ```{r}
 sort(jays$attendance)
 sort(s)
 ```
+
+\normalsize
+
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
 
 ## Getting mean of bootstrap sample
 
@@ -95,7 +121,8 @@ tibble(sim = 1:4)
 ```{r bootstrap-R-7}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
-  mutate(sample = list(sample(jays$attendance, replace = TRUE)))
+  mutate(sample = list(sample(jays$attendance, 
+                              replace = TRUE)))
 ```
 
 -   Each row of our dataframe contains *all* of a bootstrap sample of 25
@@ -108,7 +135,8 @@ tibble(sim = 1:4) %>%
 ```{r bootstrap-R-8}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
-  mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>%   
+  mutate(sample = list(sample(jays$attendance, 
+                              replace = TRUE))) %>%   
   mutate(my_mean = mean(sample))
 ```
 
@@ -124,12 +152,13 @@ tibble(sim = 1:4) %>%
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3)  -> g
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3) -> g
 ```
 
 ## The (pointless) histogram
 
 ```{r bootstrap-R-10}
+#| fig-height: 5
 g
 ```
 
@@ -140,7 +169,8 @@ g
 ```{r bootstrap-R-11}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
-  mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
+  mutate(sample = list(sample(jays$attendance, 
+                              replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
   ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
 ```
@@ -148,6 +178,7 @@ tibble(sim = 1:1000) %>%
 ## The (better) histogram
 
 ```{r bootstrap-R-12}
+#| fig-height: 5
 g
 ```
 
@@ -169,7 +200,8 @@ g
 ```{r bootstrap-R-13}
 tibble(sim = 1:4) %>% 
   rowwise() %>% 
-  mutate(sample = list(sample(jays$attendance, replace = TRUE)))
+  mutate(sample = list(sample(jays$attendance, 
+                              replace = TRUE)))
 ```
 
 ## Comments on the code 2/2
@@ -193,10 +225,11 @@ tibble(sim = 1:4) %>%
 ```{r bootstrap-R-14, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
-kids
 ```
 
 ```{r bootstrap-R-15}
+#| fig-height: 5
+
 ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 ```
 
@@ -204,14 +237,19 @@ ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 
 -   Use `filter` to select rows where something is true:
 
+\small
+
 ```{r bootstrap-R-16}
 kids %>% filter(group == "c") -> controls
 controls
 ```
 
+\normalsize
+
 ## Bootstrap these
 
 ```{r bootstrap-R-17}
+#| fig-height: 4
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(controls$score, replace = TRUE))) %>% 
@@ -222,12 +260,13 @@ tibble(sim = 1:1000) %>%
 ## ... and the treatment group:
 
 ```{r bootstrap-R-19}
+#| fig-height: 4
 kids %>% filter(group=="t") -> treats
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 15) 
+  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) 
 ```
 
 ## Comments

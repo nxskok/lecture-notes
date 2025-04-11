@@ -254,6 +254,8 @@ my_url <- "http://ritsokiguess.site/datafiles/languages.txt"
 
 ## Making a distance object
 
+\small
+
 ```{r bCluster-9, size="footnotesize"}
 number.d %>%
   select(-la) %>%
@@ -261,6 +263,8 @@ number.d %>%
 d
 class(d)
 ```
+
+\normalsize
 
 ## Cluster analysis and dendrogram
 
@@ -283,13 +287,15 @@ plot(d.hc)
 -   Finally, Hungarian and Finnish joined to each other and everything
     else.
 
-## Clustering process
+## Clustering process 1/2
 
 \small
 
 ```{r bCluster-11 }
 enframe(d.hc$labels)
 ```
+
+## Clustering process 2/2
 
 ```{r}
 d.hc$merge
@@ -620,7 +626,6 @@ set.seed(457299)
 vital.s %>% select(-country) %>% 
   kmeans(3) -> vital.km3
 vital.km3
-names(vital.km3)
 ```
 
 A lot of output, so look at these individually.
@@ -963,7 +968,8 @@ g <- ggplot(d, aes(
   x = LD1, y = LD2, colour = factor(cluster),
   label = country
 )) + geom_point() +
-  geom_text_repel(size = 2, max.overlaps = Inf) + guides(colour = "none")
+  geom_text_repel(size = 2, max.overlaps = Inf) + 
+  guides(colour = "none")
 ```
 
 ## The plot

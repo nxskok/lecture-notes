@@ -76,7 +76,7 @@ tibble(usdates = c("05/27/2012", "01/03/2016", "12/31/2015")) %>%
   mutate(uk = dmy(usdates))
 ```
 
-- For UK-format dates with month second, one of these dates is legit,
+- For UK-format dates with month second, one of these dates is legit (but wrong),
 but the other two make no sense.
 
 ## Our data frame's last column:
@@ -178,16 +178,35 @@ dd %>% mutate(dt = ymd_hms(text)) %>% pull(dt)
 - Default timezone is “Universal Coordinated Time”. Change it via `tz=`
 and the name of a timezone: 
 
-```{r}
-OlsonNames()
-```
-
-
 ```{r dates-and-times-17, paged.print=T}
 dd %>% 
   mutate(dt = ymd_hms(text, tz = "America/Toronto")) -> dd
 dd %>% mutate(zone = tz(dt))
 ```
+
+## Finding a timezone name
+
+- Use `OlsonNames()`. Some of them:
+
+
+```{r}
+#| echo: false
+
+wid <- getOption("width")
+options(width = 60)
+```
+
+
+```{r}
+sample(OlsonNames(), 10)
+```
+
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
 
 ## Extracting time parts
 - As you would expect: 
@@ -195,10 +214,8 @@ dd %>% mutate(zone = tz(dt))
 dd %>%
   select(-text) %>%
   mutate(
-    h = hour(dt),
-    sec = second(dt),
-    min = minute(dt),
-    zone = tz(dt)
+    h = hour(dt), sec = second(dt),
+    min = minute(dt), zone = tz(dt)
   )
 ```
 
@@ -210,7 +227,7 @@ dd %>%
   mutate(oz = with_tz(dt, "Australia/Sydney"))
 ```
 
-In more detail: 
+## In more detail 
 
 ```{r dates-and-times-20}
 dd %>%
@@ -218,7 +235,11 @@ dd %>%
   pull(oz)
 ```
 
+"Australian Eastern Time", Standard or Daylight. Note when the Australian summer is.
+
+
 ## How long between date-times?
+
 - We may need to calculate the time between two events. For example,
 these are the dates and times that some patients were admitted to
 and discharged from a hospital:

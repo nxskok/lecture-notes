@@ -2,9 +2,6 @@
 title: "Bayesian Statistics with Stan"
 execute:
   echo: true
-format:
-  revealjs:
-    scrollable: true
 ---
 
 ## Packages for this section
@@ -28,8 +25,9 @@ set.seed(457299)
 
 ```{r}
 #| eval: false
-install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev",
-                                       "https://cloud.r-project.org"))
+install.packages("cmdstanr", 
+                 repos = c("https://stan-dev.r-universe.dev",
+                           "https://cloud.r-project.org"))
 ```
 
 -   `posterior` and `bayesplot`, from the same place:
@@ -37,10 +35,12 @@ install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev",
 ```{r}
 #| eval: false
 
-install.packages("posterior", repos = c("https://stan-dev.r-universe.dev",
-                                        "https://cloud.r-project.org"))
-install.packages("bayesplot", repos = c("https://stan-dev.r-universe.dev",
-                                        "https://cloud.r-project.org"))
+install.packages("posterior", 
+                 repos = c("https://stan-dev.r-universe.dev",
+                           "https://cloud.r-project.org"))
+install.packages("bayesplot", 
+                 repos = c("https://stan-dev.r-universe.dev",
+                           "https://cloud.r-project.org"))
 ```
 
 ## Installation 2/2
@@ -205,7 +205,7 @@ poisson1_data <- list(x = x)
 poisson1_data
 ```
 
--   sample
+-   sample (output is long)
 
 ```{r rstan-10}
 poisson1_fit <- poisson1$sample(data = poisson1_data)
@@ -213,9 +213,13 @@ poisson1_fit <- poisson1$sample(data = poisson1_data)
 
 ## The output
 
+\small
+
 ```{r rstan-11}
 poisson1_fit
 ```
+
+\normalsize
 
 ## Comments
 
@@ -275,13 +279,18 @@ Output should be the same (to within randomness):
 poisson2_fit <- poisson2$sample(data = poisson2_data)
 ```
 
+\small
+
 ```{r}
 poisson2_fit
 ```
 
+\normalsize
+
 ## Picture of posterior
 
 ```{r rstan-16}
+#| fig-height: 5
 mcmc_hist(poisson2_fit$draws("lambda"), binwidth = 0.25)
 ```
 
@@ -290,7 +299,7 @@ mcmc_hist(poisson2_fit$draws("lambda"), binwidth = 0.25)
 A little awkward at first:
 
 ```{r rstan-17}
-poisson2_fit$draws()
+str(poisson2_fit$draws())
 ```
 
 A 3-dimensional array. A dataframe would be much better.
@@ -346,6 +355,7 @@ ggplot(d, aes(x = xsim)) + geom_bar() +
 ## The plot
 
 ```{r rstan-22}
+#| fig-height: 5
 g
 ```
 
@@ -369,12 +379,16 @@ posterior), but the other points seem pretty well on a line.
 
 Recall the jumping rats data:
 
+\small
+
 ```{r rstan-24, message=F}
 my_url <- 
   "http://ritsokiguess.site/datafiles/jumping.txt"
 rats0 <- read_delim(my_url, " ")
 rats0
 ```
+
+\normalsize
 
 ## Our aims here
 
@@ -387,7 +401,7 @@ rats0
 -   Ask whether the posterior distributions of these means are
     sufficiently different.
 
-## Numbering the groups
+## Numbering the groups 1/2
 
 -   Stan doesn't handle categorical variables (everything is `real` or
     `int`).
@@ -399,6 +413,11 @@ rats0 %>% mutate(
   group_fct = fct_inorder(group),
   group_no = as.integer(group_fct)
 ) -> rats
+```
+
+## Numbering the groups 2/2
+
+```{r}
 rats
 ```
 
@@ -555,17 +574,22 @@ anova_fit
 ## Plotting the posterior distributions for the `mu`
 
 ```{r rstan-29}
+#| fig-height: 5
 mcmc_hist(anova_fit$draws("mu"), binwidth = 5)
 ```
 
 ## Extract the sampled values
+
+\small
 
 ```{r anova_ext}
 as_draws_df(anova_fit$draws()) %>% as_tibble() -> anova_draws
 anova_draws
 ```
 
-## estimated probability that $\mu_3 > \mu_1$
+\normalsize
+
+## Estimated probability that $\mu_3 > \mu_1$
 
 ```{r rstan-30}
 anova_draws %>% 
@@ -574,6 +598,16 @@ anova_draws %>%
 ```
 
 High jumping group almost certainly has larger mean than control group.
+
+## Compare lowjump and control the same way
+
+```{r rstan-30a}
+anova_draws %>% 
+  count(`mu[2]`>`mu[1]`) %>% 
+  mutate(prob = n/sum(n))
+```
+
+Likely that lowjump mean higher than control mean, but not a certainty.
 
 ## More organizing
 
@@ -611,10 +645,16 @@ ggplot(sims, aes(x = bone_density, fill = group)) +
 Randomly sample from posterior means and SDs in `sims`. There are 12000
 rows in `sims`:
 
+
+\footnotesize
+
 ```{r rstan-34}
-sims %>% mutate(sim_data = rnorm(12000, bone_density, sigma)) -> ppd
+sims %>% mutate(sim_data = rnorm(12000, bone_density,
+                                 sigma)) -> ppd
 ppd
 ```
+
+\normalsize
 
 ## Compare posterior predictive distribution with actual data
 
