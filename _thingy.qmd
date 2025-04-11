@@ -1,0 +1,24 @@
+---
+title: "my docco"
+author: "me"
+format: html
+editor: visual
+---
+
+## Packages
+
+```{r}
+library(tidyverse)
+```
+
+## Weights of chickens
+
+```{r}
+chickwts
+```
+
+## A boxplot
+
+```{r}
+ggplot(chickwts, aes(x = feed, y = weight)) + geom_boxplot()
+```

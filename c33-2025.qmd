@@ -18,7 +18,8 @@ ideas:
     -   2-sample
     -   matched pairs
 -   assumptions: `assumptions_c33`
--   bootstrap with CIs and simulation (same or different sections?) `simboot`
+-   bootstrap with CIs and simulation (same or different sections?)
+    `simboot`
 -   power rewritten: `power_c33`
 -   sign test, mood median
 -   anova as now
