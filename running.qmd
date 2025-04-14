@@ -16,13 +16,13 @@ Click Log In (the blue button) under R Studio.
 ## Log in
 
 
-![](2024-07-08 15.26.11 cilogon.org b0ad75daa5a3.png)
+![](2024-07-08 15.26.11 cilogon.org b0ad75daa5a3.png){height="80%"}
 
 Click Log On, to verify that you actually are at U of T.
 
 ## UTorID and password
 
-![](2024-07-08 15.26.56 idpz.utorauth.utoronto.ca 0ee390b6ec53.png)
+![](2024-07-08 15.26.56 idpz.utorauth.utoronto.ca 0ee390b6ec53.png){height="80%"}
 
 as usual, but with *your* UTorID and password, not mine!
 
@@ -104,7 +104,7 @@ code: `chickwts`
 
 ## My document
 
-![](2024-07-09 13.56.58 r.datatools.utoronto.ca a3ab120e66da.png)
+![](2024-07-09 13.56.58 r.datatools.utoronto.ca a3ab120e66da.png){height="95%"}
 
   
 ## Run the chunks
@@ -121,7 +121,7 @@ save it, and run Render again. For example, you can try putting some of the text
 
 ## The end of my (rendered) report 
 
-![](2024-07-09 14.01.27 r.datatools.utoronto.ca ee49aba03d21.png)
+![](2024-07-09 14.01.27 r.datatools.utoronto.ca ee49aba03d21.png){height="90%"}
 
 
 ## Installing R on your own computer
@@ -144,7 +144,7 @@ save it, and run Render again. For example, you can try putting some of the text
 - R is stored on numerous “mirrors”, sites around the world. The top
 one, “0-Cloud”, picks one for you. 
 
-![](Screenshot_2018-08-17_11-09-02.png){width=150%}
+![](Screenshot_2018-08-17_11-09-02.png){height="60%"}
 
 
 ## Click your mirror
@@ -157,15 +157,15 @@ one, “0-Cloud”, picks one for you.
 
 ## Click on Base
 
-![](r33.png){width=150%}
+![](r33.png){height="100%"}
 
 - Click on “base” here.
 
 ## The actual download
 
-- The version number is, as I write this, 4.4.1, but there  may be an update between me writing this and you reading it.
+- The version number is, as I write this, 4.4.2, but there  may be an update between me writing this and you reading it.
 
-- For Windows, click something like the top link below:
+- For Windows, click something like the top link below (yours will have the latest version number):
 
 ![](2024-07-10 11.25.47 cloud.r-project.org bad5510fdcbc.png)
 
@@ -180,10 +180,8 @@ one, “0-Cloud”, picks one for you.
 ## Now, R Studio
 
 - Go to <https://www.rstudio.com/>. You will be redirected to `posit.co`, which is the new name of the company that makes R Studio.
-- Top right, click Download R Studio (the blue link).
-
-
-- Scroll down to where it says R Studio Desktop, Free, and a blue Download button underneath. Click Download.
+- Click Open Source, then go down to Download R Studio (at the bottom).
+- Scroll down to left Download R Studio button. Click it.
 
 ## Find the one for you
 
