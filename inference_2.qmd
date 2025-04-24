@@ -84,9 +84,23 @@ set.seed(457299)
 ```
 
 ```{r}
+#| echo: false
+wid <- getOption("width")
+options(width = 60)
+```
+
+
+```{r}
 x <- rnorm(15, 8, 4)
 x
 ```
+
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
 
 -   Test whether `x` from population with mean 10 or not (over):
 
@@ -102,9 +116,18 @@ t.test(x, mu = 10)
 
 ```{r}
 ans <- t.test(x, mu = 10)
-str(ans)
 ans$p.value
 ```
+
+## How I knew it was called that
+
+\footnotesize
+
+```{r}
+str(ans)
+```
+
+\normalsize
 
 ## Run this lots of times
 
@@ -133,7 +156,7 @@ tibble(sim = 1:1000) %>%
 We correctly rejected 422 times out of 1000, so the estimated power is
 0.422.
 
-## Try again with bigger sample
+## Aside: Try again with bigger sample
 
 ```{r inference-2-R-6a}
 tibble(sim = 1:1000) %>% 
@@ -154,8 +177,18 @@ tibble(sim = 1:1000) %>%
     mean:
 
 ```{r inference-2-R-7}
-power.t.test(n = 15, delta = 10-8, sd = 4, type = "one.sample")
+#| eval: false
+power.t.test(n = 15, delta = 10-8, sd = 4, 
+             type = "one.sample")
 ```
+
+## Results
+
+```{r}
+power.t.test(n = 15, delta = 10-8, sd = 4, 
+             type = "one.sample")
+```
+
 
 ## Comparison of results
 
@@ -203,7 +236,8 @@ power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 ## One-sided test
 
 ```{r}
-power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one.sided")
+power.t.test(power=0.80, delta=10-8, sd=4, 
+             type="one.sample", alternative = "one.sided")
 ```
 
 ## Power curves
@@ -216,7 +250,7 @@ power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample", alternative = "one
 -   Called power curve.
 -   Build and plot it yourself.
 
-## Building it
+## Building it 1/2
 
 -   If you feed `power.t.test` a collection ("vector") of values, it will
     do calculation for each one.
@@ -227,6 +261,8 @@ ns <- seq(10,100,10)
 ns
 ```
 
+## Building it 2/2
+
 \small
 
 -   Calculate powers:
@@ -234,11 +270,31 @@ ns
 ```{r inference-2-R-10}
 ans<- power.t.test(n=ns, delta=10-8, sd=4, type="one.sample")
 ans
-str(ans)
-ans$power
 ```
 
 \normalsize
+
+## Just the power
+
+```{r}
+#| echo: false
+
+wid <- getOption("width")
+options(width = 60)
+```
+
+
+```{r}
+ans$power
+```
+
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
+
 
 ## Building a plot (1/2)
 
@@ -263,6 +319,7 @@ g <-   ggplot(d, aes(x = n, y = power)) + geom_point() +
 ## The power curve
 
 ```{r inference-2-R-13}
+#| fig-height: 5
 g
 ```
 
@@ -281,6 +338,7 @@ tibble(n=ns) %>% rowwise() %>%
 ## The power curve done the other way
 
 ```{r inference-2-R-15}
+#| fig-height: 5
 g2
 ```
 
@@ -313,19 +371,31 @@ combos
 
 -   Calculate the powers, carefully:
 
+```{r, echo=F}
+wid=getOption("width")
+options(width=50)
+```
+
 ```{r inference-2-R-18}
 ans <- with(combos, power.t.test(n=n, delta=10-mean, sd=4, 
                               type="one.sample"))
 ans$power
 ```
 
-## Make a data frame to plot, pulling things from the right places:
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
+
+## Make a data frame to plot
+
+pulling things from the right places:
 
 ```{r inference-2-R-20}
-d <- tibble(n=factor(combos$n), mean=combos$mean,
-power=ans$power)
-# d <- tibble(n=combos$n, mean=combos$mean,
-#          power=ans$power)
+d <- tibble(n=factor(combos$n), mean=combos$mean, 
+            power=ans$power)
 d
 ```
 
@@ -340,7 +410,7 @@ g  <-  ggplot(d, aes(x = mean, y = power, colour = n)) +
 
 ## The power curves
 
-```{r inference-2-R-22, fig.height=3.8}
+```{r inference-2-R-22, fig.height=5}
 g
 ```
 
