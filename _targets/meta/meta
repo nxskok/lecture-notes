@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|a3bbeaf08422cbba|||||||||||||||
+.Random.seed|object|e6c4e2d8003972d4|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -27,7 +27,7 @@ bManova_slides|stem|e0fd6fd6e8e84232|2a492f816968f060|5eb280cd17cb36f9|-21108093
 bMultiway|stem|ddd55d00497c8ed1|fe318f7c8a5299b5|ef46db3751d8e999|-1740502699|bMultiway.Rmd|t19485.7803051548s|7442dc48055f419e|14640|file|local|vector|||0||
 bMultiway_slides|stem|f3c5dbc46a8a52a1|8a20e766595dcacc|476ebad79e310b9c|1176347564|bMultiway_slides.pdf*bMultiway_slides.Rmd|t19379.715351136s|c083609bde4a4e84|114042|file|local|vector|||11.169||
 bootstrap|stem|05e342965088ddc9|2af5635346654888|2c530c1562a7fbd1|-318166751|bootstrap_files*bootstrap.html*bootstrap.pdf*bootstrap.qmd|t20201.964306259s|20fae95126bbb1eb|4226145|file|local|vector|||14.536||
-bootstrap_c33|stem|c79faa8e52b5e178|a249acb1b7232334|2c530c1562a7fbd1|1725799570|bootstrap_c33_files*bootstrap_c33.html*bootstrap_c33.qmd|t20201.9622733432s|16a90b0bc43ec2cb|68457|file|local|vector|||6.245||
+bootstrap_c33|stem|61d235b9d75f4a68|a249acb1b7232334|2c530c1562a7fbd1|1725799570|bootstrap_c33_files*bootstrap_c33.html*bootstrap_c33.qmd|t20202.8881213635s|1ea2590cce07f65b|7516655|file|local|vector|||7.164||
 bootstrap_R|stem|6d34ff8142c09220|c61dbb47dd04a34c|2c530c1562a7fbd1|1737820633|bootstrap_R_files*bootstrap_R.html*bootstrap_R.pdf*bootstrap_R.qmd|t20201.9636596191s|7b6d66cbfaf6bbd3|3848544|file|local|vector|||10.209||
 bootstrap_R_slides|stem|de8c1ce05a4caba5|a596eb0d402cb087|c64b7d956aba4096|317570555|bootstrap_R_slides.pdf*bootstrap_R_slides.Rmd|t19379.7152215065s|5548dd502a5d577d|82453|file|local|vector|||9.918||
 bootstrap_slides|stem|6d3e911587bd72ff|d83cfa9798996713|c1b89123d2c63c03|2071402768|bootstrap_slides.pdf*bootstrap_slides.Rmd*bootstrap_slides_files|t19379.7151062751s|3dd413d319aac42a|223515|file|local|vector|||17.088|package cmdstanr was built under R version 4.3.0|

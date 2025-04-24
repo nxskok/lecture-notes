@@ -306,16 +306,18 @@ vitaminb
 
 ## Grouped boxplot
 
-```{r bAnova-10, fig.height=6.0}
+```{r bAnova-10, fig.height=4.5}
 ggplot(vitaminb, aes(
   x = ratsize, y = kidneyweight,
   fill = diet
 )) + geom_boxplot()
 ```
 
-## What's going on?
+## What's going on? 
 
 -   Calculate group means:
+
+\small
 
 ```{r bAnova-11 }
 summary <- vitaminb %>%
@@ -323,6 +325,8 @@ summary <- vitaminb %>%
   summarize(n = n(), mean = mean(kidneyweight))
 summary
 ```
+
+\normalsize
 
 -   Rat size: a large and consistent effect.
 
@@ -395,10 +399,14 @@ TukeyHSD(vitaminb.2)
 
 ## Previous ANOVA as regression
 
+\footnotesize
+
 ```{r bAnova-16}
 vitaminb.3 <- lm(kidneyweight ~ ratsize + diet, data = vitaminb)
 summary(vitaminb.3)
 ```
+
+\normalsize
 
 ## Reproduce ANOVA
 
@@ -413,6 +421,7 @@ summary(vitaminb.3)
 ## Are the residuals normal?
 
 ```{r bAnova-18}
+#| fig-height: 5
 ggplot(vitaminb.3, aes(sample=.resid)) + 
   stat_qq() + stat_qq_line()
 ```
@@ -420,6 +429,7 @@ ggplot(vitaminb.3, aes(sample=.resid)) +
 ## Residuals against fitted
 
 ```{r bAnova-19}
+#| fig-height: 5
 ggplot(vitaminb.3, aes(x=.fitted, y=.resid)) + geom_point()
 ```
 
@@ -440,6 +450,7 @@ vitaminb.3 %>% augment(vitaminb) -> vitaminb.3a
 ## Residuals vs rat size
 
 ```{r bAnova-21}
+#| fig-height: 5
 ggplot(vitaminb.3a, aes(x = ratsize, y = .resid)) + 
   geom_boxplot()
 ```
@@ -447,6 +458,7 @@ ggplot(vitaminb.3a, aes(x = ratsize, y = .resid)) +
 ## Residuals vs diet
 
 ```{r bAnova-22}
+#| fig-height: 5
 ggplot(vitaminb.3a, aes(x = diet, y = .resid)) + 
   geom_boxplot()
 ```
@@ -479,7 +491,6 @@ autonoise <- read_table(u)
 
 ```{r bAnova-24 }
 autonoise
-glimpse(autonoise)
 ```
 
 ## Making boxplot
@@ -503,6 +514,7 @@ g <- autonoise %>%
 -   Some evidence of differences in spreads (ignore for now):
 
 ```{r bAnova-26}
+#| fig-height: 4.5
 g
 ```
 
@@ -520,10 +532,14 @@ summary(autonoise.1)
 
 ## Tukey: ouch!
 
+\scriptsize
+
 ```{r bAnova-28}
 autonoise.2 <- TukeyHSD(autonoise.1)
 autonoise.2$`size:type`
 ```
+
+\normalsize
 
 ## Interaction plot
 
@@ -565,8 +581,17 @@ autonoise %>%
   ggplot(aes(
     x = size, y = mean_noise, group = type,
     colour = type
-  )) + geom_point() + geom_line()
+  )) + geom_point() + geom_line() -> g
 ```
+
+## Interaction plot again
+
+```{r}
+#| fig-height: 5
+
+g
+```
+
 
 ## Simple effects for auto noise example
 
@@ -680,8 +705,6 @@ autonoise %>%
     engine size):
 
 ```{r bAnova-39}
-autonoise
-
 autonoise %>%
   nest_by(size) %>% 
   rowwise() %>% 
@@ -708,7 +731,7 @@ simple_effects
 ## Simultaneous tests
 
 -   When testing simple effects, doing several tests at once. (In this
-    case, 3.) Have to adjust P-values for this. Eg. Bonferroni:
+    case, 3.) Should adjust P-values for this. Eg. Bonferroni:
 
 ```{r bAnova-41}
 simple_effects %>% 
@@ -991,10 +1014,14 @@ contrasts(chain$model) <- m
 
 ## ANOVA *as if regression*
 
+\footnotesize
+
 ```{r bAnova-57 }
 chain.1 <- lm(kickback ~ model, data = chain)
 summary(chain.1)
 ```
+
+\normalsize
 
 ## Conclusions
 
