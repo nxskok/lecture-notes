@@ -64,7 +64,9 @@ A            44         12          38        10
 B            28         22          20        18
 ```
 
-Read into data frame called `prevalence`.
+## Read in
+
+... into data frame called `prevalence`:
 
 ```{r tidy-extra-R-6, message=F}
 my_url <- "http://ritsokiguess.site/STAC32/disease.txt"
@@ -85,30 +87,34 @@ prevalence %>%
 ## Making longer, the better way
 
 ```{r tidy-extra-R-8}
-prevalence
-prevalence  %>% 
+prevalence %>% 
   pivot_longer(-Species, names_to=c("disease", "location"),
                names_sep="_", 
                values_to="frequency") -> prevalence_longer 
 prevalence_longer
 ```
 
-## Making wider, different ways
+## Making wider, different ways 1/2
 
 ```{r tidy-extra-R-9}
 prevalence_longer %>% 
-  pivot_wider(names_from=c(Species, location), values_from=frequency)
+  pivot_wider(names_from=c(Species, location), 
+              values_from=frequency)
 ```
+
+## Making wider, different ways 2/2
+
 
 ```{r tidy-extra-R-10}
 prevalence_longer %>% 
   pivot_wider(names_from=location, values_from=frequency)
 ```
 
-## Interlude {.smaller}
+## Interlude
+
+Pigs data again:
 
 ```{r tidy-extra-R-11}
-pigs_longer
 pigs_longer %>% 
   group_by(feed) %>% 
   summarize(weight_mean=mean(weight))
@@ -118,13 +124,18 @@ pigs_longer %>%
 
 eg. quartiles:
 
+\scriptsize
+
 ```{r tidy-extra-R-12, error=T}
+#| warning = TRUE
 pigs_longer %>% 
   group_by(feed) %>% 
   summarize(r=quantile(weight, c(0.25, 0.75)))
 ```
 
-## Following the hint...
+\normalsize
+
+## Following the hint (gives no warning)
 
 ```{r}
 pigs_longer %>% 
@@ -137,14 +148,11 @@ pigs_longer %>%
 ```{r tidy-extra-R-13, error=T}
 pigs_longer %>% 
   group_by(feed) %>% 
-  summarize(r=quantile(weight, c(0.25, 0.75)))
-pigs_longer %>% 
-  group_by(feed) %>% 
   summarize(r=list(quantile(weight, c(0.25, 0.75)))) %>% 
   unnest(r)
 ```
 
-## or, even better, use `enframe`:
+## Or, even better, use `enframe`:
 
 ```{r tidy-extra-R-14}
 quantile(pigs_longer$weight, c(0.25, 0.75))
@@ -173,19 +181,15 @@ post, followup) two variables `y` and `z` are measured on each person:
 my_url <- "http://ritsokiguess.site/STAC32/repmes.txt"
 repmes0 <- read_table(my_url)
 repmes0
+```
 
+## Create unique ids
 
+```{r}
 repmes0 %>% mutate(id=str_c(treatment, ".", rep)) %>% 
   select(-rep) %>% 
   select(id, everything()) -> repmes
 repmes
-```
-
-```{r}
-repmes %>% pivot_longer(contains("_"),
-                        names_to=c("time", ".value"),
-                        names_sep="_"
-                        ) 
 ```
 
 ## Attempt 1
@@ -198,13 +202,14 @@ repmes %>% pivot_longer(contains("_"),
                          )
 ```
 
+## Comment
+
 This is *too* long! We wanted a column called `y` and a column called
 `z`, but they have been pivoted-longer too.
 
 ## Attempt 2
 
 ```{r tidy-extra-R-18}
-repmes
 repmes %>% pivot_longer(contains("_"),
                         names_to=c("time", ".value"),
                         names_sep="_"
@@ -212,22 +217,30 @@ repmes %>% pivot_longer(contains("_"),
 repmes3
 ```
 
+## Comment
+
 This has done what we wanted.
 
-## make a graph
+## Make a graph
 
 ```{r tidy-extra-R-19}
+#| fig-height: 5
 ggplot(repmes3, aes(x=fct_inorder(time), y=y, 
                     colour=treatment, group = id)) +
   geom_point() + geom_line()
 ```
 
-A so-called spaghetti plot. The three measurements for each person are
-joined by lines, and the lines are coloured by treatment.
+## Comment
 
-## or do the plot with means
+- A so-called "spaghetti plot": 
+  - The three measurements for each person are
+joined by lines
+  - The lines are coloured by treatment.
+
+## Or do the plot with means
 
 ```{r tidy-extra-R-20}
+#| fig-height: 4
 repmes3 %>% group_by(treatment, ftime=fct_inorder(time)) %>% 
   summarize(mean_y=mean(y)) %>% 
   ggplot(aes(x=ftime, y=mean_y, colour=treatment, 
@@ -235,5 +248,8 @@ repmes3 %>% group_by(treatment, ftime=fct_inorder(time)) %>%
     geom_point() + geom_line()
 ```
 
-On average, the two real treatments go up and level off, but the control
+## Comment
+
+- On average, the two real treatments go up and level off
+- but the control
 group is very different.
