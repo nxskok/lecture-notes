@@ -1,5 +1,7 @@
 ---
 title: "The bootstrap"
+execute: 
+  echo: true
 ---
 
 
@@ -10,7 +12,7 @@ library(tidyverse)
 library(bootstrap)
 ```
 
-Source: [Hesterberg et al](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
+Source: [Hesterberg et al (link)](https://www.researchgate.net/publication/265399426_Bootstrap_Methods_and_Permutation_Tests)
 
 
 ## Is my sampling distribution normal enough?
@@ -74,17 +76,20 @@ mean(boot)
 set.seed(457299)
 ```
 
-\small
+\footnotesize
+
 ```{r bootstrap-6}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(boot_sample = list(sample(irs$Time, replace = TRUE)))
 ```
+
 \normalsize
 
 ## Get the mean of each of those
 
-\small
+\footnotesize
+
 ```{r bootstrap-7}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
@@ -92,6 +97,7 @@ tibble(sim = 1:1000) %>%
   mutate(my_mean = mean(boot_sample)) -> samples
 samples
 ```
+
 \normalsize
 
 ## Sampling distribution of sample mean
@@ -113,25 +119,35 @@ ggplot(samples, aes(sample = my_mean)) +
 
 - a very very slight right-skewness, but very close to normal.
 
-## Confidence interval from the bootstrap distribution
+## Confidence interval from the bootstrap distribution 1/2
 
-There are two ways (at least):
+There are two ways (at least). First way:
 
 - percentile bootstrap interval: take the 2.5 and 97.5 percentiles (to get the middle 95%). This is easy, but not always the best:
 
-\small
-```{r bootstrap-10}
-(b_p=quantile(samples$my_mean, c(0.025, 0.975)))
+```{r}
+samples %>% 
+  ungroup() %>% # undo the rowwise()
+  reframe(ci = quantile(my_mean, c(0.025, 0.975))) %>% 
+  pull(ci) -> b_p 
+b_p
 ```
-\normalsize
 
-- bootstrap $t$: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a $t$ interval:
+## Confidence interval from the bootstrap distribution 2/2
+
+- Second way: bootstrap $t$: use the SD of the bootstrapped sampling distribution as the SE of the estimator of the mean and make a $t$ interval:
 
 \small
 ```{r bootstrap-11}
 n <- length(irs$Time)
 t_star <- qt(0.975, n-1)
-b_t <- with(samples, mean(my_mean)+c(-1, 1)*t_star*sd(my_mean))
+samples %>% ungroup() %>% 
+  summarize(boot_mean = mean(my_mean), 
+                      boot_sd = sd(my_mean)) %>% 
+  mutate(margin = t_star * boot_sd) %>% 
+  mutate(lo = boot_mean - margin,
+         hi = boot_mean + margin) -> d
+b_t <- c(d$lo, d$hi)
 b_t
 ```
 \normalsize
@@ -173,7 +189,7 @@ Brad Efron and Robert J. Tibshirani.
 ## Run this on the IRS data:
 
 ```{r bootstrap-14}
-bca=bcanon(irs$Time, 1000, mean)
+bca <- bcanon(irs$Time, 1000, mean)
 bca$confpoints
 ```
 
@@ -218,7 +234,7 @@ ggplot(soap, aes(x=speed, y=scrap, colour=line))+
 - Line B produces less scrap for any given speed.
 - For line B, estimate the correlation between speed and scrap (with a confidence interval.)
 
-## Extract the line B data; standard correlation test xxx
+## Extract the line B data; standard correlation test
 
 ```{r bootstrap-19}
 soap %>% filter(line=="b") -> line_b
@@ -237,7 +253,7 @@ o_c=with(line_b, cor.test(speed, scrap))$conf.int
 
 \scriptsize
 ```{r bootstrap-21}
-line_b %>% sample_frac(replace=T)
+line_b %>% sample_frac(replace=TRUE)
 ```
 \normalsize
 
@@ -248,13 +264,15 @@ line_b %>% sample_frac(replace=T)
 ```{r bootstrap-22}
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
-  mutate(boot_df = list(sample_frac(line_b, replace = TRUE))) %>% 
-  mutate(my_cor = with(boot_df, cor(speed, scrap))) -> cors
+  mutate(boot_df = list(sample_frac(line_b, 
+                                    replace = TRUE))) %>% 
+  mutate(my_cor = 
+           with(boot_df, cor(speed, scrap))) -> cors
 ```
 
 ## A picture of this
 
-```{r bootstrap-23, fig.height=4}
+```{r bootstrap-23, fig.height=5}
 ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 ```
 
@@ -264,7 +282,10 @@ ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 - Bootstrap percentile interval is:
 
 ```{r bootstrap-24}
-(b_p=quantile(cors$my_cor, c(0.025, 0.975)))
+cors %>% ungroup() %>% 
+  reframe(ci = quantile(my_cor, c(0.025, 0.975))) %>% 
+  pull(ci) -> b_p
+b_p
 ```
 
 - We probably need the BCA interval instead.
@@ -315,6 +336,7 @@ tibble(limit=my_names, o_c, b_p, b_bca)
 
 \small
 ```{r bootstrap-28}
+#| fig-height: 5
 cors %>% 
   mutate(z = 0.5 * log((1+my_cor)/(1-my_cor))) %>% 
   ggplot(aes(sample=z)) + stat_qq() + stat_qq_line()

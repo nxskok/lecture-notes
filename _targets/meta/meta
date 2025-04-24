@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|2c5f160187086904|||||||||||||||
+.Random.seed|object|a3bbeaf08422cbba|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -9,7 +9,7 @@ ancova|stem|f6d3e2031ca9df68|32ef33eb045b3069|2c530c1562a7fbd1|1190776872|ancova
 anova|stem|7c388bb9ecf2f465|f3619db96c6db259|2c530c1562a7fbd1|1926265697|anova.html*anova.pdf*anova.qmd|t20201.9655684368s|78caac11e6498bb0|4481273|file|local|vector|||17.285||
 asphalt|stem|19fda42e6466772c|7915b81d321fb106|2c530c1562a7fbd1|-2049011821|asphalt_files*asphalt.html*asphalt.pdf*asphalt.qmd|t20201.9657370812s|7bb40fe14019d49b|4791900|file|local|vector|||14.55||
 asphalt_slides|stem|102070a93c40b8da|4ccca33a7516746a|61b8a3bf60456c2f|-998026003|asphalt_slides.pdf*asphalt_slides.Rmd|t19379.7034076982s|a934a0b3cbe8f675|196766|file|local|vector|||22.297|package cmdstanr was built under R version 4.3.0|
-assumptions_c33|stem|2bf032a88decd80b|6dcbbb4d3171c6c1|2c530c1562a7fbd1|1272618179|assumptions_c33.html*assumptions_c33.pdf*assumptions_c33.qmd|t20201.9645458529s|d28d2aab5fb22c49|3828024|file|local|vector|||9.933||
+assumptions_c33|stem|2ceb3ab3e27783d9|6dcbbb4d3171c6c1|2c530c1562a7fbd1|1272618179|assumptions_c33.html*assumptions_c33.pdf*assumptions_c33.qmd|t20202.7959591808s|1b56f8297dcba765|3831007|file|local|vector|||8.4||
 bAncova|stem|6599c93b8c7387cb|d0fd867a84126eb6|ef46db3751d8e999|2112088981|bAncova.Rmd|t19467.8006715116s|92ff492ca8a56313|4138|file|local|vector|||0.963||
 bAncova_slides|stem|acea6c858a9d9f0a|b44ab3e2e858e76c|81a44102a93a15bf|1072888702|bAncova_slides.pdf*bAncova_slides.Rmd|t19467.8007659567s|cd83d5d9aa94d43b|81528|file|local|vector|||7.602||
 bAnova|stem|6a7be9dba819155f|f5c2d298ecafeb88|ef46db3751d8e999|-1632939918|bAnova.Rmd|t18800.6490767817s|008036e1fd55f3fd|22637|file|local|vector|||1.014||
