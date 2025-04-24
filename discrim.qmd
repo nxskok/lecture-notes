@@ -145,8 +145,6 @@ hilo.1
 
 Feed output from LDA into `predict`:
 
-\scriptsize
-
 ```{r bDiscrim-6 }
 p <- predict(hilo.1)
 hilo.2 <- cbind(hilo, p)
@@ -154,10 +152,13 @@ hilo.2 <- cbind(hilo, p)
 
 ## the LD scores
 
+\scriptsize
+
 ```{r}
 hilo.2
 ```
 
+\normalsize
 
 ## LD1 scores in order
 
@@ -237,6 +238,8 @@ Only obs. 7 has any doubt: `yield` low for a high-fertilizer, but high
 
 ## Example 2: the peanuts
 
+\footnotesize
+
 ```{r bDiscrim-14, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/peanuts.txt"
 peanuts <- read_delim(my_url, " ")
@@ -245,12 +248,13 @@ peanuts
 
 \normalsize
 
--   Recall: `location` and `variety` both significant in MANOVA. Make
-    combo of them (over):
+## Comment
 
-## Location-variety combos
+-   Recall: `location` and `variety` both significant in MANOVA. 
+-   Make combo of them:
 
-\footnotesize
+
+\small
 
 ```{r combos}
 peanuts %>%
@@ -290,12 +294,45 @@ peanuts.1$scaling
 -   Proportion of trace values show relative importance of LDs: `LD1`
     much more important than `LD2`; `LD3` worthless.
 
-## The predictions and misclassification
+## The predictions, badly
+
+\footnotesize
 
 ```{r bDiscrim-17 }
 p <- predict(peanuts.1)
 peanuts.2 <- cbind(peanuts.combo, p)
-peanuts.2
+peanuts.2 
+```
+
+\normalsize
+
+## Comments 
+
+- Hard to read:
+  - The posterior probabilities are in scientific notation
+  - The *names* of the `posterior` columns are rather long; names like `p.5_1` would be better.
+
+```{r}
+peanuts.2 %>% 
+  mutate(across(starts_with("posterior"), 
+                            \(p) round(p, 3))) %>% 
+  rename_with(\(p) str_remove(p, "osterior"), 
+              starts_with("posterior")) -> peanuts.2a
+```
+
+## Result (slightly better)
+
+\scriptsize
+
+```{r}
+peanuts.2a
+```
+
+\normalsize
+
+## Misclassification
+
+```{r}
 with(peanuts.2, table(obs = combo, pred = class))
 ```
 
@@ -304,34 +341,26 @@ rest all correct.
 
 ## Posterior probabilities
 
-\scriptsize
+\footnotesize
 
 ```{r bDiscrim-18}
-peanuts.2 %>% 
-  mutate(across(starts_with("posterior"), \(p) round(p, 2))) %>% 
-  select(combo,  class, starts_with("posterior"))
+peanuts.2a %>% 
+  select(combo,  class, starts_with("p"))
 ```
-
-\small
-
-*Some* doubt about which combo each plant belongs in, but not too much.
-The one misclassified plant was a close call.
-
-```{r}
-peanuts.2 %>% count(combo, class) %>% pivot_wider(names_from = "class" , values_from = n, values_fill = 0)
-```
-
 
 \normalsize
+
+## Comments 
+
+- *Some* doubt about which combo each plant belongs in, but not too much.
+- The one misclassified plant (row 8) was a close call.
 
 ## Discriminant scores, again
 
 -   How are discriminant scores related to original variables?
 
--   Construct data frame with original data and discriminant scores side
-    by side:
 
-\footnotesize
+\small
 
 ```{r bDiscrim-19}
 peanuts.1$scaling
@@ -343,6 +372,7 @@ peanuts.1$scaling
 
 -   LD2 positive if `w` small.
 
+
 ## Discriminant scores for data
 
 \footnotesize
@@ -351,17 +381,17 @@ peanuts.1$scaling
 peanuts.2 %>% select(y, w, starts_with("x"))
 ```
 
--   Obs. 5 and 6 have most positive `LD1`: large `y`, small `w`.
+-   Obs. 5 and 6 have most positive `LD1`: large `y`, small `w`.
 
--   Obs. 4 has most positive `LD2`: small `w`.
+-   Obs. 4 has most positive `LD2`: small `w`.
 
 \normalsize
 
-## Plot LD1 vs. LD2, labelling by combo
+## Plot LD1 vs. LD2, labelling by combo
 
 \small
 
-```{r bDiscrim-24, fig.height=6}
+```{r bDiscrim-24, fig.height=4.5}
 g <- ggplot(peanuts.2, aes(x = x.LD1, y = x.LD2, colour = combo, 
                     label = combo)) + geom_point() +
   geom_text_repel() + guides(colour = "none")
@@ -415,7 +445,6 @@ install_github("vqv/ggbiplot")
 ```{r bDiscrim-28 }
 p <- lda(combo ~ y + smk + w,
   data = peanuts.combo, CV = TRUE)
-p
 peanuts.3 <- cbind(peanuts.combo, class = p$class, 
                    posterior = p$posterior)
 with(peanuts.3, table(obs = combo, pred = class))
@@ -438,7 +467,9 @@ g
 ```{r bDiscrim-29}
 peanuts.3 %>% 
   mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
-  select(combo, class, starts_with("posterior"))
+  rename_with(\(p) str_remove(p, "osterior"), 
+              starts_with("posterior")) %>% 
+  select(combo, class, starts_with("p."))
 ```
 
 \normalsize
@@ -474,7 +505,7 @@ peanuts.3 %>%
 
 ## The data
 
-\footnotesize
+\scriptsize
 
 ```{r}
 #| message = FALSE
@@ -509,7 +540,6 @@ active.1
 ```{r bDiscrim-31 }
 p <- predict(active.1)
 active.2 <- cbind(active, p)
-active.2 %>% mutate(across(starts_with("posterior"), \(p) round(p,3)))
 with(active.2, table(obs = job, pred = class))
 ```
 
@@ -561,7 +591,9 @@ active.2 %>% mutate(person = row_number()) %>%
 
 ```{r bDiscrim-35}
 active.2 %>% mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
-  select(job, class, starts_with("posterior"))
+  rename_with(\(p) str_remove(p, "osterior"), 
+              starts_with("posterior")) %>% 
+  select(job, class, starts_with("p."))
 ```
 
 \normalsize
@@ -587,7 +619,9 @@ This time one of the bellydancers was classified as a politician.
 ```{r bDiscrim-37}
 active.3 %>% 
   mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
-  select(job, class, starts_with("post"))
+  rename_with(\(p) str_remove(p, "osterior"), 
+              starts_with("posterior")) %>% 
+  select(job, class, starts_with("p."))
 ```
 
 \normalsize
@@ -633,7 +667,7 @@ g
 #| message = FALSE
 my_url <- "http://ritsokiguess.site/datafiles/remote-sensing.txt"
 crops <- read_table(my_url)
-crops %>% print(n = 25)
+crops
 ```
 
 \normalsize
@@ -708,8 +742,10 @@ ggbiplot(crops.1, groups = crops$crop)
 
 ```{r bDiscrim-52 }
 crops.2 %>% mutate(across(starts_with("posterior"), \(p) round(p, 3))) %>% 
+  rename_with(\(p) str_remove(p, "osterior"), 
+              starts_with("posterior")) %>% 
   filter(crop != class) %>% 
-  select(crop, class, starts_with("posterior"))
+  select(crop, class, starts_with("p."))
 ```
 
 \normalsize
