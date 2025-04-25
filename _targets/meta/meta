@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|2f1a6e823d582834|||||||||||||||
+.Random.seed|object|6a6d158c8e744f48|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -56,7 +56,7 @@ graphs_c33|stem|d60f0bc324eea1b3|647cabed92f7dfc0|2c530c1562a7fbd1|-1263923915|g
 graphs_R|stem|a9612ab8f8323e91|ba2a1604eedf5507|ef46db3751d8e999|-2115159619|graphs_R.Rmd|t19374.6868897982s|7031694a7cef1c81|3132|file|local|vector|||0||
 graphs_R_slides|stem|c9db4d02569b0fd9|9bb7e2a8f597b3d0|9530f23b1dba258e|451036043|graphs_R_slides.pdf*graphs_R_slides.Rmd|t19380.2030385224s|395818be89bc4bab|178723|file|local|vector|||33.991|package cmdstanr was built under R version 4.3.0|
 index|stem|c475e8cf07b710bb|6335c3f75bbadd8e|2c530c1562a7fbd1|554519753|index_files*index.md*index.qmd|t20201.9621251867s|54f2fde1d50daaa7|30539|file|local|vector|||0.895||
-inference_1|stem|767adcdbda8de714|11ac0c6c7f511407|2c530c1562a7fbd1|1496710995|inference_1_files*inference_1.html*inference_1.pdf*inference_1.qmd|t20203.01100402s|ad461ddc3b5dc884|4471478|file|local|vector|||9.792||
+inference_1|stem|767adcdbda8de714|11ac0c6c7f511407|2c530c1562a7fbd1|1496710995|inference_1_files*inference_1.html*inference_1.pdf*inference_1.qmd|t20203.0110042746s|05a47df0187ffc1e|4441521|file|local|vector|||9.792||
 inference_1_R|stem|78b7560aee8f440b|0dafe75890a6e475|ef46db3751d8e999|1286191339|inference_1_R.Rmd|t18800.6534865079s|58d5f2ca33704f7d|9930|file|local|vector|||0||
 inference_1_R_slides|stem|fb7f3f929081dd5f|89a0b59d11aff2a2|95a29fbefd6de995|-909330202|inference_1_R_slides.pdf*inference_1_R_slides.Rmd|t19379.9148177824s|0c45077ec12c13b8|381377|file|local|vector|||11.357||
 inference_2|stem|47ed1a81ad861506|71ff0e53607c4ecc|2c530c1562a7fbd1|-2027583079|inference_2.html*inference_2.pdf*inference_2.qmd|t20202.7237942808s|b6120670fe330113|3992969|file|local|vector|||11.279||
@@ -77,7 +77,7 @@ inference_5_R_slides|stem|9a6c8a642be33856|40870de14c3e2baa|815bfd1e6342f80f|149
 inference_5a|stem|3942e614142d226b|fe6f8ae88388ba6e|2c530c1562a7fbd1|1274852786|inference_5a.html*inference_5a.pdf*inference_5a.qmd|t20201.8442639352s|ffa951e3d9eaff98|3689890|file|local|vector|||8.534||
 inference_5b|stem|8a73b502ceef5b60|3710ee578f6887b2|2c530c1562a7fbd1|62240231|inference_5b.html*inference_5b.pdf*inference_5b.qmd|t20201.9616783914s|139436eff38c45e6|3977285|file|local|vector|||9.9||
 inference_c33|stem|8390f5c6dec545d9|58a43215fa086070|2c530c1562a7fbd1|-862795612|inference_c33.html*inference_c33.pdf*inference_c33.qmd|t20201.8434798508s|ed41b024b9fb066d|4402335|file|local|vector|||10.824||
-logistic|stem|1dc400267aedb843|727c1f99245ba22d|2c530c1562a7fbd1|1448786029|logistic_files*logistic.html*logistic.pdf*logistic.qmd|t20201.9620111151s|2701172c9ddfc858|5718117|file|local|vector|||24.536||
+logistic|stem|87ae3b4f782e051c|727c1f99245ba22d|2c530c1562a7fbd1|1448786029|logistic_files*logistic.html*logistic.pdf*logistic.qmd|t20203.7427698031s|0cd3a6984277fe1b|6170312|file|local|vector|||23.096||
 manova|stem|c0ee625b677feb90|7c91e26bc384b3c3|2c530c1562a7fbd1|1967024412|manova.html*manova.pdf*manova.qmd|t20201.9633966663s|eabd741f26f474ad|4059225|file|local|vector|||11.028||
 mapping|stem|12496460bfbb5ac3|536e887c80c1e8e5|d84d7cdd1c3c4b08|607285889|mapping_files*mapping.html*mapping.qmd|t19489.7175367455s|222c2ca194f36476|80109|file|local|vector|||8.232||
 mapping_slides|stem|5e9a22f37f1de127|2b764460e0b0deac|356053bfec8b35bb|223396972|mapping_slides.pdf*mapping_slides.Rmd|t19467.7695602666s|6dcaaab2c36eca21|1387804|file|local|vector|||12.003||
