@@ -31,8 +31,6 @@ library(MASS, exclude = "select") # for Box-Cox, later
 library(tidyverse)
 library(broom)
 library(marginaleffects)
-# library(conflicted) # add these lines if you forget the exclude
-# conflict_prefer("select", "dplyr")
 ```
 
 ## A regression with one $x$
@@ -48,16 +46,16 @@ sleep <- read_delim(my_url, " ")
 
 ## Check data
 
-```{r bRegression-3, size="footnotesize"}
-summary(sleep)
-```
+\footnotesize
 
 ```{r}
 sleep
 ```
 
+\normalsize
+
 Make scatter plot of ATST (response) vs. age (explanatory) using code
-overleaf:
+overleaf.
 
 ## The scatterplot
 
@@ -155,9 +153,13 @@ glance(sleep.1)
 
 ## Broom part 2
 
+\footnotesize
+
 ```{r bRegression-10,warning=F}
 sleep.1 %>% augment(sleep)
 ```
+
+\normalsize
 
 Useful for plotting residuals against an $x$-variable.
 
@@ -220,6 +222,7 @@ cbind(new, pp)
 ## Plotting the confidence intervals for mean response again:
 
 ```{r}
+#| fig-height: 5
 plot_predictions(sleep.1, condition = "age")
 ```
 
@@ -238,7 +241,7 @@ plot_predictions(sleep.1, condition = "age")
 
 Marks confidence interval for mean for all $x$:
 
-```{r bRegression-15, fig.height=6.0}
+```{r bRegression-15, fig.height=4.5}
 ggplot(sleep, aes(x = age, y = atst)) + geom_point() +
   geom_smooth(method = "lm") +
   scale_y_continuous(breaks = seq(420, 600, 20))
@@ -257,7 +260,7 @@ How to tell whether a straight-line regression is appropriate?
 
 Not much pattern here --- regression appropriate.
 
-```{r akjhkadjfhjahnkkk,fig.height=3.4}
+```{r akjhkadjfhjahnkkk,fig.height=4.5}
 ggplot(sleep.1, aes(x = .fitted, y = .resid)) + geom_point()
 ```
 
@@ -272,7 +275,7 @@ curvy <- read_delim(my_url, " ")
 
 ## Scatterplot
 
-```{r bRegression-16, fig.height=3.8}
+```{r bRegression-16, fig.height=5}
 ggplot(curvy, aes(x = xx, y = yy)) + geom_point()
 ```
 
@@ -287,7 +290,7 @@ summary(curvy.1)
 
 ## Residual plot
 
-```{r altoadige,fig.height=3.8}
+```{r altoadige,fig.height=5}
 ggplot(curvy.1, aes(x = .fitted, y = .resid)) + geom_point()
 ```
 
@@ -312,10 +315,13 @@ curvy.2a <- update(curvy.1, . ~ . + I(xx^2))
 
 ## Regression 2
 
+\footnotesize
+
 ```{r bRegression-20 }
-tidy(curvy.2)
-glance(curvy.2) #
+summary(curvy.2)
 ```
+
+\normalsize
 
 ## Comments
 
@@ -329,9 +335,9 @@ glance(curvy.2) #
 
 ## The residual plot now
 
-No problems any more:
+No apparent problems any more:
 
-```{r bRegression-21, size="small", fig.height=3.4}
+```{r bRegression-21, size="small", fig.height=4.5}
 ggplot(curvy.2, aes(x = .fitted, y = .resid)) + geom_point()
 ```
 
@@ -392,7 +398,7 @@ boxcox(y ~ x, data = madeup)
 
 ## The Box-Cox output
 
-```{r trento,echo=F, fig.height=4}
+```{r trento,echo=F, fig.height=6}
 boxcox(y ~ x, data = madeup)
 ```
 
@@ -427,11 +433,14 @@ Looks much straighter.
 
 ## Regression with transformed $y$
 
+\footnotesize
+
 ```{r bRegression-25}
 madeup.1 <- lm(log(y) ~ x, data = madeup)
-glance(madeup.1)
-tidy(madeup.1)
+summary(madeup.1)
 ```
+
+\normalsize
 
 R-squared now decently high.
 
@@ -484,11 +493,15 @@ visits
 
 ## Fit multiple regression
 
+\scriptsize
+
 ```{r bRegression-28}
 visits.1 <- lm(timedrs ~ phyheal + menheal + stress,
   data = visits)
 summary(visits.1)
 ```
+
+\normalsize
 
 ## The slopes
 
@@ -502,10 +515,14 @@ summary(visits.1)
 
 ## Just `menheal`
 
+\footnotesize
+
 ```{r bRegression-30 }
 visits.2 <- lm(timedrs ~ menheal, data = visits)
 summary(visits.2)
 ```
+
+\normalsize
 
 ## `menheal` by itself
 
@@ -599,7 +616,7 @@ boxcox(timedrs + 1 ~ phyheal + menheal + stress, data = visits)
 
 ## Try 1
 
-```{r bRegression-36, echo=F,fig.height=4.5}
+```{r bRegression-36, echo=F}
   boxcox(timedrs + 1 ~ phyheal + menheal + stress, 
          data = visits)
 ```
@@ -619,7 +636,7 @@ my.lambda
 
 ## Try 2
 
-```{r bRegression-38, fig.height=3.5}
+```{r bRegression-38, fig.height=5}
 boxcox(timedrs + 1 ~ phyheal + menheal + stress,
   lambda = my.lambda,
   data = visits
@@ -734,26 +751,7 @@ anova(visits.6, visits.5)
 Data set `punting.txt` contains 4 variables for 13 right-footed football
 kickers (punters): left leg and right leg strength (lbs), distance
 punted (ft), another variable called "fred". Predict punting distance
-from other variables:
-
-\scriptsize
-
-```         
-left            right               punt         fred
-170               170                162.50       171 
-130               140                144.0        136   
-170               180                174.50       174 
-160               160                163.50       161 
-150               170                192.0        159 
-150               150                171.75       151 
-180               170                162.0        174 
-110               110                104.83       111 
-110               120                105.67       114 
-120               130                117.58       126 
-140               120                140.25       129  
-130               140                150.17       136 
-150               160                165.17       154 
-```
+from other variables.
 
 ## Reading in
 
@@ -766,18 +764,24 @@ punting <- read_table(my_url)
 
 ## The data
 
+\small
+
 ```{r bRegression-47}
 punting
 ```
 
+\normalsize
+
 ## Regression and output
+
+\footnotesize
 
 ```{r bRegression-48}
 punting.1 <- lm(punt ~ left + right + fred, data = punting)
-glance(punting.1)
-tidy(punting.1)
 summary(punting.1)
 ```
+
+\normalsize
 
 ## Comments
 
@@ -804,32 +808,43 @@ cor(punting)
 
 ## Just `right`
 
+
 ```{r bRegression-50 }
 punting.2 <- lm(punt ~ right, data = punting)
-summary(punting.2)
 anova(punting.2, punting.1)
-punting.3 <- lm(punt ~ left, data = punting)
-summary(punting.3)
 ```
+
 
 No significant loss by dropping other two variables.
 
 ## Comparing R-squareds
 
+- All three $x$-variables:
+
 ```{r bRegression-51 }
 summary(punting.1)$r.squared
+```
+
+- Only `right`:
+
+```{r}
 summary(punting.2)$r.squared
 ```
 
-Basically no difference. In regression (over), `right` significant:
+
+- Basically no difference. In regression (over), `right` significant:
 
 ## Regression results
 
+\footnotesize
+
 ```{r bRegression-52 }
-tidy(punting.2)
+summary(punting.2)
 ```
 
-## But\ldots
+\normalsize
+
+## But...
 
 -   Maybe we got the *form* of the relationship with `left` wrong.
 
@@ -846,14 +861,18 @@ tidy(punting.2)
 
 ## Augmenting `punting.2`
 
+\footnotesize
+
 ```{r bRegression-53 }
 punting.2 %>% augment(punting) -> punting.2.aug
 punting.2.aug 
 ```
 
+\normalsize
+
 ## Residuals against `left`
 
-```{r basingstoke,fig.height=3.5}
+```{r basingstoke,fig.height=4.5}
 ggplot(punting.2.aug, aes(x = left, y = .resid)) +
   geom_point()
 ```
