@@ -27,12 +27,16 @@ library(broom)
 
 ## Reading in the data
 
+\small
+
 ```{r windmill-2}
 my_url <- 
   "http://ritsokiguess.site/datafiles/windmill.csv"
 windmill <- read_csv(my_url)
 windmill
 ```
+
+\normalsize
 
 ## Strategy
 
@@ -71,10 +75,14 @@ ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
 
 ## Fit a straight line (and see what happens)
 
+\footnotesize
+
 ```{r windmill-7}
 DC.1 <- lm(DC_output ~ wind_velocity, data = windmill)
 summary(DC.1)
 ```
+
+\normalsize
 
 ## Another way of looking at the output
 
@@ -120,7 +128,8 @@ showing the intercept and slope and their significance.
 ## Scatterplot, but with line
 
 ```{r windmill-11}
-#| message = FALSE
+#| message: false
+#| fig-height: 4.5
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
   geom_point() + geom_smooth(method="lm", se = FALSE)
 ```
@@ -128,6 +137,7 @@ ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
 ## Plot of residuals against fitted values
 
 ```{r windmill-13}
+#| fig-height: 5
 ggplot(DC.1, aes(y = .resid, x = .fitted)) + geom_point()
 ```
 
@@ -148,7 +158,9 @@ ggplot(DC.1, aes(y = .resid, x = .fitted)) + geom_point()
 ## normal quantile plot of residuals
 
 ```{r}
-ggplot(DC.1, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+#| fig-height: 4.5
+ggplot(DC.1, aes(sample = .resid)) + 
+  stat_qq() + stat_qq_line()
 ```
 
 ## Parabolas and fitting parabola model
@@ -170,19 +182,10 @@ DC.2 <- lm(DC_output ~ wind_velocity + I(wind_velocity^2),
 
 ## Parabola model output
 
+\footnotesize
+
 ```{r windmill-16}
 summary(DC.2)
-# tidy(DC.2)
-```
-
-```{r}
-summary(DC.2)
-```
-
-\scriptsize
-
-```{r windmill-17}
-glance(DC.2)
 ```
 
 \normalsize
@@ -199,6 +202,7 @@ glance(DC.2)
 ## Residual plot from parabola model
 
 ```{r windmill-18}
+#| fig-height: 4.5
 ggplot(DC.2, aes(y = .resid, x =  .fitted)) +
   geom_point()
 ```
@@ -206,6 +210,7 @@ ggplot(DC.2, aes(y = .resid, x =  .fitted)) +
 ## normal quantile plot of residuals
 
 ```{r}
+#| fig-height: 4.5
 ggplot(DC.2, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 ```
 
@@ -283,26 +288,31 @@ ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
 
 ##   and run regression like this:
 
+\footnotesize
+
 ```{r asyreg}
 DC.3 <- lm(DC_output ~ wind_pace, data = windmill)
 summary(DC.3)
 ```
+
+\normalsize
 
 ## Scatterplot for wind_pace
 
 Pretty straight. Blue actually smooth curve not line:
 
 ```{r windmill-20, ref.label="straightness", echo=F}
+#| fig-height: 5
 ggplot(windmill, aes(y = DC_output, x = wind_pace)) +
   geom_point() + geom_smooth(se = F)
 ```
 
 ## Regression output
 
-
+\footnotesize
 
 ```{r windmill-21}
-glance(DC.3)
+summary(DC.3)
 ```
 
 
@@ -310,6 +320,8 @@ glance(DC.3)
 ```{r windmill-22}
 tidy(DC.3)
 ```
+
+\normalsize
 
 ## Comments
 
@@ -322,13 +334,16 @@ tidy(DC.3)
 ## Residual plot for asymptote model
 
 ```{r resida}
+#| fig-height: 4.5
 ggplot(DC.3, aes(y = .resid, x = .fitted)) + geom_point()
 ```
 
 ## normal quantile plot of residuals
 
 ```{r}
-ggplot(DC.3, aes(sample = .resid)) + stat_qq() + stat_qq_line()
+#| fig-height: 4.5
+ggplot(DC.3, aes(sample = .resid)) + 
+  stat_qq() + stat_qq_line()
 ```
 
 This is skewed (left), but is not bad (and definitely better than the
@@ -501,7 +516,6 @@ my_fits %>%
     y = fit, x = wind_velocity,
     colour = model
   )) + geom_line() -> g
-g
 ```
 
 ## Making a plot 2/2
