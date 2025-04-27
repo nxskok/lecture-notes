@@ -65,7 +65,7 @@ sqrt_minus_1 <- function(x) {
 If last line of function calculates value without saving it, that value
 is returned.
 
-## About the input; testing
+## About the input; testing 1/2
 
 -   The input to a function can be called anything. Here we called it
     `x`. This is the name used inside the function.
@@ -78,6 +78,8 @@ sqrt_minus_1(11)
 sqrt_minus_1(3)
 ```
 
+## Testing 2/2
+
 ```{r}
 #| error: true
 q <- 17
@@ -85,7 +87,7 @@ sqrt_minus_1(q)
 sqrt_minus_1("text")
 ```
 
--   It works!
+-   It works! (At least, it works when it should and fails when it should.)
 
 ## Vectorization 1/2
 
@@ -300,16 +302,24 @@ with(my_df, slope(x, y, subset = 3:4))
 
 -   Just uses the last two observations in `x` and `y`:
 
+\small
+
 ```{r functions-25}
 my_df %>% slice(3:4)
 ```
 
+\footnotesize
+
 -   so the slope should be $(14 − 10)/(4 − 3) = 4$ and is.
 
+## What happens here?
+
 ```{r}
+#| warning: true
 with(my_df, slope(x, y, hair = "spiky"))
 ```
 
+- Where did the warning come from?
 
 
 ## Running a function for each of several inputs
@@ -351,9 +361,6 @@ slopes
 -   Since slope returns a decimal number (a `dbl`), appropriate
     function-running function is `map_dbl`:
 
-```{r}
-d
-```
 
 ```{r functions-28}
 map_dbl(d, \(d) slope(d, my_df$y))
@@ -395,25 +402,14 @@ quartiles(1:5)
 -   When function returns more than one thing, `map` (or `map_df`)
     instead of `map_dbl`.
 
-## map results
+## Map results
 
 -   Try:
 
-```{r}
-d
-```
-
-
 ```{r functions-32}
-d
 map(d, \(d) quartiles(d)) -> e
 e
 ```
-
-```{r}
-e[[3]][2]
-```
-
 
 -   A list.
 
@@ -443,11 +439,14 @@ d %>% map_df(\(d) quartiles(d))
 -   `map` can also be used within data frames to calculate new columns.
     Let’s do the square roots of 1 through 10 again:
 
+\small
+
 ```{r functions-35}
 d <- tibble(x = 1:10)
-d
 d %>% mutate(root = map_dbl(x, \(x) sqrt(x)))
 ```
+
+\normalsize
 
 ## Write a function first and then map it
 
@@ -466,7 +465,6 @@ d %>% mutate(root = map_dbl(x, \(x) sqrt(x)))
 ```{r functions-36}
 6 %% 2
 5 %% 2
-# 13 %/% 2
 ```
 
 -   5 has remainder 1 so it is odd.
@@ -490,10 +488,6 @@ hotpo <- function(x) {
 }
 ```
 
-```{r}
-x <- 4
-ifelse((x %% 2) == 1, 3 * x + 1, x %/% 2)
-```
 
 ## Test it
 
@@ -506,10 +500,6 @@ hotpo(4.5)
 ## One through ten
 
 -   Use a data frame of numbers 1 through 10 again:
-
-```{r}
-# tibble(x = 1:10) %>% mutate(y = hotpo(x))
-```
 
 ```{r functions-39}
 tibble(x = 1:10) %>% mutate(y = map_int(x, \(x) hotpo(x)))
@@ -577,6 +567,8 @@ options(width = w)
 
 ## Top 10 longest sequences
 
+\footnotesize
+
 ```{r functions-43}
 tibble(start = 1:100) %>%
   mutate(seq_length = map_int(
@@ -598,6 +590,8 @@ tibble(start = 1:7) %>%
 
 ## Using the whole sequence to find its length and its max
 
+\small
+
 ```{r functions-45}
 tibble(start = 1:7) %>%
   mutate(sequence = map(start, \(start) hotpo_seq(start))) %>%
@@ -607,15 +601,21 @@ tibble(start = 1:7) %>%
   )
 ```
 
+
+
 ## Does it work with `rowwise`?
+
+\small
 
 ```{r functions-46}
 tibble(start=1:7) %>% 
   rowwise() %>% 
-  mutate(sequence = 0) %>% 
+  mutate(sequence = list(hotpo_seq(start))) %>% 
   mutate(seq_length = length(sequence)) %>% 
   mutate(seq_max = max(sequence))
 ```
+
+\normalsize
 
 It does.
 
@@ -624,4 +624,4 @@ It does.
 -   Called the **Collatz conjecture**.
 -   Nobody knows whether the sequence always gets to 1.
 -   Nobody has found an $n$ for which it doesn’t.
--   A [tree](https://www.jasondavies.com/collatz-graph/).
+-   A [tree (link)](https://www.jasondavies.com/collatz-graph/).
