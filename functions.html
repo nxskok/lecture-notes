@@ -2549,8 +2549,8 @@ window.onload = function() {
 </div>
 <p>If last line of function calculates value without saving it, that value is returned.</p>
 </section>
-<section id="about-the-input-testing" class="slide level2">
-<h2>About the input; testing</h2>
+<section id="about-the-input-testing-12" class="slide level2">
+<h2>About the input; testing 1/2</h2>
 <ul>
 <li>The input to a function can be called anything. Here we called it <code>x</code>. This is the name used inside the function.</li>
 <li>The function is a “machine” for calculating square-root-minus-1. It doesn’t do anything until you call it:</li>
@@ -2569,6 +2569,9 @@ window.onload = function() {
 <pre><code>[1] 1.414214</code></pre>
 </div>
 </div>
+</section>
+<section id="testing-22" class="slide level2">
+<h2>Testing 2/2</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href></a>q <span class="ot">&lt;-</span> <span class="dv">17</span></span>
 <span id="cb16-2"><a href></a><span class="fu">sqrt_minus_1</span>(q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2581,7 +2584,7 @@ window.onload = function() {
 </div>
 </div>
 <ul>
-<li>It works!</li>
+<li>It works! (At least, it works when it should and fails when it should.)</li>
 </ul>
 </section>
 <section id="vectorization-12" class="slide level2">
@@ -2901,12 +2904,22 @@ F-statistic:   NaN on 1 and 0 DF,  p-value: NA</code></pre>
 <ul>
 <li>so the slope should be <span class="math inline">\((14 − 10)/(4 − 3) = 4\)</span> and is.</li>
 </ul>
+</section>
+<section id="what-happens-here" class="slide level2">
+<h2>What happens here?</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href></a><span class="fu">with</span>(my_df, <span class="fu">slope</span>(x, y, <span class="at">hair =</span> <span class="st">&quot;spiky&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: In lm.fit(x, y, offset = offset, singular.ok = singular.ok, ...) :
+ extra argument &#39;hair&#39; will be disregarded</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.1</code></pre>
 </div>
 </div>
+<ul>
+<li>Where did the warning come from?</li>
+</ul>
 </section>
 <section id="running-a-function-for-each-of-several-inputs" class="slide level2">
 <h2>Running a function for each of several inputs</h2>
@@ -2914,7 +2927,7 @@ F-statistic:   NaN on 1 and 0 DF,  p-value: NA</code></pre>
 <li>Suppose we have a data frame containing several different <code>x</code>’s to use in regressions, along with the <code>y</code> we had before:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href></a>(d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x1 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>), <span class="at">x3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href></a>(d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x1 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>), <span class="at">x3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2937,12 +2950,12 @@ F-statistic:   NaN on 1 and 0 DF,  p-value: NA</code></pre>
 <li>Looping variable <code>i</code> goes from 1 to 3 (3 columns, thus 3 slopes):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href></a>slopes <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">3</span>)</span>
-<span id="cb67-2"><a href></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb67-3"><a href></a>  d <span class="sc">%&gt;%</span> <span class="fu">pull</span>(i) <span class="ot">-&gt;</span> xx</span>
-<span id="cb67-4"><a href></a>  slopes[i] <span class="ot">&lt;-</span> <span class="fu">slope</span>(xx, my_df<span class="sc">$</span>y)</span>
-<span id="cb67-5"><a href></a>}</span>
-<span id="cb67-6"><a href></a>slopes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href></a>slopes <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">3</span>)</span>
+<span id="cb68-2"><a href></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb68-3"><a href></a>  d <span class="sc">%&gt;%</span> <span class="fu">pull</span>(i) <span class="ot">-&gt;</span> xx</span>
+<span id="cb68-4"><a href></a>  slopes[i] <span class="ot">&lt;-</span> <span class="fu">slope</span>(xx, my_df<span class="sc">$</span>y)</span>
+<span id="cb68-5"><a href></a>}</span>
+<span id="cb68-6"><a href></a>slopes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1.1000000 -1.1000000  0.5140187</code></pre>
 </div>
@@ -2957,16 +2970,6 @@ F-statistic:   NaN on 1 and 0 DF,  p-value: NA</code></pre>
 <li>In words: for each of these (columns of <code>d</code>), run function (<code>slope</code>) with inputs “it” and <code>y</code>), and collect together the answers.</li>
 <li>Since slope returns a decimal number (a <code>dbl</code>), appropriate function-running function is <code>map_dbl</code>:</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x1"],"name":[1],"type":["int"],"align":["right"]},{"label":["x2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["x3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"8","3":"2"},{"1":"2","2":"7","3":"4"},{"1":"3","2":"6","3":"6"},{"1":"4","2":"5","3":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href></a><span class="fu">map_dbl</span>(d, \(d) <span class="fu">slope</span>(d, my_df<span class="sc">$</span>y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -3034,31 +3037,13 @@ F-statistic:   NaN on 1 and 0 DF,  p-value: NA</code></pre>
 </ul>
 </section>
 <section id="map-results" class="slide level2">
-<h2>map results</h2>
+<h2>Map results</h2>
 <ul>
 <li>Try:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x1"],"name":[1],"type":["int"],"align":["right"]},{"label":["x2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["x3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"8","3":"2"},{"1":"2","2":"7","3":"4"},{"1":"3","2":"6","3":"6"},{"1":"4","2":"5","3":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x1"],"name":[1],"type":["int"],"align":["right"]},{"label":["x2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["x3"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"8","3":"2"},{"1":"2","2":"7","3":"4"},{"1":"3","2":"6","3":"6"},{"1":"4","2":"5","3":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href></a><span class="fu">map</span>(d, \(d) <span class="fu">quartiles</span>(d)) <span class="ot">-&gt;</span> e</span>
-<span id="cb81-2"><a href></a>e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href></a><span class="fu">map</span>(d, \(d) <span class="fu">quartiles</span>(d)) <span class="ot">-&gt;</span> e</span>
+<span id="cb79-2"><a href></a>e</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$x1
  25%  75% 
@@ -3073,13 +3058,6 @@ $x3
 3.50 6.75 </code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href></a>e[[<span class="dv">3</span>]][<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> 75% 
-6.75 </code></pre>
-</div>
-</div>
 <ul>
 <li>A list.</li>
 </ul>
@@ -3090,7 +3068,7 @@ $x3
 <li>Better: pretend output from quartiles is one-row data frame:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href></a><span class="fu">map_df</span>(d, \(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href></a><span class="fu">map_df</span>(d, \(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3103,7 +3081,7 @@ $x3
 <section id="or-even" class="slide level2">
 <h2>Or even</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href></a>d <span class="sc">%&gt;%</span> <span class="fu">map_df</span>(\(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href></a>d <span class="sc">%&gt;%</span> <span class="fu">map_df</span>(\(d) <span class="fu">quartiles</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3126,16 +3104,8 @@ $x3
 <li><code>map</code> can also be used within data frames to calculate new columns. Let’s do the square roots of 1 through 10 again:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb87-2"><a href></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"1"},{"1":"2"},{"1":"3"},{"1":"4"},{"1":"5"},{"1":"6"},{"1":"7"},{"1":"8"},{"1":"9"},{"1":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href></a>d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">root =</span> <span class="fu">map_dbl</span>(x, \(x) <span class="fu">sqrt</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href></a>d <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb83-2"><a href></a>d <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">root =</span> <span class="fu">map_dbl</span>(x, \(x) <span class="fu">sqrt</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3160,15 +3130,14 @@ $x3
 <li>Odd or even? Work out the remainder when dividing by 2:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href></a><span class="dv">6</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href></a><span class="dv">6</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href></a><span class="dv">5</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href></a><span class="dv">5</span> <span class="sc">%%</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href></a><span class="co"># 13 %/% 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>5 has remainder 1 so it is odd.</li>
@@ -3180,38 +3149,31 @@ $x3
 <li>First test for integerness, then test for odd or even, and then do the appropriate calculation:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href></a>hotpo <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb94-2"><a href></a>  <span class="fu">stopifnot</span>(<span class="fu">round</span>(x) <span class="sc">==</span> x) <span class="co"># passes if input an integer</span></span>
-<span id="cb94-3"><a href></a>  remainder <span class="ot">&lt;-</span> x <span class="sc">%%</span> <span class="dv">2</span></span>
-<span id="cb94-4"><a href></a>  <span class="cf">if</span> (remainder <span class="sc">==</span> <span class="dv">1</span>) { <span class="co"># odd number</span></span>
-<span id="cb94-5"><a href></a>    ans <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb94-6"><a href></a>  }</span>
-<span id="cb94-7"><a href></a>  <span class="cf">else</span> { <span class="co"># even number</span></span>
-<span id="cb94-8"><a href></a>    ans <span class="ot">&lt;-</span> x <span class="sc">%/%</span> <span class="dv">2</span> <span class="co"># integer division</span></span>
-<span id="cb94-9"><a href></a>  }</span>
-<span id="cb94-10"><a href></a>  ans</span>
-<span id="cb94-11"><a href></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href></a>x <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb95-2"><a href></a><span class="fu">ifelse</span>((x <span class="sc">%%</span> <span class="dv">2</span>) <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span>, x <span class="sc">%/%</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href></a>hotpo <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb88-2"><a href></a>  <span class="fu">stopifnot</span>(<span class="fu">round</span>(x) <span class="sc">==</span> x) <span class="co"># passes if input an integer</span></span>
+<span id="cb88-3"><a href></a>  remainder <span class="ot">&lt;-</span> x <span class="sc">%%</span> <span class="dv">2</span></span>
+<span id="cb88-4"><a href></a>  <span class="cf">if</span> (remainder <span class="sc">==</span> <span class="dv">1</span>) { <span class="co"># odd number</span></span>
+<span id="cb88-5"><a href></a>    ans <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb88-6"><a href></a>  }</span>
+<span id="cb88-7"><a href></a>  <span class="cf">else</span> { <span class="co"># even number</span></span>
+<span id="cb88-8"><a href></a>    ans <span class="ot">&lt;-</span> x <span class="sc">%/%</span> <span class="dv">2</span> <span class="co"># integer division</span></span>
+<span id="cb88-9"><a href></a>  }</span>
+<span id="cb88-10"><a href></a>  ans</span>
+<span id="cb88-11"><a href></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="test-it" class="slide level2">
 <h2>Test it</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href></a><span class="fu">hotpo</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href></a><span class="fu">hotpo</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href></a><span class="fu">hotpo</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href></a><span class="fu">hotpo</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href></a><span class="fu">hotpo</span>(<span class="fl">4.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href></a><span class="fu">hotpo</span>(<span class="fl">4.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in hotpo(4.5): round(x) == x is not TRUE</code></pre>
 </div>
@@ -3223,10 +3185,7 @@ $x3
 <li>Use a data frame of numbers 1 through 10 again:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href></a><span class="co"># tibble(x = 1:10) %&gt;% mutate(y = hotpo(x))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">map_int</span>(x, \(x) <span class="fu">hotpo</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">map_int</span>(x, \(x) <span class="fu">hotpo</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3243,14 +3202,14 @@ $x3
 <li>If I get to 4, 2, 1, 4, 2, 1 I’ll repeat for ever, so let’s stop when we get to 1:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href></a>hotpo_seq <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb105-2"><a href></a>  ans <span class="ot">&lt;-</span> x</span>
-<span id="cb105-3"><a href></a>  <span class="cf">while</span> (x <span class="sc">!=</span> <span class="dv">1</span>) {</span>
-<span id="cb105-4"><a href></a>    x <span class="ot">&lt;-</span> <span class="fu">hotpo</span>(x)</span>
-<span id="cb105-5"><a href></a>    ans <span class="ot">&lt;-</span> <span class="fu">c</span>(ans, x)</span>
-<span id="cb105-6"><a href></a>  }</span>
-<span id="cb105-7"><a href></a>  ans</span>
-<span id="cb105-8"><a href></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href></a>hotpo_seq <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb96-2"><a href></a>  ans <span class="ot">&lt;-</span> x</span>
+<span id="cb96-3"><a href></a>  <span class="cf">while</span> (x <span class="sc">!=</span> <span class="dv">1</span>) {</span>
+<span id="cb96-4"><a href></a>    x <span class="ot">&lt;-</span> <span class="fu">hotpo</span>(x)</span>
+<span id="cb96-5"><a href></a>    ans <span class="ot">&lt;-</span> <span class="fu">c</span>(ans, x)</span>
+<span id="cb96-6"><a href></a>  }</span>
+<span id="cb96-7"><a href></a>  ans</span>
+<span id="cb96-8"><a href></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Strategy: keep looping “while <code>x</code> is not 1”.</li>
@@ -3263,7 +3222,7 @@ $x3
 <li>Start at 6:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href></a><span class="fu">hotpo_seq</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href></a><span class="fu">hotpo_seq</span>(<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  6  3 10  5 16  8  4  2  1</code></pre>
 </div>
@@ -3275,7 +3234,7 @@ $x3
 <li>Start at 27:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href></a><span class="fu">hotpo_seq</span>(<span class="dv">27</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href></a><span class="fu">hotpo_seq</span>(<span class="dv">27</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]   27   82   41  124   62   31   94   47  142   71  214
  [12]  107  322  161  484  242  121  364  182   91  274  137
@@ -3301,10 +3260,10 @@ $x3
 <section id="top-10-longest-sequences" class="slide level2">
 <h2>Top 10 longest sequences</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb110-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">map_int</span>(</span>
-<span id="cb110-3"><a href></a>    start, \(start) <span class="fu">length</span>(<span class="fu">hotpo_seq</span>(start)))) <span class="sc">%&gt;%</span></span>
-<span id="cb110-4"><a href></a>  <span class="fu">slice_max</span>(seq_length, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb101-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">map_int</span>(</span>
+<span id="cb101-3"><a href></a>    start, \(start) <span class="fu">length</span>(<span class="fu">hotpo_seq</span>(start)))) <span class="sc">%&gt;%</span></span>
+<span id="cb101-4"><a href></a>  <span class="fu">slice_max</span>(seq_length, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3320,8 +3279,8 @@ $x3
 <section id="what-happens-if-we-save-the-entire-sequence" class="slide level2">
 <h2>What happens if we save the entire sequence?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb111-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb102-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3337,12 +3296,12 @@ $x3
 <section id="using-the-whole-sequence-to-find-its-length-and-its-max" class="slide level2">
 <h2>Using the whole sequence to find its length and its max</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb112-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start))) <span class="sc">%&gt;%</span></span>
-<span id="cb112-3"><a href></a>  <span class="fu">mutate</span>(</span>
-<span id="cb112-4"><a href></a>    <span class="at">seq_length =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">length</span>(sequence)),</span>
-<span id="cb112-5"><a href></a>    <span class="at">seq_max =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">max</span>(sequence))</span>
-<span id="cb112-6"><a href></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href></a><span class="fu">tibble</span>(<span class="at">start =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb103-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">map</span>(start, \(start) <span class="fu">hotpo_seq</span>(start))) <span class="sc">%&gt;%</span></span>
+<span id="cb103-3"><a href></a>  <span class="fu">mutate</span>(</span>
+<span id="cb103-4"><a href></a>    <span class="at">seq_length =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">length</span>(sequence)),</span>
+<span id="cb103-5"><a href></a>    <span class="at">seq_max =</span> <span class="fu">map_int</span>(sequence, \(sequence) <span class="fu">max</span>(sequence))</span>
+<span id="cb103-6"><a href></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3355,15 +3314,15 @@ $x3
 <section id="does-it-work-with-rowwise" class="slide level2">
 <h2>Does it work with <code>rowwise</code>?</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href></a><span class="fu">tibble</span>(<span class="at">start=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb113-2"><a href></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb113-3"><a href></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb113-4"><a href></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">length</span>(sequence)) <span class="sc">%&gt;%</span> </span>
-<span id="cb113-5"><a href></a>  <span class="fu">mutate</span>(<span class="at">seq_max =</span> <span class="fu">max</span>(sequence))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href></a><span class="fu">tibble</span>(<span class="at">start=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-2"><a href></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb104-3"><a href></a>  <span class="fu">mutate</span>(<span class="at">sequence =</span> <span class="fu">list</span>(<span class="fu">hotpo_seq</span>(start))) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-4"><a href></a>  <span class="fu">mutate</span>(<span class="at">seq_length =</span> <span class="fu">length</span>(sequence)) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-5"><a href></a>  <span class="fu">mutate</span>(<span class="at">seq_max =</span> <span class="fu">max</span>(sequence))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["start"],"name":[1],"type":["int"],"align":["right"]},{"label":["sequence"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["seq_length"],"name":[3],"type":["int"],"align":["right"]},{"label":["seq_max"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"0","3":"1","4":"0"},{"1":"2","2":"0","3":"1","4":"0"},{"1":"3","2":"0","3":"1","4":"0"},{"1":"4","2":"0","3":"1","4":"0"},{"1":"5","2":"0","3":"1","4":"0"},{"1":"6","2":"0","3":"1","4":"0"},{"1":"7","2":"0","3":"1","4":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["start"],"name":[1],"type":["int"],"align":["right"]},{"label":["sequence"],"name":[2],"type":["list"],"align":["right"]},{"label":["seq_length"],"name":[3],"type":["int"],"align":["right"]},{"label":["seq_max"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"<int [1]>","3":"1","4":"1"},{"1":"2","2":"<dbl [2]>","3":"2","4":"2"},{"1":"3","2":"<dbl [8]>","3":"8","4":"16"},{"1":"4","2":"<dbl [3]>","3":"3","4":"4"},{"1":"5","2":"<dbl [6]>","3":"6","4":"16"},{"1":"6","2":"<dbl [9]>","3":"9","4":"16"},{"1":"7","2":"<dbl [17]>","3":"17","4":"52"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -3376,7 +3335,7 @@ $x3
 <li>Called the <strong>Collatz conjecture</strong>.</li>
 <li>Nobody knows whether the sequence always gets to 1.</li>
 <li>Nobody has found an <span class="math inline">\(n\)</span> for which it doesn’t.</li>
-<li>A <a href="https://www.jasondavies.com/collatz-graph/">tree</a>.</li>
+<li>A <a href="https://www.jasondavies.com/collatz-graph/">tree (link)</a>.</li>
 </ul>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
