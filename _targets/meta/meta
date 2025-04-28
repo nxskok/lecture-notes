@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|2b5ea87119d1ebf8|||||||||||||||
+.Random.seed|object|87c7ed5cb080c02e|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -74,7 +74,7 @@ inference_4b_R_slides|stem|84f062345b35f867|681d8fadfcfb9ca1|4916a67ba9f0c79d|59
 inference_5|stem||b5e93cadf954df8c|d84d7cdd1c3c4b08|2020472775||t19485.9083347199s||0|file|local|vector|||2.269||33m39m System command quarto failed
 inference_5_R|stem|bd7456365f950f40|c25099eac5c02304|ef46db3751d8e999|1236966356|inference_5_R.Rmd|t19377.7536313841s|b1ff94ac529c990b|11467|file|local|vector|||0.001||
 inference_5_R_slides|stem|9a6c8a642be33856|40870de14c3e2baa|815bfd1e6342f80f|1497279634|inference_5_R_slides.pdf*inference_5_R_slides.Rmd|t19379.964625005s|9c197f16ff795a13|126686|file|local|vector|||12.588||
-inference_5a|stem|3942e614142d226b|fe6f8ae88388ba6e|2c530c1562a7fbd1|1274852786|inference_5a.html*inference_5a.pdf*inference_5a.qmd|t20201.8442639352s|ffa951e3d9eaff98|3689890|file|local|vector|||8.534||
+inference_5a|stem|bc7dbc3cb5f108e7|fe6f8ae88388ba6e|2c530c1562a7fbd1|1274852786|inference_5a.html*inference_5a.pdf*inference_5a.qmd|t20206.7066426058s|7e808856739584ef|3692111|file|local|vector|||10.098||
 inference_5b|stem|8a73b502ceef5b60|3710ee578f6887b2|2c530c1562a7fbd1|62240231|inference_5b.html*inference_5b.pdf*inference_5b.qmd|t20201.9616783914s|139436eff38c45e6|3977285|file|local|vector|||9.9||
 inference_c33|stem|f1a1bfcafad8f797|58a43215fa086070|2c530c1562a7fbd1|-862795612|inference_c33.html*inference_c33.pdf*inference_c33.qmd|t20205.9148901545s|34ff391b8a8ec36d|4410263|file|local|vector|||11.916||
 logistic|stem|87ae3b4f782e051c|727c1f99245ba22d|2c530c1562a7fbd1|1448786029|logistic_files*logistic.html*logistic.pdf*logistic.qmd|t20203.7435028507s|1e1ea461079e2f91|5654747|file|local|vector|||23.096||
