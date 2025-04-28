@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|cfa43a841e938292|||||||||||||||
+.Random.seed|object|2b5ea87119d1ebf8|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -39,7 +39,7 @@ bRegression|stem|36b15ee2580b5aea|27013a9507446728|ef46db3751d8e999|1707664056|b
 bRegression_slides|stem|6bbfa8336ccac3ae|33bf5e23e66ec731|0de437ab7cc88947|-444216599|bRegression_slides.pdf*bRegression_slides.Rmd|t19379.7265642812s|ce4dda7f5f3f5a93|434185|file|local|vector|||16.974||
 bSurvival|stem|fa9310afc44d0fba|f43d0e37879b9518|ef46db3751d8e999|-54375285|bSurvival2.Rmd|t19380.0725243554s|9831d6609e61e460|5090|file|local|vector|||0.76||
 bSurvival_slides|stem|8fa30fe66a0de3d5|ea200d8d2b35776d|93f14824bedeea10|1480893430|bSurvival_slides.pdf*bSurvival_slides.Rmd|t19380.0743525588s||160745|file|local|vector|||35.869|package cmdstanr was built under R version 4.3.0. gather_ was deprecated in tidyr 1.2.0.i Please use gather instead.i The deprecated feature was likely used in the  survminer package.  Please report the issue at  8httpsgithub.comkassambarasurvminerissueshttpsgithub.comkassambarasurvminerissues8.|object dance not found
-choosing|stem|c484d737b6316300|869324457bf359a3|2c530c1562a7fbd1|-1807282654|choosing.html*choosing.pdf*choosing.qmd|t20201.9638111518s|c573cd08ccef2f63|3981017|file|local|vector|||13.129||
+choosing|stem|bb8197fb282e9457|869324457bf359a3|2c530c1562a7fbd1|-1807282654|choosing.html*choosing.pdf*choosing.qmd|t20205.9150374922s|e3aa017670ecfcf4|3978149|file|local|vector|||12.685||
 choosing_R|stem|fd9b3d599dd6812b|723a041acec56fff|ef46db3751d8e999|950995899|choosing_R.Rmd|t19487.8544949716s|72ccd0f188e1f588|8289|file|local|vector|||1.357||
 choosing_R_slides|stem|5d2951d9087b0c78|bd4d9a7cc0e8af9e|8f1e747f00e044e1|1767707305|choosing_R_slides.pdf*choosing_R_slides.Rmd|t19487.8544950179s|f67260aa4f42abd7|167772|file|local|vector|||77.658|Package microtype Warning Unable to apply patch footnote on input line 150.|
 cluster|stem|8e0cc07261b97373|11938b45a5451055|2c530c1562a7fbd1|752463725|cluster.html*cluster.pdf*cluster.qmd|t20201.9632687667s|4cd6d9dd9cf57fea|8919462|file|local|vector|||24.378||
@@ -76,7 +76,7 @@ inference_5_R|stem|bd7456365f950f40|c25099eac5c02304|ef46db3751d8e999|1236966356
 inference_5_R_slides|stem|9a6c8a642be33856|40870de14c3e2baa|815bfd1e6342f80f|1497279634|inference_5_R_slides.pdf*inference_5_R_slides.Rmd|t19379.964625005s|9c197f16ff795a13|126686|file|local|vector|||12.588||
 inference_5a|stem|3942e614142d226b|fe6f8ae88388ba6e|2c530c1562a7fbd1|1274852786|inference_5a.html*inference_5a.pdf*inference_5a.qmd|t20201.8442639352s|ffa951e3d9eaff98|3689890|file|local|vector|||8.534||
 inference_5b|stem|8a73b502ceef5b60|3710ee578f6887b2|2c530c1562a7fbd1|62240231|inference_5b.html*inference_5b.pdf*inference_5b.qmd|t20201.9616783914s|139436eff38c45e6|3977285|file|local|vector|||9.9||
-inference_c33|stem|8390f5c6dec545d9|58a43215fa086070|2c530c1562a7fbd1|-862795612|inference_c33.html*inference_c33.pdf*inference_c33.qmd|t20201.8434798508s|ed41b024b9fb066d|4402335|file|local|vector|||10.824||
+inference_c33|stem|f1a1bfcafad8f797|58a43215fa086070|2c530c1562a7fbd1|-862795612|inference_c33.html*inference_c33.pdf*inference_c33.qmd|t20205.9148901545s|34ff391b8a8ec36d|4410263|file|local|vector|||11.916||
 logistic|stem|87ae3b4f782e051c|727c1f99245ba22d|2c530c1562a7fbd1|1448786029|logistic_files*logistic.html*logistic.pdf*logistic.qmd|t20203.7435028507s|1e1ea461079e2f91|5654747|file|local|vector|||23.096||
 manova|stem|7001e199efd35cb1|7c91e26bc384b3c3|2c530c1562a7fbd1|1967024412|manova.html*manova.pdf*manova.qmd|t20203.8593620657s|1842c1f395285ade|4054658|file|local|vector|||13.139||
 mapping|stem|12496460bfbb5ac3|536e887c80c1e8e5|d84d7cdd1c3c4b08|607285889|mapping_files*mapping.html*mapping.qmd|t19489.7175367455s|222c2ca194f36476|80109|file|local|vector|||8.232||

@@ -27,13 +27,17 @@ library(smmr)
 Suppose we want to know whether people are in favour of having daylight
 savings time all year round. We ask 20 males and 20 females whether they
 each agree with having DST all year round ("yes") or not ("no"). Some
-randomly chosen data:
+randomly chosen rows of data:
+
+\footnotesize
 
 ```{r inference-5-R-1, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/dst.txt"
 dst <- read_delim(my_url," ")
-dst %>% slice_sample(n = 10)
+dst %>% slice_sample(n = 8)
 ```
+
+\normalsize
 
 ## ... continued
 
@@ -83,7 +87,6 @@ chisq.test(tab, correct=FALSE)
 ```{r inference-5-R-4, echo=FALSE, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/drp.txt"
 kids <- read_delim(my_url," ")
-kids
 ```
 
 -   Find overall median score:
@@ -122,9 +125,13 @@ chisq.test(tab, correct=FALSE)
 
 -   `median_test` does the whole thing:
 
+\small 
+
 ```{r inference-5-R-8}
 median_test(kids, score, group)
 ```
+
+\normalsize
 
 -   P-value again two-sided.
 
@@ -158,6 +165,7 @@ kids %>%
 ## The graph
 
 ```{r}
+#| fig-height: 4.5
 g
 ```
 

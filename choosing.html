@@ -2544,27 +2544,11 @@ window.onload = function() {
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href></a><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 2 3 4 5</code></pre>
-</div>
-</div>
 </section>
 <section id="choosing-all-but-some-columns" class="slide level2">
 <h2>Choosing all-but some columns</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>(RCC<span class="sc">:</span>LBM))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div data-pagedtable="false">
-  <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Sex"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sport"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Ht"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Wt"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"female","2":"Netball","3":"176.8","4":"59.90"},{"1":"female","2":"Netball","3":"172.6","4":"63.00"},{"1":"female","2":"Netball","3":"176.0","4":"66.30"},{"1":"female","2":"Netball","3":"169.9","4":"60.70"},{"1":"female","2":"Netball","3":"183.0","4":"72.90"},{"1":"female","2":"Netball","3":"178.2","4":"67.90"},{"1":"female","2":"Netball","3":"177.3","4":"67.50"},{"1":"female","2":"Netball","3":"174.1","4":"74.10"},{"1":"female","2":"Netball","3":"173.6","4":"68.20"},{"1":"female","2":"Netball","3":"173.7","4":"68.80"},{"1":"female","2":"Netball","3":"178.7","4":"75.30"},{"1":"female","2":"Netball","3":"183.3","4":"67.40"},{"1":"female","2":"Netball","3":"174.4","4":"70.00"},{"1":"female","2":"Netball","3":"173.3","4":"74.00"},{"1":"female","2":"Netball","3":"168.6","4":"51.90"},{"1":"female","2":"Netball","3":"174.0","4":"74.10"},{"1":"female","2":"Netball","3":"176.0","4":"74.30"},{"1":"female","2":"Netball","3":"172.2","4":"77.80"},{"1":"female","2":"Netball","3":"182.7","4":"66.90"},{"1":"female","2":"Netball","3":"180.5","4":"83.80"},{"1":"female","2":"Netball","3":"179.8","4":"82.90"},{"1":"female","2":"Netball","3":"179.6","4":"64.10"},{"1":"female","2":"Netball","3":"171.7","4":"68.85"},{"1":"female","2":"BBall","3":"195.9","4":"78.90"},{"1":"female","2":"BBall","3":"189.7","4":"74.40"},{"1":"female","2":"BBall","3":"177.8","4":"69.10"},{"1":"female","2":"BBall","3":"185.0","4":"74.90"},{"1":"female","2":"BBall","3":"184.6","4":"64.60"},{"1":"female","2":"BBall","3":"174.0","4":"63.70"},{"1":"female","2":"BBall","3":"186.2","4":"75.20"},{"1":"female","2":"BBall","3":"173.8","4":"62.30"},{"1":"female","2":"BBall","3":"171.4","4":"66.50"},{"1":"female","2":"BBall","3":"179.9","4":"62.90"},{"1":"female","2":"BBall","3":"193.4","4":"96.30"},{"1":"female","2":"BBall","3":"188.7","4":"75.50"},{"1":"female","2":"BBall","3":"169.1","4":"63.00"},{"1":"female","2":"Row","3":"177.9","4":"80.50"},{"1":"female","2":"Row","3":"177.5","4":"71.30"},{"1":"female","2":"Row","3":"179.6","4":"70.50"},{"1":"female","2":"Row","3":"181.3","4":"73.20"},{"1":"female","2":"Row","3":"179.7","4":"68.70"},{"1":"female","2":"Row","3":"185.2","4":"80.50"},{"1":"female","2":"Row","3":"177.3","4":"72.90"},{"1":"female","2":"Row","3":"179.3","4":"74.50"},{"1":"female","2":"Row","3":"175.3","4":"75.40"},{"1":"female","2":"Row","3":"174.0","4":"69.50"},{"1":"female","2":"Row","3":"183.3","4":"66.40"},{"1":"female","2":"Row","3":"184.7","4":"79.70"},{"1":"female","2":"Row","3":"180.2","4":"73.60"},{"1":"female","2":"Row","3":"180.2","4":"78.70"},{"1":"female","2":"Row","3":"176.0","4":"75.00"},{"1":"female","2":"Row","3":"156.0","4":"49.80"},{"1":"female","2":"Row","3":"179.7","4":"67.20"},{"1":"female","2":"Row","3":"180.9","4":"66.00"},{"1":"female","2":"Row","3":"179.5","4":"74.30"},{"1":"female","2":"Row","3":"178.9","4":"78.10"},{"1":"female","2":"Row","3":"182.1","4":"79.50"},{"1":"female","2":"Row","3":"186.3","4":"78.50"},{"1":"female","2":"Swim","3":"170.0","4":"64.80"},{"1":"female","2":"Swim","3":"170.0","4":"59.00"},{"1":"female","2":"Swim","3":"180.5","4":"72.10"},{"1":"female","2":"Swim","3":"173.3","4":"75.60"},{"1":"female","2":"Swim","3":"173.5","4":"71.40"},{"1":"female","2":"Swim","3":"181.0","4":"69.70"},{"1":"female","2":"Swim","3":"175.0","4":"63.90"},{"1":"female","2":"Swim","3":"170.3","4":"55.10"},{"1":"female","2":"Swim","3":"165.0","4":"60.00"},{"1":"female","2":"Field","3":"169.8","4":"58.00"},{"1":"female","2":"T400m","3":"174.1","4":"64.70"},{"1":"female","2":"Field","3":"175.0","4":"87.50"},{"1":"female","2":"Field","3":"171.1","4":"78.90"},{"1":"female","2":"Field","3":"172.7","4":"83.90"},{"1":"female","2":"Field","3":"175.6","4":"82.80"},{"1":"female","2":"Field","3":"171.6","4":"74.40"},{"1":"female","2":"Field","3":"172.3","4":"94.80"},{"1":"female","2":"T400m","3":"171.4","4":"49.20"},{"1":"female","2":"TSprnt","3":"178.0","4":"61.90"},{"1":"female","2":"T400m","3":"162.0","4":"53.60"},{"1":"female","2":"T400m","3":"167.3","4":"63.70"},{"1":"female","2":"T400m","3":"162.0","4":"52.80"},{"1":"female","2":"T400m","3":"170.8","4":"65.20"},{"1":"female","2":"T400m","3":"163.0","4":"50.90"},{"1":"female","2":"T400m","3":"166.1","4":"57.30"},{"1":"female","2":"T400m","3":"176.0","4":"60.00"},{"1":"female","2":"TSprnt","3":"163.9","4":"60.10"},{"1":"female","2":"T400m","3":"173.0","4":"52.50"},{"1":"female","2":"T400m","3":"177.0","4":"59.70"},{"1":"female","2":"TSprnt","3":"168.0","4":"57.30"},{"1":"female","2":"TSprnt","3":"172.0","4":"59.60"},{"1":"female","2":"Tennis","3":"167.9","4":"71.50"},{"1":"female","2":"Tennis","3":"177.5","4":"69.70"},{"1":"female","2":"Tennis","3":"162.5","4":"56.10"},{"1":"female","2":"Tennis","3":"172.5","4":"61.10"},{"1":"female","2":"Tennis","3":"166.7","4":"47.40"},{"1":"female","2":"Tennis","3":"175.0","4":"56.00"},{"1":"female","2":"Tennis","3":"157.9","4":"45.80"},{"1":"female","2":"Gym","3":"158.9","4":"47.80"},{"1":"female","2":"Gym","3":"156.9","4":"43.80"},{"1":"female","2":"Gym","3":"148.9","4":"37.80"},{"1":"female","2":"Gym","3":"149.0","4":"45.10"},{"1":"male","2":"Swim","3":"172.7","4":"67.00"},{"1":"male","2":"Swim","3":"176.5","4":"74.40"},{"1":"male","2":"Swim","3":"183.0","4":"79.30"},{"1":"male","2":"Swim","3":"194.4","4":"87.50"},{"1":"male","2":"Swim","3":"193.4","4":"83.50"},{"1":"male","2":"Swim","3":"180.2","4":"78.00"},{"1":"male","2":"Swim","3":"183.0","4":"78.00"},{"1":"male","2":"Swim","3":"184.0","4":"85.00"},{"1":"male","2":"Swim","3":"192.7","4":"84.70"},{"1":"male","2":"Swim","3":"187.2","4":"92.00"},{"1":"male","2":"Swim","3":"183.9","4":"72.30"},{"1":"male","2":"Swim","3":"192.0","4":"83.00"},{"1":"male","2":"Swim","3":"190.4","4":"96.90"},{"1":"male","2":"Row","3":"190.7","4":"85.70"},{"1":"male","2":"Row","3":"181.8","4":"85.40"},{"1":"male","2":"Row","3":"188.3","4":"85.30"},{"1":"male","2":"Row","3":"198.0","4":"93.50"},{"1":"male","2":"Row","3":"186.0","4":"86.80"},{"1":"male","2":"Row","3":"192.0","4":"87.90"},{"1":"male","2":"Row","3":"185.6","4":"87.20"},{"1":"male","2":"Row","3":"165.3","4":"53.80"},{"1":"male","2":"Row","3":"185.6","4":"89.80"},{"1":"male","2":"Row","3":"189.0","4":"91.10"},{"1":"male","2":"Row","3":"193.4","4":"88.60"},{"1":"male","2":"Row","3":"185.6","4":"92.30"},{"1":"male","2":"Row","3":"194.6","4":"97.00"},{"1":"male","2":"Row","3":"189.0","4":"89.50"},{"1":"male","2":"Row","3":"188.1","4":"88.20"},{"1":"male","2":"BBall","3":"200.4","4":"92.20"},{"1":"male","2":"BBall","3":"195.3","4":"78.90"},{"1":"male","2":"BBall","3":"194.1","4":"90.30"},{"1":"male","2":"BBall","3":"187.9","4":"87.00"},{"1":"male","2":"BBall","3":"209.4","4":"113.70"},{"1":"male","2":"BBall","3":"203.4","4":"98.00"},{"1":"male","2":"BBall","3":"198.7","4":"100.20"},{"1":"male","2":"BBall","3":"187.1","4":"79.40"},{"1":"male","2":"BBall","3":"196.6","4":"90.30"},{"1":"male","2":"BBall","3":"186.1","4":"77.70"},{"1":"male","2":"BBall","3":"192.8","4":"83.90"},{"1":"male","2":"BBall","3":"195.2","4":"75.50"},{"1":"male","2":"T400m","3":"169.1","4":"60.60"},{"1":"male","2":"T400m","3":"186.6","4":"71.00"},{"1":"male","2":"T400m","3":"184.4","4":"71.80"},{"1":"male","2":"T400m","3":"187.3","4":"76.80"},{"1":"male","2":"Field","3":"185.1","4":"102.70"},{"1":"male","2":"Field","3":"185.5","4":"94.25"},{"1":"male","2":"Field","3":"184.9","4":"79.00"},{"1":"male","2":"T400m","3":"175.0","4":"66.60"},{"1":"male","2":"T400m","3":"185.4","4":"71.80"},{"1":"male","2":"T400m","3":"181.0","4":"74.80"},{"1":"male","2":"T400m","3":"176.0","4":"68.20"},{"1":"male","2":"T400m","3":"176.2","4":"62.30"},{"1":"male","2":"T400m","3":"174.0","4":"61.00"},{"1":"male","2":"T400m","3":"191.0","4":"77.50"},{"1":"male","2":"T400m","3":"171.0","4":"57.40"},{"1":"male","2":"TSprnt","3":"174.0","4":"71.40"},{"1":"male","2":"TSprnt","3":"180.2","4":"70.30"},{"1":"male","2":"TSprnt","3":"178.5","4":"80.20"},{"1":"male","2":"Field","3":"190.3","4":"84.20"},{"1":"male","2":"Field","3":"185.0","4":"111.30"},{"1":"male","2":"Field","3":"189.0","4":"80.70"},{"1":"male","2":"Field","3":"180.1","4":"97.90"},{"1":"male","2":"Field","3":"189.2","4":"123.20"},{"1":"male","2":"TSprnt","3":"182.6","4":"72.90"},{"1":"male","2":"TSprnt","3":"186.0","4":"83.00"},{"1":"male","2":"TSprnt","3":"174.9","4":"75.90"},{"1":"male","2":"T400m","3":"180.6","4":"70.70"},{"1":"male","2":"T400m","3":"178.6","4":"67.10"},{"1":"male","2":"T400m","3":"173.0","4":"69.20"},{"1":"male","2":"T400m","3":"179.7","4":"67.05"},{"1":"male","2":"TSprnt","3":"174.6","4":"70.50"},{"1":"male","2":"TSprnt","3":"178.0","4":"70.80"},{"1":"male","2":"T400m","3":"178.5","4":"71.00"},{"1":"male","2":"TSprnt","3":"171.3","4":"69.10"},{"1":"male","2":"T400m","3":"178.0","4":"62.90"},{"1":"male","2":"TSprnt","3":"189.1","4":"94.80"},{"1":"male","2":"Field","3":"195.4","4":"94.60"},{"1":"male","2":"Field","3":"179.1","4":"108.20"},{"1":"male","2":"Field","3":"180.1","4":"97.90"},{"1":"male","2":"Field","3":"179.6","4":"75.20"},{"1":"male","2":"TSprnt","3":"174.7","4":"74.80"},{"1":"male","2":"WPolo","3":"192.7","4":"94.20"},{"1":"male","2":"WPolo","3":"179.3","4":"76.10"},{"1":"male","2":"WPolo","3":"197.5","4":"94.70"},{"1":"male","2":"WPolo","3":"182.7","4":"86.20"},{"1":"male","2":"WPolo","3":"190.5","4":"79.60"},{"1":"male","2":"WPolo","3":"191.0","4":"85.30"},{"1":"male","2":"WPolo","3":"179.6","4":"74.40"},{"1":"male","2":"WPolo","3":"192.6","4":"93.50"},{"1":"male","2":"WPolo","3":"194.1","4":"87.60"},{"1":"male","2":"WPolo","3":"193.0","4":"85.40"},{"1":"male","2":"WPolo","3":"193.9","4":"101.00"},{"1":"male","2":"WPolo","3":"187.7","4":"74.90"},{"1":"male","2":"WPolo","3":"185.3","4":"87.30"},{"1":"male","2":"WPolo","3":"191.5","4":"90.00"},{"1":"male","2":"WPolo","3":"184.6","4":"94.70"},{"1":"male","2":"WPolo","3":"179.9","4":"76.30"},{"1":"male","2":"WPolo","3":"183.9","4":"93.20"},{"1":"male","2":"Tennis","3":"183.5","4":"80.00"},{"1":"male","2":"Tennis","3":"183.1","4":"73.80"},{"1":"male","2":"Tennis","3":"178.4","4":"71.10"},{"1":"male","2":"Tennis","3":"190.8","4":"76.70"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(Sex<span class="sc">:</span>Sport, Ht<span class="sc">:</span>Wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>(RCC<span class="sc">:</span>LBM))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2588,7 +2572,7 @@ window.onload = function() {
 <section id="columns-whose-names-begin-with-s" class="slide level2">
 <h2>Columns whose names begin with S</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;S&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">&quot;S&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2602,7 +2586,7 @@ window.onload = function() {
 <h2>Columns whose names end with C</h2>
 <p>either uppercase or lowercase:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">&quot;c&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">&quot;c&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2616,7 +2600,7 @@ window.onload = function() {
 <h2>Case-sensitive</h2>
 <p>This works with any of the select-helpers:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">&quot;C&quot;</span>, <span class="at">ignore.case=</span><span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">&quot;C&quot;</span>, <span class="at">ignore.case=</span><span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2629,7 +2613,7 @@ window.onload = function() {
 <section id="column-names-containing-letter-r" class="slide level2">
 <h2>Column names containing letter R</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&quot;r&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&quot;r&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2645,10 +2629,14 @@ window.onload = function() {
 <ul>
 <li><code>^</code> means “start of text”</li>
 <li><code>.</code> means “exactly one character, but could be anything”</li>
+<li><code>t</code> means a literal letter t (uppercase or lowercase)</li>
 <li><code>$</code> means “end of text”.</li>
 </ul>
+</section>
+<section id="matching-a-regular-expression" class="slide level2">
+<h2>Matching a regular expression</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">matches</span>(<span class="st">&quot;^.t$&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">matches</span>(<span class="st">&quot;^.t$&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2665,7 +2653,7 @@ window.onload = function() {
 <li>eg, to choose text columns:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.character))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.character))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2678,7 +2666,7 @@ window.onload = function() {
 <section id="choosing-rows-by-number" class="slide level2">
 <h2>Choosing rows by number</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">16</span><span class="sc">:</span><span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">16</span><span class="sc">:</span><span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2691,8 +2679,8 @@ window.onload = function() {
 <section id="non-consecutive-rows" class="slide level2">
 <h2>Non-consecutive rows</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href></a>athletes <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href></a>  <span class="fu">slice</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">17</span>, <span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href></a>athletes <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href></a>  <span class="fu">slice</span>(<span class="dv">10</span>, <span class="dv">13</span>, <span class="dv">17</span>, <span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2705,11 +2693,11 @@ window.onload = function() {
 <section id="a-random-sample-of-rows" class="slide level2">
 <h2>A random sample of rows</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">slice_sample</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Sex"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sport"],"name":[2],"type":["chr"],"align":["left"]},{"label":["RCC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["WCC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Hc"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Hg"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Ferr"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["BMI"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["SSF"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["%Bfat"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["LBM"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["Ht"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["Wt"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"male","2":"Row","3":"4.71","4":"8.0","5":"45.5","6":"15.6","7":"91","8":"24.93","9":"78.0","10":"11.95","11":"78.00","12":"188.1","13":"88.2"},{"1":"male","2":"Tennis","3":"5.03","4":"6.4","5":"42.7","6":"14.3","7":"122","8":"22.01","9":"47.6","10":"8.51","11":"68.00","12":"183.1","13":"73.8"},{"1":"male","2":"T400m","3":"5.03","4":"6.6","5":"44.7","6":"15.9","7":"191","8":"19.85","9":"30.9","10":"6.53","11":"59.00","12":"178.0","13":"62.9"},{"1":"female","2":"BBall","3":"4.30","4":"8.9","5":"41.1","6":"13.5","7":"41","8":"22.64","9":"75.1","10":"17.95","11":"54.57","12":"171.4","13":"66.5"},{"1":"male","2":"Field","3":"5.01","4":"8.9","5":"46.0","6":"15.9","7":"212","8":"30.18","9":"96.9","10":"18.08","11":"80.00","12":"180.1","13":"97.9"},{"1":"male","2":"WPolo","3":"4.63","4":"14.3","5":"44.8","6":"15.0","7":"133","8":"25.43","9":"49.5","10":"8.97","11":"79.00","12":"185.3","13":"87.3"},{"1":"male","2":"WPolo","3":"5.02","4":"6.1","5":"43.6","6":"14.8","7":"87","8":"23.07","9":"52.8","10":"8.84","11":"68.00","12":"179.6","13":"74.4"},{"1":"female","2":"Netball","3":"4.46","4":"10.9","5":"39.7","6":"13.7","7":"102","8":"23.99","9":"115.9","10":"23.01","11":"57.20","12":"176.0","13":"74.3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Sex"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sport"],"name":[2],"type":["chr"],"align":["left"]},{"label":["RCC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["WCC"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Hc"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Hg"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Ferr"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["BMI"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["SSF"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["%Bfat"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["LBM"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["Ht"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["Wt"],"name":[13],"type":["dbl"],"align":["right"]}],"data":[{"1":"male","2":"Swim","3":"5.32","4":"6.0","5":"47.5","6":"16.3","7":"155","8":"23.29","9":"54.4","10":"9.17","11":"71.00","12":"183.0","13":"78.0"},{"1":"female","2":"Row","3":"4.46","4":"5.7","5":"39.2","6":"13.0","7":"43","8":"23.17","9":"80.3","10":"16.25","11":"62.39","12":"179.3","13":"74.5"},{"1":"male","2":"Swim","3":"5.11","4":"6.7","5":"46.1","6":"15.6","7":"93","8":"22.32","9":"40.5","10":"6.86","11":"78.00","12":"193.4","13":"83.5"},{"1":"male","2":"TSprnt","3":"5.69","4":"10.8","5":"50.5","6":"18.5","7":"53","8":"24.51","9":"42.3","10":"7.29","11":"69.00","12":"174.7","13":"74.8"},{"1":"male","2":"Field","3":"5.01","4":"8.9","5":"46.0","6":"15.9","7":"212","8":"30.18","9":"96.9","10":"18.08","11":"80.00","12":"180.1","13":"97.9"},{"1":"male","2":"WPolo","3":"4.86","4":"8.9","5":"46.9","6":"15.8","7":"65","8":"23.58","9":"57.7","10":"10.25","11":"68.00","12":"179.9","13":"76.3"},{"1":"male","2":"T400m","3":"4.87","4":"6.3","5":"45.8","6":"16.1","7":"41","8":"21.75","9":"34.6","10":"6.99","11":"62.00","12":"175.0","13":"66.6"},{"1":"female","2":"Netball","3":"4.12","4":"6.1","5":"36.6","6":"11.8","7":"21","8":"21.38","9":"90.4","10":"16.86","11":"56.45","12":"178.2","13":"67.9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -2718,7 +2706,7 @@ window.onload = function() {
 <section id="rows-for-which-something-is-true" class="slide level2">
 <h2>Rows for which something is true</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2731,7 +2719,7 @@ window.onload = function() {
 <section id="more-complicated-selections" class="slide level2">
 <h2>More complicated selections</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span>, RCC <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span>, RCC <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2744,8 +2732,8 @@ window.onload = function() {
 <section id="another-way-to-do-and" class="slide level2">
 <h2>Another way to do “and”</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href></a>  <span class="fu">filter</span>(RCC <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href></a>  <span class="fu">filter</span>(RCC <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2758,7 +2746,7 @@ window.onload = function() {
 <section id="eitheror" class="slide level2">
 <h2>Either/Or</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span> <span class="sc">|</span> RCC <span class="sc">&gt;</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Sport <span class="sc">==</span> <span class="st">&quot;Tennis&quot;</span> <span class="sc">|</span> RCC <span class="sc">&gt;</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2771,7 +2759,7 @@ window.onload = function() {
 <section id="sorting-into-order" class="slide level2">
 <h2>Sorting into order</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(RCC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(RCC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2784,7 +2772,7 @@ window.onload = function() {
 <section id="breaking-ties-by-another-variable" class="slide level2">
 <h2>Breaking ties by another variable</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(RCC, BMI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(RCC, BMI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2797,7 +2785,7 @@ window.onload = function() {
 <section id="descending-order" class="slide level2">
 <h2>Descending order</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(BMI))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(BMI))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2810,10 +2798,10 @@ window.onload = function() {
 <section id="the-top-ones" class="slide level2">
 <h2>“The top ones”</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span></span>
-<span id="cb26-3"><a href></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-4"><a href></a>  <span class="fu">select</span>(Sport, Wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href></a>  <span class="fu">select</span>(Sport, Wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2826,9 +2814,9 @@ window.onload = function() {
 <section id="another-way" class="slide level2">
 <h2>Another way</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href></a>athletes <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> Wt, <span class="at">n=</span><span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-3"><a href></a>  <span class="fu">select</span>(Sport, Wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a>athletes <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> Wt, <span class="at">n=</span><span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href></a>  <span class="fu">select</span>(Sport, Wt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2841,10 +2829,10 @@ window.onload = function() {
 <section id="create-new-variables-from-old-ones" class="slide level2">
 <h2>Create new variables from old ones</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
-<span id="cb28-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">wt_lb =</span> Wt <span class="sc">*</span> <span class="fl">2.2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-3"><a href></a>  <span class="fu">select</span>(Sport, Sex, Wt, wt_lb) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-4"><a href></a>  <span class="fu">arrange</span>(Wt) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">wt_lb =</span> Wt <span class="sc">*</span> <span class="fl">2.2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href></a>  <span class="fu">select</span>(Sport, Sex, Wt, wt_lb) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href></a>  <span class="fu">arrange</span>(Wt) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2858,23 +2846,19 @@ window.onload = function() {
 <h2>Turning the result into a number</h2>
 <p>Output is always data frame unless you explicitly turn it into something else, eg. the weight of the heaviest athlete, as a number:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href></a>  <span class="fu">pluck</span>(<span class="st">&quot;Wt&quot;</span>, <span class="dv">1</span>) <span class="ot">-&gt;</span> heavy</span>
-<span id="cb29-3"><a href></a>heavy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href></a>  <span class="fu">pluck</span>(<span class="st">&quot;Wt&quot;</span>, <span class="dv">1</span>) <span class="ot">-&gt;</span> heavy</span>
+<span id="cb26-3"><a href></a>heavy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 123.2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href></a>heavy <span class="sc">*</span> <span class="fl">2.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 271.04</code></pre>
 </div>
 </div>
 <p>Or the 20 heaviest weights in descending order:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
-<span id="cb33-2"><a href></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-3"><a href></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb33-4"><a href></a>  <span class="fu">pluck</span>(<span class="st">&quot;Wt&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href></a>  <span class="fu">pluck</span>(<span class="st">&quot;Wt&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 123.20 113.70 111.30 108.20 102.70 101.00 100.20  98.00  97.90  97.90
 [11]  97.00  96.90  96.30  94.80  94.80  94.70  94.70  94.60  94.25  94.20</code></pre>
@@ -2884,10 +2868,10 @@ window.onload = function() {
 <section id="another-way-to-do-the-last-one" class="slide level2">
 <h2>Another way to do the last one</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
-<span id="cb35-2"><a href></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a href></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb35-4"><a href></a>  <span class="fu">pull</span>(<span class="st">&quot;Wt&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Wt)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href></a>  <span class="fu">pull</span>(<span class="st">&quot;Wt&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 123.20 113.70 111.30 108.20 102.70 101.00 100.20  98.00  97.90  97.90
 [11]  97.00  96.90  96.30  94.80  94.80  94.70  94.70  94.60  94.25  94.20</code></pre>
@@ -2899,7 +2883,7 @@ window.onload = function() {
 <h2>To find the mean height of the women athletes</h2>
 <p>Two ways:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a>athletes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2909,9 +2893,9 @@ window.onload = function() {
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
-<span id="cb38-2"><a href></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href></a>  <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href></a>athletes <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href></a>  <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(Ht))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -2988,9 +2972,9 @@ window.onload = function() {
 <li>Suppose you are working in the nails department of a hardware store and you find that you have sold these items:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href></a>my_url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/nail_sales.csv&quot;</span></span>
-<span id="cb39-2"><a href></a>sales <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
-<span id="cb39-3"><a href></a>sales</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a>my_url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/nail_sales.csv&quot;</span></span>
+<span id="cb34-2"><a href></a>sales <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
+<span id="cb34-3"><a href></a>sales</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3007,9 +2991,9 @@ window.onload = function() {
 <li><p>Fortunately you found a list of product descriptions and prices:</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a>my_url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/nail_desc.csv&quot;</span></span>
-<span id="cb40-2"><a href></a>desc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
-<span id="cb40-3"><a href></a>desc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href></a>my_url <span class="ot">&lt;-</span> <span class="st">&quot;http://ritsokiguess.site/datafiles/nail_desc.csv&quot;</span></span>
+<span id="cb35-2"><a href></a>desc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(my_url)</span>
+<span id="cb35-3"><a href></a>desc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3026,7 +3010,7 @@ window.onload = function() {
 <li><code>left_join</code>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3045,9 +3029,9 @@ window.onload = function() {
 </ul>
 <p>So now can work out how much the total revenue was:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(desc) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">product_revenue =</span> sales<span class="sc">*</span>price) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href></a>  <span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(product_revenue))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(desc) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href></a>  <span class="fu">mutate</span>(<span class="at">product_revenue =</span> sales<span class="sc">*</span>price) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href></a>  <span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(product_revenue))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3075,8 +3059,8 @@ window.onload = function() {
 <li>Suppose the <code>sales</code> dataframe <em>also</em> had a column <code>qty</code> (which was the quantity sold):</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">&quot;qty&quot;</span><span class="ot">=</span><span class="st">&quot;sales&quot;</span>) <span class="ot">-&gt;</span> sales1</span>
-<span id="cb43-2"><a href></a>sales1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">&quot;qty&quot;</span><span class="ot">=</span><span class="st">&quot;sales&quot;</span>) <span class="ot">-&gt;</span> sales1</span>
+<span id="cb38-2"><a href></a>sales1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3092,8 +3076,8 @@ window.onload = function() {
 <section id="matching-only-on-product-code" class="slide level2">
 <h2>Matching only on product code</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a>sales1 <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a href></a>  <span class="fu">left_join</span>(desc, <span class="fu">join_by</span>(product_code))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href></a>sales1 <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href></a>  <span class="fu">left_join</span>(desc, <span class="fu">join_by</span>(product_code))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3112,8 +3096,8 @@ window.onload = function() {
 <li>Suppose the product code in <code>sales</code> was just <code>code</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">&quot;code&quot;</span> <span class="ot">=</span> <span class="st">&quot;product_code&quot;</span>) <span class="ot">-&gt;</span> sales2</span>
-<span id="cb45-2"><a href></a>sales2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="st">&quot;code&quot;</span> <span class="ot">=</span> <span class="st">&quot;product_code&quot;</span>) <span class="ot">-&gt;</span> sales2</span>
+<span id="cb40-2"><a href></a>sales2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3132,8 +3116,8 @@ window.onload = function() {
 <li>Use <code>join_by</code>, but like this:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a>sales2 <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href></a>  <span class="fu">left_join</span>(desc, <span class="fu">join_by</span>(code <span class="sc">==</span> product_code))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href></a>sales2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href></a>  <span class="fu">left_join</span>(desc, <span class="fu">join_by</span>(code <span class="sc">==</span> product_code))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3154,7 +3138,7 @@ window.onload = function() {
 <section id="full-join-here" class="slide level2">
 <h2>Full join here</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3171,7 +3155,7 @@ window.onload = function() {
 <h2>The same thing, but with <code>anti_join</code></h2>
 <p>Anything in first df but not in second?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href></a>desc <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href></a>desc <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(sales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source type="application/json">
@@ -3179,9 +3163,22 @@ window.onload = function() {
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href></a><span class="co"># sales %&gt;% anti_join(desc)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Masonry nails are the only thing in our product description file that we did not sell any of.</p>
+</section>
+<section id="the-other-way-around" class="slide level2">
+<h2>The other way around</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a>sales <span class="sc">%&gt;%</span> <span class="fu">anti_join</span>(desc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":["product_code"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sales"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>There was nothing we sold that was not in the description file.</p>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
