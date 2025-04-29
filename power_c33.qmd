@@ -276,6 +276,7 @@ tibble(n=seq(10, 100, 10)) %>% rowwise() %>%
 ## The power curve
 
 ```{r inference-2-R-15}
+#| fig-height: 5
 g2
 ```
 
@@ -325,7 +326,7 @@ g  <-  ggplot(powers, aes(x = mean, y = power, colour = factor(n))) +
 
 ## The power curves
 
-```{r inference-2-R-22, fig.height=3.8}
+```{r inference-2-R-22, fig.height=5}
 g
 ```
 
