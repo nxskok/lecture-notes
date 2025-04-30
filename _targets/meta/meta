@@ -1,5 +1,5 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-.Random.seed|object|145c4ce657d9577c|||||||||||||||
+.Random.seed|object|9590cc47c5b77e44|||||||||||||||
 <<<<<<< HEAD|||||||||||||||||
 =======|||||||||||||||||
 >>>>>>> 41e165e23859277d39cf61b308708a7560fe205e|||||||||||||||||
@@ -39,7 +39,7 @@ bRegression|stem|36b15ee2580b5aea|27013a9507446728|ef46db3751d8e999|1707664056|b
 bRegression_slides|stem|6bbfa8336ccac3ae|33bf5e23e66ec731|0de437ab7cc88947|-444216599|bRegression_slides.pdf*bRegression_slides.Rmd|t19379.7265642812s|ce4dda7f5f3f5a93|434185|file|local|vector|||16.974||
 bSurvival|stem|fa9310afc44d0fba|f43d0e37879b9518|ef46db3751d8e999|-54375285|bSurvival2.Rmd|t19380.0725243554s|9831d6609e61e460|5090|file|local|vector|||0.76||
 bSurvival_slides|stem|8fa30fe66a0de3d5|ea200d8d2b35776d|93f14824bedeea10|1480893430|bSurvival_slides.pdf*bSurvival_slides.Rmd|t19380.0743525588s||160745|file|local|vector|||35.869|package cmdstanr was built under R version 4.3.0. gather_ was deprecated in tidyr 1.2.0.i Please use gather instead.i The deprecated feature was likely used in the  survminer package.  Please report the issue at  8httpsgithub.comkassambarasurvminerissueshttpsgithub.comkassambarasurvminerissues8.|object dance not found
-choosing|stem|bb8197fb282e9457|869324457bf359a3|2c530c1562a7fbd1|-1807282654|choosing.html*choosing.pdf*choosing.qmd|t20205.9150374922s|e3aa017670ecfcf4|3978149|file|local|vector|||12.685||
+choosing|stem|2138e4c1c1ffa192|869324457bf359a3|2c530c1562a7fbd1|-1807282654|choosing.html*choosing.pdf*choosing.qmd|t20208.7393925028s|9bd7d9c4776f15cd|3978159|file|local|vector|||11.42||
 choosing_R|stem|fd9b3d599dd6812b|723a041acec56fff|ef46db3751d8e999|950995899|choosing_R.Rmd|t19487.8544949716s|72ccd0f188e1f588|8289|file|local|vector|||1.357||
 choosing_R_slides|stem|5d2951d9087b0c78|bd4d9a7cc0e8af9e|8f1e747f00e044e1|1767707305|choosing_R_slides.pdf*choosing_R_slides.Rmd|t19487.8544950179s|f67260aa4f42abd7|167772|file|local|vector|||77.658|Package microtype Warning Unable to apply patch footnote on input line 150.|
 cluster|stem|8e0cc07261b97373|11938b45a5451055|2c530c1562a7fbd1|752463725|cluster.html*cluster.pdf*cluster.qmd|t20201.9632687667s|4cd6d9dd9cf57fea|8919462|file|local|vector|||24.378||
@@ -62,13 +62,13 @@ inference_1_R_slides|stem|fb7f3f929081dd5f|89a0b59d11aff2a2|95a29fbefd6de995|-90
 inference_2|stem|47ed1a81ad861506|71ff0e53607c4ecc|2c530c1562a7fbd1|-2027583079|inference_2.html*inference_2.pdf*inference_2.qmd|t20202.7237942808s|b6120670fe330113|3992969|file|local|vector|||11.279||
 inference_2_R|stem|b461fcc3ed0c6175|62f2325c195486cf|ef46db3751d8e999|866742730|inference_2_R.Rmd|t19485.7500377768s|5fc00338f01b6bf9|10042|file|local|vector|||1.136||
 inference_2_R_slides|stem|ba865a983312033d|a2155b77565dfba1|9a1282a83be1f2fc|-611451905|inference_2_R_slides.pdf*inference_2_R_slides.Rmd|t19484.8250269966s|8ac8ae9da4dee46b|91416|file|local|vector|||16.172||
-inference_3|stem|f5a42a997d4583c3|5dd7cc097cbe6187|2c530c1562a7fbd1|896473392|inference_3.html*inference_3.pdf*inference_3.qmd|t20201.8433545231s|fef4888943221f31|4254200|file|local|vector|||13.188||
+inference_3|stem|29e919513d5293d8|5dd7cc097cbe6187|2c530c1562a7fbd1|896473392|inference_3.html*inference_3.pdf*inference_3.qmd|t20208.7391548686s|601a2b1d39c369c2|4254880|file|local|vector|||13.182||
 inference_3_R|stem|2a2463cd314ba2d9|583e2b802749e2b4|ef46db3751d8e999|-519183694|inference_3_R.Rmd|t19379.9667695562s|0035f980c1fbf4e2|10432|file|local|vector|||1.709||
 inference_3_R_slides|stem|272f0f3927870b6a|df343e9154759046|2dba33d9c4a833ac|681694972|inference_3_R_slides.pdf*inference_3_R_slides.Rmd|t19379.9671235864s|57394f7d556ef7ab|95622|file|local|vector|||18.738|package cmdstanr was built under R version 4.3.0|
 inference_4a|stem|3535e51465a7d435|a3198c6d744dcc66|2c530c1562a7fbd1|151659938|inference_4a_files*inference_4a.html*inference_4a.pdf*inference_4a.qmd|t20201.9661345292s|f2b76d10bf47e5ce|4518750|file|local|vector|||11.563||
 inference_4a_R|stem|faa392ea6831aa4e|6768f1001ac1501e|ef46db3751d8e999|-291506009|inference_4a_R.Rmd|t19377.7536313841s|1a46dbd3ee39e7cc|5120|file|local|vector|||0||
 inference_4a_R_slides|stem|0eaba70514d749f3|93069902641c6430|5d969b1bc08fbdb8|-569311856|inference_4a_R_slides.pdf*inference_4a_R_slides.Rmd|t19379.9644760692s|f37b25d73bfbdc97|167445|file|local|vector|||14.469||
-inference_4b|stem|2346747b5fb1ea63|79a38770c5abbd16|2c530c1562a7fbd1|-1731177673|inference_4b.html*inference_4b.pdf*inference_4b.qmd|t20207.8309965589s|bfbeee83bdefd047|4127870|file|local|vector|||9.694||
+inference_4b|stem|2346747b5fb1ea63|79a38770c5abbd16|2c530c1562a7fbd1|-1731177673|inference_4b.html*inference_4b.pdf*inference_4b.qmd|t20208.6400204869s|bfbeee83bdefd047|4127870|file|local|vector|||9.694||
 inference_4b_R|stem|fb97707d9ab29e5d|373e2319a47fdb8e|ef46db3751d8e999|1996875819|inference_4b_R.Rmd|t19416.6685814132s|d4198efac04d41ef|2730|file|local|vector|||9.365||
 inference_4b_R_slides|stem|84f062345b35f867|681d8fadfcfb9ca1|4916a67ba9f0c79d|592644384|inference_4b_R_slides.pdf*inference_4b_R_slides.Rmd|t19380.2030395872s|c22181831dfd07b3|58850|file|local|vector|||88.087|package cmdstanr was built under R version 4.3.0|
 inference_5|stem||b5e93cadf954df8c|d84d7cdd1c3c4b08|2020472775||t19485.9083347199s||0|file|local|vector|||2.269||33m39m System command quarto failed
@@ -94,8 +94,8 @@ outline_d29_slides|stem|c86e6574c0e8baf8|a3b0856e19383b86|9822ff9a3bceac94|-1261
 power_c33|stem|84be458f7561eff6|ac70b74e6a10e16e|2c530c1562a7fbd1|-1439843598|power_c33.html*power_c33.pdf*power_c33.qmd|t20207.8507109627s|b31a4ec156a8d119|3917387|file|local|vector|||11.197||
 preliminaries|stem|a1e21d9c34145d58|587ad1253cdee6ea|ef46db3751d8e999|2144827096|preliminaries.Rmd|t19353.7199907083s|2691f4548de0c6bf|1321|file|local|vector|||0||
 princomp|stem|41b5f83708dc65de|5edaefa2542aa5fc|2c530c1562a7fbd1|-486004891|princomp.html*princomp.pdf*princomp.qmd|t20204.6532245078s|b52595436a17ab2f|5725972|file|local|vector|||17.33||
-profile|stem|836c383d980f8131|5fcbc00ad0b78c2e|2c530c1562a7fbd1|1381439627|profile.html*profile.pdf*profile.qmd|t20207.8508781777s|3339845d3daf07cb|4263835|file|local|vector|||14.38||
-readfile|stem|543cc5bc216466eb|921cd7f782c1e1c5|2c530c1562a7fbd1|-1339943692|readfile.html*readfile.pdf*readfile.qmd|t20201.9628630767s|88c9594199e3f54a|4099664|file|local|vector|||9.667||
+profile|stem|836c383d980f8131|5fcbc00ad0b78c2e|2c530c1562a7fbd1|1381439627|profile.html*profile.pdf*profile.qmd|t20208.6319494047s|3339845d3daf07cb|4263835|file|local|vector|||14.38||
+readfile|stem|74e7ff8c5b087eaa|921cd7f782c1e1c5|2c530c1562a7fbd1|-1339943692|readfile.html*readfile.pdf*readfile.qmd|t20208.7392601971s|a1ca6a9b02dcce26|4105842|file|local|vector|||9.005||
 readfile_R|stem|50ae80e9a0bb9e41|f657773094628a4a|ef46db3751d8e999|-701932185|readfile_R.Rmd|t19467.7566442397s|799025e7fe6c3bbb|7063|file|local|vector|||1.415||
 readfile_R_slides|stem|aa413eabc0cf2713|55a0e7e99a0fd29c|7ebf8625991ada44|1359483203|readfile_R_slides.pdf*readfile_R_slides.Rmd|t19379.9944595239s|b5a5310861665ed0|209071|file|local|vector|||13.397|package cmdstanr was built under R version 4.3.0|
 regression|stem|f4da9cc7b166dd7c|9e88f085b9bf7f3f|2c530c1562a7fbd1|16270653|regression_files*regression.html*regression.pdf*regression.qmd|t20203.8895043608s|bd4c85e3dc91c56a|5562191|file|local|vector|||20.308||
