@@ -1,4 +1,4 @@
----
+ ---
 title: "Reading data files"
 editor: 
   markdown: 
@@ -124,7 +124,7 @@ mydata
     set in R.
 -   Tibbles print as much as will display on the screen. If there are
     more rows or columns, it will say so.
--   You will see navigation keys to display more rows or columns (if
+-   You might see navigation keys to display more rows or columns (if
     there are more).
 
 ## `View`-ing your data frame
@@ -135,10 +135,10 @@ mydata
 View(mydata)
 ```
 
-...or find your data frame in the Global Environment top right and click
-it. - This pops up a "data frame viewer" top left:
+- ...or find your data frame in the Global Environment top right and click it. 
+- This pops up a "data frame viewer" top left:
 
-![](viewview.png){height="500px"}
+![](viewview.png){height="150px"}
 
 ## This View
 
@@ -161,9 +161,13 @@ it. - This pops up a "data frame viewer" top left:
     too low, so the min and/or max will be unreasonable.
 -   Five-number summary:
 
+\footnotesize
+
 ```{r readfile-R-6}
 summary(mydata)
 ```
+
+\normalsize
 
 -   Quantitative, five-number summary plus mean.
 -   Categorical, how many rows.
@@ -193,6 +197,8 @@ global
 -   Another common format for data is a text file with the values
     separated by spaces. Top of some other data:
 
+\scriptsize
+
 ```         
 cup tempdiff            
 Starbucks 13            
@@ -214,9 +220,9 @@ SIGG 20.5
 SIGG 24.5      
 CUPPS 6    
 CUPPS 6    
-CUPPS 18.5 
-CUPPS 10   
 ```
+
+\normalsize
 
 ## Reading the coffee data
 
@@ -225,20 +231,29 @@ CUPPS 10
 -   This time, `read_delim`, and we also have to say what the thing is
     separating the values:
 
+\footnotesize
+
 ```{r readfile-R-9}
+#| message: true
 coffee <- read_delim("coffee.txt", " ")
-coffee
 ```
+
+\normalsize
 
 -   Name of the cup, text, and tempdiff, a decimal number.
 
-## Looking at the values (some)
+## Looking at the values
+
+\footnotesize
 
 ```{r readfile-R-10}
 coffee
 ```
 
-These were four brands of travel mug (in cup), and for each, how much
+\normalsize
+
+These were four brands of travel mug (in `cup`), 
+and for each, how much
 the temperature of the coffee in the mug decreased over 30 minutes.
 
 ## Reading from the Web; the soap data
@@ -247,8 +262,8 @@ the temperature of the coffee in the mug decreased over 30 minutes.
 -   Save the URL in a variable first:
 
 ```{r readfile-R-11}
-url <- "http://ritsokiguess.site/datafiles/soap.txt"
-soap <- read_delim(url, " ")
+my_url <- "http://ritsokiguess.site/datafiles/soap.txt"
+soap <- read_delim(my_url, " ")
 ```
 
 ## The soap data (some)
@@ -261,7 +276,7 @@ soap
 
 -   Sometimes you see data aligned in columns, thus:
 
-![](Screenshot_2019-04-24_20-16-24.png){height="400px"}
+![](Screenshot_2019-04-24_20-16-24.png){height="200px"}
 
 -   `read_delim` will not work: values separated by more than one space.
 -   The number of spaces between values is not constant, because there
@@ -280,7 +295,7 @@ drugs
 -   Here is [my spreadsheet](test2.xlsx) from before, but tarted up a
     bit:
 
-![](excel.png){height="450px"}
+![](excel.png){height="200px"}
 
 -   It is now a workbook with a second sheet called "notes" (that we
     don't want).
@@ -296,9 +311,12 @@ drugs
     spreadsheet first.
 -   Excel spreadsheets must be "local": cannot read one in from a URL.
 
+\small
+
 ```{r readfile-R-15, warning=F}
-# install.packages("readxl")
-library(readxl)
+library(readxl) # install first (once) with install.packages
 mydata2 <- read_excel("test2.xlsx", sheet = "data")
 mydata2
 ```
+
+\normalsize
