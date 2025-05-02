@@ -599,7 +599,7 @@ mat.pc <- mat %>%
 ##  Scree plot: one component fine
 
 ```{r palermo,fig.height=5}
-ggscreeplot(mat.pc)
+# ggscreeplot(mat.pc)
 ```
   
 

@@ -72,7 +72,6 @@ windmill_slides|stem|4231604f24ed30b6|ca80591eeba57987|ddbba9933c9282f4|-3659156
 with_categ_R|stem|bdf3967c9bc92f14|3a4a4b51d78d174f|ef46db3751d8e999|-425767943|with_categ_R.Rmd|t19320.6773734849s|493ddf0ca9d8fe86|3759|file|local|vector|||0||
 with_categ_R_slides|stem|6b5a2598ee426227|96795db7948c93bb|b5837cdd00b0fb3c|1817100208|with_categ_R_slides.pdf*with_categ_R_slides.Rmd|t19380.2030613467s|80ed2c6e71394a5f|62639|file|local|vector|||10.283||
 <<<<<<< HEAD|||||||||||||||||
-vector_matrix|stem|8eea9cc119e36983|c1242968eeb5c9a1|2c530c1562a7fbd1|-848478896|vector_matrix.html*vector_matrix.pdf*vector_matrix.qmd|t20189.6402541368s|s3593391b|3593391|file|local|vector|||16.918||
 inference_4b|stem|6b4f87d6d7ba6b78|6a787b56e9b7ef64|2c530c1562a7fbd1|-1731177673|inference_4b.html*inference_4b.pdf*inference_4b.qmd|t20189.6407689545s|s4027354b|4027354|file|local|vector|||14.885||
 outline_c32|stem|220e3792852023eb|0bb7fadae9ce6215|2c530c1562a7fbd1|2092086277|outline_c32.html*outline_c32.pdf*outline_c32.qmd|t20189.6408535036s|s3521351b|3521351|file|local|vector|||7.27||
 outline_c33|stem|02f2fb292b89aaa9|5f88e964b8cdf7c0|2c530c1562a7fbd1|1705669887|outline_c33.html*outline_c33.pdf*outline_c33.qmd|t20189.6410956577s|s3520782b|3520782|file|local|vector|||7.289||
@@ -84,7 +83,6 @@ inference_5a|stem|830e4b2c040fb7ac|6dfca9f0091eb319|2c530c1562a7fbd1|1274852786|
 tidy_extra|stem|46e210cdc105379d|c16e5953656e28c5|2c530c1562a7fbd1|-1229011653|tidy_extra.html*tidy_extra.pdf*tidy_extra.qmd|t20189.6435356714s|s3961422b|3961422|file|local|vector|||16.091||
 inference_5b|stem|abaaf5c7fa981c64|183ca78b0f92ee9c|2c530c1562a7fbd1|62240231|inference_5b.html*inference_5b.pdf*inference_5b.qmd|t20189.6437212512s|s3874842b|3874842|file|local|vector|||16.001||
 choosing|stem|fe18beae3374d383|bc85389b00725027|2c530c1562a7fbd1|-1807282654|choosing.html*choosing.pdf*choosing.qmd|t20189.6452569774s|s3878702b|3878702|file|local|vector|||17.008||
-princomp|stem|186d30975ec4c1f0|264299fbb5048333|2c530c1562a7fbd1|-486004891|princomp.html*princomp.pdf*princomp.qmd|t20189.6457722349s|s6094940b|6094940|file|local|vector|||29.994||
 outline_d29|stem|01ba04a1efc62231|7058b7768b1e4845|2c530c1562a7fbd1|1144950870|outline_d29.html*outline_d29.pdf*outline_d29.qmd|t20189.6466409783s|s3524628b|3524628|file|local|vector|||7.677||
 profile|stem|10f7feab2a960da4|0a4090f5f53eb9f1|2c530c1562a7fbd1|1381439627|profile.html*profile.pdf*profile.qmd|t20189.6470663626s|s4137592b|4137592|file|local|vector|||21.686||
 running|stem|c2c841eccf88abde|6c267ad467efb2dc|2c530c1562a7fbd1|-862476045|running.html*running.pdf*running.qmd|t20189.647381376s|s8787945b|8787945|file|local|vector|||11.573||
@@ -94,8 +92,6 @@ functions|stem|66f03a2d6f51b896|81482d6048f84cdb|2c530c1562a7fbd1|512566530|func
 discrim|stem|62593a729fdb2734|7f472b397ca8c8fd|2c530c1562a7fbd1|396770949|discrim.html*discrim.pdf*discrim.qmd|t20189.6493626304s|s4457693b|4457693|file|local|vector|||24.879||
 reports|stem|9b32052527fbd359|f3ddb20556ea5f38|2c530c1562a7fbd1|536393307|reports.html*reports.pdf*reports.qmd|t20189.6494636295s|s7768566b|7768566|file|local|vector|||8.772||
 anova|stem|6cd869b4345e0b3f|2b2db73e68f1d044|2c530c1562a7fbd1|1926265697|anova.html*anova.pdf*anova.qmd|t20189.6497461025s|s4379293b|4379293|file|local|vector|||24.366||
-inference_c33|stem|7b5625a78fe79121|7f4ec282dbafcf01|2c530c1562a7fbd1|-862795612|inference_c33.html*inference_c33.pdf*inference_c33.qmd|t20189.6754231151s|s4299943b|4299943|file|local|vector|||15.92||
-graphs_c33|stem|1af329a8a3860de9|795901db24a2ae81|2c530c1562a7fbd1|-1263923915|graphs_c33.html*graphs_c33.pdf*graphs_c33.qmd|t20189.6757310678s|s5489430b|5489430|file|local|vector|||26.639||
 logistic|stem|66c0377ebac10d9d|145a711b2435a74d|2c530c1562a7fbd1|1448786029|logistic_files*logistic.html*logistic.pdf*logistic.qmd|t20189.6489019701s|s5616131b|5616131|file|local|vector|||32.646||
 index|stem|c475e8cf07b710bb|352efd5d52885cc7|2c530c1562a7fbd1|554519753|index_files*index.md*index.qmd|t20189.643196989s|s30539b|30539|file|local|vector|||1.284||
 regression|stem|51cab6336deb0099|5cefd8f3e16cc645|2c530c1562a7fbd1|16270653|regression_files*regression.html*regression.pdf*regression.qmd|t20189.6422700972s|s5407947b|5407947|file|local|vector|||28.489||
@@ -119,7 +115,11 @@ wider_wrong|stem|9390b8409e7a78d6|7aa309e75d639ed5|2c530c1562a7fbd1|-1326064152|
 readfile|stem|fa586303d160975b|83dc58dba121b1e3|2c530c1562a7fbd1|-1339943692|readfile.html*readfile.pdf*readfile.qmd|t20190.0667589528s|s3995348b|3995348|file|local|vector|||17.813||
 =======|||||||||||||||||
 >>>>>>> e5e639c688b37b4b15e9064790c684f53b297376|||||||||||||||||
-.Random.seed|object|c2b81a2a9ce355dc
 inference_2|stem|920903c0e6ec9268|2861b6a97340a053|2c530c1562a7fbd1|-2027583079|inference_2_files*inference_2.html*inference_2.pdf*inference_2.qmd|t20210.1037336134s|s3997883b|3997883|file|local|vector|||19.855||
 tidying|stem|e2306910e27bddb4|603ec461a454407a|2c530c1562a7fbd1|-815462382|tidying_files*tidying.html*tidying.pdf*tidying.qmd|t20210.1039651077s|s5356654b|5356654|file|local|vector|||19.938||
-inference_3|stem|810acd9bd2fe4659|2e96036c7c31a6a7|2c530c1562a7fbd1|896473392|inference_3.html*inference_3.pdf*inference_3.qmd|t20189.6476131365s||4151806|file|local|vector|||2.475||[1m[22m[31m✖[39m Error running quarto cli. [36mℹ[39m Rerun with `quiet = FALSE` to see the full error message. [1mCaused by error:[22m [33m![39m System command 'quarto' failed
+inference_3|stem|2336ddca3ccff5b0|2e96036c7c31a6a7|2c530c1562a7fbd1|896473392|inference_3_files*inference_3.html*inference_3.pdf*inference_3.qmd|t20210.1185427117s|s4179268b|4179268|file|local|vector|||21.988||
+inference_c33|stem|b55a66917c565617|7f4ec282dbafcf01|2c530c1562a7fbd1|-862795612|inference_c33.html*inference_c33.pdf*inference_c33.qmd|t20210.1187369723s|s4307873b|4307873|file|local|vector|||16.707||
+graphs_c33|stem|0db0585a1c4223f1|795901db24a2ae81|2c530c1562a7fbd1|-1263923915|graphs_c33.html*graphs_c33.pdf*graphs_c33.qmd|t20210.119052206s|s5459197b|5459197|file|local|vector|||27.176||
+vector_matrix|stem|7f27d928612ebdca|c1242968eeb5c9a1|2c530c1562a7fbd1|-848478896|vector_matrix.html*vector_matrix.pdf*vector_matrix.qmd|t20210.1192127742s|s3593391b|3593391|file|local|vector|||13.854||
+.Random.seed|object|d149b0683f86b52a
+princomp|stem|186d30975ec4c1f0|264299fbb5048333|2c530c1562a7fbd1|-486004891|princomp.html*princomp.pdf*princomp.qmd|t20189.6457722349s||6094940|file|local|vector|||8.779||[1m[22m[31m✖[39m Error running quarto cli. [36mℹ[39m Rerun with `quiet = FALSE` to see the full error message. [1mCaused by error:[22m [33m![39m System command 'quarto' failed
