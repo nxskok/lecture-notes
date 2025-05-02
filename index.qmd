@@ -3,10 +3,8 @@ title: "Lecture notes"
 format: gfm
 ---
 
-Here are my lecture notes, all of them, in chronological order, with the slideshows, PDF versions of those (for printing) and the Quarto documents with the code that made the slides:
+Here are my lecture notes, all of them, in course order, with the slideshows, PDF versions of those (for printing) and the Quarto documents with the code that made the slides:
 
-| Section | Slides | PDF | Code |
-|:--------|:--------|:--------------|:----------|
 | Section | Slides | PDF | Code |
 |:--------|:--------|:--------------|:----------|
 |STAC32 course outline | [Slides](http://ritsokiguess.site/lecture-notes/outline_c32.html) | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_c32.pdf) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/outline_c32.qmd) |
@@ -33,8 +31,6 @@ Here are my lecture notes, all of them, in chronological order, with the slidesh
 |Functions | [Slides](http://ritsokiguess.site/lecture-notes/functions.html) | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/functions.pdf) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/functions.qmd) |
 |Dates and Times | [Slides](http://ritsokiguess.site/lecture-notes/dates_and_times.html) | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dates_and_times.pdf) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dates_and_times.qmd) |
 |Durations, intervals and periods | [Slides](http://ritsokiguess.site/lecture-notes/dip.html) | [PDF](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dip.pdf) | [Code](https://raw.githubusercontent.com/nxskok/lecture-notes/master/dip.qmd) |
-
-
 |STAC33 course outline | [Slides](http://ritsokiguess.site/lecture-notes/outline_c33.html) | [PDF](http://ritsokiguess.site/lecture-notes/outline_c33.pdf) | [Code](http://ritsokiguess.site/lecture-notes/outline_c33.qmd) |
 |Running R | [Slides](http://ritsokiguess.site/lecture-notes/running.html) | [PDF](http://ritsokiguess.site/lecture-notes/running.pdf) | [Code](http://ritsokiguess.site/lecture-notes/running.qmd) |
 |Reading data files | [Slides](http://ritsokiguess.site/lecture-notes/readfile.html) | [PDF](http://ritsokiguess.site/lecture-notes/readfile.pdf) | [Code](http://ritsokiguess.site/lecture-notes/readfile.qmd) |
@@ -57,8 +53,6 @@ Here are my lecture notes, all of them, in chronological order, with the slidesh
 |Functions | [Slides](http://ritsokiguess.site/lecture-notes/functions.html) | [PDF](http://ritsokiguess.site/lecture-notes/functions.pdf) | [Code](http://ritsokiguess.site/lecture-notes/functions.qmd) |
 |Vector and matrix algebra | [Slides](http://ritsokiguess.site/lecture-notes/vector_matrix.html) | [PDF](http://ritsokiguess.site/lecture-notes/vector_matrix.pdf) |  [Code](http://ritsokiguess.site/lecture-notes/vector_matrix.qmd) |
 |Bayesian statistics with Stan | [Slides](http://ritsokiguess.site/lecture-notes/rstan.html) | [PDF](http://ritsokiguess.site/lecture-notes/rstan.pdf) | [Code](http://ritsokiguess.site/lecture-notes/rstan.qmd) |
-
-
 |STAD29 course outline | [Slides](http://ritsokiguess.site/lecture-notes/outline_d29.html) | [PDF](http://ritsokiguess.site/lecture-notes/outline_d29.pdf) | [Code](http://ritsokiguess.site/lecture-notes/outline_d29.qmd) |
 |Regression revisited | [Slides](http://ritsokiguess.site/lecture-notes/regression.html) | [PDF](http://ritsokiguess.site/lecture-notes/regression.pdf) | [Code](http://ritsokiguess.site/lecture-notes/regression.qmd) |
 |Logistic regression | [Slides](http://ritsokiguess.site/lecture-notes/logistic.html) | [PDF](http://ritsokiguess.site/lecture-notes/logistic.pdf) | [Code](http://ritsokiguess.site/lecture-notes/logistic.qmd) |
