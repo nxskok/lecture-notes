@@ -1,6 +1,6 @@
 ---
 title: "Lecture notes"
-format: gfm
+format: html
 ---
 
 Here are my lecture notes, all of them, in course order, with the slideshows, PDF versions of those (for printing) and the Quarto documents with the code that made the slides:
