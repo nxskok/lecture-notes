@@ -50,6 +50,7 @@ format:
   beamer:
     incremental: false
     theme: Boadilla
+    urlcolor: red
 execute:
   echo: true
   freeze: auto

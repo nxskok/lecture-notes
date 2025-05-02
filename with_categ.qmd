@@ -18,13 +18,16 @@ library(broom)
 options(dplyr.summarise.inform = FALSE)
 ```
 
--   Recall pig feed data, after we tidied it:
+-   Recall pig feed data, after we tidied it: 
+
+\small
 
 ```{r with-categ-R-3, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/pigs2.txt"
 pigs <- read_delim(my_url, " ")
 pigs 
 ```
+\normalsize
 
 ## Summaries
 
@@ -87,7 +90,7 @@ anova(pigs.2)
 -   Same as before.
 -   But no Tukey this way:
 
-\footnotesize
+\scriptsize 
 
 ```{r with-categ-R-8, error=TRUE}
 TukeyHSD(pigs.2)
@@ -109,21 +112,23 @@ TukeyHSD(pigs.2)
 
 Read the data:
 
+\footnotesize
+
 ```{r with-categ-R-9, message=F}
 my_url <- "http://ritsokiguess.site/datafiles/crickets2.csv"
 crickets <- read_csv(my_url)
-crickets %>% slice_sample(n = 10)
+crickets %>% slice_sample(n = 10) # display sample of rows
 ```
+\normalsize
 
 ## Fit model with `lm`
 
 ```{r with-categ-R-10}
 crickets.1 <- lm(pulse_rate ~ temperature + species, 
                  data = crickets)
-summary(crickets.1)
 ```
 
-Can I remove anything? No:
+## Can I remove anything? No:
 
 ```{r with-categ-R-11}
 drop1(crickets.1, test = "F") 
@@ -135,9 +140,12 @@ drop1(crickets.1, test = "F")
 
 ## The summary
 
+\footnotesize
+
 ```{r with-categ-R-12}
 summary(crickets.1)
 ```
+\normalsize
 
 ## Conclusions
 
@@ -149,7 +157,7 @@ summary(crickets.1)
 -   R-squared of almost 0.99 is very high, so that the prediction of
     pulse rate from species and temperature is very good.
 
-## To end with a graph
+## To end with a graph 
 
 -   Two quantitative variables and one categorical: scatterplot with
     categories distinguished by colour.
@@ -160,11 +168,13 @@ t1 <- "Pulse rate against temperature for two species of crickets"
 t2 <- "Temperature in degrees Celsius"
 ggplot(crickets, aes(x = temperature, y = pulse_rate,
   colour = species)) +
-  geom_point() + geom_smooth(method = "lm", se = FALSE) -> g
+  geom_point() + geom_smooth(method = "lm", se = FALSE) +
+  ggtitle(t1, subtitle = t2) -> g
 ```
 
 ## The graph
 
 ```{r}
+#| fig-height: 5
 g
 ```

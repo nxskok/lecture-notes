@@ -51,7 +51,7 @@ Then, to check that you have the C++ stuff needed to compile Stan code:
 check_cmdstan_toolchain()
 ```
 
-and then:
+which should produce output like `The C++ toolchain required for CmdStan is setup properly!`, and then:
 
 ```{r}
 #| eval: false
@@ -59,7 +59,7 @@ install_cmdstan(cores = 6)
 ```
 
 If you happen to know how many cores (processors) your computer has,
-insert the appropriate number. (My laptop has 4 and my desktop 6.)
+insert the appropriate number. (My new laptop has 8 and my desktop 6.)
 
 All of this is done once. If you have problems, go [here
 (link)](https://mc-stan.org/cmdstanr/articles/cmdstanr.html).
@@ -186,15 +186,19 @@ parameters {
 
 ## Compile and sample from the model 1/2
 
--   compile
+-   compile 
 
 ```{r rstan-8, message=FALSE}
 poisson1 <- cmdstan_model("poisson1.stan")
 ```
 
+\scriptsize
+
 ```{r}
 poisson1
 ```
+
+\normalsize
 
 ## Compile and sample from the model 2/2
 
@@ -205,7 +209,7 @@ poisson1_data <- list(x = x)
 poisson1_data
 ```
 
--   sample (output is long)
+-   sample (output is (very) long)
 
 ```{r rstan-10}
 poisson1_fit <- poisson1$sample(data = poisson1_data)
@@ -223,9 +227,17 @@ poisson1_fit
 
 ## Comments
 
+```{r}
+#| echo: false
+summ <- poisson1_fit$summary(variables = "lambda")
+v <- c(summ$mean, summ$q5, summ$q95)
+v <- round(v, 2)
+```
+
+
 -   This summarizes the posterior distribution of $\lambda$
--   the posterior mean is 3.21
--   with a 90% posterior interval of 2.25 to 4.33.
+-   the posterior mean is `r v[1]`
+-   with a 90% posterior interval of `r v[2]` to `r v[3]`.
 -   The probability that $\lambda$ is between these two values really is
     90%.
 
@@ -564,7 +576,7 @@ anova_fit
 
 ## Comments
 
--   The posterior 95% intervals for control (group 1) and highjump
+-   The posterior 90% intervals for control (group 1) and highjump
     (group 3) do not quite overlap, suggesting that these exercise
     groups really are different.
 -   Bayesian approach does not normally do tests: look at posterior

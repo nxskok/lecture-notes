@@ -111,6 +111,8 @@ and pull out what you need to answer the question.
 
 - But you can grab just individual pieces as shown below:
 
+\small
+
 ```{r}
 names(summary(dogs.2))
 ```
@@ -260,7 +262,7 @@ This says:
 ## Interaction plot
 
 
-```{r bProfile-10, fig.height=3.5}
+```{r bProfile-10, fig.height=4}
 ggplot(dogs.long, aes(x = time, y = lh, 
                       colour = drug, group = drug)) +
   stat_summary(fun = mean, geom = "point") +
@@ -337,7 +339,7 @@ ggplot(dogs.long, aes(x = time, y = lh,
 
 ## The spaghetti plot
 
-```{r hoverla,fig.height=4.5}
+```{r hoverla,fig.height=5}
 g
 ```
 
@@ -626,12 +628,12 @@ runners.wide %>%
     with it if needed).
 
 
-## Interaction plot
+## Interaction plot 
 
 -   We went to trouble of finding means by group, so making interaction
     plot is now mainly easy:
 
-```{r bProfile-31, fig.height=2.7}
+```{r bProfile-31, fig.height=4}
 ggplot(summ, aes(x = time, y = mean, colour = diet,
                  group = diet)) + geom_point() + geom_line()
 ```

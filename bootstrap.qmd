@@ -23,7 +23,7 @@ irs <- read_csv(my_url)
 ```
 
 
-```{r bootstrap-3, fig.height=5}
+```{r bootstrap-3, fig.height=4.5}
 ggplot(irs, aes(x=Time))+geom_histogram(bins=10)
 ```
 
@@ -200,11 +200,15 @@ tibble(limit=my_names, o_t, b_t, b_p, b_bca)
 
 Recall the soap data:
 
+\small 
+
 ```{r bootstrap-17, message=FALSE}
 url <- "http://ritsokiguess.site/datafiles/soap.txt"
 soap <- read_delim(url," ")
 soap
 ```
+
+\normalsize
 
 ## Scatterplot
 
@@ -254,7 +258,7 @@ tibble(sim = 1:1000) %>%
 
 ## A picture of this
 
-```{r bootstrap-23, fig.height=4}
+```{r bootstrap-23, fig.height=5}
 ggplot(cors, aes(x=my_cor))+geom_histogram(bins=15)
 ```
 
@@ -315,6 +319,7 @@ tibble(limit=my_names, o_c, b_p, b_bca)
 
 \small
 ```{r bootstrap-28}
+#| fig-height: 4.5
 cors %>% 
   mutate(z = 0.5 * log((1+my_cor)/(1-my_cor))) %>% 
   ggplot(aes(sample=z)) + stat_qq() + stat_qq_line()

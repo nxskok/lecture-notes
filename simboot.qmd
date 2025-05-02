@@ -75,14 +75,24 @@ tibble(sim = 1:10000) %>%
   mutate(x = rbinom(1, 2, 0.5),
          y = rbinom(1, 3, 0.2),
          z = x + y) -> d
+```
+
+## Results
+
+\small 
+
+```{r}
 d
 ```
+
+\normalsize
 
 ## Distribution of sum
 
 Make a bar chart rather than a histogram because distribution of $Z$ is discrete:
 
 ```{r}
+#| fig-height: 4.5
 ggplot(d, aes(x = z)) + geom_bar()
 ```
 
@@ -153,12 +163,38 @@ ggplot(jays, aes(sample = attendance)) +
 
 ```{r bootstrap-4}
 boot <- sample(jays$attendance, replace=TRUE)
-sort(jays$attendance)
-sort(boot)
 mean(boot)
 ```
 
 - That's one bootstrapped mean. We need a whole bunch.
+
+## Comparing the actual sample with the bootstrapped one
+
+```{r}
+#| echo: false
+
+wid <- getOption("width")
+options(width = 65)
+```
+
+
+\footnotesize
+
+```{r}
+sort(jays$attendance)
+sort(boot)
+```
+
+\normalsize
+
+Bootstrap sample has repeats plus missing values from original sample.
+
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
 
 ## A whole bunch
 
@@ -173,12 +209,18 @@ tibble(sim = 1:10000) %>%
   rowwise() %>% 
   mutate(boot_sample = list(sample(jays$attendance, replace = TRUE))) %>% 
   mutate(my_mean = mean(boot_sample)) -> samples
-samples
 ```
 
 - for each row:
   - obtain a bootstrap sample (`list` because we are saving the whole sample in one cell of the dataframe)
   - work out the mean of that bootstrap sample.
+  
+## Bootstrap sample means
+
+```{r}
+samples
+```
+
   
 ## Sampling distribution of sample mean
 
@@ -227,19 +269,28 @@ ggplot(kids, aes(sample = score)) +
 kids %>% filter(group == "c") -> controls
 tibble(sim = 1:10000) %>% 
   rowwise() %>% 
-  mutate(my_sample = list(sample(controls$score, replace = TRUE))) %>% 
+  mutate(my_sample = list(sample(controls$score, 
+                                 replace = TRUE))) %>% 
   mutate(my_mean = mean(my_sample)) -> samples1
+```
+
+## Bootstrap sample means
+
+```{r}
 samples1
 ```
+
+
 
 ## The bootstrap sampling distribution
 
 ```{r}
+#| fig-height: 5
 ggplot(samples1, aes(sample = my_mean)) +
   stat_qq() + stat_qq_line()
 ```
 
-- Close to normal
+- Very close to normal.
 
 ## Same, for treatment group
 
@@ -247,13 +298,15 @@ ggplot(samples1, aes(sample = my_mean)) +
 kids %>% filter(group == "t") -> treated
 tibble(sim = 1:10000) %>% 
   rowwise() %>% 
-  mutate(my_sample = list(sample(treated$score, replace = TRUE))) %>% 
+  mutate(my_sample = list(sample(treated$score, 
+                                 replace = TRUE))) %>% 
   mutate(my_mean = mean(my_sample)) -> samples2
 ```
 
 ## The bootstrap sampling distribution
 
 ```{r}
+#| fig-height: 4
 ggplot(samples2, aes(sample = my_mean)) +
   stat_qq() + stat_qq_line()
 ```
@@ -272,10 +325,14 @@ pain <- read_table(my_url)
 
 - With matched pairs, assumption is of normality of *differences*:
 
+\small
+
 ```{r}
 pain %>% mutate(diff = druga - drugb) -> pain
 pain
 ```
+
+\normalsize
 
 ## Bootstrap sampling distribution of differences
 
@@ -284,12 +341,19 @@ tibble(sim = 1:10000) %>%
   rowwise() %>% 
   mutate(my_sample = list(sample(pain$diff, replace = TRUE))) %>% 
   mutate(my_mean = mean(my_sample)) -> samples
+```
+
+## Result
+
+```{r}
 samples
 ```
+
 
 ## Assess it for normality
 
 ```{r}
+#| fig-height: 4
 ggplot(samples, aes(sample = my_mean)) +
   stat_qq() + stat_qq_line()
 ```
@@ -300,7 +364,8 @@ ggplot(samples, aes(sample = my_mean)) +
 ## Histogram with many bins
 
 ```{r}
+#| fig-height: 4
 ggplot(samples, aes(x = my_mean)) + geom_histogram(bins = 60)
 ```
 
-- actually a very multimodal distribution: one mode for each time the low outlier appears in the bootstrap sampling distribution (can be none at all up to several times, because bootstrap sampling is with replacement).
+- actually a very multimodal distribution: one mode for each time the low outlier appears in the bootstrap sampling distribution (can be none at all up to several times).

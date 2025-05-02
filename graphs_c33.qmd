@@ -35,9 +35,28 @@ athletes <- read_tsv(my_url)
 
 ## The data (some)
 
+\small
+
+```{r}
+#| echo: false
+
+wid <- getOption("width")
+options(width = 60)
+```
+
+
 ```{r graphs-R-3}
 athletes
 ```
+
+
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
+\normalsize
 
 ## Types of graph {.smaller}
 
@@ -112,9 +131,12 @@ ggplot(athletes, aes(x = Sport, y = BMI, fill = Sex)) +
   geom_boxplot()
 ```
 
+## Or...
+
 A variation that uses `colour` instead of `fill`:
 
 ```{r}
+#| fig-height: 5
 ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
   geom_boxplot()
 ```
@@ -122,8 +144,7 @@ ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
 ## Height and weight by gender
 
 ```{r}
-#| fig-height: 9
-#| fig-width: 9
+#| fig-height: 5
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point()
 ```
@@ -140,7 +161,7 @@ ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
 Default uses same scale for each facet. To use different scales for each
 facet, this:
 
-```{r graphs-R-13, fig.height=5.2}
+```{r graphs-R-13, fig.height=4.8}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport, scales = "free")
 ```
@@ -148,6 +169,7 @@ ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
 ## Another view of height vs weight
 
 ```{r}
+#| fig-height: 4.5
 ggplot(athletes, aes(x = Ht, y = Wt)) +
   geom_point() + facet_wrap(~ Sex)
 ```
@@ -158,7 +180,9 @@ ggplot(athletes, aes(x = Ht, y = Wt)) +
 For assessing whether a column has a normal distribution or not:
 
 ```{r}
-ggplot(athletes, aes(sample = BMI)) + stat_qq() + stat_qq_line()
+#| fig-height: 4 
+ggplot(athletes, aes(sample = BMI)) + stat_qq() + 
+  stat_qq_line()
 ```
 
 
@@ -175,8 +199,9 @@ ggplot(athletes, aes(sample = BMI)) + stat_qq() + stat_qq_line()
 Male and female athletes' BMI separately:
 
 ```{r}
-ggplot(athletes, aes(sample = BMI)) + stat_qq() + stat_qq_line() +
-  facet_wrap(~ Sex)
+#| fig-height: 4
+ggplot(athletes, aes(sample = BMI)) + stat_qq() + 
+  stat_qq_line() + facet_wrap(~ Sex)
 ```
 
 ## Comments

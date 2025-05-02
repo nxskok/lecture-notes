@@ -28,9 +28,13 @@ twogroups <- read_delim(my_url," ")
 
 ## The data
 
+\footnotesize
+
 ```{r inference-3-R-2}
 twogroups
 ```
+
+\normalsize
 
 ## 95% CI (default)
 
@@ -102,11 +106,15 @@ parameter value outside CI, rejected.
 
 ## Read in data
 
+\footnotesize
+
 ```{r inference-3-R-6, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/irs.txt"
 irs <- read_csv(my_url)
 irs
 ```
+
+\normalsize
 
 ## Test whether mean is 160 or greater
 
@@ -119,7 +127,7 @@ Reject null; mean (for all people to complete form) greater than 160.
 
 ## But, look at a graph
 
-```{r inference-3-R-8, fig.height=3.5}
+```{r inference-3-R-8, fig.height=5}
 ggplot(irs, aes(x = Time)) + geom_histogram(bins = 6)
 ```
 
@@ -176,13 +184,15 @@ tibble(x=17:30) %>%
   summarize(total=sum(prob))
 ```
 
-or
+## Aside
+
+- `pbinom` gives the cumulative probability (prob. of less than or equal than the first input):
 
 ```{r}
 pbinom(17, 30, 0.5) # prob of <= 17
 ```
 
-and hence (note first input):
+- and hence (note first input):
 
 ```{r}
 pbinom(16, 30, 0.5, lower.tail = FALSE)
@@ -224,13 +234,13 @@ library(smmr)
 sign_test(irs, Time, 160)
 ```
 
-## Comments (1/3)
+## Comments (1/4)
 
 -   Testing whether population median *greater than* 160, so want
     *upper-tail* P-value 0.2923. Same as before.
 -   Also get table of values above and below; this too as we got.
 
-## Comments (2/3)
+## Comments (2/4)
 
 -   P-values are:
 
@@ -242,6 +252,9 @@ sign_test(irs, Time, 160)
 -   These are very different: we reject a mean of 160 (in favour of the
     mean being bigger), but clearly *fail* to reject a median of 160 in
     favour of a bigger one.
+    
+## Comments 3/4
+
 -   Why is that? Obtain mean and median:
 
 ```{r inference-3-R-15}
@@ -249,7 +262,7 @@ irs %>% summarize(mean_time = mean(Time),
                   median_time = median(Time))
 ```
 
-## Comments (3/3) {.smaller}
+## Comments (4/4) {.smaller}
 
 -   The mean is pulled a long way up by the right skew, and is a fair
     bit bigger than 160.
@@ -298,27 +311,39 @@ pval_sign(300, irs, Time)
 
 -   Choose our null medians first:
 
+\small 
+
 ```{r inference-3-R-18}
 (d <- tibble(null_median=seq(100,300,20)))
 ```
+
+\normalsize
 
 ## ... and then
 
 "for each null median, run the function `pval_sign` for that null median
 and get the P-value":
 
+\footnotesize
+
 ```{r inference-3-R-19}
 d %>% rowwise() %>% 
   mutate(p_value = pval_sign(null_median, irs, Time))
 ```
 
+\normalsize
+
 ## Make it easier for ourselves
+
+\footnotesize
 
 ```{r inference-3-R-20}
 d %>% rowwise() %>% 
   mutate(p_value = pval_sign(null_median, irs, Time)) %>% 
   mutate(in_out = ifelse(p_value > 0.05, "inside", "outside"))
 ```
+
+\normalsize
 
 ## confidence interval for median?
 
@@ -429,9 +454,10 @@ tibble(sim = 1:1000) %>%
   ggplot(aes(x=my_mean)) + geom_histogram(bins=10) -> g
 ```
 
-## With normal quantile plot (see after that section)
+## With normal quantile plot
 
-```{r inference-3-R-29xxx}
+```{r inference-3-R-29a}
+#| fig-height: 4
 tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 
@@ -444,6 +470,7 @@ tibble(sim = 1:10000) %>%
 ## The sampling distribution
 
 ```{r inference-3-R-30}
+#| fig-height: 5
 g
 ```
 

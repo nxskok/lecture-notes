@@ -41,11 +41,15 @@ library(tidyverse)
 
 ...as a `.csv` file:
 
+\scriptsize
+
 ```{r inference-1-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/jays15-home.csv"
 jays <- read_csv(my_url) 
 jays
 ```
+
+\normalsize
 
 ## Another way
 
@@ -54,10 +58,14 @@ jays
 
 -   To see the first few values in all the variables, can also use
     `glimpse`:
+    
+\scriptsize
 
 ```{r inference-1-R-5}
 glimpse(jays)
 ```
+
+\normalsize
 
 ## Attendance histogram
 
@@ -175,11 +183,11 @@ Sir Ronald A. Fisher, 1890--1962.
 
 -   From The Arrangement of Field Experiments (1926):
 
-![](fisher1.png){width="200%"}
+![](fisher1.png){width="100%"}
 
 -   and
 
-![](fisher2.png){width="200%"}
+![](fisher2.png){width="100%"}
 
 ## Three steps:
 
@@ -218,7 +226,7 @@ t.test(jays$attendance, mu=29327)
 -   You might say that this is not normal enough for a sample size of
     $n = 25$, in which case you don't trust the $t$-test result:
 
-```{r inference-1-R-11, fig.height=6}
+```{r inference-1-R-11, fig.height=5}
 ggplot(jays, aes(x = attendance)) + geom_histogram(bins = 6)
 ```
 
@@ -249,9 +257,13 @@ kids <- read_delim(my_url," ")
 
 ## The data
 
+\small
+
 ```{r inference-1-R-13}
 kids
 ```
+
+\normalsize
 
 In `group`, `t` is "treatment" (the new reading method) and `c` is
 "control" (the old one).

@@ -46,7 +46,7 @@ hilo
 
 ## Boxplot for yield for each fertilizer group
 
-```{r ferto,size="small",fig.height=3}
+```{r ferto,size="small",fig.height=4.5}
 ggplot(hilo, aes(x = fertilizer, y = yield)) + geom_boxplot()
 ```
 
@@ -54,7 +54,7 @@ Yields overlap for fertilizer groups.
 
 ## Boxplot for weight for each fertilizer group
 
-```{r casteldisangro,size="small",fig.height=3}
+```{r casteldisangro,size="small",fig.height=4.5}
 ggplot(hilo, aes(x = fertilizer, y = weight)) + geom_boxplot()
 ```
 
@@ -75,7 +75,7 @@ summary(hilo.w)
 
 Neither response depends significantly on fertilizer. But...
 
-## Plotting both responses at once
+## Plotting both responses at once 
 
 -   Have two response variables (not more), so can plot the response
     variables against *each other*, labelling points by which fertilizer
@@ -92,7 +92,6 @@ d <- tribble(
   31, 14,
   38, 10
 )
-d
 ```
 
 -   Then plot data as points, and add line through points in `d`:
@@ -108,7 +107,7 @@ ggplot(hilo, aes(x = yield, y = weight,
 
 ## The plot
 
-```{r charlecombe, echo=F, fig.height=3}
+```{r charlecombe, echo=F}
 g
 ```
 
@@ -139,7 +138,6 @@ options(width = 60)
 
 ```{r bManova-8}
 response <- with(hilo, cbind(yield, weight))
-response
 hilo.1 <- manova(response ~ fertilizer, data = hilo)
 summary(hilo.1)
 ```
@@ -282,19 +280,12 @@ response <- with(peanuts, cbind(y, smk, w))
 head(response)
 ```
 
-## Analysis (using `Manova`)
+## Analysis (using `manova`)
 
-```{r, include=FALSE}
-w <- getOption("width")
-options(width = 100)
-```
-
-\tiny
 
 ```{r bManova-14}
-peanuts.1 <- lm(response ~ location * variety, data = peanuts)
-peanuts.2 <- Manova(peanuts.1)
-summary(peanuts.2)
+peanuts.1 <- manova(response ~ location * variety, data = peanuts)
+summary(peanuts.1)
 ```
 
 \normalsize
@@ -330,7 +321,9 @@ options(width = w)
 ## Assessing normality
 
 ```{r}
-peanuts %>% pivot_longer(y:w, names_to = "yname", values_to = "y") %>% 
+#| fig-height: 4
+peanuts %>% pivot_longer(y:w, names_to = "yname", 
+                         values_to = "y") %>% 
   ggplot(aes(sample = y)) + stat_qq() + stat_qq_line() +
   facet_grid(yname ~ location, scales = "free_y")
 ```
@@ -355,11 +348,12 @@ summary(BoxM(response, peanuts$variety))
 - Create a combo column that is the combination of location and variety:
 
 ```{r}
-peanuts %>% mutate(combo = str_c(location, "-", variety)) -> d
+peanuts %>% mutate(combo = 
+                     str_c(location, "-", variety)) -> d
 d
 ```
 
-- then run Box's M test as usual:
+## Then run Box's M test as usual:
 
 ```{r}
 summary(BoxM(response, d$combo))

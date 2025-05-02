@@ -66,11 +66,11 @@ Sir Ronald A. Fisher, 1890--1962.
 
 -   From The Arrangement of Field Experiments (1926):
 
-![](fisher1.png){width="200%"}
+![](fisher1.png){width="100%"}
 
 -   and
 
-![](fisher2.png){width="200%"}
+![](fisher2.png){width="100%"}
 
 ## $\alpha$ and errors
 
@@ -112,23 +112,31 @@ Sir Ronald A. Fisher, 1890--1962.
 
 ...as a `.csv` file:
 
+\footnotesize
+
 ```{r inference-1-R-2}
 my_url <- "http://ritsokiguess.site/datafiles/jays15-home.csv"
 jays <- read_csv(my_url) 
 jays
 ```
 
+\normalsize
+
 ## Another way
 
--   This is a big data set: only 25 observations, but a lot of
+-   This is a "big" data set: only 25 observations, but a lot of
     *variables*.
 
 -   To see the first few values in all the variables, can also use
     `glimpse`:
 
+\scriptsize
+
 ```{r inference-1-R-5}
 glimpse(jays)
 ```
+
+\normalsize
 
 ## Attendance histogram
 
@@ -288,6 +296,7 @@ Some data:
 
 
 ## Matched pairs data
+
 - Data are comparison of 2 drugs for effectiveness at reducing pain.
 
      - 12 subjects (cases) were arthritis sufferers

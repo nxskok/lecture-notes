@@ -63,10 +63,14 @@ pain <- read_table(my_url)
 
 - With matched pairs, assumption is of normality of *differences*, so work those out first:
 
+\footnotesize
+
 ```{r}
 pain %>% mutate(diff = druga - drugb) -> pain
 pain
 ```
+
+\normalsize
 
 ## Normality of differences
 

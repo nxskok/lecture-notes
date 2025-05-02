@@ -140,7 +140,7 @@ ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
 Default uses same scale for each facet. To use different scales for each
 facet, this:
 
-```{r graphs-R-13, fig.height=5.2}
+```{r graphs-R-13, fig.height=4.5}
 ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
   geom_point() + facet_wrap(~Sport, scales = "free")
 ```
@@ -148,6 +148,7 @@ ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
 ## Another view of height vs weight
 
 ```{r}
+#| fig-height: 5
 ggplot(athletes, aes(x = Ht, y = Wt)) +
   geom_point() + facet_wrap(~ Sex)
 ```

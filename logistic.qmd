@@ -64,6 +64,8 @@ rats
 
 ## This doesn't work
 
+\small
+
 ```{r}
 #| error: true
 
@@ -71,24 +73,34 @@ rats
 status.0 <- glm(status ~ dose, family = "binomial", data = rats)
 ```
 
-Values of response variable (here `status`) must be either:
+\normalsize
 
-- 1 = "success", 0 = "failure"
-- a `factor` (not text) with two levels.
+- Values of response variable (here `status`) must be either:
+
+  - 1 = "success", 0 = "failure"
+  - a `factor` (not text) with two levels.
+
+- The error message doesn't say that the second is a possibility.
+
 
 ## Basic logistic regression
 
 -   So, make response into a factor first:
+
+\small
 
 ```{r bLogistic-4}
 rats2 <- rats %>% mutate(status = factor(status))
 rats2
 ```
 
+\normalsize
+
 -   then fit model:
 
 ```{r bLogistic-5, error=T}
-status.1 <- glm(status ~ dose, family = "binomial", data = rats2)
+status.1 <- glm(status ~ dose, family = "binomial", 
+                data = rats2)
 ```
 
 ## Output
@@ -169,7 +181,8 @@ with(rat2, cbind(lived, died))
 -   constructing the response in the `glm`:
 
 ```{r bLogistic-11}
-rat2.1 <- glm(cbind(lived, died) ~ dose, family = "binomial", data = rat2)
+rat2.1 <- glm(cbind(lived, died) ~ dose, 
+              family = "binomial", data = rat2)
 ```
 
 ## Output
@@ -193,11 +206,15 @@ cbind(predictions(rat2.1, newdata = new)) %>%
 
 ```{r}
 #| error: true
+#| fig-height: 5
 plot_predictions(rat2.1, condition = "dose")
 ```
 
+## Dose and predicted log-odds
+
 ```{r}
 #| error: true
+#| fig-height: 5
 plot_predictions(rat2.1, condition = "dose", type = "link")
 ```
 
@@ -229,7 +246,10 @@ plot_predictions(rat2.1, condition = "dose", type = "link")
 
 -   See what relates to death.
 
+
 ## Read in data
+
+\footnotesize
 
 ```{r bLogistic-14}
 my_url <- 
@@ -237,6 +257,8 @@ my_url <-
 sepsis <- read_delim(my_url, " ")
 sepsis
 ```
+
+\normalsize
 
 ## Make sure categoricals really are
 
@@ -255,16 +277,23 @@ sepsis
 
 ```{r bLogistic-16 }
 sepsis.1 <- glm(death ~ shock + malnut + alcohol + age +
-  bowelinf,
-family = "binomial",
-data = sepsis
+  bowelinf, family = "binomial", data = sepsis
 )
 ```
 
 ## Output part 1
 
+\small
+
 ```{r bLogistic-17}
 summary(sepsis.1)
+```
+
+\normalsize
+
+## Or, with `tidy` (from `broom`)
+
+```{r}
 tidy(sepsis.1)
 ```
 
@@ -274,15 +303,18 @@ tidy(sepsis.1)
 
 ## Removing `malnut`
 
+\small
+
 ```{r bLogistic-18}
 sepsis.2 <- update(sepsis.1, . ~ . - malnut)
 summary(sepsis.2)
-tidy(sepsis.2)
 ```
 
--   Everything significant now.
+\normalsize
 
 ## Comments
+
+-   Everything significant now.
 
 -   Most of the original $x$'s helped predict death. Only `malnut`
     seemed not to add anything.
@@ -295,16 +327,25 @@ tidy(sepsis.2)
 -   All coefficients are *positive*, so having any of the risk factors
     (or being older) *increases* risk of death.
 
-## Predictions from model without "malnut"
+## Predictions from model without "malnut" 1/2
 
 -   A few (rows of original dataframe) chosen "at random":
 
 ```{r bLogistic-19}
 sepsis %>% slice(c(4, 1, 2, 11, 32)) -> new
 new
+```
+
+## Predictions from model without "malnut" 2/2
+
+\footnotesize
+
+```{r}
 cbind(predictions(sepsis.2, newdata = new)) %>% 
   select(estimate, conf.low, conf.high, shock:bowelinf) 
 ```
+
+\normalsize
 
 ## Comments
 
@@ -338,8 +379,8 @@ cbind(predictions(sepsis.2, newdata = new)) %>%
 ```{r}
 new <- datagrid(shock = c(0, 1), model = sepsis.2)
 new
-cbind(predictions(sepsis.2, newdata = new)) %>% 
-  select(estimate, death:shock)
+cbind(predictions(sepsis.2, newdata = new)) %>%
+ select(estimate, alcohol:shock)
 ```
 
 ## Assessing proportionality of odds for age
@@ -552,6 +593,8 @@ levels(miners$Severity)
 
 ## Plot proportions against exposure 1/2
 
+\small
+
 ```{r bLogistic-28, fig.height=3.5, message=F}
 miners %>% 
   group_by(Exposure) %>% 
@@ -559,9 +602,12 @@ miners %>%
 prop
 ```
 
+\normalsize
+
 ## Plot proportions against exposure 2/2
 
 ```{r}
+#| fig-height: 4.5
 ggplot(prop, aes(x = Exposure, y = proportion,
                    colour = Severity)) + 
   geom_point() + geom_smooth(se = F)
@@ -587,6 +633,8 @@ sev.1 <- polr(Severity ~ Exposure,
 
 ## Output: not very illuminating
 
+\footnotesize
+
 ```{r}
 sev.1 <- polr(Severity ~ Exposure,
   weights = Freq,
@@ -598,20 +646,22 @@ sev.1 <- polr(Severity ~ Exposure,
 summary(sev.1)
 ```
 
+\normalsize
+
 ## Does exposure have an effect?
 
-Fit model without `Exposure`, and compare using `anova`. Note `1` for
-model with just intercept:
+Fit model without `Exposure`, and compare using `anova`. 
+Note `1` for model with just intercept:
 
-```{r bLogistic-36, echo=F}
-w <- getOption("width")
-options(width = w - 20)
-```
+
+\footnotesize
 
 ```{r bLogistic-37}
 sev.0 <- polr(Severity ~ 1, weights = Freq, data = miners)
 anova(sev.0, sev.1)
 ```
+
+\normalsize
 
 Exposure definitely has effect on severity of disease.
 
@@ -642,10 +692,15 @@ cbind(predictions(sev.1, newdata = new)) %>%
 
 ## Plot of predicted probabilities
 
+- Wider for looking at, longer for graph:
+
 ```{r}
 
-plot_predictions(model = sev.1, condition = c("Exposure", "group"), type = "probs") + 
-  geom_point(data = prop, aes(x = Exposure, y = proportion, colour = Severity)) -> ggg
+plot_predictions(model = sev.1, 
+                 condition = c("Exposure", "group"), 
+                 type = "probs") + 
+  geom_point(data = prop, aes(x = Exposure, y = proportion, 
+                              colour = Severity)) -> ggg
 ```
 
 ## The graph
@@ -695,10 +750,13 @@ brandpref %>%
          ) -> brandpref
 ```
 
+\footnotesize
+
 ```{r}
 brandpref 
-brandpref %>% count(sex)
 ```
+
+\normalsize
 
 ## Fitting model
 
@@ -709,8 +767,9 @@ library(nnet)
 # levels(brandpref$sex)
 
 brands.1 <- multinom(brand ~ age + sex, data = brandpref)
-summary(brands.1)
 ```
+
+- `summary` output not helpful.
 
 ## Can we drop anything?
 
@@ -734,12 +793,25 @@ brands.3 <- multinom(brand ~ sex, data = brandpref)
 
 ## Do age/sex help predict brand? 2/3
 
+\footnotesize
+
 ```{r bLogistic-51}
 anova(brands.2, brands.1)
+```
+
+\normalsize
+
+## Do age/sex help predict brand? 3/3
+
+\footnotesize
+
+```{r}
 anova(brands.3, brands.1)
 ```
 
-## Do age/sex help predict brand? 3/3
+\normalsize
+
+## Comments
 
 -   `age` definitely significant (second `anova`)
 
@@ -760,10 +832,13 @@ anova(brands.3, brands.1)
 brands.1 <- with(brandpref, multinom(brand ~ age + sex))
 ```
 
+\small
+
 ```{r bLogistic-52 }
-step(brands.1)
 step(brands.1, trace = 0)
 ```
+
+\normalsize
 
 -   Final model contains both `age` and `sex` so neither could be
     removed.
@@ -781,11 +856,9 @@ Space the ages out a bit for prediction (see over).
 ## Combinations
 
 ```{r}
-new <- datagrid(age = seq(24, 40, 4), # cover the entire range of ages
+new <- datagrid(age = seq(24, 40, 4), # cover age range 
                 sex = c("female", "male"), model = brands.1)
 new
-# new <- datagrid(age = seq(24, 40, 4), # cover the entire range of ages
-                # model = brands.1)
 ```
 
 ## The predictions
@@ -810,17 +883,19 @@ cbind(predictions(brands.1, newdata = new)) %>%
     (sort of) wrong about that:
 
 ```{r}
+#| fig-height: 4.5
 plot_predictions(brands.1, condition = c("age", "sex"), 
          type = "probs")
 ```
 
 
 
-## Making it go 
+## Making it go
 
 -   We have to include `group` in the `condition`:
 
 ```{r}
+#| fig-height: 4.5
 plot_predictions(brands.1, condition = c("age", "group"))
 ```
 
@@ -834,9 +909,14 @@ plot_predictions(brands.1, condition = c("age", "group"))
 If we add the
 other variable to the *end*, we get facets for `sex`:
 
+\small
+
 ```{r}
+#| fig-height: 4.5
 plot_predictions(brands.1, condition = c("age", "group", "sex"))
 ```
+
+\normalsize
 
 Not actually much difference between males and
 females.
@@ -847,8 +927,9 @@ females.
 - *don't* actually plot the graph, then plot the right things:
 
 ```{r}
-plot_predictions(brands.1, condition = c("age", "brand", "sex"), 
-         type = "probs", draw = FALSE) %>% 
+plot_predictions(brands.1, 
+                 condition = c("age", "brand", "sex"), 
+                 type = "probs", draw = FALSE) %>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
   geom_line() -> g
@@ -881,10 +962,6 @@ g
 
 Summarize all people of same brand preference, same sex, same age on one
 line of data file with frequency on end:
-
-```{r}
-brandpref
-```
 
 ```         
 1 0 24 1
@@ -926,22 +1003,31 @@ b.2 <- multinom(brand ~ age, data = bf, weights = Freq)
 
 ## P-value for `sex` identical
 
+\footnotesize
+
 ```{r bLogistic-62}
 anova(b.2, b.1)
 ```
 
+\normalsize
+
 Same P-value as before, so we haven't changed anything important.
 
-## Trying interaction between age and gender
+## Trying interaction between age and sex
 
-```{r bLogistic-69, echo=F}
-options(width = 60)
-```
 
 ```{r bLogistic-70 }
+#| results: hide
 brands.4 <- update(brands.1, . ~ . + age:sex)
+```
+
+\footnotesize
+
+```{r}
 anova(brands.1, brands.4)
 ```
+
+\normalsize
 
 -   No evidence that effect of age on brand preference differs for the
     two genders.
@@ -949,8 +1035,9 @@ anova(brands.1, brands.4)
 ## Make graph again
 
 ```{r}
-plot_predictions(brands.4, condition = c("age", "brand", "sex"), 
-         type = "probs", draw = FALSE)  %>% 
+plot_predictions(brands.4, 
+                 condition = c("age", "brand", "sex"), 
+                 type = "probs", draw = FALSE)  %>% 
   ggplot(aes(x = age, y = estimate, colour = group, 
              linetype = sex)) +
   geom_line() -> g4
