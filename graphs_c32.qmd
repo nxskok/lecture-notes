@@ -1,0 +1,329 @@
+---
+title: "Drawing graphs"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Our data
+
+-   To illustrate making graphs, we need some data.
+-   Data on 202 male and female athletes at the Australian Institute of
+    Sport.
+-   Variables:
+    -   categorical: Sex of athlete, sport they play
+    -   quantitative: height (cm), weight (kg), lean body mass, red and
+        white blood cell counts, haematocrit and haemoglobin (blood),
+        ferritin concentration, body mass index, percent body fat.
+-   Values separated by tabs (which impacts reading in).
+
+## Packages for this section
+
+```{r graphs-R-1}
+library(tidyverse)
+```
+
+## Reading data into R
+
+-   Use `read_tsv` ("tab-separated values"), like `read_csv`.
+-   Data in `ais.txt`:
+
+```{r graphs-R-2}
+my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
+athletes <- read_tsv(my_url)
+```
+
+## The data (some)
+
+\small
+
+```{r}
+#| echo: false
+
+wid <- getOption("width")
+options(width = 60)
+```
+
+
+```{r graphs-R-3}
+athletes
+```
+
+
+```{r}
+#| echo: false
+
+options(width = wid)
+```
+
+\normalsize
+
+## Types of graph {.smaller}
+
+Depends on number and type of variables:
+
+| Categorical | Quantitative | Graph                                                       |
+|-------------:|-------------:|:-------------------------------------------|
+|           1 |            0 | bar chart                                                   |
+|           0 |            1 | histogram                                                   |
+|           2 |            0 | grouped bar charts                                          |
+|           1 |            1 | side-by-side boxplots                                       |
+|           0 |            2 | scatterplot                                                 |
+|           2 |            1 | grouped boxplots                                            |
+|           1 |            2 | scatterplot with points identified by group (eg. by colour) |
+
+With more (categorical) variables, might want *separate plots by
+groups*. This is called `facetting` in R.
+
+## `ggplot`
+
+-   R has a standard graphing procedure `ggplot`, that we use for all
+    our graphs.
+-   Use in different ways to get precise graph we want.
+-   Let's start with bar chart of the sports played by the athletes.
+
+## Bar chart
+
+```{r graphs-R-4, fig.height=3.9}
+ggplot(athletes, aes(x = Sport)) + geom_bar()
+```
+
+## Histogram of body mass index
+
+```{r graphs-R-5, fig.height=3.9}
+ggplot(athletes, aes(x = BMI)) + geom_histogram(bins = 10)
+```
+
+## Which sports are played by males and females?
+
+Grouped bar chart:
+
+```{r graphs-R-6, fig.height=3.15}
+ggplot(athletes, aes(x = Sport, fill = Sex)) +
+  geom_bar(position = "dodge")
+```
+
+## BMI by gender
+
+```{r graphs-R-7, fig.height=4}
+ggplot(athletes, aes(x = Sex, y = BMI)) + geom_boxplot() 
+```
+
+## Height vs. weight
+
+Scatterplot:
+
+```{r graphs-R-8, fig.height=3.4}
+ggplot(athletes, aes(x = Ht, y = Wt)) + geom_point()
+```
+
+## With regression line
+
+```{r graphs-R-9, fig.height=3.6}
+ggplot(athletes, aes(x = Ht, y = Wt)) +
+  geom_point() + geom_smooth(method = "lm")
+```
+
+## BMI by sport and gender
+
+```{r graphs-R-10, fig.height=3.6}
+ggplot(athletes, aes(x = Sport, y = BMI, fill = Sex)) +
+  geom_boxplot()
+```
+
+## Or...
+
+A variation that uses `colour` instead of `fill`:
+
+```{r}
+#| fig-height: 5
+ggplot(athletes, aes(x = Sport, y = BMI, colour = Sex)) +
+  geom_boxplot()
+```
+
+## Height and weight by gender
+
+```{r}
+#| fig-height: 5
+ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
+  geom_point()
+```
+
+## Height by weight by gender for each sport, with facets
+
+```{r graphs-R-12, fig.height=3.6}
+ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
+  geom_point() + facet_wrap(~Sport)
+```
+
+## Filling each facet
+
+Default uses same scale for each facet. To use different scales for each
+facet, this:
+
+```{r graphs-R-13, fig.height=4.8}
+ggplot(athletes, aes(x = Ht, y = Wt, colour = Sex)) +
+  geom_point() + facet_wrap(~Sport, scales = "free")
+```
+
+## Another view of height vs weight
+
+```{r}
+#| fig-height: 4.5
+ggplot(athletes, aes(x = Ht, y = Wt)) +
+  geom_point() + facet_wrap(~ Sex)
+```
+
+
+## Normal quantile plot
+
+For assessing whether a column has a normal distribution or not:
+
+```{r}
+#| fig-height: 4 
+ggplot(athletes, aes(sample = BMI)) + stat_qq() + 
+  stat_qq_line()
+```
+
+
+## Comments
+
+- Data on $y$-axis
+- on $x$-axis, the $z$-scores you would expect if normal distribution correct
+- if the points follow the line, distribution is normal
+- the way in which the points *don't* follow line tell you about how the distribution is not normal
+- in this case, the highest values are too high (long upper tail).
+
+## Facetting
+
+Male and female athletes' BMI separately:
+
+```{r}
+#| fig-height: 4
+ggplot(athletes, aes(sample = BMI)) + stat_qq() + 
+  stat_qq_line() + facet_wrap(~ Sex)
+```
+
+## Comments
+
+- The distribution of BMI for females is closer to normal, with only the highest few values being too high
+- The distribution of BMI values for males might even be right-skewed: not only are the upper values too high, but some of the lowest ones are not low enough.
+
+## More normal quantile plots
+
+-   How straight does a normal quantile plot have to be?
+-   There is randomness in real data, so even a normal quantile plot
+    from normal data won't look perfectly straight.
+-   With a small sample, can look not very straight even from normal
+    data.
+-   Looking for systematic departure from a straight line; random
+    wiggles ought not to concern us.
+-   Look at some examples where we know the answer, so that we can see
+    what to expect.
+
+## Normal data, large sample
+
+```{r set-seed, echo=F}
+set.seed(457299)
+```
+
+```{r inference-4a-R-11, fig.height=4.5}
+d <- tibble(x=rnorm(200))
+ggplot(d, aes(x=x)) + geom_histogram(bins=10)
+```
+
+## The normal quantile plot
+
+```{r inference-4a-R-12, fig.height=4.5}
+ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
+```
+
+## Normal data, small sample
+
+```{r inference-4a-R-13, echo=F}
+set.seed(457299)
+```
+
+-   Not so convincingly normal, but not obviously skewed:
+
+```{r normal-small, fig.height=4.5}
+d <- tibble(x=rnorm(20))
+ggplot(d, aes(x=x)) + geom_histogram(bins=5)
+```
+
+## The normal quantile plot
+
+Good, apart from the highest and lowest points being slightly off. I'd
+call this good:
+
+```{r inference-4a-R-14, fig.height=4.5}
+ggplot(d, aes(sample=x)) + stat_qq() + stat_qq_line()
+```
+
+## Chi-squared data, *df* = 10
+
+Somewhat skewed to right:
+
+```{r inference-4a-R-15, fig.height=4.5}
+d <- tibble(x=rchisq(100, 10))
+ggplot(d,aes(x=x)) + geom_histogram(bins=10)
+```
+
+## The normal quantile plot
+
+Somewhat opening-up curve:
+
+```{r inference-4a-R-16, fig.height=4.5}
+ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
+```
+
+## Chi-squared data, df = 3
+
+Definitely skewed to right:
+
+```{r chisq-small-df, fig.height=4.5}
+d <- tibble(x=rchisq(100, 3))
+ggplot(d, aes(x=x)) + geom_histogram(bins=10)
+```
+
+## The normal quantile plot
+
+Clear upward-opening curve:
+
+```{r inference-4a-R-17, fig.height=4.5}
+ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
+```
+
+## t-distributed data, df = 3
+
+Long tails (or a very sharp peak):
+
+```{r t-small, fig.height=4.5}
+d <- tibble(x=rt(300, 3))
+ggplot(d, aes(x=x)) + geom_histogram(bins=15)
+```
+
+## The normal quantile plot
+
+Low values too low and high values too high for normal.
+
+```{r inference-4a-R-18, fig.height=4.5}
+ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
+```
+
+## Summary
+
+On a normal quantile plot:
+
+-   points following line (with some small wiggles): normal.
+-   kind of deviation from a straight line indicates kind of
+    nonnormality:
+    -   a few highest point(s) too high and/or lowest too low: outliers
+    -   else see how points at each end off the line:
+
+|                | High points |              |
+|----------------|-------------|--------------|
+| **Low points** | **Too low** | **Too high** |
+| **Too low**    | Skewed left | Long tails   |
+| **Too high**   | Short tails | Skewed right |
+
