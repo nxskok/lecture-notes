@@ -25,6 +25,7 @@ options(clustermq.scheduler = "multicore")
 # source("other_functions.R") # Source other scripts as needed. # nolint
 
 # Replace the target list below with your own:
+# this renders to html but not to pdf
 list(
   tar_quarto(index, "index.qmd"),
   tar_quarto(alternative_c33, "alternative_c33.qmd"),
