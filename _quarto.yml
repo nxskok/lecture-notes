@@ -15,7 +15,7 @@ project:
     - discrim.qmd
     - factor.qmd
     - functions.qmd
-    - graphs.qmd
+    - graphs_c32.qmd
     - graphs_c33.qmd
     - inference*.qmd
     - logistic.qmd
