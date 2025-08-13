@@ -4,7 +4,7 @@ title: "STAC32 Course Outline"
 
 ## This course
 
--   STAC32, Applications of Statistical Methods (Fall 2024)
+-   STAC32, Applications of Statistical Methods (Fall 2025)
 
 -   Classes:
 
@@ -122,9 +122,10 @@ The blue things are all links:
 ## Course material 2/2
 
 -   Tidying and organizing data
--   Case studies
+-   Case studies:
+  - simple regression
+  - multiple regression
 -   Functions
--   Dates and times
 -   Miscellaneous tasks (as time permits)
 
 
@@ -137,11 +138,19 @@ Students with diverse learning styles and needs are welcome in this course. In p
 -   I expect that you will do your own work in this course, and not seek help from outside this course. 
 -   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
 
+## Expectations 1.5/3
+
+- In particular, using chatgpt or the like *will not help you* in this course.
+- Your aim in this course should be to *learn how to use R yourself*, and to interpret the results yourself.  If you cannot do this, you will not succeed on the exams, *and* you will not be able to use either R or AI tools  effectively in the future because you will not have the skills required to critically assess their output.
+- Large language models are literally *bullshit generators*: they have *no interest* in whether what they return is true or false, relevant or irrelevant. Thus, you should never use the output from them without reading it through carefully to assess it for correctness and relevance, and in order to do that, you need to have the relevant knowledge *in your brain*.
+- The questions you will be answering in this course will be specific to particular datasets and analyses, and your answers will need to be equally specific and relevant. Answers that speak in generalities will usually receive very little credit.
+
 ## Expectations 2/3 {.smaller}
 
 -   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me. Everything in the course, unless otherwise stated, can be completed using this material.
 -   Anything else, for example material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there.
--   If you want credit for any ideas that come from outside the course materials, you must say where they came from.
+-   Giving a link that does not exist or is not relevant is automatically *plagiarism*.
+-   If you want credit for any ideas that come from outside the course materials, you must say where they came from. Using AI tools does not enable you to do this.
 -   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view, and claiming that an idea from outside the course is yours when it is not is *plagiarism*.
 
 ## Expectations 3/3
