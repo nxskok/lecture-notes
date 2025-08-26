@@ -93,23 +93,16 @@ Principal components:
 
 ```{r bFactor-2}
 kids.0 <- princomp(covmat = m) 
+kids.0
 ```
 
 I used `kids.0` here since I want `kids.1` and `kids.2` later.
 
 
-##  Scree plot
-```{r bFactor-3, fig.height=3.5}
-ggscreeplot(kids.0)
-```
-
- 
-
-
 ##  Principal component results
 
-
-* Need 2 components. Loadings:
+- `ggscreeplot` doesn't work here.
+- First two standard deviations seem bigger than rest, suggests 2 components.
 
 \footnotesize
 ```{r bFactor-4}

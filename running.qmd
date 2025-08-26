@@ -40,7 +40,6 @@ If already signed in with UTorID and password, you may get to skip some steps.
 - Each user has a “workspace”, a place where all your work is
 stored.
 - Within that workspace, you can have as many Projects as you like.
-- To create a new Project, click on the blue New Project button.
 - I recommend having one project per *course*.
 - R Studio restarts in project where you left off.
 
@@ -55,7 +54,7 @@ stored.
   - give it a name and click Create Project.
 - You see the name of your new project top right.
 
-## R Notebooks
+## Quarto documents
 
 - At left of previous view is Console, where you can enter R commands
 and see output.
