@@ -8,3 +8,4 @@
 /.quarto/
 *.html
 *.pdf
+*_files/*
