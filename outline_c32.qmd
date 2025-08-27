@@ -56,7 +56,7 @@ title: "STAC32 Course Outline"
 -   Begin with "Dear Dr Butler"
 -   State *clearly* how I can help you. 
 -   Include your name (as U of T knows it) *and* student number
--   I aim to reply within one working day.
+-   I aim to reply within two working days.
 
 ## Course objectives
 
