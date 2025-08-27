@@ -9,8 +9,8 @@ title: "STAC32 Course Outline"
 -   Classes:
 
     -   2 hours of lectures / week, in person.
-    -   1 hour of tutorial / week, in person **starting in week 2**
-    -   "office hours" in person only. For 1 hour after each LEC01 lecture in IA 4028, or catch me after class, specifically Tu 14:00-14:45 and Th 13:00-14:00.
+    -   1 hour of tutorial / week, in person **starting in week 2**. In tutorial, you work through a worksheet, with a TA available to help if you get stuck.
+    -   "office hours" in person only. For 1 hour after each LEC01 lecture in IA 4028, or catch me after class, specifically Tu 14:00-15:00 and Th 13:00-14:00.
 
 -   Instructor:
 
@@ -68,13 +68,13 @@ title: "STAC32 Course Outline"
     -   Expect to be asked for software output, explanation, or both.
     -   The grading will reward evidence of clear understanding and insight.
 
--   Along the way you will learn how to use R Notebooks and how to turn these into reports.
+-   Along the way you will learn how to use Quarto documents and how to turn these into reports.
 
 ## Course materials
 
 The blue things are all links:
 
--   [Quercus](https://q.utoronto.ca/): lecture videos, hand in assignments, receive grades.
+-   [Quercus](https://q.utoronto.ca/): hand in assignments, receive grades, ancient lecture videos
 
 -   [Course website](http://ritsokiguess.site/STAC32/): course news, reminders, lecture notes and code, assignment solutions, other stuff I want to share with you
 
@@ -87,7 +87,7 @@ The blue things are all links:
 -   Assignments: 8 total, due after weeks 3 through 11. Best 6 count, total 25% (about 4% each).
     - expect that each assignment will cover up to the Tuesday lecture before it is due
     - will become available after the Wednesday tutorial, and will be due Monday at 11:59pm
-    - you will need to hand in your previewed/knitted notebook showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
+    - you will need to hand in your rendered Quarto document showing your code, output, answers and explanations (in the first tutorial you will learn how to do this)
 -   Midterm (30%), final (45%) exams  (in person). You *must get at least 40%* on the final exam to pass the course.
 
 ## Grading
@@ -133,26 +133,29 @@ The blue things are all links:
 
 Students with diverse learning styles and needs are welcome in this course. In particular, if you have a disability/health consideration that may require accommodations, please feel free to approach me and/or the AccessAbility Services Office as soon as possible. I will work with you and AccessAbility Services to ensure you can achieve your learning goals in this course. Enquiries are confidential. The UTSC AccessAbility Services staff are available by appointment to assess specific needs, provide referrals and arrange appropriate accommodations: (416) 287-7560 or by e-mail at `ability.utsc@utsc.utoronto.ca`.
 
-## Expectations 1/4
+## Expectations 1/5
 
 -   I expect that you will do your own work in this course, and not seek help from outside this course. 
 -   All the ideas you need to succeed in this course are contained in the lecture notes, with a few exceptions that I will tell you about. Seeking help from outside the course may confuse you more than it helps.
 
-## Expectations 2/4
+## Expectations 2/5
 
 - In particular, using chatgpt or the like *will not help you* in this course.
 - Your aim in this course should be to *learn how to use R yourself*, and to interpret the results yourself.  If you cannot do this, you will not succeed on the exams, *and* you will not be able to use either R or AI tools  effectively in the future because you will not have the skills required to critically assess their output.
-- Large language models are literally *bullshit generators*: they have *no interest* in whether what they return is true or false, relevant or irrelevant. Thus, you should never use the output from them without reading it through carefully to assess it for correctness and relevance, and in order to do that, you need to have the relevant knowledge *in your brain*.
-- The questions you will be answering in this course will be specific to particular datasets and analyses, and your answers will need to be equally specific and relevant. Answers that speak in generalities will usually receive very little credit.
 
-## Expectations 3/4 {.smaller}
+## Expectations 3/5
+
+- Large language models are literally *bullshit generators*: they have *no interest* in whether what they return is true or false, relevant or irrelevant. Thus, you should never use the output from them without reading it through carefully to assess it for correctness and relevance, and in order to do that, you need to have the relevant knowledge *in your brain*.
+- The questions you will be answering in this course will be specific to particular datasets and analyses, and your answers will need to be equally specific and relevant. Answers speaking  in generalities will receive little or no credit.
+
+## Expectations 4/5 {.smaller}
 
 -   You may freely use anything that you learn from the lecture notes, PASIAS, solutions to previous assignments, or from conversation with the TAs or me. Everything in the course, unless otherwise stated, can be completed using this material.
 -   Anything else, for example material you find on the Internet, **must be cited**. You can do this by giving the URL that it came from, for example "according to `https://r4ds.had.co.nz/data-import.html`", and then say whatever it is you learned from there.
--   If you want credit for any ideas that come from outside the course materials, you must say where they came from.
+-   If you want credit for *any* ideas that come from outside the course materials, you must say where they came from.
 -   Citation is a way of making sure that people get credit for ideas that are theirs; not citing when you should is a way of erasing someone's point of view, and claiming that an idea from outside the course is yours when it is not is *plagiarism*.
 
-## Expectations 4/4
+## Expectations 5/5
 
 -   I expect you to learn how to do things *as they are done in this course*. You will also make STAD29 much easier if you do that.
 -   Detailed [course policies](https://ritsokiguess.site/STAC32/policies.pdf). If you have a question about administrative policies in the course, look here first.
