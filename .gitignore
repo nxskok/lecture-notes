@@ -7,3 +7,5 @@
 .DS_Store
 /.quarto/
 *_files/*
+
+**/*.quarto_ipynb

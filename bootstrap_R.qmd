@@ -1,5 +1,8 @@
 ---
 title: "Bootstrap for sampling distribution of sample mean"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Assessing assumptions
@@ -37,7 +40,6 @@ jays <- read_csv("http://ritsokiguess.site/datafiles/jays15-home.csv")
 set.seed(457299)
 ```
 
-
 \small
 
 ```{r}
@@ -46,7 +48,6 @@ set.seed(457299)
 wid <- getOption("width")
 options(width = 60)
 ```
-
 
 ```{r bootstrap-R-2}
 jays$attendance
@@ -80,7 +81,6 @@ sort(s)
 
 options(width = wid)
 ```
-
 
 ## Getting mean of bootstrap sample
 
@@ -143,7 +143,7 @@ tibble(sim = 1:4) %>%
 -   These are (four simulated values of) the bootstrapped sampling
     distribution of the sample mean.
 
-## Make a histogram of them
+## Make a normal quantile plot of them
 
 -   rather pointless here, but to get the idea:
 
@@ -152,10 +152,11 @@ tibble(sim = 1:4) %>%
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 3) -> g
+  ggplot(aes(sample = my_mean)) + 
+    stat_qq() + stat_qq_line() -> g
 ```
 
-## The (pointless) histogram
+## The (pointless) plot
 
 ```{r bootstrap-R-10}
 #| fig-height: 5
@@ -164,18 +165,19 @@ g
 
 ## Now do again with a decent number of bootstrap samples
 
--   say 1000, and put a decent number of bins on the histogram also:
+-   say 10000, to get a good look at the tails:
 
 ```{r bootstrap-R-11}
-tibble(sim = 1:1000) %>% 
+tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(jays$attendance, 
                               replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) -> g
+  ggplot(aes(sample = my_mean)) +
+    stat_qq() + stat_qq_line() -> g
 ```
 
-## The (better) histogram
+## The (better) plot
 
 ```{r bootstrap-R-12}
 #| fig-height: 5
@@ -184,7 +186,7 @@ g
 
 ## Comments
 
--   This is very close to normal
+-   This is very close to normal (only very slightly right-skewed)
 -   The bootstrap says that the sampling distribution of the sample mean
     is close to normal, even though the distribution of the data is not
 -   A sample size of 25 is big enough to overcome the skewness that we
@@ -250,23 +252,23 @@ controls
 
 ```{r bootstrap-R-17}
 #| fig-height: 4
-tibble(sim = 1:1000) %>% 
+tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(controls$score, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
 ```
 
 ## ... and the treatment group:
 
 ```{r bootstrap-R-19}
 #| fig-height: 4
-kids %>% filter(group=="t") -> treats
-tibble(sim = 1:1000) %>% 
+kids %>% filter(group == "t") -> treats
+tibble(sim = 1:10000) %>% 
   rowwise() %>% 
   mutate(sample = list(sample(treats$score, replace = TRUE))) %>% 
   mutate(my_mean = mean(sample)) %>% 
-  ggplot(aes(x = my_mean)) + geom_histogram(bins = 10) 
+  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
 ```
 
 ## Comments

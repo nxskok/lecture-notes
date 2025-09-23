@@ -1,8 +1,8 @@
- ---
-title: "Reading data files"
-editor: 
-  markdown: 
-    wrap: 72
+---
+title: "Reading data files" 
+editor:                     
+  markdown:                  
+    wrap: 72                   
 ---
 
 ## Introduction
@@ -75,6 +75,7 @@ library(tidyverse)
 mydata <- read_csv("test1.csv")
 mydata
 ```
+
 ## More on the above
 
 -   read_csv guesses what kind of thing is in each column. Here it
@@ -91,7 +92,7 @@ mydata
 -   Or, use
 
 ```{r, eval=FALSE}
-# f <- file.choose()
+f <- file.choose()
 f
 ```
 
@@ -135,8 +136,9 @@ mydata
 View(mydata)
 ```
 
-- ...or find your data frame in the Global Environment top right and click it. 
-- This pops up a "data frame viewer" top left:
+-   ...or find your data frame in the Global Environment top right and
+    click it.
+-   This pops up a "data frame viewer" top left:
 
 ![](viewview.png){height="150px"}
 
@@ -254,8 +256,7 @@ coffee
 
 \normalsize
 
-These were four brands of travel mug (in `cup`), 
-and for each, how much
+These were four brands of travel mug (in `cup`), and for each, how much
 the temperature of the coffee in the mug decreased over 30 minutes.
 
 ## Reading from the Web; the soap data

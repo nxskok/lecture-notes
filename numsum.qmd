@@ -1,5 +1,8 @@
 ---
 title: "Numerical Summaries"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Summarizing data in R 1/2
@@ -43,11 +46,9 @@ wid=getOption("width")
 options(width=85)
 ```
 
-
 ```{r}
 summary(athletes)
 ```
-
 
 ```{r asphalt-36, echo=F}
 options(width=wid)
@@ -66,7 +67,8 @@ athletes %>% summarize(m=mean(Ht))
 or to get mean and SD of BMI:
 
 ```{r numsum-R-4}
-athletes %>% summarize(m = mean(BMI), s = sd(BMI))
+athletes %>% summarize(mean_bmi = mean(BMI), 
+                       sd_bmi = sd(BMI))
 ```
 
 ## A warning
@@ -149,13 +151,10 @@ summarize(n = n(), mean_Ht = mean(Ht), sd_Ht = sd(Ht))
 
 -   Standard deviation of each (numeric) column:
 
-\footnotesize
-
 ```{r numsum-R-10}
-athletes %>% summarize(across(where(is.numeric), \(x) sd(x))) 
+athletes %>% 
+  summarize(across(where(is.numeric), \(x) sd(x))) 
 ```
-
-\normalsize
 
 ## Summarizing several columns 2/2
 

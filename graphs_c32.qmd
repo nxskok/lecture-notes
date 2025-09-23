@@ -35,42 +35,23 @@ athletes <- read_tsv(my_url)
 
 ## The data (some)
 
-\small
-
-```{r}
-#| echo: false
-
-wid <- getOption("width")
-options(width = 60)
-```
-
-
 ```{r graphs-R-3}
 athletes
 ```
-
-
-```{r}
-#| echo: false
-
-options(width = wid)
-```
-
-\normalsize
 
 ## Types of graph {.smaller}
 
 Depends on number and type of variables:
 
-| Categorical | Quantitative | Graph                                                       |
-|-------------:|-------------:|:-------------------------------------------|
-|           1 |            0 | bar chart                                                   |
-|           0 |            1 | histogram                                                   |
-|           2 |            0 | grouped bar charts                                          |
-|           1 |            1 | side-by-side boxplots                                       |
-|           0 |            2 | scatterplot                                                 |
-|           2 |            1 | grouped boxplots                                            |
-|           1 |            2 | scatterplot with points identified by group (eg. by colour) |
+| Categorical | Quantitative | Graph |
+|---:|---:|:---|
+| 1 | 0 | bar chart |
+| 0 | 1 | histogram |
+| 2 | 0 | grouped bar charts |
+| 1 | 1 | side-by-side boxplots |
+| 0 | 2 | scatterplot |
+| 2 | 1 | grouped boxplots |
+| 1 | 2 | scatterplot with points identified by group (eg. by colour) |
 
 With more (categorical) variables, might want *separate plots by
 groups*. This is called `facetting` in R.
@@ -174,7 +155,6 @@ ggplot(athletes, aes(x = Ht, y = Wt)) +
   geom_point() + facet_wrap(~ Sex)
 ```
 
-
 ## Normal quantile plot
 
 For assessing whether a column has a normal distribution or not:
@@ -185,14 +165,15 @@ ggplot(athletes, aes(sample = BMI)) + stat_qq() +
   stat_qq_line()
 ```
 
-
 ## Comments
 
-- Data on $y$-axis
-- on $x$-axis, the $z$-scores you would expect if normal distribution correct
-- if the points follow the line, distribution is normal
-- the way in which the points *don't* follow line tell you about how the distribution is not normal
-- in this case, the highest values are too high (long upper tail).
+-   Data on $y$-axis
+-   on $x$-axis, the $z$-scores you would expect if normal distribution
+    correct
+-   if the points follow the line, distribution is normal
+-   the way in which the points *don't* follow line tell you about how
+    the distribution is not normal
+-   in this case, the highest values are too high (long upper tail).
 
 ## Facetting
 
@@ -206,8 +187,11 @@ ggplot(athletes, aes(sample = BMI)) + stat_qq() +
 
 ## Comments
 
-- The distribution of BMI for females is closer to normal, with only the highest few values being too high
-- The distribution of BMI values for males might even be right-skewed: not only are the upper values too high, but some of the lowest ones are not low enough.
+-   The distribution of BMI for females is closer to normal, with only
+    the highest few values being too high
+-   The distribution of BMI values for males might even be right-skewed:
+    not only are the upper values too high, but some of the lowest ones
+    are not low enough.
 
 ## More normal quantile plots
 
@@ -235,7 +219,7 @@ ggplot(d, aes(x=x)) + geom_histogram(bins=10)
 ## The normal quantile plot
 
 ```{r inference-4a-R-12, fig.height=4.5}
-ggplot(d,aes(sample=x))+stat_qq()+stat_qq_line()
+ggplot(d,aes(sample=x)) + stat_qq() + stat_qq_line()
 ```
 
 ## Normal data, small sample
@@ -265,8 +249,8 @@ ggplot(d, aes(sample=x)) + stat_qq() + stat_qq_line()
 Somewhat skewed to right:
 
 ```{r inference-4a-R-15, fig.height=4.5}
-d <- tibble(x=rchisq(100, 10))
-ggplot(d,aes(x=x)) + geom_histogram(bins=10)
+d <- tibble(x = rchisq(100, 10))
+ggplot(d,aes(x = x)) + geom_histogram(bins=10)
 ```
 
 ## The normal quantile plot
@@ -326,4 +310,3 @@ On a normal quantile plot:
 | **Low points** | **Too low** | **Too high** |
 | **Too low**    | Skewed left | Long tails   |
 | **Too high**   | Short tails | Skewed right |
-

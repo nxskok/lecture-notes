@@ -58,7 +58,7 @@ jays
 
 -   To see the first few values in all the variables, can also use
     `glimpse`:
-    
+
 \scriptsize
 
 ```{r inference-1-R-5}
@@ -162,7 +162,7 @@ with(jays, t.test(attendance))
 
 ## Why 0.05? This man.
 
-::: columns
+::::: columns
 ::: {.column width="40%"}
 ![](fisher.png)
 :::
@@ -177,7 +177,7 @@ with(jays, t.test(attendance))
 
 Sir Ronald A. Fisher, 1890--1962.
 :::
-:::
+:::::
 
 ## Why 0.05? (2)
 

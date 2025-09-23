@@ -1,5 +1,8 @@
 ---
 title: "Choosing things in dataframes"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Packages
@@ -12,7 +15,7 @@ library(tidyverse)
 
 ## Doing things with data frames
 
-Let's go back to our Australian athletes: 
+Let's go back to our Australian athletes:
 
 ```{r}
 #| echo: false
@@ -26,13 +29,10 @@ options(width = 65)
 my_url <- "http://ritsokiguess.site/datafiles/ais.txt"
 athletes <- read_tsv(my_url)
 ```
-\footnotesize
 
 ```{r choosing-R-1}
 athletes
 ```
-
-\normalsize
 
 ## Choosing a column
 
@@ -52,16 +52,11 @@ athletes %>% select(Sport, Hg, BMI)
 athletes %>% select(Sex:WCC, BMI)
 ```
 
-
-
-
-## Choosing all-but some columns 
+## Choosing all-but some columns
 
 ```{r choosing-R-5}
 athletes %>% select(-(RCC:LBM))
 ```
-
-
 
 ## Select-helpers
 
@@ -121,130 +116,77 @@ athletes %>% select(matches("^.t$"))
 -   Use `where` as with summarizing several columns
 -   eg, to choose text columns:
 
-\small
-
 ```{r choosing-R-11}
 athletes %>% select(where(is.character))
 ```
 
-\normalsize
-
 ## Choosing rows by number
-
-\footnotesize
 
 ```{r choosing-R-12}
 athletes %>% slice(16:25)
 ```
 
-\normalsize
-
-## Non-consecutive rows 
-
-\footnotesize
+## Non-consecutive rows
 
 ```{r choosing-R-13}
 athletes %>% 
   slice(10, 13, 17, 42)
 ```
 
-\normalsize
-
 ## A random sample of rows
-
-\footnotesize
-
 
 ```{r choosing-R-14}
 athletes %>% slice_sample(n=8)
 ```
 
-\normalsize
-
 ## Rows for which something is true
-
-\footnotesize
-
 
 ```{r choosing-R-15}
 athletes %>% filter(Sport == "Tennis")
 ```
 
-\normalsize
-
 ## More complicated selections
-
-\footnotesize
-
 
 ```{r choosing-R-16}
 athletes %>% filter(Sport == "Tennis", RCC < 5)
 ```
 
-\normalsize
-
 ## Another way to do "and"
-
-\footnotesize
-
 
 ```{r choosing-R-17}
 athletes %>% filter(Sport == "Tennis") %>% 
   filter(RCC < 5)
 ```
 
-\normalsize
-
 ## Either/Or
-
-\footnotesize
-
 
 ```{r choosing-R-18}
 athletes %>% filter(Sport == "Tennis" | RCC > 5)
 ```
 
-\normalsize
-
 ## Sorting into order
-
-\footnotesize
-
 
 ```{r choosing-R-19}
 athletes %>% arrange(RCC)
 ```
 
-\normalsize
-
 ## Breaking ties by another variable
-
-\footnotesize
-
 
 ```{r choosing-R-20}
 athletes %>% arrange(RCC, BMI)
 ```
 
-\normalsize
-
 ## Descending order
-
-\footnotesize
-
 
 ```{r choosing-R-21}
 athletes %>% arrange(desc(BMI))
 ```
-
-\normalsize
 
 ```{r}
 #| echo: false
 
 options(width = wid)
 ```
-
 
 ## "The top ones"
 
@@ -263,33 +205,33 @@ athletes %>%
   select(Sport, Wt)
 ```
 
+```{r}
+athletes %>% 
+  slice_max(order_by = Wt, n=7) %>% 
+  select(Sport, Ht) 
+
+```
+
 ## Create new variables from old ones
 
-\small
-
 ```{r new-from-old}
-athletes %>%
-  mutate(wt_lb = Wt * 2.2) %>%
+athletes %>% 
+  mutate(wt_lb = Wt * 2.2) %>% 
   select(Sport, Sex, Wt, wt_lb) %>% 
   arrange(Wt) 
 ```
 
-\normalsize
-
 ## Turning the result into a number
 
 Output is always data frame unless you explicitly turn it into something
-else, eg. the weight of the heaviest athlete, as a number:
+else, eg. the weight of the heaviest athlete, as a number:\normalsize
 
 ```{r to-number}
-athletes %>% arrange(desc(Wt)) %>% 
-  pluck("Wt", 1) -> heavy
+athletes %>% arrange(desc(Wt)) %>% pluck("Wt", 1) -> heavy
 heavy
 ```
 
 Or the 20 heaviest weights in descending order:
-
-\footnotesize
 
 ```{r choosing-R-24}
 athletes %>%
@@ -298,20 +240,15 @@ athletes %>%
   pluck("Wt")
 ```
 
-\normalsize
-
 ## Another way to do the last one
-
-\footnotesize
 
 ```{r choosing-R-25}
 athletes %>%
   arrange(desc(Wt)) %>%
   slice(1:20) %>%
-  pull("Wt")
+  pull("Wt") -> big_wt
+big_wt
 ```
-
-\normalsize
 
 `pull` grabs the column you name *as a vector* (of whatever it
 contains).
@@ -327,24 +264,24 @@ athletes %>% group_by(Sex) %>% summarize(m = mean(Ht))
 ```{r choosing-R-27}
 athletes %>%
   filter(Sex == "female") %>%
-  summarize(m = mean(Ht))
+  summarize(w_mean = mean(Ht))
 ```
 
 ## Summary of data selection/arrangement "verbs" {.smaller}
 
-| Verb           | Purpose                                                          |
-|:---------------|:-----------------------------------------------------------------|
-| `select`       | Choose columns                                                   |
-| `slice`        | Choose rows by number                                            |
-| `slice_sample` | Choose random rows                                               |
-| `slice_max`    | Choose rows with largest values on a variable (also `slice_min`) |
-| `filter`       | Choose rows satisfying conditions                                |
-| `arrange`      | Sort in order by column(s)                                       |
-| `mutate`       | Create new variables                                             |
-| `group_by`     | Create groups to work with                                       |
-| `summarize`    | Calculate summary statistics (by groups if defined)              |
-| `pluck`        | Extract items from data frame                                    |
-| `pull`         | Extract a single column from a data frame as a vector            |
+| Verb | Purpose |
+|:------------------|:----------------------------------------------------|
+| `select` | Choose columns |
+| `slice` | Choose rows by number |
+| `slice_sample` | Choose random rows |
+| `slice_max` | Choose rows with largest values on a variable (also `slice_min`) |
+| `filter` | Choose rows satisfying conditions |
+| `arrange` | Sort in order by column(s) |
+| `mutate` | Create new variables |
+| `group_by` | Create groups to work with |
+| `summarize` | Calculate summary statistics (by groups if defined) |
+| `pluck` | Extract items from data frame |
+| `pull` | Extract a single column from a data frame as a vector |
 
 ## Looking things up in another data frame
 
