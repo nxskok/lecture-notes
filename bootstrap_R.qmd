@@ -235,6 +235,15 @@ kids <- read_delim(my_url," ")
 ggplot(kids, aes(x=group, y=score)) + geom_boxplot()
 ```
 
+## or, a normal quantile plot
+
+```{r}
+#| fig-height: 5
+ggplot(kids, aes(sample = score)) + stat_qq() + 
+  stat_qq_line() + facet_wrap(~ group)
+```
+
+
 ## Getting just the control group
 
 -   Use `filter` to select rows where something is true:
