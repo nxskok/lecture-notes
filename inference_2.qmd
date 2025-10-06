@@ -33,18 +33,18 @@ Tension between truth and decision about truth (imperfect).
 
 ## Power
 
--   Suppose $H_0 : \theta = 10$, $H_a : \theta \ne 10$ for some
-    parameter $\theta$.
--   Suppose $H_0$ wrong. What does that say about $\theta$?
--   Not much. Could have $\theta = 11$ or $\theta = 8$ or
-    $\theta = 496$. In each case, $H_0$ wrong.
--   How likely a type II error is depends on what $\theta$ is:
-    -   If $\theta = 496$, should be able to reject $H_0 : \theta = 10$
+-   Suppose $H_0 : \mu = 10$, $H_a : \mu \ne 10$ for some
+    population mean $\mu$.
+-   Suppose $H_0$ wrong. What does that say about $\mu$?
+-   Not much. Could have $\mu = 11$ or $\mu = 8$ or
+    $\mu = 496$. In each case, $H_0$ wrong.
+-   How likely a type II error is depends on what $\mu$ is:
+    -   If $\mu = 496$, should be able to reject $H_0 : \mu = 10$
         even for small sample, so $\beta$ should be small (power large).
-    -   If $\theta = 11$, might have hard time rejecting $H_0$ even with
+    -   If $\mu = 11$, might have hard time rejecting $H_0$ even with
         large sample, so $\beta$ would be larger (power smaller).
 -   Power depends on true parameter value, and on sample size.
--   So we play "what if": "if $\theta$ were 11 (or 8 or 496), what would
+-   So we play "what if": "if $\mu$ were 11 (or 8 or 496), what would
     power be?".
 
 ## Figuring out power
@@ -145,6 +145,7 @@ set.seed(457299)
 ```
 
 ```{r inference-2-R-6}
+library(tidyverse)
 tibble(sim = 1:1000) %>% 
   rowwise() %>% 
   mutate(my_sample = list(rnorm(15, 8, 4))) %>% 
@@ -178,7 +179,7 @@ tibble(sim = 1:1000) %>%
 
 ```{r inference-2-R-7}
 #| eval: false
-power.t.test(n = 15, delta = 10-8, sd = 4, 
+power.t.test(n = 40, delta = 10-8, sd = 4, 
              type = "one.sample")
 ```
 
@@ -239,6 +240,69 @@ power.t.test(power=0.80, delta=10-8, sd=4, type="one.sample")
 power.t.test(power=0.80, delta=10-8, sd=4, 
              type="one.sample", alternative = "one.sided")
 ```
+
+## By simulation
+
+Try a sample size and see what power you get. Here's $n = 15$ from before:
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(rnorm(15, 8, 4))) %>% 
+  mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
+  mutate(p_val = t_test$p.value) %>% 
+  count(p_val <= 0.05)
+```
+
+To get power 0.80, two-sided, need a *bigger sample*.
+
+## To get a bigger power
+
+How much bigger? No idea. *Make any guess*. What about $n = 50$?
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(rnorm(50, 8, 4))) %>% 
+  mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
+  mutate(p_val = t_test$p.value) %>% 
+  count(p_val <= 0.05)
+```
+
+Power now *too big*.
+
+## Try again
+
+sample size between 15 and 50, say $n = 30$:
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(rnorm(30, 8, 4))) %>% 
+  mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
+  mutate(p_val = t_test$p.value) %>% 
+  count(p_val <= 0.05)
+```
+
+Now a little too small, hence right answer between 30 and 50, closer to 30.
+
+## One last try ($n = 35$)
+
+```{r}
+tibble(sim = 1:1000) %>% 
+  rowwise() %>% 
+  mutate(my_sample = list(rnorm(35, 8, 4))) %>% 
+  mutate(t_test = list(t.test(my_sample, mu = 10))) %>% 
+  mutate(p_val = t_test$p.value) %>% 
+  count(p_val <= 0.05)
+```
+
+## But...
+
+... simulation has randomness: limit to how close you can get.
+
+Rule of thumb: with 1000 simulations, estimated power within 0.03 (3%).
+
 
 ## Power curves
 
