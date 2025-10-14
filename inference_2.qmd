@@ -179,7 +179,7 @@ tibble(sim = 1:1000) %>%
 
 ```{r inference-2-R-7}
 #| eval: false
-power.t.test(n = 40, delta = 10-8, sd = 4, 
+power.t.test(n = 15, delta = 10-8, sd = 4, 
              type = "one.sample")
 ```
 
@@ -349,6 +349,7 @@ options(width = 60)
 
 
 ```{r}
+str(ans)
 ans$power
 ```
 
@@ -375,9 +376,9 @@ d
     (maximum power):
 
 ```{r inference-2-R-12}
-g <-   ggplot(d, aes(x = n, y = power)) + geom_point() + 
+ggplot(d, aes(x = n, y = power)) + geom_point() + 
   geom_line() + 
-  geom_hline(yintercept = 1, linetype = "dashed")
+  geom_hline(yintercept = 1, linetype = "dashed") -> g
 ```
 
 ## The power curve
@@ -508,7 +509,7 @@ kids <- read_delim(my_url," ")
 
 ```{r inference-2-R-26}
 kids %>% group_by(group) %>% 
-  summarize(n=n(), s=sd(score))
+  summarize(n = n(), s = sd(score))
 ```
 
 ## Setting up

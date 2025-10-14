@@ -329,8 +329,8 @@ and get the P-value":
 ```{r inference-3-R-19}
 d %>% rowwise() %>% 
   mutate(p_value = pval_sign(null_median, irs, Time))
-```
 
+```
 \normalsize
 
 ## Make it easier for ourselves
@@ -442,29 +442,16 @@ ci_median(irs, Time, conf.level=0.90)
 -   but, was the sample size (30) big enough to overcome the skewness?
 -   Bootstrap, again:
 
-```{r inference-3-R-28, echo=FALSE}
-set.seed(457299)
-```
-
-```{r inference-3-R-29}
-tibble(sim = 1:1000) %>% 
-  rowwise() %>% 
-  mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 
-  mutate(my_mean = mean(my_sample)) %>% 
-  ggplot(aes(x=my_mean)) + geom_histogram(bins=10) -> g
-```
-
-## With normal quantile plot
-
 ```{r inference-3-R-29a}
 #| fig-height: 4
 tibble(sim = 1:10000) %>% 
   rowwise() %>% 
-  mutate(my_sample = list(sample(irs$Time, replace = TRUE))) %>% 
+  mutate(my_sample = list(sample(irs$Time, 
+                                 replace = TRUE))) %>% 
   mutate(my_mean = mean(my_sample)) %>% 
-  ggplot(aes(sample = my_mean)) + stat_qq() + stat_qq_line()
-
-```
+  ggplot(aes(sample = my_mean)) + stat_qq() + 
+    stat_qq_line() -> g
+```.
 
 
 ## The sampling distribution
