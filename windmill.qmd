@@ -52,14 +52,14 @@ windmill
 
 ```{r windmill-4, eval=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth() 
+  geom_point() + geom_smooth(se = FALSE) 
 ```
 
 ## Scatterplot
 
 ```{r windmill-5, echo=FALSE, message=FALSE}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth(se = FALSE) 
+  geom_point() + geom_smooth() 
 ```
 
 ## Comments
@@ -79,8 +79,8 @@ ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
 
 ```{r windmill-7}
 DC.1 <- lm(DC_output ~ wind_velocity, data = windmill)
-summary(DC.1)
 ```
+summary(DC.1)
 
 \normalsize
 
@@ -137,8 +137,28 @@ ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
 ## Plot of residuals against fitted values
 
 ```{r windmill-13}
-#| fig-height: 5
+#| fig-height: 4
 ggplot(DC.1, aes(y = .resid, x = .fitted)) + geom_point()
+```
+
+```{r}
+fortify(DC.1)
+```
+
+
+## Avoiding the warning
+
+- We loaded `broom` above, so do this before making residual plot:
+
+```{r}
+DC.1a <- augment(DC.1)
+DC.1a
+```
+
+## and then make the plot
+
+```{r}
+ggplot(DC.1a, aes(y = .resid, x = .fitted)) + geom_point()
 ```
 
 ## Comments on residual plot
@@ -156,6 +176,8 @@ ggplot(DC.1, aes(y = .resid, x = .fitted)) + geom_point()
         relationship, and try to apply.
 
 ## normal quantile plot of residuals
+
+(or use `DC.1a`)
 
 ```{r}
 #| fig-height: 4.5
@@ -223,8 +245,8 @@ This distribution has long tails, which should worry us at least some.
 
 ```{r fitcurve, eval=F}
 ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
-  geom_point() + geom_smooth(method = "lm", se = F) +
-  geom_line(data = DC.2, aes(y = .fitted))
+  geom_point() + geom_smooth(method = "lm", se = FALSE) +
+  geom_line(data = DC.2, aes(y = .fitted)) -> g
 ```
 
 ## Comments
@@ -243,6 +265,7 @@ ggplot(windmill, aes(y = DC_output, x = wind_velocity)) +
 ## Scatterplot with fitted line and curve
 
 ```{r windmill-19, ref.label="fitcurve", echo=F}
+g
 ```
 
 Curve clearly fits better than line.
@@ -338,7 +361,7 @@ tidy(DC.3)
 ggplot(DC.3, aes(y = .resid, x = .fitted)) + geom_point()
 ```
 
-## normal quantile plot of residuals
+## Normal quantile plot of residuals
 
 ```{r}
 #| fig-height: 4.5
@@ -389,13 +412,13 @@ w2 %>%
                values_to="fit") %>%
   ggplot(aes(x = wind_velocity, y = DC_output)) +
   geom_point() +
-  geom_line(aes(y = fit, colour = model)) 
+  geom_line(aes(y = fit, colour = model)) -> g1
 ```
 
 ## Scatterplot with fitted curves
 
 ```{r windmill-25, ref.label= "allcurves", echo=F}
-
+g1
 ```
 
 ## Comments

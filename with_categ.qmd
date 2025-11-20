@@ -130,9 +130,13 @@ crickets.1 <- lm(pulse_rate ~ temperature + species,
 
 ## Can I remove anything? No:
 
+\small
+
 ```{r with-categ-R-11}
 drop1(crickets.1, test = "F") 
 ```
+
+\normalsize
 
 `drop1` is right thing to use in a regression with categorical
 (explanatory) variables in it: "can I remove this categorical variable
@@ -157,7 +161,7 @@ summary(crickets.1)
 -   R-squared of almost 0.99 is very high, so that the prediction of
     pulse rate from species and temperature is very good.
 
-## To end with a graph 
+## What this model is doing: a graph 
 
 -   Two quantitative variables and one categorical: scatterplot with
     categories distinguished by colour.
@@ -178,3 +182,73 @@ ggplot(crickets, aes(x = temperature, y = pulse_rate,
 #| fig-height: 5
 g
 ```
+    
+## Residuals
+
+- We can also check residuals from this kind of model:
+
+\small
+
+```{r}
+crickets.1a <- augment(crickets.1)
+crickets.1a
+```
+
+\normalsize
+
+and then...
+
+## Residuals vs fitted
+
+```{r}
+#| fig-height: 4.5
+ggplot(crickets.1a, aes(x = .fitted, y = .resid)) + 
+  geom_point()
+```
+
+## Normal quantile plot of residuals
+
+```{r}
+#| fig-height: 5
+ggplot(crickets.1a, aes(sample = .resid)) + 
+  stat_qq() + stat_qq_line()
+```
+
+## Residuals vs. $x$'s
+
+doesn't work as you expect:
+
+```{r}
+#| error: TRUE
+
+crickets.1a %>% 
+  pivot_longer(temperature:species, 
+               names_to = "xname", values_to = "xval")
+```
+
+## so do them separately 1/3
+
+```{r}
+#| fig-height: 5
+ggplot(crickets.1a, aes(x = temperature, y = .resid)) + 
+  geom_point()
+```
+
+## so do them separately 2/3
+
+```{r}
+#| fig-height: 5
+ggplot(crickets.1a, aes(x = species, y = .resid)) + 
+  geom_point()
+```
+
+## so do them separately 3/3
+
+or perhaps better for categorical $x$'s
+
+```{r}
+#| fig-height: 5
+ggplot(crickets.1a, aes(x = species, y = .resid)) + 
+  geom_boxplot()
+```
+

@@ -318,6 +318,7 @@ tidy(rut.2)
 ```{r asphalt-20}
 rut.3 <- lm(log(rut.depth) ~ pct.a.surf + log(viscosity), data = asphalt)
 tidy(rut.3)
+summary(rut.3)
 ```
 
 \normalsize
@@ -364,6 +365,7 @@ tidy(rut.2) %>% arrange(p.value)
 ```{r asphalt-24}
 rut.4 <- lm(log(rut.depth) ~ pct.a.surf + fines + voids + 
               log(viscosity) + run, data = asphalt)
+summary(rut.4)
 tidy(rut.4) %>% arrange(p.value) %>% select(term, p.value)
 ```
 
@@ -386,6 +388,7 @@ tidy(rut.4) %>% arrange(p.value)
 
 ```{r asphalt-26}
 rut.5 <- update(rut.4, . ~ . - fines)
+summary(rut.5)
 tidy(rut.5) %>% arrange(p.value) %>% select(term, p.value)
 ```
 
@@ -395,6 +398,7 @@ Can't take out intercept, so `run`, with P-value 0.36, goes next.
 
 ```{r asphalt-27}
 rut.6 <- update(rut.5, . ~ . - run)
+summary(rut.6)
 tidy(rut.6) %>% arrange(p.value) %>% select(term, p.value)
 ```
 
@@ -505,7 +509,7 @@ options(width=wid)
 -   Best model was our `rut.6`:
 
 ```{r asphalt-37}
-tidy(rut.6)
+tidy(rut.6) 
 ```
 
 ## Revisiting (2)
@@ -541,7 +545,8 @@ ggplot(rut.6, aes(sample = .resid)) + stat_qq() + stat_qq_line()
 -   Do our trick again to put them all on one plot:
 
 ```{r asphalt-40}
-augment(rut.6, asphalt) %>%
+augment(rut.6)
+augment(rut.6, data = asphalt) %>%
   mutate(log_vis=log(viscosity)) %>% 
   pivot_longer(
     c(pct.a.surf:voids, run, log_vis),

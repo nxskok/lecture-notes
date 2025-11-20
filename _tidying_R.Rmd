@@ -34,7 +34,7 @@ saying which feed that weight goes with.
   
 ## Packages for this section
 
-```{r tidying-R-1, eval=F}
+```{r tidying-R-1}
 library(tidyverse)
 library(readxl)
 ```
@@ -42,7 +42,7 @@ library(readxl)
   
 ## Reading in the pig data
 
-```{r tidying-R-2, message=F}
+```{r tidying-R-2, message=FALSE}
 my_url <- "http://ritsokiguess.site/datafiles/pigs1.txt"
 pigs1 <- read_delim(my_url, " ")
 pigs1

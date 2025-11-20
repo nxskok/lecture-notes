@@ -451,7 +451,7 @@ tibble(sim = 1:10000) %>%
   mutate(my_mean = mean(my_sample)) %>% 
   ggplot(aes(sample = my_mean)) + stat_qq() + 
     stat_qq_line() -> g
-```.
+```
 
 
 ## The sampling distribution

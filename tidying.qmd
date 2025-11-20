@@ -89,6 +89,7 @@ pigs1 %>% pivot_longer(-pig, names_to="feed",
 or
 
 ```{r}
+pigs1
 pigs1 %>% pivot_longer(starts_with("feed"), names_to="feed", 
                        values_to="weight") 
 ```
@@ -192,7 +193,7 @@ options(width = 72)
 ```
 
 ```{r tidying-R-11}
-tb %>% slice_sample(n = 10)
+tb 
 ```
 
 \normalsize
@@ -449,7 +450,7 @@ weather %>%
   select(-station) %>% 
   unite(datestr, c(Year, Month, Day), sep = "-") %>%
   mutate(date = as.Date(datestr)) %>%
-  select(c(date, tmax, tmin)) -> weather_tidy
+  select(date, tmax, tmin) -> weather_tidy
 ```
 
 \normalsize

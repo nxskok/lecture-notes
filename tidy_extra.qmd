@@ -44,6 +44,24 @@ pigs_longer %>%
   pivot_wider(names_from=pig, values_from=weight)
 ```
 
+but:
+
+```{r}
+pigs_longer %>% 
+  pivot_wider(names_from=pig, values_from=weight) %>% 
+  select(2)
+```
+
+this has selected the column called *1*, which is the column *numbered* 2.
+
+To get the column we want:
+
+```{r}
+pigs_longer %>% 
+  pivot_wider(names_from=pig, values_from=weight) %>% 
+  select(`2`)
+```
+
 ## Disease presence and absence at two locations
 
 Frequencies of plants observed with and without disease at two
@@ -130,7 +148,7 @@ eg. quartiles:
 #| warning = TRUE
 pigs_longer %>% 
   group_by(feed) %>% 
-  summarize(r=quantile(weight, c(0.25, 0.75)))
+  summarize(r = quantile(weight, c(0.25, 0.75)))
 ```
 
 \normalsize
@@ -243,8 +261,7 @@ joined by lines
 #| fig-height: 4
 repmes3 %>% group_by(treatment, ftime=fct_inorder(time)) %>% 
   summarize(mean_y=mean(y)) %>% 
-  ggplot(aes(x=ftime, y=mean_y, colour=treatment, 
-             group=treatment)) + 
+  ggplot(aes(x=ftime, y=mean_y, colour=treatment, group=treatment)) + 
     geom_point() + geom_line()
 ```
 

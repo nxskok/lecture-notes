@@ -92,6 +92,7 @@ kids <- read_delim(my_url," ")
 -   Find overall median score:
 
 ```{r inference-5-R-5}
+# kids
 kids %>% summarize(med=median(score)) %>% pull(med) -> m
 m
 ```
